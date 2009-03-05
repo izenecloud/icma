@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2005-06-15T21:28:39.422714Z"
+   url="file:///home/s0450736/repos/maxent/lib/boost/config/compiler"
+   last-author="s0450736"
+   kind="dir"
+   uuid="19d9576d-9bf9-0310-8c4c-ab5631dd9ef3"
+   repos="file:///home/s0450736/repos"
+   revision="514"/>
+<entry
+   committed-rev="1"
+   name="sgi_mipspro.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="3c9426da3ab5d3767b25e58aa143fe1e"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="sunpro_cc.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="82537ba841d71ee146b6990a75b9f46f"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="gcc.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="7e6910724623241ce235a07d0ff52936"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="greenhills.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="1e2bae2b360e873ca669d8764e6cf0c0"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="digitalmars.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="2ad16a480709915747ff57c79812e2a3"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="compaq_cxx.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="2967d2ecda0198ded81abe8fe6ea845c"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="metrowerks.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="57e809c051ce9b22cabd8b2a24f0aa24"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="mpw.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="2d98bd752cc1710384d7f2135a758db6"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="kai.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="7dc51e5637b89db8344c6ee067071796"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="visualc.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="da691d8ab0966fbe9b03c257a86fb3e4"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="common_edg.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="88e9673dd2579df04de29c1f5c198336"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="comeau.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="43b7d15b0f9cc397347735862807858d"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="vacpp.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="81101745fdbde10e322a69c997600ccb"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="intel.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="227d3b5b3043143632cb8d368b13cf0a"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="hp_acc.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="ea12b931ca3446342cf31606db51a4cb"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="borland.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="08698c38defd0b293ee8757da4670005"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+</wc-entries>

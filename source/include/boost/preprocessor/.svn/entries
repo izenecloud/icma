@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2005-06-15T21:28:39.422714Z"
+   url="file:///home/s0450736/repos/maxent/lib/boost/preprocessor"
+   last-author="s0450736"
+   kind="dir"
+   uuid="19d9576d-9bf9-0310-8c4c-ab5631dd9ef3"
+   repos="file:///home/s0450736/repos"
+   revision="514"/>
+<entry
+   committed-rev="1"
+   name="identity.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="053023035818b7db1fab0118b28f057e"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   name="control"
+   kind="dir"/>
+<entry
+   name="repetition"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="empty.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="ae580b0980a67291898c029dbebf2716"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   name="debug"
+   kind="dir"/>
+<entry
+   name="tuple"
+   kind="dir"/>
+<entry
+   name="arithmetic"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="cat.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="3a06752ff2e32ac4d353b861042c49e2"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="enum_params.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="cdc097ccd7553642d737b110069ada25"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="inc.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="48eaa13fc37bb6146313b0829ba0e478"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="comma_if.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="07ed7b9fcb7ea23b61343d09d9aa9e85"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   name="detail"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="stringize.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="68f2e70de647e0aee3ae64ac962a5d8d"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   name="config"
+   kind="dir"/>
+<entry
+   name="punctuation"
+   kind="dir"/>
+<entry
+   name="logical"
+   kind="dir"/>
+<entry
+   name="list"
+   kind="dir"/>
+<entry
+   name="facilities"
+   kind="dir"/>
+</wc-entries>

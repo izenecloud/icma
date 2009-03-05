@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2005-06-15T21:28:39.422714Z"
+   url="file:///home/s0450736/repos/maxent/lib/boost/type_traits/detail"
+   last-author="s0450736"
+   kind="dir"
+   uuid="19d9576d-9bf9-0310-8c4c-ab5631dd9ef3"
+   repos="file:///home/s0450736/repos"
+   revision="514"/>
+<entry
+   committed-rev="1"
+   name="yes_no_type.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="aed617c375fa6d4f7e55a990084931c4"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="template_arity_spec.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="010e324f8978ec75d68fa0b4cc92ee76"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="ice_or.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="7c3bce030d2fd7d91d6a74a5295ab862"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="type_trait_def.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="1c25836feb5658ad2d69d82b9f0ef7b7"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="is_mem_fun_pointer_impl.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="950f33b56c1598c43d8251cd83cb391f"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="is_function_ptr_helper.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="8c7983ca2a466fdd214b1eca8cf23372"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="type_trait_undef.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="3aba8da26784b42109737dc9662f1a38"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="is_mem_fun_pointer_tester.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="49b0836ddbf8f9ff616b784f6396e66c"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="bool_trait_def.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="3fbe2a4af56d2b71eb99d9c8954c368b"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="cv_traits_impl.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="ce55e520b530ff49053d04ed20a8324c"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="bool_trait_undef.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="e4c7ce30936ab78d0dddd3207bac8bd7"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="ice_not.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="b3da4cef03bb7ede418858da3e74d29f"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="ice_and.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="0f32931618cbbc29912171d683631953"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="ice_eq.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="f5342ec08a7cb71b06f19fcf22078742"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="false_result.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="81cf5c9c2237be76e0f233306134850f"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+</wc-entries>

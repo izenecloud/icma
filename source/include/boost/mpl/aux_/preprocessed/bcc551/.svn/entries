@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2005-06-15T21:28:39.422714Z"
+   url="file:///home/s0450736/repos/maxent/lib/boost/mpl/aux_/preprocessed/bcc551"
+   last-author="s0450736"
+   kind="dir"
+   uuid="19d9576d-9bf9-0310-8c4c-ab5631dd9ef3"
+   repos="file:///home/s0450736/repos"
+   revision="514"/>
+<entry
+   committed-rev="1"
+   name="arg.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="ced8d1f4c96b71fa399816666c0cb377"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="or.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="0155bba585243876d96ac2b7ae0d5105"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="and.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="f390f4d29f7ad0636d379e4d089ca731"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="apply.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="5c45e03968b208e47c9a07895879a325"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="placeholders.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="b27f937b2a83cf7ee35976938b48c6ad"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+</wc-entries>

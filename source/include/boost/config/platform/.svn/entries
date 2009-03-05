@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2005-06-15T21:28:39.422714Z"
+   url="file:///home/s0450736/repos/maxent/lib/boost/config/platform"
+   last-author="s0450736"
+   kind="dir"
+   uuid="19d9576d-9bf9-0310-8c4c-ab5631dd9ef3"
+   repos="file:///home/s0450736/repos"
+   revision="514"/>
+<entry
+   committed-rev="1"
+   name="irix.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="b5987ac9e7e8f47d121bec6889869764"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="solaris.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="1f9fb4c2657494ed5bfc8437b5a59e78"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="linux.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="abefbe2aebc811c66d0ebcf0443ac685"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="amigaos.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="87d90c532e2a3adf132cc3cec9339ab1"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="cygwin.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="b63a0343518623bd33152d4fb6193d75"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="aix.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="a5dd1f5b7c6effe477e21118052d26ea"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="macos.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="4d0159ff6b60ce291a7e747be8b613e1"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="win32.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="b4c3ac2f90ca3ef322c7bb15dab6c7f9"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="hpux.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="1755d86d7190cbfe2b6667e295564658"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="beos.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="22c154588443ef4e508f24a2ffdad836"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="bsd.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="3734455ad01cd395940e0718af866c63"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+</wc-entries>

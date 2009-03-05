@@ -1,0 +1,145 @@
+/** \file sentence.h
+ * 
+ * \author Jun Jiang
+ * \version 0.1
+ * \date Feb 17, 2009
+ */
+
+#ifndef CMA_SENTENCE_H
+#define CMA_SENTENCE_H
+
+#include <string>
+#include <vector>
+
+namespace cma
+{
+
+/**
+ * Morpheme is a pair of lexicon string and its part-of-speech tag.
+ */
+struct Morpheme
+{
+    /** the lexicon string value */
+    std::string lexicon_;
+
+    /** the index code of part-of-speech tag */
+    int posCode_;
+};
+
+/** A list of morphemes. */
+typedef std::vector<Morpheme> MorphemeList;
+
+/**
+ * Sentence saves the results of Chinese morphological analysis.
+ * Typically, the usage is like below:
+ *
+ * Sentence s;
+ * s.setString("...");
+ *
+ * Analyzer* analyzer = ...;
+ * analyzer->runWithSentence(s);
+ *
+ * // get n-best results
+ * for(int i=0; i<s.getListSize(); ++i)
+ * {
+ *	for(int j=0; j<s.getCount(i); ++j)
+ *	{
+ *	    const char* pLexicon = s.getLexicon(i, j);
+ *	    const char* strPOS = s.getStrPOS(i, j);
+ *	    ...
+ *	}
+ *	double score = s.getScore(i);
+ *	...
+ * }
+ *
+ * // get one-best result
+ * int i= s.getOneBestIndex();
+ * ...
+ */
+class Sentence
+{
+public:
+    /**
+     * Set the raw sentence string.
+     * \param pString value of the raw string
+     * \attention the previous analysis results will be removed.
+     */
+    void setString(const char* pString);
+
+    /**
+     * Get the raw sentence string.
+     * \return value of the raw string
+     */
+    const char* getString(void) const;
+
+    /**
+     * Get the number of candidates of morphological analysis result.
+     * \return the number of candidates
+     */
+    int getListSize(void) const;
+
+    /**
+     * Get the number of morphemes in candidate result \e nPos.
+     * \param nPos candidate result index
+     * \return the number of morphemes
+     */
+    int getCount(int nPos) const;
+
+    /**
+     * Get the string of morpheme \e nIdx in candidate result \e nPos.
+     * \param nPos candidate result index
+     * \param nIdx morpheme index
+     * \return morpheme string
+     */
+    const char* getLexicon(int nPos, int nIdx) const;
+
+    /**
+     * Get the POS index code of morpheme \e nIdx in candidate result \e nPos.
+     * \param nPos candidate result index
+     * \param nIdx morpheme index
+     * \return POS index code
+     */
+    int getPOS(int nPos, int nIdx) const;
+
+    /**
+     * Get the POS string of morpheme \e nIdx in candidate result \e nPos.
+     * \param nPos candidate result index
+     * \param nIdx morpheme index
+     * \return POS string
+     */
+    const char* getStrPOS(int nPos, int nIdx) const;
+
+    /**
+     * Get the score of candidate result \e nPos.
+     * \param nPos candidate result index
+     * \return the score value
+     */
+    double getScore(int nPos) const;
+
+    /**
+     * Get the index of the candidate result, which has the highest score.
+     * \return candidate result index
+     */
+    int getOneBestIndex(void) const;
+
+    /**
+     * Add a candidate result of morphological analysis.
+     * \param morphemeList the candidate result
+     * \param score the score value of the candidate
+     */
+    void addList(const MorphemeList& morphemeList, double score = 0.0);
+
+private:
+    /** the raw sentence string */
+    std::string raw_;
+
+    /** the candidates list of morphological analysis result */
+    std::vector<MorphemeList> candidates_;
+
+    /** the scores list of candidates */
+    std::vector<double> scores_;
+};
+
+} // namespace cma
+
+#endif // CMA_SENTENCE_H

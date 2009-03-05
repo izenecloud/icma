@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2005-06-15T21:28:39.422714Z"
+   url="file:///home/s0450736/repos/maxent/lib/boost/config/stdlib"
+   last-author="s0450736"
+   kind="dir"
+   uuid="19d9576d-9bf9-0310-8c4c-ab5631dd9ef3"
+   repos="file:///home/s0450736/repos"
+   revision="514"/>
+<entry
+   committed-rev="1"
+   name="vacpp.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="030d46649adf6868d454dcbe1d6e8475"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="msl.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="27d4a821404aa46d705cc112b7d5ac1f"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="sgi.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="b0ff2ad3ffe70c7706597723d6cc989b"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="modena.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="49aa471d14effb292f74a7ba25a78b7f"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="libcomo.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="894d97aed5283ea615d4d02eb4502e05"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="roguewave.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="6cce0ea8200168bf236e4a93437d17f7"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="dinkumware.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="0a023d3dbd1b339bb8822c498a1b3439"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="libstdcpp3.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="510b3c900bdd40b003a2c6101aa0aadd"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="stlport.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="84a22fd88a37357912dc9e9dd1d420b1"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+</wc-entries>

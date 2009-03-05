@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2005-06-15T21:28:39.422714Z"
+   url="file:///home/s0450736/repos/maxent/lib/boost/preprocessor/arithmetic"
+   last-author="s0450736"
+   kind="dir"
+   uuid="19d9576d-9bf9-0310-8c4c-ab5631dd9ef3"
+   repos="file:///home/s0450736/repos"
+   revision="514"/>
+<entry
+   committed-rev="1"
+   name="inc.hpp"
+   text-time="2006-10-05T11:37:20.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="bdadc10cfac5fed7c3b69b2ab6695222"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+</wc-entries>

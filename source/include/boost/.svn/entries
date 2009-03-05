@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2005-06-15T21:28:39.422714Z"
+   url="file:///home/s0450736/repos/maxent/lib/boost"
+   last-author="s0450736"
+   kind="dir"
+   uuid="19d9576d-9bf9-0310-8c4c-ab5631dd9ef3"
+   repos="file:///home/s0450736/repos"
+   revision="514"/>
+<entry
+   committed-rev="1"
+   name="token_iterator.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="f7b7c279c060371cd1ecdae54d4b3fcf"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="next_prior.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="2f679b4ab84a80b1bdd53eecae306fdc"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   name="python"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="lexical_cast.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="eb36061adf9ed8fa36d060ceb28b5bbc"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="assert.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="efadf9b02091010386b7b21a8715b616"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   name="mpl"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="utility.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="3bbac554feff07f120d47e9c33fc2cc2"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="shared_array.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="8d8d0f96a1da20e68754fccffc7bbbe0"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="cstdint.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="47fd7da31c684198449963a05fcdf5ae"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="static_assert.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="688e30d3961062bcba9c3a5bbfecc14c"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="token_functions.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="6aac922350918fd086830eef5187ff43"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="tokenizer.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="e15cf3f15c04e207e7cb7b8d83a3f521"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="scoped_array.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="3ccb6acf36a32d5a28e428f79cd19ff3"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   name="detail"
+   kind="dir"/>
+<entry
+   name="utility"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="timer.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="4abb39c6bd710b95686eb9f3ad0dcc51"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="throw_exception.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="285b25dabf8ab3684b087ed8d31669d1"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   name="type_traits"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="iterator.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="06c3b74c7c24b3b382b7888845b55dfa"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="non_type.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="d6fd61ca2e8e696e6de943b4ae0d0ff3"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="shared_ptr.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="f57397d358e71894580849ac78d3209c"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   name="preprocessor"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="limits.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="e8fc350d4e883c02278708b37a5e51fe"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="scoped_ptr.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="b30d9434e54384e336d794799e959843"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="utility_fwd.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="8b19d87a88c3cfa353e259060d3bc44c"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   name="iterator"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="progress.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="02559e9c16fe120bc52499d8dcb51cd9"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="config.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="9666bcff467fd9a7cb7c64151d65fc35"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="checked_delete.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="1640d151c7cb08ab61833ff09b6a01d9"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   committed-rev="1"
+   name="noncopyable.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="60a750deb8a75e674164718513b3055d"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+<entry
+   name="config"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="type.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="a30b9974ea0568f6c215c6fefc04558b"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:21.000000Z"/>
+</wc-entries>

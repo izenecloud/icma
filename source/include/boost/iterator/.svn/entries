@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2005-06-15T21:28:39.422714Z"
+   url="file:///home/s0450736/repos/maxent/lib/boost/iterator"
+   last-author="s0450736"
+   kind="dir"
+   uuid="19d9576d-9bf9-0310-8c4c-ab5631dd9ef3"
+   repos="file:///home/s0450736/repos"
+   revision="514"/>
+<entry
+   committed-rev="1"
+   name="interoperable.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="6cea07ba83b87a6ffac18a5915666a87"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   name="detail"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="iterator_facade.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="c67feac622fc9deed8160da63dd4c4d9"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="iterator_categories.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="fafef0cbafe7acbbec6bd539a4834a8f"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="iterator_traits.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="dc5dfe9e56996ad79ffc5202d742e610"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+<entry
+   committed-rev="1"
+   name="iterator_adaptor.hpp"
+   text-time="2006-10-05T11:37:21.000000Z"
+   committed-date="2005-06-15T21:28:39.422714Z"
+   checksum="766b14e581c561062531fdfbf6cd0317"
+   last-author="s0450736"
+   kind="file"
+   prop-time="2006-10-05T11:37:20.000000Z"/>
+</wc-entries>
