@@ -40,13 +40,16 @@
 #include <float.h>
 #include "lbfgs.h"
 
+#include "lbfgs.c"
+
 #if defined(WIN32) && !defined(__GNUC__) /* assume use Intel Fortran Compiler on win32 platform if not compiled with GCC */
 #    define LBFGS_FUN LBFGS
 #else
 #    define LBFGS_FUN lbfgs_ /* assume use GNU f77 otherwise */
 #endif
+
     /* Fortran lbfgs interface */
-#if defined(__cplusplus)
+/* #if defined(__cplusplus)
 extern "C" {
 #endif
     extern void LBFGS_FUN(int* n, int* m, double* x, double* f, double* g,
@@ -54,7 +57,7 @@ extern "C" {
             double* xtol, double* w, int* iflag, int* niter, int* nfuns);
 #if defined(__cplusplus)
 }
-#endif
+#endif */
 
 /* create an opt object
  * n is the dimension of the variable
@@ -111,7 +114,7 @@ void lbfgs_destory(lbfgs_t* opt) {
  *       = 2: user must provide the diagonal matrix Hk0.
  */
 int lbfgs_run(lbfgs_t* opt, double* x, double* f, double* g) {
-    LBFGS_FUN(&opt->n, &opt->m, x, f, g, &opt->diagco, opt->diag,
+    lbfgs_(&opt->n, &opt->m, x, f, g, &opt->diagco, opt->diag,
             opt->iprint, &opt->eps, &opt->xtol, opt->w, &opt->iflag,
             &opt->niter, &opt->nfuns);
     return opt->iflag;

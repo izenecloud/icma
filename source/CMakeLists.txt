@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.6)
 
 project(CMA)
 
-add_definitions("-Wall")# -O3
+add_definitions("-Wall -lf2c -lm")# -O3
 
 include_directories(../include)
 include_directories(./include)
