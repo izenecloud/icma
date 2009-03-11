@@ -37,6 +37,8 @@
 #ifndef _LBFGS_H
 #define _LBFGS_H
 
+#include "lbfgs_algo.h"
+
 #if defined(__cplusplus)
 extern "C" {
 #endif
