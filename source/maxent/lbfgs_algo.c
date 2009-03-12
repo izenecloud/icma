@@ -26,7 +26,7 @@ struct lb3_1_ {
 struct {
     integer e_1[2];
     doublereal e_2[3];
-    } lb3_ = { 6, 6, .9, 1e-20, 1e20 };
+    } lb3_ = { {6, 6}, {.9, 1e-20, 1e20} };
 
 
 /* Table of constant values */
@@ -1244,8 +1244,8 @@ L30:
 /*        IF AN UNUSUAL TERMINATION IS TO OCCUR THEN LET */
 /*        STP BE THE LOWEST POINT OBTAINED SO FAR. */
 
-    if (brackt && (*stp <= stmin || *stp >= stmax) || *nfev >= *maxfev - 1 || 
-	    infoc == 0 || brackt && stmax - stmin <= *xtol * stmax) {
+    if ((brackt && (*stp <= stmin || *stp >= stmax)) || *nfev >= *maxfev - 1 || 
+	    infoc == 0 || (brackt && stmax - stmin <= *xtol * stmax)) {
 	*stp = stx;
     }
 
@@ -1274,7 +1274,7 @@ L45:
 
 /*        TEST FOR CONVERGENCE. */
 
-    if (brackt && (*stp <= stmin || *stp >= stmax) || infoc == 0) {
+    if ((brackt && (*stp <= stmin || *stp >= stmax)) || infoc == 0) {
 	*info = 6;
     }
     if (*stp == lb3_1.stpmax && *f <= ftest1 && dg <= dgtest) {
@@ -1439,7 +1439,7 @@ L45:
 
 /*     CHECK THE INPUT PARAMETERS FOR ERRORS. */
 
-    if (*brackt && (*stp <= min(*stx,*sty) || *stp >= max(*stx,*sty)) || *dx *
+    if ((*brackt && (*stp <= min(*stx,*sty) || *stp >= max(*stx,*sty))) || *dx *
 	     (*stp - *stx) >= 0.f || *stpmax < *stpmin) {
 	return 0;
     }

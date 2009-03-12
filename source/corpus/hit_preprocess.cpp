@@ -43,7 +43,7 @@ void HIT_Preprocess::format(const char* rawFile, const char* resultFile)
 	getline(from, line);
 
 	brace_start = false;
-	for(uint i=0; i<line.length(); ++i) {
+	for(unsigned int i=0; i<line.length(); ++i) {
 	    // check sequence tag
 	    if(line[i] == '[' || line[i] == ']') {
 		    brace_start = !brace_start;

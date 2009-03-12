@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.4)
 
 project(CMA-CHEN)
 
-add_definitions("-Wall")# -O3
+add_definitions("-Wall -Wno-deprecated -Wno-write-strings")# -O3
 
 include_directories(../include)
 include_directories(./include)

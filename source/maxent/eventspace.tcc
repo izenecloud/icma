@@ -57,7 +57,8 @@ EventSpace<Ev>::EventSpace(boost::shared_ptr<featmap_type> featmap,
 template<typename Ev>
 EventSpace<Ev>::~EventSpace() {
     for (size_t i = 0; i < this->size(); ++i) {
-        delete[] (*this)[i].m_context;
+        //delete[] (*this)[i].m_context; //orig
+        delete[] (*this)[i].m_context; //modified
     }
 }
 
