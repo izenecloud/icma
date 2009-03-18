@@ -27,6 +27,7 @@ TARGET_LINK_LIBRARIES(t_modelfile ${LIBS_ME})
 ADD_EXECUTABLE(t_itemmap t_itemmap.cc)
 TARGET_LINK_LIBRARIES(t_itemmap ${LIBS_ME})
 
-
+ADD_EXECUTABLE(t_cppstringutils t_cppstringutils.cc)
+TARGET_LINK_LIBRARIES(t_cppstringutils ${LIBS_CMAC})
 
 

@@ -46,17 +46,6 @@
 #    define LBFGS_FUN lbfgs_ /* assume use GNU f77 otherwise */
 #endif
 
-    /* Fortran lbfgs interface */
-/* #if defined(__cplusplus)
-extern "C" {
-#endif
-    extern void LBFGS_FUN(int* n, int* m, double* x, double* f, double* g,
-            int* diagco,double* diag, int* iprint, double* eps,
-            double* xtol, double* w, int* iflag, int* niter, int* nfuns);
-#if defined(__cplusplus)
-}
-#endif */
-
 /* create an opt object
  * n is the dimension of the variable
  * m is the number of the corrections used in BFGS update

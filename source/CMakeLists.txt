@@ -13,7 +13,7 @@ include_directories(./maxent)
 
 SET(LIBS_ME maxent)
 SET(LIBS_CORPUS corpus)
-
+SET(LIBS_CMAC cmac)
 
 add_subdirectory(maxent)
 add_subdirectory(src)

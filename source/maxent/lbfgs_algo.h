@@ -7,4 +7,6 @@ int lbfgs_(integer *n, integer *m, doublereal *x, doublereal
 		 doublereal *eps, doublereal *xtol, doublereal *w, integer *iflag, 
 		 	integer *niter, integer *nfuns);
 
+int  MAIN__( );
+
 #endif
