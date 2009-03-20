@@ -19,7 +19,7 @@ namespace cma{
  * \param words return vector to store words list
  * \return tags return value to store tag list
  */
-void CMABasicTrainer::split_tag(const wstring& s, vector<wstring>& words,
+void split_tag(const wstring& s, vector<wstring>& words,
         vector<wstring>& tags){
     typedef boost::tokenizer <boost::char_separator<wchar_t>,
         wstring::const_iterator, wstring> TagTokenizer;
@@ -35,43 +35,45 @@ void CMABasicTrainer::split_tag(const wstring& s, vector<wstring>& words,
     }
 }
 
-void CMABasicTrainer::gather_feature(wstring& word, vector<wstring>& context,
+void gather_feature(TrainerData* data, wstring& word, vector<wstring>& context,
         wstring& tag){
     //only collect tag dict for common words
-    if(!is_rare_word(word))
-        tagDict_[word][tag] += 1;
+    if(!is_rare_word(data, word))
+        data->tagDict_[word][tag] += 1;
    
     for(vector<wstring>::iterator itr = context.begin();
           itr != context.end(); ++itr){
-        featDict_[itr->append(tag)] += 1;
+        data->featDict_[itr->append(tag)] += 1;
     }
 }
 
-bool CMABasicTrainer::is_rare_word(wstring& word){
-    return wordFreq_[word] > rareFreq_;
+bool is_rare_word(TrainerData* data, wstring& word){
+    return data->wordFreq_[word] > data->rareFreq_;
 }
 
-void CMABasicTrainer::add_event(wstring& word, vector<wstring>& context,
+void add_event(TrainerData* data, wstring& word, vector<wstring>& context,
         wstring& tag){
     vector<string> evts;
     for(vector<wstring>::iterator itr = context.begin();
           itr != context.end(); ++itr){
-        if(featDict_.count(itr->append(tag)) > 0)
+        if(data->featDict_.count(itr->append(tag)) > 0)
             evts.push_back(CPPStringUtils::to_utf8(*itr));
     }
 
     if(!evts.empty())
-        me.add_event(evts, CPPStringUtils::to_utf8(tag));
+        data->me.add_event(evts, CPPStringUtils::to_utf8(tag));
 }
 
-void CMABasicTrainer::save_training_data(wstring& word, vector<wstring>& context,
+void save_training_data(TrainerData* data, wstring& word, vector<wstring>& context,
         wstring& tag){
     vector<string> evts;
     for(vector<wstring>::iterator itr = context.begin();
           itr != context.end(); ++itr){
-        if(featDict_.count(itr->append(tag)) > 0)
+        if(data->featDict_.count(itr->append(tag)) > 0)
             evts.push_back(CPPStringUtils::to_utf8(*itr));
     }
+
+    ofstream *training_data = data->training_data;
 
     if(!evts.empty()){
         (*training_data)<<CPPStringUtils::to_utf8(tag)<<" ";
@@ -82,21 +84,21 @@ void CMABasicTrainer::save_training_data(wstring& word, vector<wstring>& context
     }
 }
 
-void CMABasicTrainer::add_heldout_event(wstring& word, 
+void add_heldout_event(TrainerData* data, wstring& word,
         vector<wstring>& context, wstring& tag){
     vector<string> evts;
     for(vector<wstring>::iterator itr = context.begin();
           itr != context.end(); ++itr){
-        if(featDict_.count(itr->append(tag)) > 0)
+        if(data->featDict_.count(itr->append(tag)) > 0)
             evts.push_back(CPPStringUtils::to_utf8(*itr));
     }
 
     if(!evts.empty())
-        me.add_heldout_event(evts, CPPStringUtils::to_utf8(tag));
+        data->me.add_heldout_event(evts, CPPStringUtils::to_utf8(tag));
 }
 
 
-void CMABasicTrainer::gather_word_freq(const char* file){
+void gather_word_freq(TrainerData* data, const char* file){
     ifstream in(file);
     string line;
 
@@ -107,23 +109,23 @@ void CMABasicTrainer::gather_word_freq(const char* file){
         split_tag(CPPStringUtils::from_utf8w(line), words, tags);
         for(vector<wstring>::iterator itr = words.begin();
               itr != words.end(); ++itr){
-            wordFreq_[*itr] += 1;
+            data->wordFreq_[*itr] += 1;
         }
     }
-
+    in.close();
 
 }
 
 
-void CMABasicTrainer::get_chars(wstring& word, vector<wstring>& ret){
+void get_chars(wstring& word, vector<wstring>& ret){
     for(size_t i=0; i<word.length(); i+=2){
         ret.push_back(word.substr(i, 2));
     }
 }
 
 
-void CMABasicTrainer::extract_feature(const char* file,
-        void (*func)(wstring& ,vector<wstring>& ,wstring&)){
+void extract_feature(TrainerData* data, const char* file,
+        void (*func)(TrainerData*, wstring& ,vector<wstring>& ,wstring&)){
     ifstream in(file);
     string line;
 
@@ -137,10 +139,105 @@ void CMABasicTrainer::extract_feature(const char* file,
 
         for(size_t i=0; i<words.size(); ++i){
             vector<wstring> context;
-            get_context(words, tags, i, wordFreq_[words[i]] < rareFreq_, context);
-            func(words[i], context, tags[i]);
+            data->get_context(words, tags, i, data->wordFreq_[words[i]] < data->rareFreq_, context);
+            func(data, words[i], context, tags[i]);
         }
     }
+
+    in.close();
 }
+
+void save_word_freq(TrainerData* data, const char* file){
+    ofstream out(file);
+    for(map<wstring, int>::iterator itr = data->wordFreq_.begin();
+          itr != data->wordFreq_.end(); ++itr){
+        out<<CPPStringUtils::to_utf8(itr->first)<<" "<<itr->second<<endl;
+    }
+    out.close();
+}
+
+void save_tag_dict(TrainerData* data, const char* file){
+    ofstream out(file);
+    for(map<wstring, map<wstring, int> >::iterator itr = data->tagDict_.begin();
+          itr != data->tagDict_.end(); ++itr){
+        out<<CPPStringUtils::to_utf8(itr->first);
+        map<wstring, int>& inner = itr->second;
+        for(map<wstring, int>::iterator itr2 = inner.begin();
+              itr2 != inner.end(); ++itr2){
+            out<<" "<<CPPStringUtils::to_utf8(itr2->first)<<" "<<itr2->second;
+        }
+        out<<endl;
+    }
+    out.close();
+}
+
+void save_features(TrainerData* data, const char* file){
+    ofstream out(file);
+    for(map<wstring, int>::iterator itr = data->featDict_.begin();
+          itr != data->featDict_.end(); ++itr){
+        out<<CPPStringUtils::to_utf8(itr->first)<<" "<<itr->second<<endl;
+    }
+    out.close();
+}
+
+void cutoff_feature(TrainerData* data, int cutoff, int rareCutoff){
+    map<wstring, int> tmp;
+    for(map<wstring, int>::iterator itr = data->featDict_.begin();
+          itr != data->featDict_.end(); ++itr){
+        if((itr->first).find(L"curword=") != (itr->first).npos){
+            if(itr->second >= rareCutoff)
+                tmp[itr->first] = itr->second;
+        }else if(itr->second >= cutoff){
+            tmp[itr->first] = itr->second;
+        }
+    }
+    data->featDict_ = tmp;
+}
+
+void train(TrainerData* data, const char* file, const string& destFile, const char* extractFile,
+        size_t iters, string method, float gaussian){
+
+    string fileStr(file);
+    //First pass: gather word frequency information {{{
+    cout<<"First pass: gather word frequency information"<<endl;
+    gather_word_freq(data, file);
+
+    string wordFreqFile = fileStr.append(".wordfreq");
+    save_word_freq(data, wordFreqFile.data());
+    // }}}
+
+    //Second pass: gather features and tag dict {{{
+    cout<<"Second pass: gather features and tag dict to be used in tagger"<<endl;
+    extract_feature(data, file, gather_feature);
+    cutoff_feature(data, data->cutoff_, data->rareFreq_);
+    string featureFile = fileStr.append(".features");
+    save_features(data, featureFile.data());
+    string tagFile = fileStr.append(".tag");
+    save_tag_dict(data, tagFile.data());
+    // }}}
+
+    if(extractFile){
+        cout<<"Saving training data to "<<extractFile<<endl;
+        data->training_data = new ofstream(extractFile);
+        extract_feature(data, file, save_training_data);
+        data->training_data->close();
+        delete data->training_data;
+        exit(0);
+    }
+
+    // Third pass:training ME model...{{{
+    cout<<"Third pass:training ME model..."<<endl;
+    data->me.begin_add_event();
+    extract_feature(data, file, add_event);
+    data->me.end_add_event(data->evCutoff_);
+
+    data->me.train(iters, method, gaussian);
+    cout<<"training finished"<<endl;
+
+    cout<<"saving tagger model to "<<destFile<<endl;
+    data->me.save(destFile);
+    // }}}
+}
+
 
 }
