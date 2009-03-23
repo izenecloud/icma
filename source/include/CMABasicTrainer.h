@@ -101,6 +101,8 @@ void save_word_freq(TrainerData* data, const char* file);
 
 void save_tag_dict(TrainerData* data, const char* file);
 
+void load_tag_dict(map<wstring, map<wstring, int> > *tagDict, const char* file);
+
 void save_features(TrainerData* data, const char* file);
 
 void cutoff_feature(TrainerData* data, int cutoff, int rareCutoff);

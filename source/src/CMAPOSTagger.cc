@@ -73,4 +73,43 @@ void get_pos_zh_scontext(vector<wstring>& words, vector<wstring>& tags, size_t i
     }
 }
 
+void POSTagger::tag_word(vector<wstring>& words, int i, vector<wstring>& hist,
+        vector<pair<wstring, double> >& ret){
+
+    assert(hist.size() == i);
+
+    vector<wstring> context;
+    bool exists = tagDict_.count(words[i]) > 0;
+    get_context(words, hist, i, !exists, context);
+
+    vector<string> evts;
+    for(vector<wstring>::iterator itr = context.begin();
+          itr != context.end(); ++itr){
+        evts.push_back(CPPStringUtils::to_utf8(*itr));
+    }
+    vector<pair<outcome_type, double> > outcomes;
+    me.eval_all(evts, outcomes);
+
+    if(exists){
+        for(vector<pair<outcome_type, double> >::iterator itr = outcomes.begin();
+                itr != outcomes.end(); ++itr){
+            wstring tag = CPPStringUtils::from_utf8w(itr->first);
+            if(tagDict_[words[i]][tag])
+                ret.push_back(pair<wstring, double>(tag,itr->second));
+        }
+    }else{
+        for(vector<pair<outcome_type, double> >::iterator itr = outcomes.begin();
+                itr != outcomes.end(); ++itr){
+            ret.push_back(pair<wstring, double>(
+                  CPPStringUtils::from_utf8w(itr->first),itr->second));
+        }
+    }
+}
+
+int POSTagger::tag_sentence(vector<wstring>& words, int N){
+    size_t n = words.size();
+
+    return 0;
+}
+
 }

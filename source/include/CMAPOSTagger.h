@@ -10,6 +10,8 @@
 
 #include "CMABasicTrainer.h"
 
+using namespace maxent::me;
+
 namespace cma{
 
 inline bool isNumber(wstring& word){
@@ -40,6 +42,44 @@ void get_prefix_suffix(wstring& word, size_t length, vector<wstring>& prefixes,
  */
 void get_pos_zh_scontext(vector<wstring>& words, vector<wstring>& tags, size_t i,
         bool rareWord, vector<wstring>& context);
+
+
+
+class POSTagger{
+public:
+    POSTagger(const string& model, const char* tagDictFile,
+             context_t context){
+        me.load(model);
+        load_tag_dict(&tagDict_, tagDictFile);
+        get_context = context;
+    }
+
+    void tag_file(const char* inFile, const char *outFile);
+
+    /**
+     * tagging given sentence s and return N best
+     * \param words a list of words to tag
+     * \param N return N best
+     */
+    int tag_sentence(vector<wstring>& words, int N);
+
+private:
+
+    /**
+     * tag word words[i] under given tag history hist
+     *
+     * \return a list of (tag, score) pair sorted
+     */
+    void tag_word(vector<wstring>& words, int i, vector<wstring>& hist,
+        vector<pair<wstring, double> >& ret);
+
+    void advance();
+
+private:
+    MaxentModel me;
+    map<wstring, map<wstring, int> > tagDict_;
+    context_t get_context;
+};
 
 }
 #endif	/* _CMAPOSTAGGER_H */

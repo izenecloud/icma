@@ -7,9 +7,12 @@
 #include <stdlib.h>
 using namespace std;
 
-const boost::char_separator<wchar_t> UNIT_SEP(L" ");
-
 namespace cma{
+
+typedef boost::tokenizer <boost::char_separator<wchar_t>,
+    wstring::const_iterator, wstring> TagTokenizer;
+
+const boost::char_separator<wchar_t> UNIT_SEP(L" ");
 
 /**
  * split out word and pos/poc in s into two separate lists.<br>
@@ -20,9 +23,7 @@ namespace cma{
  * \return tags return value to store tag list
  */
 void split_tag(const wstring& s, vector<wstring>& words,
-        vector<wstring>& tags){
-    typedef boost::tokenizer <boost::char_separator<wchar_t>,
-        wstring::const_iterator, wstring> TagTokenizer;
+        vector<wstring>& tags){    
     TagTokenizer token(s, UNIT_SEP);
     for(TagTokenizer::const_iterator itr = token.begin(); itr != token.end(); ++itr){
         size_t pos = itr->find_first_of(TAG_SEP);
@@ -169,6 +170,27 @@ void save_tag_dict(TrainerData* data, const char* file){
         out<<endl;
     }
     out.close();
+}
+
+void load_tag_dict(map<wstring, map<wstring, int> > *tagDict, const char* file){
+    ifstream in(file);
+    string line;
+    while(!in.eof()){
+        getline(in, line);
+        wstring ws = CPPStringUtils::from_utf8w(line);
+        TagTokenizer token(ws, UNIT_SEP);
+        TagTokenizer::iterator itr = token.begin();
+        if(itr == token.end())
+            continue;
+        wstring word = *itr++;
+        while(itr != token.end()){
+            wstring tag = *itr++;
+            wstring count = *itr++;
+            (*tagDict)[word][tag] = atoi(CPPStringUtils::to_utf8(count).data());
+        }
+    }
+
+    in.close();
 }
 
 void save_features(TrainerData* data, const char* file){
