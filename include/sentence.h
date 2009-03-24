@@ -97,7 +97,7 @@ public:
      * Get the POS index code of morpheme \e nIdx in candidate result \e nPos.
      * \param nPos candidate result index
      * \param nIdx morpheme index
-     * \return POS index code
+     * \return POS index code, -1 for non POS available
      */
     int getPOS(int nPos, int nIdx) const;
 
@@ -105,7 +105,7 @@ public:
      * Get the POS string of morpheme \e nIdx in candidate result \e nPos.
      * \param nPos candidate result index
      * \param nIdx morpheme index
-     * \return POS string
+     * \return POS string, null pointer for non POS available
      */
     const char* getStrPOS(int nPos, int nIdx) const;
 
@@ -118,7 +118,7 @@ public:
 
     /**
      * Get the index of the candidate result, which has the highest score.
-     * \return candidate result index
+     * \return candidate result index, -1 is returned if there is no candidate result.
      */
     int getOneBestIndex(void) const;
 
@@ -129,6 +129,12 @@ public:
      */
     void addList(const MorphemeList& morphemeList, double score = 0.0);
 
+    /**
+     * Set the table of part-of-speech tags.
+     * \param table the POS tag table
+     */
+    static void setPOSTable(const std::vector<std::string>& table);
+
 private:
     /** the raw sentence string */
     std::string raw_;
@@ -138,6 +144,9 @@ private:
 
     /** the scores list of candidates */
     std::vector<double> scores_;
+
+    /** the POS tag table */
+    static std::vector<std::string> posTable_;
 };
 
 } // namespace cma

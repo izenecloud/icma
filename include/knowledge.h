@@ -42,11 +42,18 @@ public:
     virtual int loadStopWordDict(const char* fileName) = 0;
 
     /**
-     * Load the statistical model file, which is in binary format.
+     * Load the model file in binary format, which contains statistical information for word segmentation.
      * \param binFileName the file name
      * \return 0 for fail, 1 for success
      */
     virtual int loadStatModel(const char* binFileName) = 0;
+
+    /**
+     * Load the model file in binary format, which contains statistical information for part-of-speech tagging.
+     * \param binFileName the file name
+     * \return 0 for fail, 1 for success
+     */
+    virtual int loadPOSModel(const char* binFileName) = 0;
 
     /**
      * Encode the system dictionary file from text to binary format.

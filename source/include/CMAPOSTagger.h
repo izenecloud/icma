@@ -81,7 +81,7 @@ private:
      *
      * \return a list of (tag, score) pair sorted
      */
-    void tag_word(vector<wstring>& words, int i, vector<wstring>& hist,
+    void tag_word(vector<wstring>& words, int i, size_t N, vector<wstring>& hist,
         vector<pair<wstring, double> >& ret);
 
     void advance(pair<vector<wstring>, double> tag, vector<wstring>& words,

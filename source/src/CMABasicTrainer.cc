@@ -28,7 +28,8 @@ void split_tag(const wstring& s, vector<wstring>& words,
     for(TagTokenizer::const_iterator itr = token.begin(); itr != token.end(); ++itr){
         size_t pos = itr->find_first_of(TAG_SEP);
         if(pos == wstring::npos || pos == 0){
-            wcerr<<"The Format is word/tag, but not "<<*itr<<endl;
+            cerr<<"The Format is word/tag, but not ("<<
+                  CPPStringUtils::to_utf8(*itr)<<")"<<endl;
             exit(1);
         }
         words.push_back(itr->substr(0,pos));

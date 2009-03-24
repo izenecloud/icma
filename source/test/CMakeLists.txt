@@ -30,4 +30,5 @@ TARGET_LINK_LIBRARIES(t_itemmap ${LIBS_ME})
 ADD_EXECUTABLE(t_cppstringutils t_cppstringutils.cc)
 TARGET_LINK_LIBRARIES(t_cppstringutils ${LIBS_CMAC})
 
-
+ADD_EXECUTABLE(t_hit_preprocess t_hit_preprocess.cc)
+TARGET_LINK_LIBRARIES(t_hit_preprocess ${LIBS_CORPUS})

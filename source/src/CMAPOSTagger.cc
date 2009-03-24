@@ -81,8 +81,8 @@ void pos_train(const char* file, const string& destFile,const char* extractFile,
 }
 
 
-void POSTagger::tag_word(vector<wstring>& words, int i, vector<wstring>& hist,
-        vector<pair<wstring, double> >& ret){
+void POSTagger::tag_word(vector<wstring>& words, int i, size_t N, 
+        vector<wstring>& hist, vector<pair<wstring, double> >& ret){
 
     //cout<<hist.size()<<","<<i<<endl;
     assert(hist.size() == i);
@@ -96,22 +96,38 @@ void POSTagger::tag_word(vector<wstring>& words, int i, vector<wstring>& hist,
           itr != context.end(); ++itr){
         evts.push_back(CPPStringUtils::to_utf8(*itr));
     }
+
+    if(N == 1){
+        string tag;
+        double score = me.eval(evts, tag);
+        ret.push_back(pair<wstring, double>(CPPStringUtils::from_utf8w(tag), score));
+        return;
+    }
+
+
     vector<pair<outcome_type, double> > outcomes;
-    me.eval_all(evts, outcomes);
+    me.eval_all(evts, outcomes, true);
 
     if(exists){
         //need to optimize 
         for(vector<pair<outcome_type, double> >::iterator itr = outcomes.begin();
                 itr != outcomes.end(); ++itr){
             wstring tag = CPPStringUtils::from_utf8w(itr->first);
-            if(tagDict_[words[i]][tag])
+            if(tagDict_[words[i]][tag]){
                 ret.push_back(pair<wstring, double>(tag,itr->second));
+                --N;
+                //at most N tags
+                if(!N) return;
+            }
         }
     }else{
         for(vector<pair<outcome_type, double> >::iterator itr = outcomes.begin();
                 itr != outcomes.end(); ++itr){
             ret.push_back(pair<wstring, double>(
                   CPPStringUtils::from_utf8w(itr->first),itr->second));
+            --N;
+            //at most N tags
+            if(!N) return;
         }
     }
 }
@@ -119,7 +135,8 @@ void POSTagger::tag_word(vector<wstring>& words, int i, vector<wstring>& hist,
 void POSTagger::advance(pair<vector<wstring>,double> tag, vector<wstring>& words,
         int i, size_t N, vector<pair<vector<wstring>,double> >& ret){
     vector<pair<wstring, double> > pos;
-    tag_word(words, i, tag.first, pos);
+    //pos contains at most N elements
+    tag_word(words, i, N, tag.first, pos);
     for(vector<pair<wstring, double> >::iterator itr = pos.begin();
           itr != pos.end(); ++itr){
         vector<wstring> tag0 = tag.first;
@@ -151,12 +168,12 @@ void POSTagger::tag_sentence(vector<wstring>& words, size_t N,
                 h1.push_back(*itr);
             }
         }
+
+        sort(h1.begin(), h1.end(), cmpSDPair);
+        h0.empty();
+        size_t h0Size = min(N, h1.size());
+        h0.insert(h0.begin(), h1.begin(), h1.begin() + h0Size);
         
-        cout<<"Cp "<<i<<",len(h1)="<<h1.size()<<endl;
-        h0 = h1;
-        cout<<"Cp "<<i<<",len(h0)="<<h0.size()<<endl;
-        sort(h0.begin(), h0.end(), cmpSDPair);
-        cout<<"End "<<i<<endl;
     }
 }
 
