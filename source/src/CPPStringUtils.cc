@@ -1,8 +1,4 @@
 #include "CPPStringUtils.h"
-#include "wctype.h"
-
-inline char    _to_lower(const char c)     {if (((unsigned char)c)<0x80) return tolower(c); else if (((unsigned char)c)>=0xc0 && ((unsigned char) c)<0xdf) return (unsigned char)c+0x20; else return c;};
-inline wchar_t _to_wlower(const wchar_t c) {if (c<0x80) return towlower(c); else if (c>=0xc0 && c<0xdf) return c+0x20; else return c;};
 
 std::string CPPStringUtils::to_string(const std::wstring source)
 {
@@ -237,30 +233,6 @@ std::wstring CPPStringUtils::from_utf8w(const std::string source)
 	}
 
 	return dest;
-}
-
-std::string CPPStringUtils::to_lower(std::string src)
-{
-	string dest = string(src);
-	transform(dest.begin(), dest.end(), dest.begin(), _to_lower);
-
-	return dest;
-}
-
-std::wstring CPPStringUtils::to_lower(std::wstring src)
-{
-	wstring dest = wstring(src);
-	transform(dest.begin(), dest.end(), dest.begin(), _to_wlower);
-
-	return dest;
-}
-
-std::string CPPStringUtils::to_lower_utf8(std::string utf8_src)
-{
-	if ( utf8_src.empty() )
-		return utf8_src;
-
-	return to_utf8(to_lower(from_utf8w(utf8_src)));
 }
 
 std::string CPPStringUtils::trim(std::string src)

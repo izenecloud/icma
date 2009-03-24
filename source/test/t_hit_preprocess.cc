@@ -17,6 +17,7 @@
 #include "hit_preprocess.h"
 
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 using namespace cma;

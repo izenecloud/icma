@@ -67,7 +67,8 @@ int Sentence::getOneBestIndex(void) const
 
     assert(scores_.size() > 0 && scores_.size() == candidates_.size());
 
-    return max_element(scores_.begin(), scores_.end()) - scores_.begin();
+    //return max_element(scores_.begin(), scores_.end()) - scores_.begin();
+	return 0;
 }
 
 void Sentence::addList(const MorphemeList& morphemeList, double score)

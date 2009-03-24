@@ -25,10 +25,6 @@ public:
         static std::string from_utf8(const std::string source);
         static std::wstring from_utf8w(const std::string source);
 
-        static std::string to_lower(std::string src);
-        static std::wstring to_lower(std::wstring src);
-        static std::string to_lower_utf8(std::string utf8_src);
-
         static std::string trim(std::string src);
         static std::wstring trim(std::wstring src);
 
