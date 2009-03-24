@@ -10,6 +10,9 @@
 
 #include "CMABasicTrainer.h"
 
+#include <algorithm>
+#include <math.h>
+
 using namespace maxent::me;
 
 namespace cma{
@@ -43,12 +46,19 @@ void get_prefix_suffix(wstring& word, size_t length, vector<wstring>& prefixes,
 void get_pos_zh_scontext(vector<wstring>& words, vector<wstring>& tags, size_t i,
         bool rareWord, vector<wstring>& context);
 
+inline bool cmpSDPair(pair<vector<wstring>,double> p1, pair<vector<wstring>,double> p2){
+    return p1.second - p2.second >= 0;
+}
+
+void pos_train(const char* file, const string& destFile,
+        const char* extractFile = 0, string method = "lbfgs", size_t iters = 15,
+        float gaussian = 0.0f);
 
 
 class POSTagger{
 public:
     POSTagger(const string& model, const char* tagDictFile,
-             context_t context){
+             context_t context = get_pos_zh_scontext){
         me.load(model);
         load_tag_dict(&tagDict_, tagDictFile);
         get_context = context;
@@ -61,7 +71,8 @@ public:
      * \param words a list of words to tag
      * \param N return N best
      */
-    int tag_sentence(vector<wstring>& words, int N);
+    void tag_sentence(vector<wstring>& words, size_t N,
+            vector<pair<vector<wstring>, double> >& h0);
 
 private:
 
@@ -73,7 +84,8 @@ private:
     void tag_word(vector<wstring>& words, int i, vector<wstring>& hist,
         vector<pair<wstring, double> >& ret);
 
-    void advance();
+    void advance(pair<vector<wstring>, double> tag, vector<wstring>& words,
+            int i, size_t N, vector<pair<vector<wstring>, double> >& ret);
 
 private:
     MaxentModel me;

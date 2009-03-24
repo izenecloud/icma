@@ -36,15 +36,23 @@ void split_tag(const wstring& s, vector<wstring>& words,
     }
 }
 
+void token_wstring(const wstring& s, vector<wstring>& words){
+    TagTokenizer token(s, UNIT_SEP);
+    for(TagTokenizer::const_iterator itr = token.begin(); itr != token.end(); ++itr){
+        words.push_back(*itr);
+    }
+}
+
 void gather_feature(TrainerData* data, wstring& word, vector<wstring>& context,
         wstring& tag){
     //only collect tag dict for common words
     if(!is_rare_word(data, word))
         data->tagDict_[word][tag] += 1;
-   
+    
     for(vector<wstring>::iterator itr = context.begin();
           itr != context.end(); ++itr){
-        data->featDict_[itr->append(tag)] += 1;
+        wstring f = *itr + L"_" + tag;
+        data->featDict_[f] += 1;
     }
 }
 
@@ -57,7 +65,7 @@ void add_event(TrainerData* data, wstring& word, vector<wstring>& context,
     vector<string> evts;
     for(vector<wstring>::iterator itr = context.begin();
           itr != context.end(); ++itr){
-        if(data->featDict_.count(itr->append(tag)) > 0)
+        if(data->featDict_.count(*itr + L"_" + tag) > 0)
             evts.push_back(CPPStringUtils::to_utf8(*itr));
     }
 
@@ -70,7 +78,7 @@ void save_training_data(TrainerData* data, wstring& word, vector<wstring>& conte
     vector<string> evts;
     for(vector<wstring>::iterator itr = context.begin();
           itr != context.end(); ++itr){
-        if(data->featDict_.count(itr->append(tag)) > 0)
+        if(data->featDict_.count(*itr + L"_" + tag) > 0)
             evts.push_back(CPPStringUtils::to_utf8(*itr));
     }
 
@@ -90,7 +98,7 @@ void add_heldout_event(TrainerData* data, wstring& word,
     vector<string> evts;
     for(vector<wstring>::iterator itr = context.begin();
           itr != context.end(); ++itr){
-        if(data->featDict_.count(itr->append(tag)) > 0)
+        if(data->featDict_.count(*itr + L"_" + tag) > 0)
             evts.push_back(CPPStringUtils::to_utf8(*itr));
     }
 
@@ -101,8 +109,7 @@ void add_heldout_event(TrainerData* data, wstring& word,
 
 void gather_word_freq(TrainerData* data, const char* file){
     ifstream in(file);
-    string line;
-
+    string line;    
     while(!in.eof()){
         getline(in, line);
         vector<wstring> words;
@@ -216,15 +223,16 @@ void cutoff_feature(TrainerData* data, int cutoff, int rareCutoff){
     data->featDict_ = tmp;
 }
 
-void train(TrainerData* data, const char* file, const string& destFile, const char* extractFile,
-        size_t iters, string method, float gaussian){
+void train(TrainerData* data, const char* file, const string& destFile,
+        const char* extractFile, string method, size_t iters, float gaussian){
 
     string fileStr(file);
     //First pass: gather word frequency information {{{
     cout<<"First pass: gather word frequency information"<<endl;
     gather_word_freq(data, file);
-
-    string wordFreqFile = fileStr.append(".wordfreq");
+    //cout<<"save word freq"<<endl;
+    string wordFreqFile = fileStr;
+    wordFreqFile.append(".wordfreq");
     save_word_freq(data, wordFreqFile.data());
     // }}}
 
@@ -232,9 +240,11 @@ void train(TrainerData* data, const char* file, const string& destFile, const ch
     cout<<"Second pass: gather features and tag dict to be used in tagger"<<endl;
     extract_feature(data, file, gather_feature);
     cutoff_feature(data, data->cutoff_, data->rareFreq_);
-    string featureFile = fileStr.append(".features");
+    string featureFile = fileStr;
+    featureFile.append(".features");
     save_features(data, featureFile.data());
-    string tagFile = fileStr.append(".tag");
+    string tagFile = fileStr;
+    tagFile.append(".tag");
     save_tag_dict(data, tagFile.data());
     // }}}
 

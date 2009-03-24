@@ -75,6 +75,7 @@ public:
  */
 void split_tag(const wstring& s, vector<wstring>& words, vector<wstring>& tags);
 
+void token_wstring(const wstring& s, vector<wstring>& words);
 
 void gather_feature(TrainerData* data, wstring& word, vector<wstring>& context,
         wstring& tag);
@@ -113,9 +114,9 @@ void cutoff_feature(TrainerData* data, int cutoff, int rareCutoff);
  * \param method the method of Maximum Model Parameters Estimation [default = lbfgs]
  * \param gaussian apply Gaussian penality when training [default=0.0]
  */
-void train(TrainerData* data, const char* file, const string& destFile, const char* extractFile = 0, size_t iters = 15,
-        string method = "lbfgs", float gaussian = 0.0f);
-
+void train(TrainerData* data, const char* file, const string& destFile,
+        const char* extractFile = 0, string method = "lbfgs",
+        size_t iters = 15, float gaussian = 0.0f);
 }
 
 #endif	/* _CMABASICTRAINER_H */
