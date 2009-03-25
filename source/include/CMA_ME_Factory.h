@@ -1,22 +1,22 @@
-/** \file cma_crf_factory.h
+/* 
  * 
- * \author Jun Jiang
- * \version 0.1
- * \date Feb 20, 2009
+ * \author vernkin
  */
 
-#ifndef CMA_CRF_FACTORY_H
-#define CMA_CRF_FACTORY_H
+#ifndef _CMA_ME_FACTORY_H
+#define	_CMA_ME_FACTORY_H
 
 #include "cma_factory.h"
+#include "CMA_ME_Analyzer.h"
+#include "CMA_ME_Knowledge.h"
 
 namespace cma
 {
 
 /**
- * CMA_CRF_Factory creates instances for Chinese morphological analysis.
+ * CMA_ME_Factory creates instances for Chinese morphological analysis.
  */
-class CMA_CRF_Factory : public CMA_Factory
+class CMA_ME_Factory : public CMA_Factory
 {
 public:
     /**
@@ -34,4 +34,5 @@ public:
 
 } // namespace cma
 
-#endif // CMA_CRF_FACTORY_H
+#endif	/* _CMA_ME_FACTORY_H */
+

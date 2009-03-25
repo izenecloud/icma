@@ -117,6 +117,11 @@ void cutoff_feature(TrainerData* data, int cutoff, int rareCutoff);
 void train(TrainerData* data, const char* file, const string& destFile,
         const char* extractFile = 0, string method = "lbfgs",
         size_t iters = 15, float gaussian = 0.0f);
+
+void fetchSegmentedFile(const char* inFile, const char* outFile,
+        bool keepTag = true, bool keepSeparator = false);
+
+
 }
 
 #endif	/* _CMABASICTRAINER_H */

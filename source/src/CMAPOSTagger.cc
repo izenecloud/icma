@@ -1,3 +1,6 @@
+
+#include <string>
+
 #include "CMAPOSTagger.h"
 
 namespace cma{
@@ -108,6 +111,7 @@ void POSTagger::tag_word(vector<wstring>& words, int i, size_t N,
     vector<pair<outcome_type, double> > outcomes;
     me.eval_all(evts, outcomes, true);
 
+    size_t origN = N;
     if(exists){
         //need to optimize 
         for(vector<pair<outcome_type, double> >::iterator itr = outcomes.begin();
@@ -120,15 +124,19 @@ void POSTagger::tag_word(vector<wstring>& words, int i, size_t N,
                 if(!N) return;
             }
         }
-    }else{
-        for(vector<pair<outcome_type, double> >::iterator itr = outcomes.begin();
-                itr != outcomes.end(); ++itr){
-            ret.push_back(pair<wstring, double>(
-                  CPPStringUtils::from_utf8w(itr->first),itr->second));
-            --N;
-            //at most N tags
-            if(!N) return;
-        }
+
+        //add at least one tag
+        if(origN != N)
+            return;
+    }
+
+    for(vector<pair<outcome_type, double> >::iterator itr = outcomes.begin();
+            itr != outcomes.end(); ++itr){
+        ret.push_back(pair<wstring, double>(
+              CPPStringUtils::from_utf8w(itr->first),itr->second));
+        --N;
+        //at most N tags
+        if(!N) return;
     }
 }
 
@@ -143,7 +151,7 @@ void POSTagger::advance(pair<vector<wstring>,double> tag, vector<wstring>& words
         tag0.push_back(itr->first);
         double score = itr->second * tag.second;
         ret.push_back(pair<vector<wstring>, double>(tag0, score));
-        cout<<"#"<<i<<", tag="<<CPPStringUtils::to_utf8(itr->first)<<",score="<<itr->second<<endl;
+        //cout<<"#"<<i<<", tag="<<CPPStringUtils::to_utf8(itr->first)<<",score="<<itr->second<<endl;
     }
 }
 
@@ -155,7 +163,6 @@ void POSTagger::tag_sentence(vector<wstring>& words, size_t N,
     h0.push_back(s);
 
     for(size_t i=0; i<n; ++i){
-        cout<<"Beg "<<i<<endl;
         size_t sz = min(N, h0.size());
         vector<pair<vector<wstring>, double> > h1;
         for(size_t j=0; j<sz; ++j){
@@ -173,7 +180,7 @@ void POSTagger::tag_sentence(vector<wstring>& words, size_t N,
         h0.empty();
         size_t h0Size = min(N, h1.size());
         h0.insert(h0.begin(), h1.begin(), h1.begin() + h0Size);
-        
+
     }
 }
 
@@ -199,7 +206,7 @@ void POSTagger::tag_file(const char* inFile, const char* outFile){
 
         vector<pair<vector<wstring>, double> > h0;
         tag_sentence(words, 5, h0);
-        
+
         //print the best result
         vector<wstring> best = h0[0].first;
 

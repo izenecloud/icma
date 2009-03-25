@@ -182,6 +182,7 @@ void save_tag_dict(TrainerData* data, const char* file){
 
 void load_tag_dict(map<wstring, map<wstring, int> > *tagDict, const char* file){
     ifstream in(file);
+    assert(in);
     string line;
     while(!in.eof()){
         getline(in, line);
@@ -272,5 +273,40 @@ void train(TrainerData* data, const char* file, const string& destFile,
     // }}}
 }
 
+
+void fetchSegmentedFile(const char* inFile, const char* outFile, bool keepTag,
+        bool keepSeparator){
+    ifstream in(inFile);
+    ofstream out(outFile);
+
+    string line;
+    while(!in.eof()){
+        getline(in, line);
+
+        bool inTag = false;
+        for(string::iterator itr = line.begin(); itr != line.end(); ++itr){
+            if(*itr == '/'){
+                inTag = true;
+            }else if(*itr == ' '){
+                inTag = false;
+                if(keepSeparator)
+                    out<<' ';
+                continue;
+            }
+
+            if(inTag){
+                if(keepTag)
+                    out<<*itr;
+            }else{
+                out<<*itr;
+            }
+        }
+
+        if(!in.eof())
+            out<<endl;
+    }
+    in.close();
+    out.close();
+}
 
 }
