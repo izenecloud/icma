@@ -50,7 +50,7 @@
 #include "gistrainer.hpp"
 //This MACRO occurs two times in this file (totally 2). 
 //#ifdef HAVE_FORTRAN
-    #include "lbfgstrainer.hpp"
+    //#include "lbfgstrainer.hpp"
 //#endif
 #include "modelfile.hpp"
 #include "maxentmodel.hpp"
@@ -511,11 +511,11 @@ void MaxentModel::train(size_t iter, const std::string& method,
     scoped_ptr<Trainer> t;
     if (method == "lbfgs") {
 //#ifdef HAVE_FORTRAN
-        t.reset(new LBFGSTrainer);
-/*#else
+        //t.reset(new LBFGSTrainer);
+/*#else*/
         cerr << "LBFGS module not compiled in, use GIS instead" << endl;
         t.reset(new GISTrainer);
-#endif*/
+/*#endif*/
     }
     else if (method == "gis")
         t.reset(new GISTrainer);

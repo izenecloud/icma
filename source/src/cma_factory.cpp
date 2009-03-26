@@ -6,7 +6,7 @@
  */
 
 #include "cma_factory.h"
-#include "cma_crf_factory.h"
+#include "CMA_ME_Factory.h"
 
 namespace cma
 {
@@ -17,7 +17,7 @@ CMA_Factory* CMA_Factory::instance()
 {
     if(instance_ == 0)
     {
-	instance_ = new CMA_CRF_Factory;
+	instance_ = new CMA_ME_Factory;
     }
 
     return instance_;

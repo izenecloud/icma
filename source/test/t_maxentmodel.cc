@@ -193,10 +193,10 @@ static char * all_tests() {
     mu_run_test(test_gis1);
     mu_run_test(test_gis2);
     mu_run_test(test_gis3);
-    mu_run_test(test_lbfgs1);
+    /*mu_run_test(test_lbfgs1);
     mu_run_test(test_lbfgs2);
     mu_run_test(test_lbfgs3);
-    mu_run_test(test_dump_events);
+    mu_run_test(test_dump_events);*/
 
     return 0;
 }

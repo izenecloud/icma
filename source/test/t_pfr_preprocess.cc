@@ -1,8 +1,8 @@
 /** \file test_pfr_preprocess.cpp
- * Test to remove phrase tags in the corpus "PFR_199801_人民日报标注语料".
+ * Test to remove phrase tags and first word in each line in the corpus "PFR_199801_人民日报标注语料".
  * An example of input and output is like below:
  * Input from raw file:
- *	[中央/n 人民/n 广播/vn 电台/n]nt 
+ *	19980101-01-001-006/m  [中央/n 人民/n 广播/vn 电台/n]nt 
  * Output to result file:
  *	中央/n  人民/n  广播/vn  电台/n
  * 

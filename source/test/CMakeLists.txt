@@ -9,8 +9,8 @@ TARGET_LINK_LIBRARIES(t_display ${LIBS_ME})
 ADD_EXECUTABLE(t_event t_event.cc)
 TARGET_LINK_LIBRARIES(t_event ${LIBS_ME})
 
-ADD_EXECUTABLE(t_lbfgstrainer t_lbfgstrainer.cc)
-TARGET_LINK_LIBRARIES(t_lbfgstrainer ${LIBS_ME})
+#ADD_EXECUTABLE(t_lbfgstrainer t_lbfgstrainer.cc)
+#TARGET_LINK_LIBRARIES(t_lbfgstrainer ${LIBS_ME})
 
 ADD_EXECUTABLE(t_maxentmodel t_maxentmodel.cc)
 TARGET_LINK_LIBRARIES(t_maxentmodel ${LIBS_ME})
@@ -32,3 +32,6 @@ TARGET_LINK_LIBRARIES(t_cppstringutils ${LIBS_CMAC})
 
 ADD_EXECUTABLE(t_hit_preprocess t_hit_preprocess.cc)
 TARGET_LINK_LIBRARIES(t_hit_preprocess ${LIBS_CORPUS})
+
+ADD_EXECUTABLE(t_pfr_preprocess t_pfr_preprocess.cc)
+TARGET_LINK_LIBRARIES(t_pfr_preprocess ${LIBS_CORPUS})
