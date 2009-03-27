@@ -51,10 +51,13 @@ inline bool is_matched_poc(wstring& preTag, wstring& curTag){
     if(preTag == L"M")
             return curTag == L"R" || curTag == L"M";
      
-    cerr<<"Invalid POC tag "<<CPPStringUtils::to_utf8(preTag)<<endl;
+    cerr<<"Invalid POC tag "<<T_UTF8(preTag)<<endl;
     exit(1);
     return false;
 }
+
+
+
 
 class SegTagger{
 public:
@@ -92,6 +95,7 @@ private:
     MaxentModel me;
     map<wstring, map<wstring, int> > tagDict_;
     context_t get_context;
+    static wstring puctStr;
 };
 
 }

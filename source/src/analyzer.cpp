@@ -16,6 +16,7 @@ Analyzer::Analyzer()
     : options_(OPTION_TYPE_NUM)
 {
     options_[OPTION_TYPE_POS_TAGGING] = 1; // print part-of-speech tags defaultly
+    options_[N_BEST] = 1;
 }
 
 Analyzer::~Analyzer()

@@ -8,9 +8,14 @@
 #ifndef _CPPSTRINGUTILS_H
 #define	_CPPSTRINGUTILS_H
 
+#include <string>
 using namespace std;
 
-#include <string>
+
+#define F_UTF8W(in) CPPStringUtils::from_utf8w(in)
+#define T_UTF8(in) CPPStringUtils::to_utf8(in)
+#define WS2S(in) CPPStringUtils::to_string(in)
+#define S2WS(in) CPPStringUtils::to_wstring(in)
 
 class CPPStringUtils {
 public:

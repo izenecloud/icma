@@ -10,6 +10,13 @@
 #include "CMAPOCTagger.h"
 #include "CMAPOSTagger.h"
 
+#include "VSynonym.h"
+
+#include <set>
+#include <string>
+
+using namespace std;
+
 namespace cma{
 
 class CMA_ME_Knowledge : public Knowledge{
@@ -31,6 +38,20 @@ public:
      * \return 0 for fail, 1 for success
      */
     virtual int loadUserDict(const char* fileName);
+
+    /**
+     * Load the synonym dictionary
+     * \param fileName the file name
+     * \return 0 for fail, 1 for success
+     */
+    virtual int loadSynonymDictionary(const char* fileName);
+
+    /**
+     * Get the Synonyms of the specific word
+     * \param word the specific word
+     * \param synomym the object to hold the synonym
+     */
+    virtual void getSynonyms(const string& word, VSynonym& synonym);
 
     /**
      * Load the stop-word dictionary file, which is in text format.
@@ -80,12 +101,27 @@ public:
      */
     POSTagger* getPOSTagger() const;
 
+    /**
+     * Whether the specific word is stop word
+     */
+    bool isStopWord(const wstring& word);
+
+private:
+    /** Input maybe a line or a word*/
+    string decodeEncryptWord(const string& origWord);
+
 private:
     /** tagger for segment */
     SegTagger *segT_;
 
     /** tagger for POS */
     POSTagger *posT_;
+
+    /** VSynonymContainer */
+    VSynonymContainer *vsynC_;
+
+    /** stop words set */
+    set<wstring> stopWords_;
 
 };
 

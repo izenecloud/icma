@@ -208,7 +208,7 @@ void POSTagger::tag_file(const char* inFile, const char* outFile){
         tag_sentence(words, 5, h0);
 
         //print the best result
-        vector<wstring> best = h0[0].first;
+        vector<wstring>& best = h0[0].first;
 
         size_t n = words.size();
         for(size_t i=0; i<n; ++i){
@@ -217,6 +217,7 @@ void POSTagger::tag_file(const char* inFile, const char* outFile){
             if(i != n - 1)
                 out<<" ";
         }
+
         out<<endl;
     }
 

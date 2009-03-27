@@ -28,8 +28,7 @@ void split_tag(const wstring& s, vector<wstring>& words,
     for(TagTokenizer::const_iterator itr = token.begin(); itr != token.end(); ++itr){
         size_t pos = itr->find_first_of(TAG_SEP);
         if(pos == wstring::npos || pos == 0){
-            cerr<<"The Format is word/tag, but not ("<<
-                  CPPStringUtils::to_utf8(*itr)<<")"<<endl;
+            cerr<<"The Format is word/tag, but not ("<<T_UTF8(*itr)<<")"<<endl;
             exit(1);
         }
         words.push_back(itr->substr(0,pos));
@@ -67,11 +66,11 @@ void add_event(TrainerData* data, wstring& word, vector<wstring>& context,
     for(vector<wstring>::iterator itr = context.begin();
           itr != context.end(); ++itr){
         if(data->featDict_.count(*itr + L"_" + tag) > 0)
-            evts.push_back(CPPStringUtils::to_utf8(*itr));
+            evts.push_back(T_UTF8(*itr));
     }
 
     if(!evts.empty())
-        data->me.add_event(evts, CPPStringUtils::to_utf8(tag));
+        data->me.add_event(evts, T_UTF8(tag));
 }
 
 void save_training_data(TrainerData* data, wstring& word, vector<wstring>& context,
@@ -80,15 +79,15 @@ void save_training_data(TrainerData* data, wstring& word, vector<wstring>& conte
     for(vector<wstring>::iterator itr = context.begin();
           itr != context.end(); ++itr){
         if(data->featDict_.count(*itr + L"_" + tag) > 0)
-            evts.push_back(CPPStringUtils::to_utf8(*itr));
+            evts.push_back(T_UTF8(*itr));
     }
 
     ofstream *training_data = data->training_data;
 
     if(!evts.empty()){
-        (*training_data)<<CPPStringUtils::to_utf8(tag)<<" ";
+        (*training_data)<<T_UTF8(tag)<<" ";
         for(vector<string>::iterator itr = evts.begin(); itr != evts.end(); ++itr){
-            (*training_data)<<CPPStringUtils::to_utf8(*itr)<<" ";
+            (*training_data)<<T_UTF8(*itr)<<" ";
         }
         (*training_data)<<"\n";
     }
@@ -100,11 +99,11 @@ void add_heldout_event(TrainerData* data, wstring& word,
     for(vector<wstring>::iterator itr = context.begin();
           itr != context.end(); ++itr){
         if(data->featDict_.count(*itr + L"_" + tag) > 0)
-            evts.push_back(CPPStringUtils::to_utf8(*itr));
+            evts.push_back(T_UTF8(*itr));
     }
 
     if(!evts.empty())
-        data->me.add_heldout_event(evts, CPPStringUtils::to_utf8(tag));
+        data->me.add_heldout_event(evts, T_UTF8(tag));
 }
 
 
@@ -115,7 +114,7 @@ void gather_word_freq(TrainerData* data, const char* file){
         getline(in, line);
         vector<wstring> words;
         vector<wstring> tags;
-        split_tag(CPPStringUtils::from_utf8w(line), words, tags);
+        split_tag(F_UTF8W(line), words, tags);
         for(vector<wstring>::iterator itr = words.begin();
               itr != words.end(); ++itr){
             data->wordFreq_[*itr] += 1;
@@ -144,7 +143,7 @@ void extract_feature(TrainerData* data, const char* file,
             continue;
         vector<wstring> words;
         vector<wstring> tags;
-        split_tag(CPPStringUtils::from_utf8w(line), words, tags);
+        split_tag(F_UTF8W(line), words, tags);
 
         for(size_t i=0; i<words.size(); ++i){
             vector<wstring> context;
@@ -160,7 +159,7 @@ void save_word_freq(TrainerData* data, const char* file){
     ofstream out(file);
     for(map<wstring, int>::iterator itr = data->wordFreq_.begin();
           itr != data->wordFreq_.end(); ++itr){
-        out<<CPPStringUtils::to_utf8(itr->first)<<" "<<itr->second<<endl;
+        out<<T_UTF8(itr->first)<<" "<<itr->second<<endl;
     }
     out.close();
 }
@@ -169,11 +168,11 @@ void save_tag_dict(TrainerData* data, const char* file){
     ofstream out(file);
     for(map<wstring, map<wstring, int> >::iterator itr = data->tagDict_.begin();
           itr != data->tagDict_.end(); ++itr){
-        out<<CPPStringUtils::to_utf8(itr->first);
+        out<<T_UTF8(itr->first);
         map<wstring, int>& inner = itr->second;
         for(map<wstring, int>::iterator itr2 = inner.begin();
               itr2 != inner.end(); ++itr2){
-            out<<" "<<CPPStringUtils::to_utf8(itr2->first)<<" "<<itr2->second;
+            out<<" "<<T_UTF8(itr2->first)<<" "<<itr2->second;
         }
         out<<endl;
     }
@@ -186,7 +185,7 @@ void load_tag_dict(map<wstring, map<wstring, int> > *tagDict, const char* file){
     string line;
     while(!in.eof()){
         getline(in, line);
-        wstring ws = CPPStringUtils::from_utf8w(line);
+        wstring ws = F_UTF8W(line);
         TagTokenizer token(ws, UNIT_SEP);
         TagTokenizer::iterator itr = token.begin();
         if(itr == token.end())
@@ -195,7 +194,7 @@ void load_tag_dict(map<wstring, map<wstring, int> > *tagDict, const char* file){
         while(itr != token.end()){
             wstring tag = *itr++;
             wstring count = *itr++;
-            (*tagDict)[word][tag] = atoi(CPPStringUtils::to_utf8(count).data());
+            (*tagDict)[word][tag] = atoi(T_UTF8(count).data());
         }
     }
 
@@ -206,7 +205,7 @@ void save_features(TrainerData* data, const char* file){
     ofstream out(file);
     for(map<wstring, int>::iterator itr = data->featDict_.begin();
           itr != data->featDict_.end(); ++itr){
-        out<<CPPStringUtils::to_utf8(itr->first)<<" "<<itr->second<<endl;
+        out<<T_UTF8(itr->first)<<" "<<itr->second<<endl;
     }
     out.close();
 }

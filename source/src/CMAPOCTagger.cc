@@ -3,7 +3,15 @@
 #include "CMAPOCTagger.h"
 #include "strutil.h"
 
+#define _ME_STRICT_POC_MATCHED
+
 namespace cma{
+
+const wstring puntStr = L"～！＠＃％＾＆×（）｀　｛｝［］：＂｜；＇＼＜＞？，．／。《》“”‘’＋－＝—．、~!@#%^&*()` {}[]:\"|;'\\<>?,./.<>""''+-=_.";
+
+inline bool isPuntuation(const wstring& str){
+    return str.length() == 1 && puntStr.find(str[0]) != puntStr.npos;
+}
 
 /**
  * POS context type for POC(Position of Character) (zh/chinese)
@@ -11,6 +19,10 @@ namespace cma{
 void get_poc_zh_scontext(vector<wstring>& words, vector<wstring>& tags, size_t i,
         bool rareWord, vector<wstring>& context){
     context.push_back(L"curword=" + words[i]);
+
+    if(isPuntuation(words[i])){
+        context.push_back(L"puntuation");
+    }
 
     size_t n = words.size();
 
@@ -103,7 +115,7 @@ void create_poc_meterial(const char* inFile, const char* outFile){
             continue;
         }
 
-        wstring ws = CPPStringUtils::from_utf8w(line);
+        wstring ws = F_UTF8W(line);
         POCTokenizer token(ws, boost::char_separator<wchar_t>(L" "));
         POCTokenizer::const_iterator itr = token.begin();
         if( itr == token.end() ){
@@ -114,19 +126,18 @@ void create_poc_meterial(const char* inFile, const char* outFile){
         while(true){
             size_t pos = itr->find_first_of(TAG_SEP);
             if(pos == wstring::npos || pos == 0){
-                cerr<<"The Format is word/tag, but not ("<<
-                      CPPStringUtils::to_utf8(*itr)<<")"<<endl;
+                cerr<<"The Format is word/tag, but not ("<<T_UTF8(*itr)<<")"<<endl;
                 exit(1);
             }
             wstring word = itr->substr(0,pos);
             if(word.length() == 1){
-                out<<CPPStringUtils::to_utf8(word)<<"/I";
+                out<<T_UTF8(word)<<"/I";
             }else{
-                out<<CPPStringUtils::to_utf8(word.substr(0, 1))<<"/L ";
+                out<<T_UTF8(word.substr(0, 1))<<"/L ";
                 size_t lastIndex = word.length() - 1;
                 for(size_t i=1; i<lastIndex; ++i)
-                    out<<CPPStringUtils::to_utf8(word.substr(i, 1))<<"/M ";
-                out<<CPPStringUtils::to_utf8(word.substr(lastIndex, 1))<<"/R";
+                    out<<T_UTF8(word.substr(i, 1))<<"/M ";
+                out<<T_UTF8(word.substr(lastIndex, 1))<<"/R";
             }
 
             ++itr;
@@ -153,24 +164,28 @@ void SegTagger::tag_word(vector<wstring>& words, int i, size_t N,
     get_context(words, hist, i, !exists, context);
 
     vector<string> evts;
-    for(vector<wstring>::iterator itr = context.begin();
-          itr != context.end(); ++itr){
-        evts.push_back(CPPStringUtils::to_utf8(*itr));
+    size_t n = context.size();
+    for(size_t k=0; k<n; ++k){
+        evts.push_back(T_UTF8(context[k]));
     }
 
     vector<pair<outcome_type, double> > outcomes;
     me.eval_all(evts, outcomes, true);
-    wstring preTag = (i > 0) ? hist[i-1] : L"R";
+    #ifdef _ME_STRICT_POC_MATCHED
+        wstring preTag = (i > 0) ? hist[i-1] : L"I";
+    #endif
 
-    size_t origN = N;
+        size_t origN = N;
     if(exists){
         //need to optimize
         for(vector<pair<outcome_type, double> >::iterator itr = outcomes.begin();
                 itr != outcomes.end(); ++itr){
-            wstring tag = CPPStringUtils::from_utf8w(itr->first);
+            wstring tag = F_UTF8W(itr->first);
             if(tagDict_[words[i]][tag]){
+                #ifdef _ME_STRICT_POC_MATCHED
                 if(!is_matched_poc(preTag, tag))
                     continue;
+                #endif
                 ret.push_back(pair<wstring, double>(tag,itr->second));
                 --N;
                 //at most N tags
@@ -185,9 +200,11 @@ void SegTagger::tag_word(vector<wstring>& words, int i, size_t N,
     
     for(vector<pair<outcome_type, double> >::iterator itr = outcomes.begin();
             itr != outcomes.end(); ++itr){
-        wstring tag = CPPStringUtils::from_utf8w(itr->first);
+        wstring tag = F_UTF8W(itr->first);
+        #ifdef _ME_STRICT_POC_MATCHED
         if(!is_matched_poc(preTag, tag))
             continue;
+        #endif
         ret.push_back(pair<wstring, double>(tag, itr->second));
         --N;
         //at most N tags
@@ -203,9 +220,11 @@ void SegTagger::advance(pair<vector<wstring>,double> tag, vector<wstring>& words
     tag_word(words, i, N, tag.first, pos);
     for(vector<pair<wstring, double> >::iterator itr = pos.begin();
           itr != pos.end(); ++itr){
+        //copy the vector, it is too slow
         vector<wstring> tag0 = tag.first;
         tag0.push_back(itr->first);
         double score = itr->second * tag.second;
+        //copy tag0 again in the pushback
         ret.push_back(pair<vector<wstring>, double>(tag0, score));
         //cout<<"#"<<i<<", tag="<<CPPStringUtils::to_utf8(itr->first)<<",score="<<itr->second<<endl;
     }
@@ -247,6 +266,7 @@ void SegTagger::seg_sentence(wstring sentence, size_t N,
     }
     //cout<<"h0 size = "<<h0.size()<<endl;
     //construct the sentence
+    #ifdef _ME_STRICT_POC_MATCHED
     for(vector<pair<vector<wstring>,double> >::iterator itr = h0.begin();
           itr != h0.end(); ++itr){
         vector<wstring> tags = itr->first;
@@ -274,6 +294,41 @@ void SegTagger::seg_sentence(wstring sentence, size_t N,
             seg.push_back(sentence.substr(begin, n-begin)); //append the last segment
         segment.push_back(pair<vector<wstring>,double>(seg, itr->second));
     }
+    #else
+    for(vector<pair<vector<wstring>,double> >::iterator itr = h0.begin();
+          itr != h0.end(); ++itr){
+        vector<wstring> tags = itr->first;
+        vector<wstring> seg;
+        size_t begin = 0;
+        for(size_t i = 0; i < n; ++i){
+            if(tags[i] == L"R"){
+                seg.push_back(sentence.substr(begin, i-begin+1));
+                begin = i + 1;
+            }else if(tags[i] == L"I"){
+                //the previous word maym not end successfully
+                if(begin < i)
+                    seg.push_back(sentence.substr(begin, i - begin));
+                seg.push_back(sentence.substr(i, 1));
+                begin = i + 1;
+            }else if(tags[i] == L"L"){
+                //the previous word maym not end successfully
+                if(begin < i)
+                    seg.push_back(sentence.substr(begin, i - begin));
+                begin = i;
+            }else if(tags[i] == L"M"){
+                //do nothing
+            }else{
+                // unrecognize tag
+                assert(0);
+            }
+        }
+
+        if(begin != n)
+            seg.push_back(sentence.substr(begin, n-begin)); //append the last segment
+        segment.push_back(pair<vector<wstring>,double>(seg, itr->second));
+    }    
+    #endif
+    
 }
 
 void SegTagger::tag_file(const char* inFile, const char* outFile){
@@ -288,19 +343,25 @@ void SegTagger::tag_file(const char* inFile, const char* outFile){
             out<<endl;
             continue;
         }
-        wstring sentence = CPPStringUtils::from_utf8w(line);
+        wstring sentence = F_UTF8W(line);
 
         vector<pair<vector<wstring>, double> > segment;
-        seg_sentence(sentence, 3, segment);
+        seg_sentence(sentence, 2, segment);
 
         //print the best result
-        vector<wstring> best = segment[0].first;
+        vector<wstring>& best = segment[0].first;
 
         size_t n = best.size();
         for(size_t i=0; i<n; ++i){
-            out<<CPPStringUtils::to_utf8(best[i]);
+            out<<T_UTF8(best[i]);
             if(i != n - 1)
                 out<<" ";
+            size_t n = best.size();
+            for(size_t i=0; i<n; ++i){
+                out<<T_UTF8(best[i]);
+                if(i != n - 1)
+                    out<<" ";
+            }
         }
         out<<endl;
     }

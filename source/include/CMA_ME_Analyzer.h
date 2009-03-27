@@ -10,6 +10,10 @@
 #include "analyzer.h"
 #include "CMA_ME_Knowledge.h"
 
+#include <string>
+
+using namespace std;
+
 namespace cma
 {
 
@@ -17,6 +21,7 @@ class CMA_ME_Analyzer : public Analyzer
 {
 public:
     CMA_ME_Analyzer();
+    ~CMA_ME_Analyzer();
 
     /**
      * Set the \e Knowledge for analysis.
@@ -53,7 +58,14 @@ public:
      *      \e outFileName.
      */
     virtual int runWithStream(const char* inFileName, const char* outFileName);
-    
+
+private:
+    /**
+     * Each segment only map to one pos set
+     */
+    void analysis(const string& sentence, int N, vector<vector<string> >& pos,
+            vector<pair<vector<string>, double> >& segment, bool tagPOS = true);
+
 private:
     CMA_ME_Knowledge *knowledge_;
 };
