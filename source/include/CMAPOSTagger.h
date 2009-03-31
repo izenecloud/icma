@@ -17,7 +17,7 @@ using namespace maxent::me;
 
 namespace cma{
 
-inline bool isNumber(wstring& word){
+inline bool isNumber(string& word){
     for(size_t i=0; i<word.length(); ++i){
         if(word[i] < '0' || word[i] > '9')
             return false;
@@ -25,11 +25,11 @@ inline bool isNumber(wstring& word){
     return true;
 }
 
-inline bool isHyphen(wstring& word){
+inline bool isHyphen(string& word){
     return word.length() == 1 && word[0] == '-';
 }
 
-inline bool isUpperCase(wstring& word){
+inline bool isUpperCase(string& word){
     for(size_t i=0; i<word.length(); ++i){
         if(word[i] < 'A' || word[i] > 'Z')
             return false;
@@ -43,10 +43,10 @@ void get_prefix_suffix(wstring& word, size_t length, vector<wstring>& prefixes,
 /**
  * POS context type for POS (zh/chinese)
  */
-void get_pos_zh_scontext(vector<wstring>& words, vector<wstring>& tags, size_t i,
-        bool rareWord, vector<wstring>& context);
+void get_pos_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
+        bool rareWord, vector<string>& context);
 
-inline bool cmpSDPair(pair<vector<wstring>,double> p1, pair<vector<wstring>,double> p2){
+inline bool cmpSDPair(pair<vector<string>,double> p1, pair<vector<string>,double> p2){
     return p1.second - p2.second >= 0;
 }
 
@@ -71,8 +71,8 @@ public:
      * \param words a list of words to tag
      * \param N return N best
      */
-    void tag_sentence(vector<wstring>& words, size_t N,
-            vector<pair<vector<wstring>, double> >& h0);
+    void tag_sentence(vector<string>& words, size_t N,
+            vector<pair<vector<string>, double> >& h0);
 
 private:
 
@@ -81,15 +81,15 @@ private:
      *
      * \return a list of (tag, score) pair sorted
      */
-    void tag_word(vector<wstring>& words, int i, size_t N, vector<wstring>& hist,
-        vector<pair<wstring, double> >& ret);
+    void tag_word(vector<string>& words, int i, size_t N, vector<string>& hist,
+        vector<pair<string, double> >& ret);
 
-    void advance(pair<vector<wstring>, double> tag, vector<wstring>& words,
-            int i, size_t N, vector<pair<vector<wstring>, double> >& ret);
+    void advance(pair<vector<string>, double> tag, vector<string>& words,
+            int i, size_t N, vector<pair<vector<string>, double> >& ret);
 
 private:
     MaxentModel me;
-    map<wstring, map<wstring, int> > tagDict_;
+    map<string, map<string, int> > tagDict_;
     context_t get_context;
 };
 

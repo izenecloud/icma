@@ -9,10 +9,10 @@ using namespace std;
 
 namespace cma{
 
-typedef boost::tokenizer <boost::char_separator<wchar_t>,
-    wstring::const_iterator, wstring> TagTokenizer;
+typedef boost::tokenizer <boost::char_separator<char>,
+    string::const_iterator, string> TagTokenizer;
 
-const boost::char_separator<wchar_t> UNIT_SEP(L" ");
+const boost::char_separator<char> UNIT_SEP(" ");
 
 /**
  * split out word and pos/poc in s into two separate lists.<br>
@@ -22,13 +22,13 @@ const boost::char_separator<wchar_t> UNIT_SEP(L" ");
  * \param words return vector to store words list
  * \return tags return value to store tag list
  */
-void split_tag(const wstring& s, vector<wstring>& words,
-        vector<wstring>& tags){    
+void split_tag(const string& s, vector<string>& words,
+        vector<string>& tags){
     TagTokenizer token(s, UNIT_SEP);
     for(TagTokenizer::const_iterator itr = token.begin(); itr != token.end(); ++itr){
         size_t pos = itr->find_first_of(TAG_SEP);
-        if(pos == wstring::npos || pos == 0){
-            cerr<<"The Format is word/tag, but not ("<<T_UTF8(*itr)<<")"<<endl;
+        if(pos == string::npos || pos == 0){
+            cerr<<"The Format is word/tag, but not ("<<*itr<<")"<<endl;
             exit(1);
         }
         words.push_back(itr->substr(0,pos));
@@ -36,74 +36,66 @@ void split_tag(const wstring& s, vector<wstring>& words,
     }
 }
 
-void token_wstring(const wstring& s, vector<wstring>& words){
-    TagTokenizer token(s, UNIT_SEP);
-    for(TagTokenizer::const_iterator itr = token.begin(); itr != token.end(); ++itr){
-        words.push_back(*itr);
-    }
-}
-
-void gather_feature(TrainerData* data, wstring& word, vector<wstring>& context,
-        wstring& tag){
+void gather_feature(TrainerData* data, string& word, vector<string>& context,
+        string& tag){
     //only collect tag dict for common words
     if(!is_rare_word(data, word))
         data->tagDict_[word][tag] += 1;
     
-    for(vector<wstring>::iterator itr = context.begin();
+    for(vector<string>::iterator itr = context.begin();
           itr != context.end(); ++itr){
-        wstring f = *itr + L"_" + tag;
-        data->featDict_[f] += 1;
+        data->featDict_[*itr + "_" + tag] += 1;
     }
 }
 
-bool is_rare_word(TrainerData* data, wstring& word){
+bool is_rare_word(TrainerData* data, string& word){
     return data->wordFreq_[word] > data->rareFreq_;
 }
 
-void add_event(TrainerData* data, wstring& word, vector<wstring>& context,
-        wstring& tag){
+void add_event(TrainerData* data, string& word, vector<string>& context,
+        string& tag){
     vector<string> evts;
-    for(vector<wstring>::iterator itr = context.begin();
+    for(vector<string>::iterator itr = context.begin();
           itr != context.end(); ++itr){
-        if(data->featDict_.count(*itr + L"_" + tag) > 0)
-            evts.push_back(T_UTF8(*itr));
+        if(data->featDict_.count(*itr + "_" + tag) > 0)
+            evts.push_back(*itr);
     }
 
     if(!evts.empty())
-        data->me.add_event(evts, T_UTF8(tag));
+        data->me.add_event(evts, tag);
 }
 
-void save_training_data(TrainerData* data, wstring& word, vector<wstring>& context,
-        wstring& tag){
+void save_training_data(TrainerData* data, string& word, vector<string>& context,
+        string& tag){
     vector<string> evts;
-    for(vector<wstring>::iterator itr = context.begin();
+    for(vector<string>::iterator itr = context.begin();
           itr != context.end(); ++itr){
-        if(data->featDict_.count(*itr + L"_" + tag) > 0)
-            evts.push_back(T_UTF8(*itr));
+        if(data->featDict_.count(*itr + "_" + tag) > 0)
+            evts.push_back(*itr);
     }
 
     ofstream *training_data = data->training_data;
 
     if(!evts.empty()){
-        (*training_data)<<T_UTF8(tag)<<" ";
+        (*training_data)<<tag<<" ";
         for(vector<string>::iterator itr = evts.begin(); itr != evts.end(); ++itr){
-            (*training_data)<<T_UTF8(*itr)<<" ";
+            (*training_data)<<*itr<<" ";
         }
         (*training_data)<<"\n";
     }
 }
 
-void add_heldout_event(TrainerData* data, wstring& word,
-        vector<wstring>& context, wstring& tag){
+void add_heldout_event(TrainerData* data, string& word,
+        vector<string>& context, string& tag){
     vector<string> evts;
-    for(vector<wstring>::iterator itr = context.begin();
+    for(vector<string>::iterator itr = context.begin();
           itr != context.end(); ++itr){
-        if(data->featDict_.count(*itr + L"_" + tag) > 0)
-            evts.push_back(T_UTF8(*itr));
+        if(data->featDict_.count(*itr + "_" + tag) > 0)
+            evts.push_back(*itr);
     }
 
     if(!evts.empty())
-        data->me.add_heldout_event(evts, T_UTF8(tag));
+        data->me.add_heldout_event(evts, tag);
 }
 
 
@@ -112,10 +104,10 @@ void gather_word_freq(TrainerData* data, const char* file){
     string line;    
     while(!in.eof()){
         getline(in, line);
-        vector<wstring> words;
-        vector<wstring> tags;
-        split_tag(F_UTF8W(line), words, tags);
-        for(vector<wstring>::iterator itr = words.begin();
+        vector<string> words;
+        vector<string> tags;
+        split_tag(line, words, tags);
+        for(vector<string>::iterator itr = words.begin();
               itr != words.end(); ++itr){
             data->wordFreq_[*itr] += 1;
         }
@@ -125,7 +117,7 @@ void gather_word_freq(TrainerData* data, const char* file){
 }
 
 
-void get_chars(wstring& word, vector<wstring>& ret){
+void get_chars(string& word, vector<string>& ret){
     for(size_t i=0; i<word.length(); i+=2){
         ret.push_back(word.substr(i, 2));
     }
@@ -133,7 +125,7 @@ void get_chars(wstring& word, vector<wstring>& ret){
 
 
 void extract_feature(TrainerData* data, const char* file,
-        void (*func)(TrainerData*, wstring& ,vector<wstring>& ,wstring&)){
+        void (*func)(TrainerData*, string& ,vector<string>& ,string&)){
     ifstream in(file);
     string line;
 
@@ -141,12 +133,12 @@ void extract_feature(TrainerData* data, const char* file,
         getline(in, line);
         if(!line.size())
             continue;
-        vector<wstring> words;
-        vector<wstring> tags;
-        split_tag(F_UTF8W(line), words, tags);
+        vector<string> words;
+        vector<string> tags;
+        split_tag(line, words, tags);
 
         for(size_t i=0; i<words.size(); ++i){
-            vector<wstring> context;
+            vector<string> context;
             data->get_context(words, tags, i, data->wordFreq_[words[i]] < data->rareFreq_, context);
             func(data, words[i], context, tags[i]);
         }
@@ -157,44 +149,44 @@ void extract_feature(TrainerData* data, const char* file,
 
 void save_word_freq(TrainerData* data, const char* file){
     ofstream out(file);
-    for(map<wstring, int>::iterator itr = data->wordFreq_.begin();
+    for(map<string, int>::iterator itr = data->wordFreq_.begin();
           itr != data->wordFreq_.end(); ++itr){
-        out<<T_UTF8(itr->first)<<" "<<itr->second<<endl;
+        out<<itr->first<<" "<<itr->second<<endl;
     }
     out.close();
 }
 
 void save_tag_dict(TrainerData* data, const char* file){
     ofstream out(file);
-    for(map<wstring, map<wstring, int> >::iterator itr = data->tagDict_.begin();
+    for(map<string, map<string, int> >::iterator itr = data->tagDict_.begin();
           itr != data->tagDict_.end(); ++itr){
-        out<<T_UTF8(itr->first);
-        map<wstring, int>& inner = itr->second;
-        for(map<wstring, int>::iterator itr2 = inner.begin();
+        out<<itr->first;
+        map<string, int>& inner = itr->second;
+        for(map<string, int>::iterator itr2 = inner.begin();
               itr2 != inner.end(); ++itr2){
-            out<<" "<<T_UTF8(itr2->first)<<" "<<itr2->second;
+            out<<" "<<itr2->first<<" "<<itr2->second;
         }
         out<<endl;
     }
     out.close();
 }
 
-void load_tag_dict(map<wstring, map<wstring, int> > *tagDict, const char* file){
+void load_tag_dict(map<string, map<string, int> > *tagDict, const char* file){
     ifstream in(file);
     assert(in);
     string line;
     while(!in.eof()){
         getline(in, line);
-        wstring ws = F_UTF8W(line);
+        string ws = line;
         TagTokenizer token(ws, UNIT_SEP);
         TagTokenizer::iterator itr = token.begin();
         if(itr == token.end())
             continue;
-        wstring word = *itr++;
+        string word = *itr++;
         while(itr != token.end()){
-            wstring tag = *itr++;
-            wstring count = *itr++;
-            (*tagDict)[word][tag] = atoi(T_UTF8(count).data());
+            string tag = *itr++;
+            string count = *itr++;
+            (*tagDict)[word][tag] = atoi(count.data());
         }
     }
 
@@ -203,18 +195,18 @@ void load_tag_dict(map<wstring, map<wstring, int> > *tagDict, const char* file){
 
 void save_features(TrainerData* data, const char* file){
     ofstream out(file);
-    for(map<wstring, int>::iterator itr = data->featDict_.begin();
+    for(map<string, int>::iterator itr = data->featDict_.begin();
           itr != data->featDict_.end(); ++itr){
-        out<<T_UTF8(itr->first)<<" "<<itr->second<<endl;
+        out<<itr->first<<" "<<itr->second<<endl;
     }
     out.close();
 }
 
 void cutoff_feature(TrainerData* data, int cutoff, int rareCutoff){
-    map<wstring, int> tmp;
-    for(map<wstring, int>::iterator itr = data->featDict_.begin();
+    map<string, int> tmp;
+    for(map<string, int>::iterator itr = data->featDict_.begin();
           itr != data->featDict_.end(); ++itr){
-        if((itr->first).find(L"curword=") != (itr->first).npos){
+        if((itr->first).find("curword=") != (itr->first).npos){
             if(itr->second >= rareCutoff)
                 tmp[itr->first] = itr->second;
         }else if(itr->second >= cutoff){
@@ -224,16 +216,14 @@ void cutoff_feature(TrainerData* data, int cutoff, int rareCutoff){
     data->featDict_ = tmp;
 }
 
-void train(TrainerData* data, const char* file, const string& destFile,
+void train(TrainerData* data, const char* file, const string cateName,
         const char* extractFile, string method, size_t iters, float gaussian){
 
-    string fileStr(file);
     //First pass: gather word frequency information {{{
     cout<<"First pass: gather word frequency information"<<endl;
     gather_word_freq(data, file);
     //cout<<"save word freq"<<endl;
-    string wordFreqFile = fileStr;
-    wordFreqFile.append(".wordfreq");
+    string wordFreqFile = cateName + ".wordfreq";
     save_word_freq(data, wordFreqFile.data());
     // }}}
 
@@ -241,11 +231,9 @@ void train(TrainerData* data, const char* file, const string& destFile,
     cout<<"Second pass: gather features and tag dict to be used in tagger"<<endl;
     extract_feature(data, file, gather_feature);
     cutoff_feature(data, data->cutoff_, data->rareFreq_);
-    string featureFile = fileStr;
-    featureFile.append(".features");
+    string featureFile = cateName + ".features";
     save_features(data, featureFile.data());
-    string tagFile = fileStr;
-    tagFile.append(".tag");
+    string tagFile = cateName + ".tag";
     save_tag_dict(data, tagFile.data());
     // }}}
 
@@ -266,7 +254,7 @@ void train(TrainerData* data, const char* file, const string& destFile,
 
     data->me.train(iters, method, gaussian);
     cout<<"training finished"<<endl;
-
+    string destFile = cateName + ".model";
     cout<<"saving tagger model to "<<destFile<<endl;
     data->me.save(destFile);
     // }}}

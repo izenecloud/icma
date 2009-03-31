@@ -8,11 +8,14 @@
 #include "sentence.h"
 
 #include <cassert>
+#include <bits/stl_map.h>
 
 namespace cma
 {
 
 std::vector<std::string> Sentence::posTable_;
+
+std::map<std::string, int> Sentence::posMap_;
 
 void Sentence::setString(const char* pString)
 {
@@ -80,6 +83,18 @@ void Sentence::addList(const MorphemeList& morphemeList, double score)
 void Sentence::setPOSTable(const std::vector<std::string>& table)
 {
     posTable_ = table;
+    posMap_.clear();
+    int n = (int)table.size();
+    for(int i=0; i<n; ++i){
+        posMap_[table[i]] = i;
+    }
+}
+
+int Sentence::getPOSCode(const std::string& strPOS){
+    std::map<std::string, int>::iterator itr = posMap_.find(strPOS);
+    if(itr == posMap_.end())
+        return -1;
+    return itr->second;
 }
 
 } // namespace cma

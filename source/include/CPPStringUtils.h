@@ -9,6 +9,7 @@
 #define	_CPPSTRINGUTILS_H
 
 #include <string>
+#include <vector>
 using namespace std;
 
 
@@ -16,6 +17,9 @@ using namespace std;
 #define T_UTF8(in) CPPStringUtils::to_utf8(in)
 #define WS2S(in) CPPStringUtils::to_string(in)
 #define S2WS(in) CPPStringUtils::to_wstring(in)
+
+#define T_UTF8_VEC(in, ret) CPPStringUtils::separate_utf8_chars(in, ret)
+#define TOKEN_STR(in, ret) CPPStringUtils::token_string(in, ret)
 
 class CPPStringUtils {
 public:
@@ -30,6 +34,8 @@ public:
         static std::string from_utf8(const std::string source);
         static std::wstring from_utf8w(const std::string source);
 
+        static void separate_utf8_chars(const string& source, vector<string>& ret);
+
         static std::string trim(std::string src);
         static std::wstring trim(std::wstring src);
 
@@ -42,6 +48,8 @@ public:
         static std::string tc2sc_utf8(std::string src);
 
         static std::wstring remove_html_content(std::wstring src, std::wstring startTag, std::wstring endTag);
+
+        static void token_string(const string& s, vector<string>& words);
 };
 #endif	/* _CPPSTRINGUTILS_H */
 

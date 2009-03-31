@@ -1,4 +1,5 @@
 #include "CPPStringUtils.h"
+#include <boost/tokenizer.hpp>
 
 std::string CPPStringUtils::to_string(const std::wstring source)
 {
@@ -234,6 +235,49 @@ std::wstring CPPStringUtils::from_utf8w(const std::string source)
 
 	return dest;
 }
+
+
+void CPPStringUtils::separate_utf8_chars(const string& source,
+        vector<string>& ret)
+{
+    int length = source.length();
+
+    for(int i=0; i<length; i++){
+        unsigned int c1 = (unsigned char) source[i];
+        if ( c1<0x80 ) {
+            ret.push_back(source.substr(i, 1));
+        }
+        else if ( (c1 & 0xe0)==0xc0 ){
+            if ( i+1 < length ){
+                ret.push_back(source.substr(i, 2));
+                ++i;
+            }
+            else
+                i = length-1;
+        }
+        else if ( (c1 & 0xf0)==0xe0 ){
+            if ( i+2<length ){
+                ret.push_back(source.substr(i, 3));
+                i += 2;
+            }
+            else
+                i = length-1;
+        }
+        else if ( (c1 & 0xf8)==0xf0 ){
+            if ( i+3<length ){
+                ret.push_back(source.substr(i, 4));
+                i += 3;
+            }
+            else
+                i = length-1;
+        }
+        else {
+            // illegal coding, skip that char
+            //ret.push_back("?");
+        }
+    }
+}
+
 
 std::string CPPStringUtils::trim(std::string src)
 {
@@ -535,3 +579,13 @@ std::wstring CPPStringUtils::remove_html_content(std::wstring src, std::wstring 
 	return dst;
 }
 
+const boost::char_separator<char> CPUNIT_SEP(" ");
+
+void CPPStringUtils::token_string(const string& s, vector<string>& words){
+    typedef boost::tokenizer <boost::char_separator<char>,
+        string::const_iterator, string> CPTokenizer;
+    CPTokenizer token(s, CPUNIT_SEP);
+    for(CPTokenizer::const_iterator itr = token.begin(); itr != token.end(); ++itr){
+        words.push_back(*itr);
+    }
+}

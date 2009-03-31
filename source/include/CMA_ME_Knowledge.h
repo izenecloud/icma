@@ -104,11 +104,15 @@ public:
     /**
      * Whether the specific word is stop word
      */
-    bool isStopWord(const wstring& word);
+    bool isStopWord(const string& word);
+
+    VTrie* getTrie();
 
 private:
     /** Input maybe a line or a word*/
     string decodeEncryptWord(const string& origWord);
+
+    void loadOuterDictRecord(const string& record, int counter = 1);
 
 private:
     /** tagger for segment */
@@ -120,8 +124,11 @@ private:
     /** VSynonymContainer */
     VSynonymContainer *vsynC_;
 
+    /** The Trie to hold system and */
+    VTrie* trie_;
+
     /** stop words set */
-    set<wstring> stopWords_;
+    set<string> stopWords_;
 
 };
 

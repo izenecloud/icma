@@ -9,26 +9,40 @@
 #define	_CMAPOCTAGGER_H
 
 #include "CMABasicTrainer.h"
+#include "types.h"
 
 #include <algorithm>
 #include <math.h>
-
+#include <set>
+#include <map>
 using namespace maxent::me;
 
 namespace cma{
 
+extern map<string, uint8_t> POCs2c;
+
+extern vector<string> POCVec;
+
+enum CharType
+{
+    CHAR_TYPE_DIGIT = 1, ///< digit character
+    CHAR_TYPE_PUNTUATION, ///< puntuation character
+    CHAR_TYPE_LETTER, ///< letter character
+    CHAR_TYPE_OTHER ///< other character
+};
+
+extern map<string, CharType> TYPE_MAP;
+
+extern set<string> HYPHEN_SET;
+
 /**
  * POS context type for POC(Position of Character) (zh/chinese)
  */
-void get_poc_zh_scontext(vector<wstring>& words, vector<wstring>& tags, size_t i,
-        bool rareWord, vector<wstring>& context);
+void get_poc_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
+        bool rareWord, vector<string>& context);
 
-inline bool cmpSDPOCPair(pair<vector<wstring>,double> p1, pair<vector<wstring>,double> p2){
-    return p1.second - p2.second >= 0;
-}
-
-void poc_train(const char* file, const string& destFile,
-        const char* extractFile = 0, string method = "lbfgs", size_t iters = 15,
+void poc_train(const char* file, const string& cateName,
+        const char* extractFile = 0, string method = "gis", size_t iters = 15,
         float gaussian = 0.0f);
 
 /**
@@ -41,22 +55,38 @@ void poc_train(const char* file, const string& destFile,
  */
 void create_poc_meterial(const char* inFile, const char* outFile);
 
-inline bool is_matched_poc(wstring& preTag, wstring& curTag){
-    if(preTag == L"R" || preTag == L"I")
-        return curTag == L"L" || curTag == L"I";
+inline bool is_matched_poc(string& preTag, string& curTag){
+    if(preTag == "R" || preTag == "I")
+        return curTag == "L" || curTag == "I";
         
-    if(preTag == L"L")
-            return curTag == L"R" || curTag == L"M";
+    if(preTag == "L")
+            return curTag == "R" || curTag == "M";
         
-    if(preTag == L"M")
-            return curTag == L"R" || curTag == L"M";
+    if(preTag == "M")
+            return curTag == "R" || curTag == "M";
      
-    cerr<<"Invalid POC tag "<<T_UTF8(preTag)<<endl;
+    cerr<<"Invalid POC tag "<<preTag<<endl;
     exit(1);
     return false;
 }
 
+class POCTagUnit{
+public:
+    POCTagUnit(uint8_t pPOC, double pScore, int pIndex) : pocCode(pPOC),
+            score(pScore), index(pIndex){
 
+    }
+
+    //TODO another copy
+    bool operator < (POCTagUnit other) const{
+        return score - other.score;
+    }
+
+public:
+    uint8_t pocCode;
+    double score;
+    int index;
+};
 
 
 class SegTagger{
@@ -75,8 +105,12 @@ public:
      * \param senetence the given sentence
      * \param N return N best
      */
-    void seg_sentence(wstring sentence, size_t N,
-            vector<pair<vector<wstring>, double> >& segment);
+    void seg_sentence(string sentence, size_t N,
+            vector<pair<vector<string>, double> >& segment);
+
+    void appendWordTag(string& word, string& tag, int counter = 1);
+
+    static void initialize();
 
 private:
 
@@ -85,17 +119,14 @@ private:
      *
      * \return a list of (tag, score) pair sorted
      */
-    void tag_word(vector<wstring>& words, int i, size_t N, vector<wstring>& hist,
-        vector<pair<wstring, double> >& ret);
-
-    void advance(pair<vector<wstring>, double> tag, vector<wstring>& words,
-            int i, size_t N, vector<pair<vector<wstring>, double> >& ret);
+    void tag_word(vector<string>& words, int i, size_t N, vector<string>& hist,
+        vector<POCTagUnit>& ret, double initScore);
 
 private:
     MaxentModel me;
-    map<wstring, map<wstring, int> > tagDict_;
+    /** tag dictionary */
+    map<string, map<string, int> > tagDict_;
     context_t get_context;
-    static wstring puctStr;
 };
 
 }

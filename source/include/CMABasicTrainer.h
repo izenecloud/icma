@@ -24,8 +24,8 @@ using namespace maxent;
 namespace cma{
 
 /** words, tags, i, rare_word, ret */
-typedef void(*context_t)(vector<wstring>&, vector<wstring>&, size_t,
-        bool, vector<wstring>&);
+typedef void(*context_t)(vector<string>&, vector<string>&, size_t,
+        bool, vector<string>&);
 
 
 
@@ -43,9 +43,9 @@ public:
 
 
 public:
-    map<wstring, int> wordFreq_;
-    map<wstring, int> featDict_;
-    map<wstring, map<wstring, int> > tagDict_;
+    map<string, int> wordFreq_;
+    map<string, int> featDict_;
+    map<string, map<string, int> > tagDict_;
     /** use special feature for rare word with frequency &lt; RARE [default=5] */
     int rareFreq_;
 
@@ -73,36 +73,34 @@ public:
  * \param words return vector to store words list
  * \return tags return value to store tag list
  */
-void split_tag(const wstring& s, vector<wstring>& words, vector<wstring>& tags);
+void split_tag(const string& s, vector<string>& words, vector<string>& tags);
 
-void token_wstring(const wstring& s, vector<wstring>& words);
+void gather_feature(TrainerData* data, string& word, vector<string>& context,
+        string& tag);
 
-void gather_feature(TrainerData* data, wstring& word, vector<wstring>& context,
-        wstring& tag);
+bool is_rare_word(TrainerData* data, string& word);
 
-bool is_rare_word(TrainerData* data, wstring& word);
+void add_event(TrainerData* data, string& word, vector<string>& context,
+        string& tag);
 
-void add_event(TrainerData* data, wstring& word, vector<wstring>& context,
-        wstring& tag);
+void save_training_data(TrainerData* data, string& word,
+        vector<string>& context, string& tag);
 
-void save_training_data(TrainerData* data, wstring& word,
-        vector<wstring>& context, wstring& tag);
-
-void add_heldout_event(TrainerData* data, wstring& word,
-        vector<wstring>& context, wstring& tag);
+void add_heldout_event(TrainerData* data, string& word,
+        vector<string>& context, string& tag);
 
 void gather_word_freq(TrainerData* data, const char* file);
 
-void get_chars(wstring& word, vector<wstring>& ret);
+void get_chars(string& word, vector<string>& ret);
 
 void extract_feature(TrainerData* data, const char* file,
-        void (*func)(TrainerData*, wstring&, vector<wstring>&, wstring&));
+        void (*func)(TrainerData*, string&, vector<string>&, string&));
 
 void save_word_freq(TrainerData* data, const char* file);
 
 void save_tag_dict(TrainerData* data, const char* file);
 
-void load_tag_dict(map<wstring, map<wstring, int> > *tagDict, const char* file);
+void load_tag_dict(map<string, map<string, int> > *tagDict, const char* file);
 
 void save_features(TrainerData* data, const char* file);
 
@@ -111,11 +109,11 @@ void cutoff_feature(TrainerData* data, int cutoff, int rareCutoff);
 /**
  * \param extractFile if set, save the training data to the extractFile and exit
  * \param iters how many iterations are required for training[default=15]
- * \param method the method of Maximum Model Parameters Estimation [default = lbfgs]
+ * \param method the method of Maximum Model Parameters Estimation [default = gis]
  * \param gaussian apply Gaussian penality when training [default=0.0]
  */
-void train(TrainerData* data, const char* file, const string& destFile,
-        const char* extractFile = 0, string method = "lbfgs",
+void train(TrainerData* data, const char* file, const string cateFile,
+        const char* extractFile = 0, string method = "gis",
         size_t iters = 15, float gaussian = 0.0f);
 
 void fetchSegmentedFile(const char* inFile, const char* outFile,

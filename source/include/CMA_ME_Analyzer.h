@@ -68,6 +68,9 @@ private:
 
 private:
     CMA_ME_Knowledge *knowledge_;
+
+    /** string buffer stores result for \e runWithString */
+    string strBuf_;
 };
 
 
