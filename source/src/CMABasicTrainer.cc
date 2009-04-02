@@ -217,24 +217,33 @@ void cutoff_feature(TrainerData* data, int cutoff, int rareCutoff){
 }
 
 void train(TrainerData* data, const char* file, const string cateName,
-        const char* extractFile, string method, size_t iters, float gaussian){
+        const char* extractFile, string method, size_t iters, float gaussian,
+        bool isPOS){
 
     //First pass: gather word frequency information {{{
     cout<<"First pass: gather word frequency information"<<endl;
     gather_word_freq(data, file);
-    //cout<<"save word freq"<<endl;
-    string wordFreqFile = cateName + ".wordfreq";
-    save_word_freq(data, wordFreqFile.data());
+    #ifdef DEBUG_TRAINING
+        string wordFreqFile = cateName + ".wordfreq";
+        save_word_freq(data, wordFreqFile.data());
+    #endif
     // }}}
 
     //Second pass: gather features and tag dict {{{
     cout<<"Second pass: gather features and tag dict to be used in tagger"<<endl;
     extract_feature(data, file, gather_feature);
     cutoff_feature(data, data->cutoff_, data->rareFreq_);
-    string featureFile = cateName + ".features";
-    save_features(data, featureFile.data());
-    string tagFile = cateName + ".tag";
-    save_tag_dict(data, tagFile.data());
+    #ifdef DEBUG_TRAINING
+        string featureFile = cateName + ".features";
+        save_features(data, featureFile.data());
+        string tagFile = cateName + ".tag";
+        save_tag_dict(data, tagFile.data());
+    #else
+        if(isPOS){
+            string tagFile = cateName + ".tag";
+            save_tag_dict(data, tagFile.data());
+        }
+    #endif
     // }}}
 
     if(extractFile){

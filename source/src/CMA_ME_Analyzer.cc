@@ -11,7 +11,7 @@ namespace cma
 {
     
 CMA_ME_Analyzer::CMA_ME_Analyzer():knowledge_(0){
-
+    SegTagger::initialize();
 }
 
 CMA_ME_Analyzer::~CMA_ME_Analyzer(){

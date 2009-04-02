@@ -80,7 +80,7 @@ void pos_train(const char* file, const string& cateFile,const char* extractFile,
         string method, size_t iters,float gaussian){
       TrainerData data;
       data.get_context = get_pos_zh_scontext;
-      train(&data, file, cateFile, extractFile, method, iters, gaussian);
+      train(&data, file, cateFile, extractFile, method, iters, gaussian, true);
 }
 
 
@@ -197,7 +197,7 @@ void POSTagger::tag_file(const char* inFile, const char* outFile){
         }
 
         vector<pair<vector<string>, double> > h0;
-        tag_sentence(words, 5, h0);
+        tag_sentence(words, 2, h0);
 
         //print the best result
         vector<string>& best = h0[0].first;
@@ -214,6 +214,10 @@ void POSTagger::tag_file(const char* inFile, const char* outFile){
 
     in.close();
     out.close();
+}
+
+void POSTagger::appendWordPOS(string& word, string& tag, int counter){
+    tagDict_[word][tag] += counter;
 }
 
 }

@@ -16,7 +16,7 @@
 
 #include "maxentmodel.hpp"
 #include "CPPStringUtils.h"
-
+#include "cmacconfig.h"
 
 using namespace std;
 using namespace maxent;
@@ -26,8 +26,6 @@ namespace cma{
 /** words, tags, i, rare_word, ret */
 typedef void(*context_t)(vector<string>&, vector<string>&, size_t,
         bool, vector<string>&);
-
-
 
 class TrainerData{
 
@@ -111,10 +109,11 @@ void cutoff_feature(TrainerData* data, int cutoff, int rareCutoff);
  * \param iters how many iterations are required for training[default=15]
  * \param method the method of Maximum Model Parameters Estimation [default = gis]
  * \param gaussian apply Gaussian penality when training [default=0.0]
+ * \param isPOS if true, output the tag dictioanry
  */
 void train(TrainerData* data, const char* file, const string cateFile,
         const char* extractFile = 0, string method = "gis",
-        size_t iters = 15, float gaussian = 0.0f);
+        size_t iters = 15, float gaussian = 0.0f, bool isPOS = true);
 
 void fetchSegmentedFile(const char* inFile, const char* outFile,
         bool keepTag = true, bool keepSeparator = false);

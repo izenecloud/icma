@@ -74,6 +74,8 @@ public:
     void tag_sentence(vector<string>& words, size_t N,
             vector<pair<vector<string>, double> >& h0);
 
+    void appendWordPOS(string& word, string& tag, int counter = 1);
+
 private:
 
     /**

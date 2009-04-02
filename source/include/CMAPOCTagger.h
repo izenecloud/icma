@@ -8,6 +8,7 @@
 #ifndef _CMAPOCTAGGER_H
 #define	_CMAPOCTAGGER_H
 
+#include "cmacconfig.h"
 #include "CMABasicTrainer.h"
 #include "types.h"
 
@@ -19,14 +20,10 @@ using namespace maxent::me;
 
 namespace cma{
 
-extern map<string, uint8_t> POCs2c;
-
-extern vector<string> POCVec;
-
 enum CharType
 {
     CHAR_TYPE_DIGIT = 1, ///< digit character
-    CHAR_TYPE_PUNTUATION, ///< puntuation character
+    CHAR_TYPE_PUNC, ///< puntuation character
     CHAR_TYPE_LETTER, ///< letter character
     CHAR_TYPE_OTHER ///< other character
 };
@@ -55,60 +52,31 @@ void poc_train(const char* file, const string& cateName,
  */
 void create_poc_meterial(const char* inFile, const char* outFile);
 
-inline bool is_matched_poc(string& preTag, string& curTag){
-    if(preTag == "R" || preTag == "I")
-        return curTag == "L" || curTag == "I";
-        
-    if(preTag == "L")
-            return curTag == "R" || curTag == "M";
-        
-    if(preTag == "M")
-            return curTag == "R" || curTag == "M";
-     
-    cerr<<"Invalid POC tag "<<preTag<<endl;
-    exit(1);
-    return false;
-}
-
-class POCTagUnit{
-public:
-    POCTagUnit(uint8_t pPOC, double pScore, int pIndex) : pocCode(pPOC),
-            score(pScore), index(pIndex){
-
-    }
-
-    //TODO another copy
-    bool operator < (POCTagUnit other) const{
-        return score - other.score;
-    }
-
-public:
+struct POCTagUnit{
     uint8_t pocCode;
     double score;
     int index;
-};
 
+    /** -1 if not exists*/
+    int previous;
+};
 
 class SegTagger{
 public:
-    SegTagger(const string& model, const char* tagDictFile,
-             context_t context = get_poc_zh_scontext){
+
+    SegTagger(const string& model, const char* tagDictFile){
         me.load(model);
-        load_tag_dict(&tagDict_, tagDictFile);
-        get_context = context;
     }
 
     void tag_file(const char* inFile, const char *outFile);
 
     /**
      * tagging given sentence s and return N best
-     * \param senetence the given sentence
+     * \param words the given words list
      * \param N return N best
      */
-    void seg_sentence(string sentence, size_t N,
+    void seg_sentence(vector<string>& words, size_t N,
             vector<pair<vector<string>, double> >& segment);
-
-    void appendWordTag(string& word, string& tag, int counter = 1);
 
     static void initialize();
 
@@ -116,17 +84,16 @@ private:
 
     /**
      * tag word words[i] under given tag history hist
-     *
+     * \param lastIndex the last index of candidates
+     * \param canSize the used size in the candidates
      * \return a list of (tag, score) pair sorted
      */
-    void tag_word(vector<string>& words, int i, size_t N, vector<string>& hist,
-        vector<POCTagUnit>& ret, double initScore);
+    void tag_word(vector<string>& words, int index, size_t N, uint8_t* tags,
+            POCTagUnit* candidates, int& lastIndex, int& canSize, 
+            double initScore, int candidateNum);
 
 private:
     MaxentModel me;
-    /** tag dictionary */
-    map<string, map<string, int> > tagDict_;
-    context_t get_context;
 };
 
 }

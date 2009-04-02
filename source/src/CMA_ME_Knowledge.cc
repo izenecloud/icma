@@ -64,7 +64,7 @@ int CMA_ME_Knowledge::loadStopWordDict(const char* fileName){
 }
 
 int CMA_ME_Knowledge::loadSystemDict(const char* binFileName){
-    assert(segT_);
+    assert(posT_);
     if(!trie_)
         trie_ = new VTrie();
 
@@ -80,7 +80,7 @@ int CMA_ME_Knowledge::loadSystemDict(const char* binFileName){
 }
 
 int CMA_ME_Knowledge::loadUserDict(const char* fileName){
-    assert(segT_);
+    assert(posT_);
     if(!trie_)
         trie_ = new VTrie();
 
@@ -106,7 +106,7 @@ void CMA_ME_Knowledge::loadOuterDictRecord(const string& record, int counter){
     VTrieNode node;
     trie_->insert(word.data(), &node);
     for(size_t i=1; i<n; ++i){
-        segT_->appendWordTag(word, tokens[i], counter);
+        posT_->appendWordPOS(word, tokens[i], counter);
     }
 }
 
