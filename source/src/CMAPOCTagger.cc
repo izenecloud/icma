@@ -1,22 +1,8 @@
-
-#include <vector>
-
-
-#include <map>
-
 #include "CPPStringUtils.h"
 #include "CMAPOCTagger.h"
 #include "strutil.h"
 
 namespace cma{
-
-const wstring _PuntStr = L"～！＠＃％＾＆×（）｀　｛｝［］：＂｜；＇＼＜＞？，．／。《》“”‘’＋－＝—．、~!@#%^&*()` {}[]:\"|;'\\<>?,./.<>""''+-=_.";
-
-const wstring _LetterStr = L"ＱＷＥＲＴＹＵＩＯＰｑｗｅｒｔｙｕｉｏｐＡＳＤＦＧＨＪＫＬａｓｄｆｇｈｊｋｌＺＸＣＶＢＮＭｚｘｃｖｂｎｍQWERTYUIOPqwertyuiopASDFGHJKLasdfghjklZXCVBNMzxcvbnm";
-
-const wstring _HyphenStr = L"-—－";
-
-const wstring _DigitStr = L"０１２３４５６７８９0123456789";
 
 /** Its order cannot be modified, is_matched_poc() use their order*/
 const string _pocTagSeq = "LMRI";
@@ -26,10 +12,6 @@ string POC_EMPTY_STR = "";
 map<string, uint8_t> POCs2c;
 
 string POCArray[4];
-
-map<string, CharType> TYPE_MAP;
-
-set<string> HYPHEN_SET;
 
 bool POC_INIT_FLAG = false;
 
@@ -48,11 +30,6 @@ inline bool is_matched_poc(uint8_t preTag, uint8_t curTag){
             return false;
     }
 }
-
-inline bool isPuntuation(const string& str){
-    return TYPE_MAP[str] == CHAR_TYPE_PUNC;
-}
-
 
 /**
  * \param tag_1 is tags[i-1]
@@ -311,7 +288,7 @@ void SegTagger::tag_word(vector<string>& words, int index, size_t N,
     }
 }
 
-void SegTagger::seg_sentence(vector<string>& words, size_t N,
+void SegTagger::seg_sentence(vector<string>& words, size_t N, size_t retSize,
         vector<pair<vector<string>, double> >& segment){
     size_t n = words.size();
 
@@ -362,14 +339,14 @@ void SegTagger::seg_sentence(vector<string>& words, size_t N,
 
         h0Size = canSize;
     }
-    
+    if(retSize < h0Size)
+        h0Size = retSize;
     //construct the sentence
     #ifdef _ME_STRICT_POC_MATCHED
     for(int k=0; k<h0Size; ++k){
         uint8_t* tags = h0[k];
-        segment.push_back(pair<vector<string>,double>());
-        pair<vector<string>,double>& pair = segment.back();
-        pair.second = scores[k];
+        pair<vector<string>,double>& pair = segment[k];        
+        pair.second = (pair.second > 0) ? (pair.second * scores[k]) : scores[k];
         vector<string>& seg = pair.first;
         string strBuf;
         for(size_t i = 0; i < n; ++i){
@@ -402,9 +379,8 @@ void SegTagger::seg_sentence(vector<string>& words, size_t N,
     #else
     for(int k=0; k<h0Size; ++k){
         uint8_t* tags = h0[k];
-        segment.push_back(pair<vector<string>,double>());
-        pair<vector<string>,double>& pair = segment.back();
-        pair.second = scores[k];
+        pair<vector<string>,double>& pair = segment[k];
+        pair.second = (pair.second > 0) ? (pair.second * scores[k]) : scores[k];
         vector<string>& seg = pair.first;
         string strBuf;
         for(size_t i = 0; i < n; ++i){
@@ -453,14 +429,16 @@ void SegTagger::tag_file(const char* inFile, const char* outFile){
             continue;
         }
 
-        vector<pair<vector<string>, double> > segment;
+        vector<pair<vector<string>, double> > segment(1);
         vector<string> words;
         T_UTF8_VEC(line, words);
 
-        seg_sentence(words, 2, segment);
-
+        seg_sentence(words, 2, 1, segment);
+        #ifdef EN_ASSERT
+            assert(segment.size() == 1);
+        #endif
         //print the best result
-        vector<string>& best = segment[0].first;
+        vector<string>& best = segment.front().first;
         size_t maxIndex = best.size() - 1;
         for(size_t i=0; i<maxIndex; ++i){
             out<<best[i]<<" ";
@@ -472,12 +450,7 @@ void SegTagger::tag_file(const char* inFile, const char* outFile){
     out.close();
 }
 
-void addToTypeMap(const wstring& str, CharType type){
-    size_t len = str.length();
-    for(size_t i=0; i<len; ++i){
-        TYPE_MAP[T_UTF8(str.substr(i, 1))] = type;
-    }
-}
+
 
 void SegTagger::initialize(){
     if(POC_INIT_FLAG)
@@ -489,16 +462,6 @@ void SegTagger::initialize(){
     for(size_t i=0;i<_pocTagSeq.size(); ++i){
         POCs2c[_pocTagSeq.substr(i,1)] = (uint8_t)i;
         POCArray[i] = _pocTagSeq.substr(i,1);
-    }
-
-    addToTypeMap(_PuntStr, CHAR_TYPE_PUNC);
-    addToTypeMap(_LetterStr, CHAR_TYPE_LETTER);
-    addToTypeMap(_DigitStr, CHAR_TYPE_DIGIT);
-
-    //update hyphen set
-    size_t len = _HyphenStr.length();
-    for(size_t i=0; i<len; ++i){
-        HYPHEN_SET.insert(T_UTF8(_HyphenStr.substr(i, 1)));
     }
 }
 

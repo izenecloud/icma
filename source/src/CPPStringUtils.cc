@@ -253,7 +253,7 @@ void CPPStringUtils::separate_utf8_chars(const string& source,
                 ++i;
             }
             else
-                i = length-1;
+                break;
         }
         else if ( (c1 & 0xf0)==0xe0 ){
             if ( i+2<length ){
@@ -261,7 +261,7 @@ void CPPStringUtils::separate_utf8_chars(const string& source,
                 i += 2;
             }
             else
-                i = length-1;
+                break;
         }
         else if ( (c1 & 0xf8)==0xf0 ){
             if ( i+3<length ){
@@ -269,7 +269,7 @@ void CPPStringUtils::separate_utf8_chars(const string& source,
                 i += 3;
             }
             else
-                i = length-1;
+                break;
         }
         else {
             // illegal coding, skip that char

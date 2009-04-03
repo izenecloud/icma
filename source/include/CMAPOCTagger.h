@@ -20,18 +20,6 @@ using namespace maxent::me;
 
 namespace cma{
 
-enum CharType
-{
-    CHAR_TYPE_DIGIT = 1, ///< digit character
-    CHAR_TYPE_PUNC, ///< puntuation character
-    CHAR_TYPE_LETTER, ///< letter character
-    CHAR_TYPE_OTHER ///< other character
-};
-
-extern map<string, CharType> TYPE_MAP;
-
-extern set<string> HYPHEN_SET;
-
 /**
  * POS context type for POC(Position of Character) (zh/chinese)
  */
@@ -71,11 +59,12 @@ public:
     void tag_file(const char* inFile, const char *outFile);
 
     /**
-     * tagging given sentence s and return N best
+     * tagging given words list and return N best
      * \param words the given words list
      * \param N return N best
+     * \param retSize retSize &lt;= N, the size of segment
      */
-    void seg_sentence(vector<string>& words, size_t N,
+    void seg_sentence(vector<string>& words, size_t N, size_t retSize,
             vector<pair<vector<string>, double> >& segment);
 
     static void initialize();

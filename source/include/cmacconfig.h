@@ -11,5 +11,9 @@
 
 #define _ME_STRICT_POC_MATCHED
 
+#ifdef EN_ASSERT
+    #include <assert.h>
+#endif
+
 #endif	/* _CMACCONFIG_H */
 

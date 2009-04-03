@@ -6,12 +6,14 @@
 
 #include "strutil.h"
 #include "sentence.h"
+#include "CateStrTokenizer.h"
 
 namespace cma
 {
     
 CMA_ME_Analyzer::CMA_ME_Analyzer():knowledge_(0){
     SegTagger::initialize();
+    CateStrTokenizer::initialize();
 }
 
 CMA_ME_Analyzer::~CMA_ME_Analyzer(){
@@ -111,7 +113,7 @@ const char* CMA_ME_Analyzer::runWithString(const char* inStr){
 
     strBuf_.clear();
     if(printPOS){
-        vector<string>& best = segment[0].first;
+        vector<string>& best = segment.begin()->first;
         vector<string>& bestPOS = pos[0];
         size_t n = best.size();
         for(size_t i=0; i<n; ++n){
@@ -147,6 +149,18 @@ void CMA_ME_Analyzer::analysis(const string& sentence, int N,
         vector<pair<vector<string>,double> >& segment, bool tagPOS){
     int minN = N > 1 ? N : 2;
 
+
+    vector<string> words;
+    T_UTF8_VEC(sentence, words);
+    //TODO: need more combination, seperate tokens
+
+    knowledge_->getSegTagger()->seg_sentence(words, minN, N, segment);
+    //TODO: use the trie to combined words
+
+    //TODO: mark the POS
+    //vector<pair<vector<string>,double> >& poses;
+    
+    
 }
 
 }

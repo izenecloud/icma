@@ -7,6 +7,7 @@
 #ifndef _CMA_ME_ANALYZER_H
 #define	_CMA_ME_ANALYZER_H
 
+#include "cmacconfig.h"
 #include "analyzer.h"
 #include "CMA_ME_Knowledge.h"
 
