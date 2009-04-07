@@ -18,12 +18,13 @@ namespace cma{
 
 enum CharType
 {
+    CHAR_TYPE_INIT, ///< initial type
     CHAR_TYPE_DIGIT, ///< digit character
     CHAR_TYPE_PUNC, ///< puntuation character
     CHAR_TYPE_HYPHEN, ///< hythen string, like -
     CHAR_TYPE_SPACE, ///< space string, like ' '
     CHAR_TYPE_LETTER, ///< letter character
-    CHAR_TYPE_OTHER ///< other character
+    CHAR_TYPE_OTHER = 7777///< other character
 };
 
 extern map<string, CharType> TYPE_MAP;
@@ -42,7 +43,7 @@ struct CatePoint{
 class CateStrTokenizer{
 public:
 
-    CateStrTokenizer(string& sentence);
+    CateStrTokenizer(const string& sentence);
 
     /**
      * Move to next token
@@ -73,11 +74,11 @@ private:
     /** Words Collection */
     vector<string> wordSeq_;
 
-    /** Current Type */
-    CharType curType_;
+    /** The Type of the token */
+    CharType tokenT_;
 
-    /** Current String */
-    string curStr_;
+    /** Special String */
+    string speStr_;
 
     /** sentence */
     string sen_;
@@ -89,10 +90,10 @@ private:
     int senIdx_;
 
     /** Current Character, for internal perpose*/
-    string _curChar;
+    string _strBuf;
 
-    /** Current Character Type, for internal perpose*/
-    CharType _curCharT;
+    /** pervious Character Type, for internal perpose*/
+    CharType _preCharT;
 };
     
 }

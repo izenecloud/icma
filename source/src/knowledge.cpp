@@ -14,4 +14,14 @@ Knowledge::~Knowledge()
 {
 }
 
+void Knowledge::setEncodeType(EncodeType type)
+{
+    encodeType_ = type;
+}
+
+Knowledge::EncodeType Knowledge::getEncodeType() const
+{
+    return encodeType_;
+}
+
 } // namespace cma

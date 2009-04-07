@@ -14,6 +14,8 @@
 
 #include <set>
 #include <string>
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -110,7 +112,7 @@ public:
 
 private:
     /** Input maybe a line or a word*/
-    string decodeEncryptWord(const string& origWord);
+    string readEncryptLine(FILE *in);
 
     void loadOuterDictRecord(const string& record, int counter = 1);
 

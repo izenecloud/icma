@@ -15,5 +15,7 @@
     #include <assert.h>
 #endif
 
+#include <iostream>
+
 #endif	/* _CMACCONFIG_H */
 

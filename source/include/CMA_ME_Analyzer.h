@@ -10,6 +10,8 @@
 #include "cmacconfig.h"
 #include "analyzer.h"
 #include "CMA_ME_Knowledge.h"
+#include "CateStrTokenizer.h"
+#include "sentence.h"
 
 #include <string>
 
@@ -22,6 +24,10 @@ class CMA_ME_Analyzer : public Analyzer
 {
 public:
     CMA_ME_Analyzer();
+
+    /**
+     * The Desconstrutor won't delete knowledge pointer
+     */
     ~CMA_ME_Analyzer();
 
     /**

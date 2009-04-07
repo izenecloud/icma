@@ -16,7 +16,7 @@ Analyzer::Analyzer()
     : options_(OPTION_TYPE_NUM)
 {
     options_[OPTION_TYPE_POS_TAGGING] = 1; // print part-of-speech tags defaultly
-    options_[N_BEST] = 1;
+    options_[OPTION_TYPE_NBEST] = 10; // set the default number of candidate results of runWithSentence()
 }
 
 Analyzer::~Analyzer()
@@ -25,6 +25,11 @@ Analyzer::~Analyzer()
 
 void Analyzer::setOption(OptionType nOption, double nValue)
 {
+    // check nbest value range
+    if(nOption == OPTION_TYPE_NBEST && nValue < 1)
+    {
+	return;
+    }
     options_[nOption] = nValue;
 }
 
