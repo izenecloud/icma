@@ -93,7 +93,8 @@ public:
     enum OptionType
     {
 	OPTION_TYPE_POS_TAGGING, ///< non-zero value to print part-of-speech tags, which is the default value
-	OPTION_TYPE_NUM ///< the count of option types
+	OPTION_TYPE_NBEST, ///< a positive value to set the number of candidate results of \e runWithSentence(), which is set to 10 defaultly.
+        OPTION_TYPE_NUM ///< the count of option types
     };
 
     /**

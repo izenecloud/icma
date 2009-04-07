@@ -54,6 +54,14 @@ void pos_train(const char* file, const string& destFile,
         const char* extractFile = 0, string method = "lbfgs", size_t iters = 15,
         float gaussian = 0.0f);
 
+struct POSTagUnit{
+    string pos;
+    double score;
+    int index;
+
+    /** -1 if not exists*/
+    int previous;
+};
 
 class POSTagger{
 public:
@@ -67,31 +75,32 @@ public:
     void tag_file(const char* inFile, const char *outFile);
 
     /**
-     * tagging given sentence s and return N best
-     * \param words a list of words to tag
+     * tagging given words list and return N best
+     * \param words the given words list
      * \param N return N best
+     * \param retSize retSize &lt;= N, the size of segment
      */
-    void tag_sentence(vector<string>& words, size_t N,
-            vector<pair<vector<string>, double> >& h0);
+    void tag_sentence(vector<string>& words, size_t N, size_t retSize,
+            vector<pair<vector<string>, double> >& segment);
 
     void appendWordPOS(string& word, string& tag, int counter = 1);
 
+    typedef map<string, map<string, int> > TAGDICT_T ;
 private:
 
     /**
      * tag word words[i] under given tag history hist
-     *
+     * \param lastIndex the last index of candidates
+     * \param canSize the used size in the candidates
      * \return a list of (tag, score) pair sorted
      */
-    void tag_word(vector<string>& words, int i, size_t N, vector<string>& hist,
-        vector<pair<string, double> >& ret);
-
-    void advance(pair<vector<string>, double> tag, vector<string>& words,
-            int i, size_t N, vector<pair<vector<string>, double> >& ret);
+    void tag_word(vector<string>& words, int index, size_t N, string* tags,
+            POSTagUnit* candidates, int& lastIndex, int& canSize,
+            double initScore, int candidateNum);
 
 private:
     MaxentModel me;
-    map<string, map<string, int> > tagDict_;
+    TAGDICT_T tagDict_;
     context_t get_context;
 };
 

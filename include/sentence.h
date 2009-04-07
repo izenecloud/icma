@@ -1,5 +1,5 @@
 /** \file sentence.h
- * 
+ *
  * \author Jun Jiang
  * \version 0.1
  * \date Feb 17, 2009
@@ -10,6 +10,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 namespace cma
 {
@@ -129,12 +130,6 @@ public:
      */
     void addList(const MorphemeList& morphemeList, double score = 0.0);
 
-    /**
-     * Set the table of part-of-speech tags.
-     * \param table the POS tag table
-     */
-    static void setPOSTable(const std::vector<std::string>& table);
-
 private:
     /** the raw sentence string */
     std::string raw_;
@@ -144,9 +139,6 @@ private:
 
     /** the scores list of candidates */
     std::vector<double> scores_;
-
-    /** the POS tag table */
-    static std::vector<std::string> posTable_;
 };
 
 } // namespace cma

@@ -62,6 +62,33 @@ public:
      * \return 0 for fail, 1 for success
      */
     virtual int encodeSystemDict(const char* txtFileName, const char* binFileName) = 0;
+
+    /**
+     * Encode type of characters.
+     */
+    enum EncodeType
+    {
+	ENCODE_TYPE_GB2312, ///< GB 2312 character type
+	ENCODE_TYPE_BIG5, ///< Big 5 character type
+	ENCODE_TYPE_NUM ///< the count of character types
+    };
+
+    /**
+     * Set the character encode type.
+     * If this function is not called, the default value returned by \e getEncodeType() is \e ENCODE_TYPE_GB2312.
+     * \param type the encode type
+     */
+    void setEncodeType(EncodeType type);
+
+    /**
+     * Get the character encode type.
+     * \return the encode type
+     */
+    EncodeType getEncodeType() const;
+
+private:
+    /** character encode type */
+    EncodeType encodeType_;
 };
 
 }
