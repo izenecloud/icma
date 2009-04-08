@@ -12,7 +12,7 @@
 #include <boost/tokenizer.hpp>
 #include <fstream>
 
-#define TAG_SEP L'/'
+#define TAG_SEP '/'
 
 #include "maxentmodel.hpp"
 #include "CPPStringUtils.h"

@@ -21,6 +21,11 @@ using namespace std;
 #define T_UTF8_VEC(in, ret) CPPStringUtils::separate_utf8_chars(in, ret)
 #define TOKEN_STR(in, ret) CPPStringUtils::token_string(in, ret)
 
+#define ENC_FILE(toenc, fromenc, inFile, outFile) \
+    CPPStringUtils::encFile(toenc, fromenc, inFile, outFile)
+
+extern const string UTF8_N;
+
 class CPPStringUtils {
 public:
         static std::string to_string(const std::wstring source);
@@ -50,6 +55,14 @@ public:
         static std::wstring remove_html_content(std::wstring src, std::wstring startTag, std::wstring endTag);
 
         static void token_string(const string& s, vector<string>& words);
+
+        static string encString(const char* toenc, const char* fromenc, string& in);
+
+        /**
+         * Change the encoding of a file from fromenc to toenc
+         */
+        static int encFile(const char* toEnc, const char* fromEnc,
+                const char* inFile, const char* outFile);
 };
 #endif	/* _CPPSTRINGUTILS_H */
 

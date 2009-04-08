@@ -1,5 +1,12 @@
 #include "CPPStringUtils.h"
 #include <boost/tokenizer.hpp>
+#include <fstream>
+#include <iconv.h>
+
+const string UTF8_N = "utf8";
+
+#define SIZE_BUFFER 512
+#define SIZE_BUFFER_256 256
 
 std::string CPPStringUtils::to_string(const std::wstring source)
 {
@@ -589,3 +596,143 @@ void CPPStringUtils::token_string(const string& s, vector<string>& words){
         words.push_back(*itr);
     }
 }
+
+string CPPStringUtils::encString(const char* toenc, const char* fromenc, string& in){
+    iconv_t cd = iconv_open(toenc, fromenc);
+    size_t bufSize = in.length() * 3;
+    size_t origSize = in.length();
+    char* data = (char*)in.data();
+    char tmp[bufSize];
+    char* c1 = tmp;
+
+    iconv(cd, &data, &origSize, &c1, &bufSize);
+    iconv_close(cd);
+    return string(tmp);
+}
+
+int CodeConvert (const char* fcharset, const char* tcharset, char* inbuf, size_t inlen,
+        char* outbuf, size_t outlen)
+{
+
+    iconv_t vIconv;
+    char** vPin = &inbuf;
+    char** vPout = &outbuf;
+
+    if( fcharset == NULL || tcharset == NULL || inbuf == NULL
+          || outbuf == NULL || strlen(inbuf) == 0 || inlen == 0 || outlen == 0)
+    {
+        return -1;
+    }
+
+    vIconv = iconv_open(tcharset, fcharset);
+    if (vIconv == (iconv_t)(-1))
+    {
+        printf("iconv_open error!\n");
+        return -2;
+    }
+    if (iconv(vIconv, vPin, &inlen, vPout, &outlen) == -1)
+    {
+        return -3;
+    }
+
+    iconv_close(vIconv);
+    return 0;
+}
+
+
+int CPPStringUtils::encFile ( const char* toEnc, const char* fromEnc,
+        const char* inFile, const char* outFile)
+{
+
+        FILE* vInFile = NULL;
+        FILE* vOutFile = NULL;
+
+        char vBuffer[SIZE_BUFFER + 1];
+        char vInBuffer[SIZE_BUFFER + 1];
+        char vOutBuffer[SIZE_BUFFER + 1];
+
+        int inbuflen = 0;
+        int i = 0;
+
+
+        int infilelen = strlen(inFile);
+        int outfilelen = strlen(outFile);
+
+        memset(vBuffer, 0x00, sizeof(vBuffer));
+        memset(vInBuffer, 0x00, sizeof(vInBuffer));
+        memset(vOutBuffer, 0x00, sizeof(vOutBuffer));
+
+        /* 判断参数 */
+        if (
+                fromEnc == NULL || toEnc == NULL
+                || inFile == NULL || outFile == NULL
+                || infilelen == 0 || infilelen > 255
+                || outfilelen == 0 || outfilelen > 255
+        ) {
+                printf("parameter is error!\n");
+                return -1;
+        }
+
+        assert((vInFile=fopen(inFile, "rb")));
+        assert((vOutFile=fopen(outFile, "wb+")));
+
+        /* 取文件长度 */
+        fseek(vInFile, 0, SEEK_END);
+
+        infilelen = ftell(vInFile);
+        fseek(vInFile, 0, SEEK_SET);
+
+        /* Read file (256Bytes) */
+        while ((inbuflen=fread(vInBuffer, 1, SIZE_BUFFER_256, vInFile)) != 0)
+        {
+                i = inbuflen;
+                while (1)
+                {
+                        if (i <= 0) break;
+                        strncpy(vBuffer, vInBuffer, i);
+                        if (CodeConvert(fromEnc, toEnc, vBuffer, i, vOutBuffer, SIZE_BUFFER) == 0)
+                        {
+                                fseek(vInFile, -(inbuflen-i), SEEK_CUR);
+                                break;
+                        }
+                        i--;
+                }
+                if (i <= 0)
+                {
+                        /* 这里可以增加对外字之类的处理 */
+                        printf("convert codeing failed!\n");
+                        fclose(vInFile);
+                        fclose(vOutFile);
+                        return -1;
+                }
+                fwrite(vOutBuffer, 1, strlen(vOutBuffer), vOutFile);
+                memset(vInBuffer, 0x00, sizeof(vInBuffer));
+                memset(vOutBuffer, 0x00, sizeof(vOutBuffer));
+        }
+
+        fclose(vInFile);
+        fclose(vOutFile);
+        return 0;
+
+}
+
+/*
+void CPPStringUtils::encFile(const char* toenc, const char* fromenc,
+        const char* inFile, const char* outFile){
+    
+    string line;
+    ifstream in(inFile);
+
+    assert(in);
+    ofstream out(outFile);
+    while(!in.eof()){
+        getline(in, line);
+        out<<encString(toenc, fromenc, line)<<endl;
+    }
+
+    in.close();
+    out.close();
+     
+}
+*/
+

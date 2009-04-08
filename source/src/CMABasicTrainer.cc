@@ -1,8 +1,11 @@
 
+#include <set>
+
+
 #include <vector>
 
 #include "CMABasicTrainer.h"
-
+#include "strutil.h"
 #include <iostream>
 #include <stdlib.h>
 using namespace std;
@@ -26,9 +29,13 @@ void split_tag(const string& s, vector<string>& words,
         vector<string>& tags){
     TagTokenizer token(s, UNIT_SEP);
     for(TagTokenizer::const_iterator itr = token.begin(); itr != token.end(); ++itr){
+        string tmp = *itr;
+        trimSelf(tmp);
+        if(tmp.empty())
+            continue;
         size_t pos = itr->find_first_of(TAG_SEP);
         if(pos == string::npos || pos == 0){
-            cerr<<"The Format is word/tag, but not ("<<*itr<<")"<<endl;
+            cout<<"The Format is word/tag, but not ("<<*itr<<")"<<endl;
             exit(1);
         }
         words.push_back(itr->substr(0,pos));
@@ -101,6 +108,7 @@ void add_heldout_event(TrainerData* data, string& word,
 
 void gather_word_freq(TrainerData* data, const char* file){
     ifstream in(file);
+    assert(in);
     string line;    
     while(!in.eof()){
         getline(in, line);
@@ -167,6 +175,24 @@ void save_tag_dict(TrainerData* data, const char* file){
             out<<" "<<itr2->first<<" "<<itr2->second;
         }
         out<<endl;
+    }
+    out.close();
+}
+
+void save_pos_list(TrainerData* data, const char* file){
+    set<string> posSet;
+    ofstream out(file);
+    for(map<string, map<string, int> >::iterator itr = data->tagDict_.begin();
+          itr != data->tagDict_.end(); ++itr){
+        map<string, int>& inner = itr->second;
+        for(map<string, int>::iterator itr2 = inner.begin();
+              itr2 != inner.end(); ++itr2){
+            posSet.insert(itr2->first);
+        }
+    }
+
+    for(set<string>::iterator itr = posSet.begin(); itr != posSet.end(); ++itr){
+        out<<*itr<<endl;
     }
     out.close();
 }
@@ -238,10 +264,16 @@ void train(TrainerData* data, const char* file, const string cateName,
         save_features(data, featureFile.data());
         string tagFile = cateName + ".tag";
         save_tag_dict(data, tagFile.data());
+        if(isPOS){
+            string posFile = cateName + ".pos";
+            save_pos_list(data, posFile.data());
+        }
     #else
         if(isPOS){
             string tagFile = cateName + ".tag";
             save_tag_dict(data, tagFile.data());
+            string posFile = cateName + ".pos";
+            save_pos_list(data, posFile);
         }
     #endif
     // }}}
