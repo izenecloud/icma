@@ -2,6 +2,9 @@
  * \author vernkin
  */
 
+#include <string>
+
+
 #include "CMA_ME_Knowledge.h"
 #include "CPPStringUtils.h"
 #include "strutil.h"
@@ -86,6 +89,7 @@ int CMA_ME_Knowledge::loadUserDict(const char* fileName){
         trie_ = new VTrie();
 
     ifstream in(fileName);
+    assert(in);
     string line;
     while(!in.eof()){
         getline(in, line);
@@ -105,6 +109,7 @@ void CMA_ME_Knowledge::loadOuterDictRecord(const string& record, int counter){
     replaceAll(word, "_", " ");
 
     VTrieNode node;
+    node.data = 1;
     trie_->insert(word.data(), &node);
     for(size_t i=1; i<n; ++i){
         posT_->appendWordPOS(word, tokens[i], counter);

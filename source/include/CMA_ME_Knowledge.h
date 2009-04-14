@@ -110,6 +110,10 @@ public:
 
     VTrie* getTrie();
 
+    bool supportPOSTProcessing(){
+        return trie_ != 0;
+    }
+
 private:
     /** Input maybe a line or a word*/
     string readEncryptLine(FILE *in);

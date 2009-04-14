@@ -1,3 +1,6 @@
+
+#include <vector>
+
 #include "CPPStringUtils.h"
 #include "CMAPOCTagger.h"
 #include "strutil.h"
@@ -126,6 +129,7 @@ inline void get_poc_zh_context_1(vector<string>& words, string& tag_1, string& t
  */
 void get_poc_zh_context(vector<string>& words, vector<string>& tags, size_t i,
         bool rareWord, vector<string>& context){
+    context.resize(8);
     get_poc_zh_context_1(words, tags[i-1], tags[i-2], i, context);
 }
 

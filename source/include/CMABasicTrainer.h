@@ -12,7 +12,7 @@
 #include <boost/tokenizer.hpp>
 #include <fstream>
 
-#define TAG_SEP L'/'
+#define TAG_SEP '/'
 
 #include "maxentmodel.hpp"
 #include "CPPStringUtils.h"
@@ -97,6 +97,8 @@ void extract_feature(TrainerData* data, const char* file,
 void save_word_freq(TrainerData* data, const char* file);
 
 void save_tag_dict(TrainerData* data, const char* file);
+
+void save_sys_dict(TrainerData* data, const char* file);
 
 void load_tag_dict(map<string, map<string, int> > *tagDict, const char* file);
 

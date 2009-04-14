@@ -50,8 +50,8 @@ inline bool cmpSDPair(pair<vector<string>,double> p1, pair<vector<string>,double
     return p1.second - p2.second >= 0;
 }
 
-void pos_train(const char* file, const string& destFile,
-        const char* extractFile = 0, string method = "lbfgs", size_t iters = 15,
+void pos_train(const char* file, const string& cateFile,
+        const char* extractFile = 0, string method = "gis", size_t iters = 15,
         float gaussian = 0.0f);
 
 struct POSTagUnit{

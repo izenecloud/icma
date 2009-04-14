@@ -21,8 +21,8 @@ enum CharType
     CHAR_TYPE_INIT, ///< initial type
     CHAR_TYPE_DIGIT, ///< digit character
     CHAR_TYPE_PUNC, ///< puntuation character
-    CHAR_TYPE_HYPHEN, ///< hythen string, like -
-    CHAR_TYPE_SPACE, ///< space string, like ' '
+    CHAR_TYPE_HYPHEN, ///< hythen character, like '-'
+    CHAR_TYPE_SPACE, ///< space character, like ' '
     CHAR_TYPE_LETTER, ///< letter character
     CHAR_TYPE_OTHER = 7777///< other character
 };
