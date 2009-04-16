@@ -169,7 +169,7 @@ namespace cma {
         int begin = -1;
         int lastWordEnd = -1;
 
-        size_t n = src.size();
+        int n = (int)src.size();
         VTrieNode node;
         for (int i = 0; i < n; ++i) {
             string& str = src[i];
@@ -245,20 +245,21 @@ namespace cma {
     }
 
     void CMA_ME_Analyzer::analysis(const string& sentence, int N,
-            vector<vector<string> >& pos,
+            vector<vector<string> >& posRet,
             vector<pair<vector<string>, double> >& segRet, bool tagPOS) {
-        int minN = N > 1 ? N : 2;
+        int segN = N > 1 ? N : 2;
         segRet.resize(N);
 
         vector<pair<vector<string>, double> > segment(N);
 
+        SegTagger* segTagger = knowledge_->getSegTagger();
         //separate digits, letter and so on
         CateStrTokenizer ct(sentence);
         while (ct.next()) {
             if (ct.isWordSeq()) {
                 vector<string>& words = ct.getWordSeq();
                 if (words.size() > 1) {
-                    knowledge_->getSegTagger()->seg_sentence(words, minN, N, segment);
+                    segTagger->seg_sentence(words, segN, N, segment);
                     continue;
                 }
                 string& word = words.front();
@@ -281,8 +282,14 @@ namespace cma {
             combineRetWithTrie( trie, srcPair.first, destPair.first);
         }
 
-        //TODO: mark the POS
-        //vector<pair<vector<string>,double> >& poses;
+        if(!tagPOS)
+            return;
+
+        posRet.resize(N);
+        POSTagger* posTagger = knowledge_->getPOSTagger();       
+        for (int i = 0; i < N; ++i) {
+            posTagger->tag_sentence_best(segRet[i].first, posRet[i]);
+        }
 
 
     }

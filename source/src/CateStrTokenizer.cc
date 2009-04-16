@@ -39,8 +39,8 @@ void CateStrTokenizer::initialize(){
 }
 
 CateStrTokenizer::CateStrTokenizer(const string& sentence) :
-      sen_(sentence), senIdx_(0), senLen_((int)sentence.length()),
-      _preCharT(CHAR_TYPE_INIT), tokenT_(CHAR_TYPE_INIT){
+      tokenT_(CHAR_TYPE_INIT), sen_(sentence), senIdx_(0),
+      senLen_((int)sentence.length()), _preCharT(CHAR_TYPE_INIT){
 
 }
 

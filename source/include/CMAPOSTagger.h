@@ -99,6 +99,11 @@ public:
             vector<pair<vector<string>, double> >& segment);
 
     /**
+     * Only return the best result
+     */
+    void tag_sentence_best(vector<string>& words, vector<string>& posRet);
+
+    /**
      * Append the POS Information into Trie and POS Vector
      */
     bool appendWordPOS(string& line);
@@ -112,7 +117,7 @@ private:
      * \return a list of (tag, score) pair sorted
      */
     void tag_word(vector<string>& words, int index, size_t N, string* tags,
-            POSTagUnit* candidates, int& lastIndex, int& canSize,
+            POSTagUnit* candidates, int& lastIndex, size_t& canSize,
             double initScore, int candidateNum);
 
 private:

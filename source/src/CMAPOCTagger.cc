@@ -200,7 +200,7 @@ void create_poc_meterial(const char* inFile, const char* outFile){
  * \return true if the candidates is full
  */
 inline void insertCandidate(uint8_t pocCode, int index, double score,
-        POCTagUnit* candidates, int& lastIndex, int& canSize, size_t N){
+        POCTagUnit* candidates, int& lastIndex, size_t& canSize, size_t N){
     if(canSize == 0 || (N==1 && score > candidates[lastIndex].score)){
         POCTagUnit& head = candidates[0];
         head.pocCode = pocCode;
@@ -261,7 +261,7 @@ inline void insertCandidate(uint8_t pocCode, int index, double score,
 }
 
 void SegTagger::tag_word(vector<string>& words, int index, size_t N, 
-        uint8_t* tags, POCTagUnit* candidates, int& lastIndex, int& canSize,
+        uint8_t* tags, POCTagUnit* candidates, int& lastIndex, size_t& canSize,
         double initScore, int candidateNum){
 
     vector<string> context(8);
@@ -314,7 +314,7 @@ void SegTagger::seg_sentence(vector<string>& words, size_t N, size_t retSize,
     //last index of candidates
     int lastIndex;
     //the size of the candidates
-    int canSize;
+    size_t canSize;
 
     for(size_t i=0; i<n; ++i){
         lastIndex = -1;
@@ -381,7 +381,7 @@ void SegTagger::seg_sentence(vector<string>& words, size_t N, size_t retSize,
             seg.push_back(strBuf);
     }
     #else
-    for(int k=0; k<h0Size; ++k){
+    for(size_t k=0; k<h0Size; ++k){
         uint8_t* tags = h0[k];
         pair<vector<string>,double>& pair = segment[k];
         pair.second = (pair.second > 0) ? (pair.second * scores[k]) : scores[k];

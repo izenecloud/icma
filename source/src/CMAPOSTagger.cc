@@ -7,6 +7,8 @@ namespace cma{
 
 string POS_EMPTY_STR = "";
 
+const string DEFAULT_POS = "n";
+
 void get_prefix_suffix(wstring& word, size_t length, vector<wstring>& prefixes,
         vector<wstring>& suffixes){
     size_t l = min(word.length(), length);
@@ -79,7 +81,7 @@ void pos_train(const char* file, const string& cateFile,const char* extractFile,
 
 
 inline void insertCandidate(string& pos, int index, double score,
-        POSTagUnit* candidates, int& lastIndex, int& canSize, size_t N){
+        POSTagUnit* candidates, int& lastIndex, size_t& canSize, size_t N){
     if(canSize == 0 || (N==1 && score > candidates[lastIndex].score)){
         POSTagUnit& head = candidates[0];
         head.pos = pos;
@@ -140,7 +142,7 @@ inline void insertCandidate(string& pos, int index, double score,
 }
 
 void POSTagger::tag_word(vector<string>& words, int index, size_t N,
-        string* tags, POSTagUnit* candidates, int& lastIndex, int& canSize,
+        string* tags, POSTagUnit* candidates, int& lastIndex, size_t& canSize,
         double initScore, int candidateNum){
     vector<string> context;
 
@@ -151,12 +153,6 @@ void POSTagger::tag_word(vector<string>& words, int index, size_t N,
     string& tag_1 = index > 0 ? tags[index-1] : POS_EMPTY_STR;
     string& tag_2 = index > 1 ? tags[index-2] : POS_EMPTY_STR;
     get_pos_zh_scontext_1(words, tag_1, tag_2, index, !exists, context);
-    if(N == 1){
-        string tag;
-        double score = me.eval(context, tag);
-        candidates[canSize].score = initScore ? score : initScore * score;
-        return;
-    }
 
     vector<pair<outcome_type, double> > outcomes;
     me.eval_all(context, outcomes, false);
@@ -193,7 +189,7 @@ void POSTagger::tag_word(vector<string>& words, int index, size_t N,
 
 void POSTagger::tag_sentence(vector<string>& words, size_t N, size_t retSize,
             vector<pair<vector<string>, double> >& segment){
-   size_t n = words.size();
+    size_t n = words.size();
 
     //h0, h1 and score don't need to initialize
     string _array1[N][n];
@@ -213,7 +209,7 @@ void POSTagger::tag_sentence(vector<string>& words, size_t N, size_t retSize,
     //last index of candidates
     int lastIndex;
     //the size of the candidates
-    int canSize;
+    size_t canSize;
 
     for(size_t i=0; i<n; ++i){
         lastIndex = -1;
@@ -227,11 +223,11 @@ void POSTagger::tag_sentence(vector<string>& words, size_t N, size_t retSize,
         }
 
         //generate the N-best
-        for(int k=canSize-1; k>=0; --k){
+        for(size_t k=canSize-1; k>=0; --k){
             POSTagUnit& unit = candidates[lastIndex];
             lastIndex = unit.previous;
 
-            for(int jj=0; jj<i; ++jj){
+            for(size_t jj=0; jj<i; ++jj){
                 h1[k][jj] = h0[unit.index][jj];
             }
 
@@ -250,12 +246,12 @@ void POSTagger::tag_sentence(vector<string>& words, size_t N, size_t retSize,
         h0Size = retSize;
 
     //store the result
-    for(int k=0; k<h0Size; ++k){
+    for(size_t k=0; k<h0Size; ++k){
         pair<vector<string>,double>& pair = segment[k];
         pair.second = (pair.second > 0) ? (pair.second * scores[k]) : scores[k];
         vector<string>& seg = pair.first;
         string* tags = h0[k];
-        for(int i = 0; i < n; ++i){
+        for(size_t i = 0; i < n; ++i){
             seg.push_back(tags[i]);
         }
     }
@@ -299,6 +295,56 @@ void POSTagger::tag_file(const char* inFile, const char* outFile){
     out.close();
 }
 
+void POSTagger::tag_sentence_best(vector<string>& words, vector<string>& posRet){
+    size_t n = words.size();
+    for(size_t index=0; index<n; ++index){
+        vector<string> context;
+        VTrieNode node;
+        trie_->search( words[index].data(), &node );
+        bool exists = node.data > 0;
+        string& tag_1 = index > 0 ? posRet[index-1] : POS_EMPTY_STR;
+        string& tag_2 = index > 1 ? posRet[index-2] : POS_EMPTY_STR;
+        get_pos_zh_scontext_1(words, tag_1, tag_2, index, !exists, context);
+        if(exists){
+            set<string>& posSet = posVec_[node.data];
+
+            if(posSet.empty()){
+                posRet.push_back(DEFAULT_POS);
+                continue;
+            }else if(posSet.size() == 1){
+                posRet.push_back(*posSet.begin());
+                continue;
+            }
+
+            vector<pair<outcome_type, double> > outcomes;
+            me.eval_all(context, outcomes, false);
+
+            //find the best pos
+            double bestScore = -1.0;
+            string bestPos;
+            size_t outSize = outcomes.size();
+            
+            for(size_t k=0; k<outSize; ++k){
+                pair<outcome_type, double>& pair = outcomes[k];
+                if(pair.second > bestScore && (posSet.count(pair.first) > 0)){
+                    bestScore = pair.second;
+                    bestPos = pair.first;
+                }
+            }
+
+            //no suitable pos found, insert the default POS n
+            if(bestScore < 0)
+                posRet.push_back(DEFAULT_POS);
+            else
+                posRet.push_back(bestPos);
+        }else{
+            string pos;
+            me.eval(context, pos);
+            posRet.push_back(pos);
+        }
+    }
+}
+
 bool POSTagger::appendWordPOS(string& line){
     vector<string> tokens;
     TOKEN_STR(line, tokens);
@@ -316,9 +362,10 @@ bool POSTagger::appendWordPOS(string& line){
     if(node.data > 0){
         posSet = &(posVec_[node.data]);
     }else{
+        //get the right offset (offset 0 is reserved)
+        node.data = (int)posVec_.size();
         //insert new key
         posVec_.push_back(set<string>());
-        node.data = (int)posVec_.size();
         trie_->insert(word.data(), &node);
         posSet = &(posVec_.back());
     }
@@ -326,6 +373,8 @@ bool POSTagger::appendWordPOS(string& line){
     for(size_t i=1; i<n; ++i){
         posSet->insert(tokens[i]);
     }
+
+    return true;
 }
 
 }

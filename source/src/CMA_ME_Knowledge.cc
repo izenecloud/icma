@@ -65,6 +65,7 @@ int CMA_ME_Knowledge::loadStatModel(const char* cateName){
 int CMA_ME_Knowledge::loadSynonymDictionary(const char* fileName){
     assert(!vsynC_);
     vsynC_ = new VSynonymContainer(fileName, " ", "_");
+    return 1;
 }
 
 void CMA_ME_Knowledge::getSynonyms(const string& word, VSynonym& synonym){

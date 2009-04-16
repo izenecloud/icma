@@ -1,3 +1,9 @@
-SET(CM_SRC analyzer.cpp knowledge.cpp cma_factory.cpp CPPStringUtils.cc sentence.cpp)
+#SET(CMAKE_CURRENT_BINARY_DIR cmac)
 
-ADD_LIBRARY(cmac STATIC ${CM_SRC})
+SET(CM_BASIC_SRC analyzer.cpp CMA_ME_Analyzer.cc CMAPOSTagger.cc sentence.cpp CateStrTokenizer.cc CMA_ME_Factory.cc  CPPStringUtils.cc CMABasicTrainer.cc  CMA_ME_Knowledge.cc knowledge.cpp VTrieCode.cc cma_factory.cpp CMAPOCTagger.cc pos_table.cpp)
+
+ADD_LIBRARY(${LIBS_CMAC} STATIC ${CM_BASIC_SRC})
+TARGET_LINK_LIBRARIES(${LIBS_CMAC} ${LIBS_ME})
+
+ADD_EXECUTABLE(cmactrainer TrainerCMD.cc)
+TARGET_LINK_LIBRARIES(cmactrainer ${LIBS_CMAC})

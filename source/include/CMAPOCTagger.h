@@ -78,7 +78,7 @@ private:
      * \return a list of (tag, score) pair sorted
      */
     void tag_word(vector<string>& words, int index, size_t N, uint8_t* tags,
-            POCTagUnit* candidates, int& lastIndex, int& canSize, 
+            POCTagUnit* candidates, int& lastIndex, size_t& canSize,
             double initScore, int candidateNum);
 
 private:

@@ -83,11 +83,11 @@ private:
     /** sentence */
     string sen_;
 
-    /** the length of the sentence */
-    int senLen_;
-
     /** the last index of the sen_ */
     int senIdx_;
+
+        /** the length of the sentence */
+    int senLen_;
 
     /** Current Character, for internal perpose*/
     string _strBuf;

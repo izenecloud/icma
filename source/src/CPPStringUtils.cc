@@ -630,7 +630,7 @@ int CodeConvert (const char* fcharset, const char* tcharset, char* inbuf, size_t
         printf("iconv_open error!\n");
         return -2;
     }
-    if (iconv(vIconv, vPin, &inlen, vPout, &outlen) == -1)
+    if (iconv(vIconv, vPin, &inlen, vPout, &outlen) == 0)
     {
         return -3;
     }
@@ -699,7 +699,6 @@ int CPPStringUtils::encFile ( const char* toEnc, const char* fromEnc,
                 }
                 if (i <= 0)
                 {
-                        /* 这里可以增加对外字之类的处理 */
                         printf("convert codeing failed!\n");
                         fclose(vInFile);
                         fclose(vOutFile);
@@ -715,24 +714,3 @@ int CPPStringUtils::encFile ( const char* toEnc, const char* fromEnc,
         return 0;
 
 }
-
-/*
-void CPPStringUtils::encFile(const char* toenc, const char* fromenc,
-        const char* inFile, const char* outFile){
-    
-    string line;
-    ifstream in(inFile);
-
-    assert(in);
-    ofstream out(outFile);
-    while(!in.eof()){
-        getline(in, line);
-        out<<encString(toenc, fromenc, line)<<endl;
-    }
-
-    in.close();
-    out.close();
-     
-}
-*/
-
