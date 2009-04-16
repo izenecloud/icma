@@ -333,14 +333,36 @@ void POSTagger::tag_sentence_best(vector<string>& words, vector<string>& posRet)
             }
 
             //no suitable pos found, insert the default POS n
-            if(bestScore < 0)
+            if(bestScore < 0 || bestPos.empty())
                 posRet.push_back(DEFAULT_POS);
             else
                 posRet.push_back(bestPos);
         }else{
             string pos;
-            me.eval(context, pos);
-            posRet.push_back(pos);
+            if(me.eval(context, pos) > 0.0)
+                posRet.push_back(pos);
+            else{
+                vector<pair<outcome_type, double> > outcomes;
+                me.eval_all(context, outcomes, false);
+
+                //find the best pos
+                double bestScore = -1.0;
+                size_t outSize = outcomes.size();
+
+                for(size_t k=0; k<outSize; ++k){
+                    pair<outcome_type, double>& pair = outcomes[k];
+                    if(pair.second > bestScore){
+                        bestScore = pair.second;
+                        pos = pair.first;
+                    }
+                }
+
+                //no suitable pos found, insert the default POS n
+                if(bestScore < 0 || pos.empty())
+                    posRet.push_back(DEFAULT_POS);
+                else
+                    posRet.push_back(pos);
+            }
         }
     }
 }

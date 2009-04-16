@@ -391,7 +391,7 @@ double MaxentModel::eval(const context_type& context,
     size_t oid = m_outcome_map->id(outcome);
 
     if (oid == m_outcome_map->null_id) {
-        cerr << "[MaxentModel::eval()] unknown outcome id:" << oid << endl;
+        //cerr << "[MaxentModel::eval()] unknown outcome id:" << oid << endl;
         return 0.0;
     }
 
