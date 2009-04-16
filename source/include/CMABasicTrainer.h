@@ -31,7 +31,7 @@ class TrainerData{
 
 public:
     TrainerData(){
-        rareFreq_ = 5;
+        rareFreq_ = 1;
 
         cutoff_ = 10;
         evCutoff_ = 1;
@@ -44,7 +44,7 @@ public:
     map<string, int> wordFreq_;
     map<string, int> featDict_;
     map<string, map<string, int> > tagDict_;
-    /** use special feature for rare word with frequency &lt; RARE [default=5] */
+    /** use special feature for rare word with frequency &lt; RARE [default=1] */
     int rareFreq_;
 
     /** discard feature with frequency &lt; CUTOFF when training [default=5]*/
@@ -97,6 +97,8 @@ void extract_feature(TrainerData* data, const char* file,
 void save_word_freq(TrainerData* data, const char* file);
 
 void save_tag_dict(TrainerData* data, const char* file);
+
+void save_sys_dict(TrainerData* data, const char* file);
 
 void load_tag_dict(map<string, map<string, int> > *tagDict, const char* file);
 

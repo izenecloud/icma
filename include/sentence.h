@@ -1,5 +1,5 @@
 /** \file sentence.h
- *
+ * 
  * \author Jun Jiang
  * \version 0.1
  * \date Feb 17, 2009
@@ -25,6 +25,13 @@ struct Morpheme
 
     /** the index code of part-of-speech tag */
     int posCode_;
+
+    /**
+     * Constructor.
+     * The lexicon string value is initialized with empty string,
+     * and the index code of part-of-speech tag is initialized with -1, meaning that no part-of-speech tag is available.
+     */
+    Morpheme();
 };
 
 /** A list of morphemes. */

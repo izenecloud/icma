@@ -1,5 +1,5 @@
 
-#include <string>
+#include "VTrie.h"
 
 #include "CMAPOSTagger.h"
 
@@ -22,19 +22,6 @@ inline void get_pos_zh_scontext_1(vector<string>& words, string& tag_1,
     size_t n = words.size();
 
     if(rareWord){
-        /*vector<wstring> prefixes;
-        vector<wstring> suffixes;
-        get_prefix_suffix(w, 2, prefixes, suffixes);
-        for(vector<wstring>::iterator itr = prefixes.begin(); 
-              itr != prefixes.end(); ++itr){
-            context.push_back(L"prefix=" + *itr);
-        }
-
-        for(vector<wstring>::iterator itr = suffixes.begin();
-              itr != suffixes.end(); ++itr){
-            context.push_back(L"suffix=" + *itr);
-        }*/
-
         if(isNumber(w))
             context.push_back("numeric");
 
@@ -91,10 +78,6 @@ void pos_train(const char* file, const string& cateFile,const char* extractFile,
 }
 
 
-/**
- *
- * \return true if the candidates is full
- */
 inline void insertCandidate(string& pos, int index, double score,
         POSTagUnit* candidates, int& lastIndex, int& canSize, size_t N){
     if(canSize == 0 || (N==1 && score > candidates[lastIndex].score)){
@@ -160,9 +143,11 @@ void POSTagger::tag_word(vector<string>& words, int index, size_t N,
         string* tags, POSTagUnit* candidates, int& lastIndex, int& canSize,
         double initScore, int candidateNum){
     vector<string> context;
-    
-    TAGDICT_T::iterator tagItr = tagDict_.find(words[index]) ;
-    bool exists = tagItr != tagDict_.end();
+
+    VTrieNode node;
+    trie_->search( words[index].data(), &node );
+
+    bool exists = node.data > 0;
     string& tag_1 = index > 0 ? tags[index-1] : POS_EMPTY_STR;
     string& tag_2 = index > 1 ? tags[index-2] : POS_EMPTY_STR;
     get_pos_zh_scontext_1(words, tag_1, tag_2, index, !exists, context);
@@ -176,31 +161,13 @@ void POSTagger::tag_word(vector<string>& words, int index, size_t N,
     vector<pair<outcome_type, double> > outcomes;
     me.eval_all(context, outcomes, false);
 
-    /*
-    if(exists){
-        //need to optimize
-        for(vector<pair<outcome_type, double> >::iterator itr = outcomes.begin();
-                itr != outcomes.end(); ++itr){
-            string& tag = itr->first;
-            if(tagDict_[words[i]][tag]){
-                ret.push_back(pair<string, double>(tag,itr->second));
-                --N;
-                //at most N tags
-                if(!N) return;
-            }
-        }
-
-        //add at least one tag
-        if(origN != N) return;
-    }
-    */
     size_t outSize = outcomes.size();
     if(exists){
-        map<string, int>& innerMap = tagItr->second;
+        set<string>& posSet = posVec_[node.data];
         for(size_t i=0; i<outSize; ++i){
             pair<outcome_type, double>& pair = outcomes[i];
             //whether exists such pos
-            if(innerMap.find(pair.first) == innerMap.end())
+            if(posSet.count(pair.first) <= 0)
                 continue;
             double score = pair.second * initScore;
             if(canSize >= N && score <= candidates[lastIndex].score)
@@ -332,8 +299,33 @@ void POSTagger::tag_file(const char* inFile, const char* outFile){
     out.close();
 }
 
-void POSTagger::appendWordPOS(string& word, string& tag, int counter){
-    tagDict_[word][tag] += counter;
+bool POSTagger::appendWordPOS(string& line){
+    vector<string> tokens;
+    TOKEN_STR(line, tokens);
+    size_t n = tokens.size();
+    if(!n)
+        return false;
+    string word = tokens[0];
+    replaceAll(word, "_", " ");
+
+    set<string>* posSet = 0;
+    //try to search first
+    VTrieNode node;
+    trie_->search(word.data(), &node);   
+    //already exits
+    if(node.data > 0){
+        posSet = &(posVec_[node.data]);
+    }else{
+        //insert new key
+        posVec_.push_back(set<string>());
+        node.data = (int)posVec_.size();
+        trie_->insert(word.data(), &node);
+        posSet = &(posVec_.back());
+    }
+    
+    for(size_t i=1; i<n; ++i){
+        posSet->insert(tokens[i]);
+    }
 }
 
 }

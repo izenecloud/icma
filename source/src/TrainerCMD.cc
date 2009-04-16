@@ -62,6 +62,6 @@ int tainerEntry(int argc, char** argv){
     return 1;
 }
 
-int main(int argc, char** argv){
+int main1(int argc, char** argv){
     return tainerEntry(argc, argv);
 }

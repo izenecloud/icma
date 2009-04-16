@@ -9,9 +9,15 @@
 #define	_CMAPOSTAGGER_H
 
 #include "CMABasicTrainer.h"
+#include "VTrie.h"
+#include "strutil.h"
+#include "CPPStringUtils.h"
 
 #include <algorithm>
 #include <math.h>
+#include <vector>
+#include <set>
+#include <string>
 
 using namespace maxent::me;
 
@@ -63,15 +69,24 @@ struct POSTagUnit{
     int previous;
 };
 
+/**
+ * Tagging the POS Information
+ */
 class POSTagger{
 public:
-    POSTagger(const string& model, const char* tagDictFile,
-             context_t context = get_pos_zh_scontext){
+    POSTagger(const string& model, VTrie* pTrie){
         me.load(model);
-        load_tag_dict(&tagDict_, tagDictFile);
-        get_context = context;
+        assert(pTrie);
+        trie_ = pTrie;
+        //reserved the location offset 0
+        posVec_.push_back(set<string>());
     }
 
+    /**
+     * Tag the segmented file with pos
+     * \param inFile the input file
+     * \param outFile the output file
+     */
     void tag_file(const char* inFile, const char *outFile);
 
     /**
@@ -83,9 +98,11 @@ public:
     void tag_sentence(vector<string>& words, size_t N, size_t retSize,
             vector<pair<vector<string>, double> >& segment);
 
-    void appendWordPOS(string& word, string& tag, int counter = 1);
+    /**
+     * Append the POS Information into Trie and POS Vector
+     */
+    bool appendWordPOS(string& line);
 
-    typedef map<string, map<string, int> > TAGDICT_T ;
 private:
 
     /**
@@ -100,8 +117,11 @@ private:
 
 private:
     MaxentModel me;
-    TAGDICT_T tagDict_;
-    context_t get_context;
+    
+    /** The trie_ is not supposed destroyed by the POSTagger */
+    VTrie *trie_;
+
+    vector<set<string> > posVec_;
 };
 
 }

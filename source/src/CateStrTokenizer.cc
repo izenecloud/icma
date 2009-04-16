@@ -33,7 +33,8 @@ void CateStrTokenizer::initialize(){
     addToTypeMap(_PuntStr, CHAR_TYPE_PUNC);
     addToTypeMap(_LetterStr, CHAR_TYPE_LETTER);
     addToTypeMap(_DigitStr, CHAR_TYPE_DIGIT);
-    addToTypeMap(_HyphenStr, CHAR_TYPE_HYPHEN);
+    //Take The _HyphenStr As CHAR_TYPE_LETTER, but not CHAR_TYPE_HYPHEN
+    addToTypeMap(_HyphenStr, CHAR_TYPE_LETTER);
     addToTypeMap(_SpaceStr, CHAR_TYPE_SPACE);
 }
 
@@ -206,8 +207,8 @@ bool CateStrTokenizer::next(){
             return true;
         }
 
-        else if(_preCharT == CHAR_TYPE_DIGIT || _preCharT == CHAR_TYPE_HYPHEN
-                    || _preCharT == CHAR_TYPE_LETTER)
+        else if(_preCharT == CHAR_TYPE_DIGIT || _preCharT == CHAR_TYPE_LETTER
+                    || _preCharT == CHAR_TYPE_HYPHEN)
         {
             if(curType == CHAR_TYPE_SPACE){
                 speStr_ = _strBuf;

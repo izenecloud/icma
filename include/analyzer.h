@@ -92,15 +92,16 @@ public:
      */
     enum OptionType
     {
-	OPTION_TYPE_POS_TAGGING, ///< non-zero value to print part-of-speech tags, which is the default value
-	OPTION_TYPE_NBEST, ///< a positive value to set the number of candidate results of \e runWithSentence(), which is set to 10 defaultly.
-        OPTION_TYPE_NUM ///< the count of option types
+	OPTION_TYPE_POS_TAGGING, ///< the value zero for not to tag part-of-speech tags in the result of \e runWithSentence(), \e runWithString() and \e runWithStream, which value is 1 defaultly.
+	OPTION_TYPE_NBEST, ///< a positive value to set the number of candidate results of \e runWithSentence(), which value is 1 defaultly.
+	OPTION_TYPE_NUM ///< the count of option types
     };
 
     /**
      * Set the option value for analysis.
      * \param nOption the option type
      * \param nValue the option value
+     * \attention when \e nOption is \e OPTION_TYPE_NBEST, the invalid \e nValue less than 1 will take no effect.
      */
     void setOption(OptionType nOption, double nValue);
 

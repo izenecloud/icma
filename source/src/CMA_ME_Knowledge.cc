@@ -2,17 +2,25 @@
  * \author vernkin
  */
 
+#include <string>
+
+
 #include "CMA_ME_Knowledge.h"
 #include "CPPStringUtils.h"
 #include "strutil.h"
+#include "pos_table.h"
 
 #include <assert.h>
 using namespace std;
 
 namespace cma{
 
-CMA_ME_Knowledge::CMA_ME_Knowledge(): segT_(0), posT_(0),vsynC_(0),trie_(0){
+vector<string> ENCODING_VEC;
 
+bool ENC_VEC_INIT_FLAG = false;
+
+CMA_ME_Knowledge::CMA_ME_Knowledge(): segT_(0), posT_(0),vsynC_(0),trie_(0){
+    CMA_ME_Knowledge::initialize();
 }
 
 CMA_ME_Knowledge::~CMA_ME_Knowledge(){
@@ -23,10 +31,26 @@ CMA_ME_Knowledge::~CMA_ME_Knowledge(){
 }
 
 int CMA_ME_Knowledge::loadPOSModel(const char* cateName){
-    assert(!posT_);
     string cateStr(cateName);
-    posT_ = new POSTagger((cateStr + ".model").data(),
-            (cateStr + ".tag").data());
+
+    //load pos table first
+    ifstream posFile((cateStr + ".pos").data());
+    assert(posFile);
+    string line;
+    while(!posFile.eof()){
+        getline(posFile, line);
+        trimSelf(line);
+        if(!line.empty())
+            continue;
+        POSTable::instance()->addPOS(line);
+    }
+
+    if(!trie_)
+        trie_ = new VTrie();
+
+    assert(!posT_);
+    posT_ = new POSTagger((cateStr + ".model").data(), trie_);
+
     return 1;
 }
 
@@ -49,6 +73,7 @@ void CMA_ME_Knowledge::getSynonyms(const string& word, VSynonym& synonym){
 
 int CMA_ME_Knowledge::loadStopWordDict(const char* fileName){
     ifstream in(fileName);
+    assert(in);
     string line;
     while(!in.eof()){
         getline(in, line);
@@ -63,18 +88,17 @@ int CMA_ME_Knowledge::loadStopWordDict(const char* fileName){
 
 int CMA_ME_Knowledge::loadSystemDict(const char* binFileName){
     assert(posT_);
-    if(!trie_)
-        trie_ = new VTrie();
+    assert(trie_);
 
     FILE *in = fopen(binFileName, "r");
+    assert(in);
     string line;
     while(!feof(in)){
         //may be another way get line
         line = readEncryptLine(in);
         if(line.empty())
             break;
-
-        loadOuterDictRecord(line, 5);
+        posT_->appendWordPOS(line);
     }
     fclose(in);
     return 1;
@@ -85,31 +109,31 @@ int CMA_ME_Knowledge::loadUserDict(const char* fileName){
     if(!trie_)
         trie_ = new VTrie();
 
-    ifstream in(fileName);
+    string destFile(fileName);
+    bool createTmpFile = false;
+    if(getEncodeType() != ENCODE_TYPE_UTF8){
+        destFile += ".utf8.tmp";
+        ENC_FILE(ENCODING_VEC[ENCODE_TYPE_UTF8].data(), ENCODING_VEC[getEncodeType()].data(),
+                fileName, destFile.data());
+        createTmpFile = true;
+    }
+
+    ifstream in(destFile.data());
+    assert(in);
     string line;
     while(!in.eof()){
         getline(in, line);
-        loadOuterDictRecord(line, 10);
+        posT_->appendWordPOS(line);
     }
     in.close();
+
+    if(createTmpFile){
+        remove(destFile.data());
+    }
+
     return 1;
 }
 
-void CMA_ME_Knowledge::loadOuterDictRecord(const string& record, int counter){
-    vector<string> tokens;
-    TOKEN_STR(record, tokens);
-    size_t n = tokens.size();
-    if(!n)
-        return;
-    string word = tokens[0];
-    replaceAll(word, "_", " ");
-
-    VTrieNode node;
-    trie_->insert(word.data(), &node);
-    for(size_t i=1; i<n; ++i){
-        posT_->appendWordPOS(word, tokens[i], counter);
-    }
-}
 
 int CMA_ME_Knowledge::encodeSystemDict(const char* txtFileName,
         const char* binFileName){
@@ -209,6 +233,17 @@ bool CMA_ME_Knowledge::isStopWord(const string& word){
 
 VTrie* CMA_ME_Knowledge::getTrie(){
     return trie_;
+}
+
+void CMA_ME_Knowledge::initialize(){
+    if(ENC_VEC_INIT_FLAG)
+        return;
+
+    ENC_VEC_INIT_FLAG = true;
+    ENCODING_VEC.resize(ENCODE_TYPE_NUM + 1);
+    ENCODING_VEC[ENCODE_TYPE_GB2312] = "gb2312";
+    ENCODING_VEC[ENCODE_TYPE_BIG5] = "big5";
+    ENCODING_VEC[ENCODE_TYPE_UTF8] = "utf8";
 }
 
 }

@@ -13,6 +13,7 @@
 #include "VSynonym.h"
 
 #include <set>
+#include <vector>
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -20,6 +21,8 @@
 using namespace std;
 
 namespace cma{
+
+extern vector<string> ENCODING_VEC;
 
 class CMA_ME_Knowledge : public Knowledge{
 
@@ -110,11 +113,14 @@ public:
 
     VTrie* getTrie();
 
+    /**
+     * Invoked by the CMA_ME_Knowledge Constructor
+     */
+    static void initialize();
+
 private:
     /** Input maybe a line or a word*/
     string readEncryptLine(FILE *in);
-
-    void loadOuterDictRecord(const string& record, int counter = 1);
 
 private:
     /** tagger for segment */

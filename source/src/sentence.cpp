@@ -1,5 +1,5 @@
 /** \file sentence.cpp
- *
+ * 
  * \author Jun Jiang
  * \version 0.1
  * \date Feb 17, 2009
@@ -8,10 +8,16 @@
 #include "sentence.h"
 #include "pos_table.h"
 
+#include <algorithm>
 #include <cassert>
 
 namespace cma
 {
+
+Morpheme::Morpheme()
+    : posCode_(-1)
+{
+}
 
 void Sentence::setString(const char* pString)
 {
@@ -30,7 +36,7 @@ int Sentence::getListSize(void) const
     return candidates_.size();
 }
 
-int Sentence::getCount(int nPos) const
+int Sentence::getCount(int nPos) const 
 {
     return candidates_[nPos].size();
 }
@@ -64,7 +70,7 @@ int Sentence::getOneBestIndex(void) const
 
     assert(scores_.size() > 0 && scores_.size() == candidates_.size());
 
-    return max_element(scores_.begin(), scores_.end()) - scores_.begin();
+    return std::max_element(scores_.begin(), scores_.end()) - scores_.begin();
 }
 
 void Sentence::addList(const MorphemeList& morphemeList, double score)

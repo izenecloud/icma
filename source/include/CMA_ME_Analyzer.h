@@ -10,7 +10,6 @@
 #include "cmacconfig.h"
 #include "analyzer.h"
 #include "CMA_ME_Knowledge.h"
-#include "CateStrTokenizer.h"
 #include "sentence.h"
 
 #include <string>
@@ -78,6 +77,9 @@ private:
 
     /** string buffer stores result for \e runWithString */
     string strBuf_;
+
+    /** The encoding of the input/output text */
+    Knowledge::EncodeType encoding_;
 };
 
 

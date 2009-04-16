@@ -56,7 +56,7 @@ void gather_feature(TrainerData* data, string& word, vector<string>& context,
 }
 
 bool is_rare_word(TrainerData* data, string& word){
-    return data->wordFreq_[word] > data->rareFreq_;
+    return data->wordFreq_[word] < data->rareFreq_;
 }
 
 void add_event(TrainerData* data, string& word, vector<string>& context,
@@ -179,6 +179,21 @@ void save_tag_dict(TrainerData* data, const char* file){
     out.close();
 }
 
+void save_sys_dict(TrainerData* data, const char* file){
+    ofstream out(file);
+    for(map<string, map<string, int> >::iterator itr = data->tagDict_.begin();
+          itr != data->tagDict_.end(); ++itr){
+        out<<itr->first;
+        map<string, int>& inner = itr->second;
+        for(map<string, int>::iterator itr2 = inner.begin();
+              itr2 != inner.end(); ++itr2){
+            out<<" "<<itr2->first;
+        }
+        out<<endl;
+    }
+    out.close();
+}
+
 void save_pos_list(TrainerData* data, const char* file){
     set<string> posSet;
     ofstream out(file);
@@ -263,19 +278,15 @@ void train(TrainerData* data, const char* file, const string cateName,
         string featureFile = cateName + ".features";
         save_features(data, featureFile.data());
         string tagFile = cateName + ".tag";
-        save_tag_dict(data, tagFile.data());
-        if(isPOS){
-            string posFile = cateName + ".pos";
-            save_pos_list(data, posFile.data());
-        }
-    #else
-        if(isPOS){
-            string tagFile = cateName + ".tag";
-            save_tag_dict(data, tagFile.data());
-            string posFile = cateName + ".pos";
-            save_pos_list(data, posFile);
-        }
+        save_tag_dict(data, tagFile.data());       
     #endif
+        
+    if(isPOS){
+        string posFile = cateName + ".pos";
+        save_pos_list(data, posFile.data());
+        string sysDictFile = cateName + ".sysdict";
+        save_sys_dict(data, sysDictFile.data());
+    }
     // }}}
 
     if(extractFile){

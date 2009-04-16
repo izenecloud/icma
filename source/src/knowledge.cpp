@@ -10,6 +10,11 @@
 namespace cma
 {
 
+Knowledge::Knowledge()
+    : encodeType_(ENCODE_TYPE_GB2312)
+{
+}
+
 Knowledge::~Knowledge()
 {
 }

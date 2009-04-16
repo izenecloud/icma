@@ -111,6 +111,12 @@ public:
         offset = 0;
     }
 
+    friend ostream& operator << ( ostream& sout, VTrieNode& node ){
+        sout<<"(data:"<<node.data<<", moreLong:"<<node.moreLong<<", state:"
+                <<node.state<<", offset "<<node.offset<<")";
+        return sout;
+    }
+
 public:
     /** the integer value */
     int data;
@@ -460,6 +466,8 @@ public:
             node->data = *reinterpret_cast<int*>(dataPtr+1);
         }else{
             node->data = 0;
+            node->moreLong = false;
+            return 0;
         }
         --node->state;
         node->offset += VTENTRY_L;
