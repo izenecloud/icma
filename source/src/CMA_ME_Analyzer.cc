@@ -13,7 +13,6 @@
 namespace cma {
 
     CMA_ME_Analyzer::CMA_ME_Analyzer() : knowledge_(0) {
-        SegTagger::initialize();
         CateStrTokenizer::initialize();
     }
 
@@ -259,7 +258,10 @@ namespace cma {
             if (ct.isWordSeq()) {
                 vector<string>& words = ct.getWordSeq();
                 if (words.size() > 1) {
-                    segTagger->seg_sentence(words, segN, N, segment);
+                    if(N == 1)
+                        segTagger->seg_sentence_best(words, segment[0].first);
+                    else
+                        segTagger->seg_sentence(words, segN, N, segment);
                     continue;
                 }
                 string& word = words.front();

@@ -11,12 +11,15 @@
 #include "cmacconfig.h"
 #include "CMABasicTrainer.h"
 #include "types.h"
+#include "VTrie.h"
 
 #include <algorithm>
 #include <math.h>
 #include <set>
 #include <map>
 using namespace maxent::me;
+
+#define USE_POC_TRIE
 
 namespace cma{
 
@@ -52,9 +55,7 @@ struct POCTagUnit{
 class SegTagger{
 public:
 
-    SegTagger(const string& model, const char* tagDictFile){
-        me.load(model);
-    }
+    SegTagger(const string& cateName);
 
     void tag_file(const char* inFile, const char *outFile);
 
@@ -67,7 +68,17 @@ public:
     void seg_sentence(vector<string>& words, size_t N, size_t retSize,
             vector<pair<vector<string>, double> >& segment);
 
+    /**
+     * only return the best segment result
+     */
+    void seg_sentence_best(vector<string>& words, vector<string>& segment);
+
+    /**
+     * Would be invoked by the SegTagger's Constructor
+     */
     static void initialize();
+
+    bool appendWordPOC(const string& line);
 
 private:
 
@@ -83,6 +94,11 @@ private:
 
 private:
     MaxentModel me;
+
+    #ifdef USE_POC_TRIE
+    /** Store the data to the POC tag (L/R/M/I) */
+    VTrie trie_;
+    #endif
 };
 
 }

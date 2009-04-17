@@ -74,16 +74,20 @@ struct POSTagUnit{
  */
 class POSTagger{
 public:
-    POSTagger(const string& model, VTrie* pTrie){
-        me.load(model);
-        assert(pTrie);
-        trie_ = pTrie;
-        //reserved the location offset 0
-        posVec_.push_back(set<string>());
-    }
+    /**
+     * Construct the POSTagger with outer VTrie
+     */
+    POSTagger(const string& model, VTrie* pTrie);
 
     /**
-     * Tag the segmented file with pos
+     * Construct the POSTagger with inner VTrie (read from dictFile)
+     */
+    POSTagger(const string& model, const char* dictFile);
+
+    ~POSTagger();
+
+    /**
+     * Tag the segmented file with pos (In UTF8 Encoding)
      * \param inFile the input file
      * \param outFile the output file
      */
@@ -123,8 +127,13 @@ private:
 private:
     MaxentModel me;
     
-    /** The trie_ is not supposed destroyed by the POSTagger */
+    /** 
+     * If the trie_ passed by parameter the trie_ is not supposed destroyed by
+     * the POSTagger
+     */
     VTrie *trie_;
+
+    bool isInnerTrie_;
 
     vector<set<string> > posVec_;
 };

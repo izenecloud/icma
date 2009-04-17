@@ -57,8 +57,7 @@ int CMA_ME_Knowledge::loadPOSModel(const char* cateName){
 int CMA_ME_Knowledge::loadStatModel(const char* cateName){
     assert(!segT_);
     string cateStr(cateName);
-    segT_ = new SegTagger((cateStr + ".model").data(),
-            (cateStr + ".tag").data());
+    segT_ = new SegTagger(cateStr);
     return 1;
 }
 

@@ -15,7 +15,7 @@
     #include <assert.h>
 #endif
 
-#define TEST_SEG_CMD
+//#define TEST_SEG_CMD
 
 #ifdef TEST_SEG_CMD
 //Print the Trie Node Information

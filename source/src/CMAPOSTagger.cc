@@ -141,6 +141,35 @@ inline void insertCandidate(string& pos, int index, double score,
     unit.previous = cIndex;
 }
 
+POSTagger::POSTagger(const string& model, VTrie* pTrie) : isInnerTrie_(false){
+    me.load(model);
+    assert(pTrie);
+    trie_ = pTrie;
+    //reserved the location offset 0
+    posVec_.push_back(set<string>());
+}
+
+POSTagger::POSTagger(const string& model, const char* dictFile) : isInnerTrie_(true){
+    me.load(model);
+
+    trie_ = new VTrie();
+    //reserved the location offset 0
+    posVec_.push_back(set<string>());
+    ifstream in(dictFile);
+    assert(in);
+    string line;
+    while(!in.eof()){
+        getline(in, line);
+        appendWordPOS(line);
+    }
+    in.close();
+}
+
+POSTagger::~POSTagger(){
+    if(isInnerTrie_)
+        delete trie_;
+}
+
 void POSTagger::tag_word(vector<string>& words, int index, size_t N,
         string* tags, POSTagUnit* candidates, int& lastIndex, size_t& canSize,
         double initScore, int candidateNum){
@@ -277,18 +306,15 @@ void POSTagger::tag_file(const char* inFile, const char* outFile){
             continue;
         }
 
-        vector<pair<vector<string>, double> > h0(1);
-        tag_sentence(words, 2, 1, h0);
+        vector<string> posRet;
+        tag_sentence_best(words, posRet);
 
-        //print the best result
-        vector<string>& best = h0[0].first;
-
-        size_t maxIndex = words.size();
+        size_t maxIndex = words.size() - 1;
         for(size_t i=0; i<maxIndex; ++i){
-            out<<words[i] << "/"<< best[i]<<" ";
+            out<<words[i] << "/"<< posRet[i]<<" ";
         }
 
-        out<<words[maxIndex] << "/"<< best[maxIndex]<<endl;
+        out<<words[maxIndex] << "/"<< posRet[maxIndex]<<endl;
     }
 
     in.close();

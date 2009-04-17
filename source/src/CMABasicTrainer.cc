@@ -33,8 +33,8 @@ void split_tag(const string& s, vector<string>& words,
         trimSelf(tmp);
         if(tmp.empty())
             continue;
-        size_t pos = itr->find_first_of(TAG_SEP);
-        if(pos == string::npos || pos == 0){
+        size_t pos = tmp.find_last_of(TAG_SEP);
+        if(pos == string::npos || pos == 0 || pos == (*itr).length() - 1){
             cout<<"The Format is word/tag, but not ("<<*itr<<")"<<endl;
             exit(1);
         }
@@ -284,9 +284,10 @@ void train(TrainerData* data, const char* file, const string cateName,
     if(isPOS){
         string posFile = cateName + ".pos";
         save_pos_list(data, posFile.data());
-        string sysDictFile = cateName + ".sysdict";
-        save_sys_dict(data, sysDictFile.data());
     }
+
+    string sysDictFile = cateName + ".dic";
+    save_sys_dict(data, sysDictFile.data());
     // }}}
 
     if(extractFile){
