@@ -137,7 +137,6 @@ private:
 
     /** stop words set */
     set<string> stopWords_;
-
 };
 
 }

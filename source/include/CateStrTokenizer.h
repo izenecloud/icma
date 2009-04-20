@@ -13,21 +13,9 @@ using namespace std;
 
 #include "CPPStringUtils.h"
 #include "cmacconfig.h"
+#include "tokenizer.h"
 
 namespace cma{
-
-enum CharType
-{
-    CHAR_TYPE_INIT, ///< initial type
-    CHAR_TYPE_DIGIT, ///< digit character
-    CHAR_TYPE_PUNC, ///< puntuation character
-    CHAR_TYPE_HYPHEN, ///< hythen character, like '-'
-    CHAR_TYPE_SPACE, ///< space character, like ' '
-    CHAR_TYPE_LETTER, ///< letter character
-    CHAR_TYPE_OTHER = 7777///< other character
-};
-
-extern map<string, CharType> TYPE_MAP;
 
 /**
  * Record the index and category of the specific index
@@ -43,7 +31,7 @@ struct CatePoint{
 class CateStrTokenizer{
 public:
 
-    CateStrTokenizer(const string& sentence);
+    CateStrTokenizer(CTypeTokenizer* pCToken);
 
     /**
      * Move to next token
@@ -80,20 +68,17 @@ private:
     /** Special String */
     string speStr_;
 
-    /** sentence */
-    string sen_;
-
-    /** the last index of the sen_ */
-    int senIdx_;
-
-        /** the length of the sentence */
-    int senLen_;
+    const char* nextTokenPtr;
 
     /** Current Character, for internal perpose*/
     string _strBuf;
 
     /** pervious Character Type, for internal perpose*/
     CharType _preCharT;
+
+    CTypeTokenizer* ctoken_;
+
+    const CMA_CType* ctype_;
 };
     
 }

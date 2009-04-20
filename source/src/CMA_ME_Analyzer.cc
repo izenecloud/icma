@@ -6,18 +6,18 @@
 #include "pos_table.h"
 #include "CPPStringUtils.h"
 #include "CateStrTokenizer.h"
+#include "tokenizer.h"
 
 #include <fstream>
 #include <iostream>
 
 namespace cma {
 
-    CMA_ME_Analyzer::CMA_ME_Analyzer() : knowledge_(0) {
-        CateStrTokenizer::initialize();
+    CMA_ME_Analyzer::CMA_ME_Analyzer() : knowledge_(0), ctype_(0) {
     }
 
     CMA_ME_Analyzer::~CMA_ME_Analyzer() {
-
+        delete ctype_;
     }
 
     int CMA_ME_Analyzer::runWithSentence(Sentence& sentence) {
@@ -25,7 +25,7 @@ namespace cma {
 
         vector<pair<vector<string>, double> > segment;
         vector<vector<string> > pos;
-        analysis(string(sentence.getString()), N, pos, segment, true);
+        analysis(sentence.getString(), N, pos, segment, true);
 
         size_t size = segment.size();
         for (size_t i = 0; i < size; ++i) {
@@ -34,8 +34,11 @@ namespace cma {
             vector<string>& poses = pos[i];
             size_t segSize = segs.size();
             for (size_t j = 0; j < segSize; ++j) {
+                string& seg = segs[j];
+                if(knowledge_->isStopWord(seg))
+                    continue;
                 Morpheme morp;
-                morp.lexicon_ = segs[j]; //TODO change the encoding
+                morp.lexicon_ = seg; //TODO change the encoding
                 morp.posCode_ = POSTable::instance()->getCodeFromStr(poses[j]);
                 list.push_back(morp);
             }
@@ -49,20 +52,8 @@ namespace cma {
         int N = 1;
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
 
-        //check the encoding
-        string inFile(inFileName);
-        string outFile(outFileName);
-        bool createTmpFile = false;
-        if(encoding_ != Knowledge::ENCODE_TYPE_UTF8){
-            createTmpFile = true;
-            inFile += ".utf8.tmp";
-            outFile += ".utf8.tmp";
-            ENC_FILE(ENCODING_VEC[Knowledge::ENCODE_TYPE_UTF8].data(), ENCODING_VEC[encoding_].data(),
-                inFileName, inFile.data());
-        }
-
-        ifstream in(inFile.data());
-        ofstream out(outFile.data());
+        ifstream in(inFileName);
+        ofstream out(outFileName);
         string line;
         bool remains = !in.eof();
         while (remains) {
@@ -74,7 +65,7 @@ namespace cma {
             }
             vector<pair<vector<string>, double> > segment;
             vector<vector<string> > pos;
-            analysis(line, N, pos, segment, printPOS);
+            analysis(line.data(), N, pos, segment, printPOS);
 
             if (printPOS) {
                 vector<string>& best = segment[0].first;
@@ -109,23 +100,11 @@ namespace cma {
         in.close();
         out.close();
 
-        if(createTmpFile){
-            //remove temporal utf8 input file
-            remove(inFile.data());
-            //change the encoding to the final encoding
-            ENC_FILE(ENCODING_VEC[encoding_].data(), ENCODING_VEC[Knowledge::ENCODE_TYPE_UTF8].data(),
-                outFile.data(), outFileName);
-            //remove temporal utf8 output file
-            remove(outFile.data());
-        }
-
         return 1;
     }
 
     const char* CMA_ME_Analyzer::runWithString(const char* inStr) {
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
-
-        string line(inStr);
 
         //FOR Test
         /*VTrieNode node;
@@ -135,7 +114,7 @@ namespace cma {
         
         vector<pair<vector<string>, double> > segment;
         vector<vector<string> > pos;
-        analysis(line, 1, pos, segment, printPOS);
+        analysis(inStr, 1, pos, segment, printPOS);
 
         strBuf_.clear();
         if (printPOS) {
@@ -160,7 +139,9 @@ namespace cma {
 
     void CMA_ME_Analyzer::setKnowledge(Knowledge* pKnowledge) {
         knowledge_ = (CMA_ME_Knowledge*) pKnowledge;
-        encoding_ = knowledge_->getEncodeType();
+        if(ctype_)
+            delete ctype_;
+        ctype_ = CMA_CType::instance(knowledge_->getEncodeType());
     }
 
     void combineRetWithTrie(VTrie *trie, vector<string>& src, vector<string>& dest) {
@@ -243,7 +224,7 @@ namespace cma {
         }
     }
 
-    void CMA_ME_Analyzer::analysis(const string& sentence, int N,
+    void CMA_ME_Analyzer::analysis(const char* sentence, int N,
             vector<vector<string> >& posRet,
             vector<pair<vector<string>, double> >& segRet, bool tagPOS) {
         int segN = N > 1 ? N : 2;
@@ -252,8 +233,11 @@ namespace cma {
         vector<pair<vector<string>, double> > segment(N);
 
         SegTagger* segTagger = knowledge_->getSegTagger();
+
+        CTypeTokenizer token(ctype_, sentence);
+        
         //separate digits, letter and so on
-        CateStrTokenizer ct(sentence);
+        CateStrTokenizer ct(&token);
         while (ct.next()) {
             if (ct.isWordSeq()) {
                 vector<string>& words = ct.getWordSeq();

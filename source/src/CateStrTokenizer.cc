@@ -2,6 +2,7 @@
 
 namespace cma{
 
+/*
 const wstring _PuntStr = L"～！＠＃％＾＆×（）｀｛｝［］：＂｜；＇＼＜＞？，．／。《》“”‘’＋＝．、~!@#%^&*()`{}[]:\"|;'\\<>?,./.<>""''+=.";
 
 const wstring _LetterStr = L"ＱＷＥＲＴＹＵＩＯＰｑｗｅｒｔｙｕｉｏｐＡＳＤＦＧＨＪＫＬａｓｄｆｇｈｊｋｌＺＸＣＶＢＮＭｚｘｃｖｂｎｍQWERTYUIOPqwertyuiopASDFGHJKLasdfghjklZXCVBNMzxcvbnm";
@@ -16,32 +17,34 @@ typedef map<string, CharType> TYPE_MAP_T;
 TYPE_MAP_T TYPE_MAP;
 
 set<string> HYPHEN_SET;
-
+ */
 bool CST_INIT_FLAG = false;
-
+ 
+/*
 void addToTypeMap(const wstring& str, CharType type){
     size_t len = str.length();
     for(size_t i=0; i<len; ++i){
         TYPE_MAP[T_UTF8(str.substr(i, 1))] = type;
     }
-}
+}*/
 
 void CateStrTokenizer::initialize(){
     if(CST_INIT_FLAG)
         return;
     CST_INIT_FLAG = true;
-    addToTypeMap(_PuntStr, CHAR_TYPE_PUNC);
+    /*addToTypeMap(_PuntStr, CHAR_TYPE_PUNC);
     addToTypeMap(_LetterStr, CHAR_TYPE_LETTER);
-    addToTypeMap(_DigitStr, CHAR_TYPE_DIGIT);
+    addToTypeMap(_DigitStr, CHAR_TYPE_NUMBER);
     //Take The _HyphenStr As CHAR_TYPE_LETTER, but not CHAR_TYPE_HYPHEN
     addToTypeMap(_HyphenStr, CHAR_TYPE_LETTER);
-    addToTypeMap(_SpaceStr, CHAR_TYPE_SPACE);
+    addToTypeMap(_SpaceStr, CHAR_TYPE_SPACE);*/
 }
 
-CateStrTokenizer::CateStrTokenizer(const string& sentence) :
-      tokenT_(CHAR_TYPE_INIT), sen_(sentence), senIdx_(0),
-      senLen_((int)sentence.length()), _preCharT(CHAR_TYPE_INIT){
-
+CateStrTokenizer::CateStrTokenizer(CTypeTokenizer* pCToken) :
+      tokenT_(CHAR_TYPE_INIT), _preCharT(CHAR_TYPE_INIT),
+      ctoken_(pCToken){
+    ctype_ = ctoken_->getCType();
+    nextTokenPtr = ctoken_->next();
 }
 
 string& CateStrTokenizer::getSpecialStr(){
@@ -60,43 +63,6 @@ bool CateStrTokenizer::isWordSeq(){
     return tokenT_ == CHAR_TYPE_OTHER;
 }
 
-void getNextChar(string& source, int length, int& i, string& ret){
-    unsigned int c1 = (unsigned int)source[i];
-    if ( c1<0x80 ) {
-        ret = source.substr(i, 1);
-        ++i;
-    }
-    else if ( (c1 & 0xe0)==0xc0 ){
-        if ( i+1 < length ){
-            ret = source.substr(i, 2);
-            i += 2;
-        }
-        else
-            i = length;
-    }
-    else if ( (c1 & 0xf0)==0xe0 ){
-        if ( i+2<length ){
-            ret = source.substr(i, 3);
-            i += 3;
-        }
-        else
-            i = length;
-    }
-    else if ( (c1 & 0xf8)==0xf0 ){
-        if ( i+3<length ){
-            ret = source.substr(i, 4);
-            i += 4;
-        }
-        else
-            i = length;
-    }
-    else {
-        // illegal coding, skip that char
-        ++i;
-        if(i < length)
-            getNextChar(source, length, i, ret);
-    }
-}
 
 bool CateStrTokenizer::next(){
     //only punctuation contains at most one character
@@ -110,7 +76,7 @@ bool CateStrTokenizer::next(){
         return true;
     }
 
-    if(senIdx_ == senLen_){
+    if(!nextTokenPtr){
         //cannot be space type
         #ifdef EN_ASSERT
             assert(_preCharT != CHAR_TYPE_SPACE);
@@ -137,21 +103,12 @@ bool CateStrTokenizer::next(){
         wordSeq_.clear();
     }
 
-    while(senIdx_ < senLen_){
-        string curChar;
-        getNextChar(sen_, senLen_, senIdx_, curChar);
-        //cannot read any character (after ignore the invalid one)
-        if(curChar.empty()){
-            #ifdef EN_ASSERT
-                assert(senIdx_ == senLen_);
-            #endif
-           //try to get ending one
-            return next();
-        }
+    while(nextTokenPtr){
+        const char* curChar = nextTokenPtr;
+        nextTokenPtr = ctoken_->next();
 
         //find the CharType of the current string
-        TYPE_MAP_T::iterator typeItr = TYPE_MAP.find(curChar);
-        CharType curType = (typeItr == TYPE_MAP.end()) ? CHAR_TYPE_OTHER : typeItr->second;
+        CharType curType = ctype_->getCharType(curChar);
         #ifdef EN_ASSERT
             assert(_preCharT != CHAR_TYPE_PUNC);
             assert(_preCharT != CHAR_TYPE_SPACE);
@@ -207,7 +164,7 @@ bool CateStrTokenizer::next(){
             return true;
         }
 
-        else if(_preCharT == CHAR_TYPE_DIGIT || _preCharT == CHAR_TYPE_LETTER
+        else if(_preCharT == CHAR_TYPE_NUMBER || _preCharT == CHAR_TYPE_LETTER
                     || _preCharT == CHAR_TYPE_HYPHEN)
         {
             if(curType == CHAR_TYPE_SPACE){
@@ -221,7 +178,7 @@ bool CateStrTokenizer::next(){
 
             if(curType == CHAR_TYPE_PUNC){
                 speStr_ = _strBuf;
-                tokenT_ = CHAR_TYPE_DIGIT;
+                tokenT_ = CHAR_TYPE_NUMBER;
                 _preCharT = curType;
                 _strBuf = curChar;
                 return true;
@@ -230,7 +187,7 @@ bool CateStrTokenizer::next(){
             if(curType == CHAR_TYPE_OTHER){
                 speStr_ = _strBuf;
                 wordSeq_.push_back(curChar);
-                tokenT_ = CHAR_TYPE_DIGIT;
+                tokenT_ = CHAR_TYPE_NUMBER;
                 _preCharT = curType;
                 _strBuf.clear();
                 return true;

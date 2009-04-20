@@ -11,6 +11,7 @@
 #include "analyzer.h"
 #include "CMA_ME_Knowledge.h"
 #include "sentence.h"
+#include "cma_ctype.h"
 
 #include <string>
 
@@ -69,7 +70,7 @@ private:
     /**
      * Each segment only map to one pos set
      */
-    void analysis(const string& sentence, int N, vector<vector<string> >& pos,
+    void analysis(const char* sentence, int N, vector<vector<string> >& pos,
             vector<pair<vector<string>, double> >& segment, bool tagPOS = true);
 
 private:
@@ -78,8 +79,7 @@ private:
     /** string buffer stores result for \e runWithString */
     string strBuf_;
 
-    /** The encoding of the input/output text */
-    Knowledge::EncodeType encoding_;
+    CMA_CType* ctype_;
 };
 
 

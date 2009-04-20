@@ -13,19 +13,17 @@
 #include <string.h>
 using namespace std;
 
-
+/*
 #define F_UTF8W(in) CPPStringUtils::from_utf8w(in)
 #define T_UTF8(in) CPPStringUtils::to_utf8(in)
 #define WS2S(in) CPPStringUtils::to_string(in)
 #define S2WS(in) CPPStringUtils::to_wstring(in)
 
 #define T_UTF8_VEC(in, ret) CPPStringUtils::separate_utf8_chars(in, ret)
-#define TOKEN_STR(in, ret) CPPStringUtils::token_string(in, ret)
-
-#define ENC_FILE(toenc, fromenc, inFile, outFile) \
-    CPPStringUtils::encFile(toenc, fromenc, inFile, outFile)
 
 extern const string UTF8_N;
+*/
+#define TOKEN_STR(in, ret) CPPStringUtils::token_string(in, ret)
 
 class CPPStringUtils {
 public:

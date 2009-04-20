@@ -6,7 +6,6 @@
 
 
 #include "CMA_ME_Knowledge.h"
-#include "CPPStringUtils.h"
 #include "strutil.h"
 #include "pos_table.h"
 
@@ -110,13 +109,6 @@ int CMA_ME_Knowledge::loadUserDict(const char* fileName){
         trie_ = new VTrie();
 
     string destFile(fileName);
-    bool createTmpFile = false;
-    if(getEncodeType() != ENCODE_TYPE_UTF8){
-        destFile += ".utf8.tmp";
-        ENC_FILE(ENCODING_VEC[ENCODE_TYPE_UTF8].data(), ENCODING_VEC[getEncodeType()].data(),
-                fileName, destFile.data());
-        createTmpFile = true;
-    }
 
     ifstream in(destFile.data());
     assert(in);
@@ -125,12 +117,8 @@ int CMA_ME_Knowledge::loadUserDict(const char* fileName){
         getline(in, line);
         posT_->appendWordPOS(line);
     }
+
     in.close();
-
-    if(createTmpFile){
-        remove(destFile.data());
-    }
-
     return 1;
 }
 

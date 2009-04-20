@@ -33,16 +33,6 @@ void poc_train(const char* file, const string& cateName,
         const char* extractFile = 0, string method = "gis", size_t iters = 15,
         float gaussian = 0.0f);
 
-/**
- * The input is AB/tag2 CDF/tag2 G/tag3 ... <br>
- * The output is A/L B/R C/L D/M F/M G/I <br>
- * L is Left; R is Rightl M is Middle; I is independent.
- *
- * \param inFile the input file
- * \param outFile the output file
- */
-void create_poc_meterial(const char* inFile, const char* outFile);
-
 struct POCTagUnit{
     uint8_t pocCode;
     double score;
@@ -57,7 +47,8 @@ public:
 
     SegTagger(const string& cateName);
 
-    void tag_file(const char* inFile, const char *outFile);
+    void tag_file(const char* inFile, const char *outFile, 
+            string encType = "gbk");
 
     /**
      * tagging given words list and return N best

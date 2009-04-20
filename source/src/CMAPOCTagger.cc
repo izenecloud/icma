@@ -1,9 +1,13 @@
 
+#include "cma_ctype.h"
+
+
 #include <vector>
 
-#include "CPPStringUtils.h"
 #include "CMAPOCTagger.h"
+#include "CPPStringUtils.h"
 #include "strutil.h"
+#include "tokenizer.h"
 
 namespace cma{
 
@@ -151,61 +155,6 @@ void poc_train(const char* file, const string& cateName,const char* extractFile,
       data.get_context = get_poc_zh_context;
       train(&data, file, cateName, extractFile, method, iters, gaussian, false);
 }
-
-void create_poc_meterial(const char* inFile, const char* outFile){
-    ifstream in(inFile);
-    ofstream out(outFile);
-    string line;
-
-    typedef boost::tokenizer <boost::char_separator<wchar_t>,
-        wstring::const_iterator, wstring> POCTokenizer;
-
-    while(!in.eof()){
-        getline(in, line);
-        trimSelf(line);
-        if(line.length() == 0){
-            out<<endl;
-            continue;
-        }
-
-        wstring ws = F_UTF8W(line);
-        POCTokenizer token(ws, boost::char_separator<wchar_t>(L" "));
-        POCTokenizer::const_iterator itr = token.begin();
-        if( itr == token.end() ){
-            out<<endl;
-            continue;
-        }
-        
-        while(true){
-            size_t pos = itr->find_last_of(TAG_SEP);
-            if(pos == wstring::npos || pos == 0 || pos == (*itr).length() - 1){
-                cerr<<"The Format is word/tag, but not ("<<T_UTF8(*itr)<<")"<<endl;
-                exit(1);
-            }
-            wstring word = itr->substr(0,pos);
-            if(word.length() == 1){
-                out<<T_UTF8(word)<<"/I";
-            }else{
-                out<<T_UTF8(word.substr(0, 1))<<"/L ";
-                size_t lastIndex = word.length() - 1;
-                for(size_t i=1; i<lastIndex; ++i)
-                    out<<T_UTF8(word.substr(i, 1))<<"/M ";
-                out<<T_UTF8(word.substr(lastIndex, 1))<<"/R";
-            }
-
-            ++itr;
-            if(itr != token.end())
-                out<<" ";
-            else{
-                out<<endl;
-                break;
-            }
-        }
-    }
-    in.close();
-    out.close();
-}
-
 
 /**
  *
@@ -444,11 +393,15 @@ void SegTagger::seg_sentence(vector<string>& words, size_t N, size_t retSize,
     
 }
 
-void SegTagger::tag_file(const char* inFile, const char* outFile){
+void SegTagger::tag_file(const char* inFile, const char* outFile,
+        string encType){
     ifstream in(inFile);
     ofstream out(outFile);
 
     string line;
+
+    CMA_CType *ctype = CMA_CType::instance(CMA_CType::getEncType(encType));
+    CTypeTokenizer ctypeCt(ctype);
 
     while(!in.eof()){
         getline(in, line);
@@ -457,10 +410,15 @@ void SegTagger::tag_file(const char* inFile, const char* outFile){
             continue;
         }
 
-        vector<string> best;
-        vector<string> words;
-        T_UTF8_VEC(line, words);
+        ctypeCt.assign(line.data());
 
+        vector<string> words;
+        const char* nextPtr;
+        while((nextPtr = ctypeCt.next())){
+            words.push_back(nextPtr);
+        }
+
+        vector<string> best;
         seg_sentence_best(words, best);
 
         //print the result
@@ -473,6 +431,8 @@ void SegTagger::tag_file(const char* inFile, const char* outFile){
 
     in.close();
     out.close();
+
+    delete ctype;
 }
 
 

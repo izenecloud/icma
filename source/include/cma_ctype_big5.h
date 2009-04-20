@@ -1,0 +1,74 @@
+/** \file cma_ctype_big5.h
+ * 
+ * \author Jun Jiang
+ * \version 0.1
+ * \date April 06, 2009
+ */
+
+#ifndef CMA_CTYPE_BIG5_H
+#define CMA_CTYPE_BIG5_H
+
+#include "cma_ctype.h"
+
+namespace cma
+{
+
+/**
+ * CMA_CType_Big5 gives the character type information in Big5 encoding.
+ */
+class CMA_CType_Big5 : public CMA_CType
+{
+public:
+    /**
+     * Create an instance of \e CMA_CType_Big5.
+     * \return the pointer to instance
+     */
+    static CMA_CType_Big5* instance();
+
+    /**
+     * Get the byte count of the first character pointed by \e p, which character is in a specific encoding.
+     * \param p pointer to the character string
+     * \return the count of bytes.
+     */
+    virtual unsigned int getByteCount(const char* p) const;
+
+    /**
+     * Check whether is punctuation.
+     * \param p pointer to the character string
+     * \return true for punctuation, false for non punctuation.
+     */
+    virtual bool isPunct(const char* p) const;
+
+    /**
+     * Get the character type.
+     * \param p pointer to the string to be checked
+     * \return the character type.
+     */
+    virtual CharType getCharType(const char* p) const;
+
+    /**
+     * Check whether is white-space character.
+     * White-space characters are " \t\n\v\f\r", and also space character in specific encoding.
+     * \param p pointer to the character string
+     * \return true for white-space character, false for non white-space character.
+     */
+    virtual bool isSpace(const char* p) const;
+
+    /**
+     * Check whether is a separator of sentence.
+     * \param p pointer to the character string
+     * \return true for separator, false for non separator.
+     */
+    virtual bool isSentenceSeparator(const char* p) const;
+
+protected:
+    CMA_CType_Big5();
+
+private:
+    /** the instance of \e CMA_CType_Big5 */
+    static CMA_CType_Big5* instance_;
+};
+
+} // namespace cma
+
+#endif // CMA_CTYPE_BIG5_H

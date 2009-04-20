@@ -1,13 +1,13 @@
 
 #include <set>
-
-
+#include <iostream>
+#include <stdlib.h>
 #include <vector>
 
 #include "CMABasicTrainer.h"
 #include "strutil.h"
-#include <iostream>
-#include <stdlib.h>
+#include "tokenizer.h"
+
 using namespace std;
 
 namespace cma{
@@ -311,6 +311,89 @@ void train(TrainerData* data, const char* file, const string cateName,
     cout<<"saving tagger model to "<<destFile<<endl;
     data->me.save(destFile);
     // }}}
+}
+
+void create_poc_meterial(const char* inFile, const char* outFile,
+        Knowledge::EncodeType type){
+    ifstream in(inFile);
+    ofstream out(outFile);
+    string line;
+
+    typedef boost::tokenizer <boost::char_separator<char>,
+        string::const_iterator, string> POCTokenizer;
+
+    CMA_CType *ctype = CMA_CType::instance(type);
+    CTypeTokenizer ctypeToken(ctype);
+
+    while(!in.eof()){
+        getline(in, line);
+        trimSelf(line);
+        if(line.length() == 0){
+            continue;
+        }
+
+        POCTokenizer token(line, boost::char_separator<char>(" "));
+        POCTokenizer::const_iterator itr = token.begin();
+        if( itr == token.end() ){
+            out<<endl;
+            continue;
+        }
+        
+        while(true){
+            size_t pos = itr->find_last_of(TAG_SEP);
+            if(pos == string::npos || pos == 0 || pos == (*itr).length() - 1){
+                cerr<<"The Format is word/tag, but not ("<<*itr<<")"<<endl;
+                exit(1);
+            }
+
+            string word = itr->substr(0,pos);
+            ctypeToken.assign(word.c_str());
+            
+            vector<string> charVec;
+            const char* nextPtr;
+            while((nextPtr = ctypeToken.next())){
+                charVec.push_back(nextPtr);
+            }
+
+            size_t charLen = charVec.size();
+            #ifdef USE_BE_TAG_SET
+            if(charLen > 1)
+                out<<charVec[0]<<"/B ";
+            else
+                out<<charVec[0]<<"/B";
+            
+            for(size_t i=1; i<charLen; ++i){
+                if(i == charLen - 1)
+                    out<<charVec[0]<<"/E";
+                else
+                    out<<charVec[0]<<"/E ";
+                
+            }
+            #else           
+            if(charLen == 1){
+                out<<charVec[0]<<"/I";
+            }else{
+                out<<charVec[0]<<"/L ";
+                
+                for(size_t i=1; i<charLen-1; ++i)
+                    out<<charVec[i]<<"/M ";
+                out<<charVec[charLen-1]<<"/R";
+            }
+            #endif
+
+            ++itr;
+            if(itr != token.end())
+                out<<" ";
+            else{
+                out<<endl;
+                break;
+            }
+        }
+    }
+    in.close();
+    out.close();
+
+    delete ctype;
 }
 
 

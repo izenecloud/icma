@@ -14,9 +14,10 @@
 
 #define TAG_SEP '/'
 
-#include "maxentmodel.hpp"
-#include "CPPStringUtils.h"
 #include "cmacconfig.h"
+#include "maxentmodel.hpp"
+#include "knowledge.h"
+#include "pubapi/knowledge.h"
 
 using namespace std;
 using namespace maxent;
@@ -116,6 +117,18 @@ void cutoff_feature(TrainerData* data, int cutoff, int rareCutoff);
 void train(TrainerData* data, const char* file, const string cateFile,
         const char* extractFile = 0, string method = "gis",
         size_t iters = 15, float gaussian = 0.0f, bool isPOS = true);
+
+/**
+ * The input is AB/tag2 CDF/tag2 G/tag3 ... <br>
+ * The output is A/L B/R C/L D/M F/M G/I <br>
+ * L is Left; R is Rightl M is Middle; I is independent.
+ *
+ * The other tagset is <b>B</b> (Begin) and <b>E</b> (end)
+ * \param inFile the input file
+ * \param outFile the output file
+ */
+void create_poc_meterial(const char* inFile, const char* outFile,
+        Knowledge::EncodeType type);
 
 void fetchSegmentedFile(const char* inFile, const char* outFile,
         bool keepTag = true, bool keepSeparator = false);
