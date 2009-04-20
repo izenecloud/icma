@@ -1,28 +1,23 @@
+
+#include "cma_ctype.h"
+
 #include "CMAPOCTagger.h"
 #include "CMAPOSTagger.h"
 #include <stdlib.h>
 
 using namespace cma;
 
-void beginTrain(string pMateFile, string cateFile, string enc = ""){
+void beginTrain(string pMateFile, string cateFile, string enc = "gbk"){
     string mateFile = pMateFile;
-    bool tmpMateFile = false;
 
-    if(!enc.empty() && enc != "utf8" && enc != "UTF8"
-            && enc != "utf-8" && enc != "UTF-8"){
-        //if not utf-8, create a tmp file
-        mateFile.append(".utf8.txt");
-        tmpMateFile = true;
-        cout<<"#Transfer Encoding "<<enc<<" to "<<UTF8_N<<" into "<<mateFile<<endl;
-        ENC_FILE(UTF8_N.data(), enc.data(), pMateFile.data(), mateFile.data());
-    }
+    Knowledge::EncodeType encType = CMA_CType::getEncType(enc);
 
     cout<<"#Start Training POS Model..."<<endl;
     pos_train(mateFile.data(), cateFile);
 
     cout<<"#Generate POC Material File "<<endl;
     string matePOC = mateFile + ".poc.tmp";
-    create_poc_meterial(mateFile.data(), matePOC.data());
+    create_poc_meterial(mateFile.data(), matePOC.data(), encType);
 
     string cateFilePOC = cateFile + "-poc";
     cout<<"#Start Training POC Model..."<<endl;
@@ -31,8 +26,7 @@ void beginTrain(string pMateFile, string cateFile, string enc = ""){
     //remove matePOC and mateFile(if tmpMateFile is true)
     cout<<"#Remove temporal files "<<endl;
     remove(matePOC.data());
-    if(tmpMateFile)
-        remove(mateFile.data());
+
     cout<<"#Training Finished!"<<endl;
 }
 
@@ -43,7 +37,7 @@ void printTainerUsage(){
     cout<<"   cateFile is the category file, there are several files are "<<
             "created after the trainging, and with cateFile as the prefix, "<<
             "prefix should contains both path and name, such /dir1/dir2/n1"<<endl;
-    cout<<"   encoding (optional) is the encoding of the mateFile, and utf-8 "<<
+    cout<<"   encoding (optional) is the encoding of the mateFile, and gbk "<<
             "is the default encoding"<<endl;
 }
 
