@@ -42,9 +42,10 @@ public:
     /**
      * Get the character type.
      * \param p pointer to the string to be checked
+     * \param preType the chartype of the previous character
      * \return the character type.
      */
-    virtual CharType getCharType(const char* p) const;
+    virtual CharType getCharType(const char* p, CharType preType) const;
 
     /**
      * Check whether is white-space character.

@@ -17,7 +17,8 @@
 #include "cmacconfig.h"
 #include "maxentmodel.hpp"
 #include "knowledge.h"
-#include "pubapi/knowledge.h"
+#include "cma_ctype.h"
+#include "knowledge.h"
 
 using namespace std;
 using namespace maxent;
@@ -26,20 +27,20 @@ namespace cma{
 
 /** words, tags, i, rare_word, ret */
 typedef void(*context_t)(vector<string>&, vector<string>&, size_t,
-        bool, vector<string>&);
+        bool, vector<string>&, CMA_CType *ctype);
 
 class TrainerData{
 
 public:
-    TrainerData(){
+    TrainerData(context_t pGet_context, Knowledge::EncodeType encType) :
+          get_context(pGet_context){
         rareFreq_ = 1;
 
         cutoff_ = 10;
         evCutoff_ = 1;
 
-        get_context = 0;
+        ctype_ = CMA_CType::instance(encType);
     }
-
 
 public:
     map<string, int> wordFreq_;
@@ -60,6 +61,8 @@ public:
 
     /** words, tags, i, rare_word, ret */
     context_t get_context;
+
+    CMA_CType *ctype_;
 };
 
 

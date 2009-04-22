@@ -71,11 +71,14 @@ bool CMA_CType_Big5::isPunct(const char* p) const
     return false;
 }
 
-CharType CMA_CType_Big5::getCharType(const char* p) const
+CharType CMA_CType_Big5::getCharType(const char* p, CharType preType) const
 {
     assert(p);
 
     const unsigned char* uc = (const unsigned char*)p;
+
+    if(isPunct(p))
+        return CHAR_TYPE_PUNC;
 
     if((uc[0] >= 0x30 && uc[0] <= 0x39) //0123456789
             || (uc[0] == 0x2e) //.

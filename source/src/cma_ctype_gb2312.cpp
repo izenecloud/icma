@@ -72,7 +72,7 @@ bool CMA_CType_GB2312::isPunct(const char* p) const
     return false;
 }
 
-CharType CMA_CType_GB2312::getCharType(const char* p) const
+CharType CMA_CType_GB2312::getCharType(const char* p, CharType preType) const
 {
     assert(p);
 
@@ -83,6 +83,9 @@ CharType CMA_CType_GB2312::getCharType(const char* p) const
             || (uc[0] == 0x25) //%
             || (uc[0] == 0xa3 && uc[1] >= 0xb0 && uc[1] <= 0xb9)) //０１２３４５６７８９
         return CHAR_TYPE_NUMBER;
+
+    if(isPunct(p))
+        return CHAR_TYPE_PUNC;
 
     unsigned short value = uc[0] << 8 | uc[1];
     switch(value)

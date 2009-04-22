@@ -42,13 +42,15 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
     assert(word);
 
     bool start = true;
+    CharType preType = CHAR_TYPE_INIT;
+    assert(false && "the pretype is not correctly");
     CharType charType;
     WordType wordType = WORD_TYPE_OTHER;
 
     tokenizer_.assign(word);
     for(const char* p=tokenizer_.next(); p; p=tokenizer_.next())
     {
-        charType = ctype_->getCharType(p);
+        charType = ctype_->getCharType(p, preType);
         if(start)
         {
             switch(charType)

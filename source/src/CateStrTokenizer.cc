@@ -108,7 +108,7 @@ bool CateStrTokenizer::next(){
         nextTokenPtr = ctoken_->next();
 
         //find the CharType of the current string
-        CharType curType = ctype_->getCharType(curChar);
+        CharType curType = ctype_->getCharType(curChar, _preCharT);
         #ifdef EN_ASSERT
             assert(_preCharT != CHAR_TYPE_PUNC);
             assert(_preCharT != CHAR_TYPE_SPACE);

@@ -1,39 +1,63 @@
-
-#include "cma_ctype.h"
-
-
 #include <vector>
 
 #include "CMAPOCTagger.h"
 #include "CPPStringUtils.h"
 #include "strutil.h"
 #include "tokenizer.h"
+#include "cma_ctype.h"
 
 namespace cma{
 
 string POC_EMPTY_STR = "";
 
-
 map<string, uint8_t> POCs2c;
 
-#ifdef USE_POC_TRIE
-    #define POC_TAG_L 1
-    #define POC_TAG_M 2
-    #define POC_TAG_R 4
-    #define POC_TAG_I 8
-    string POCArray[9];
+#ifdef USE_BE_TAG_SET
+    #define POC_TAG_B 1
+    #define POC_TAG_E 2
+
+    string POCArray[3];
+
+    #define DEFAULT_POC POC_TAG_B
+
+    /** if set, use punctuaion and character type feature */
+    //#define USE_BE_TYPE_FEATURE
+
 #else
-    #define POC_TAG_L 0
-    #define POC_TAG_M 1
-    #define POC_TAG_R 2
-    #define POC_TAG_I 3
-    string POCArray[4];
+    #ifdef USE_POC_TRIE
+        #define POC_TAG_L 1
+        #define POC_TAG_M 2
+        #define POC_TAG_R 4
+        #define POC_TAG_I 8
+        string POCArray[9];
+    #else
+        #define POC_TAG_L 0
+        #define POC_TAG_M 1
+        #define POC_TAG_R 2
+        #define POC_TAG_I 3
+        string POCArray[4];
+    #endif
+
+    #define DEFAULT_POC POC_TAG_I
 #endif
 
-#define DEFAULT_POC POC_TAG_I
+#ifdef USE_POC_NEW_FEATURE
+     #ifdef USE_BE_TYPE_FEATURE
+        #define POC_TEMPLATE_SIZE 12
+     #else
+        #define POC_TEMPLATE_SIZE 10
+     #endif
+#else
+    #define POC_TEMPLATE_SIZE 8
+#endif
 
 bool POC_INIT_FLAG = false;
 
+const string POC_BOUNDARY = "BOUNDARY";
+
+string CharTypeArray[CHAR_TYPE_NUM];
+
+#ifndef USE_BE_TAG_SET
 inline bool is_matched_poc(uint8_t preTag, uint8_t curTag){
     switch(preTag){
         case POC_TAG_I: // I
@@ -49,13 +73,71 @@ inline bool is_matched_poc(uint8_t preTag, uint8_t curTag){
             return false;
     }
 }
+#endif
 
 /**
  * \param tag_1 is tags[i-1]
  * \param tag_2 is tags[i-2]
  */
 inline void get_poc_zh_context_1(vector<string>& words, string& tag_1, string& tag_2,
-        size_t i, vector<string>& context){
+        size_t i, vector<string>& context, CMA_CType *ctype){
+
+    #ifdef EN_ASSERT
+        assert(context.size() == POC_TEMPLATE_SIZE);
+    #endif
+
+    #ifdef USE_POC_NEW_FEATURE       
+    string wa[5]; //word array
+    #ifdef USE_BE_TYPE_FEATURE
+    string ta[5]; //type array
+    #endif
+
+    size_t n = words.size();
+    size_t offset = i - 2;
+    for(size_t j = 0; j < 5; ++j, ++offset){
+        if(offset >= 0 && offset < n){
+            wa[j] = words[offset];
+            #ifdef USE_BE_TYPE_FEATURE
+            ta[j] = CharTypeArray[ctype->getCharType(wa[j].c_str())];
+            #endif
+        }else{
+            wa[j] = POC_BOUNDARY;
+            #ifdef USE_BE_TYPE_FEATURE
+            ta[j] = POC_BOUNDARY;
+            #endif
+        }
+    }
+
+    int k = -1;
+    // Cn , n ∈ [−2, 2]
+    context[++k] = "C-2=" + wa[0];
+    context[++k] = "C-1=" + wa[1];
+    context[++k] = "C0=" + wa[2];
+    context[++k] = "C1=" + wa[3];
+    context[++k] = "C2=" + wa[4];
+
+    //Cn Cn+1 , n ∈ [−2, 1]
+    context[++k] = "C-2,-1=" + wa[0] + "," + wa[1];
+    context[++k] = "C-1,0=" + wa[1] + "," + wa[2];
+    context[++k] = "C0,1=" + wa[2] + "," + wa[3];
+    context[++k] = "C1,2=" + wa[3] + "," + wa[4];
+
+    //C−1 C1
+    context[++k] = "C-1,1=" + wa[1] + "," + wa[3];
+
+    #ifdef USE_BE_TYPE_FEATURE
+    //Pu (C0 ) whether is punctuation
+    if( ta[2] == CharTypeArray[CHAR_TYPE_PUNC] )
+        context[++k] = "punctuation=yes";
+    else
+        context[++k] = "punctuation=no";
+
+    context[++k] = "T-2,-1,0,1,2=" + ta[0] + "," + ta[1] +
+            "," + ta[2] + "," + ta[3] + "," + ta[4];
+    #endif //#ifdef USE_BE_TYPE_FEATURE
+
+    #else
+
     int k = -1;
     string& word_0 = words[i];
     context[++k] = "curword=" + word_0;
@@ -134,9 +216,6 @@ inline void get_poc_zh_context_1(vector<string>& words, string& tag_1, string& t
             context[++k] = "W-2,-1,+1,+2=BOUNDARY,BOUNDARY,BOUNDARY,BOUNDARY";
         }
     } //end i==0
-    
-    #ifdef EN_ASSERT
-        assert(context.size() == 8);
     #endif
 }
 
@@ -144,15 +223,15 @@ inline void get_poc_zh_context_1(vector<string>& words, string& tag_1, string& t
  * POS context type for POC(Position of Character) (zh/chinese)
  */
 void get_poc_zh_context(vector<string>& words, vector<string>& tags, size_t i,
-        bool rareWord, vector<string>& context){
-    context.resize(8);
-    get_poc_zh_context_1(words, tags[i-1], tags[i-2], i, context);
+        bool rareWord, vector<string>& context, CMA_CType *ctype){
+    context.resize(POC_TEMPLATE_SIZE);
+    get_poc_zh_context_1(words, tags[i-1], tags[i-2], i, context, ctype);
 }
 
-void poc_train(const char* file, const string& cateName,const char* extractFile,
+void poc_train(const char* file, const string& cateName,
+        Knowledge::EncodeType encType, const char* extractFile,
         string method, size_t iters,float gaussian){
-      TrainerData data;
-      data.get_context = get_poc_zh_context;
+      TrainerData data(get_poc_zh_context, encType);
       train(&data, file, cateName, extractFile, method, iters, gaussian, false);
 }
 
@@ -223,7 +302,7 @@ inline void insertCandidate(uint8_t pocCode, int index, double score,
 
 SegTagger::SegTagger(const string& cateName){
     SegTagger::initialize();
-    cout<<"Load poc model"<<(cateName + ".model")<<endl;
+    //cout<<"Load poc model"<<(cateName + ".model")<<endl;
     me.load(cateName + ".model");
 
     #ifdef USE_POC_TRIE
@@ -242,11 +321,11 @@ void SegTagger::tag_word(vector<string>& words, int index, size_t N,
         uint8_t* tags, POCTagUnit* candidates, int& lastIndex, size_t& canSize,
         double initScore, int candidateNum){
 
-    vector<string> context(8);
+    vector<string> context(POC_TEMPLATE_SIZE);
 
     string& tag_1 = index > 0 ? POCArray[tags[index-1]] : POC_EMPTY_STR;
     string& tag_2 = index > 1 ? POCArray[tags[index-2]] : POC_EMPTY_STR;
-    get_poc_zh_context_1(words, tag_1, tag_2, index, context);
+    get_poc_zh_context_1(words, tag_1, tag_2, index, context, ctype_);
 
     vector<pair<outcome_type, double> > outcomes;
     me.eval_all(context, outcomes, false);
@@ -274,59 +353,74 @@ inline void combinePOCToWord(vector<string>& words, size_t n, uint8_t* tags,
         vector<string>& seg){
     string strBuf;
 
-    #ifdef _ME_STRICT_POC_MATCHED
-    for(size_t i = 0; i < n; ++i){
-        if(tags[i] == POC_TAG_R){ // R
-            seg.push_back(strBuf + words[i]);
-            strBuf.clear();
-        }else if(tags[i] == POC_TAG_I){ // I
-            #ifdef EN_ASSERT
-            assert(strBuf.empty());
-            #endif
-            seg.push_back(words[i]);
-        }else if(tags[i] == POC_TAG_L){ // L
-            #ifdef EN_ASSERT
-            assert(strBuf.empty());
-            #endif
-            strBuf.append(words[i]);
-        }else if(tags[i] == POC_TAG_M){ // M
-            strBuf.append(words[i]);
-        }else{
-            // unrecognize tag
-            cerr<<"Error POC (MATCHED): "<<(int)tags[i]<<" ("<<k<<","<<i<<")"<<endl;
-            assert(0);
-        }
-    }
-
-    #else    
-    for(size_t i = 0; i < n; ++i){
-        if(tags[i] == POC_TAG_R){ // R
-            seg.push_back(strBuf + words[i]);
-            strBuf.clear();
-        }else if(tags[i] == POC_TAG_I){ // I
-            if(!strBuf.empty()){
-                seg.push_back(strBuf);
-                strBuf.clear();
+    #ifdef USE_BE_TAG_SET
+        for(size_t i = 0; i < n; ++i){
+            if(tags[i] == POC_TAG_B){
+                if(!strBuf.empty())
+                    seg.push_back(strBuf);
+                strBuf = words[i];
             }
-            seg.push_back(words[i]);
-        }else if(tags[i] == POC_TAG_L){ // L
-            if(!strBuf.empty()){
-                seg.push_back(strBuf);
-                strBuf.clear();
+            else if(tags[i] == POC_TAG_E){
+                strBuf.append(words[i]);
             }
-            strBuf.append(words[i]);
-        }else if(tags[i] == POC_TAG_M){ // M
-            strBuf.append(words[i]);
-        }else{
-            // unrecognize tag
-            cerr<<"Error POC: "<<(int)tags[i]<<"("<<i<<")"<<endl;
-            assert(0);
+            else{
+                assert(false && "Invalid POC Code in the BE tag set");
+            }
         }
-    }
-    #endif
+    #else
+        #ifdef _ME_STRICT_POC_MATCHED
+            for(size_t i = 0; i < n; ++i){
+                if(tags[i] == POC_TAG_R){ // R
+                    seg.push_back(strBuf + words[i]);
+                    strBuf.clear();
+                }else if(tags[i] == POC_TAG_I){ // I
+                    #ifdef EN_ASSERT
+                    assert(strBuf.empty());
+                    #endif
+                    seg.push_back(words[i]);
+                }else if(tags[i] == POC_TAG_L){ // L
+                    #ifdef EN_ASSERT
+                    assert(strBuf.empty());
+                    #endif
+                    strBuf.append(words[i]);
+                }else if(tags[i] == POC_TAG_M){ // M
+                    strBuf.append(words[i]);
+                }else{
+                    // unrecognize tag
+                    cerr<<"Error POC (MATCHED): "<<(int)tags[i]<<" ("<<k<<","<<i<<")"<<endl;
+                    assert(0);
+                }
+            }
 
+        #else
+            for(size_t i = 0; i < n; ++i){
+                if(tags[i] == POC_TAG_R){ // R
+                    seg.push_back(strBuf + words[i]);
+                    strBuf.clear();
+                }else if(tags[i] == POC_TAG_I){ // I
+                    if(!strBuf.empty()){
+                        seg.push_back(strBuf);
+                        strBuf.clear();
+                    }
+                    seg.push_back(words[i]);
+                }else if(tags[i] == POC_TAG_L){ // L
+                    if(!strBuf.empty()){
+                        seg.push_back(strBuf);
+                        strBuf.clear();
+                    }
+                    strBuf.append(words[i]);
+                }else if(tags[i] == POC_TAG_M){ // M
+                    strBuf.append(words[i]);
+                }else{
+                    // unrecognize tag
+                    cerr<<"Error POC: "<<(int)tags[i]<<"("<<i<<")"<<endl;
+                    assert(0);
+                }
+            }
+        #endif
+    #endif //end #ifdef USE_BE_TAG_SET
     //the remaining string
-    if(strBuf.length() > 0)
+    if(!strBuf.empty())
         seg.push_back(strBuf);
 }
 
@@ -400,8 +494,8 @@ void SegTagger::tag_file(const char* inFile, const char* outFile,
 
     string line;
 
-    CMA_CType *ctype = CMA_CType::instance(CMA_CType::getEncType(encType));
-    CTypeTokenizer ctypeCt(ctype);
+    CMA_CType *cType = CMA_CType::instance(CMA_CType::getEncType(encType));
+    CTypeTokenizer ctypeCt(cType);
 
     while(!in.eof()){
         getline(in, line);
@@ -431,16 +525,106 @@ void SegTagger::tag_file(const char* inFile, const char* outFile,
 
     in.close();
     out.close();
-
-    delete ctype;
 }
 
 
 void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment){
     size_t n = words.size();
     uint8_t pocRet[n];
+
+    #ifdef USE_BE_TAG_SET
+    CharType preType = CHAR_TYPE_INIT;
+    #endif
     for(size_t index=0; index<n; ++index){
-        vector<string> context(8);
+        #ifdef DEBUG_POC_TAGGER
+        cout<<"Check "<<index<<":"<<words[index]<<endl;
+        #endif
+
+        #ifdef USE_BE_TAG_SET
+        CharType curType = ctype_->getCharType(words[index].c_str(), preType);
+
+        if(curType == CHAR_TYPE_PUNC){
+            pocRet[index] = POC_TAG_B;
+            preType = curType;
+            continue;
+        }
+
+        switch(preType){          
+            case CHAR_TYPE_PUNC:
+                pocRet[index] = POC_TAG_B;
+                preType = curType;
+                continue;
+
+            case CHAR_TYPE_NUMBER:
+                switch(curType){
+                    case CHAR_TYPE_NUMBER:
+                        pocRet[index] = POC_TAG_E;
+                        continue;
+                    case CHAR_TYPE_LETTER:
+                    case CHAR_TYPE_HYPHEN:
+                        pocRet[index] = POC_TAG_E;
+                        preType = CHAR_TYPE_LETTER;
+                        continue;
+                    //may be unit is OK here
+                    case CHAR_TYPE_DATE:
+                        pocRet[index] = POC_TAG_E;
+                        preType = CHAR_TYPE_INIT;
+                        continue;
+                    default:
+                        break;
+                        /*pocRet[index] = POC_TAG_B;
+                        preType = curType;
+                        continue;*/
+                }
+
+            case CHAR_TYPE_DATE:
+                pocRet[index] = POC_TAG_B;
+                preType = curType;
+                continue;
+
+            case CHAR_TYPE_LETTER:
+            case CHAR_TYPE_HYPHEN:
+                switch(curType){
+                    case CHAR_TYPE_NUMBER:
+                    case CHAR_TYPE_LETTER:
+                    case CHAR_TYPE_HYPHEN:
+                        pocRet[index] = POC_TAG_E;
+                        preType = CHAR_TYPE_NUMBER;
+                        continue;
+                    default:
+                        pocRet[index] = POC_TAG_B;
+                        preType = curType;
+                        continue;
+                }
+
+            case CHAR_TYPE_INIT:
+                pocRet[index] = POC_TAG_B;
+                preType = curType;
+                continue;
+
+            case CHAR_TYPE_OTHER:
+                switch(curType){
+                    case CHAR_TYPE_NUMBER:
+                    case CHAR_TYPE_LETTER:
+                    case CHAR_TYPE_HYPHEN:
+                    case CHAR_TYPE_PUNC:
+                        pocRet[index] = POC_TAG_B;
+                        preType = curType;
+                        continue;
+                    default:
+                        break;
+                }
+
+            default:
+                break;
+        }
+
+        preType = curType;
+
+        #endif
+
+
+        vector<string> context(POC_TEMPLATE_SIZE);
 
         #ifdef USE_POC_TRIE
         VTrieNode node;
@@ -450,16 +634,24 @@ void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment
 
         string& tag_1 = index > 0 ? POCArray[pocRet[index-1]] : POC_EMPTY_STR;
         string& tag_2 = index > 1 ? POCArray[pocRet[index-2]] : POC_EMPTY_STR;
-        get_poc_zh_context_1(words, tag_1, tag_2, index, context);
+        get_poc_zh_context_1(words, tag_1, tag_2, index, context, ctype_);
 
         #ifdef USE_POC_TRIE
         if(data > 0){
 
+            #ifdef USE_BE_TAG_SET
+            if(data == POC_TAG_B || data == POC_TAG_E){
+                pocRet[index] = data;
+                continue;
+            }
+
+            #else
             if(data == POC_TAG_I || data == POC_TAG_L ||
                     data == POC_TAG_M || data == POC_TAG_R){
                 pocRet[index] = data;
                 continue;
             }
+            #endif
 
             vector<pair<outcome_type, double> > outcomes;
             me.eval_all(context, outcomes, false);
@@ -471,6 +663,9 @@ void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment
 
             for(size_t k=0; k<outSize; ++k){
                 pair<outcome_type, double>& pair = outcomes[k];
+                #ifdef DEBUG_POC_TAGGER
+                    cout<<"Eval(E) "<<pair.first<<"="<<pair.second<<endl;
+                #endif
                 if(pair.second > bestScore){
                     uint8_t pocCode = POCs2c[pair.first];
                     if(data & pocCode){
@@ -500,6 +695,9 @@ void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment
 
                 for(size_t k=0; k<outSize; ++k){
                     pair<outcome_type, double>& pair = outcomes[k];
+                    #ifdef DEBUG_POC_TAGGER
+                        cout<<"Eval(N) "<<pair.first<<"="<<pair.second<<endl;
+                    #endif
                     if(pair.second > bestScore){
                         bestScore = pair.second;
                         poc = pair.first;
@@ -521,6 +719,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment
 }
 
 bool SegTagger::appendWordPOC(const string& line){
+    #ifdef USE_POC_TRIE
     vector<string> tokens;
     TOKEN_STR(line, tokens);
     size_t n = tokens.size();
@@ -538,7 +737,8 @@ bool SegTagger::appendWordPOC(const string& line){
         node.data |= POCs2c[tag];
     }
     trie_.insert(word.data(), &node);
-
+    #endif
+    
     return true;
 }
 
@@ -547,18 +747,34 @@ void SegTagger::initialize(){
         return;
     POC_INIT_FLAG = true;
 
-    POCs2c["L"] = (uint8_t)POC_TAG_L;
-    POCArray[POC_TAG_L] = "L";
+    CharTypeArray[CHAR_TYPE_INIT] = "I";
+    CharTypeArray[CHAR_TYPE_NUMBER] = "N";
+    CharTypeArray[CHAR_TYPE_PUNC] = "P";
+    CharTypeArray[CHAR_TYPE_HYPHEN] = "H";
+    CharTypeArray[CHAR_TYPE_SPACE] = "S";
+    CharTypeArray[CHAR_TYPE_DATE] = "D";
+    CharTypeArray[CHAR_TYPE_LETTER] = "L";
+    CharTypeArray[CHAR_TYPE_OTHER] = "O";
 
-    POCs2c["R"] = (uint8_t)POC_TAG_R;
-    POCArray[POC_TAG_R] = "R";
+    #ifdef USE_BE_TAG_SET
+        POCs2c["B"] = (uint8_t)POC_TAG_B;
+        POCArray[POC_TAG_B] = "B";
 
-    POCs2c["M"] = (uint8_t)POC_TAG_M;
-    POCArray[POC_TAG_M] = "M";
+        POCs2c["E"] = (uint8_t)POC_TAG_E;
+        POCArray[POC_TAG_E] = "E";
+    #else
+        POCs2c["L"] = (uint8_t)POC_TAG_L;
+        POCArray[POC_TAG_L] = "L";
 
-    POCs2c["I"] = (uint8_t)POC_TAG_I;
-    POCArray[POC_TAG_I] = "I";
+        POCs2c["R"] = (uint8_t)POC_TAG_R;
+        POCArray[POC_TAG_R] = "R";
 
+        POCs2c["M"] = (uint8_t)POC_TAG_M;
+        POCArray[POC_TAG_M] = "M";
+
+        POCs2c["I"] = (uint8_t)POC_TAG_I;
+        POCArray[POC_TAG_I] = "I";
+    #endif
 }
 
 }

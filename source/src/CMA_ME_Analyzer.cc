@@ -139,9 +139,11 @@ namespace cma {
 
     void CMA_ME_Analyzer::setKnowledge(Knowledge* pKnowledge) {
         knowledge_ = (CMA_ME_Knowledge*) pKnowledge;
-        if(ctype_)
-            delete ctype_;
         ctype_ = CMA_CType::instance(knowledge_->getEncodeType());
+        if(knowledge_->getPOSTagger())
+            knowledge_->getPOSTagger()->setCType(ctype_);
+        if(knowledge_->getSegTagger())
+            knowledge_->getSegTagger()->setCType(ctype_);
     }
 
     void combineRetWithTrie(VTrie *trie, vector<string>& src, vector<string>& dest) {
@@ -234,6 +236,20 @@ namespace cma {
 
         SegTagger* segTagger = knowledge_->getSegTagger();
 
+        #ifdef USE_BE_TAG_SET
+        vector<string> words;
+        CTypeTokenizer ctypeToken(ctype_, sentence);
+        const char* nextPtr;
+        while((nextPtr = ctypeToken.next())){
+            words.push_back(nextPtr);
+        }
+
+        if(N == 1)
+            segTagger->seg_sentence_best(words, segment[0].first);
+        else
+            segTagger->seg_sentence(words, segN, N, segment);
+
+        #else
         CTypeTokenizer token(ctype_, sentence);
         
         //separate digits, letter and so on
@@ -258,6 +274,7 @@ namespace cma {
                 }
             }
         }
+        #endif 
 
         //TODO: use the trie to combined words
         VTrie *trie = knowledge_->getTrie();

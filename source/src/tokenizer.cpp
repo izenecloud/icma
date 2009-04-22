@@ -41,7 +41,6 @@ const char* CTypeTokenizer::next()
 {
     if(raw_ == 0 || *raw_ == 0)
         return 0;
-
     unsigned int bc = ctype_->getByteCount(raw_);
     assert(bc > 0 && bc < BUFFER_SIZE);
 

@@ -13,7 +13,7 @@ void beginTrain(string pMateFile, string cateFile, string enc = "gbk"){
     Knowledge::EncodeType encType = CMA_CType::getEncType(enc);
 
     cout<<"#Start Training POS Model..."<<endl;
-    pos_train(mateFile.data(), cateFile);
+    pos_train(mateFile.data(), cateFile, encType);
 
     cout<<"#Generate POC Material File "<<endl;
     string matePOC = mateFile + ".poc.tmp";
@@ -21,7 +21,7 @@ void beginTrain(string pMateFile, string cateFile, string enc = "gbk"){
 
     string cateFilePOC = cateFile + "-poc";
     cout<<"#Start Training POC Model..."<<endl;
-    poc_train(matePOC.data(), cateFilePOC);
+    poc_train(matePOC.data(), cateFilePOC, encType);
 
     //remove matePOC and mateFile(if tmpMateFile is true)
     cout<<"#Remove temporal files "<<endl;

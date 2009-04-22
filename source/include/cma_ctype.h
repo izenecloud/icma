@@ -29,7 +29,8 @@ enum CharType
     CHAR_TYPE_SPACE, ///< space character, like ' '
     CHAR_TYPE_DATE, ///< date character
     CHAR_TYPE_LETTER, ///< letter character
-    CHAR_TYPE_OTHER = 7777///< other character
+    CHAR_TYPE_OTHER, ///< other character
+    CHAR_TYPE_NUM
 };
 
 /**
@@ -69,9 +70,10 @@ public:
     /**
      * Get the character type.
      * \param p pointer to the string to be checked
+     * \param preType the chartype of the previous character
      * \return the character type.
      */
-    virtual CharType getCharType(const char* p) const = 0;
+    virtual CharType getCharType(const char* p, CharType preType) const = 0;
 
     /**
      * Check whether is white-space character.

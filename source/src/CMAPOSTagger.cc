@@ -9,17 +9,8 @@ string POS_EMPTY_STR = "";
 
 const string DEFAULT_POS = "n";
 
-void get_prefix_suffix(wstring& word, size_t length, vector<wstring>& prefixes,
-        vector<wstring>& suffixes){
-    size_t l = min(word.length(), length);
-    for(size_t i=1; i<=l; ++i){
-        prefixes.push_back(word.substr(0, i));
-        suffixes.push_back(word.substr(word.length()-i, i));
-    }
-}
-
 inline void get_pos_zh_scontext_1(vector<string>& words, string& tag_1,
-        string& tag_2, size_t i, bool rareWord, vector<string>& context){
+        string& tag_2, size_t i, bool rareWord, vector<string>& context, CMA_CType *ctype){
     string& w = words[i];
     size_t n = words.size();
 
@@ -66,16 +57,15 @@ inline void get_pos_zh_scontext_1(vector<string>& words, string& tag_1,
 }
 
 void get_pos_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
-        bool rareWord, vector<string>& context){
+        bool rareWord, vector<string>& context, CMA_CType *ctype){
     string& tag_1 = i > 0 ? tags[i-1] : POS_EMPTY_STR;
     string& tag_2 = i > 1 ? tags[i-2] : POS_EMPTY_STR;
-    get_pos_zh_scontext_1(words, tag_1, tag_2, i, rareWord, context);
+    get_pos_zh_scontext_1(words, tag_1, tag_2, i, rareWord, context, ctype);
 }
 
-void pos_train(const char* file, const string& cateFile,const char* extractFile,
-        string method, size_t iters,float gaussian){
-      TrainerData data;
-      data.get_context = get_pos_zh_scontext;
+void pos_train(const char* file, const string& cateFile, Knowledge::EncodeType encType,
+        const char* extractFile, string method, size_t iters,float gaussian){
+      TrainerData data(get_pos_zh_scontext, encType);
       train(&data, file, cateFile, extractFile, method, iters, gaussian, true);
 }
 
@@ -181,7 +171,7 @@ void POSTagger::tag_word(vector<string>& words, int index, size_t N,
     bool exists = node.data > 0;
     string& tag_1 = index > 0 ? tags[index-1] : POS_EMPTY_STR;
     string& tag_2 = index > 1 ? tags[index-2] : POS_EMPTY_STR;
-    get_pos_zh_scontext_1(words, tag_1, tag_2, index, !exists, context);
+    get_pos_zh_scontext_1(words, tag_1, tag_2, index, !exists, context, ctype_);
 
     vector<pair<outcome_type, double> > outcomes;
     me.eval_all(context, outcomes, false);
@@ -330,7 +320,7 @@ void POSTagger::tag_sentence_best(vector<string>& words, vector<string>& posRet)
         bool exists = node.data > 0;
         string& tag_1 = index > 0 ? posRet[index-1] : POS_EMPTY_STR;
         string& tag_2 = index > 1 ? posRet[index-2] : POS_EMPTY_STR;
-        get_pos_zh_scontext_1(words, tag_1, tag_2, index, !exists, context);
+        get_pos_zh_scontext_1(words, tag_1, tag_2, index, !exists, context, ctype_);
         if(exists){
             set<string>& posSet = posVec_[node.data];
 

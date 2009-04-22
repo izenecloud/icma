@@ -19,17 +19,16 @@
 #include <map>
 using namespace maxent::me;
 
-#define USE_POC_TRIE
-
 namespace cma{
 
 /**
  * POS context type for POC(Position of Character) (zh/chinese)
  */
 void get_poc_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
-        bool rareWord, vector<string>& context);
+        bool rareWord, vector<string>& context, CMA_CType *ctype);
 
 void poc_train(const char* file, const string& cateName,
+        Knowledge::EncodeType encType = Knowledge::ENCODE_TYPE_GB2312,
         const char* extractFile = 0, string method = "gis", size_t iters = 15,
         float gaussian = 0.0f);
 
@@ -71,6 +70,10 @@ public:
 
     bool appendWordPOC(const string& line);
 
+    void setCType(CMA_CType *ctype){
+        ctype_ = ctype;
+    }
+
 private:
 
     /**
@@ -85,6 +88,8 @@ private:
 
 private:
     MaxentModel me;
+
+    CMA_CType *ctype_;
 
     #ifdef USE_POC_TRIE
     /** Store the data to the POC tag (L/R/M/I) */

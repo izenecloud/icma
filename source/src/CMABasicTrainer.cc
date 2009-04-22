@@ -147,7 +147,8 @@ void extract_feature(TrainerData* data, const char* file,
 
         for(size_t i=0; i<words.size(); ++i){
             vector<string> context;
-            data->get_context(words, tags, i, data->wordFreq_[words[i]] < data->rareFreq_, context);
+            data->get_context(words, tags, i, data->wordFreq_[words[i]] < data->rareFreq_, 
+                    context, data->ctype_);
             func(data, words[i], context, tags[i]);
         }
     }
@@ -364,9 +365,9 @@ void create_poc_meterial(const char* inFile, const char* outFile,
             
             for(size_t i=1; i<charLen; ++i){
                 if(i == charLen - 1)
-                    out<<charVec[0]<<"/E";
+                    out<<charVec[i]<<"/E";
                 else
-                    out<<charVec[0]<<"/E ";
+                    out<<charVec[i]<<"/E ";
                 
             }
             #else           
@@ -392,8 +393,6 @@ void create_poc_meterial(const char* inFile, const char* outFile,
     }
     in.close();
     out.close();
-
-    delete ctype;
 }
 
 
