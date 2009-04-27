@@ -13,6 +13,7 @@
 using std::string;
 
 #include "knowledge.h" // Knowledge::EncodeType
+#include "cmacconfig.h"
 
 namespace cma
 {
@@ -25,7 +26,6 @@ enum CharType
     CHAR_TYPE_INIT, ///< initial type
     CHAR_TYPE_NUMBER, ///< digit character
     CHAR_TYPE_PUNC, ///< puntuation character
-    CHAR_TYPE_HYPHEN, ///< hythen character, like '-'
     CHAR_TYPE_SPACE, ///< space character, like ' '
     CHAR_TYPE_DATE, ///< date character
     CHAR_TYPE_LETTER, ///< letter character
@@ -60,35 +60,16 @@ public:
     virtual unsigned int getByteCount(const char* p) const = 0;
 
     /**
-     * Check whether is punctuation.
-     * \param p pointer to the character string
-     * \return true for punctuation, false for non punctuation.
-     */
-    virtual bool isPunct(const char* p) const = 0;
-
-
-    /**
      * Get the character type.
      * \param p pointer to the string to be checked
      * \param preType the chartype of the previous character
+     * \param nextP the pointer of the next character, it can be 0
      * \return the character type.
      */
-    virtual CharType getCharType(const char* p, CharType preType) const = 0;
+    virtual CharType getCharType(const char* p, CharType preType,
+            const char* nextP) const = 0;
 
-    /**
-     * Check whether is white-space character.
-     * White-space characters are " \t\n\v\f\r", and also space character in specific encoding.
-     * \param p pointer to the character string
-     * \return true for white-space character, false for non white-space character.
-     */
-    virtual bool isSpace(const char* p) const = 0;
-
-    /**
-     * Check whether is a seperator of sentence.
-     * \param p pointer to the character string
-     * \return true for separator, false for non separator.
-     */
-    virtual bool isSentenceSeparator(const char* p) const = 0;
+    bool isPunct(const char* p) const;
 };
 
 } // namespace cma

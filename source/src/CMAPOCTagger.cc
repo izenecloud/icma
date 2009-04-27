@@ -12,44 +12,26 @@ string POC_EMPTY_STR = "";
 
 map<string, uint8_t> POCs2c;
 
-#ifdef USE_BE_TAG_SET
-    #define POC_TAG_B 1
-    #define POC_TAG_E 2
 
-    string POCArray[3];
+#define POC_TAG_B 1
+#define POC_TAG_E 2
 
-    #define DEFAULT_POC POC_TAG_B
+#define POC_TAG_B_NAME "B"
+#define POC_TAG_E_NAME "E"
 
-    /** if set, use punctuaion and character type feature */
-    //#define USE_BE_TYPE_FEATURE
+string POCArray[3];
 
-#else
-    #ifdef USE_POC_TRIE
-        #define POC_TAG_L 1
-        #define POC_TAG_M 2
-        #define POC_TAG_R 4
-        #define POC_TAG_I 8
-        string POCArray[9];
-    #else
-        #define POC_TAG_L 0
-        #define POC_TAG_M 1
-        #define POC_TAG_R 2
-        #define POC_TAG_I 3
-        string POCArray[4];
-    #endif
+#define DEFAULT_POC POC_TAG_B
 
-    #define DEFAULT_POC POC_TAG_I
-#endif
+/** if set, use punctuaion and character type feature */
+//#define USE_BE_TYPE_FEATURE
 
-#ifdef USE_POC_NEW_FEATURE
-     #ifdef USE_BE_TYPE_FEATURE
-        #define POC_TEMPLATE_SIZE 12
-     #else
-        #define POC_TEMPLATE_SIZE 10
-     #endif
-#else
-    #define POC_TEMPLATE_SIZE 8
-#endif
+
+ #ifdef USE_BE_TYPE_FEATURE
+    #define POC_TEMPLATE_SIZE 12
+ #else
+    #define POC_TEMPLATE_SIZE 10
+ #endif
 
 bool POC_INIT_FLAG = false;
 
@@ -57,43 +39,23 @@ const string POC_BOUNDARY = "BOUNDARY";
 
 string CharTypeArray[CHAR_TYPE_NUM];
 
-#ifndef USE_BE_TAG_SET
-inline bool is_matched_poc(uint8_t preTag, uint8_t curTag){
-    switch(preTag){
-        case POC_TAG_I: // I
-        case POC_TAG_R: // R
-            return curTag == POC_TAG_L || curTag == POC_TAG_I; // L or I
-        case POC_TAG_L: // L
-            return curTag == POC_TAG_R || curTag == POC_TAG_M; // R or M
-        case POC_TAG_M: // M
-            return curTag == POC_TAG_R || curTag == POC_TAG_M; // R or M
-        default:
-            cerr<<"Invalid POC tag (POC_TRIE) "<<preTag<<endl;
-            exit(1);
-            return false;
-    }
-}
-#endif
 
-/**
- * \param tag_1 is tags[i-1]
- * \param tag_2 is tags[i-2]
- */
-inline void get_poc_zh_context_1(vector<string>& words, string& tag_1, string& tag_2,
-        size_t i, vector<string>& context, CMA_CType *ctype){
+namespace pocInner{
+
+inline void get_poc_zh_context_1(vector<string>& words, size_t index,
+        vector<string>& context, CMA_CType *ctype){
 
     #ifdef EN_ASSERT
         assert(context.size() == POC_TEMPLATE_SIZE);
     #endif
 
-    #ifdef USE_POC_NEW_FEATURE       
     string wa[5]; //word array
     #ifdef USE_BE_TYPE_FEATURE
     string ta[5]; //type array
     #endif
 
     size_t n = words.size();
-    size_t offset = i - 2;
+    size_t offset = index - 2;
     for(size_t j = 0; j < 5; ++j, ++offset){
         if(offset >= 0 && offset < n){
             wa[j] = words[offset];
@@ -135,104 +97,6 @@ inline void get_poc_zh_context_1(vector<string>& words, string& tag_1, string& t
     context[++k] = "T-2,-1,0,1,2=" + ta[0] + "," + ta[1] +
             "," + ta[2] + "," + ta[3] + "," + ta[4];
     #endif //#ifdef USE_BE_TYPE_FEATURE
-
-    #else
-
-    int k = -1;
-    string& word_0 = words[i];
-    context[++k] = "curword=" + word_0;
-
-    size_t n = words.size();
-
-    if(i>0){
-        context[++k] = "T-1=" + tag_1;
-        string& word_1 = words[i-1];
-        if(i>1){
-            context[++k] = "T-2=" + tag_2;
-            string& word_2 = words[i-2];
-            context[++k] = "W-2,-1=" +word_2+ "," + word_1;
-            if(i<n-1){
-                string& word_a1 = words[i+1];
-                context[++k] = "W-1,+1=" + word_1 + "," + word_a1;
-                context[++k] = "W-1,0,+1=" + word_1 + "," + word_0 + "," + word_a1;
-                if(i<n-2){
-                    string& word_a2 = words[i+2];
-                    context[++k] = "W+1,+2=" +word_a1+ "," + word_a2;
-                    context[++k] = "W-2,-1,+1,+2=" + word_2+ "," +word_1+ "," +word_a1+ "," +word_a2;
-                }else{
-                    context[++k] = "W+1,+2=" +word_a1+ ",BOUNDARY";
-                    context[++k] = "W-2,-1,+1,+2=" +word_2+ "," +word_1+ "," +word_a1+ ",BOUNDARY";
-                }
-            }else{ // i==n-1
-                context[++k] = "W-1,+1=" +word_1+ ",BOUNDARY";
-                context[++k] = "W-1,0,+1=" +word_1+ "," +word_0+ ",BOUNDARY";
-                context[++k] = "W+1,+2=BOUNDARY,BOUNDARY";
-                context[++k] = "W-2,-1,+1,+2=" +word_2+ "," +word_1+ ",BOUNDARY,BOUNDARY";
-            }
-        } //end i>1
-        else{ // i==1
-            context[++k] = "T-2=BOUNDARY";
-            context[++k] = "W-2,-1=BOUNDARY," + word_1;
-            if(i<n-1){
-                string& word_a1 = words[i+1];
-                context[++k] = "W-1,+1=" + word_1 + "," + word_a1;
-                context[++k] = "W-1,0,+1=" + word_1 + "," + word_0 + "," + word_a1;
-                if(i<n-2){
-                    string& word_a2 = words[i+2];
-                    context[++k] = "W+1,+2=" +word_a1+ "," + word_a2;
-                    context[++k] = "W-2,-1,+1,+2=BOUNDARY," +word_1+ "," +word_a1+ "," + word_a2;
-                }else{
-                    context[++k] = "W+1,+2=" +word_a1+ ",BOUNDARY";
-                    context[++k] = "W-2,-1,+1,+2=BOUNDARY," +word_1+ "," +word_a1+ ",BOUNDARY";
-                }
-            }else{ // i==n-1
-                context[++k] = "W-1,+1=" +word_1+ ",BOUNDARY";
-                context[++k] = "W-1,0,+1=" +word_1 + "," + word_0+ ",BOUNDARY";
-                context[++k] = "W+1,+2=BOUNDARY,BOUNDARY";
-                context[++k] = "W-2,-1,+1,+2=BOUNDARY," +word_1+ ",BOUNDARY,BOUNDARY";
-            }
-        } //end i==1
-    } // end if(i>0)
-    else{ // i==0
-        context[++k] = "T-1=BOUNDARY";
-        context[++k] = "T-2=BOUNDARY";
-        context[++k] = "W-2,-1=BOUNDARY,BOUNDARY";
-        if(i<n-1){
-            string& word_a1 = words[i+1];
-            context[++k] = "W-1,+1=BOUNDARY," + words[i+1];
-            context[++k] = "W-1,0,+1=BOUNDARY," +word_0 + "," + word_a1;
-            if(i<n-2){
-                string& word_a2 = words[i+2];
-                context[++k] = "W+1,+2=" + word_a1 + "," + word_a2;
-                context[++k] = "W-2,-1,+1,+2=BOUNDARY,BOUNDARY," +word_a1+ "," +word_a2;
-            }else{
-                context[++k] = "W+1,+2=" + word_a1 + ",BOUNDARY";
-                context[++k] = "W-2,-1,+1,+2=BOUNDARY,BOUNDARY," +word_a1+ ",BOUNDARY";
-            }
-        }else{
-            context[++k] = "W-1,+1=BOUNDARY,BOUNDARY";
-            context[++k] = "W-1,0,+1=BOUNDARY," + word_0 + ",BOUNDARY";
-            context[++k] = "W+1,+2=BOUNDARY,BOUNDARY";
-            context[++k] = "W-2,-1,+1,+2=BOUNDARY,BOUNDARY,BOUNDARY,BOUNDARY";
-        }
-    } //end i==0
-    #endif
-}
-
-/**
- * POS context type for POC(Position of Character) (zh/chinese)
- */
-void get_poc_zh_context(vector<string>& words, vector<string>& tags, size_t i,
-        bool rareWord, vector<string>& context, CMA_CType *ctype){
-    context.resize(POC_TEMPLATE_SIZE);
-    get_poc_zh_context_1(words, tags[i-1], tags[i-2], i, context, ctype);
-}
-
-void poc_train(const char* file, const string& cateName,
-        Knowledge::EncodeType encType, const char* extractFile,
-        string method, size_t iters,float gaussian){
-      TrainerData data(get_poc_zh_context, encType);
-      train(&data, file, cateName, extractFile, method, iters, gaussian, false);
 }
 
 /**
@@ -300,21 +164,129 @@ inline void insertCandidate(uint8_t pocCode, int index, double score,
     unit.previous = cIndex;
 }
 
-SegTagger::SegTagger(const string& cateName){
+inline void combinePOCToWord(vector<string>& words, size_t n, uint8_t* tags,
+        vector<string>& seg){
+    string strBuf;
+
+    for(size_t i = 0; i < n; ++i){
+        if(tags[i] == POC_TAG_B){
+            if(!strBuf.empty())
+                seg.push_back(strBuf);
+            strBuf = words[i];
+        }
+        else if(tags[i] == POC_TAG_E){
+            strBuf.append(words[i]);
+        }
+        else{
+            assert(false && "Invalid POC Code in the BE tag set");
+        }
+    }
+    //the remaining string
+    if(!strBuf.empty())
+        seg.push_back(strBuf);
+}
+
+/**
+ * \param curType passed by value
+ * \return if true, the POC information for the current tag is set
+ */
+inline bool checkCharTypePair(uint8_t* pocRet, size_t index, CharType& preType,
+        CharType curType){
+    if(curType == CHAR_TYPE_PUNC){
+        pocRet[index] = POC_TAG_B;
+        preType = curType;
+        return true;
+    }
+
+    switch(preType){
+    case CHAR_TYPE_PUNC:
+        pocRet[index] = POC_TAG_B;
+        preType = curType;
+        return true;
+
+    case CHAR_TYPE_NUMBER:
+        switch(curType){
+            case CHAR_TYPE_NUMBER:
+                pocRet[index] = POC_TAG_E;
+                return true;
+            case CHAR_TYPE_LETTER:
+            //may be unit is OK here
+            case CHAR_TYPE_DATE:
+                pocRet[index] = POC_TAG_E;
+                preType = CHAR_TYPE_INIT;
+                return true;
+            default:
+                return false;
+        }
+
+    case CHAR_TYPE_DATE:
+        pocRet[index] = POC_TAG_B;
+        preType = curType;
+        return true;
+
+    case CHAR_TYPE_LETTER:
+        switch(curType){
+            case CHAR_TYPE_NUMBER:
+            case CHAR_TYPE_LETTER:
+                pocRet[index] = POC_TAG_E;
+                preType = CHAR_TYPE_NUMBER;
+                return true;
+            default:
+                pocRet[index] = POC_TAG_B;
+                preType = curType;
+                return true;
+        }
+
+    case CHAR_TYPE_INIT:
+        pocRet[index] = POC_TAG_B;
+        preType = curType;
+        return true;
+
+    case CHAR_TYPE_OTHER:
+        switch(curType){
+            case CHAR_TYPE_NUMBER:
+            case CHAR_TYPE_LETTER:
+            case CHAR_TYPE_PUNC:
+                pocRet[index] = POC_TAG_B;
+                preType = curType;
+                return true;
+            default:
+                return false;
+        }
+
+    default:
+        return false;
+    }
+    return false;
+}
+
+} //end namespace pocInner
+
+
+
+/**
+ * POS context type for POC(Position of Character) (zh/chinese)
+ */
+void get_poc_zh_context(vector<string>& words, vector<string>& tags, size_t i,
+        bool rareWord, vector<string>& context, CMA_CType *ctype){
+    context.resize(POC_TEMPLATE_SIZE);
+    pocInner::get_poc_zh_context_1(words, i, context, ctype);
+}
+
+void poc_train(const char* file, const string& cateName,
+        Knowledge::EncodeType encType, const char* extractFile,
+        string method, size_t iters,float gaussian){
+      TrainerData data(get_poc_zh_context, encType);
+      train(&data, file, cateName, extractFile, method, iters, gaussian, false);
+}
+
+
+SegTagger::SegTagger(const string& cateName, VTrie* posTrie, double eScore){
     SegTagger::initialize();
     //cout<<"Load poc model"<<(cateName + ".model")<<endl;
     me.load(cateName + ".model");
-
-    #ifdef USE_POC_TRIE
-    ifstream in((cateName+".dic").data());
-    assert(in);
-    string line;
-    while(!in.eof()){
-        getline(in, line);
-        appendWordPOC(line);
-    }
-    in.close();
-    #endif
+    trie_ = posTrie;
+    setEScore(eScore);
 }
 
 void SegTagger::tag_word(vector<string>& words, int index, size_t N, 
@@ -323,15 +295,10 @@ void SegTagger::tag_word(vector<string>& words, int index, size_t N,
 
     vector<string> context(POC_TEMPLATE_SIZE);
 
-    string& tag_1 = index > 0 ? POCArray[tags[index-1]] : POC_EMPTY_STR;
-    string& tag_2 = index > 1 ? POCArray[tags[index-2]] : POC_EMPTY_STR;
-    get_poc_zh_context_1(words, tag_1, tag_2, index, context, ctype_);
+    pocInner::get_poc_zh_context_1(words, index, context, ctype_);
 
     vector<pair<outcome_type, double> > outcomes;
     me.eval_all(context, outcomes, false);
-    #ifdef _ME_STRICT_POC_MATCHED
-        uint8_t preTag = (index > 0) ? tags[index-1] : 3;
-    #endif
 
     size_t outSize = outcomes.size();
     for(size_t i=0; i<outSize; ++i){
@@ -340,89 +307,12 @@ void SegTagger::tag_word(vector<string>& words, int index, size_t N,
         if(canSize >= N && score <= candidates[lastIndex].score)
             continue;
         uint8_t pocCode = POCs2c[pair.first];
-        #ifdef _ME_STRICT_POC_MATCHED
-        if(!is_matched_poc(preTag, pocCode))
-            continue;
-        #endif
-        insertCandidate(pocCode, candidateNum, score, candidates,
+        pocInner::insertCandidate(pocCode, candidateNum, score, candidates,
                 lastIndex, canSize, N);
     }
 }
 
-inline void combinePOCToWord(vector<string>& words, size_t n, uint8_t* tags,
-        vector<string>& seg){
-    string strBuf;
 
-    #ifdef USE_BE_TAG_SET
-        for(size_t i = 0; i < n; ++i){
-            if(tags[i] == POC_TAG_B){
-                if(!strBuf.empty())
-                    seg.push_back(strBuf);
-                strBuf = words[i];
-            }
-            else if(tags[i] == POC_TAG_E){
-                strBuf.append(words[i]);
-            }
-            else{
-                assert(false && "Invalid POC Code in the BE tag set");
-            }
-        }
-    #else
-        #ifdef _ME_STRICT_POC_MATCHED
-            for(size_t i = 0; i < n; ++i){
-                if(tags[i] == POC_TAG_R){ // R
-                    seg.push_back(strBuf + words[i]);
-                    strBuf.clear();
-                }else if(tags[i] == POC_TAG_I){ // I
-                    #ifdef EN_ASSERT
-                    assert(strBuf.empty());
-                    #endif
-                    seg.push_back(words[i]);
-                }else if(tags[i] == POC_TAG_L){ // L
-                    #ifdef EN_ASSERT
-                    assert(strBuf.empty());
-                    #endif
-                    strBuf.append(words[i]);
-                }else if(tags[i] == POC_TAG_M){ // M
-                    strBuf.append(words[i]);
-                }else{
-                    // unrecognize tag
-                    cerr<<"Error POC (MATCHED): "<<(int)tags[i]<<" ("<<k<<","<<i<<")"<<endl;
-                    assert(0);
-                }
-            }
-
-        #else
-            for(size_t i = 0; i < n; ++i){
-                if(tags[i] == POC_TAG_R){ // R
-                    seg.push_back(strBuf + words[i]);
-                    strBuf.clear();
-                }else if(tags[i] == POC_TAG_I){ // I
-                    if(!strBuf.empty()){
-                        seg.push_back(strBuf);
-                        strBuf.clear();
-                    }
-                    seg.push_back(words[i]);
-                }else if(tags[i] == POC_TAG_L){ // L
-                    if(!strBuf.empty()){
-                        seg.push_back(strBuf);
-                        strBuf.clear();
-                    }
-                    strBuf.append(words[i]);
-                }else if(tags[i] == POC_TAG_M){ // M
-                    strBuf.append(words[i]);
-                }else{
-                    // unrecognize tag
-                    cerr<<"Error POC: "<<(int)tags[i]<<"("<<i<<")"<<endl;
-                    assert(0);
-                }
-            }
-        #endif
-    #endif //end #ifdef USE_BE_TAG_SET
-    //the remaining string
-    if(!strBuf.empty())
-        seg.push_back(strBuf);
-}
 
 void SegTagger::seg_sentence(vector<string>& words, size_t N, size_t retSize,
         vector<pair<vector<string>, double> >& segment){
@@ -482,7 +372,7 @@ void SegTagger::seg_sentence(vector<string>& words, size_t N, size_t retSize,
         uint8_t* tags = h0[k];
         pair<vector<string>,double>& pair = segment[k];
         pair.second = (pair.second > 0) ? (pair.second * scores[k]) : scores[k];
-        combinePOCToWord(words, n, tags, pair.first);
+        pocInner::combinePOCToWord(words, n, tags, pair.first);
     }
     
 }
@@ -532,214 +422,54 @@ void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment
     size_t n = words.size();
     uint8_t pocRet[n];
 
-    #ifdef USE_BE_TAG_SET
     CharType preType = CHAR_TYPE_INIT;
-    #endif
+    
+    const char* curPtr;
+    const char* nextPtr = (n > 0) ? words[0].c_str() : 0;
     for(size_t index=0; index<n; ++index){
+        curPtr = nextPtr;
+        nextPtr = ( index + 1 < n ) ? words[ index+1 ].c_str() : 0;
+
+        CharType curType = ctype_->getCharType(curPtr, preType, nextPtr);
+
         #ifdef DEBUG_POC_TAGGER
-        cout<<"Check "<<index<<":"<<words[index]<<endl;
+        cout<<"Check "<<index<<":"<<words[index]<<",type: "<<CharTypeArray[curType]<<endl;
         #endif
 
-        #ifdef USE_BE_TAG_SET
-        CharType curType = ctype_->getCharType(words[index].c_str(), preType);
-
-        if(curType == CHAR_TYPE_PUNC){
-            pocRet[index] = POC_TAG_B;
-            preType = curType;
+        if( pocInner::checkCharTypePair(pocRet, index, preType, curType) ){
             continue;
         }
-
-        switch(preType){          
-            case CHAR_TYPE_PUNC:
-                pocRet[index] = POC_TAG_B;
-                preType = curType;
-                continue;
-
-            case CHAR_TYPE_NUMBER:
-                switch(curType){
-                    case CHAR_TYPE_NUMBER:
-                        pocRet[index] = POC_TAG_E;
-                        continue;
-                    case CHAR_TYPE_LETTER:
-                    case CHAR_TYPE_HYPHEN:
-                        pocRet[index] = POC_TAG_E;
-                        preType = CHAR_TYPE_LETTER;
-                        continue;
-                    //may be unit is OK here
-                    case CHAR_TYPE_DATE:
-                        pocRet[index] = POC_TAG_E;
-                        preType = CHAR_TYPE_INIT;
-                        continue;
-                    default:
-                        break;
-                        /*pocRet[index] = POC_TAG_B;
-                        preType = curType;
-                        continue;*/
-                }
-
-            case CHAR_TYPE_DATE:
-                pocRet[index] = POC_TAG_B;
-                preType = curType;
-                continue;
-
-            case CHAR_TYPE_LETTER:
-            case CHAR_TYPE_HYPHEN:
-                switch(curType){
-                    case CHAR_TYPE_NUMBER:
-                    case CHAR_TYPE_LETTER:
-                    case CHAR_TYPE_HYPHEN:
-                        pocRet[index] = POC_TAG_E;
-                        preType = CHAR_TYPE_NUMBER;
-                        continue;
-                    default:
-                        pocRet[index] = POC_TAG_B;
-                        preType = curType;
-                        continue;
-                }
-
-            case CHAR_TYPE_INIT:
-                pocRet[index] = POC_TAG_B;
-                preType = curType;
-                continue;
-
-            case CHAR_TYPE_OTHER:
-                switch(curType){
-                    case CHAR_TYPE_NUMBER:
-                    case CHAR_TYPE_LETTER:
-                    case CHAR_TYPE_HYPHEN:
-                    case CHAR_TYPE_PUNC:
-                        pocRet[index] = POC_TAG_B;
-                        preType = curType;
-                        continue;
-                    default:
-                        break;
-                }
-
-            default:
-                break;
-        }
-
         preType = curType;
-
-        #endif
-
 
         vector<string> context(POC_TEMPLATE_SIZE);
 
-        #ifdef USE_POC_TRIE
-        VTrieNode node;
-        trie_.search( words[index].data(), &node );
-        int data = node.data;
-        #endif
+        pocInner::get_poc_zh_context_1(words, index, context, ctype_);
 
-        string& tag_1 = index > 0 ? POCArray[pocRet[index-1]] : POC_EMPTY_STR;
-        string& tag_2 = index > 1 ? POCArray[pocRet[index-2]] : POC_EMPTY_STR;
-        get_poc_zh_context_1(words, tag_1, tag_2, index, context, ctype_);
+        vector<pair<outcome_type, double> > outcomes;
+        me.eval_all(context, outcomes, false);
 
-        #ifdef USE_POC_TRIE
-        if(data > 0){
+        pair<outcome_type, double>& pair0 = outcomes[0];
 
-            #ifdef USE_BE_TAG_SET
-            if(data == POC_TAG_B || data == POC_TAG_E){
-                pocRet[index] = data;
-                continue;
-            }
+        double tagEScore = (pair0.first == POC_TAG_E_NAME) ?
+              pair0.second : ( 1 - pair0.second );
 
-            #else
-            if(data == POC_TAG_I || data == POC_TAG_L ||
-                    data == POC_TAG_M || data == POC_TAG_R){
-                pocRet[index] = data;
-                continue;
-            }
-            #endif
+        if(tagEScore <= 0.5){
+            pocRet[index] = POC_TAG_B;
+            continue;
+        }
 
-            vector<pair<outcome_type, double> > outcomes;
-            me.eval_all(context, outcomes, false);
+        if(tagEScore >= eScore_){
+            pocRet[index] = POC_TAG_E;
+            continue;
+        }
 
-            //find the best pos
-            double bestScore = -1.0;
-            uint8_t bestPoc;
-            size_t outSize = outcomes.size();
+        //use the trie_ information
 
-            for(size_t k=0; k<outSize; ++k){
-                pair<outcome_type, double>& pair = outcomes[k];
-                #ifdef DEBUG_POC_TAGGER
-                    cout<<"Eval(E) "<<pair.first<<"="<<pair.second<<endl;
-                #endif
-                if(pair.second > bestScore){
-                    uint8_t pocCode = POCs2c[pair.first];
-                    if(data & pocCode){
-                        bestScore = pair.second;
-                        bestPoc = pocCode;
-                    }
-                }
-            }
+        pocRet[index] = POC_TAG_E;
 
-            //no suitable pos found, insert the default POS n
-            if(bestScore <= 0)
-                pocRet[index] = DEFAULT_POC;
-            else
-                pocRet[index] = bestPoc;
-        }else{
-        #endif
-            string poc;
-            if(me.eval(context, poc) > 0.0)
-                pocRet[index] = POCs2c[poc];
-            else{
-                vector<pair<outcome_type, double> > outcomes;
-                me.eval_all(context, outcomes, false);
-
-                //find the best pos
-                double bestScore = -1.0;
-                size_t outSize = outcomes.size();
-
-                for(size_t k=0; k<outSize; ++k){
-                    pair<outcome_type, double>& pair = outcomes[k];
-                    #ifdef DEBUG_POC_TAGGER
-                        cout<<"Eval(N) "<<pair.first<<"="<<pair.second<<endl;
-                    #endif
-                    if(pair.second > bestScore){
-                        bestScore = pair.second;
-                        poc = pair.first;
-                    }
-                }
-
-                //no suitable pos found, insert the default POS n
-                if(bestScore <= 0)
-                    pocRet[index] = DEFAULT_POC;
-                else
-                    pocRet[index] = POCs2c[poc];
-            }
-        #ifdef USE_POC_TRIE
-        } //end if(exists) / else
-        #endif
     }
 
-    combinePOCToWord(words, n, pocRet, segment);
-}
-
-bool SegTagger::appendWordPOC(const string& line){
-    #ifdef USE_POC_TRIE
-    vector<string> tokens;
-    TOKEN_STR(line, tokens);
-    size_t n = tokens.size();
-    //at least have the word(character) and one POC tag
-    if(n < 2)
-        return false;
-    string word = tokens[0];
-
-    //try to search first, if found, also init node.data
-    VTrieNode node;
-    trie_.search(word.data(), &node);
-
-    for(size_t i=1; i<n; ++i){
-        string& tag = tokens[i];
-        node.data |= POCs2c[tag];
-    }
-    trie_.insert(word.data(), &node);
-    #endif
-    
-    return true;
+    pocInner::combinePOCToWord(words, n, pocRet, segment);
 }
 
 void SegTagger::initialize(){
@@ -750,31 +480,16 @@ void SegTagger::initialize(){
     CharTypeArray[CHAR_TYPE_INIT] = "I";
     CharTypeArray[CHAR_TYPE_NUMBER] = "N";
     CharTypeArray[CHAR_TYPE_PUNC] = "P";
-    CharTypeArray[CHAR_TYPE_HYPHEN] = "H";
     CharTypeArray[CHAR_TYPE_SPACE] = "S";
     CharTypeArray[CHAR_TYPE_DATE] = "D";
     CharTypeArray[CHAR_TYPE_LETTER] = "L";
     CharTypeArray[CHAR_TYPE_OTHER] = "O";
 
-    #ifdef USE_BE_TAG_SET
-        POCs2c["B"] = (uint8_t)POC_TAG_B;
-        POCArray[POC_TAG_B] = "B";
+    POCs2c["B"] = (uint8_t)POC_TAG_B;
+    POCArray[POC_TAG_B] = "B";
 
-        POCs2c["E"] = (uint8_t)POC_TAG_E;
-        POCArray[POC_TAG_E] = "E";
-    #else
-        POCs2c["L"] = (uint8_t)POC_TAG_L;
-        POCArray[POC_TAG_L] = "L";
-
-        POCs2c["R"] = (uint8_t)POC_TAG_R;
-        POCArray[POC_TAG_R] = "R";
-
-        POCs2c["M"] = (uint8_t)POC_TAG_M;
-        POCArray[POC_TAG_M] = "M";
-
-        POCs2c["I"] = (uint8_t)POC_TAG_I;
-        POCArray[POC_TAG_I] = "I";
-    #endif
+    POCs2c["E"] = (uint8_t)POC_TAG_E;
+    POCArray[POC_TAG_E] = "E";
 }
 
 }

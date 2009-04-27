@@ -55,8 +55,10 @@ int CMA_ME_Knowledge::loadPOSModel(const char* cateName){
 
 int CMA_ME_Knowledge::loadStatModel(const char* cateName){
     assert(!segT_);
+    if(!trie_)
+        trie_ = new VTrie();
     string cateStr(cateName);
-    segT_ = new SegTagger(cateStr);
+    segT_ = new SegTagger(cateStr, trie_);
     return 1;
 }
 
@@ -87,7 +89,8 @@ int CMA_ME_Knowledge::loadStopWordDict(const char* fileName){
 
 int CMA_ME_Knowledge::loadSystemDict(const char* binFileName){
     assert(posT_);
-    assert(trie_);
+    if(!trie_)
+        trie_ = new VTrie();
 
     FILE *in = fopen(binFileName, "r");
     assert(in);

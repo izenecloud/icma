@@ -44,7 +44,16 @@ struct POCTagUnit{
 class SegTagger{
 public:
 
-    SegTagger(const string& cateName);
+    /**
+     * Create the SegTagger
+     * \param cateName the poc category name, the model file(cateName + ".model")
+     *     should exists.
+     * \param posTrie the VTrie to hold the POS Information
+     * \param eScore is a double value between 0.5 and 1.0, if the POC tag B has
+     * possiblity more the eScore, it will be tagged with E. EScore's default
+     * value is 0.7.
+     */
+    SegTagger(const string& cateName, VTrie* posTrie, double eScore = 0.7);
 
     void tag_file(const char* inFile, const char *outFile, 
             string encType = "gbk");
@@ -59,7 +68,9 @@ public:
             vector<pair<vector<string>, double> >& segment);
 
     /**
-     * only return the best segment result
+     * only return the best segment result, no scores is used here
+     * \param words the word list
+     * \param segment to store the segmented words
      */
     void seg_sentence_best(vector<string>& words, vector<string>& segment);
 
@@ -68,10 +79,33 @@ public:
      */
     static void initialize();
 
-    bool appendWordPOC(const string& line);
-
     void setCType(CMA_CType *ctype){
         ctype_ = ctype;
+    }
+
+    /**
+     * Set the EScore<BR>
+     * EScore is a double value between 0.5 and 1.0, if the POC tag B has
+     * possiblity more the eScore, it will be tagged with E. <BR>
+     * EScore's default value is 0.7.
+     *
+     * \return eScore the new eScore
+     */
+    void setEScore(double eScore){
+        assert( eScore > 0.5 && eScore <= 1.0 && "eScore should between 0.5 and 1.0");
+        eScore_ = eScore;
+    }
+
+    /**
+     * Get the EScore <BR>
+     * EScore is a double value between 0.5 and 1.0, if the POC tag B has
+     * possiblity more the eScore, it will be tagged with E. <BR>
+     * EScore's default value is 0.7.
+     *
+     * \return the EScore
+     */
+    double getEScore(){
+        return eScore_;
     }
 
 private:
@@ -91,10 +125,10 @@ private:
 
     CMA_CType *ctype_;
 
-    #ifdef USE_POC_TRIE
-    /** Store the data to the POC tag (L/R/M/I) */
-    VTrie trie_;
-    #endif
+    /** Store the data to the POS tags */
+    VTrie* trie_;
+
+    double eScore_;
 };
 
 }

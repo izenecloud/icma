@@ -18,13 +18,8 @@
  */
 #define USE_BE_TAG_SET
 
-//#define _ME_STRICT_POC_MATCHED
-
 /** Whether use POC new feature */
 #define USE_POC_NEW_FEATURE
-
-/** Whether use the VTrie in the POC */
-//#define USE_POC_TRIE
 
 #define TEST_SEG_CMD
 

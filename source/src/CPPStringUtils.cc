@@ -1,7 +1,9 @@
 #include "CPPStringUtils.h"
 #include <boost/tokenizer.hpp>
 #include <fstream>
-#include <iconv.h>
+#ifdef USE_ICONV
+    #include <iconv.h>
+#endif
 
 const string UTF8_N = "utf8";
 
@@ -597,6 +599,7 @@ void CPPStringUtils::token_string(const string& s, vector<string>& words){
     }
 }
 
+#ifdef USE_ICONV
 string CPPStringUtils::encString(const char* toenc, const char* fromenc, string& in){
     iconv_t cd = iconv_open(toenc, fromenc);
     size_t bufSize = in.length() * 3;
@@ -712,5 +715,6 @@ int CPPStringUtils::encFile ( const char* toEnc, const char* fromEnc,
         fclose(vInFile);
         fclose(vOutFile);
         return 0;
-
 }
+#endif
+

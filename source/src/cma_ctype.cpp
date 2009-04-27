@@ -33,7 +33,7 @@ CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
 }
 
 Knowledge::EncodeType CMA_CType::getEncType(string encType){
-    if(encType == "gbk" || encType == "GBK"){
+    if(encType == "gb2312" || encType == "GB2312"){
         return Knowledge::ENCODE_TYPE_GB2312;
     }else if(encType == "big5" || encType == "BIG5"){
         return Knowledge::ENCODE_TYPE_BIG5;
@@ -45,6 +45,10 @@ Knowledge::EncodeType CMA_CType::getEncType(string encType){
 
 CMA_CType::~CMA_CType()
 {
+}
+
+bool CMA_CType::isPunct(const char* p) const{
+    return getCharType(p, CHAR_TYPE_INIT, 0) == CHAR_TYPE_PUNC;
 }
 
 } // namespace cma

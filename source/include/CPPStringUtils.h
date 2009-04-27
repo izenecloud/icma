@@ -13,6 +13,9 @@
 #include <string.h>
 using namespace std;
 
+//whether use iconv
+//#define USE_ICONV
+
 /*
 #define F_UTF8W(in) CPPStringUtils::from_utf8w(in)
 #define T_UTF8(in) CPPStringUtils::to_utf8(in)
@@ -55,6 +58,7 @@ public:
 
         static void token_string(const string& s, vector<string>& words);
 
+        #ifdef USE_ICONV
         static string encString(const char* toenc, const char* fromenc, string& in);
 
         /**
@@ -62,6 +66,7 @@ public:
          */
         static int encFile(const char* toEnc, const char* fromEnc,
                 const char* inFile, const char* outFile);
+        #endif
 };
 #endif	/* _CPPSTRINGUTILS_H */
 

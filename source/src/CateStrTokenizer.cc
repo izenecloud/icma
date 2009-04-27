@@ -107,8 +107,8 @@ bool CateStrTokenizer::next(){
         const char* curChar = nextTokenPtr;
         nextTokenPtr = ctoken_->next();
 
-        //find the CharType of the current string
-        CharType curType = ctype_->getCharType(curChar, _preCharT);
+        //find the CharType of the current string FIXME 0 is error here
+        CharType curType = ctype_->getCharType(curChar, _preCharT, 0);
         #ifdef EN_ASSERT
             assert(_preCharT != CHAR_TYPE_PUNC);
             assert(_preCharT != CHAR_TYPE_SPACE);
@@ -164,8 +164,7 @@ bool CateStrTokenizer::next(){
             return true;
         }
 
-        else if(_preCharT == CHAR_TYPE_NUMBER || _preCharT == CHAR_TYPE_LETTER
-                    || _preCharT == CHAR_TYPE_HYPHEN)
+        else if(_preCharT == CHAR_TYPE_NUMBER || _preCharT == CHAR_TYPE_LETTER)
         {
             if(curType == CHAR_TYPE_SPACE){
                 speStr_ = _strBuf;

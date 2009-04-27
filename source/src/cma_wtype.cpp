@@ -50,7 +50,7 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
     tokenizer_.assign(word);
     for(const char* p=tokenizer_.next(); p; p=tokenizer_.next())
     {
-        charType = ctype_->getCharType(p, preType);
+        charType = ctype_->getCharType(p, preType, 0);
         if(start)
         {
             switch(charType)
@@ -116,7 +116,7 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
                     // letter word includes numbers, letters and punctuations.
                     if(charType != CHAR_TYPE_NUMBER
                             && charType != CHAR_TYPE_LETTER
-                            && ctype_->isPunct(p) == false)
+                            && !ctype_->isPunct(p))
                     {
                             wordType = WORD_TYPE_OTHER;
                     }
