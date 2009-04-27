@@ -72,13 +72,13 @@ namespace cma {
                 vector<string>& bestPOS = pos[0];
                 size_t maxIndex = best.size() - 1;
                 for (size_t i = 0; i < maxIndex; ++i) {
-                    out << best[i] << "/" << bestPOS[i] << " ";
+                    out << best[i] << posDelimiter_ << bestPOS[i] << wordDelimiter_;
                 }
 
                 if (remains)
-                    out << best[maxIndex] << "/" << bestPOS[maxIndex] << endl;
+                    out << best[maxIndex] << posDelimiter_ << bestPOS[maxIndex] << endl;
                 else {
-                    out << best[maxIndex] << "/" << bestPOS[maxIndex];
+                    out << best[maxIndex] << posDelimiter_ << bestPOS[maxIndex];
                     break;
                 }
             } else {
@@ -122,14 +122,16 @@ namespace cma {
             vector<string>& bestPOS = pos[0];
             size_t maxIndex = best.size() - 1;
             for (size_t i = 0; i < maxIndex; ++i) {
-                strBuf_.append(best[i]).append("/").append(bestPOS[i]).append(" ");
+                strBuf_.append(best[i]).append(posDelimiter_).
+                      append(bestPOS[i]).append(wordDelimiter_);
             }
-            strBuf_.append(best[maxIndex]).append("/").append(bestPOS[maxIndex]);
+            strBuf_.append(best[maxIndex]).append(posDelimiter_).
+                  append(bestPOS[maxIndex]);
         } else {
             vector<string>& best = segment[0].first;
             size_t maxIndex = best.size() - 1;
             for (size_t i = 0; i < maxIndex; ++i) {
-                strBuf_.append(best[i]).append(" ");
+                strBuf_.append(best[i]).append(wordDelimiter_);
             }
             strBuf_.append(best[maxIndex]);
         }

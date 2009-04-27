@@ -10,16 +10,11 @@ namespace cma{
 
 string POC_EMPTY_STR = "";
 
-map<string, uint8_t> POCs2c;
-
-
 #define POC_TAG_B 1
 #define POC_TAG_E 2
 
 #define POC_TAG_B_NAME "B"
 #define POC_TAG_E_NAME "E"
-
-string POCArray[3];
 
 #define DEFAULT_POC POC_TAG_B
 
@@ -37,8 +32,9 @@ bool POC_INIT_FLAG = false;
 
 const string POC_BOUNDARY = "BOUNDARY";
 
+#ifdef USE_BE_TYPE_FEATURE
 string CharTypeArray[CHAR_TYPE_NUM];
-
+#endif
 
 namespace pocInner{
 
@@ -306,7 +302,7 @@ void SegTagger::tag_word(vector<string>& words, int index, size_t N,
         double score = pair.second * initScore;
         if(canSize >= N && score <= candidates[lastIndex].score)
             continue;
-        uint8_t pocCode = POCs2c[pair.first];
+        uint8_t pocCode = (pair.first == POC_TAG_B_NAME) ? POC_TAG_B : POC_TAG_E;
         pocInner::insertCandidate(pocCode, candidateNum, score, candidates,
                 lastIndex, canSize, N);
     }
@@ -429,11 +425,14 @@ void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment
     for(size_t index=0; index<n; ++index){
         curPtr = nextPtr;
         nextPtr = ( index + 1 < n ) ? words[ index+1 ].c_str() : 0;
-
         CharType curType = ctype_->getCharType(curPtr, preType, nextPtr);
 
         #ifdef DEBUG_POC_TAGGER
-        cout<<"Check "<<index<<":"<<words[index]<<",type: "<<CharTypeArray[curType]<<endl;
+            cout<<"Check "<<index<<":"<<words[index];
+            #ifdef USE_BE_TYPE_FEATURE
+                cout<<<<",type: "<<CharTypeArray[curType];
+            #endif
+            cout<<endl;
         #endif
 
         if( pocInner::checkCharTypePair(pocRet, index, preType, curType) ){
@@ -442,14 +441,11 @@ void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment
         preType = curType;
 
         vector<string> context(POC_TEMPLATE_SIZE);
-
         pocInner::get_poc_zh_context_1(words, index, context, ctype_);
 
         vector<pair<outcome_type, double> > outcomes;
         me.eval_all(context, outcomes, false);
-
         pair<outcome_type, double>& pair0 = outcomes[0];
-
         double tagEScore = (pair0.first == POC_TAG_E_NAME) ?
               pair0.second : ( 1 - pair0.second );
 
@@ -477,6 +473,7 @@ void SegTagger::initialize(){
         return;
     POC_INIT_FLAG = true;
 
+    #ifdef USE_BE_TYPE_FEATURE
     CharTypeArray[CHAR_TYPE_INIT] = "I";
     CharTypeArray[CHAR_TYPE_NUMBER] = "N";
     CharTypeArray[CHAR_TYPE_PUNC] = "P";
@@ -484,12 +481,7 @@ void SegTagger::initialize(){
     CharTypeArray[CHAR_TYPE_DATE] = "D";
     CharTypeArray[CHAR_TYPE_LETTER] = "L";
     CharTypeArray[CHAR_TYPE_OTHER] = "O";
-
-    POCs2c["B"] = (uint8_t)POC_TAG_B;
-    POCArray[POC_TAG_B] = "B";
-
-    POCs2c["E"] = (uint8_t)POC_TAG_E;
-    POCArray[POC_TAG_E] = "E";
+    #endif
 }
 
 }
