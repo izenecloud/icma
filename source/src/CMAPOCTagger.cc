@@ -36,8 +36,11 @@ const string POC_BOUNDARY = "BOUNDARY";
 string CharTypeArray[CHAR_TYPE_NUM];
 #endif
 
-namespace pocInner{
+namespace pocinner{
 
+/**
+ * Inner function to get the context of the POC
+ */
 inline void get_poc_zh_context_1(vector<string>& words, size_t index,
         vector<string>& context, CMA_CType *ctype){
 
@@ -160,6 +163,9 @@ inline void insertCandidate(uint8_t pocCode, int index, double score,
     unit.previous = cIndex;
 }
 
+/**
+ * Combine the poc tags to words
+ */
 inline void combinePOCToWord(vector<string>& words, size_t n, uint8_t* tags,
         vector<string>& seg){
     string strBuf;
@@ -183,80 +189,64 @@ inline void combinePOCToWord(vector<string>& words, size_t n, uint8_t* tags,
 }
 
 /**
- * \param curType passed by value
- * \return if true, the POC information for the current tag is set
+ * The utility class to search the string one by one
  */
-inline bool checkCharTypePair(uint8_t* pocRet, size_t index, CharType& preType,
-        CharType curType){
-    if(curType == CHAR_TYPE_PUNC){
-        pocRet[index] = POC_TAG_B;
-        preType = curType;
-        return true;
+class StrBasedVTrie{
+public:
+    StrBasedVTrie( VTrie* pTrie ) : trie(pTrie){
     }
 
-    switch(preType){
-    case CHAR_TYPE_PUNC:
-        pocRet[index] = POC_TAG_B;
-        preType = curType;
-        return true;
-
-    case CHAR_TYPE_NUMBER:
-        switch(curType){
-            case CHAR_TYPE_NUMBER:
-                pocRet[index] = POC_TAG_E;
-                return true;
-            case CHAR_TYPE_LETTER:
-            //may be unit is OK here
-            case CHAR_TYPE_DATE:
-                pocRet[index] = POC_TAG_E;
-                preType = CHAR_TYPE_INIT;
-                return true;
-            default:
-                return false;
-        }
-
-    case CHAR_TYPE_DATE:
-        pocRet[index] = POC_TAG_B;
-        preType = curType;
-        return true;
-
-    case CHAR_TYPE_LETTER:
-        switch(curType){
-            case CHAR_TYPE_NUMBER:
-            case CHAR_TYPE_LETTER:
-                pocRet[index] = POC_TAG_E;
-                preType = CHAR_TYPE_NUMBER;
-                return true;
-            default:
-                pocRet[index] = POC_TAG_B;
-                preType = curType;
-                return true;
-        }
-
-    case CHAR_TYPE_INIT:
-        pocRet[index] = POC_TAG_B;
-        preType = curType;
-        return true;
-
-    case CHAR_TYPE_OTHER:
-        switch(curType){
-            case CHAR_TYPE_NUMBER:
-            case CHAR_TYPE_LETTER:
-            case CHAR_TYPE_PUNC:
-                pocRet[index] = POC_TAG_B;
-                preType = curType;
-                return true;
-            default:
-                return false;
-        }
-
-    default:
-        return false;
+    /**
+     * Reset all the status
+     */
+    void reset(){
+        completeSearch = true;
+        node.init();
     }
-    return false;
-}
 
-} //end namespace pocInner
+    /**
+     * search the specific string
+     *
+     * \param p point to the specific string
+     * \return true if have extending string or just the right string, here
+     * string is the combination of the previous strings and p
+     */
+    bool search(const char *p){
+        if(!completeSearch)
+            return false;        
+        
+        while(node.moreLong && *p){
+            trie->find(*p, &node);
+            ++p;
+        }
+
+        completeSearch = !(*p) && (node.data > 0 || node.moreLong);
+        return completeSearch;
+    }
+
+    /**
+     * First reset then search
+     */
+    bool firstSearch(const char* p){
+        reset();
+        return search(p);
+    }
+
+public:
+    VTrie* trie;
+
+    /**
+     * The VTrieNode
+     */
+    VTrieNode node;
+
+    /**
+     * true if the search over all the characters in the input string
+     */
+    bool completeSearch;
+};
+
+} //end namespace pocinner
 
 
 
@@ -266,13 +256,14 @@ inline bool checkCharTypePair(uint8_t* pocRet, size_t index, CharType& preType,
 void get_poc_zh_context(vector<string>& words, vector<string>& tags, size_t i,
         bool rareWord, vector<string>& context, CMA_CType *ctype){
     context.resize(POC_TEMPLATE_SIZE);
-    pocInner::get_poc_zh_context_1(words, i, context, ctype);
+    pocinner::get_poc_zh_context_1(words, i, context, ctype);
 }
 
 void poc_train(const char* file, const string& cateName,
-        Knowledge::EncodeType encType, const char* extractFile,
+        Knowledge::EncodeType encType,
+        string posDelimiter, const char* extractFile,
         string method, size_t iters,float gaussian){
-      TrainerData data(get_poc_zh_context, encType);
+      TrainerData data(get_poc_zh_context, encType, posDelimiter);
       train(&data, file, cateName, extractFile, method, iters, gaussian, false);
 }
 
@@ -291,7 +282,7 @@ void SegTagger::tag_word(vector<string>& words, int index, size_t N,
 
     vector<string> context(POC_TEMPLATE_SIZE);
 
-    pocInner::get_poc_zh_context_1(words, index, context, ctype_);
+    pocinner::get_poc_zh_context_1(words, index, context, ctype_);
 
     vector<pair<outcome_type, double> > outcomes;
     me.eval_all(context, outcomes, false);
@@ -303,7 +294,7 @@ void SegTagger::tag_word(vector<string>& words, int index, size_t N,
         if(canSize >= N && score <= candidates[lastIndex].score)
             continue;
         uint8_t pocCode = (pair.first == POC_TAG_B_NAME) ? POC_TAG_B : POC_TAG_E;
-        pocInner::insertCandidate(pocCode, candidateNum, score, candidates,
+        pocinner::insertCandidate(pocCode, candidateNum, score, candidates,
                 lastIndex, canSize, N);
     }
 }
@@ -368,7 +359,7 @@ void SegTagger::seg_sentence(vector<string>& words, size_t N, size_t retSize,
         uint8_t* tags = h0[k];
         pair<vector<string>,double>& pair = segment[k];
         pair.second = (pair.second > 0) ? (pair.second * scores[k]) : scores[k];
-        pocInner::combinePOCToWord(words, n, tags, pair.first);
+        pocinner::combinePOCToWord(words, n, tags, pair.first);
     }
     
 }
@@ -417,15 +408,10 @@ void SegTagger::tag_file(const char* inFile, const char* outFile,
 void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment){
     size_t n = words.size();
     uint8_t pocRet[n];
+    pocinner::StrBasedVTrie strTrie(trie_);
 
-    CharType preType = CHAR_TYPE_INIT;
-    
-    const char* curPtr;
-    const char* nextPtr = (n > 0) ? words[0].c_str() : 0;
     for(size_t index=0; index<n; ++index){
-        curPtr = nextPtr;
-        nextPtr = ( index + 1 < n ) ? words[ index+1 ].c_str() : 0;
-        CharType curType = ctype_->getCharType(curPtr, preType, nextPtr);
+        const char* curPtr = words[ index ].c_str();
 
         #ifdef DEBUG_POC_TAGGER
             cout<<"Check "<<index<<":"<<words[index];
@@ -435,13 +421,8 @@ void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment
             cout<<endl;
         #endif
 
-        if( pocInner::checkCharTypePair(pocRet, index, preType, curType) ){
-            continue;
-        }
-        preType = curType;
-
         vector<string> context(POC_TEMPLATE_SIZE);
-        pocInner::get_poc_zh_context_1(words, index, context, ctype_);
+        pocinner::get_poc_zh_context_1(words, index, context, ctype_);
 
         vector<pair<outcome_type, double> > outcomes;
         me.eval_all(context, outcomes, false);
@@ -449,23 +430,37 @@ void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment
         double tagEScore = (pair0.first == POC_TAG_E_NAME) ?
               pair0.second : ( 1 - pair0.second );
 
+        #ifdef DEBUG_POC_TAGGER
+            cout<<"tagEScore "<<tagEScore<<endl;
+        #endif
+
+        //no check if the POC tag is B
         if(tagEScore <= 0.5){
             pocRet[index] = POC_TAG_B;
+            strTrie.firstSearch(curPtr);
             continue;
         }
+
+        strTrie.search(curPtr);
+        #ifdef DEBUG_POC_TAGGER
+            cout<<"Search StrVTrie "<<strTrie.completeSearch<<endl;
+        #endif
 
         if(tagEScore >= eScore_){
-            pocRet[index] = POC_TAG_E;
+            pocRet[index] = POC_TAG_E;            
             continue;
         }
 
-        //use the trie_ information
-
-        pocRet[index] = POC_TAG_E;
+        if(strTrie.completeSearch)
+            pocRet[index] = POC_TAG_E;
+        else{
+            strTrie.firstSearch(curPtr);
+            pocRet[index] = POC_TAG_B;
+        }
 
     }
 
-    pocInner::combinePOCToWord(words, n, pocRet, segment);
+    pocinner::combinePOCToWord(words, n, pocRet, segment);
 }
 
 void SegTagger::initialize(){

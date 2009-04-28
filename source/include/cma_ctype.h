@@ -1,6 +1,6 @@
 /** \file cma_ctype.h
  * 
- * \author Jun Jiang
+ * \author Vernkin
  * \version 0.1
  * \date Mar 10, 2009
  */
@@ -69,7 +69,19 @@ public:
     virtual CharType getCharType(const char* p, CharType preType,
             const char* nextP) const = 0;
 
+    /**
+     * Whether the p is a punctuation
+     * \param p pointer to the string to be checked
+     * \return true if the p is the punctuation
+     */
     bool isPunct(const char* p) const;
+
+    /**
+     * Get the number of the characters in the p
+     * \param p pointer to the string to be checked
+     * \return the number of the characters in the p
+     */
+    size_t length(const char* p) const;
 };
 
 } // namespace cma

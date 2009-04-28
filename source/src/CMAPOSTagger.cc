@@ -64,8 +64,9 @@ void get_pos_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
 }
 
 void pos_train(const char* file, const string& cateFile, Knowledge::EncodeType encType,
+        string posDelimiter,
         const char* extractFile, string method, size_t iters,float gaussian){
-      TrainerData data(get_pos_zh_scontext, encType);
+      TrainerData data(get_pos_zh_scontext, encType, posDelimiter);
       train(&data, file, cateFile, extractFile, method, iters, gaussian, true);
 }
 
@@ -387,8 +388,9 @@ bool POSTagger::appendWordPOS(string& line){
     vector<string> tokens;
     TOKEN_STR(line, tokens);
     size_t n = tokens.size();
-    if(!n)
+    if(!n){
         return false;
+    }
     string word = tokens[0];
     replaceAll(word, "_", " ");
 
@@ -404,14 +406,16 @@ bool POSTagger::appendWordPOS(string& line){
         node.data = (int)posVec_.size();
         //insert new key
         posVec_.push_back(set<string>());
-        trie_->insert(word.data(), &node);
         posSet = &(posVec_.back());
+
+        trie_->insert(word.data(), &node);
     }
     
     for(size_t i=1; i<n; ++i){
         posSet->insert(tokens[i]);
     }
 
+    
     return true;
 }
 

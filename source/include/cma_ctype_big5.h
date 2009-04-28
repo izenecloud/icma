@@ -1,7 +1,7 @@
 /** \file cma_ctype_big5.h
  * 
- * \author Jun Jiang
- * \version 0.1
+ * \author Vernkin
+ * \version 0.2
  * \date April 06, 2009
  */
 

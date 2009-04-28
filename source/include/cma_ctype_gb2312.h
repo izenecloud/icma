@@ -1,7 +1,7 @@
 /** \file cma_ctype_gb2312.h
  * 
- * \author Jun Jiang
- * \version 0.1
+ * \author Vernkin
+ * \version 0.2
  * \date Mar 11, 2009
  */
 

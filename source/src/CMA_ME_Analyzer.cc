@@ -85,7 +85,7 @@ namespace cma {
                 vector<string>& best = segment[0].first;
                 size_t maxIndex = best.size() - 1;
                 for (size_t i = 0; i < maxIndex; ++i) {
-                    out << best[i] << " ";
+                    out << best[i] << wordDelimiter_;
                 }
 
                 if (remains)
@@ -107,10 +107,10 @@ namespace cma {
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
 
         //FOR Test
-        /*VTrieNode node;
+        VTrieNode node;
         knowledge_->getTrie()->search(inStr, &node);
         cout<<"Exist "<<(node.data > 0)<<endl;
-        */
+        
         
         vector<pair<vector<string>, double> > segment;
         vector<vector<string> > pos;
@@ -148,7 +148,42 @@ namespace cma {
             knowledge_->getSegTagger()->setCType(ctype_);
     }
 
-    void combineRetWithTrie(VTrie *trie, vector<string>& src, vector<string>& dest) {
+namespace meanainner{
+
+    /**
+     * \param lastWordEnd include that index
+     */
+    inline void toCombine(VTrie *trie, CMA_CType* type, vector<string>& src,
+            int begin, int lastWordEnd, vector<string>& dest){
+        if(begin == lastWordEnd){
+            dest.push_back(src[begin]);
+            return;
+        }
+        bool isOK = true;
+        //only have two word
+        /*if((lastWordEnd - begin < 2) &&
+                (type->length(src[begin].data()) + type->length(src[begin+1].data()) < 3)){
+            VTrieNode node;
+            trie->search(src[begin].data(), &node);
+            if(node.data > 0){
+                trie->search(src[begin + 1].data(), &node);
+                isOK = node.data <= 0;
+            }
+        }*/
+
+        if(isOK){
+            string buf = src[begin];
+            for(int k=begin+1; k<=lastWordEnd; ++k)
+                buf.append(src[k]);
+            dest.push_back(buf);
+        }else{
+            for(int k=begin; k<=lastWordEnd; ++k)
+                dest.push_back(src[k]);
+        }
+    }
+
+    void combineRetWithTrie(VTrie *trie, vector<string>& src, 
+            vector<string>& dest, CMA_CType* type) {
         
         int begin = -1;
         int lastWordEnd = -1;
@@ -179,12 +214,9 @@ namespace cma {
                 if (begin < 0)
                     dest.push_back(str);
                 else {
-                    string buf = src[begin];
                     if(lastWordEnd < begin)
                         lastWordEnd = begin;
-                    for(int k=begin+1; k<=lastWordEnd; ++k)
-                        buf.append(src[k]);
-                    dest.push_back(buf);
+                    toCombine(trie, type, src, begin, lastWordEnd, dest);
                     begin = -1;
                     //restart that node
                     i = lastWordEnd; //another ++ in the loop
@@ -200,18 +232,12 @@ namespace cma {
                     if (begin < 0)
                         dest.push_back(str);
                     else {
-                        string buf = src[begin];
-
                         if(node.data > 0)
                             lastWordEnd = i;
                         else if(lastWordEnd < begin)
                             lastWordEnd = begin;
 
-                        for(int k=begin+1; k<=lastWordEnd; ++k)
-                            buf.append(src[k]);
-
-                        dest.push_back(buf);
-                        
+                        toCombine(trie, type, src, begin, lastWordEnd, dest);
                         begin = -1;
                         i = lastWordEnd;
                     }
@@ -221,39 +247,25 @@ namespace cma {
         } //end for
 
         if(begin >= 0){
-            string buf = src[begin];
-            for(int k=begin+1; k<n; ++k)
-                buf.append(src[k]);
-            dest.push_back(buf);
+            toCombine(trie, type, src, begin, n-1, dest);
         }
     }
+
+}
 
     void CMA_ME_Analyzer::analysis(const char* sentence, int N,
             vector<vector<string> >& posRet,
             vector<pair<vector<string>, double> >& segRet, bool tagPOS) {
-        int segN = N > 1 ? N : 2;
+        int segN = N;
         segRet.resize(N);
 
         vector<pair<vector<string>, double> > segment(N);
 
         SegTagger* segTagger = knowledge_->getSegTagger();
 
-        #ifdef USE_BE_TAG_SET
-        vector<string> words;
-        CTypeTokenizer ctypeToken(ctype_, sentence);
-        const char* nextPtr;
-        while((nextPtr = ctypeToken.next())){
-            words.push_back(nextPtr);
-        }
 
-        if(N == 1)
-            segTagger->seg_sentence_best(words, segment[0].first);
-        else
-            segTagger->seg_sentence(words, segN, N, segment);
-
-        #else
         CTypeTokenizer token(ctype_, sentence);
-        
+
         //separate digits, letter and so on
         CateStrTokenizer ct(&token);
         while (ct.next()) {
@@ -271,20 +283,23 @@ namespace cma {
                     segment[i].first.push_back(word);
                 }
             } else {
+                #ifdef DEBUG_POC_TAGGER
+                    cout<<"Get Speical String "<<ct.getSpecialStr()<<endl;
+                #endif
                 for (int i = 0; i < N; ++i) {
                     segment[i].first.push_back(ct.getSpecialStr());
                 }
             }
         }
-        #endif 
 
-        //TODO: use the trie to combined words
+
         VTrie *trie = knowledge_->getTrie();
         for (int i = 0; i < N; ++i) {
             pair<vector<string>, double>& srcPair = segment[i];
             pair<vector<string>, double>& destPair = segRet[i];
             destPair.second = srcPair.second;
-            combineRetWithTrie( trie, srcPair.first, destPair.first);
+            meanainner::combineRetWithTrie( trie, srcPair.first, 
+                    destPair.first, ctype_);
         }
 
         if(!tagPOS)

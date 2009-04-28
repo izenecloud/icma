@@ -1,6 +1,6 @@
 /** \file cma_ctype_gb2312.cpp
  * 
- * \author Jun Jiang
+ * \author Vernkin
  * \version 0.1
  * \date Mar 11, 2009
  */
@@ -21,11 +21,17 @@ namespace gb2312type{
 
     const unsigned char COMMA = (unsigned char)(',');
 
+    const unsigned char HYPHEN = (unsigned char)('-');
+
     const unsigned short ZHI_CH = 0xd6ae; //之  
 
     const unsigned short DIAN_CH = 0xb5e3; //点
 
-    const unsigned short FEN_ZH = 0xb7d6; //分
+    const unsigned short FEN_CH = 0xb7d6; //分
+
+    const unsigned short DUO_CH = 0xb6e0; //多
+
+    const unsigned short YU_CH = 0xd3e0; //余
 
     /**
      * Whether it is punctuation in any cases
@@ -195,6 +201,12 @@ CharType CMA_CType_GB2312::getCharType(const char* p, CharType preType,
                 return CHAR_TYPE_LETTER;
             return CHAR_TYPE_PUNC;
 
+        case HYPHEN:
+            if( (preType == CHAR_TYPE_LETTER || preType == CHAR_TYPE_NUMBER)
+                    && (isAbsLetter(nextUc) || isAbsDigit(nextUc)) )
+                return CHAR_TYPE_LETTER;
+            return CHAR_TYPE_PUNC;
+
         case ZHI_CH:
         case DIAN_CH:
             if(nextUc == 0)
@@ -203,13 +215,19 @@ CharType CMA_CType_GB2312::getCharType(const char* p, CharType preType,
                 return CHAR_TYPE_NUMBER;
             break;
 
-        case FEN_ZH:
+        case FEN_CH:
             // x分之x
             if(nextUc != 0 && nextUc[0] >= 0x80){
                 unsigned short nextValue = nextUc[0] << 8 | nextUc[1];
                 if(nextValue == ZHI_CH)
                     return CHAR_TYPE_NUMBER;
             }
+            break;
+
+        case DUO_CH:
+        case YU_CH:
+            if(preType == CHAR_TYPE_NUMBER)
+                return CHAR_TYPE_NUMBER;
             break;
     }
 
@@ -223,6 +241,9 @@ CharType CMA_CType_GB2312::getCharType(const char* p, CharType preType,
 
     if(isAbsPunt(uc))
         return CHAR_TYPE_PUNC;
+
+    if(isAbsSpace(uc))
+        return CHAR_TYPE_SPACE;
 
     //other constraint to check day?
     if(isAbsDate(uc)){

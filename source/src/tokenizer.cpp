@@ -52,7 +52,6 @@ const char* CTypeTokenizer::next()
 
     // move to next character
     raw_ += bc;
-
     return buffer_;
 }
 

@@ -18,45 +18,45 @@ typedef boost::tokenizer <boost::char_separator<char>,
 const boost::char_separator<char> UNIT_SEP(" ");
 
 /**
+ * Here take posDelimiter as '/' <BR>
  * split out word and pos/poc in s into two separate lists.<br>
  * Format: word1/tag1 word2/tag2 word3/tag3
  *
  * \param s the target string
  * \param words return vector to store words list
  * \return tags return value to store tag list
+ * \param posDelimiter the specific pos delimiter
  */
-void split_tag(const string& s, vector<string>& words,
-        vector<string>& tags){
+void split_tag(const string& s, vector<string>& words, vector<string>& tags,
+        string posDelimiter){
     TagTokenizer token(s, UNIT_SEP);
+    size_t posDeliLen = posDelimiter.length();
     for(TagTokenizer::const_iterator itr = token.begin(); itr != token.end(); ++itr){
         string tmp = *itr;
         trimSelf(tmp);
         if(tmp.empty())
             continue;
-        size_t pos = tmp.find_last_of(TAG_SEP);
-        if(pos == string::npos || pos == 0 || pos == (*itr).length() - 1){
-            cout<<"The Format is word/tag, but not ("<<*itr<<")"<<endl;
+        size_t pos = tmp.find_last_of(posDelimiter);
+        if(pos == string::npos || pos == 0 || pos == (*itr).length() - posDeliLen){
+            cout<< "The Format is word" << posDelimiter << "tag, but not ("
+                    <<*itr<<")"<<endl;
             exit(1);
         }
         words.push_back(itr->substr(0,pos));
-        tags.push_back(itr->substr(pos+1, itr->length() - pos));
+        tags.push_back(itr->substr(pos + posDeliLen, itr->length() - pos));
     }
 }
 
 void gather_feature(TrainerData* data, string& word, vector<string>& context,
         string& tag){
     //only collect tag dict for common words
-    if(!is_rare_word(data, word))
+    if(!data->isRareWord(word))
         data->tagDict_[word][tag] += 1;
     
     for(vector<string>::iterator itr = context.begin();
           itr != context.end(); ++itr){
         data->featDict_[*itr + "_" + tag] += 1;
     }
-}
-
-bool is_rare_word(TrainerData* data, string& word){
-    return data->wordFreq_[word] < data->rareFreq_;
 }
 
 void add_event(TrainerData* data, string& word, vector<string>& context,
@@ -114,7 +114,7 @@ void gather_word_freq(TrainerData* data, const char* file){
         getline(in, line);
         vector<string> words;
         vector<string> tags;
-        split_tag(line, words, tags);
+        split_tag(line, words, tags, data->posDelimiter);
         for(vector<string>::iterator itr = words.begin();
               itr != words.end(); ++itr){
             data->wordFreq_[*itr] += 1;
@@ -123,14 +123,6 @@ void gather_word_freq(TrainerData* data, const char* file){
     in.close();
 
 }
-
-
-void get_chars(string& word, vector<string>& ret){
-    for(size_t i=0; i<word.length(); i+=2){
-        ret.push_back(word.substr(i, 2));
-    }
-}
-
 
 void extract_feature(TrainerData* data, const char* file,
         void (*func)(TrainerData*, string& ,vector<string>& ,string&)){
@@ -143,7 +135,7 @@ void extract_feature(TrainerData* data, const char* file,
             continue;
         vector<string> words;
         vector<string> tags;
-        split_tag(line, words, tags);
+        split_tag(line, words, tags, data->posDelimiter);
 
         for(size_t i=0; i<words.size(); ++i){
             vector<string> context;
@@ -166,21 +158,6 @@ void save_word_freq(TrainerData* data, const char* file){
 }
 
 void save_tag_dict(TrainerData* data, const char* file){
-    ofstream out(file);
-    for(map<string, map<string, int> >::iterator itr = data->tagDict_.begin();
-          itr != data->tagDict_.end(); ++itr){
-        out<<itr->first;
-        map<string, int>& inner = itr->second;
-        for(map<string, int>::iterator itr2 = inner.begin();
-              itr2 != inner.end(); ++itr2){
-            out<<" "<<itr2->first<<" "<<itr2->second;
-        }
-        out<<endl;
-    }
-    out.close();
-}
-
-void save_sys_dict(TrainerData* data, const char* file){
     ofstream out(file);
     for(map<string, map<string, int> >::iterator itr = data->tagDict_.begin();
           itr != data->tagDict_.end(); ++itr){
@@ -244,7 +221,9 @@ void save_features(TrainerData* data, const char* file){
     out.close();
 }
 
-void cutoff_feature(TrainerData* data, int cutoff, int rareCutoff){
+void cutoff_feature(TrainerData* data){
+    int cutoff = data->cutoff_;
+    int rareCutoff = data->rareFreq_;
     map<string, int> tmp;
     for(map<string, int>::iterator itr = data->featDict_.begin();
           itr != data->featDict_.end(); ++itr){
@@ -274,12 +253,17 @@ void train(TrainerData* data, const char* file, const string cateName,
     //Second pass: gather features and tag dict {{{
     cout<<"Second pass: gather features and tag dict to be used in tagger"<<endl;
     extract_feature(data, file, gather_feature);
-    cutoff_feature(data, data->cutoff_, data->rareFreq_);
+    cutoff_feature(data);
     #ifdef DEBUG_TRAINING
         string featureFile = cateName + ".features";
         save_features(data, featureFile.data());
-        string tagFile = cateName + ".tag";
-        save_tag_dict(data, tagFile.data());       
+        string tagFile = cateName + ".dic";
+        save_tag_dict(data, tagFile.data());
+    #else
+        if(isPOS){
+            string sysDictFile = cateName + ".dic";
+            save_tag_dict(data, sysDictFile.data());
+        }
     #endif
         
     if(isPOS){
@@ -287,8 +271,7 @@ void train(TrainerData* data, const char* file, const string cateName,
         save_pos_list(data, posFile.data());
     }
 
-    string sysDictFile = cateName + ".dic";
-    save_sys_dict(data, sysDictFile.data());
+    
     // }}}
 
     if(extractFile){
@@ -315,7 +298,7 @@ void train(TrainerData* data, const char* file, const string cateName,
 }
 
 void create_poc_meterial(const char* inFile, const char* outFile,
-        Knowledge::EncodeType type){
+        Knowledge::EncodeType type, string posDelimiter){
     ifstream in(inFile);
     ofstream out(outFile);
     string line;
@@ -323,9 +306,9 @@ void create_poc_meterial(const char* inFile, const char* outFile,
     typedef boost::tokenizer <boost::char_separator<char>,
         string::const_iterator, string> POCTokenizer;
 
-    CMA_CType *ctype = CMA_CType::instance(type);
-    CTypeTokenizer ctypeToken(ctype);
+    CTypeTokenizer ctypeToken(CMA_CType::instance(type));
 
+    size_t posDeliLen = posDelimiter.length();
     while(!in.eof()){
         getline(in, line);
         trimSelf(line);
@@ -341,13 +324,15 @@ void create_poc_meterial(const char* inFile, const char* outFile,
         }
         
         while(true){
-            size_t pos = itr->find_last_of(TAG_SEP);
-            if(pos == string::npos || pos == 0 || pos == (*itr).length() - 1){
-                cerr<<"The Format is word/tag, but not ("<<*itr<<")"<<endl;
+            size_t pos = itr->find_last_of(posDelimiter);
+            if(pos == string::npos || pos == 0 ||
+                    pos == (*itr).length() - posDeliLen){
+                cerr<<"The Format is word" << posDelimiter <<"tag, but not ("
+                        <<*itr<<")"<<endl;
                 exit(1);
             }
 
-            string word = itr->substr(0,pos);
+            string word = itr->substr( 0 , pos);
             ctypeToken.assign(word.c_str());
             
             vector<string> charVec;
@@ -357,7 +342,6 @@ void create_poc_meterial(const char* inFile, const char* outFile,
             }
 
             size_t charLen = charVec.size();
-            #ifdef USE_BE_TAG_SET
             if(charLen > 1)
                 out<<charVec[0]<<"/B ";
             else
@@ -368,19 +352,7 @@ void create_poc_meterial(const char* inFile, const char* outFile,
                     out<<charVec[i]<<"/E";
                 else
                     out<<charVec[i]<<"/E ";
-                
             }
-            #else           
-            if(charLen == 1){
-                out<<charVec[0]<<"/I";
-            }else{
-                out<<charVec[0]<<"/L ";
-                
-                for(size_t i=1; i<charLen-1; ++i)
-                    out<<charVec[i]<<"/M ";
-                out<<charVec[charLen-1]<<"/R";
-            }
-            #endif
 
             ++itr;
             if(itr != token.end())
@@ -396,18 +368,19 @@ void create_poc_meterial(const char* inFile, const char* outFile,
 }
 
 
-void fetchSegmentedFile(const char* inFile, const char* outFile, bool keepTag,
-        bool keepSeparator){
+void fetchSegmentedFile(const char* inFile, const char* outFile, 
+        string posDelimiter, bool keepTag, bool keepSeparator){
     ifstream in(inFile);
     ofstream out(outFile);
 
     string line;
+    char delimChar = posDelimiter[0];
     while(!in.eof()){
         getline(in, line);
 
         bool inTag = false;
         for(string::iterator itr = line.begin(); itr != line.end(); ++itr){
-            if(*itr == '/'){
+            if(*itr == delimChar){
                 inTag = true;
             }else if(*itr == ' '){
                 inTag = false;

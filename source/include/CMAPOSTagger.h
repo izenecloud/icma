@@ -44,21 +44,19 @@ inline bool isUpperCase(string& word){
     return true;
 }
 
-void get_prefix_suffix(wstring& word, size_t length, vector<wstring>& prefixes,
-        vector<wstring>& suffixes);
-
 /**
  * POS context type for POS (zh/chinese)
  */
 void get_pos_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
         bool rareWord, vector<string>& context, CMA_CType *ctype);
 
-inline bool cmpSDPair(pair<vector<string>,double> p1, pair<vector<string>,double> p2){
-    return p1.second - p2.second >= 0;
-}
 
+/**
+ * Trainig the POS Maxent model
+ */
 void pos_train(const char* file, const string& cateFile,
         Knowledge::EncodeType encType = Knowledge::ENCODE_TYPE_GB2312,
+        string posDelimiter = "/",
         const char* extractFile = 0, string method = "gis", size_t iters = 15,
         float gaussian = 0.0f);
 

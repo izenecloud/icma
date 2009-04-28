@@ -1,7 +1,7 @@
 /** \file cma_ctype_big5.cpp
  * 
- * \author Jun Jiang
- * \version 0.1
+ * \author Vernkin
+ * \version 0.2
  * \date April 06, 2009
  */
 
@@ -21,9 +21,18 @@ namespace big5type{
 
     const unsigned char COMMA = (unsigned char)(',');
 
+    const unsigned char HYPHEN = (unsigned char)('-');
+
     const unsigned short ZHI_CH = 0xa4a7; //之
 
     const unsigned short DIAN_CH = 0xc249; //點
+
+    const unsigned short FEN_CH = 0xa4c0; //分
+
+    const unsigned short DUO_CH = 0xa668; //多
+
+    const unsigned short YU_CH = 0xa745; //余
+
 
     /**
      * Whether it is punctuation in any cases

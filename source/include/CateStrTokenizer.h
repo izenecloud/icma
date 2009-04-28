@@ -53,11 +53,6 @@ public:
 
     string& getSpecialStr();
 
-    /**
-     * Initialize all the map and set
-     */
-    static void initialize();
-
 private:
     /** Words Collection */
     vector<string> wordSeq_;
@@ -67,9 +62,6 @@ private:
 
     /** Special String */
     string speStr_;
-
-    const char* nextTokenPtr;
-
     /** Current Character, for internal perpose*/
     string _strBuf;
 
@@ -79,6 +71,13 @@ private:
     CTypeTokenizer* ctoken_;
 
     const CMA_CType* ctype_;
+
+    /**
+     * The pointer to the next string
+     */
+    const char* nextTokenPtr;
+
+    bool init;
 };
     
 }

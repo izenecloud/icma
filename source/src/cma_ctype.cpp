@@ -51,4 +51,17 @@ bool CMA_CType::isPunct(const char* p) const{
     return getCharType(p, CHAR_TYPE_INIT, 0) == CHAR_TYPE_PUNC;
 }
 
+size_t CMA_CType::length(const char* p) const{
+    size_t ret = 0;
+    while(p){
+        unsigned int len = getByteCount(p);
+        //len can be 0
+        if(!len)
+            return ret;
+        p += len;
+        ++ret;
+    }
+    return ret;
+}
+
 } // namespace cma

@@ -27,8 +27,12 @@ namespace cma{
 void get_poc_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
         bool rareWord, vector<string>& context, CMA_CType *ctype);
 
+/**
+ * Training the POC Maxent Model
+ */
 void poc_train(const char* file, const string& cateName,
         Knowledge::EncodeType encType = Knowledge::ENCODE_TYPE_GB2312,
+        string posDelimiter = "/",
         const char* extractFile = 0, string method = "gis", size_t iters = 15,
         float gaussian = 0.0f);
 
@@ -128,6 +132,10 @@ private:
     /** Store the data to the POS tags */
     VTrie* trie_;
 
+    /**
+     * EScore is a double value between 0.5 and 1.0, if the POC tag B has
+     * possiblity more the eScore, it will be tagged with E. <BR>
+     */
     double eScore_;
 };
 
