@@ -3,8 +3,12 @@
 
 #define DEBUG
 
+#ifdef DEBUG
 /** if set, output all the training data */
 #define DEBUG_TRAINING
+/** DEBUG CateStrTokenizer */
+//#define DEBUG_CATESTRTOKENIZER
+#endif
 
 /** Enable assert statement */
 #define EN_ASSERT
@@ -15,17 +19,19 @@
 /** if set, use punctuaion and character type feature */
 #define USE_BE_TYPE_FEATURE
 
-#define TEST_SEG_CMD
+#define USE_STRTRIE
+
+//#define TEST_SEG_CMD
 
 #ifdef TEST_SEG_CMD
+    #ifdef DEBUG
     //Print the Trie Node Information
     //#define DEBUG_TRIE_MATCH
 
     /** Print the detail in the SegTagger*/
     #define DEBUG_POC_TAGGER
+    #endif
 #endif
-
-//#define DEBUG_CATESTRTOKENIZER
 
 #include <iostream>
 

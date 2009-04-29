@@ -20,120 +20,76 @@ CMA_WType::CMA_WType(const CMA_CType* ctype)
 {
 }
 
-bool CMA_WType::isPunct(const char* word)
-{
-    assert(word);
-    
-    if(*word == 0)
-        return false;
-
-    tokenizer_.assign(word);
-    for(const char* p=tokenizer_.next(); p; p=tokenizer_.next())
-    {
-        if(! ctype_->isPunct(p))
-            return false;
-    }
-
-    return true;
-}
 
 CMA_WType::WordType CMA_WType::getWordType(const char* word)
 {
     assert(word);
 
-    bool start = true;
     CharType preType = CHAR_TYPE_INIT;
-    assert(false && "the pretype is not correctly");
-    CharType charType;
-    WordType wordType = WORD_TYPE_OTHER;
+    CharType curType;
 
     tokenizer_.assign(word);
-    for(const char* p=tokenizer_.next(); p; p=tokenizer_.next())
+    const char* nextP = tokenizer_.next();
+    char curChar[5];
+    while(nextP)
     {
-        charType = ctype_->getCharType(p, preType, 0);
-        if(start)
-        {
-            switch(charType)
-            {
-                case CHAR_TYPE_NUMBER:
-                    wordType = WORD_TYPE_NUMBER;
-                    break;
+        strcpy(curChar, nextP);
+        nextP = tokenizer_.next();
+        curType = ctype_->getCharType(curChar, preType, nextP);
 
-                case CHAR_TYPE_DATE:
-                    wordType = WORD_TYPE_OTHER;
-                    break;
-
-                case CHAR_TYPE_LETTER:
-                    wordType = WORD_TYPE_LETTER;
-                    break;
-
-                case CHAR_TYPE_OTHER:
-                    wordType = WORD_TYPE_OTHER;
-                    break;
-
-                default:
-                    assert(false && "unkown character type in getting word type");
-                    break;
-            }
-
-            start = false;
-        }
-        else
-        {
-            switch(wordType)
-            {
-                case WORD_TYPE_NUMBER:
-                    switch(charType)
-                    {
-                        case CHAR_TYPE_NUMBER:
-                            wordType = CMA_WType::WORD_TYPE_NUMBER;
-                            break;
-
-                        case CHAR_TYPE_DATE:
-                            wordType = WORD_TYPE_DATE;
-                            break;
-
-                        case CHAR_TYPE_LETTER:
-                            wordType = WORD_TYPE_LETTER;
-                            break;
-
-                        case CHAR_TYPE_OTHER:
-                            wordType = WORD_TYPE_OTHER;
-                            break;
-
-                        default:
-                            assert(false && "unkown character type in getting word type");
-                            break;
-                    }
-                    break;
-
-                case WORD_TYPE_DATE:
-                    // date word should not be followed by any other character
-                    wordType = WORD_TYPE_OTHER;
-                    break;
-
-                case WORD_TYPE_LETTER:
-                    // letter word includes numbers, letters and punctuations.
-                    if(charType != CHAR_TYPE_NUMBER
-                            && charType != CHAR_TYPE_LETTER
-                            && !ctype_->isPunct(p))
-                    {
-                            wordType = WORD_TYPE_OTHER;
-                    }
-                    break;
-
-                case WORD_TYPE_OTHER:
-                default:
-                    assert(false && "unexpected word type in gettting word type");
-                    break;
-            }
+        if(curType == preType)
+            continue;
+        switch(curType){
+            case CHAR_TYPE_OTHER:
+                return WORD_TYPE_OTHER;
+            case CHAR_TYPE_PUNC:
+                if(preType == CHAR_TYPE_INIT && !nextP)
+                    return WORD_TYPE_PUNC;
+                return WORD_TYPE_OTHER;
+            default:
+                break;
         }
 
-        if(wordType == WORD_TYPE_OTHER)
-            break;
+
+
+        switch(preType){
+            case CHAR_TYPE_INIT:
+                preType = curType;
+                break;
+
+            case CHAR_TYPE_NUMBER:
+                switch(curType){
+                    case CHAR_TYPE_LETTER:
+                        preType = CHAR_TYPE_LETTER;
+                        break;
+                    case CHAR_TYPE_DATE:
+                        return (nextP) ? WORD_TYPE_OTHER : WORD_TYPE_DATE;
+                    default:
+                        assert(false && "unexpected arrive here");
+                        break;
+                }
+
+            case CHAR_TYPE_LETTER:
+                if(curType == CHAR_TYPE_NUMBER)
+                    continue;
+                default:
+                    assert(false && "unexpected arrive here");
+                    break;
+                
+        }
     }
 
-    return wordType;
+    switch(curType){
+        case CHAR_TYPE_LETTER:
+            preType = CHAR_TYPE_LETTER;
+            break;
+        case CHAR_TYPE_NUMBER:
+            return WORD_TYPE_NUMBER;
+        default:
+            assert(false && "unexpected arrive here");
+            return WORD_TYPE_OTHER;
+    }
+    return WORD_TYPE_OTHER;
 }
 
 } // namespace cma

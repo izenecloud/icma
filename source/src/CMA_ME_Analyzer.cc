@@ -266,10 +266,26 @@ namespace meanainner{
         while((next = token.next())){
             words.push_back(next);
         }
+
+        if(words.empty())
+            return;
+
+        int maxWordOff = (int)words.size() - 1;
+        CharType types[maxWordOff + 1];
+        CharType preType = CHAR_TYPE_INIT;
+        for(int i=0; i<maxWordOff; ++i){
+            types[i] = preType = ctype_->getCharType(words[i].data(),
+                    preType, words[i+1].data());
+
+        }
+
+        types[maxWordOff] = ctype_->getCharType(words[maxWordOff].data(),
+                    preType, 0);
+
         if(N == 1)
-            segTagger->seg_sentence_best(words, segment[0].first);
+            segTagger->seg_sentence_best(words, types, segment[0].first);
         else
-            segTagger->seg_sentence(words, segN, N, segment);
+            segTagger->seg_sentence(words, types, segN, N, segment);
         #else
         //separate digits, letter and so on
         CateStrTokenizer ct(&token);
@@ -314,7 +330,8 @@ namespace meanainner{
         posRet.resize(N);
         POSTagger* posTagger = knowledge_->getPOSTagger();       
         for (int i = 0; i < N; ++i) {
-            posTagger->tag_sentence_best(segRet[i].first, posRet[i]);
+            posTagger->tag_sentence_best(segRet[i].first, posRet[i], 0,
+                segRet[i].first.size());
         }
 
 

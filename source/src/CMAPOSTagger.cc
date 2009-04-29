@@ -1,66 +1,69 @@
 
+#include <vector>
+
 #include "VTrie.h"
+#include "cma_wtype.h"
 
 #include "CMAPOSTagger.h"
 
 namespace cma{
 
-string POS_EMPTY_STR = "";
-
 const string DEFAULT_POS = "n";
 
+string POS_BOUNDARY = "BoUnD";
+
+namespace posinner{
+
 inline void get_pos_zh_scontext_1(vector<string>& words, string& tag_1,
-        string& tag_2, size_t i, bool rareWord, vector<string>& context, CMA_CType *ctype){
-    string& w = words[i];
+        string& tag_2, size_t index, vector<string>& context,
+        CMA_WType& wtype){
+    string& w = words[index];
+
+    CMA_WType::WordType type = wtype.getWordType(w.data());
+
+    switch(type){
+        case CMA_WType::WORD_TYPE_DATE:
+            context.push_back("iD");
+            return;
+        case CMA_WType::WORD_TYPE_LETTER:
+            context.push_back("iL");
+            return;
+        case CMA_WType::WORD_TYPE_NUMBER:
+            context.push_back("iN");
+            return;
+        case CMA_WType::WORD_TYPE_PUNC:
+            context.push_back("iP");
+            return;
+        default:
+            break;
+    }
+
     size_t n = words.size();
+    string wa[5]; //word array
+    wa[2] = w;
+    wa[0] = index > 1 ? wa[index-2] : POS_BOUNDARY;
+    wa[1] = index > 0 ? wa[index-1] : POS_BOUNDARY;
+    wa[3] = (index < n - 1) ? wa[index+1] : POS_BOUNDARY;
+    wa[4] = (index < n - 2) ? wa[index+2] : POS_BOUNDARY;
 
-    if(rareWord){
-        if(isNumber(w))
-            context.push_back("numeric");
+    context.push_back("CO=" + w[2]);
+    context.push_back("C-1=" + wa[1]);
+    context.push_back("C-2=" + wa[0]);
+    context.push_back("T-1=" + tag_1);
+    context.push_back("T-2,-1="+tag_2+","+tag_1);
+    context.push_back("C1=" + wa[3]);
+    context.push_back("C2=" + wa[4]);
 
-        if(isUpperCase(w))
-            context.push_back("uppercase");
-        
-        if(isHyphen(w))
-            context.push_back("hyphen");
-    }else{
-        context.push_back("curword=" + w);
-    }
-
-    if(i > 0){
-        context.push_back("word-1=" + words[i-1]);
-        context.push_back("tag-1=" + tag_1);
-        if(i>1){
-            context.push_back("word-2=" + words[i-2]);
-            context.push_back("tag-1,2=" + tag_2 + "," + tag_1);
-        }else{
-            context.push_back("word-2=BOUNDARY");
-            context.push_back("tag-1,2=BOUNDARY," + tag_1);
-        }
-    }else{
-        context.push_back("word-1=BOUNDARY");
-        context.push_back("word-2=BOUNDARY");
-        context.push_back("tag-1=BOUNDARY");
-        context.push_back("tag-1,2=BOUNDARY,BOUNDARY");
-    }
-
-    if(i+1 < n){
-        context.push_back("word+1=" + words[i+1]);
-        if(i+2 < n)
-            context.push_back("word+2=" + words[i+2]);
-        else
-            context.push_back("word+2=BOUNDARY");
-    }else{
-        context.push_back("word+1=BOUNDARY");
-        context.push_back("word+2=BOUNDARY");
-    }
 }
+
+} //end namespace posinner
 
 void get_pos_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
         bool rareWord, vector<string>& context, CMA_CType *ctype){
-    string& tag_1 = i > 0 ? tags[i-1] : POS_EMPTY_STR;
-    string& tag_2 = i > 1 ? tags[i-2] : POS_EMPTY_STR;
-    get_pos_zh_scontext_1(words, tag_1, tag_2, i, rareWord, context, ctype);
+    string& tag_1 = i > 0 ? tags[i-1] : POS_BOUNDARY;
+    string& tag_2 = i > 1 ? tags[i-2] : POS_BOUNDARY;
+    CMA_WType wtype(ctype);
+    posinner::get_pos_zh_scontext_1(words, tag_1, tag_2, i, context, wtype);
 }
 
 void pos_train(const char* file, const string& cateFile, Knowledge::EncodeType encType,
@@ -163,16 +166,16 @@ POSTagger::~POSTagger(){
 
 void POSTagger::tag_word(vector<string>& words, int index, size_t N,
         string* tags, POSTagUnit* candidates, int& lastIndex, size_t& canSize,
-        double initScore, int candidateNum){
+        double initScore, int candidateNum, CMA_WType& wtype){
     vector<string> context;
 
     VTrieNode node;
     trie_->search( words[index].data(), &node );
 
     bool exists = node.data > 0;
-    string& tag_1 = index > 0 ? tags[index-1] : POS_EMPTY_STR;
-    string& tag_2 = index > 1 ? tags[index-2] : POS_EMPTY_STR;
-    get_pos_zh_scontext_1(words, tag_1, tag_2, index, !exists, context, ctype_);
+    string& tag_1 = index > 0 ? tags[index-1] : POS_BOUNDARY;
+    string& tag_2 = index > 1 ? tags[index-2] : POS_BOUNDARY;
+    posinner::get_pos_zh_scontext_1(words, tag_1, tag_2, index, context, wtype);
 
     vector<pair<outcome_type, double> > outcomes;
     me.eval_all(context, outcomes, false);
@@ -231,6 +234,8 @@ void POSTagger::tag_sentence(vector<string>& words, size_t N, size_t retSize,
     //the size of the candidates
     size_t canSize;
 
+    CMA_WType wtype(ctype_);
+
     for(size_t i=0; i<n; ++i){
         lastIndex = -1;
         canSize = 0;
@@ -239,7 +244,8 @@ void POSTagger::tag_sentence(vector<string>& words, size_t N, size_t retSize,
         #endif
 
         for(size_t j=0; j<h0Size; ++j){
-            tag_word(words, i, N, h0[j], candidates, lastIndex, canSize, scores[j], j);
+            tag_word(words, i, N, h0[j], candidates, lastIndex, canSize,
+                  scores[j], j, wtype);
         }
 
         //generate the N-best
@@ -298,7 +304,7 @@ void POSTagger::tag_file(const char* inFile, const char* outFile){
         }
 
         vector<string> posRet;
-        tag_sentence_best(words, posRet);
+        tag_sentence_best(words, posRet, 0, words.size());
 
         size_t maxIndex = words.size() - 1;
         for(size_t i=0; i<maxIndex; ++i){
@@ -312,76 +318,82 @@ void POSTagger::tag_file(const char* inFile, const char* outFile){
     out.close();
 }
 
-void POSTagger::tag_sentence_best(vector<string>& words, vector<string>& posRet){
-    size_t n = words.size();
-    for(size_t index=0; index<n; ++index){
-        vector<string> context;
-        VTrieNode node;
-        trie_->search( words[index].data(), &node );
-        bool exists = node.data > 0;
-        string& tag_1 = index > 0 ? posRet[index-1] : POS_EMPTY_STR;
-        string& tag_2 = index > 1 ? posRet[index-2] : POS_EMPTY_STR;
-        get_pos_zh_scontext_1(words, tag_1, tag_2, index, !exists, context, ctype_);
-        if(exists){
-            set<string>& posSet = posVec_[node.data];
+double POSTagger::tag_word_best_1(vector<string>& words, vector<string>& poses,
+        int index, string& pos, CMA_WType& wtype){
+    vector<string> context;
+    VTrieNode node;
+    trie_->search( words[index].data(), &node );
+    string& tag_1 = index > 0 ? poses[index-1] : POS_BOUNDARY;
+    string& tag_2 = index > 1 ? poses[index-2] : POS_BOUNDARY;
+    posinner::get_pos_zh_scontext_1(words, tag_1, tag_2, index, context, wtype);
+    if(node.data > 0){
+        set<string>& posSet = posVec_[node.data];
+        //FIXME avoid default POS here
+        if(posSet.empty()){
+            pos = DEFAULT_POS;
+            return 1.0;
+        }else if(posSet.size() == 1){
+            pos = *posSet.begin();
+            return 1.0;
+        }
 
-            if(posSet.empty()){
-                posRet.push_back(DEFAULT_POS);
-                continue;
-            }else if(posSet.size() == 1){
-                posRet.push_back(*posSet.begin());
-                continue;
-            }
+        vector<pair<outcome_type, double> > outcomes;
+        me.eval_all(context, outcomes, false);
 
-            vector<pair<outcome_type, double> > outcomes;
-            me.eval_all(context, outcomes, false);
+        //find the best pos
+        double bestScore = -1.0;
+        size_t outSize = outcomes.size();
 
-            //find the best pos
-            double bestScore = -1.0;
-            string bestPos;
-            size_t outSize = outcomes.size();
-            
-            for(size_t k=0; k<outSize; ++k){
-                pair<outcome_type, double>& pair = outcomes[k];
-                if(pair.second > bestScore && (posSet.count(pair.first) > 0)){
-                    bestScore = pair.second;
-                    bestPos = pair.first;
-                }
-            }
-
-            //no suitable pos found, insert the default POS n
-            if(bestScore < 0 || bestPos.empty())
-                posRet.push_back(DEFAULT_POS);
-            else
-                posRet.push_back(bestPos);
-        }else{
-            string pos;
-            if(me.eval(context, pos) > 0.0)
-                posRet.push_back(pos);
-            else{
-                vector<pair<outcome_type, double> > outcomes;
-                me.eval_all(context, outcomes, false);
-
-                //find the best pos
-                double bestScore = -1.0;
-                size_t outSize = outcomes.size();
-
-                for(size_t k=0; k<outSize; ++k){
-                    pair<outcome_type, double>& pair = outcomes[k];
-                    if(pair.second > bestScore){
-                        bestScore = pair.second;
-                        pos = pair.first;
-                    }
-                }
-
-                //no suitable pos found, insert the default POS n
-                if(bestScore < 0 || pos.empty())
-                    posRet.push_back(DEFAULT_POS);
-                else
-                    posRet.push_back(pos);
+        for(size_t k=0; k<outSize; ++k){
+            pair<outcome_type, double>& pair = outcomes[k];
+            if(pair.second > bestScore && (posSet.count(pair.first) > 0)){
+                bestScore = pair.second;
+                pos = pair.first;
             }
         }
+
+        if(bestScore > 0 && !pos.empty())
+            return bestScore;
+        
     }
+
+    double bestScore = -1.0;
+    if((bestScore = me.eval(context, pos)) > 0.0){
+        return bestScore;
+    }
+    
+    vector<pair<outcome_type, double> > outcomes;
+    me.eval_all(context, outcomes, false);
+
+    //find the best pos
+    
+    size_t outSize = outcomes.size();
+
+    for(size_t k=0; k<outSize; ++k){
+        pair<outcome_type, double>& pair = outcomes[k];
+        if(pair.second > bestScore){
+            bestScore = pair.second;
+            pos = pair.first;
+        }
+    }
+
+    return bestScore;
+}
+
+void POSTagger::tag_sentence_best(vector<string>& words, vector<string>& posRet,
+        int begin, int end){
+    CMA_WType wtype(ctype_);
+    for( int index = begin; index < end; ++index ){
+        string pos;
+        tag_word_best_1(words, posRet, index, pos, wtype);
+        posRet.push_back(pos);
+    }
+}
+
+double POSTagger::tag_word_best(vector<string>& words, vector<string>& poses,
+        int index, string& pos){
+    CMA_WType wtype(ctype_);
+    return tag_word_best_1(words, poses, index, pos, wtype);
 }
 
 bool POSTagger::appendWordPOS(string& line){
