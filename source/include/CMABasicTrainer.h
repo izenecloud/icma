@@ -39,6 +39,7 @@ public:
         rareFreq_ = 1;
 
         cutoff_ = 10;
+        rareCutoff_ = 5;
         evCutoff_ = 1;
 
         ctype_ = CMA_CType::instance(encType);
@@ -60,6 +61,8 @@ public:
 
     /** discard event with frequency &lt; evCutoff when training [default=1]*/
     int evCutoff_;
+
+    int rareCutoff_;
 
     MaxentModel me;
 
