@@ -19,17 +19,37 @@ namespace cma
 {
 
 /**
- * Character type.
+ * Character type. Here a char is a byte, and a character is a char and its
+ * extended bytes
  */
 enum CharType
 {
-    CHAR_TYPE_INIT, ///< initial type
+    CHAR_TYPE_INIT, ///< initial type, used to identify the type
+    
+    /**
+     * The EXtended bytes of a character, for word(two bytes, in hex form) 
+     * a3 23, the last byte (23) with type CHAR_TYPE_EX, and first byte can be
+     * other char types.
+     */
+    CHAR_TYPE_EX,
+
+    CHAR_TYPE_B, ///< the begin of a word
+
+    /**
+     * the possible end of a word, if next charcter's type isn't CHAR_TYPE_E,
+     * the character is the end character of a word
+     */
+    CHAR_TYPE_E, 
+
+
+    CHAR_TYPE_OTHER, ///< other character
+    
+    //special type have to put after CHAR_TYPE_OTHER
     CHAR_TYPE_NUMBER, ///< digit character
     CHAR_TYPE_PUNC, ///< puntuation character
     CHAR_TYPE_SPACE, ///< space character, like ' '
     CHAR_TYPE_DATE, ///< date character
-    CHAR_TYPE_LETTER, ///< letter character
-    CHAR_TYPE_OTHER, ///< other character
+    CHAR_TYPE_LETTER, ///< letter character    
     CHAR_TYPE_NUM
 };
 

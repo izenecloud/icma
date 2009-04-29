@@ -1,27 +1,22 @@
+#include "TrainerCMD.h"
 
-#include "cma_ctype.h"
+#define TRAINERCMD_AS_MAIN
 
-#include "CMAPOCTagger.h"
-#include "CMAPOSTagger.h"
-#include <stdlib.h>
-
-using namespace cma;
-
-void beginTrain(string pMateFile, string cateFile, string enc = "gbk"){
+void beginTrain(string pMateFile, string cateFile, string enc, string posDelimiter){
     string mateFile = pMateFile;
 
     Knowledge::EncodeType encType = CMA_CType::getEncType(enc);
 
     cout<<"#Start Training POS Model..."<<endl;
-    pos_train(mateFile.data(), cateFile, encType);
+    pos_train(mateFile.data(), cateFile, encType, posDelimiter);
 
     cout<<"#Generate POC Material File "<<endl;
     string matePOC = mateFile + ".poc.tmp";
-    create_poc_meterial(mateFile.data(), matePOC.data(), encType);
+    create_poc_meterial(mateFile.data(), matePOC.data(), encType, posDelimiter);
 
     string cateFilePOC = cateFile + "-poc";
     cout<<"#Start Training POC Model..."<<endl;
-    poc_train(matePOC.data(), cateFilePOC, encType);
+    poc_train(matePOC.data(), cateFilePOC, encType, posDelimiter);
 
     //remove matePOC and mateFile(if tmpMateFile is true)
     cout<<"#Remove temporal files "<<endl;
@@ -31,14 +26,17 @@ void beginTrain(string pMateFile, string cateFile, string enc = "gbk"){
 }
 
 void printTainerUsage(){
-    cout<<"The Format is: ./tainercmd mateFile cateFile [encoding]"<<endl;
+    cout<<"SYNOPSIS\n     ./tainercmd mateFile cateFile [encoding] [posDelimiter]"<<endl;
+    cout<<"Description"<<endl;
     cout<<"   mateFile is the material file, it should be in the form "<<
             "word1/pos1 word2/pos2 word3/pos3 ..."<<endl;
     cout<<"   cateFile is the category file, there are several files are "<<
             "created after the trainging, and with cateFile as the prefix, "<<
             "prefix should contains both path and name, such /dir1/dir2/n1"<<endl;
-    cout<<"   encoding (optional) is the encoding of the mateFile, and gbk "<<
-            "is the default encoding"<<endl;
+    cout<<"   encoding is the encoding of the mateFile, and gb2312"<<
+            "is the default encoding. Only support gb2312 and big5 now"<<endl;
+    cout<<"   posDelimiter is the delimiter between the word and the pos tag, "<<
+            "like '/' and '_' and default is '/'"<<endl;
 }
 
 int tainerEntry(int argc, char** argv){
@@ -48,14 +46,21 @@ int tainerEntry(int argc, char** argv){
     }
     string pMateFile(argv[1]);
     string cateFile(argv[2]);
-    string encoding;
+    string encoding = "gb2312";
     if(argc > 3){
         encoding = argv[3];
     }
-    beginTrain(pMateFile, cateFile, encoding);
+    string posDelimiter = "/";
+    if(argc > 4){
+        posDelimiter = argv[4];
+    }
+
+    beginTrain(pMateFile, cateFile, encoding, posDelimiter);
     return 1;
 }
 
+#ifdef TRAINERCMD_AS_MAIN
 int main(int argc, char** argv){
     return tainerEntry(argc, argv);
 }
+#endif

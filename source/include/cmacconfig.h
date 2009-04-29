@@ -4,7 +4,7 @@
 #define DEBUG
 
 /** if set, output all the training data */
-//#define DEBUG_TRAINING
+#define DEBUG_TRAINING
 
 /** Enable assert statement */
 #define EN_ASSERT
@@ -12,10 +12,10 @@
     #include <assert.h>
 #endif
 
-/** Whether use POC new feature */
-#define USE_POC_NEW_FEATURE
+/** if set, use punctuaion and character type feature */
+#define USE_BE_TYPE_FEATURE
 
-//#define TEST_SEG_CMD
+#define TEST_SEG_CMD
 
 #ifdef TEST_SEG_CMD
     //Print the Trie Node Information

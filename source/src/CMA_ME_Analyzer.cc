@@ -105,13 +105,7 @@ namespace cma {
 
     const char* CMA_ME_Analyzer::runWithString(const char* inStr) {
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
-
-        //FOR Test
-        VTrieNode node;
-        knowledge_->getTrie()->search(inStr, &node);
-        cout<<"Exist "<<(node.data > 0)<<endl;
-        
-        
+      
         vector<pair<vector<string>, double> > segment;
         vector<vector<string> > pos;
         analysis(inStr, 1, pos, segment, printPOS);
@@ -266,6 +260,17 @@ namespace meanainner{
 
         CTypeTokenizer token(ctype_, sentence);
 
+        #ifdef USE_BE_TYPE_FEATURE
+        vector<string> words;
+        const char* next = 0;
+        while((next = token.next())){
+            words.push_back(next);
+        }
+        if(N == 1)
+            segTagger->seg_sentence_best(words, segment[0].first);
+        else
+            segTagger->seg_sentence(words, segN, N, segment);
+        #else
         //separate digits, letter and so on
         CateStrTokenizer ct(&token);
         while (ct.next()) {
@@ -291,6 +296,7 @@ namespace meanainner{
                 }
             }
         }
+        #endif
 
 
         VTrie *trie = knowledge_->getTrie();
