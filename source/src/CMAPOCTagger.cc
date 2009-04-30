@@ -8,8 +8,6 @@
 
 namespace cma{
 
-string POC_EMPTY_STR = "";
-
 #define POC_TAG_B 1
 #define POC_TAG_E 2
 
@@ -20,14 +18,14 @@ string POC_EMPTY_STR = "";
 
 
  #ifdef USE_BE_TYPE_FEATURE
-    #define POC_TEMPLATE_SIZE 11
+    #define POC_TEMPLATE_SIZE 10
  #else
     #define POC_TEMPLATE_SIZE 10
  #endif
 
 bool POC_INIT_FLAG = false;
 
-const string POC_BOUNDARY = "BOUNDARY";
+const string POC_BOUNDARY = "BoUnD";
 
 #ifdef USE_BE_TYPE_FEATURE
 string CharTypeArray[CHAR_TYPE_NUM];
@@ -38,8 +36,8 @@ namespace pocinner{
 /**
  * Inner function to get the context of the POC
  */
-inline void get_poc_zh_context_1(vector<string>& words, size_t index,
-        vector<string>& context, CMA_CType *ctype){
+inline void get_poc_zh_context_1(vector<string>& words, CharType *types, 
+        size_t index, vector<string>& context, CMA_CType *ctype){
 
     #ifdef EN_ASSERT
         assert(context.size() == POC_TEMPLATE_SIZE);
@@ -52,7 +50,7 @@ inline void get_poc_zh_context_1(vector<string>& words, size_t index,
     #ifdef USE_BE_TYPE_FEATURE
     CharType ta[5]; //type array
     CharType preType = CHAR_TYPE_INIT;
-    if(offset > 0){
+    if(!types && offset > 0){
         preType = ctype->getCharType(words[offset-1].data(), preType, words[offset].data());
     }
     #endif
@@ -61,12 +59,16 @@ inline void get_poc_zh_context_1(vector<string>& words, size_t index,
         if(offset >= 0 && offset < n){
             wa[j] = words[offset];
             #ifdef USE_BE_TYPE_FEATURE
-            const char* lastP = 0;
-            if( offset < n - 1){
-                lastP = words[offset + 1].data();
+            if(types){
+                ta[j] = types[offset];
+            }else{
+                const char* lastP = 0;
+                if( offset < n - 1){
+                    lastP = words[offset + 1].data();
+                }
+                preType = ctype->getCharType(wa[j].c_str(), preType, lastP);
+                ta[j] = preType;
             }
-            preType = ctype->getCharType(wa[j].c_str(), preType, lastP);
-            ta[j] = preType;
             #endif
         }else{
             wa[j] = POC_BOUNDARY;
@@ -79,15 +81,21 @@ inline void get_poc_zh_context_1(vector<string>& words, size_t index,
     int k = -1;
 
      #ifdef USE_BE_TYPE_FEATURE
-        if(ta[2] != CHAR_TYPE_OTHER){
-            context.resize(5);
-            context[++k] = "C0=" + wa[2];
-            context[++k] = "C1=" + wa[3];
-            context[++k] = "T-1=" + CharTypeArray[ta[1]];
-            context[++k] = "T0=" + CharTypeArray[ta[2]];
-            context[++k] = "T+1=" + CharTypeArray[ta[3]];
-            return;
-        }
+     if(index > 0 && ta[1] == CHAR_TYPE_DATE){
+        context.resize(1);
+        context[0] = "afEnt";
+        return;
+     }
+        
+    if(ta[2] != CHAR_TYPE_OTHER){
+        context.resize(4);
+        //context[++k] = "C0=" + wa[2];
+        context[++k] = "C1=" + wa[3];
+        context[++k] = "T-1=" + CharTypeArray[ta[1]];
+        context[++k] = "T0=" + CharTypeArray[ta[2]];
+        context[++k] = "T+1=" + CharTypeArray[ta[3]];
+        return;
+    }
 
     if(index > 0 && ta[1] != CHAR_TYPE_OTHER){
         context.resize(1);
@@ -96,29 +104,25 @@ inline void get_poc_zh_context_1(vector<string>& words, size_t index,
     }
 
      #endif
+
     
+    context.resize(context.size() - 2);
+
     // Cn , n ∈ [−2, 2]
     context[++k] = "C-2=" + wa[0];
     context[++k] = "C-1=" + wa[1];
     context[++k] = "C0=" + wa[2];
     context[++k] = "C1=" + wa[3];
-    context[++k] = "C2=" + wa[4];
+    //context[++k] = "C2=" + wa[4];
 
     //Cn Cn+1 , n ∈ [−2, 1]
     context[++k] = "C-2,-1=" + wa[0] + "," + wa[1];
     context[++k] = "C-1,0=" + wa[1] + "," + wa[2];
     context[++k] = "C0,1=" + wa[2] + "," + wa[3];
-    context[++k] = "C1,2=" + wa[3] + "," + wa[4];
+    //context[++k] = "C1,2=" + wa[3] + "," + wa[4];
 
     //C−1 C1
     context[++k] = "C-1,1=" + wa[1] + "," + wa[3];
-
-    #ifdef USE_BE_TYPE_FEATURE
-    //Pu (C0 ) whether is punctuation
-
-    /*context[++k] = "T-2,-1,0,1,2=" + ta[0] + "," + ta[1] +
-            "," + ta[2] + "," + ta[3] + "," + ta[4];*/
-    #endif //#ifdef USE_BE_TYPE_FEATURE
     
 }
 
@@ -236,6 +240,7 @@ public:
      * string is the combination of the previous strings and p
      */
     bool search(const char *p){
+        //cout<<"To search "<<p<<endl;
         if(!completeSearch)
             return false;        
         
@@ -245,6 +250,9 @@ public:
         }
 
         completeSearch = !(*p) && (node.data > 0 || node.moreLong);
+
+        //cout<<"isEnd="<<!(*p)<<",data="<<node.data<<",moreLong="<<node.moreLong<<endl;
+
         return completeSearch;
     }
 
@@ -280,7 +288,7 @@ public:
 void get_poc_zh_context(vector<string>& words, vector<string>& tags, size_t i,
         bool rareWord, vector<string>& context, CMA_CType *ctype){
     context.resize(POC_TEMPLATE_SIZE);
-    pocinner::get_poc_zh_context_1(words, i, context, ctype);
+    pocinner::get_poc_zh_context_1(words, 0, i, context, ctype);
 }
 
 void poc_train(const char* file, const string& cateName,
@@ -301,13 +309,13 @@ SegTagger::SegTagger(const string& cateName, VTrie* posTrie, double eScore){
     setEScore(eScore);
 }
 
-void SegTagger::tag_word(vector<string>& words, int index, size_t N, 
-        uint8_t* tags, POCTagUnit* candidates, int& lastIndex, size_t& canSize,
-        double initScore, int candidateNum){
+void SegTagger::tag_word(vector<string>& words, CharType* types,
+        int index, size_t N, uint8_t* tags, POCTagUnit* candidates,
+        int& lastIndex, size_t& canSize, double initScore, int candidateNum){
 
     vector<string> context(POC_TEMPLATE_SIZE);
 
-    pocinner::get_poc_zh_context_1(words, index, context, ctype_);
+    pocinner::get_poc_zh_context_1(words, types, index, context, ctype_);
 
     vector<pair<outcome_type, double> > outcomes;
     me.eval_all(context, outcomes, false);
@@ -326,7 +334,8 @@ void SegTagger::tag_word(vector<string>& words, int index, size_t N,
 
 
 
-void SegTagger::seg_sentence(vector<string>& words, size_t N, size_t retSize,
+void SegTagger::seg_sentence(vector<string>& words, CharType* types,
+        size_t N, size_t retSize,
         vector<pair<vector<string>, double> >& segment){
     size_t n = words.size();
 
@@ -358,7 +367,8 @@ void SegTagger::seg_sentence(vector<string>& words, size_t N, size_t retSize,
         #endif
 
         for(size_t j=0; j<h0Size; ++j){
-            tag_word(words, i, N, h0[j], candidates, lastIndex, canSize, scores[j], j);
+            tag_word(words, types, i, N, h0[j], candidates, lastIndex,
+                    canSize, scores[j], j);
         }
         
         //generate the N-best
@@ -414,8 +424,24 @@ void SegTagger::tag_file(const char* inFile, const char* outFile,
             words.push_back(nextPtr);
         }
 
+        if(words.empty()){
+            out<<endl;
+            continue;
+        }
+
+        int maxWordOff = (int)words.size() - 1;
+        CharType types[maxWordOff + 1];
+        CharType preType = CHAR_TYPE_INIT;
+        for(int i=0; i<maxWordOff; ++i){
+            types[i] = preType = ctype_->getCharType(words[i].data(),
+                    preType, words[i+1].data());
+        }
+
+        types[maxWordOff] = ctype_->getCharType(words[maxWordOff].data(),
+                    preType, 0);
+
         vector<string> best;
-        seg_sentence_best(words, best);
+        seg_sentence_best(words, types, best);
 
         //print the result
         size_t maxIndex = best.size() - 1;
@@ -430,16 +456,17 @@ void SegTagger::tag_file(const char* inFile, const char* outFile,
 }
 
 
-void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment){
+void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
+        vector<string>& segment){
     size_t n = words.size();
     uint8_t pocRet[n];
 
-    #ifndef USE_BE_TYPE_FEATURE
+    #ifdef USE_STRTRIE
         pocinner::StrBasedVTrie strTrie(trie_);
     #endif
 
     for(size_t index=0; index<n; ++index){
-         #ifndef USE_BE_TYPE_FEATURE
+         #ifdef USE_STRTRIE
             const char* curPtr = words[ index ].c_str();
         #endif
             
@@ -448,7 +475,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment
         #endif
 
         vector<string> context(POC_TEMPLATE_SIZE);
-        pocinner::get_poc_zh_context_1(words, index, context, ctype_);
+        pocinner::get_poc_zh_context_1(words, types, index, context, ctype_);
 
         #ifdef DEBUG_POC_TAGGER
         /*int n = context.size();
@@ -470,13 +497,14 @@ void SegTagger::seg_sentence_best(vector<string>& words, vector<string>& segment
         //no check if the POC tag is B
         if(tagEScore <= 0.5){
             pocRet[index] = POC_TAG_B;
-            #ifndef USE_BE_TYPE_FEATURE
+            #ifdef USE_STRTRIE
+            if(types[index] == CHAR_TYPE_OTHER)
                 strTrie.firstSearch(curPtr);
             #endif
             continue;
         }
 
-        #ifdef USE_BE_TYPE_FEATURE
+        #ifndef USE_STRTRIE
             pocRet[index] = POC_TAG_E;
         #else
             strTrie.search(curPtr);

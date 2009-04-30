@@ -13,6 +13,7 @@
 #include "strutil.h"
 #include "CPPStringUtils.h"
 #include "cma_ctype.h"
+#include "cma_wtype.h"
 
 #include <algorithm>
 #include <math.h>
@@ -76,11 +77,13 @@ class POSTagger{
 public:
     /**
      * Construct the POSTagger with outer VTrie
+     * \param model POS model name
      */
     POSTagger(const string& model, VTrie* pTrie);
 
     /**
      * Construct the POSTagger with inner VTrie (read from dictFile)
+     * 
      */
     POSTagger(const string& model, const char* dictFile);
 
@@ -98,17 +101,37 @@ public:
      * \param words the given words list
      * \param N return N best
      * \param retSize retSize &lt;= N, the size of segment
+     * \param to store the result value
      */
     void tag_sentence(vector<string>& words, size_t N, size_t retSize,
             vector<pair<vector<string>, double> >& segment);
 
     /**
      * Only return the best result
+     * \param words words vector
+     * \param posRet to hold the result value
+     * \param begin the begin index (include) to check
+     * \param end the first index that should not check
      */
-    void tag_sentence_best(vector<string>& words, vector<string>& posRet);
+    void tag_sentence_best(vector<string>& words, vector<string>& posRet,
+            int begin, int end);
+
+    /**
+     * tag the word with the best POS and return its score
+     * \param words words vector
+     * \param poses the previous pos vector, but the current pos won't store into
+     * the poses
+     * \param index the current index to check
+     * \param pos to store the best pos
+     * \return return the score of the best pos
+     */
+    double tag_word_best(vector<string>& words, vector<string>& poses, int index,
+            string& pos);
 
     /**
      * Append the POS Information into Trie and POS Vector
+     * \param line a line like: word1 pos1 pos2 ... posN
+     * \return whether add successfully
      */
     bool appendWordPOS(string& line);
 
@@ -126,7 +149,20 @@ private:
      */
     void tag_word(vector<string>& words, int index, size_t N, string* tags,
             POSTagUnit* candidates, int& lastIndex, size_t& canSize,
-            double initScore, int candidateNum);
+            double initScore, int candidateNum, CMA_WType& wtype);
+
+    /**
+     * tag the word with the best POS (private method)
+     * \param words words vector
+     * \param poses the previous pos vector, but the current pos won't store into
+     * the poses
+     * \param index the current index to check
+     * \param pos to store the best pos
+     * \param wtype the identify the type of the word
+     * \return return the score of the best pos
+     */
+    inline double tag_word_best_1(vector<string>& words, vector<string>& poses, 
+            int index, string& pos, CMA_WType& wtype);
 
 private:
     MaxentModel me;

@@ -227,7 +227,7 @@ void cutoff_feature(TrainerData* data){
     map<string, int> tmp;
     for(map<string, int>::iterator itr = data->featDict_.begin();
           itr != data->featDict_.end(); ++itr){
-        if((itr->first).find("curword=") != (itr->first).npos){
+        if((itr->first).find("C0=") != (itr->first).npos){
             if(itr->second >= rareCutoff)
                 tmp[itr->first] = itr->second;
         }else if(itr->second >= cutoff){

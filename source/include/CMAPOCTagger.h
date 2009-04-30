@@ -60,7 +60,7 @@ public:
     SegTagger(const string& cateName, VTrie* posTrie, double eScore = 0.7);
 
     void tag_file(const char* inFile, const char *outFile, 
-            string encType = "gbk");
+            string encType = "gb2312");
 
     /**
      * tagging given words list and return N best
@@ -68,7 +68,8 @@ public:
      * \param N return N best
      * \param retSize retSize &lt;= N, the size of segment
      */
-    void seg_sentence(vector<string>& words, size_t N, size_t retSize,
+    void seg_sentence(vector<string>& words, CharType *types,
+            size_t N, size_t retSize,
             vector<pair<vector<string>, double> >& segment);
 
     /**
@@ -76,7 +77,8 @@ public:
      * \param words the word list
      * \param segment to store the segmented words
      */
-    void seg_sentence_best(vector<string>& words, vector<string>& segment);
+    void seg_sentence_best(vector<string>& words, CharType *types,
+            vector<string>& segment);
 
     /**
      * Would be invoked by the SegTagger's Constructor
@@ -120,8 +122,8 @@ private:
      * \param canSize the used size in the candidates
      * \return a list of (tag, score) pair sorted
      */
-    void tag_word(vector<string>& words, int index, size_t N, uint8_t* tags,
-            POCTagUnit* candidates, int& lastIndex, size_t& canSize,
+    void tag_word(vector<string>& words, CharType *type, int index, size_t N,
+            uint8_t* tags, POCTagUnit* candidates, int& lastIndex, size_t& canSize,
             double initScore, int candidateNum);
 
 private:
