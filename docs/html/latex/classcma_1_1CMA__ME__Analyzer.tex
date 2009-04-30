@@ -1,0 +1,118 @@
+\section{cma::CMA\_\-ME\_\-Analyzer Class Reference}
+\label{classcma_1_1CMA__ME__Analyzer}\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
+\doxyref{Analyzer}{p.}{classcma_1_1Analyzer} for the CMAC.  
+
+
+{\tt \#include $<$CMA\_\-ME\_\-Analyzer.h$>$}
+
+Inheritance diagram for cma::CMA\_\-ME\_\-Analyzer::\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2cm]{classcma_1_1CMA__ME__Analyzer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+{\bf $\sim$CMA\_\-ME\_\-Analyzer} ()
+\item 
+virtual void {\bf setKnowledge} ({\bf Knowledge} $\ast$pKnowledge)
+\item 
+virtual int {\bf runWithSentence} ({\bf Sentence} \&sentence)
+\item 
+virtual const char $\ast$ {\bf runWithString} (const char $\ast$inStr)
+\item 
+virtual int {\bf runWithStream} (const char $\ast$inFileName, const char $\ast$outFileName)
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+\doxyref{Analyzer}{p.}{classcma_1_1Analyzer} for the CMAC. 
+
+\doxyref{Analyzer}{p.}{classcma_1_1Analyzer} for the CMAC 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!$\sim$CMA\_\-ME\_\-Analyzer@{$\sim$CMA\_\-ME\_\-Analyzer}}
+\index{$\sim$CMA\_\-ME\_\-Analyzer@{$\sim$CMA\_\-ME\_\-Analyzer}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}cma::CMA\_\-ME\_\-Analyzer::$\sim$CMA\_\-ME\_\-Analyzer ()}\label{classcma_1_1CMA__ME__Analyzer_67e7728f4fa010deaa8f30c575e0c078}
+
+
+The Desconstrutor won't delete knowledge pointer 
+
+\subsection{Member Function Documentation}
+\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!setKnowledge@{setKnowledge}}
+\index{setKnowledge@{setKnowledge}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::CMA\_\-ME\_\-Analyzer::setKnowledge ({\bf Knowledge} $\ast$ {\em pKnowledge})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_04d6b5c7b7dcd199c8e96a06afa5ea44}
+
+
+Set the {\em \doxyref{Knowledge}{p.}{classcma_1_1Knowledge}\/} for analysis. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em pKnowledge}]the pointer of {\em \doxyref{Knowledge}{p.}{classcma_1_1Knowledge}\/} \end{description}
+\end{Desc}
+
+
+Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_52d2462f2f05cec4a9c4d6773e7502cb}.
+
+References cma::Knowledge::getEncodeType(), cma::CMA\_\-ME\_\-Knowledge::getPOSTagger(), cma::CMA\_\-ME\_\-Knowledge::getSegTagger(), cma::CMA\_\-CType::instance(), cma::SegTagger::setCType(), and cma::POSTagger::setCType().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!runWithSentence@{runWithSentence}}
+\index{runWithSentence@{runWithSentence}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Analyzer::runWithSentence ({\bf Sentence} \& {\em sentence})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_6bac993f470b61cc4fccdbd4a7217948}
+
+
+Execute the morphological analysis based on a sentence. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em sentence}]an instance of {\em \doxyref{Sentence}{p.}{classcma_1_1Sentence}\/} \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]0 for fail, 1 for success \end{Desc}
+\begin{Desc}
+\item[Precondition:]the raw sentence string could be got by {\em sentence.getString()\/}. \end{Desc}
+\begin{Desc}
+\item[Postcondition:]on successful return, the n-best results could be got by {\em sentence.getListSize()\/}, etc. \end{Desc}
+\begin{Desc}
+\item[Attention:]white-space characters are ignored in the analysis, which include \char`\"{} $\backslash$t$\backslash$n$\backslash$v$\backslash$f$\backslash$r\char`\"{}, and also space character in specific encoding. \end{Desc}
+
+
+Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_2274acc45dd1ccc6aa7ea87cd34ad0e7}.
+
+References cma::Sentence::addList(), cma::POSTable::getCodeFromStr(), cma::Analyzer::getOption(), cma::Sentence::getString(), cma::POSTable::instance(), cma::CMA\_\-ME\_\-Knowledge::isStopWord(), cma::Morpheme::lexicon\_\-, cma::Analyzer::OPTION\_\-TYPE\_\-NBEST, and cma::Morpheme::posCode\_\-.\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!runWithString@{runWithString}}
+\index{runWithString@{runWithString}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::CMA\_\-ME\_\-Analyzer::runWithString (const char $\ast$ {\em inStr})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_50b039c84be34cc7c83ce8aef97058f2}
+
+
+Execute the morphological analysis based on a paragraph string. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em inStr}]paragraph string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]0 for fail, otherwise a non-zero string pointer for the one-best result \end{Desc}
+
+
+Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_2d05785e30e19a390aa887f25bda2d2f}.
+
+References cma::Analyzer::getOption(), cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, cma::Analyzer::posDelimiter\_\-, and cma::Analyzer::wordDelimiter\_\-.\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!runWithStream@{runWithStream}}
+\index{runWithStream@{runWithStream}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Analyzer::runWithStream (const char $\ast$ {\em inFileName}, \/  const char $\ast$ {\em outFileName})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_eb9e065c3cc25885f2ccb0c70f4a5964}
+
+
+Execute the morphological analysis based on a file. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em inFileName}]input file name \item[{\em outFileName}]output file name \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]0 for fail, 1 for success \end{Desc}
+\begin{Desc}
+\item[Postcondition:]on successful return, the one-best result is printed to file {\em outFileName\/}. \end{Desc}
+
+
+Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_ae19c787b296d086d52449cb1b6e3699}.
+
+References cma::Analyzer::getOption(), cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, cma::Analyzer::posDelimiter\_\-, and cma::Analyzer::wordDelimiter\_\-.
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+source/include/CMA\_\-ME\_\-Analyzer.h\item 
+source/src/CMA\_\-ME\_\-Analyzer.cc\end{CompactItemize}

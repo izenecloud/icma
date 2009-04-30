@@ -1,0 +1,97 @@
+\section{cma::POSTable Class Reference}
+\label{classcma_1_1POSTable}\index{cma::POSTable@{cma::POSTable}}
+\doxyref{POSTable}{p.}{classcma_1_1POSTable} stores the global table of part-of-speech tags.  
+
+
+{\tt \#include $<$pos\_\-table.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+int {\bf addPOS} (const std::string \&pos)
+\item 
+int {\bf getCodeFromStr} (const std::string \&pos) const 
+\item 
+const char $\ast$ {\bf getStrFromCode} (int index) const 
+\item 
+int {\bf size} () const 
+\end{CompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{CompactItemize}
+\item 
+static {\bf POSTable} $\ast$ {\bf instance} ()
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+\doxyref{POSTable}{p.}{classcma_1_1POSTable} stores the global table of part-of-speech tags. 
+
+\doxyref{POSTable}{p.}{classcma_1_1POSTable} stores the global table of part-of-speech tags, each tag includes a string value and its index code. Note that the string value of part-of-speech tag is case-insensitive. For example, 'Ng' equals to 'ng'. 
+
+\subsection{Member Function Documentation}
+\index{cma::POSTable@{cma::POSTable}!instance@{instance}}
+\index{instance@{instance}!cma::POSTable@{cma::POSTable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf POSTable} $\ast$ cma::POSTable::instance ()\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1POSTable_8ce731b2b76aced0b76092b5b216aa1d}
+
+
+Create an instance of {\em \doxyref{POSTable}{p.}{classcma_1_1POSTable}\/}. \begin{Desc}
+\item[Returns:]the pointer to instance \end{Desc}
+
+
+Referenced by cma::Sentence::getStrPOS(), cma::CMA\_\-ME\_\-Knowledge::loadPOSModel(), and cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::POSTable@{cma::POSTable}!addPOS@{addPOS}}
+\index{addPOS@{addPOS}!cma::POSTable@{cma::POSTable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::addPOS (const std::string \& {\em pos})}\label{classcma_1_1POSTable_77898a33965a0eee826c41b7916d80ce}
+
+
+Add the POS string to the global part-of-speech table. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em pos}]the POS string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]the index code of the POS string added, if the POS string has been added before, its index code previously added is returned. \end{Desc}
+\begin{Desc}
+\item[Attention:]Note that the POS string is case-insensitively. \end{Desc}
+
+
+Referenced by cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTable@{cma::POSTable}!getCodeFromStr@{getCodeFromStr}}
+\index{getCodeFromStr@{getCodeFromStr}!cma::POSTable@{cma::POSTable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromStr (const std::string \& {\em pos}) const}\label{classcma_1_1POSTable_1692f43e2154d408265e09affd64d70a}
+
+
+Get the POS index code from the POS string in the global part-of-speech table. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em pos}]the POS string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]POS index code, -1 for non POS available \end{Desc}
+
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::POSTable@{cma::POSTable}!getStrFromCode@{getStrFromCode}}
+\index{getStrFromCode@{getStrFromCode}!cma::POSTable@{cma::POSTable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::POSTable::getStrFromCode (int {\em index}) const}\label{classcma_1_1POSTable_cf9611088b3484dbaad11ef2b5b24f52}
+
+
+Get the POS string from the POS index code in the global part-of-speech table. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em index}]the POS index code \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]POS string, null pointer for non POS available \end{Desc}
+
+
+Referenced by cma::Sentence::getStrPOS().\index{cma::POSTable@{cma::POSTable}!size@{size}}
+\index{size@{size}!cma::POSTable@{cma::POSTable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::size () const}\label{classcma_1_1POSTable_eb70793af427c7dd545f132e177ca26e}
+
+
+Get the number of POS tags in the global part-of-speech table. \begin{Desc}
+\item[Returns:]the number of POS tags \end{Desc}
+
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+source/include/{\bf pos\_\-table.h}\item 
+source/src/{\bf pos\_\-table.cpp}\end{CompactItemize}

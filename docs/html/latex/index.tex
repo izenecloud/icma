@@ -1,0 +1,35 @@
+Chinese Morphological Analyzer(Chen) is using Maxent Model and Character-baed Segmentation to perform segmentation and pos tagging.\section{Compile the file}\label{index_compilefile}
+\begin{enumerate}
+\item Using shell, go to the project root directory. \item Type ".mkdir build ". \item Type ".cd build ". \item Type ".cmake ../source ". \item Finally Type ".make ". to compile all the source. \end{enumerate}
+
+
+If the external program uses the library, simply add all the header files in the \$include\$ directory under the project root directory, and add the build/cmac/libcmac.a into the library path.\section{Run the Trainer}\label{index_runtrainer}
+The dataset have to be trained by the Trainer. The Trainer is a executable file with name camctrainer under build/cmac.
+
+The SYNOPSIS for the trainer is: \par
+ ./cmactrainer mateFile cateFile [encoding] [posDelimiter] \par
+
+
+\par
+The Description for the parameters: \begin{itemize}
+\item mateFile is the material file, it should be in the form word1/pos1 word2/pos2 word3/pos3 ... \item cateFile is the category file, there are several files are created after the training, and with cateFile as the prefix, prefix should contains both path and name, such /dir1/dir2/n1. \item encoding is the encoding of the mateFile, and gb2312 is the default encoding. Only support gb2312 and big5 now. \item posDelimiter is the delimiter between the word and the pos tag, like '/' and '\_\-' and default is '/'. \end{itemize}
+
+
+Take "/dir1/dir2/cate " as the cateFile, after the training. The following files are created (All under directory /dir1/dir2): \begin{enumerate}
+\item cate.model is the POS statistical model file. \item cate.pos is the all the POS gained from the training dataset. \item cate.dic is the dictionary (include words and POS tags) gained from the training dataset. This file is plain text and should be loaded as user dictionary. To convert it to the system dictionary, use Knowledge::encodeSystemDict(const char$\ast$ txtFileName, const char$\ast$ binFileName), then the binFileName can be loaded as the system dictioanry. \item cate-poc.model is the POC statistical model file. \end{enumerate}
+
+
+All the files are required to run the program.\par
+\section{Run the Demo}\label{index_rundemo}
+After the training, you can run the demo to segment the file, The Demo is a executable file with name camcsegger under build/cmac.
+
+The SYNOPSIS for the trainer is: \par
+ ./cmacsegger cateFile inFile outFile [encoding] [posDelimiter] \par
+
+
+\par
+The Description for the parameters: \begin{itemize}
+\item cateFile is the category file, there are several files are created after the training, and with cateFile as the prefix, prefix should contains both path and name, such /dir1/dir2/n1. \item inFile the input file. \item outFile the output file. \item encoding is the encoding of the mateFile, and gb2312 is the default encoding. Only support gb2312 and big5 now. \item posDelimiter is the delimiter between the word and the pos tag, like '/' and '\_\-' and default is '/'. \end{itemize}
+
+
+The result with pos tagging can be found in the outFile. 

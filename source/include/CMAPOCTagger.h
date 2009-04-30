@@ -1,6 +1,6 @@
 /* 
- * File:   CMAPOCTagger.h
- * Author: vernkin
+ * \file   CMAPOCTagger.h
+ * \author vernkin
  *
  * Created on March 24, 2009, 8:52 PM
  */
@@ -45,6 +45,10 @@ struct POCTagUnit{
     int previous;
 };
 
+/**
+ * \brief segment the string
+ * segment the string using maxent model
+ */
 class SegTagger{
 public:
 

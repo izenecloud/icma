@@ -14,6 +14,8 @@ namespace cma
 {
 
 /**
+ * \brief CMA_ME_Factory creates instances for Chinese morphological analysis.
+ *
  * CMA_ME_Factory creates instances for Chinese morphological analysis.
  */
 class CMA_ME_Factory : public CMA_Factory

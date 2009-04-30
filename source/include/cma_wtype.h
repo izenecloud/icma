@@ -18,6 +18,8 @@ namespace cma
 class CMA_CType;
 
 /**
+ * \brief CMA_WType gives the word type information.
+ *
  * CMA_WType gives the word type information.
  */
 class CMA_WType

@@ -1,0 +1,76 @@
+\section{maxent::Trainer Class Reference}
+\label{classmaxent_1_1Trainer}\index{maxent::Trainer@{maxent::Trainer}}
+{\tt \#include $<$trainer.hpp$>$}
+
+Inherited by maxent::GISTrainer, and maxent::LBFGSTrainer.
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+virtual void \textbf{train} (size\_\-t iter=15, double tol=1E-05)=0\label{classmaxent_1_1Trainer_87db7573e27737f7691cb0ca60965f4a}
+
+\item 
+void \textbf{load\_\-training\_\-data} (const string \&events, const string \&model)\label{classmaxent_1_1Trainer_c626371849df38ed5bb198fac00722ad}
+
+\item 
+void {\bf set\_\-training\_\-data} (shared\_\-ptr$<$ MEEventSpace $>$ es, shared\_\-ptr$<$ ParamsType $>$ params, size\_\-t n\_\-theta, shared\_\-array$<$ double $>$ theta, shared\_\-array$<$ double $>$ sigma2, size\_\-t n\_\-outcomes, shared\_\-ptr$<$ MEEventSpace $>$ heldout\_\-es=shared\_\-ptr$<$ MEEventSpace $>$())
+\end{CompactItemize}
+\subsection*{Protected Member Functions}
+\begin{CompactItemize}
+\item 
+size\_\-t \textbf{eval} (const Event::context\_\-type $\ast$context, size\_\-t len, vector$<$ double $>$ \&probs) const \label{classmaxent_1_1Trainer_de7e50a4e2726f5fad2967d5c2fb7f9a}
+
+\end{CompactItemize}
+\subsection*{Protected Attributes}
+\begin{CompactItemize}
+\item 
+size\_\-t \textbf{m\_\-n\_\-outcomes}\label{classmaxent_1_1Trainer_47c67de9854b7910f762cbb7b5a93b73}
+
+\item 
+size\_\-t \textbf{m\_\-N}\label{classmaxent_1_1Trainer_72a868e2d504602d4163ab7a341ea195}
+
+\item 
+size\_\-t \textbf{m\_\-n\_\-theta}\label{classmaxent_1_1Trainer_1bf05e980a185036eda7fe50cce38a35}
+
+\item 
+shared\_\-ptr$<$ MEEventSpace $>$ \textbf{m\_\-es}\label{classmaxent_1_1Trainer_69a264541a9cca7c2d1c63230f2ff2da}
+
+\item 
+shared\_\-ptr$<$ MEEventSpace $>$ \textbf{m\_\-heldout\_\-es}\label{classmaxent_1_1Trainer_0cd724df3e940c7ad278141901c71b64}
+
+\item 
+shared\_\-ptr$<$ ParamsType $>$ \textbf{m\_\-params}\label{classmaxent_1_1Trainer_e028ca45f18c63b71851e69bc3295572}
+
+\item 
+shared\_\-array$<$ double $>$ \textbf{m\_\-theta}\label{classmaxent_1_1Trainer_6afd4ab760681b13f0909d6ea5b67e67}
+
+\item 
+shared\_\-array$<$ double $>$ \textbf{m\_\-sigma2}\label{classmaxent_1_1Trainer_6c16726e4a313b975bdc8bfbca00d701}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+\doxyref{Trainer}{p.}{classmaxent_1_1Trainer} class provides an abstract interface to various training algorithms.
+
+Usually you need not use this class explicitly. \doxyref{MaxentModel::train()}{p.}{classmaxent_1_1MaxentModel_a260e12fb9bbba9ba593819015678313} provides a wrapper for the underline \doxyref{Trainer}{p.}{classmaxent_1_1Trainer} instances. 
+
+\subsection{Member Function Documentation}
+\index{maxent::Trainer@{maxent::Trainer}!set\_\-training\_\-data@{set\_\-training\_\-data}}
+\index{set\_\-training\_\-data@{set\_\-training\_\-data}!maxent::Trainer@{maxent::Trainer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void maxent::Trainer::set\_\-training\_\-data (shared\_\-ptr$<$ MEEventSpace $>$ {\em events}, \/  shared\_\-ptr$<$ ParamsType $>$ {\em params}, \/  size\_\-t {\em n\_\-theta}, \/  shared\_\-array$<$ double $>$ {\em theta}, \/  shared\_\-array$<$ double $>$ {\em sigma2}, \/  size\_\-t {\em n\_\-outcomes}, \/  shared\_\-ptr$<$ MEEventSpace $>$ {\em heldout\_\-events} = {\tt shared\_\-ptr$<$MEEventSpace$>$()})}\label{classmaxent_1_1Trainer_6835015d0ad1e85b27badd0e85459502}
+
+
+Setting training data directly.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em events}]A vector of Event objects consist of training event space. \item[{\em params}]The internal params. \item[{\em n\_\-theta}]The number of $\theta_i $ parameters. \item[{\em sigma2}]Global variance $\sigma^2 $ in Gaussian Prior Smoothing. \item[{\em correct\_\-constant}]Correct constant used in GIS algorithm. \item[{\em n\_\-outcomes}]Number of outcomes. \item[{\em heldout\_\-events}]A vector of Event objects consist of heldout event space. this parameter can be safely ignored. \end{description}
+\end{Desc}
+
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+source/maxent/trainer.hpp\item 
+source/maxent/trainer.cpp\end{CompactItemize}

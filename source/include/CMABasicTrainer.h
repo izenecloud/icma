@@ -28,7 +28,9 @@ typedef void(*context_t)(vector<string>&, vector<string>&, size_t,
         bool, vector<string>&, CMA_CType *ctype);
 
 /**
- * The ckass to hold data required in the training process
+ * \brief The class to hold data required in the training process
+ * 
+ * The class to hold data required in the training process
  */
 class TrainerData{
 
@@ -64,6 +66,7 @@ public:
 
     int rareCutoff_;
 
+    /** The maxent model */
     MaxentModel me;
 
     ofstream *training_data;

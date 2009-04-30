@@ -14,6 +14,8 @@ namespace cma
 {
 
 /**
+ * \brief CMA_CType_GB2312 gives the character type information in GB2312 encoding.
+ *
  * CMA_CType_GB2312 gives the character type information in GB2312 encoding.
  */
 class CMA_CType_GB2312 : public CMA_CType

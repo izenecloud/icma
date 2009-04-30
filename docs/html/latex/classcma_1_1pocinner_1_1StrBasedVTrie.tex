@@ -1,0 +1,113 @@
+\section{cma::pocinner::StrBasedVTrie Class Reference}
+\label{classcma_1_1pocinner_1_1StrBasedVTrie}\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}}
+The utility class to search the string one by one.  
+
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+{\bf StrBasedVTrie} ({\bf VTrie} $\ast$pTrie)
+\item 
+void {\bf reset} ()
+\item 
+bool {\bf search} (const char $\ast$p)
+\item 
+bool {\bf firstSearch} (const char $\ast$p)
+\end{CompactItemize}
+\subsection*{Public Attributes}
+\begin{CompactItemize}
+\item 
+{\bf VTrie} $\ast$ {\bf trie}
+\item 
+{\bf VTrieNode} {\bf node}
+\item 
+bool {\bf completeSearch}
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+The utility class to search the string one by one. 
+
+The utility class to search the string one by one 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!StrBasedVTrie@{StrBasedVTrie}}
+\index{StrBasedVTrie@{StrBasedVTrie}!cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}cma::pocinner::StrBasedVTrie::StrBasedVTrie ({\bf VTrie} $\ast$ {\em pTrie})\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1pocinner_1_1StrBasedVTrie_8fea04163cec0e1ca5c55f024549f2cd}
+
+
+Create an instance
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em pTrie}]the \doxyref{VTrie}{p.}{classVTrie} \end{description}
+\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!reset@{reset}}
+\index{reset@{reset}!cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::pocinner::StrBasedVTrie::reset ()\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1pocinner_1_1StrBasedVTrie_12448a8164d4d071bcd2090bf945dbf2}
+
+
+Reset all the status 
+
+References completeSearch, VTrieNode::init(), and node.
+
+Referenced by firstSearch().\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!search@{search}}
+\index{search@{search}!cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool cma::pocinner::StrBasedVTrie::search (const char $\ast$ {\em p})\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1pocinner_1_1StrBasedVTrie_08fd893cb4f417024805987870fe2de3}
+
+
+search the specific string
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]point to the specific string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]true if have extending string or just the right string, here string is the combination of the previous strings and p \end{Desc}
+
+
+References completeSearch, VTrieNode::data, VTrie::find(), VTrieNode::moreLong, node, and trie.
+
+Referenced by firstSearch(), and cma::SegTagger::seg\_\-sentence\_\-best().\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!firstSearch@{firstSearch}}
+\index{firstSearch@{firstSearch}!cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool cma::pocinner::StrBasedVTrie::firstSearch (const char $\ast$ {\em p})\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1pocinner_1_1StrBasedVTrie_587a002d4d1945a9a474ccc22c42a305}
+
+
+First reset then search 
+
+References reset(), and search().
+
+Referenced by cma::SegTagger::seg\_\-sentence\_\-best().
+
+\subsection{Member Data Documentation}
+\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!trie@{trie}}
+\index{trie@{trie}!cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf VTrie}$\ast$ {\bf cma::pocinner::StrBasedVTrie::trie}}\label{classcma_1_1pocinner_1_1StrBasedVTrie_82eb8f8fc465d8a163c2391d54385a1d}
+
+
+The \doxyref{VTrie}{p.}{classVTrie} 
+
+Referenced by search().\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!node@{node}}
+\index{node@{node}!cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf VTrieNode} {\bf cma::pocinner::StrBasedVTrie::node}}\label{classcma_1_1pocinner_1_1StrBasedVTrie_2ec5c19acfe8fc118535d0e7914e4e6d}
+
+
+The \doxyref{VTrieNode}{p.}{classVTrieNode} 
+
+Referenced by reset(), and search().\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!completeSearch@{completeSearch}}
+\index{completeSearch@{completeSearch}!cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool {\bf cma::pocinner::StrBasedVTrie::completeSearch}}\label{classcma_1_1pocinner_1_1StrBasedVTrie_a94ba15372c5ed9f4b4e56a0b03cda88}
+
+
+true if the search over all the characters in the input string 
+
+Referenced by reset(), search(), and cma::SegTagger::seg\_\-sentence\_\-best().
+
+The documentation for this class was generated from the following file:\begin{CompactItemize}
+\item 
+source/src/CMAPOCTagger.cc\end{CompactItemize}

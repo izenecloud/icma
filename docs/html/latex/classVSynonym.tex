@@ -1,0 +1,115 @@
+\section{VSynonym Class Reference}
+\label{classVSynonym}\index{VSynonym@{VSynonym}}
+\doxyref{VSynonym}{p.}{classVSynonym} the Param Type of the VSynonymDictionary.  
+
+
+{\tt \#include $<$VSynonym.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+\textbf{VSynonym} (uint8\_\-t $\ast$start)\label{classVSynonym_8907470244ab22fb8d653bb2639d2af6}
+
+\item 
+void \textbf{setData} (uint8\_\-t $\ast$start)\label{classVSynonym_12682108420cca9e98bec000d9c01b16}
+
+\item 
+vtnum\_\-t {\bf getMatchedCount} ()
+\item 
+vtnum\_\-t {\bf getSynonymCount} (int index)
+\item 
+char $\ast$ {\bf getWord} (int index, int offset)
+\item 
+char $\ast$ {\bf getHeadWord} (int index)
+\item 
+vtnum\_\-t {\bf size} ()
+\item 
+void {\bf testLoop} ()
+\end{CompactItemize}
+\subsection*{Friends}
+\begin{CompactItemize}
+\item 
+ostream \& \textbf{operator$<$$<$} (ostream \&sout, {\bf VSynonym} \&retUnit)\label{classVSynonym_87f9012788f0eae6d43007c9d137c223}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+\doxyref{VSynonym}{p.}{classVSynonym} the Param Type of the VSynonymDictionary. 
+
+It can hold the Synonym Entry list after query synonym from \doxyref{VSynonymContainer}{p.}{classVSynonymContainer}.
+
+\begin{Desc}
+\item[Author:]vernkin \end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{VSynonym@{VSynonym}!getMatchedCount@{getMatchedCount}}
+\index{getMatchedCount@{getMatchedCount}!VSynonym@{VSynonym}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}vtnum\_\-t VSynonym::getMatchedCount ()\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonym_fc7a33f76776609d882367817145c173}
+
+
+Return the count of lines including query used in searching. \begin{Desc}
+\item[Returns:]number of the synonym entries matched \end{Desc}
+
+
+Referenced by size(), and testLoop().\index{VSynonym@{VSynonym}!getSynonymCount@{getSynonymCount}}
+\index{getSynonymCount@{getSynonymCount}!VSynonym@{VSynonym}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}vtnum\_\-t VSynonym::getSynonymCount (int {\em index})\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonym_118176f00c7c841b7de52a47ad2f8fa7}
+
+
+After calling \doxyref{getMatchedCount( )}{p.}{classVSynonym_fc7a33f76776609d882367817145c173}, it is called for iterating whole synonyms within a line. This method won't take bound check.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em index}]in range of 0 to \doxyref{getMatchedCount()}{p.}{classVSynonym_fc7a33f76776609d882367817145c173}-1 \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]the num of synonyms in the indexth synonym entry \end{Desc}
+
+
+Referenced by size(), and testLoop().\index{VSynonym@{VSynonym}!getWord@{getWord}}
+\index{getWord@{getWord}!VSynonym@{VSynonym}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ VSynonym::getWord (int {\em index}, \/  int {\em offset})\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonym_67470a91b7c8e2f4b8f7240bbef78281}
+
+
+Return the string which is placed on index and offset. This method won't take bound check 
+
+Referenced by getHeadWord(), size(), and testLoop().\index{VSynonym@{VSynonym}!getHeadWord@{getHeadWord}}
+\index{getHeadWord@{getHeadWord}!VSynonym@{VSynonym}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ VSynonym::getHeadWord (int {\em index})\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonym_e02e32b069b99cfe91ed7cf19ca3e4de}
+
+
+Return the head word(entry word or first word in a line) which is placed on index. In fact, It is exactly same with getWord( index, 0 ).
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em index}]in range of 0 to \doxyref{getMatchedCount()}{p.}{classVSynonym_fc7a33f76776609d882367817145c173}-1 \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]first word in the ith lap. \end{Desc}
+
+
+References getWord().\index{VSynonym@{VSynonym}!size@{size}}
+\index{size@{size}!VSynonym@{VSynonym}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}vtnum\_\-t VSynonym::size ()\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonym_e561362558126ca3aab5c81ec599c427}
+
+
+Get the size of the \doxyref{VSynonym}{p.}{classVSynonym} \begin{Desc}
+\item[Returns:]the size of the \doxyref{VSynonym}{p.}{classVSynonym} \end{Desc}
+
+
+References getMatchedCount(), getSynonymCount(), and getWord().\index{VSynonym@{VSynonym}!testLoop@{testLoop}}
+\index{testLoop@{testLoop}!VSynonym@{VSynonym}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void VSynonym::testLoop ()\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonym_a66ade66fd6f36fa46b995e40c6a78b9}
+
+
+For testing the speed of iterating all the words 
+
+References getMatchedCount(), getSynonymCount(), and getWord().
+
+The documentation for this class was generated from the following file:\begin{CompactItemize}
+\item 
+source/vsynonym/VSynonym.h\end{CompactItemize}

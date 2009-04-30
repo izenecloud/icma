@@ -16,6 +16,8 @@ namespace cma
 class CMA_CType;
 
 /**
+ * \brief Tokenizer tokenizes a raw input string in specific encoding to a sequence of characters.
+ *
  * Tokenizer tokenizes a raw input string in specific encoding to a sequence of characters.
  * Typically, the usage is like below:
  *
@@ -41,13 +43,24 @@ public:
 
     /**
      * Constructor.
+     *
      * \param ctype reference to the specific character encoding
      */
     CTypeTokenizer(const CMA_CType* ctype);
 
-    //construct with assign
+    /*
+     * construct with assign with initial string
+     *
+     * \param ctype reference to the specific character encoding
+     * \param str initial string
+     */
     CTypeTokenizer(const CMA_CType* ctype, const char* str);
 
+    /**
+     * Get the reference to the specific character encoding
+     *
+     * \return reference to the specific character encoding
+     */
     const CMA_CType* getCType() const {
         return ctype_;
     }

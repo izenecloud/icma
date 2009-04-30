@@ -1,6 +1,6 @@
 /* 
- * File:   CMAPOSTagger.h
- * Author: vernkin
+ * \file   CMAPOSTagger.h
+ * \author vernkin
  *
  * Created on March 20, 2009, 10:46 AM
  */
@@ -24,26 +24,6 @@
 using namespace maxent::me;
 
 namespace cma{
-
-inline bool isNumber(string& word){
-    for(size_t i=0; i<word.length(); ++i){
-        if(word[i] < '0' || word[i] > '9')
-            return false;
-    }
-    return true;
-}
-
-inline bool isHyphen(string& word){
-    return word.length() == 1 && word[0] == '-';
-}
-
-inline bool isUpperCase(string& word){
-    for(size_t i=0; i<word.length(); ++i){
-        if(word[i] < 'A' || word[i] > 'Z')
-            return false;
-    }
-    return true;
-}
 
 /**
  * POS context type for POS (zh/chinese)
@@ -71,7 +51,8 @@ struct POSTagUnit{
 };
 
 /**
- * Tagging the POS Information
+ * \brief Tagging the POS Information
+ * Tagging the POS using the maxent model.
  */
 class POSTagger{
 public:
@@ -135,6 +116,11 @@ public:
      */
     bool appendWordPOS(string& line);
 
+    /**
+     * Set the reference to the specific character encoding
+     *
+     * \param ctype new specific character encoding
+     */
     void setCType(CMA_CType *ctype){
         ctype_ = ctype;
     }

@@ -1,0 +1,90 @@
+\section{cma::CorpusPreprocess Class Reference}
+\label{classcma_1_1CorpusPreprocess}\index{cma::CorpusPreprocess@{cma::CorpusPreprocess}}
+{\tt \#include $<$corpus\_\-preprocess.h$>$}
+
+Inheritance diagram for cma::CorpusPreprocess::\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2cm]{classcma_1_1CorpusPreprocess}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{CompactItemize}
+\item 
+enum {\bf Dict\_\-Format} \{ {\bf DICT\_\-FORMAT\_\-WORDPOS}, 
+{\bf DICT\_\-FORMAT\_\-POSWORD}, 
+{\bf DICT\_\-FORMAT\_\-NUM}
+ \}
+\end{CompactItemize}
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+virtual void {\bf format} (const char $\ast$rawFile, const char $\ast$resultFile)=0
+\end{CompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{CompactItemize}
+\item 
+static void {\bf extractDictionary} (const char $\ast$corpusFile, const char $\ast$dictFile, {\bf Dict\_\-Format} format)
+\end{CompactItemize}
+\subsection*{Static Protected Attributes}
+\begin{CompactItemize}
+\item 
+static const std::string {\bf FILE\_\-OPEN\_\-ERROR}\label{classcma_1_1CorpusPreprocess_a4950f9ff51e59a2fa2eb96793a672a7}
+
+\begin{CompactList}\small\item\em error message when file open failed \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+\doxyref{CorpusPreprocess}{p.}{classcma_1_1CorpusPreprocess} preprocsses the corpus for training statistical model. 
+
+\subsection{Member Enumeration Documentation}
+\index{cma::CorpusPreprocess@{cma::CorpusPreprocess}!Dict\_\-Format@{Dict\_\-Format}}
+\index{Dict\_\-Format@{Dict\_\-Format}!cma::CorpusPreprocess@{cma::CorpusPreprocess}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}enum {\bf cma::CorpusPreprocess::Dict\_\-Format}}\label{classcma_1_1CorpusPreprocess_7407da9fb5d3375c6109690a1b80c224}
+
+
+Output format of dictionary \begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{DICT\_\-FORMAT\_\-WORDPOS@{DICT\_\-FORMAT\_\-WORDPOS}!cma::CorpusPreprocess@{cma::CorpusPreprocess}}\index{cma::CorpusPreprocess@{cma::CorpusPreprocess}!DICT\_\-FORMAT\_\-WORDPOS@{DICT\_\-FORMAT\_\-WORDPOS}}\item[{\em 
+DICT\_\-FORMAT\_\-WORDPOS\label{classcma_1_1CorpusPreprocess_7407da9fb5d3375c6109690a1b80c224d314223b1e208f0baebedbb6672a08a3}
+}]\char`\"{}word pos1 pos2 ...\char`\"{} \index{DICT\_\-FORMAT\_\-POSWORD@{DICT\_\-FORMAT\_\-POSWORD}!cma::CorpusPreprocess@{cma::CorpusPreprocess}}\index{cma::CorpusPreprocess@{cma::CorpusPreprocess}!DICT\_\-FORMAT\_\-POSWORD@{DICT\_\-FORMAT\_\-POSWORD}}\item[{\em 
+DICT\_\-FORMAT\_\-POSWORD\label{classcma_1_1CorpusPreprocess_7407da9fb5d3375c6109690a1b80c224d5476cc05bdf643a42b9c841b20f7e06}
+}]\char`\"{}pos word1 word2 ...\char`\"{} \index{DICT\_\-FORMAT\_\-NUM@{DICT\_\-FORMAT\_\-NUM}!cma::CorpusPreprocess@{cma::CorpusPreprocess}}\index{cma::CorpusPreprocess@{cma::CorpusPreprocess}!DICT\_\-FORMAT\_\-NUM@{DICT\_\-FORMAT\_\-NUM}}\item[{\em 
+DICT\_\-FORMAT\_\-NUM\label{classcma_1_1CorpusPreprocess_7407da9fb5d3375c6109690a1b80c2245958c6b15f030f770aab259a374a7348}
+}]total number of format \end{description}
+\end{Desc}
+
+
+
+\subsection{Member Function Documentation}
+\index{cma::CorpusPreprocess@{cma::CorpusPreprocess}!format@{format}}
+\index{format@{format}!cma::CorpusPreprocess@{cma::CorpusPreprocess}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual void cma::CorpusPreprocess::format (const char $\ast$ {\em rawFile}, \/  const char $\ast$ {\em resultFile})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1CorpusPreprocess_c7c5392885db9b5cd707d0ddbc31c4de}
+
+
+Read from {\em rawFile\/}, process it, and write into {\em resultFile\/} in a specific format. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em rawFile}]the file to be processed \item[{\em resultFile}]the output file \end{description}
+\end{Desc}
+
+
+Implemented in {\bf cma::HIT\_\-Preprocess} \doxyref{}{p.}{classcma_1_1HIT__Preprocess_da8e9c22c4b7238d948550e941198629}, and {\bf cma::PFR\_\-Preprocess} \doxyref{}{p.}{classcma_1_1PFR__Preprocess_90735d44640b2eb9f4b74c627b58c374}.\index{cma::CorpusPreprocess@{cma::CorpusPreprocess}!extractDictionary@{extractDictionary}}
+\index{extractDictionary@{extractDictionary}!cma::CorpusPreprocess@{cma::CorpusPreprocess}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::CorpusPreprocess::extractDictionary (const char $\ast$ {\em corpusFile}, \/  const char $\ast$ {\em dictFile}, \/  {\bf Dict\_\-Format} {\em format})\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1CorpusPreprocess_9d86fb6122f969d130984afeb64e4990}
+
+
+Read from {\em corpusFile\/}, extract pairs of word and part-of-speech, and write the dictionary into {\em dictFile\/}. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em corpusFile}]the corpus file, which format is assumed as \char`\"{}word/pos\char`\"{} delimited by spaces \item[{\em dictFile}]the dictionary file for output \item[{\em format}]the format of dictionary file \end{description}
+\end{Desc}
+
+
+References DICT\_\-FORMAT\_\-POSWORD, DICT\_\-FORMAT\_\-WORDPOS, and FILE\_\-OPEN\_\-ERROR.
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+source/corpus/{\bf corpus\_\-preprocess.h}\item 
+source/corpus/{\bf corpus\_\-preprocess.cpp}\end{CompactItemize}

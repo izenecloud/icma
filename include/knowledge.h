@@ -12,6 +12,8 @@ namespace cma
 {
 
 /**
+ * \brief Knowledge manages the linguistic information for Chinese morphological analysis.
+ *
  * Knowledge manages the linguistic information for Chinese morphological analysis.
  */
 class Knowledge

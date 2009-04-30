@@ -24,6 +24,11 @@ namespace cma{
 
 extern vector<string> ENCODING_VEC;
 
+/**
+ * \brief Knowledge for the CMAC
+ *
+ * Knowledge for the CMAC
+ */
 class CMA_ME_Knowledge : public Knowledge{
 
 public:
@@ -54,7 +59,7 @@ public:
     /**
      * Get the Synonyms of the specific word
      * \param word the specific word
-     * \param synomym the object to hold the synonym
+     * \param synonym the object to hold the synonym
      */
     virtual void getSynonyms(const string& word, VSynonym& synonym);
 
@@ -111,6 +116,11 @@ public:
      */
     bool isStopWord(const string& word);
 
+    /**
+     * Get the VTrie that Knowledge holds
+     *
+     * \return the VTrie that Knowledge holds
+     */
     VTrie* getTrie();
 
     /**

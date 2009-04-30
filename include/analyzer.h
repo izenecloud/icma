@@ -17,6 +17,8 @@ class Knowledge;
 class Sentence;
 
 /**
+ * \brief Analyzer executes the Chinese morphological analysis.
+ *
  * Analyzer executes the Chinese morphological analysis.
  * Typically, the usage is like below:
  *

@@ -1,0 +1,5 @@
+\form#0:$\sigma^2$
+\form#1:$|\frac{Log-likelihood(\theta_2) - Log-likelihood(\theta_1)}{Log-likelihood(\theta_1)}|<tol$
+\form#2:$p(y|x)=\frac{1}{Z(x)} \exp \left[\sum_{i=1}^k\lambda_if_i(x,y) \right]$
+\form#3:$\theta_i $
+\form#4:$\sigma^2 $

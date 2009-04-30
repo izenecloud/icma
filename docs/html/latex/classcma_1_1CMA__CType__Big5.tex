@@ -1,0 +1,76 @@
+\section{cma::CMA\_\-CType\_\-Big5 Class Reference}
+\label{classcma_1_1CMA__CType__Big5}\index{cma::CMA\_\-CType\_\-Big5@{cma::CMA\_\-CType\_\-Big5}}
+\doxyref{CMA\_\-CType\_\-Big5}{p.}{classcma_1_1CMA__CType__Big5} gives the character type information in Big5 encoding.  
+
+
+{\tt \#include $<$cma\_\-ctype\_\-big5.h$>$}
+
+Inheritance diagram for cma::CMA\_\-CType\_\-Big5::\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2cm]{classcma_1_1CMA__CType__Big5}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+virtual unsigned int {\bf getByteCount} (const char $\ast$p) const 
+\item 
+virtual CharType {\bf getCharType} (const char $\ast$p, CharType preType, const char $\ast$nextP) const 
+\end{CompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{CompactItemize}
+\item 
+static {\bf CMA\_\-CType\_\-Big5} $\ast$ {\bf instance} ()
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+\doxyref{CMA\_\-CType\_\-Big5}{p.}{classcma_1_1CMA__CType__Big5} gives the character type information in Big5 encoding. 
+
+\doxyref{CMA\_\-CType\_\-Big5}{p.}{classcma_1_1CMA__CType__Big5} gives the character type information in Big5 encoding. 
+
+\subsection{Member Function Documentation}
+\index{cma::CMA\_\-CType\_\-Big5@{cma::CMA\_\-CType\_\-Big5}!instance@{instance}}
+\index{instance@{instance}!cma::CMA_CType_Big5@{cma::CMA\_\-CType\_\-Big5}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-CType\_\-Big5} $\ast$ cma::CMA\_\-CType\_\-Big5::instance ()\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1CMA__CType__Big5_ac103ebf44d2a2d35aef04312c064235}
+
+
+Create an instance of {\em \doxyref{CMA\_\-CType\_\-Big5}{p.}{classcma_1_1CMA__CType__Big5}\/}. \begin{Desc}
+\item[Returns:]the pointer to instance \end{Desc}
+
+
+Referenced by cma::CMA\_\-CType::instance().\index{cma::CMA\_\-CType\_\-Big5@{cma::CMA\_\-CType\_\-Big5}!getByteCount@{getByteCount}}
+\index{getByteCount@{getByteCount}!cma::CMA_CType_Big5@{cma::CMA\_\-CType\_\-Big5}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}unsigned int cma::CMA\_\-CType\_\-Big5::getByteCount (const char $\ast$ {\em p}) const\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__CType__Big5_0e471b0985214eb074b69fe273cde7f5}
+
+
+Get the byte count of the first character pointed by {\em p\/}, which character is in a specific encoding. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]pointer to the character string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]the count of bytes. \end{Desc}
+
+
+Implements {\bf cma::CMA\_\-CType} \doxyref{}{p.}{classcma_1_1CMA__CType_00f7e99cea12e9db504629c4a6cdb2d4}.\index{cma::CMA\_\-CType\_\-Big5@{cma::CMA\_\-CType\_\-Big5}!getCharType@{getCharType}}
+\index{getCharType@{getCharType}!cma::CMA_CType_Big5@{cma::CMA\_\-CType\_\-Big5}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}CharType cma::CMA\_\-CType\_\-Big5::getCharType (const char $\ast$ {\em p}, \/  CharType {\em preType}, \/  const char $\ast$ {\em nextP}) const\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__CType__Big5_a125ef224739df73781aa6ee55d28b38}
+
+
+Get the character type. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]pointer to the string to be checked \item[{\em preType}]the chartype of the previous character \item[{\em nextP}]the pointer of the next character, it can be 0 \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]the character type. \end{Desc}
+
+
+Implements {\bf cma::CMA\_\-CType} \doxyref{}{p.}{classcma_1_1CMA__CType_45412869e7ededc53dcc432d43d6a025}.
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+source/include/{\bf cma\_\-ctype\_\-big5.h}\item 
+source/src/{\bf cma\_\-ctype\_\-big5.cpp}\end{CompactItemize}

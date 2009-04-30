@@ -1,4 +1,4 @@
-#define TRAINERCMD_AS_MAIN
+//#define TRAINERCMD_AS_MAIN
 
 #include "TrainerCMD.h"
 

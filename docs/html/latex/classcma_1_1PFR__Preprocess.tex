@@ -1,0 +1,41 @@
+\section{cma::PFR\_\-Preprocess Class Reference}
+\label{classcma_1_1PFR__Preprocess}\index{cma::PFR\_\-Preprocess@{cma::PFR\_\-Preprocess}}
+{\tt \#include $<$pfr\_\-preprocess.h$>$}
+
+Inheritance diagram for cma::PFR\_\-Preprocess::\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2cm]{classcma_1_1PFR__Preprocess}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+virtual void {\bf format} (const char $\ast$rawFile, const char $\ast$resultFile)
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+\doxyref{PFR\_\-Preprocess}{p.}{classcma_1_1PFR__Preprocess} preprocsses the corpus \char`\"{}PFR\_\-199801\_\-人民日报标注语料\char`\"{}. 
+
+\subsection{Member Function Documentation}
+\index{cma::PFR\_\-Preprocess@{cma::PFR\_\-Preprocess}!format@{format}}
+\index{format@{format}!cma::PFR_Preprocess@{cma::PFR\_\-Preprocess}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::PFR\_\-Preprocess::format (const char $\ast$ {\em rawFile}, \/  const char $\ast$ {\em resultFile})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1PFR__Preprocess_90735d44640b2eb9f4b74c627b58c374}
+
+
+Read from {\em rawFile\/}, remove the phrase tags, and write into {\em resultFile\/}. An example of input and output is like below: Input from raw file: [中央/n 人民/n 广播/vn 电台/n]nt Output to result file: 中央/n 人民/n 广播/vn 电台/n \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em rawFile}]the file to be processed \item[{\em resultFile}]the output file \end{description}
+\end{Desc}
+
+
+Implements {\bf cma::CorpusPreprocess} \doxyref{}{p.}{classcma_1_1CorpusPreprocess_c7c5392885db9b5cd707d0ddbc31c4de}.
+
+References cma::CorpusPreprocess::FILE\_\-OPEN\_\-ERROR.
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+source/corpus/{\bf pfr\_\-preprocess.h}\item 
+source/corpus/{\bf pfr\_\-preprocess.cpp}\end{CompactItemize}

@@ -19,7 +19,9 @@ namespace cma
 {
 
 /**
- * Character type. 
+ * \brief Character type.
+ *
+ * Character type.
  */
 enum CharType
 {
@@ -37,6 +39,8 @@ enum CharType
 };
 
 /**
+ * \brief CMA_CType gives the character type information.
+ *
  * CMA_CType gives the character type information.
  */
 class CMA_CType

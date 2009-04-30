@@ -1,0 +1,111 @@
+\section{cma::SegTagger Class Reference}
+\label{classcma_1_1SegTagger}\index{cma::SegTagger@{cma::SegTagger}}
+segment the string segment the string using maxent model  
+
+
+{\tt \#include $<$CMAPOCTagger.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+{\bf SegTagger} (const string \&cateName, {\bf VTrie} $\ast$posTrie, double eScore=0.7)
+\item 
+void \textbf{tag\_\-file} (const char $\ast$inFile, const char $\ast$outFile, string encType=\char`\"{}gb2312\char`\"{})\label{classcma_1_1SegTagger_a25c24f24bbd54dac4e77cef92cf1e11}
+
+\item 
+void {\bf seg\_\-sentence} (vector$<$ string $>$ \&words, CharType $\ast$types, size\_\-t N, size\_\-t retSize, vector$<$ pair$<$ vector$<$ string $>$, double $>$ $>$ \&segment)
+\item 
+void {\bf seg\_\-sentence\_\-best} (vector$<$ string $>$ \&words, CharType $\ast$types, vector$<$ string $>$ \&segment)
+\item 
+void \textbf{setCType} ({\bf CMA\_\-CType} $\ast$ctype)\label{classcma_1_1SegTagger_a2c314b48a8fdb5ddc09df9a244dae91}
+
+\item 
+void {\bf setEScore} (double eScore)
+\item 
+double {\bf getEScore} ()
+\end{CompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{CompactItemize}
+\item 
+static void {\bf initialize} ()
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+segment the string segment the string using maxent model 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{cma::SegTagger@{cma::SegTagger}!SegTagger@{SegTagger}}
+\index{SegTagger@{SegTagger}!cma::SegTagger@{cma::SegTagger}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}cma::SegTagger::SegTagger (const string \& {\em cateName}, \/  {\bf VTrie} $\ast$ {\em posTrie}, \/  double {\em eScore} = {\tt 0.7})}\label{classcma_1_1SegTagger_f43fe12512609241653aeb28d02a3811}
+
+
+Create the \doxyref{SegTagger}{p.}{classcma_1_1SegTagger} \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em cateName}]the poc category name, the model file(cateName + \char`\"{}.model\char`\"{}) should exists. \item[{\em posTrie}]the \doxyref{VTrie}{p.}{classVTrie} to hold the POS Information \item[{\em eScore}]is a double value between 0.5 and 1.0, if the POC tag B has possiblity more the eScore, it will be tagged with E. EScore's default value is 0.7. \end{description}
+\end{Desc}
+
+
+References initialize(), and setEScore().
+
+\subsection{Member Function Documentation}
+\index{cma::SegTagger@{cma::SegTagger}!seg\_\-sentence@{seg\_\-sentence}}
+\index{seg\_\-sentence@{seg\_\-sentence}!cma::SegTagger@{cma::SegTagger}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::SegTagger::seg\_\-sentence (vector$<$ string $>$ \& {\em words}, \/  CharType $\ast$ {\em types}, \/  size\_\-t {\em N}, \/  size\_\-t {\em retSize}, \/  vector$<$ pair$<$ vector$<$ string $>$, double $>$ $>$ \& {\em segment})}\label{classcma_1_1SegTagger_1bc4a830d793b5e0bb142ea5061fff09}
+
+
+tagging given words list and return N best \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em words}]the given words list \item[{\em N}]return N best \item[{\em retSize}]retSize $<$= N, the size of segment \end{description}
+\end{Desc}
+\index{cma::SegTagger@{cma::SegTagger}!seg\_\-sentence\_\-best@{seg\_\-sentence\_\-best}}
+\index{seg\_\-sentence\_\-best@{seg\_\-sentence\_\-best}!cma::SegTagger@{cma::SegTagger}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::SegTagger::seg\_\-sentence\_\-best (vector$<$ string $>$ \& {\em words}, \/  CharType $\ast$ {\em types}, \/  vector$<$ string $>$ \& {\em segment})}\label{classcma_1_1SegTagger_c2b95d3cfb82743cf5cc29f8e196a6e1}
+
+
+only return the best segment result, no scores is used here \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em words}]the word list \item[{\em segment}]to store the segmented words \end{description}
+\end{Desc}
+
+
+References cma::pocinner::StrBasedVTrie::completeSearch, cma::pocinner::StrBasedVTrie::firstSearch(), and cma::pocinner::StrBasedVTrie::search().\index{cma::SegTagger@{cma::SegTagger}!initialize@{initialize}}
+\index{initialize@{initialize}!cma::SegTagger@{cma::SegTagger}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::SegTagger::initialize ()\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1SegTagger_03888848517344bd7e221d61aa7954d4}
+
+
+Would be invoked by the SegTagger's Constructor 
+
+Referenced by SegTagger().\index{cma::SegTagger@{cma::SegTagger}!setEScore@{setEScore}}
+\index{setEScore@{setEScore}!cma::SegTagger@{cma::SegTagger}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::SegTagger::setEScore (double {\em eScore})\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1SegTagger_695b30814b6c10cbdfb92434979a284c}
+
+
+Set the EScore\par
+ EScore is a double value between 0.5 and 1.0, if the POC tag B has possiblity more the eScore, it will be tagged with E. \par
+ EScore's default value is 0.7.
+
+\begin{Desc}
+\item[Returns:]eScore the new eScore \end{Desc}
+
+
+Referenced by SegTagger().\index{cma::SegTagger@{cma::SegTagger}!getEScore@{getEScore}}
+\index{getEScore@{getEScore}!cma::SegTagger@{cma::SegTagger}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}double cma::SegTagger::getEScore ()\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1SegTagger_864f555f4a72d46a6f395b1e4bfe1459}
+
+
+Get the EScore \par
+ EScore is a double value between 0.5 and 1.0, if the POC tag B has possiblity more the eScore, it will be tagged with E. \par
+ EScore's default value is 0.7.
+
+\begin{Desc}
+\item[Returns:]the EScore \end{Desc}
+
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+source/include/CMAPOCTagger.h\item 
+source/src/CMAPOCTagger.cc\end{CompactItemize}

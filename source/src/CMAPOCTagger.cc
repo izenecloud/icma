@@ -217,10 +217,17 @@ inline void combinePOCToWord(vector<string>& words, size_t n, uint8_t* tags,
 }
 
 /**
+ * \brief The utility class to search the string one by one
+ *
  * The utility class to search the string one by one
  */
 class StrBasedVTrie{
 public:
+    /**
+     * Create an instance
+     *
+     * \param pTrie the VTrie
+     */
     StrBasedVTrie( VTrie* pTrie ) : trie(pTrie){
     }
 
@@ -265,6 +272,9 @@ public:
     }
 
 public:
+    /**
+     * The VTrie
+     */
     VTrie* trie;
 
     /**

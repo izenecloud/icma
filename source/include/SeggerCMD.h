@@ -1,11 +1,10 @@
-/* 
- * \mainpage Document of the Chinese Morphological Analyzer(Chen)
+/*! \mainpage Document of the Chinese Morphological Analyzer(Chen)
  *
  * Chinese Morphological Analyzer(Chen) is using Maxent Model and Character-baed
  * Segmentation to perform segmentation and pos tagging.
  *
- * <BR>
- * <B>To compile the file:</B>
+ * \section compilefile Compile the file
+ *
  * <ol>
  *   <li> Using shell, go to the project root directory.
  *   <li> Type &quot;.mkdir build &quot;.
@@ -18,8 +17,8 @@
  * in the $include$ directory under the project root directory, and add the
  * build/cmac/libcmac.a into the library path.
  *
- * <BR><BR>
- * <B>Run the Demo</B><BR>
+ * \section runtrainer Run the Trainer
+ *
  * The dataset have to be trained by the Trainer. The Trainer is a executable 
  * file with name camctrainer under build/cmac.
  *
@@ -54,7 +53,8 @@
  *
  * All the files are required to run the program.<BR>
  *
- * <BR><B>Run the Demo</B><BR>
+ *
+ * \section rundemo Run the Demo
  *
  * After the training, you can run the demo to segment the file, The Demo is a 
  * executable file with name camcsegger under build/cmac.
@@ -77,6 +77,12 @@
  *
  * The result with pos tagging can be found in the outFile.
  */
+ 
+ /*
+ * \brief the CMD tool for the Segger
+ * \file SeggerCMD.h
+ * \author vernkin
+ */
 
 #ifndef _SEGGERCMD_H
 #define	_SEGGERCMD_H
@@ -95,6 +101,9 @@ using namespace cma;
 
 #include "VTimer.h"
 
+/**
+ * To segment the file
+ */
 void beginSeg(string mate, string inFile, string outFile, string enc,
         string posDelimiter);
 

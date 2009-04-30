@@ -1,5 +1,6 @@
 /* 
- * Category String Tokenizier
+ * \brief Category String Tokenizier
+ *
  * \author vernkin
  *
  */
@@ -18,6 +19,8 @@ using namespace std;
 namespace cma{
 
 /**
+ * \brief Record the index and category of the specific index
+ *
  * Record the index and category of the specific index
  */
 struct CatePoint{
@@ -28,9 +31,20 @@ struct CatePoint{
     CharType type;
 };
 
+/*
+ * \brief Category String Tokenizier
+ *
+ * Segment the string based on the char types, line letters, digits and so on
+ *
+ * \author vernkin
+ *
+ */
 class CateStrTokenizer{
 public:
 
+    /**
+     * Create an instance
+     */
     CateStrTokenizer(CTypeTokenizer* pCToken);
 
     /**
@@ -47,10 +61,23 @@ public:
      */
     bool isWordSeq();
 
+    /**
+     * Get the words vector
+     *
+     * \return the words vector
+     */
     vector<string>& getWordSeq();
-  
+
+    /**
+     * Get the type of the current token
+     *
+     * \return the type of the current token
+     */
     CharType getType();
 
+    /**
+     * Get the special string if the current token is not with type CHAR_TYPE_OTHER
+     */
     string& getSpecialStr();
 
 private:

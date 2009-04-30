@@ -1,0 +1,88 @@
+\section{cma::TrainerData Class Reference}
+\label{classcma_1_1TrainerData}\index{cma::TrainerData@{cma::TrainerData}}
+The class to hold data required in the training process.  
+
+
+{\tt \#include $<$CMABasicTrainer.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+\textbf{TrainerData} (context\_\-t pGet\_\-context, {\bf Knowledge::EncodeType} encType, string pPosDelimiter=\char`\"{}/\char`\"{})\label{classcma_1_1TrainerData_52479f4d8dfb9764cc59b226c06658da}
+
+\item 
+bool \textbf{isRareWord} (string \&word)\label{classcma_1_1TrainerData_309417a7099ac688be954c81a9c98742}
+
+\end{CompactItemize}
+\subsection*{Public Attributes}
+\begin{CompactItemize}
+\item 
+map$<$ string, int $>$ \textbf{wordFreq\_\-}\label{classcma_1_1TrainerData_1d9d4c16f23c5885d8dfa8c4989be181}
+
+\item 
+map$<$ string, int $>$ \textbf{featDict\_\-}\label{classcma_1_1TrainerData_565db4b9101b4c17c9a6f8530a19d2f6}
+
+\item 
+map$<$ string, map$<$ string, int $>$ $>$ \textbf{tagDict\_\-}\label{classcma_1_1TrainerData_9ecba8810e62c9a6bfb7446264654a28}
+
+\item 
+int {\bf rareFreq\_\-}
+\item 
+int {\bf cutoff\_\-}
+\item 
+int {\bf evCutoff\_\-}
+\item 
+int \textbf{rareCutoff\_\-}\label{classcma_1_1TrainerData_29cc800fcc110731293ef351c7a7bfdf}
+
+\item 
+MaxentModel {\bf me}
+\item 
+ofstream $\ast$ \textbf{training\_\-data}\label{classcma_1_1TrainerData_beca151a5af14873ecd25be4ff926d24}
+
+\item 
+context\_\-t {\bf get\_\-context}
+\item 
+{\bf CMA\_\-CType} $\ast$ \textbf{ctype\_\-}\label{classcma_1_1TrainerData_a415bd191302d39887f15f1511392ab3}
+
+\item 
+string \textbf{posDelimiter}\label{classcma_1_1TrainerData_24b6c6f09b1ffe2c5228730901147224}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+The class to hold data required in the training process. 
+
+The class to hold data required in the training process 
+
+\subsection{Member Data Documentation}
+\index{cma::TrainerData@{cma::TrainerData}!rareFreq\_\-@{rareFreq\_\-}}
+\index{rareFreq\_\-@{rareFreq\_\-}!cma::TrainerData@{cma::TrainerData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int {\bf cma::TrainerData::rareFreq\_\-}}\label{classcma_1_1TrainerData_c13b7242d3736c2d40772d093fc91a18}
+
+
+use special feature for rare word with frequency $<$ RARE [default=2] \index{cma::TrainerData@{cma::TrainerData}!cutoff\_\-@{cutoff\_\-}}
+\index{cutoff\_\-@{cutoff\_\-}!cma::TrainerData@{cma::TrainerData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int {\bf cma::TrainerData::cutoff\_\-}}\label{classcma_1_1TrainerData_23c70e451c8ba9cf53e2eccec8fc421d}
+
+
+discard feature with frequency $<$ CUTOFF when training [default=5] \index{cma::TrainerData@{cma::TrainerData}!evCutoff\_\-@{evCutoff\_\-}}
+\index{evCutoff\_\-@{evCutoff\_\-}!cma::TrainerData@{cma::TrainerData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int {\bf cma::TrainerData::evCutoff\_\-}}\label{classcma_1_1TrainerData_22eca27d2b88fc89251ed74fa9b1a255}
+
+
+discard event with frequency $<$ evCutoff when training [default=1] \index{cma::TrainerData@{cma::TrainerData}!me@{me}}
+\index{me@{me}!cma::TrainerData@{cma::TrainerData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}MaxentModel {\bf cma::TrainerData::me}}\label{classcma_1_1TrainerData_eebdd898115e74ed985c5b776bbb3074}
+
+
+The maxent model \index{cma::TrainerData@{cma::TrainerData}!get\_\-context@{get\_\-context}}
+\index{get\_\-context@{get\_\-context}!cma::TrainerData@{cma::TrainerData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}context\_\-t {\bf cma::TrainerData::get\_\-context}}\label{classcma_1_1TrainerData_6a4496484d04a90c61f201011536d8c2}
+
+
+words, tags, i, rare\_\-word, ret 
+
+The documentation for this class was generated from the following file:\begin{CompactItemize}
+\item 
+source/include/CMABasicTrainer.h\end{CompactItemize}

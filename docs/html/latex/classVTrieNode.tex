@@ -1,0 +1,148 @@
+\section{VTrieNode Class Reference}
+\label{classVTrieNode}\index{VTrieNode@{VTrieNode}}
+The node of the \doxyref{VTrie}{p.}{classVTrie}.  
+
+
+{\tt \#include $<$VTrie.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+{\bf VTrieNode} ()
+\item 
+void {\bf setData} (int pData)
+\item 
+int {\bf getData} ()
+\item 
+bool {\bf hasMoreLong} ()
+\item 
+void {\bf setMoreLong} (bool pMoreLong)
+\item 
+void {\bf init} ()
+\end{CompactItemize}
+\subsection*{Public Attributes}
+\begin{CompactItemize}
+\item 
+int {\bf data}
+\item 
+uint16\_\-t {\bf state}
+\item 
+vtptr\_\-t {\bf offset}
+\item 
+bool {\bf moreLong}
+\end{CompactItemize}
+\subsection*{Friends}
+\begin{CompactItemize}
+\item 
+ostream \& \textbf{operator$<$$<$} (ostream \&sout, {\bf VTrieNode} \&node)\label{classVTrieNode_4885ec01b6a4611e4628e741ad3d71d3}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+The node of the \doxyref{VTrie}{p.}{classVTrie}. 
+
+\doxyref{VTrieNode}{p.}{classVTrieNode} hold a int value and a bool attribute which indicates whether has the synonyms with the same prefix.
+
+\begin{Desc}
+\item[Author:]vernkin \end{Desc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{VTrieNode@{VTrieNode}!VTrieNode@{VTrieNode}}
+\index{VTrieNode@{VTrieNode}!VTrieNode@{VTrieNode}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}VTrieNode::VTrieNode ()\hspace{0.3cm}{\tt  [inline]}}\label{classVTrieNode_5f1dc9b695d5a8cfe7ef496ed2eedecf}
+
+
+Default Constructor 
+
+References init().
+
+\subsection{Member Function Documentation}
+\index{VTrieNode@{VTrieNode}!setData@{setData}}
+\index{setData@{setData}!VTrieNode@{VTrieNode}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void VTrieNode::setData (int {\em pData})\hspace{0.3cm}{\tt  [inline]}}\label{classVTrieNode_b057816aa13e2d9a30a9496ac70b5137}
+
+
+Assign value to the node of \doxyref{VTrie}{p.}{classVTrie}, And value is over 0. Almost, the value(data) may be a index of other data structure. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em pData}]new data \end{description}
+\end{Desc}
+
+
+References data.\index{VTrieNode@{VTrieNode}!getData@{getData}}
+\index{getData@{getData}!VTrieNode@{VTrieNode}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int VTrieNode::getData ()\hspace{0.3cm}{\tt  [inline]}}\label{classVTrieNode_86d3d17cecb90eb9e77d995b6e43736f}
+
+
+Get the value of the node \begin{Desc}
+\item[Returns:]value of the node \end{Desc}
+
+
+References data.\index{VTrieNode@{VTrieNode}!hasMoreLong@{hasMoreLong}}
+\index{hasMoreLong@{hasMoreLong}!VTrieNode@{VTrieNode}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool VTrieNode::hasMoreLong ()\hspace{0.3cm}{\tt  [inline]}}\label{classVTrieNode_141493870e8efb3255d8231c59f317e9}
+
+
+Whether more long string whose prefix is the query exists in trie structure. \begin{Desc}
+\item[Returns:]true if more string with same prefix \end{Desc}
+
+
+References moreLong.\index{VTrieNode@{VTrieNode}!setMoreLong@{setMoreLong}}
+\index{setMoreLong@{setMoreLong}!VTrieNode@{VTrieNode}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void VTrieNode::setMoreLong (bool {\em pMoreLong})\hspace{0.3cm}{\tt  [inline]}}\label{classVTrieNode_d04c217e0d16d6721aa80d9a38b6f604}
+
+
+see \doxyref{hasMoreLong()}{p.}{classVTrieNode_141493870e8efb3255d8231c59f317e9} \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em pMoreLong}]new more long \end{description}
+\end{Desc}
+
+
+References moreLong.\index{VTrieNode@{VTrieNode}!init@{init}}
+\index{init@{init}!VTrieNode@{VTrieNode}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void VTrieNode::init ()\hspace{0.3cm}{\tt  [inline]}}\label{classVTrieNode_4779f94525d573465c6c697258430f28}
+
+
+Reset all the value to initial state. 
+
+References data, moreLong, offset, and state.
+
+Referenced by VSynonymContainer::loadSynonyms(), cma::pocinner::StrBasedVTrie::reset(), and VTrieNode().
+
+\subsection{Member Data Documentation}
+\index{VTrieNode@{VTrieNode}!data@{data}}
+\index{data@{data}!VTrieNode@{VTrieNode}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int {\bf VTrieNode::data}}\label{classVTrieNode_47042961d632bb3ae44a80ce85600dee}
+
+
+the integer value 
+
+Referenced by cma::POSTagger::appendWordPOS(), VTrie::find(), VSynonymContainer::get\_\-synonyms(), getData(), init(), VTrie::insert(), VSynonymContainer::loadSynonyms(), VTrie::search(), cma::pocinner::StrBasedVTrie::search(), VSynonymContainer::searchNgetSynonym(), and setData().\index{VTrieNode@{VTrieNode}!state@{state}}
+\index{state@{state}!VTrieNode@{VTrieNode}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}uint16\_\-t {\bf VTrieNode::state}}\label{classVTrieNode_22cb4efc43d22ecf701d35c946ff9f11}
+
+
+the state of the node 
+
+Referenced by VTrie::find(), and init().\index{VTrieNode@{VTrieNode}!offset@{offset}}
+\index{offset@{offset}!VTrieNode@{VTrieNode}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}vtptr\_\-t {\bf VTrieNode::offset}}\label{classVTrieNode_631b40ac49aa9edfc66646adf56d062f}
+
+
+the offset in the data array of the \doxyref{VTrie}{p.}{classVTrie} 
+
+Referenced by VTrie::find(), and init().\index{VTrieNode@{VTrieNode}!moreLong@{moreLong}}
+\index{moreLong@{moreLong}!VTrieNode@{VTrieNode}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool {\bf VTrieNode::moreLong}}\label{classVTrieNode_fc34484ac37303aef51d4d213521014e}
+
+
+whethe has synonyms with the same prefix 
+
+Referenced by VTrie::find(), hasMoreLong(), init(), VTrie::insert(), VTrie::search(), cma::pocinner::StrBasedVTrie::search(), and setMoreLong().
+
+The documentation for this class was generated from the following file:\begin{CompactItemize}
+\item 
+source/vsynonym/VTrie.h\end{CompactItemize}

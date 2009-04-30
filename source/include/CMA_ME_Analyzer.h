@@ -20,6 +20,11 @@ using namespace std;
 namespace cma
 {
 
+/**
+ * \brief Analyzer for the CMAC
+ *
+ * Analyzer for the CMAC
+ */
 class CMA_ME_Analyzer : public Analyzer
 {
 public:

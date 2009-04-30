@@ -14,6 +14,8 @@ namespace cma
 {
 
 /**
+ * \brief CMA_CType_Big5 gives the character type information in Big5 encoding.
+ *
  * CMA_CType_Big5 gives the character type information in Big5 encoding.
  */
 class CMA_CType_Big5 : public CMA_CType

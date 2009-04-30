@@ -16,6 +16,8 @@ namespace cma
 {
 
 /**
+ * \brief a pair of lexicon string and its part-of-speech tag.
+ *
  * Morpheme is a pair of lexicon string and its part-of-speech tag.
  */
 struct Morpheme
@@ -38,6 +40,8 @@ struct Morpheme
 typedef std::vector<Morpheme> MorphemeList;
 
 /**
+ * \brief Sentence saves the results of Chinese morphological analysis.
+ *
  * Sentence saves the results of Chinese morphological analysis.
  * Typically, the usage is like below:
  *

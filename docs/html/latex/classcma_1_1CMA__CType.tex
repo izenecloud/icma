@@ -1,0 +1,122 @@
+\section{cma::CMA\_\-CType Class Reference}
+\label{classcma_1_1CMA__CType}\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}}
+\doxyref{CMA\_\-CType}{p.}{classcma_1_1CMA__CType} gives the character type information.  
+
+
+{\tt \#include $<$cma\_\-ctype.h$>$}
+
+Inheritance diagram for cma::CMA\_\-CType::\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2cm]{classcma_1_1CMA__CType}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+virtual unsigned int {\bf getByteCount} (const char $\ast$p) const =0
+\item 
+virtual CharType {\bf getCharType} (const char $\ast$p, CharType preType, const char $\ast$nextP) const =0
+\item 
+bool {\bf isPunct} (const char $\ast$p) const 
+\item 
+size\_\-t {\bf length} (const char $\ast$p) const 
+\end{CompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{CompactItemize}
+\item 
+static {\bf CMA\_\-CType} $\ast$ {\bf instance} ({\bf Knowledge::EncodeType} type)
+\item 
+static {\bf Knowledge::EncodeType} \textbf{getEncType} (string encType)\label{classcma_1_1CMA__CType_2a912dfae4c56e70a20f920ac564890b}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+\doxyref{CMA\_\-CType}{p.}{classcma_1_1CMA__CType} gives the character type information. 
+
+\doxyref{CMA\_\-CType}{p.}{classcma_1_1CMA__CType} gives the character type information. 
+
+\subsection{Member Function Documentation}
+\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!instance@{instance}}
+\index{instance@{instance}!cma::CMA_CType@{cma::CMA\_\-CType}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-CType} $\ast$ cma::CMA\_\-CType::instance ({\bf Knowledge::EncodeType} {\em type})\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1CMA__CType_a0a1b4e5959587032b22036c64790314}
+
+
+Create an instance of {\em \doxyref{CMA\_\-CType}{p.}{classcma_1_1CMA__CType}\/} based on the character encode type. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em type}]the character encode type \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]the pointer to instance \end{Desc}
+
+
+References cma::Knowledge::ENCODE\_\-TYPE\_\-BIG5, cma::Knowledge::ENCODE\_\-TYPE\_\-GB2312, cma::CMA\_\-CType\_\-Big5::instance(), and cma::CMA\_\-CType\_\-GB2312::instance().
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getByteCount@{getByteCount}}
+\index{getByteCount@{getByteCount}!cma::CMA_CType@{cma::CMA\_\-CType}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int cma::CMA\_\-CType::getByteCount (const char $\ast$ {\em p}) const\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1CMA__CType_00f7e99cea12e9db504629c4a6cdb2d4}
+
+
+Get the byte count of the first character pointed by {\em p\/}, which character is in a specific encoding. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]pointer to the character string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]true for punctuation, false for non punctuation. \end{Desc}
+
+
+Implemented in {\bf cma::CMA\_\-CType\_\-Big5} \doxyref{}{p.}{classcma_1_1CMA__CType__Big5_0e471b0985214eb074b69fe273cde7f5}, and {\bf cma::CMA\_\-CType\_\-GB2312} \doxyref{}{p.}{classcma_1_1CMA__CType__GB2312_057ccee8e82b0a22a30b79fb2f059b8f}.
+
+Referenced by length(), and cma::CTypeTokenizer::next().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getCharType@{getCharType}}
+\index{getCharType@{getCharType}!cma::CMA_CType@{cma::CMA\_\-CType}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual CharType cma::CMA\_\-CType::getCharType (const char $\ast$ {\em p}, \/  CharType {\em preType}, \/  const char $\ast$ {\em nextP}) const\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1CMA__CType_45412869e7ededc53dcc432d43d6a025}
+
+
+Get the character type. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]pointer to the string to be checked \item[{\em preType}]the chartype of the previous character \item[{\em nextP}]the pointer of the next character, it can be 0 \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]the character type. \end{Desc}
+
+
+Implemented in {\bf cma::CMA\_\-CType\_\-Big5} \doxyref{}{p.}{classcma_1_1CMA__CType__Big5_a125ef224739df73781aa6ee55d28b38}, and {\bf cma::CMA\_\-CType\_\-GB2312} \doxyref{}{p.}{classcma_1_1CMA__CType__GB2312_e0edf1c74d7a66ba6425b9010401456e}.
+
+Referenced by cma::CMA\_\-WType::getWordType(), and isPunct().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!isPunct@{isPunct}}
+\index{isPunct@{isPunct}!cma::CMA_CType@{cma::CMA\_\-CType}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-CType::isPunct (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_b9fbb6aa32fd36bb3838b48ffb92bf24}
+
+
+Whether the p is a punctuation \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]pointer to the string to be checked \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]true if the p is the punctuation \end{Desc}
+
+
+References getCharType().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!length@{length}}
+\index{length@{length}!cma::CMA_CType@{cma::CMA\_\-CType}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}size\_\-t cma::CMA\_\-CType::length (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_4583d638f7336cf0a548905e8e88f826}
+
+
+Get the number of the characters in the p \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]pointer to the string to be checked \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]the number of the characters in the p \end{Desc}
+
+
+References getByteCount().
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+source/include/{\bf cma\_\-ctype.h}\item 
+source/src/{\bf cma\_\-ctype.cpp}\end{CompactItemize}

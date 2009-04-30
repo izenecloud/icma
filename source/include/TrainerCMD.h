@@ -1,6 +1,8 @@
 /* 
- * File:   TrainerCMD.h
- * Author: vernkin
+ * \brief CMD tool for the dataset training
+ * CMD tool for the dataset training
+ * \file   TrainerCMD.h
+ * \author vernkin
  *
  * Created on April 29, 2009, 3:00 PM
  */

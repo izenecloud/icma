@@ -16,6 +16,8 @@ namespace cma
 {
 
 /**
+ * \brief Case-insensitive string compare.
+ *
  * Case-insensitive string compare.
  */
 class Nocase
@@ -31,6 +33,8 @@ public:
 };
 
 /**
+ * \brief POSTable stores the global table of part-of-speech tags
+ *
  * POSTable stores the global table of part-of-speech tags, each tag includes a string value and its index code.
  * Note that the string value of part-of-speech tag is case-insensitive.
  * For example, 'Ng' equals to 'ng'.

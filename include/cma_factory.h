@@ -15,6 +15,8 @@ class Analyzer;
 class Knowledge;
 
 /**
+ * \brief CMA_Factory creates instances for Chinese morphological analysis.
+ *
  * CMA_Factory creates instances for Chinese morphological analysis.
  */
 class CMA_Factory

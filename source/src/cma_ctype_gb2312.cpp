@@ -17,25 +17,25 @@ namespace cma
 
 namespace gb2312type{
 
-    const unsigned char DOT = (unsigned char)('.');
+    const unsigned char DOT = (unsigned char)('.'); ///< dot
 
-    const unsigned char COMMA = (unsigned char)(',');
+    const unsigned char COMMA = (unsigned char)(','); ///< comma
 
-    const unsigned char HYPHEN = (unsigned char)('-');
+    const unsigned char HYPHEN = (unsigned char)('-'); ///< hyphtn
 
-    const unsigned short ZHI_CH = 0xd6ae; //之  
+    const unsigned short ZHI_CH = 0xd6ae; ///< 之
 
-    const unsigned short DIAN_CH = 0xb5e3; //点
+    const unsigned short DIAN_CH = 0xb5e3; ///< 点
 
-    const unsigned short FEN_CH = 0xb7d6; //分
+    const unsigned short FEN_CH = 0xb7d6; ///< 分
 
-    const unsigned short DUO_CH = 0xb6e0; //多
+    const unsigned short DUO_CH = 0xb6e0; ///< 多
 
-    const unsigned short YU_CH = 0xd3e0; //余
+    const unsigned short YU_CH = 0xd3e0; ///< 余
 
-    const unsigned short CHENG_CH = 0xb3c9; //成
+    const unsigned short CHENG_CH = 0xb3c9; ///< 成
 
-    const unsigned short BAN_CH = 0xb0eb; //半
+    const unsigned short BAN_CH = 0xb0eb; ///< 半
 
     /**
      * Whether it is punctuation in any cases
@@ -78,6 +78,9 @@ namespace gb2312type{
         return false;
     }
 
+    /**
+     * Whether it is digit in any cases
+     */
     inline bool isAbsDigit(const unsigned char* uc){
         if((uc[0] >= 0x30 && uc[0] <= 0x39) //0123456789
             || (uc[0] == 0x25) //%
@@ -104,6 +107,9 @@ namespace gb2312type{
         return false;
     }
 
+    /**
+     * Whether it is space in any cases
+     */
     inline bool isAbsSpace(const unsigned char* uc){
         if(uc[0] < 0x80)
             return isspace(uc[0]); // check by std library
@@ -115,6 +121,9 @@ namespace gb2312type{
         return false;
     }
 
+    /**
+     * Whether it is letter in any cases
+     */
     inline bool isAbsLetter(const unsigned char* uc){
         if(uc[0] < 0x80)
         {
@@ -132,6 +141,9 @@ namespace gb2312type{
         return false;
     }
 
+    /**
+     * Whether it is date in any cases
+     */
     inline bool isAbsDate(const unsigned char* uc){
         if(uc[0] < 0x80)
             return false;

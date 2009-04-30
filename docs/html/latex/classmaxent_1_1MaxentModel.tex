@@ -1,0 +1,334 @@
+\section{maxent::MaxentModel Class Reference}
+\label{classmaxent_1_1MaxentModel}\index{maxent::MaxentModel@{maxent::MaxentModel}}
+{\tt \#include $<$maxentmodel.hpp$>$}
+
+\subsection*{Public Types}
+\begin{CompactItemize}
+\item 
+typedef me::feature\_\-type \textbf{feature\_\-type}\label{classmaxent_1_1MaxentModel_5b6785a01b3fee74727008d5a886f8f6}
+
+\item 
+typedef me::feature\_\-type \textbf{outcome\_\-type}\label{classmaxent_1_1MaxentModel_2ba8c0cf9345ae28f0f91888aa74a5d5}
+
+\item 
+typedef std::vector$<$ pair$<$ feature\_\-type, float $>$ $>$ \textbf{context\_\-type}\label{classmaxent_1_1MaxentModel_1b55d71ee52510901392f7eec02b811e}
+
+\end{CompactItemize}
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+{\bf MaxentModel} ()
+\item 
+void {\bf load} (const string \&model)
+\item 
+void {\bf save} (const string \&model, bool binary=false) const 
+\item 
+double {\bf eval} (const context\_\-type \&context, const outcome\_\-type \&outcome) const 
+\item 
+void {\bf eval\_\-all} (const context\_\-type \&context, std::vector$<$ pair$<$ outcome\_\-type, double $>$ $>$ \&outcomes, bool sort\_\-result=true) const 
+\item 
+outcome\_\-type {\bf predict} (const context\_\-type \&context) const 
+\item 
+void {\bf begin\_\-add\_\-event} ()
+\item 
+void {\bf add\_\-event} (const context\_\-type \&context, const outcome\_\-type \&outcome, size\_\-t count=1)
+\item 
+void \textbf{add\_\-heldout\_\-event} (const context\_\-type \&context, const outcome\_\-type \&outcome, size\_\-t count=1)\label{classmaxent_1_1MaxentModel_d67dadb84f2b587d598de74e76914db8}
+
+\item 
+void {\bf add\_\-event} (const vector$<$ string $>$ \&context, const outcome\_\-type \&outcome, size\_\-t count=1)
+\item 
+void \textbf{add\_\-heldout\_\-event} (const vector$<$ string $>$ \&context, const outcome\_\-type \&outcome, size\_\-t count=1)\label{classmaxent_1_1MaxentModel_56d8de52ed22f3355b3a542a68b1976b}
+
+\item 
+double {\bf eval} (const vector$<$ string $>$ \&context, const outcome\_\-type \&outcome) const 
+\item 
+void {\bf eval\_\-all} (const vector$<$ string $>$ \&context, std::vector$<$ pair$<$ outcome\_\-type, double $>$ $>$ \&outcomes, bool sort\_\-result=true) const 
+\item 
+outcome\_\-type {\bf predict} (const vector$<$ string $>$ \&context) const 
+\item 
+{\footnotesize template$<$typename Iterator$>$ }\\void {\bf add\_\-events} (Iterator begin, Iterator end)
+\item 
+void {\bf end\_\-add\_\-event} (size\_\-t cutoff=1)
+\item 
+void {\bf train} (size\_\-t iter=15, const std::string \&method=\char`\"{}lbfgs\char`\"{}, double sigma2=0.0, double tol=1E-05)
+\item 
+void \textbf{dump\_\-events} (const string \&model, bool binary=false) const \label{classmaxent_1_1MaxentModel_0144e3fb9a46640a4a987e9b61b4db11}
+
+\item 
+const char $\ast$ \textbf{\_\-\_\-str\_\-\_\-} () const \label{classmaxent_1_1MaxentModel_5db8afd2f340a19cdb9305d29c8f0bb6}
+
+\end{CompactItemize}
+\subsection*{Friends}
+\begin{CompactItemize}
+\item 
+struct \textbf{maxent\_\-pickle\_\-suite}\label{classmaxent_1_1MaxentModel_301cd211a6b037e4ca0150871ae601e5}
+
+\end{CompactItemize}
+\subsection*{Classes}
+\begin{CompactItemize}
+\item 
+struct \textbf{cmp\_\-outcome}
+\item 
+struct \textbf{cutoffed\_\-event}
+\item 
+struct \textbf{featid\_\-hasher}
+\item 
+struct \textbf{param\_\-hasher}
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+This class implements a conditional Maximun Entropy Model.
+
+A conditional Maximun Entropy Model (also called log-linear model)has the form: $p(y|x)=\frac{1}{Z(x)} \exp \left[\sum_{i=1}^k\lambda_if_i(x,y) \right]$ Where x is a context and y is the outcome tag and p(y$|$x) is the conditional probability.
+
+Normally the context x is composed of a set of contextual predicates. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{maxent::MaxentModel@{maxent::MaxentModel}!MaxentModel@{MaxentModel}}
+\index{MaxentModel@{MaxentModel}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}maxent::MaxentModel::MaxentModel ()}\label{classmaxent_1_1MaxentModel_296812cede62282a6fde6ee094a44ee7}
+
+
+Default constructor for \doxyref{MaxentModel}{p.}{classmaxent_1_1MaxentModel}.
+
+Construct an empty \doxyref{MaxentModel}{p.}{classmaxent_1_1MaxentModel} instance 
+
+\subsection{Member Function Documentation}
+\index{maxent::MaxentModel@{maxent::MaxentModel}!load@{load}}
+\index{load@{load}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void maxent::MaxentModel::load (const string \& {\em model})}\label{classmaxent_1_1MaxentModel_582a2464c1e72f3c3b6eb9c83a2ca891}
+
+
+Load a \doxyref{MaxentModel}{p.}{classmaxent_1_1MaxentModel} from a file.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em model}]The name of the model to load \end{description}
+\end{Desc}
+
+
+Referenced by cma::POSTagger::POSTagger().\index{maxent::MaxentModel@{maxent::MaxentModel}!save@{save}}
+\index{save@{save}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void maxent::MaxentModel::save (const string \& {\em model}, \/  bool {\em binary} = {\tt false}) const}\label{classmaxent_1_1MaxentModel_2aa87cdaab39cd5cdf6514b630e7e098}
+
+
+Save a \doxyref{MaxentModel}{p.}{classmaxent_1_1MaxentModel} to a file.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em model}]The name of the model to save. \item[{\em binary}]If true, the file is saved in binary format, which is usually smaller (if compiled with libz) and much faster to load. \end{description}
+\end{Desc}
+\index{maxent::MaxentModel@{maxent::MaxentModel}!eval@{eval}}
+\index{eval@{eval}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}double maxent::MaxentModel::eval (const context\_\-type \& {\em context}, \/  const outcome\_\-type \& {\em outcome}) const}\label{classmaxent_1_1MaxentModel_4169b85fbda2c210e23007f6e304dac4}
+
+
+Evaluates a context, return the conditional probability p(y$|$x).
+
+This method calculates the conditional probability p(y$|$x) for given x and y.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em context}]A list of pair$<$string, double$>$ indicates names of the contextual predicates and their values which are to be evaluated together. \item[{\em outcome}]The outcome label for which the conditional probability is calculated. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The conditional probability of p(outcome$|$context). \end{Desc}
+\begin{Desc}
+\item[See also:]\doxyref{eval\_\-all()}{p.}{classmaxent_1_1MaxentModel_e909735d4e37ca6254d28680277a1bbc} \end{Desc}
+
+
+Referenced by eval().\index{maxent::MaxentModel@{maxent::MaxentModel}!eval\_\-all@{eval\_\-all}}
+\index{eval\_\-all@{eval\_\-all}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void maxent::MaxentModel::eval\_\-all (const context\_\-type \& {\em context}, \/  std::vector$<$ pair$<$ outcome\_\-type, double $>$ $>$ \& {\em outcomes}, \/  bool {\em sort\_\-result} = {\tt true}) const}\label{classmaxent_1_1MaxentModel_e909735d4e37ca6254d28680277a1bbc}
+
+
+Evaluates a context, return the conditional distribution of the context.
+
+This method calculates the conditional probability p(y$|$x) for each possible outcome tag y.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em context}]A list of pair$<$string, double$>$ indicates the contextual predicates and their values (must be $>$= 0) which are to be evaluated together. \item[{\em outcomes}]An array of the outcomes paired with it's probability predicted by the model (the conditional distribution). \item[{\em sort\_\-result}]Whether or not the returned outcome array is sorted (larger probability first). Default is true.\end{description}
+\end{Desc}
+TODO: need optimized for large number of outcomes
+
+\begin{Desc}
+\item[See also:]\doxyref{eval()}{p.}{classmaxent_1_1MaxentModel_4169b85fbda2c210e23007f6e304dac4} \end{Desc}
+
+
+Referenced by eval\_\-all(), and predict().\index{maxent::MaxentModel@{maxent::MaxentModel}!predict@{predict}}
+\index{predict@{predict}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}MaxentModel::outcome\_\-type maxent::MaxentModel::predict (const context\_\-type \& {\em context}) const}\label{classmaxent_1_1MaxentModel_afd2cd8c670a518fd6751749f8a66040}
+
+
+Evaluates a context, return the most possible outcome y for given context x
+
+This function is a thin wrapper for \begin{Desc}
+\item[See also:]\doxyref{eval\_\-all()}{p.}{classmaxent_1_1MaxentModel_e909735d4e37ca6254d28680277a1bbc}. \end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em context}]A list of String names of the contextual predicates which are to be evaluated together. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The most possible outcome label for given context. \end{Desc}
+\begin{Desc}
+\item[See also:]\doxyref{eval\_\-all()}{p.}{classmaxent_1_1MaxentModel_e909735d4e37ca6254d28680277a1bbc} \end{Desc}
+
+
+References eval\_\-all().
+
+Referenced by predict().\index{maxent::MaxentModel@{maxent::MaxentModel}!begin\_\-add\_\-event@{begin\_\-add\_\-event}}
+\index{begin\_\-add\_\-event@{begin\_\-add\_\-event}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void maxent::MaxentModel::begin\_\-add\_\-event ()}\label{classmaxent_1_1MaxentModel_1a5aa55ae1020f7ac15ff7c4e7f94d9d}
+
+
+Signal the begining of adding event (the start of training).
+
+This method must be called before adding any event to the model. It informs the model the beginning of training. After the last event is added \begin{Desc}
+\item[See also:]\doxyref{end\_\-add\_\-event()}{p.}{classmaxent_1_1MaxentModel_a92aecda7a8d56e471d273d222f1f92a} must be called to indicate the ending of adding events. \end{Desc}
+\index{maxent::MaxentModel@{maxent::MaxentModel}!add\_\-event@{add\_\-event}}
+\index{add\_\-event@{add\_\-event}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void maxent::MaxentModel::add\_\-event (const context\_\-type \& {\em context}, \/  const outcome\_\-type \& {\em outcome}, \/  size\_\-t {\em count} = {\tt 1})}\label{classmaxent_1_1MaxentModel_8e4dafefc0ec8e8daaeb70e603c54dfe}
+
+
+Add an event (context, outcome, count) to current model for training later.
+
+\doxyref{add\_\-event()}{p.}{classmaxent_1_1MaxentModel_8e4dafefc0ec8e8daaeb70e603c54dfe} should be called after calling \begin{Desc}
+\item[See also:]\doxyref{begin\_\-add\_\-event()}{p.}{classmaxent_1_1MaxentModel_1a5aa55ae1020f7ac15ff7c4e7f94d9d}. \end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em context}]A std::vector of pair$<$std::string, float$>$ to indicate the context predicates and their values (must be $>$= 0) occured in the event. \item[{\em outcome}]A std::string indicates the outcome label. \item[{\em count}]How many times this event occurs in training set. default = 1 \end{description}
+\end{Desc}
+
+
+Referenced by add\_\-event(), and add\_\-events().\index{maxent::MaxentModel@{maxent::MaxentModel}!add\_\-event@{add\_\-event}}
+\index{add\_\-event@{add\_\-event}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void maxent::MaxentModel::add\_\-event (const vector$<$ string $>$ \& {\em context}, \/  const outcome\_\-type \& {\em outcome}, \/  size\_\-t {\em count} = {\tt 1})}\label{classmaxent_1_1MaxentModel_7f80709166a73df5f32e242afc18d96c}
+
+
+Add an event (context, outcome, count) to model for training later.
+
+This function is a thin wrapper for the above \begin{Desc}
+\item[See also:]\doxyref{eval()}{p.}{classmaxent_1_1MaxentModel_4169b85fbda2c210e23007f6e304dac4}, with all feature values omitted (default to 1.0, which is binary feature case).\end{Desc}
+\doxyref{add\_\-event()}{p.}{classmaxent_1_1MaxentModel_8e4dafefc0ec8e8daaeb70e603c54dfe} should be called after calling \begin{Desc}
+\item[See also:]\doxyref{begin\_\-add\_\-event()}{p.}{classmaxent_1_1MaxentModel_1a5aa55ae1020f7ac15ff7c4e7f94d9d}. \end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em context}]A list string names of the context predicates occure in the event. The feature value defaults to 1.0 (binary feature) \item[{\em outcome}]A std::string indicates the outcome label. \item[{\em count}]How many times this event occurs in training set. default = 1 \end{description}
+\end{Desc}
+
+
+References add\_\-event().\index{maxent::MaxentModel@{maxent::MaxentModel}!eval@{eval}}
+\index{eval@{eval}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}double maxent::MaxentModel::eval (const vector$<$ string $>$ \& {\em context}, \/  const outcome\_\-type \& {\em outcome}) const}\label{classmaxent_1_1MaxentModel_e3afac23eb01c9e40cc9c3eaf4e9578c}
+
+
+Evaluates a context, return the conditional probability p(y$|$x).
+
+This method calculates the conditional probability p(y$|$x) for given x and y.
+
+This is a wrapper function for the above \begin{Desc}
+\item[See also:]\doxyref{eval()}{p.}{classmaxent_1_1MaxentModel_4169b85fbda2c210e23007f6e304dac4}, omitting feature values in paramaters (default to 1.0, treated as binary case)\end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em context}]A list of string names of the contextual predicates to be evaluated together. \item[{\em outcome}]The outcome label for which the conditional probability is calculated. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The conditional probability of p(outcome$|$context). \end{Desc}
+\begin{Desc}
+\item[See also:]\doxyref{eval\_\-all()}{p.}{classmaxent_1_1MaxentModel_e909735d4e37ca6254d28680277a1bbc} \end{Desc}
+
+
+References eval().\index{maxent::MaxentModel@{maxent::MaxentModel}!eval\_\-all@{eval\_\-all}}
+\index{eval\_\-all@{eval\_\-all}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void maxent::MaxentModel::eval\_\-all (const vector$<$ string $>$ \& {\em context}, \/  std::vector$<$ pair$<$ outcome\_\-type, double $>$ $>$ \& {\em outcomes}, \/  bool {\em sort\_\-result} = {\tt true}) const}\label{classmaxent_1_1MaxentModel_06daf6b54be28b74da8cf7baf50f9a93}
+
+
+Evaluates a context, return the conditional distribution of given context.
+
+This method calculates the conditional probability p(y$|$x) for each possible outcome tag y.
+
+This function is a thin warpper for the above \begin{Desc}
+\item[See also:]\doxyref{eval\_\-all()}{p.}{classmaxent_1_1MaxentModel_e909735d4e37ca6254d28680277a1bbc} feature values are omitted (defualt to 1.0) for binary feature value case.\end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em context}]A list of string names of the contextual predicates which are to be evaluated together. \item[{\em outcomes}]an array of the outcomes paired with it's probability predicted by the model (the conditional distribution). \item[{\em sort\_\-result}]Whether or not the returned outcome array is sorted (larger probability first). Default is true.\end{description}
+\end{Desc}
+TODO: need optimized for large number of outcomes
+
+\begin{Desc}
+\item[See also:]\doxyref{eval()}{p.}{classmaxent_1_1MaxentModel_4169b85fbda2c210e23007f6e304dac4} \end{Desc}
+
+
+References eval\_\-all().\index{maxent::MaxentModel@{maxent::MaxentModel}!predict@{predict}}
+\index{predict@{predict}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}MaxentModel::outcome\_\-type maxent::MaxentModel::predict (const vector$<$ string $>$ \& {\em context}) const}\label{classmaxent_1_1MaxentModel_fe2c011a97263cbf923fdd499da3383f}
+
+
+Evaluates a context, return the most possible outcome y for given context x
+
+This function is a thin wrapper for \begin{Desc}
+\item[See also:]\doxyref{predict()}{p.}{classmaxent_1_1MaxentModel_afd2cd8c670a518fd6751749f8a66040} for binary value case (omitting feature values which default to 1.0)\end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em context}]A list of String names of the contextual predicates which are to be evaluated together. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The most possible outcome label for given context. \end{Desc}
+\begin{Desc}
+\item[See also:]\doxyref{eval\_\-all()}{p.}{classmaxent_1_1MaxentModel_e909735d4e37ca6254d28680277a1bbc} \end{Desc}
+
+
+References predict().\index{maxent::MaxentModel@{maxent::MaxentModel}!add\_\-events@{add\_\-events}}
+\index{add\_\-events@{add\_\-events}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Iterator$>$ void maxent::MaxentModel::add\_\-events (Iterator {\em begin}, \/  Iterator {\em end})\hspace{0.3cm}{\tt  [inline]}}\label{classmaxent_1_1MaxentModel_87e6e20d60dcef55448a5583b366bde7}
+
+
+Add a set of events indicated by range [begin, end). the value type of Iterator must be pair$<$context\_\-type, outcome\_\-type$>$ 
+
+References add\_\-event().\index{maxent::MaxentModel@{maxent::MaxentModel}!end\_\-add\_\-event@{end\_\-add\_\-event}}
+\index{end\_\-add\_\-event@{end\_\-add\_\-event}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void maxent::MaxentModel::end\_\-add\_\-event (size\_\-t {\em cutoff} = {\tt 1})}\label{classmaxent_1_1MaxentModel_a92aecda7a8d56e471d273d222f1f92a}
+
+
+Signal the ending of adding events.
+
+This method must be called after adding of the last event to inform the model the ending of the adding events.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em cutoff}]Event cutoff, all events that occurs less than cutoff times will be discussed. Default = 1 (remain all events). Please note this is different from the usual sense of $\ast$feature cutoff$\ast$. \end{description}
+\end{Desc}
+\index{maxent::MaxentModel@{maxent::MaxentModel}!train@{train}}
+\index{train@{train}!maxent::MaxentModel@{maxent::MaxentModel}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void maxent::MaxentModel::train (size\_\-t {\em iter} = {\tt 15}, \/  const std::string \& {\em method} = {\tt \char`\"{}lbfgs\char`\"{}}, \/  double {\em sigma2} = {\tt 0.0}, \/  double {\em tol} = {\tt 1E-05})}\label{classmaxent_1_1MaxentModel_a260e12fb9bbba9ba593819015678313}
+
+
+Train a ME model using selected training method.
+
+This is a wapper function for the underline \doxyref{Trainer}{p.}{classmaxent_1_1Trainer} class. It will create corresponding \doxyref{Trainer}{p.}{classmaxent_1_1Trainer} object to train a Conditional \doxyref{MaxentModel}{p.}{classmaxent_1_1MaxentModel}. Currently L-BFGS and GIS are implemented.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em iter}]Specify how many iterations are need for iterative methods. Default is 15 iterations.\item[{\em method}]The training method to use. Can be \char`\"{}lbfgs\char`\"{} or \char`\"{}gis\char`\"{}. L-BFGS is used as the default training method.\item[{\em sigma2}]Global variance $\sigma^2$ in Gaussian prior smoothing. Default is 0, which turns off Gaussian smoothing.\item[{\em tol}]Tolerance for detecting model convergence. A model is regarded as convergence when $|\frac{Log-likelihood(\theta_2) - Log-likelihood(\theta_1)}{Log-likelihood(\theta_1)}|<tol$. Default tol = 1-E05 \end{description}
+\end{Desc}
+
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+source/maxent/maxentmodel.hpp\item 
+source/maxent/maxentmodel.cpp\end{CompactItemize}
