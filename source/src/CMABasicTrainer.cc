@@ -7,6 +7,7 @@
 #include "CMABasicTrainer.h"
 #include "strutil.h"
 #include "tokenizer.h"
+#include "cma_wtype.h"
 
 using namespace std;
 
@@ -158,9 +159,20 @@ void save_word_freq(TrainerData* data, const char* file){
 }
 
 void save_tag_dict(TrainerData* data, const char* file){
+    CMA_WType wtype(data->ctype_);
     ofstream out(file);
     for(map<string, map<string, int> >::iterator itr = data->tagDict_.begin();
           itr != data->tagDict_.end(); ++itr){
+        CMA_WType::WordType type = wtype.getWordType(itr->first.data());
+        switch(type){
+            //ignore the combined words
+            case CMA_WType::WORD_TYPE_DATE:
+            case CMA_WType::WORD_TYPE_LETTER:
+            case CMA_WType::WORD_TYPE_NUMBER:
+                continue;
+            default:
+                break;
+        }
         out<<itr->first;
         map<string, int>& inner = itr->second;
         for(map<string, int>::iterator itr2 = inner.begin();

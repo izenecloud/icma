@@ -33,6 +33,10 @@ namespace gb2312type{
 
     const unsigned short YU_CH = 0xd3e0; //余
 
+    const unsigned short CHENG_CH = 0xb3c9; //成
+
+    const unsigned short BAN_CH = 0xb0eb; //半
+
     /**
      * Whether it is punctuation in any cases
      */
@@ -92,6 +96,7 @@ namespace gb2312type{
             case 0xc1e3: case 0xd2bb: case 0xb6fe: case 0xc8fd: case 0xcbc4: //零一二三四
             case 0xcee5: case 0xc1f9: case 0xc6df: case 0xb0cb: case 0xbec5: //五六七八九
             case 0xcaae: case 0xb0d9: case 0xc7a7: case 0xcdf2: case 0xd2da: //十百千万亿
+            case 0xc1bd: //两
                 return true;
 
         }
@@ -187,37 +192,33 @@ CharType CMA_CType_GB2312::getCharType(const char* p, CharType preType,
 
     switch(value){
         case DOT:
-            if(nextUc == 0)
-                return CHAR_TYPE_PUNC;
-            if( (preType == CHAR_TYPE_LETTER || preType == CHAR_TYPE_NUMBER)
+            if( nextUc && (preType == CHAR_TYPE_LETTER || preType == CHAR_TYPE_NUMBER)
                     && (isAbsLetter(nextUc) || isAbsDigit(nextUc)) )
                 return CHAR_TYPE_LETTER;
             return CHAR_TYPE_PUNC;
 
         case COMMA:
-            if(nextUc == 0)
-                return CHAR_TYPE_PUNC;
-            if( preType == CHAR_TYPE_NUMBER && isAbsDigit(nextUc) )
+            if( nextUc && preType == CHAR_TYPE_NUMBER && isAbsDigit(nextUc) )
                 return CHAR_TYPE_LETTER;
             return CHAR_TYPE_PUNC;
 
         case HYPHEN:
-            if( (preType == CHAR_TYPE_LETTER || preType == CHAR_TYPE_NUMBER)
+           if( nextUc && (preType == CHAR_TYPE_LETTER || preType == CHAR_TYPE_NUMBER)
                     && (isAbsLetter(nextUc) || isAbsDigit(nextUc)) )
                 return CHAR_TYPE_LETTER;
             return CHAR_TYPE_PUNC;
 
         case ZHI_CH:
         case DIAN_CH:
-            if(nextUc == 0)
-                break;
-            if( preType == CHAR_TYPE_NUMBER && isAbsDigit(nextUc) )
+        case CHENG_CH:
+        case BAN_CH:
+            if( nextUc && preType == CHAR_TYPE_NUMBER && isAbsDigit(nextUc) )
                 return CHAR_TYPE_NUMBER;
             break;
 
         case FEN_CH:
             // x分之x
-            if(nextUc != 0 && nextUc[0] >= 0x80){
+            if(nextUc && nextUc[0] >= 0x80){
                 unsigned short nextValue = nextUc[0] << 8 | nextUc[1];
                 if(nextValue == ZHI_CH)
                     return CHAR_TYPE_NUMBER;

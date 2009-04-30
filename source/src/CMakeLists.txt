@@ -7,3 +7,7 @@ TARGET_LINK_LIBRARIES(${LIBS_CMAC} ${LIBS_ME})
 
 ADD_EXECUTABLE(cmactrainer TrainerCMD.cc)
 TARGET_LINK_LIBRARIES(cmactrainer ${LIBS_CMAC})
+
+ADD_EXECUTABLE(cmacsegger SeggerCMD.cc)
+TARGET_LINK_LIBRARIES(cmacsegger ${LIBS_CMAC})
+

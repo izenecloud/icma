@@ -36,7 +36,7 @@ public:
     TrainerData(context_t pGet_context, Knowledge::EncodeType encType, 
             string pPosDelimiter = "/") : get_context(pGet_context),
             posDelimiter(pPosDelimiter){
-        rareFreq_ = 3;
+        rareFreq_ = 1;
 
         cutoff_ = 10;
         rareCutoff_ = 5;
@@ -155,7 +155,7 @@ void save_word_freq(TrainerData* data, const char* file);
 
 /**
  * Save the tag dictionary to the file <br>
- * With each line as: word tag1 tag2 ... tagN
+ * With each line as: word tag1 tag2 ... tagN (without counter for each tag)
  *
  * \param data the TrainerData
  * \param file the output file

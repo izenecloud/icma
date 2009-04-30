@@ -33,6 +33,9 @@ namespace big5type{
 
     const unsigned short YU_CH = 0xa745; //余
 
+    const unsigned short CHENG_CH = 0xa6a8; //成
+
+    const unsigned short BAN_CH = 0xa562; //半
 
     /**
      * Whether it is punctuation in any cases
@@ -92,6 +95,7 @@ namespace big5type{
             case 0xb973: case 0xa440: case 0xa447: case 0xa454: case 0xa57c: //零一二三四
             case 0xa4ad: case 0xa4bb: case 0xa443: case 0xa44b: case 0xa445: //五六七八九
             case 0xa451: case 0xa6ca: case 0xa464: case 0xb855: case 0xbbf5: //十百千萬億
+            case 0xa8e2: //兩
             return true;
 
         }
@@ -180,7 +184,54 @@ CharType CMA_CType_Big5::getCharType(const char* p, CharType preType,
     assert(p);
 
     const unsigned char* uc = (const unsigned char*)p;
+    const unsigned char* nextUc = (const unsigned char*)nextP;
 
+    unsigned short value = (uc[0] < 0x80) ? uc[0] : uc[0] << 8 | uc[1];
+
+    switch(value){
+        case DOT:
+            if( nextUc && (preType == CHAR_TYPE_LETTER || preType == CHAR_TYPE_NUMBER)
+                    && (isAbsLetter(nextUc) || isAbsDigit(nextUc)) )
+                return CHAR_TYPE_LETTER;
+            return CHAR_TYPE_PUNC;
+
+        case COMMA:
+            if( nextUc && preType == CHAR_TYPE_NUMBER && isAbsDigit(nextUc) )
+                return CHAR_TYPE_LETTER;
+            return CHAR_TYPE_PUNC;
+
+        case HYPHEN:
+           if( nextUc && (preType == CHAR_TYPE_LETTER || preType == CHAR_TYPE_NUMBER)
+                    && (isAbsLetter(nextUc) || isAbsDigit(nextUc)) )
+                return CHAR_TYPE_LETTER;
+            return CHAR_TYPE_PUNC;
+
+        case ZHI_CH:
+        case DIAN_CH:
+        case CHENG_CH:
+        case BAN_CH:
+            if( nextUc && preType == CHAR_TYPE_NUMBER && isAbsDigit(nextUc) )
+                return CHAR_TYPE_NUMBER;
+            break;
+
+        case FEN_CH:
+            // x分之x
+            if(nextUc && nextUc[0] >= 0x80){
+                unsigned short nextValue = nextUc[0] << 8 | nextUc[1];
+                if(nextValue == ZHI_CH)
+                    return CHAR_TYPE_NUMBER;
+            }
+            break;
+
+        case DUO_CH:
+        case YU_CH:
+            if(preType == CHAR_TYPE_NUMBER)
+                return CHAR_TYPE_NUMBER;
+            break;
+    }
+
+
+    //check common type
     if(isAbsLetter(uc))
         return CHAR_TYPE_LETTER;
 
@@ -190,16 +241,15 @@ CharType CMA_CType_Big5::getCharType(const char* p, CharType preType,
     if(isAbsPunt(uc))
         return CHAR_TYPE_PUNC;
 
+    if(isAbsSpace(uc))
+        return CHAR_TYPE_SPACE;
+
     //other constraint to check day?
-    if(isAbsDate(uc))
-        return CHAR_TYPE_DATE;
-
-    //check special character, if only has one byte
-
-    if(uc[0] < 0x80)
+    if(isAbsDate(uc)){
+        if(preType == CHAR_TYPE_NUMBER)
+            return CHAR_TYPE_DATE;
         return CHAR_TYPE_OTHER;
-
-    //if has 2 bytes
+    }
 
     return CHAR_TYPE_OTHER;
 }

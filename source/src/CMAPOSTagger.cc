@@ -41,10 +41,10 @@ inline void get_pos_zh_scontext_1(vector<string>& words, string& tag_1,
     size_t n = words.size();
     string wa[5]; //word array
     wa[2] = w;
-    wa[0] = index > 1 ? wa[index-2] : POS_BOUNDARY;
-    wa[1] = index > 0 ? wa[index-1] : POS_BOUNDARY;
-    wa[3] = (index < n - 1) ? wa[index+1] : POS_BOUNDARY;
-    wa[4] = (index < n - 2) ? wa[index+2] : POS_BOUNDARY;
+    wa[0] = index > 1 ? words[index-2] : POS_BOUNDARY;
+    wa[1] = index > 0 ? words[index-1] : POS_BOUNDARY;
+    wa[3] = (index < n - 1) ? words[index+1] : POS_BOUNDARY;
+    wa[4] = (index < n - 2) ? words[index+2] : POS_BOUNDARY;
 
     context.push_back("CO=" + w[2]);
     context.push_back("C-1=" + wa[1]);

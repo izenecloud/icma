@@ -37,8 +37,9 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
         nextP = tokenizer_.next();
         curType = ctype_->getCharType(curChar, preType, nextP);
 
-        if(curType == preType)
+        if(preType == curType)
             continue;
+
         switch(curType){
             case CHAR_TYPE_OTHER:
                 return WORD_TYPE_OTHER;
@@ -49,8 +50,6 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
             default:
                 break;
         }
-
-
 
         switch(preType){
             case CHAR_TYPE_INIT:
@@ -65,17 +64,20 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
                     case CHAR_TYPE_DATE:
                         return (nextP) ? WORD_TYPE_OTHER : WORD_TYPE_DATE;
                     default:
-                        assert(false && "unexpected arrive here");
+                        assert(false && "unexpected arrive here (pre is number, cur is not-letter or non-date)");
                         break;
                 }
+                break;
 
             case CHAR_TYPE_LETTER:
                 if(curType == CHAR_TYPE_NUMBER)
-                    continue;
-                default:
-                    assert(false && "unexpected arrive here");
-                    break;
+                    continue;              
+                assert(false && "unexpected arrive here (pre is Letter and cur is non-digit)");
+                break;
                 
+            default:
+                assert(false && "unexpected arrive here (preType)");
+                break;
         }
     }
 
