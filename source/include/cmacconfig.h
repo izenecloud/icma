@@ -5,7 +5,7 @@
 
 #ifdef DEBUG
 /** if set, output all the training data */
-#define DEBUG_TRAINING
+//#define DEBUG_TRAINING
 /** DEBUG CateStrTokenizer */
 //#define DEBUG_CATESTRTOKENIZER
 #endif

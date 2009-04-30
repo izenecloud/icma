@@ -1,4 +1,8 @@
 /* 
+ * \brief for the POS tagger
+ *
+ * for the POS tagger
+ *
  * \file   CMAPOSTagger.h
  * \author vernkin
  *
@@ -26,14 +30,31 @@ using namespace maxent::me;
 namespace cma{
 
 /**
- * POS context type for POS (zh/chinese)
+ * Get context of POS(Part of Speech) (zh/chinese)
+ *
+ * \param words the words vector
+ * \param tags the poc tags vector
+ * \param i the index in the wrods
+ * \param rareWord whether this word is rareWord
+ * \param context to hold the return context
+ * \param ctype indicates the encoding types
  */
 void get_pos_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
         bool rareWord, vector<string>& context, CMA_CType *ctype);
 
 
 /**
- * Trainig the POS Maxent model
+ * Training the POS Maxent model
+ *
+ * \param file the source file, with formate "word1/tag1 word2/tag2 ..."
+ * \param cateFile the cateFile (include the path) is the prefix of all the file
+ *    that created while training
+ * \param encType the encoding type, default is gb2312
+ * \param extractFile if set, save the training data to the extractFile and exit
+ * \param iters how many iterations are required for training[default=15]
+ * \param method the method of Maximum Model Parameters Estimation [default = gis]
+ * \param gaussian apply Gaussian penality when training [default=0.0]
+ * \param isPOS if true, output the tag dictioanry
  */
 void pos_train(const char* file, const string& cateFile,
         Knowledge::EncodeType encType = Knowledge::ENCODE_TYPE_GB2312,
@@ -41,12 +62,30 @@ void pos_train(const char* file, const string& cateFile,
         const char* extractFile = 0, string method = "gis", size_t iters = 15,
         float gaussian = 0.0f);
 
+/**
+ * \brief to hold the objects in the N-best algorithm
+ *
+ * to hold the objects in the N-best algorithm
+ */
 struct POSTagUnit{
+    /**
+     * the current pos
+     */
     string pos;
+
+    /**
+     * the score for the current poc
+     */
     double score;
+
+    /**
+     * the candidate number
+     */
     int index;
 
-    /** -1 if not exists*/
+    /**
+     * Previous index in the candidate list. -1 if not exists
+     */
     int previous;
 };
 
@@ -151,6 +190,9 @@ private:
             int index, string& pos, CMA_WType& wtype);
 
 private:
+    /**
+     * The maxent model
+     */
     MaxentModel me;
     
     /** 

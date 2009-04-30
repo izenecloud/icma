@@ -1,4 +1,8 @@
-/* 
+/*
+ * \brief for the POC tagger
+ *
+ * for the POC tagger
+ *
  * \file   CMAPOCTagger.h
  * \author vernkin
  *
@@ -22,13 +26,30 @@ using namespace maxent::me;
 namespace cma{
 
 /**
- * POS context type for POC(Position of Character) (zh/chinese)
+ * Get context of POC(Position of Character) (zh/chinese)
+ *
+ * \param words the words vector
+ * \param tags the poc tags vector
+ * \param i the index in the wrods
+ * \param rareWord whether this word is rareWord
+ * \param context to hold the return context
+ * \param ctype indicates the encoding types
  */
 void get_poc_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
         bool rareWord, vector<string>& context, CMA_CType *ctype);
 
 /**
- * Training the POC Maxent Model
+ * Training the POC Maxent model
+ *
+ * \param file the source file, with formate "word1/tag1 word2/tag2 ..."
+ * \param cateFile the cateFile (include the path) is the prefix of all the file
+ *    that created while training
+ * \param encType the encoding type, default is gb2312
+ * \param extractFile if set, save the training data to the extractFile and exit
+ * \param iters how many iterations are required for training[default=15]
+ * \param method the method of Maximum Model Parameters Estimation [default = gis]
+ * \param gaussian apply Gaussian penality when training [default=0.0]
+ * \param isPOS if true, output the tag dictioanry
  */
 void poc_train(const char* file, const string& cateName,
         Knowledge::EncodeType encType = Knowledge::ENCODE_TYPE_GB2312,
@@ -36,12 +57,30 @@ void poc_train(const char* file, const string& cateName,
         const char* extractFile = 0, string method = "gis", size_t iters = 15,
         float gaussian = 0.0f);
 
+/**
+ * \brief to hold the objects in the N-best algorithm
+ *
+ * to hold the objects in the N-best algorithm
+ */
 struct POCTagUnit{
+    /**
+     * the poc code (B/E)
+     */
     uint8_t pocCode;
+    
+    /**
+     * the score for the current poc
+     */
     double score;
+
+    /**
+     * the candidate number
+     */
     int index;
 
-    /** -1 if not exists*/
+    /** 
+     * Previous index in the candidate list. -1 if not exists
+     */
     int previous;
 };
 

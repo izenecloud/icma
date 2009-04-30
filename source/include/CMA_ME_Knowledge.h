@@ -92,6 +92,14 @@ public:
     virtual int loadPOSModel(const char* cateName);
 
     /**
+     * Load the configuration file, which is in text format.
+     * This file contains the configuration used in morphological analysis, such as part-of-speech configuration, etc.
+     * \param fileName the file name
+     * \return 0 for fail, 1 for success
+     */
+    virtual int loadConfig(const char* fileName);
+    
+    /**
      * Encode the system dictionary file from text to binary format.
      * \param txtFileName the text file name
      * \param binFileName the binary file name

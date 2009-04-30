@@ -256,7 +256,8 @@ public:
             ++p;
         }
 
-        completeSearch = !(*p) && (node.data > 0 || node.moreLong);
+        //the node.data can be negative (as no pos tags)
+        completeSearch = !(*p) && (node.data || node.moreLong);
 
         //cout<<"isEnd="<<!(*p)<<",data="<<node.data<<",moreLong="<<node.moreLong<<endl;
 

@@ -21,7 +21,9 @@ namespace gb2312type{
 
     const unsigned char COMMA = (unsigned char)(','); ///< comma
 
-    const unsigned char HYPHEN = (unsigned char)('-'); ///< hyphtn
+    const unsigned char HYPHEN = (unsigned char)('-'); ///< hyphen
+
+    const unsigned short HYPHEN_1 = 0xa3ad; ///< －
 
     const unsigned short ZHI_CH = 0xd6ae; ///< 之
 
@@ -215,6 +217,7 @@ CharType CMA_CType_GB2312::getCharType(const char* p, CharType preType,
             return CHAR_TYPE_PUNC;
 
         case HYPHEN:
+        case HYPHEN_1:
            if( nextUc && (preType == CHAR_TYPE_LETTER || preType == CHAR_TYPE_NUMBER)
                     && (isAbsLetter(nextUc) || isAbsDigit(nextUc)) )
                 return CHAR_TYPE_LETTER;

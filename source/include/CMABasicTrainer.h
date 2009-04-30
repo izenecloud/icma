@@ -188,6 +188,12 @@ void save_features(TrainerData* data, const char* file);
 void cutoff_feature(TrainerData* data);
 
 /**
+ * Training the POS or POC model
+ *
+ * \param data the TrainerData to hold the data used in the training process.
+ * \param file the source file, with formate "word1/tag1 word2/tag2 ..."
+ * \param cateFile the cateFile (include the path) is the prefix of all the file
+ *    that created while training
  * \param extractFile if set, save the training data to the extractFile and exit
  * \param iters how many iterations are required for training[default=15]
  * \param method the method of Maximum Model Parameters Estimation [default = gis]

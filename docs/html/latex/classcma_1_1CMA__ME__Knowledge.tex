@@ -28,6 +28,8 @@ virtual int {\bf loadStatModel} (const char $\ast$cateName)
 \item 
 virtual int {\bf loadPOSModel} (const char $\ast$cateName)
 \item 
+virtual int {\bf loadConfig} (const char $\ast$fileName)
+\item 
 virtual int {\bf encodeSystemDict} (const char $\ast$txtFileName, const char $\ast$binFileName)
 \item 
 {\bf SegTagger} $\ast$ {\bf getSegTagger} () const 
@@ -151,7 +153,21 @@ Load the model file in binary format, which contains statistical information for
 
 Implements {\bf cma::Knowledge} \doxyref{}{p.}{classcma_1_1Knowledge_4ceb02d9154efd5bd8e35dfab9777644}.
 
-References cma::POSTable::addPOS(), and cma::POSTable::instance().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!encodeSystemDict@{encodeSystemDict}}
+References cma::POSTable::addPOS(), and cma::POSTable::instance().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!loadConfig@{loadConfig}}
+\index{loadConfig@{loadConfig}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Knowledge::loadConfig (const char $\ast$ {\em fileName})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Knowledge_74836fae9065f4c4869a2dde144a5f63}
+
+
+Load the configuration file, which is in text format. This file contains the configuration used in morphological analysis, such as part-of-speech configuration, etc. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em fileName}]the file name \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]0 for fail, 1 for success \end{Desc}
+
+
+References cma::POSTable::instance(), and cma::POSTable::loadConfig().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!encodeSystemDict@{encodeSystemDict}}
 \index{encodeSystemDict@{encodeSystemDict}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Knowledge::encodeSystemDict (const char $\ast$ {\em txtFileName}, \/  const char $\ast$ {\em binFileName})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Knowledge_578eab67c328dcde77c359f54cb6557f}
 

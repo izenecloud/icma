@@ -5,6 +5,19 @@
 
 {\tt \#include $<$pos\_\-table.h$>$}
 
+\subsection*{Public Types}
+\begin{CompactItemize}
+\item 
+enum {\bf POSType} \{ \par
+{\bf POS\_\-TYPE\_\-NUMBER}, 
+{\bf POS\_\-TYPE\_\-DATE}, 
+{\bf POS\_\-TYPE\_\-FOREIGN}, 
+{\bf POS\_\-TYPE\_\-PUNCT}, 
+\par
+{\bf POS\_\-TYPE\_\-USER}, 
+{\bf POS\_\-TYPE\_\-MAX\_\-NUM}
+ \}
+\end{CompactItemize}
 \subsection*{Public Member Functions}
 \begin{CompactItemize}
 \item 
@@ -15,6 +28,10 @@ int {\bf getCodeFromStr} (const std::string \&pos) const
 const char $\ast$ {\bf getStrFromCode} (int index) const 
 \item 
 int {\bf size} () const 
+\item 
+bool {\bf loadConfig} (const char $\ast$fileName)
+\item 
+int {\bf getCodeFromType} ({\bf POSType} type) const 
 \end{CompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{CompactItemize}
@@ -28,6 +45,32 @@ static {\bf POSTable} $\ast$ {\bf instance} ()
 
 \doxyref{POSTable}{p.}{classcma_1_1POSTable} stores the global table of part-of-speech tags, each tag includes a string value and its index code. Note that the string value of part-of-speech tag is case-insensitive. For example, 'Ng' equals to 'ng'. 
 
+\subsection{Member Enumeration Documentation}
+\index{cma::POSTable@{cma::POSTable}!POSType@{POSType}}
+\index{POSType@{POSType}!cma::POSTable@{cma::POSTable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}enum {\bf cma::POSTable::POSType}}\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c001}
+
+
+Special part-of-speech types. \begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{POS\_\-TYPE\_\-NUMBER@{POS\_\-TYPE\_\-NUMBER}!cma::POSTable@{cma::POSTable}}\index{cma::POSTable@{cma::POSTable}!POS\_\-TYPE\_\-NUMBER@{POS\_\-TYPE\_\-NUMBER}}\item[{\em 
+POS\_\-TYPE\_\-NUMBER\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c001a9688ce10893fe5845f859eac8aa8341}
+}]the POS type of numeral words, such as \char`\"{}123\char`\"{}, \char`\"{}一百\char`\"{}, etc \index{POS\_\-TYPE\_\-DATE@{POS\_\-TYPE\_\-DATE}!cma::POSTable@{cma::POSTable}}\index{cma::POSTable@{cma::POSTable}!POS\_\-TYPE\_\-DATE@{POS\_\-TYPE\_\-DATE}}\item[{\em 
+POS\_\-TYPE\_\-DATE\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c0012aedfaa1b656b4f9d284e9f697f70d7a}
+}]the POS type of temporal nouns such as \char`\"{}今天\char`\"{}, \char`\"{}2009年\char`\"{}, etc \index{POS\_\-TYPE\_\-FOREIGN@{POS\_\-TYPE\_\-FOREIGN}!cma::POSTable@{cma::POSTable}}\index{cma::POSTable@{cma::POSTable}!POS\_\-TYPE\_\-FOREIGN@{POS\_\-TYPE\_\-FOREIGN}}\item[{\em 
+POS\_\-TYPE\_\-FOREIGN\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c001a8210d74c2fff14ee41eaab24708901e}
+}]the POS type of foreign words such as \char`\"{}ISO\char`\"{}, \char`\"{}ＣＨＩＮＡ\char`\"{}, etc \index{POS\_\-TYPE\_\-PUNCT@{POS\_\-TYPE\_\-PUNCT}!cma::POSTable@{cma::POSTable}}\index{cma::POSTable@{cma::POSTable}!POS\_\-TYPE\_\-PUNCT@{POS\_\-TYPE\_\-PUNCT}}\item[{\em 
+POS\_\-TYPE\_\-PUNCT\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c0010ef9758a5659c4e92a7f66cd853697a8}
+}]the POS type of punctuations such as \char`\"{}，\char`\"{}, \char`\"{}。\char`\"{}, etc \index{POS\_\-TYPE\_\-USER@{POS\_\-TYPE\_\-USER}!cma::POSTable@{cma::POSTable}}\index{cma::POSTable@{cma::POSTable}!POS\_\-TYPE\_\-USER@{POS\_\-TYPE\_\-USER}}\item[{\em 
+POS\_\-TYPE\_\-USER\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c0018f8cf5a000c13742573f254677f24a70}
+}]the POS type of user defined words \index{POS\_\-TYPE\_\-MAX\_\-NUM@{POS\_\-TYPE\_\-MAX\_\-NUM}!cma::POSTable@{cma::POSTable}}\index{cma::POSTable@{cma::POSTable}!POS\_\-TYPE\_\-MAX\_\-NUM@{POS\_\-TYPE\_\-MAX\_\-NUM}}\item[{\em 
+POS\_\-TYPE\_\-MAX\_\-NUM\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c001c5863d9717e733ba5f1234e1f0a64fbd}
+}]the count of POS types \end{description}
+\end{Desc}
+
+
+
 \subsection{Member Function Documentation}
 \index{cma::POSTable@{cma::POSTable}!instance@{instance}}
 \index{instance@{instance}!cma::POSTable@{cma::POSTable}}
@@ -38,7 +81,7 @@ Create an instance of {\em \doxyref{POSTable}{p.}{classcma_1_1POSTable}\/}. \beg
 \item[Returns:]the pointer to instance \end{Desc}
 
 
-Referenced by cma::Sentence::getStrPOS(), cma::CMA\_\-ME\_\-Knowledge::loadPOSModel(), and cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::POSTable@{cma::POSTable}!addPOS@{addPOS}}
+Referenced by cma::Sentence::getStrPOS(), cma::CMA\_\-ME\_\-Knowledge::loadConfig(), cma::CMA\_\-ME\_\-Knowledge::loadPOSModel(), and cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::POSTable@{cma::POSTable}!addPOS@{addPOS}}
 \index{addPOS@{addPOS}!cma::POSTable@{cma::POSTable}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::addPOS (const std::string \& {\em pos})}\label{classcma_1_1POSTable_77898a33965a0eee826c41b7916d80ce}
 
@@ -54,7 +97,7 @@ Add the POS string to the global part-of-speech table. \begin{Desc}
 \item[Attention:]Note that the POS string is case-insensitively. \end{Desc}
 
 
-Referenced by cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTable@{cma::POSTable}!getCodeFromStr@{getCodeFromStr}}
+Referenced by loadConfig(), and cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTable@{cma::POSTable}!getCodeFromStr@{getCodeFromStr}}
 \index{getCodeFromStr@{getCodeFromStr}!cma::POSTable@{cma::POSTable}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromStr (const std::string \& {\em pos}) const}\label{classcma_1_1POSTable_1692f43e2154d408265e09affd64d70a}
 
@@ -89,6 +132,34 @@ Referenced by cma::Sentence::getStrPOS().\index{cma::POSTable@{cma::POSTable}!si
 
 Get the number of POS tags in the global part-of-speech table. \begin{Desc}
 \item[Returns:]the number of POS tags \end{Desc}
+\index{cma::POSTable@{cma::POSTable}!loadConfig@{loadConfig}}
+\index{loadConfig@{loadConfig}!cma::POSTable@{cma::POSTable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTable::loadConfig (const char $\ast$ {\em fileName})}\label{classcma_1_1POSTable_a70a1e82116a1855f9599aeb48cb5139}
+
+
+Load the configuration file, which is in text format. This file contains the part-of-speech configuration, which format is \char`\"{}tag = value\char`\"{}. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em fileName}]the file name \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]0 for fail, 1 for success \end{Desc}
+
+
+References addPOS().
+
+Referenced by cma::CMA\_\-ME\_\-Knowledge::loadConfig().\index{cma::POSTable@{cma::POSTable}!getCodeFromType@{getCodeFromType}}
+\index{getCodeFromType@{getCodeFromType}!cma::POSTable@{cma::POSTable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromType ({\bf POSType} {\em type}) const}\label{classcma_1_1POSTable_d6c9ee24dd82620d36d4de8018702546}
+
+
+Get the POS index code from the special POS type. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em type}]the POS type \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]POS index code, -1 for non POS available \end{Desc}
 
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}

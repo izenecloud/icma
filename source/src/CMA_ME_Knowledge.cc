@@ -237,4 +237,12 @@ void CMA_ME_Knowledge::initialize(){
     ENCODING_VEC[ENCODE_TYPE_UTF8] = "utf8";
 }
 
+int CMA_ME_Knowledge::loadConfig(const char* fileName)
+{
+    POSTable* posTable = POSTable::instance();
+    bool r = posTable->loadConfig(fileName);
+
+    return r ? 1 : 0;
+}
+
 }

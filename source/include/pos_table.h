@@ -77,6 +77,34 @@ public:
      */
     int size() const;
 
+    /**
+     * Load the configuration file, which is in text format.
+     * This file contains the part-of-speech configuration, which format is "tag = value".
+     * \param fileName the file name
+     * \return 0 for fail, 1 for success
+     */
+    bool loadConfig(const char* fileName);
+
+    /**
+     * Special part-of-speech types.
+     */
+    enum POSType
+    {
+	POS_TYPE_NUMBER, ///< the POS type of numeral words, such as "123", "一百", etc
+	POS_TYPE_DATE, ///< the POS type of temporal nouns such as "今天", "2009年", etc
+	POS_TYPE_FOREIGN, ///< the POS type of foreign words such as "ISO", "ＣＨＩＮＡ", etc
+        POS_TYPE_PUNCT, ///< the POS type of punctuations such as "，", "。", etc
+        POS_TYPE_USER, ///< the POS type of user defined words
+        POS_TYPE_MAX_NUM ///< the count of POS types
+    };
+
+    /**
+     * Get the POS index code from the special POS type.
+     * \param type the POS type
+     * \return POS index code, -1 for non POS available
+     */
+    int getCodeFromType(POSType type) const;
+
 protected:
     POSTable();
 
@@ -92,6 +120,15 @@ private:
 
     /** the POS tag map */
     POSMap posMap_;
+
+    /** the table from \e POSType to index code */
+    std::vector<int> typeTable_;
+
+    /** the map from string to \e POSType */
+    typedef std::map<std::string, POSType> TypeMap;
+
+    /** the instance of \e TypeMap */
+    TypeMap typeMap_;
 };
 
 } // namespace cma

@@ -59,39 +59,41 @@
 <a name="l00083"></a>00083 
 <a name="l00092"></a>00092     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#29a87c6902ebaf8364fbee0e4aa20127">loadPOSModel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* cateName);
 <a name="l00093"></a>00093 
-<a name="l00100"></a>00100     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#578eab67c328dcde77c359f54cb6557f">encodeSystemDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* txtFileName, <span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName);
-<a name="l00101"></a>00101 
-<a name="l00106"></a>00106     <a class="code" href="classcma_1_1SegTagger.html" title="segment the string segment the string using maxent model">SegTagger</a>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#7f48d3975405b9e41217705142f85061">getSegTagger</a>() <span class="keyword">const</span>;
-<a name="l00107"></a>00107 
-<a name="l00112"></a>00112     <a class="code" href="classcma_1_1POSTagger.html" title="Tagging the POS Information Tagging the POS using the maxent model.">POSTagger</a>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#860d74235119267a3c58344e53eabd32">getPOSTagger</a>() <span class="keyword">const</span>;
-<a name="l00113"></a>00113 
-<a name="l00117"></a>00117     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#4a25b70f78ec7309cb5cab8f08cc1248">isStopWord</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; word);
-<a name="l00118"></a>00118 
-<a name="l00124"></a>00124     <a class="code" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#c02421f6bb9c214fc389d13aa04671b1">getTrie</a>();
-<a name="l00125"></a>00125 
-<a name="l00129"></a>00129     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#76b7b94d614802f87589fddee4b6a9a0">initialize</a>();
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131 <span class="keyword">private</span>:
-<a name="l00133"></a>00133     <span class="keywordtype">string</span> readEncryptLine(FILE *in);
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135 <span class="keyword">private</span>:
-<a name="l00137"></a>00137     <a class="code" href="classcma_1_1SegTagger.html" title="segment the string segment the string using maxent model">SegTagger</a> *segT_;
+<a name="l00100"></a>00100     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#74836fae9065f4c4869a2dde144a5f63">loadConfig</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName);
+<a name="l00101"></a>00101     
+<a name="l00108"></a>00108     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#578eab67c328dcde77c359f54cb6557f">encodeSystemDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* txtFileName, <span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName);
+<a name="l00109"></a>00109 
+<a name="l00114"></a>00114     <a class="code" href="classcma_1_1SegTagger.html" title="segment the string segment the string using maxent model">SegTagger</a>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#7f48d3975405b9e41217705142f85061">getSegTagger</a>() <span class="keyword">const</span>;
+<a name="l00115"></a>00115 
+<a name="l00120"></a>00120     <a class="code" href="classcma_1_1POSTagger.html" title="Tagging the POS Information Tagging the POS using the maxent model.">POSTagger</a>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#860d74235119267a3c58344e53eabd32">getPOSTagger</a>() <span class="keyword">const</span>;
+<a name="l00121"></a>00121 
+<a name="l00125"></a>00125     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#4a25b70f78ec7309cb5cab8f08cc1248">isStopWord</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; word);
+<a name="l00126"></a>00126 
+<a name="l00132"></a>00132     <a class="code" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#c02421f6bb9c214fc389d13aa04671b1">getTrie</a>();
+<a name="l00133"></a>00133 
+<a name="l00137"></a>00137     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#76b7b94d614802f87589fddee4b6a9a0">initialize</a>();
 <a name="l00138"></a>00138 
-<a name="l00140"></a>00140     <a class="code" href="classcma_1_1POSTagger.html" title="Tagging the POS Information Tagging the POS using the maxent model.">POSTagger</a> *posT_;
-<a name="l00141"></a>00141 
-<a name="l00143"></a>00143     <a class="code" href="classVSynonymContainer.html" title="the VTrie version of the Synonym Dictionary">VSynonymContainer</a> *vsynC_;
-<a name="l00144"></a>00144 
-<a name="l00146"></a>00146     <a class="code" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a>* trie_;
-<a name="l00147"></a>00147 
-<a name="l00149"></a>00149     set&lt;string&gt; stopWords_;
-<a name="l00150"></a>00150 };
-<a name="l00151"></a>00151 
-<a name="l00152"></a>00152 }
-<a name="l00153"></a>00153 
-<a name="l00154"></a>00154 <span class="preprocessor">#endif  </span><span class="comment">/* _CMA_ME_KNOWLEDGE_H */</span>
+<a name="l00139"></a>00139 <span class="keyword">private</span>:
+<a name="l00141"></a>00141     <span class="keywordtype">string</span> readEncryptLine(FILE *in);
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143 <span class="keyword">private</span>:
+<a name="l00145"></a>00145     <a class="code" href="classcma_1_1SegTagger.html" title="segment the string segment the string using maxent model">SegTagger</a> *segT_;
+<a name="l00146"></a>00146 
+<a name="l00148"></a>00148     <a class="code" href="classcma_1_1POSTagger.html" title="Tagging the POS Information Tagging the POS using the maxent model.">POSTagger</a> *posT_;
+<a name="l00149"></a>00149 
+<a name="l00151"></a>00151     <a class="code" href="classVSynonymContainer.html" title="the VTrie version of the Synonym Dictionary">VSynonymContainer</a> *vsynC_;
+<a name="l00152"></a>00152 
+<a name="l00154"></a>00154     <a class="code" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a>* trie_;
 <a name="l00155"></a>00155 
+<a name="l00157"></a>00157     set&lt;string&gt; stopWords_;
+<a name="l00158"></a>00158 };
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160 }
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162 <span class="preprocessor">#endif  </span><span class="comment">/* _CMA_ME_KNOWLEDGE_H */</span>
+<a name="l00163"></a>00163 
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Apr 30 13:19:50 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Apr 30 17:41:59 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

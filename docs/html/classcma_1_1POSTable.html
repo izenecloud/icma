@@ -33,6 +33,18 @@
 <p>
 <a href="classcma_1_1POSTable-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Public Types</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#b65c0d7bf4f492aeff968cf462b6c001">POSType</a> { <br>
+&nbsp;&nbsp;<a class="el" href="classcma_1_1POSTable.html#b65c0d7bf4f492aeff968cf462b6c001a9688ce10893fe5845f859eac8aa8341">POS_TYPE_NUMBER</a>, 
+<a class="el" href="classcma_1_1POSTable.html#b65c0d7bf4f492aeff968cf462b6c0012aedfaa1b656b4f9d284e9f697f70d7a">POS_TYPE_DATE</a>, 
+<a class="el" href="classcma_1_1POSTable.html#b65c0d7bf4f492aeff968cf462b6c001a8210d74c2fff14ee41eaab24708901e">POS_TYPE_FOREIGN</a>, 
+<a class="el" href="classcma_1_1POSTable.html#b65c0d7bf4f492aeff968cf462b6c0010ef9758a5659c4e92a7f66cd853697a8">POS_TYPE_PUNCT</a>, 
+<br>
+&nbsp;&nbsp;<a class="el" href="classcma_1_1POSTable.html#b65c0d7bf4f492aeff968cf462b6c0018f8cf5a000c13742573f254677f24a70">POS_TYPE_USER</a>, 
+<a class="el" href="classcma_1_1POSTable.html#b65c0d7bf4f492aeff968cf462b6c001c5863d9717e733ba5f1234e1f0a64fbd">POS_TYPE_MAX_NUM</a>
+<br>
+ }</td></tr>
+
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#77898a33965a0eee826c41b7916d80ce">addPOS</a> (const std::string &amp;pos)</td></tr>
 
@@ -42,6 +54,10 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#eb70793af427c7dd545f132e177ca26e">size</a> () const </td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#a70a1e82116a1855f9599aeb48cb5139">loadConfig</a> (const char *fileName)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#d6c9ee24dd82620d36d4de8018702546">getCodeFromType</a> (<a class="el" href="classcma_1_1POSTable.html#b65c0d7bf4f492aeff968cf462b6c001">POSType</a> type) const </td></tr>
+
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="classcma_1_1POSTable.html">POSTable</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#8ce731b2b76aced0b76092b5b216aa1d">instance</a> ()</td></tr>
 
@@ -49,7 +65,39 @@
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 <a class="el" href="classcma_1_1POSTable.html" title="POSTable stores the global table of part-of-speech tags.">POSTable</a> stores the global table of part-of-speech tags. 
 <p>
-<a class="el" href="classcma_1_1POSTable.html" title="POSTable stores the global table of part-of-speech tags.">POSTable</a> stores the global table of part-of-speech tags, each tag includes a string value and its index code. Note that the string value of part-of-speech tag is case-insensitive. For example, 'Ng' equals to 'ng'. <hr><h2>Member Function Documentation</h2>
+<a class="el" href="classcma_1_1POSTable.html" title="POSTable stores the global table of part-of-speech tags.">POSTable</a> stores the global table of part-of-speech tags, each tag includes a string value and its index code. Note that the string value of part-of-speech tag is case-insensitive. For example, 'Ng' equals to 'ng'. <hr><h2>Member Enumeration Documentation</h2>
+<a class="anchor" name="b65c0d7bf4f492aeff968cf462b6c001"></a><!-- doxytag: member="cma::POSTable::POSType" ref="b65c0d7bf4f492aeff968cf462b6c001" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classcma_1_1POSTable.html#b65c0d7bf4f492aeff968cf462b6c001">cma::POSTable::POSType</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Special part-of-speech types. <dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" name="b65c0d7bf4f492aeff968cf462b6c001a9688ce10893fe5845f859eac8aa8341"></a><!-- doxytag: member="POS_TYPE_NUMBER" ref="b65c0d7bf4f492aeff968cf462b6c001a9688ce10893fe5845f859eac8aa8341" args="" -->POS_TYPE_NUMBER</em>&nbsp;</td><td>
+the POS type of numeral words, such as "123", "一百", etc </td></tr>
+<tr><td valign="top"><em><a class="anchor" name="b65c0d7bf4f492aeff968cf462b6c0012aedfaa1b656b4f9d284e9f697f70d7a"></a><!-- doxytag: member="POS_TYPE_DATE" ref="b65c0d7bf4f492aeff968cf462b6c0012aedfaa1b656b4f9d284e9f697f70d7a" args="" -->POS_TYPE_DATE</em>&nbsp;</td><td>
+the POS type of temporal nouns such as "今天", "2009年", etc </td></tr>
+<tr><td valign="top"><em><a class="anchor" name="b65c0d7bf4f492aeff968cf462b6c001a8210d74c2fff14ee41eaab24708901e"></a><!-- doxytag: member="POS_TYPE_FOREIGN" ref="b65c0d7bf4f492aeff968cf462b6c001a8210d74c2fff14ee41eaab24708901e" args="" -->POS_TYPE_FOREIGN</em>&nbsp;</td><td>
+the POS type of foreign words such as "ISO", "ＣＨＩＮＡ", etc </td></tr>
+<tr><td valign="top"><em><a class="anchor" name="b65c0d7bf4f492aeff968cf462b6c0010ef9758a5659c4e92a7f66cd853697a8"></a><!-- doxytag: member="POS_TYPE_PUNCT" ref="b65c0d7bf4f492aeff968cf462b6c0010ef9758a5659c4e92a7f66cd853697a8" args="" -->POS_TYPE_PUNCT</em>&nbsp;</td><td>
+the POS type of punctuations such as "，", "。", etc </td></tr>
+<tr><td valign="top"><em><a class="anchor" name="b65c0d7bf4f492aeff968cf462b6c0018f8cf5a000c13742573f254677f24a70"></a><!-- doxytag: member="POS_TYPE_USER" ref="b65c0d7bf4f492aeff968cf462b6c0018f8cf5a000c13742573f254677f24a70" args="" -->POS_TYPE_USER</em>&nbsp;</td><td>
+the POS type of user defined words </td></tr>
+<tr><td valign="top"><em><a class="anchor" name="b65c0d7bf4f492aeff968cf462b6c001c5863d9717e733ba5f1234e1f0a64fbd"></a><!-- doxytag: member="POS_TYPE_MAX_NUM" ref="b65c0d7bf4f492aeff968cf462b6c001c5863d9717e733ba5f1234e1f0a64fbd" args="" -->POS_TYPE_MAX_NUM</em>&nbsp;</td><td>
+the count of POS types </td></tr>
+</table>
+</dl>
+
+</div>
+</div><p>
+<hr><h2>Member Function Documentation</h2>
 <a class="anchor" name="8ce731b2b76aced0b76092b5b216aa1d"></a><!-- doxytag: member="cma::POSTable::instance" ref="8ce731b2b76aced0b76092b5b216aa1d" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -68,7 +116,7 @@
 <p>
 Create an instance of <em><a class="el" href="classcma_1_1POSTable.html" title="POSTable stores the global table of part-of-speech tags.">POSTable</a></em>. <dl class="return" compact><dt><b>Returns:</b></dt><dd>the pointer to instance </dd></dl>
 
-<p>Referenced by <a class="el" href="sentence_8cpp-source.html#l00054">cma::Sentence::getStrPOS()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00032">cma::CMA_ME_Knowledge::loadPOSModel()</a>, and <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00023">cma::CMA_ME_Analyzer::runWithSentence()</a>.</p>
+<p>Referenced by <a class="el" href="sentence_8cpp-source.html#l00054">cma::Sentence::getStrPOS()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00240">cma::CMA_ME_Knowledge::loadConfig()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00032">cma::CMA_ME_Knowledge::loadPOSModel()</a>, and <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00023">cma::CMA_ME_Analyzer::runWithSentence()</a>.</p>
 
 </div>
 </div><p>
@@ -97,7 +145,7 @@ Add the POS string to the global part-of-speech table. <dl compact><dt><b>Parame
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the index code of the POS string added, if the POS string has been added before, its index code previously added is returned. </dd></dl>
 <dl class="attention" compact><dt><b>Attention:</b></dt><dd>Note that the POS string is case-insensitively. </dd></dl>
 
-<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00032">cma::CMA_ME_Knowledge::loadPOSModel()</a>.</p>
+<p>Referenced by <a class="el" href="pos__table_8cpp-source.html#l00093">loadConfig()</a>, and <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00032">cma::CMA_ME_Knowledge::loadPOSModel()</a>.</p>
 
 </div>
 </div><p>
@@ -177,10 +225,66 @@ Get the number of POS tags in the global part-of-speech table. <dl class="return
 
 </div>
 </div><p>
+<a class="anchor" name="a70a1e82116a1855f9599aeb48cb5139"></a><!-- doxytag: member="cma::POSTable::loadConfig" ref="a70a1e82116a1855f9599aeb48cb5139" args="(const char *fileName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cma::POSTable::loadConfig           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Load the configuration file, which is in text format. This file contains the part-of-speech configuration, which format is "tag = value". <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>fileName</em>&nbsp;</td><td>the file name </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>0 for fail, 1 for success </dd></dl>
+
+<p>References <a class="el" href="pos__table_8cpp-source.html#l00054">addPOS()</a>.</p>
+
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00240">cma::CMA_ME_Knowledge::loadConfig()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="d6c9ee24dd82620d36d4de8018702546"></a><!-- doxytag: member="cma::POSTable::getCodeFromType" ref="d6c9ee24dd82620d36d4de8018702546" args="(POSType type) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int cma::POSTable::getCodeFromType           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classcma_1_1POSTable.html#b65c0d7bf4f492aeff968cf462b6c001">POSType</a>&nbsp;</td>
+          <td class="paramname"> <em>type</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Get the POS index code from the special POS type. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>type</em>&nbsp;</td><td>the POS type </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>POS index code, -1 for non POS available </dd></dl>
+
+</div>
+</div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>source/include/<a class="el" href="pos__table_8h-source.html">pos_table.h</a><li>source/src/<a class="el" href="pos__table_8cpp.html">pos_table.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Apr 30 13:19:50 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Apr 30 17:41:59 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

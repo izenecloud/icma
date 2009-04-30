@@ -15,11 +15,10 @@ string POS_BOUNDARY = "BoUnD";
 namespace posinner{
 
 inline void get_pos_zh_scontext_1(vector<string>& words, string& tag_1,
-        string& tag_2, size_t index, vector<string>& context,
+        string& tag_2, int index, vector<string>& context,
         CMA_WType& wtype){
-    string& w = words[index];
 
-    CMA_WType::WordType type = wtype.getWordType(w.data());
+    CMA_WType::WordType type = wtype.getWordType(words[index].data());
 
     switch(type){
         case CMA_WType::WORD_TYPE_DATE:
@@ -38,21 +37,50 @@ inline void get_pos_zh_scontext_1(vector<string>& words, string& tag_1,
             break;
     }
 
-    size_t n = words.size();
-    string wa[5]; //word array
-    wa[2] = w;
+    int n = (int)words.size();
+    string wa[5]; //word array    
     wa[0] = index > 1 ? words[index-2] : POS_BOUNDARY;
     wa[1] = index > 0 ? words[index-1] : POS_BOUNDARY;
+    wa[2] = words[index];
     wa[3] = (index < n - 1) ? words[index+1] : POS_BOUNDARY;
     wa[4] = (index < n - 2) ? words[index+2] : POS_BOUNDARY;
 
-    context.push_back("CO=" + w[2]);
+    /*
+    context.push_back("CO=" + wa[2]);
     context.push_back("C-1=" + wa[1]);
     context.push_back("C-2=" + wa[0]);
+    context.push_back("C1=" + wa[3]);
+
+    context.push_back("C-2,-1=" + wa[0] + "," + wa[1]);
+    context.push_back("C-1,0=" + wa[1] + "," + wa[2]);
+    context.push_back("C0,1=" + wa[2] + "," + wa[3]);
+    context.push_back("C-1,1=" + wa[1] + "," + wa[3]);
+
     context.push_back("T-1=" + tag_1);
     context.push_back("T-2,-1="+tag_2+","+tag_1);
+    */
+    //context.push_back("C2=" + wa[4]);
+
+
+    //context.push_back("C-2=" + wa[0]);
+    context.push_back("C-1=" + wa[1]);   
+    context.push_back("CO=" + wa[2]);
     context.push_back("C1=" + wa[3]);
-    context.push_back("C2=" + wa[4]);
+    //context.push_back("C2=" + wa[3]);
+
+    context.push_back("C-2,-1=" + wa[0] + "," + wa[1]);
+    context.push_back("C-1,0=" + wa[1] + "," + wa[2]);
+    context.push_back("C0,1=" + wa[2] + "," + wa[3]);
+    //context.push_back("C1,2=" + wa[3] + "," + wa[4]);
+    
+    context.push_back("C-1,1=" + wa[1] + "," + wa[3]);
+
+    //context.push_back("C-2,-1,0=" + wa[0] + "," + wa[1] + "," + wa[2]);
+    context.push_back("C-1,0,1=" + wa[1] + "," + wa[2] + "," + wa[3]);
+    //context.push_back("C0,1,2=" + wa[2] + "," + wa[3] + "," + wa[4]);
+
+    //context.push_back("T-1=" + tag_1);
+    context.push_back("T-2,-1="+tag_2+","+tag_1);
 
 }
 
@@ -63,7 +91,7 @@ void get_pos_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
     string& tag_1 = i > 0 ? tags[i-1] : POS_BOUNDARY;
     string& tag_2 = i > 1 ? tags[i-2] : POS_BOUNDARY;
     CMA_WType wtype(ctype);
-    posinner::get_pos_zh_scontext_1(words, tag_1, tag_2, i, context, wtype);
+    posinner::get_pos_zh_scontext_1(words, tag_1, tag_2, (int)i, context, wtype);
 }
 
 void pos_train(const char* file, const string& cateFile, Knowledge::EncodeType encType,

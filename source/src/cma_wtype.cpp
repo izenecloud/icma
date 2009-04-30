@@ -83,8 +83,7 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
 
     switch(curType){
         case CHAR_TYPE_LETTER:
-            preType = CHAR_TYPE_LETTER;
-            break;
+            return WORD_TYPE_LETTER;
         case CHAR_TYPE_NUMBER:
             return WORD_TYPE_NUMBER;
         default:
