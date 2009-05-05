@@ -1,3 +1,11 @@
+/** \file CMAPOCTagger.cc
+ * \brief for the POC tagger using MaxEnt Model.
+ *
+ * \author vernkin
+ *
+ * Created on March 24, 2009, 8:52 PM
+ */
+
 #include <vector>
 
 #include "CMAPOCTagger.h"

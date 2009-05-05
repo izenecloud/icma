@@ -1,5 +1,5 @@
 /** \file cma_wtype.h
- *  The class the identify the type of the word
+ * \brief The class the identify the type of the word
  * \author Vernkin
  * \version 0.2
  * \date Mar 23, 2009
@@ -20,7 +20,6 @@ class CMA_CType;
 /**
  * \brief CMA_WType gives the word type information.
  *
- * CMA_WType gives the word type information.
  */
 class CMA_WType
 {

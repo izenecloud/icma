@@ -1,3 +1,7 @@
+/** \file CPPStringUtils.cc
+ * \brief the CPP String Utility file
+ */
+
 #include "CPPStringUtils.h"
 #include <boost/tokenizer.hpp>
 #include <fstream>

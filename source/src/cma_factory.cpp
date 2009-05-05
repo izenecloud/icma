@@ -1,5 +1,5 @@
 /** \file cma_factory.cpp
- * 
+ * \brief CMA_Factory creates instances for Chinese morphological analysis.
  * \author Jun Jiang
  * \version 0.1
  * \date Feb 20, 2009

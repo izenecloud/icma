@@ -1,5 +1,5 @@
 /** \file cma_ctype_big5.cpp
- * 
+ * \brief CMA_CType_Big5 gives the character type information in Big5 encoding.
  * \author Vernkin
  * \version 0.2
  * \date April 06, 2009

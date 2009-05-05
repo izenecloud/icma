@@ -1,5 +1,5 @@
 /** \file sentence.h
- * 
+ * \brief Sentence saves the results of Chinese morphological analysis.
  * \author Jun Jiang
  * \version 0.1
  * \date Feb 17, 2009
@@ -18,7 +18,6 @@ namespace cma
 /**
  * \brief a pair of lexicon string and its part-of-speech tag.
  *
- * Morpheme is a pair of lexicon string and its part-of-speech tag.
  */
 struct Morpheme
 {

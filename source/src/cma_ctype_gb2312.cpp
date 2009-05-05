@@ -1,5 +1,5 @@
 /** \file cma_ctype_gb2312.cpp
- * 
+ * \brief CMA_CType_GB2312 gives the character type information in GB2312 encoding.
  * \author Vernkin
  * \version 0.1
  * \date Mar 11, 2009

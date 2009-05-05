@@ -1,5 +1,5 @@
 /** \file pos_table.h
- * 
+ * \brief POSTable stores the global table of part-of-speech tags
  * \author Jun Jiang
  * \version 0.1
  * \date Apr 02, 2009

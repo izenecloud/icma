@@ -1,3 +1,7 @@
+/** \file CMABasicTrainer.cc
+ * \brief shared module for training the POC and POS MaxEnt model
+ * \author vernkin
+ */
 
 #include <set>
 #include <iostream>

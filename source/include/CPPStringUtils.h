@@ -1,8 +1,5 @@
-/* 
- * File:   CPPStringUtils.h
- * Author: Administrator
- *
- * Created on March 17, 2009, 5:39 PM
+/** \file CPPStringUtils.h
+ * \brief the CPP String Utility file
  */
 
 #ifndef _CPPSTRINGUTILS_H
@@ -28,6 +25,9 @@ extern const string UTF8_N;
 */
 #define TOKEN_STR(in, ret) CPPStringUtils::token_string(in, ret)
 
+/**
+ * \brief the CPP String Utility class
+ */
 class CPPStringUtils {
 public:
         static std::string to_string(const std::wstring source);

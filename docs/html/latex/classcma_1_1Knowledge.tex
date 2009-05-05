@@ -33,6 +33,8 @@ virtual int {\bf loadStatModel} (const char $\ast$binFileName)=0
 \item 
 virtual int {\bf loadPOSModel} (const char $\ast$binFileName)=0
 \item 
+virtual int {\bf loadConfig} (const char $\ast$fileName)=0
+\item 
 virtual int {\bf encodeSystemDict} (const char $\ast$txtFileName, const char $\ast$binFileName)=0
 \item 
 void {\bf setEncodeType} ({\bf EncodeType} type)
@@ -42,8 +44,6 @@ void {\bf setEncodeType} ({\bf EncodeType} type)
 
 
 \subsection{Detailed Description}
-\doxyref{Knowledge}{p.}{classcma_1_1Knowledge} manages the linguistic information for Chinese morphological analysis. 
-
 \doxyref{Knowledge}{p.}{classcma_1_1Knowledge} manages the linguistic information for Chinese morphological analysis. 
 
 \subsection{Member Enumeration Documentation}
@@ -97,7 +97,9 @@ Load the user dictionary file, which is in text format. \begin{Desc}
 \item[Returns:]0 for fail, 1 for success \end{Desc}
 
 
-Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_d0dac8d22ab4c3c97a281f26c95ee9e2}.\index{cma::Knowledge@{cma::Knowledge}!loadStopWordDict@{loadStopWordDict}}
+Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_d0dac8d22ab4c3c97a281f26c95ee9e2}.
+
+Referenced by beginSeg().\index{cma::Knowledge@{cma::Knowledge}!loadStopWordDict@{loadStopWordDict}}
 \index{loadStopWordDict@{loadStopWordDict}!cma::Knowledge@{cma::Knowledge}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Knowledge::loadStopWordDict (const char $\ast$ {\em fileName})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Knowledge_992bf7b7cd77c8846bc1c6cd22067d07}
 
@@ -125,7 +127,9 @@ Load the model file in binary format, which contains statistical information for
 \item[Returns:]0 for fail, 1 for success \end{Desc}
 
 
-Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_cc8f15814d4e6a248f29636a29116756}.\index{cma::Knowledge@{cma::Knowledge}!loadPOSModel@{loadPOSModel}}
+Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_cc8f15814d4e6a248f29636a29116756}.
+
+Referenced by beginSeg().\index{cma::Knowledge@{cma::Knowledge}!loadPOSModel@{loadPOSModel}}
 \index{loadPOSModel@{loadPOSModel}!cma::Knowledge@{cma::Knowledge}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Knowledge::loadPOSModel (const char $\ast$ {\em binFileName})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Knowledge_4ceb02d9154efd5bd8e35dfab9777644}
 
@@ -139,7 +143,23 @@ Load the model file in binary format, which contains statistical information for
 \item[Returns:]0 for fail, 1 for success \end{Desc}
 
 
-Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_29a87c6902ebaf8364fbee0e4aa20127}.\index{cma::Knowledge@{cma::Knowledge}!encodeSystemDict@{encodeSystemDict}}
+Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_29a87c6902ebaf8364fbee0e4aa20127}.
+
+Referenced by beginSeg().\index{cma::Knowledge@{cma::Knowledge}!loadConfig@{loadConfig}}
+\index{loadConfig@{loadConfig}!cma::Knowledge@{cma::Knowledge}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Knowledge::loadConfig (const char $\ast$ {\em fileName})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Knowledge_e4e24baf6f35004fd1d788b1b28a7ad1}
+
+
+Load the configuration file, which is in text format. This file contains the configuration used in morphological analysis, such as part-of-speech configuration, etc. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em fileName}]the file name \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]0 for fail, 1 for success \end{Desc}
+
+
+Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_74836fae9065f4c4869a2dde144a5f63}.\index{cma::Knowledge@{cma::Knowledge}!encodeSystemDict@{encodeSystemDict}}
 \index{encodeSystemDict@{encodeSystemDict}!cma::Knowledge@{cma::Knowledge}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Knowledge::encodeSystemDict (const char $\ast$ {\em txtFileName}, \/  const char $\ast$ {\em binFileName})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Knowledge_7c89dffabc4e75961d760586db283d1d}
 
@@ -163,7 +183,9 @@ Set the character encode type. If this function is not called, the default value
 \begin{description}
 \item[{\em type}]the encode type \end{description}
 \end{Desc}
-\index{cma::Knowledge@{cma::Knowledge}!getEncodeType@{getEncodeType}}
+
+
+Referenced by beginSeg().\index{cma::Knowledge@{cma::Knowledge}!getEncodeType@{getEncodeType}}
 \index{getEncodeType@{getEncodeType}!cma::Knowledge@{cma::Knowledge}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf Knowledge::EncodeType} cma::Knowledge::getEncodeType () const}\label{classcma_1_1Knowledge_26dac4378bb4192a598118abdef70ad9}
 

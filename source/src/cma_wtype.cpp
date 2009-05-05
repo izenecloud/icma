@@ -1,5 +1,5 @@
 /** \file cma_wtype.cpp
- * 
+ * \brief The class the identify the type of the word
  * \author Jun Jiang
  * \version 0.1
  * \date Mar 23, 2009

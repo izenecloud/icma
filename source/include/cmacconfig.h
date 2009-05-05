@@ -1,6 +1,12 @@
+/** \file cmacconfig.h
+ * \brief shared configuration header file for the whole CMAC project
+ * \author vernkin
+ */
+
 #ifndef _CMACCONFIG_H
 #define	_CMACCONFIG_H
 
+/** Whether in the Debug mode */
 #define DEBUG
 
 #ifdef DEBUG
@@ -19,8 +25,10 @@
 /** if set, use punctuaion and character type feature */
 #define USE_BE_TYPE_FEATURE
 
+/** Whether use the string trie in the segmentation */
 #define USE_STRTRIE
 
+/** Whether run with stdin as input */
 //#define TEST_SEG_CMD
 
 #ifdef TEST_SEG_CMD

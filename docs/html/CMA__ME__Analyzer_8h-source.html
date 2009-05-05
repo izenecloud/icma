@@ -13,28 +13,23 @@
       <li class="current"><a href="files.html"><span>Files</span></a></li>
     </ul>
   </div>
-<h1>source/include/CMA_ME_Analyzer.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/* </span>
-<a name="l00002"></a>00002 <span class="comment"> * </span>
-<a name="l00003"></a>00003 <span class="comment"> * \author vernkin</span>
-<a name="l00004"></a>00004 <span class="comment"> *</span>
-<a name="l00005"></a>00005 <span class="comment"> */</span>
-<a name="l00006"></a>00006 
-<a name="l00007"></a>00007 <span class="preprocessor">#ifndef _CMA_ME_ANALYZER_H</span>
-<a name="l00008"></a>00008 <span class="preprocessor"></span><span class="preprocessor">#define _CMA_ME_ANALYZER_H</span>
-<a name="l00009"></a>00009 <span class="preprocessor"></span>
-<a name="l00010"></a>00010 <span class="preprocessor">#include "cmacconfig.h"</span>
-<a name="l00011"></a>00011 <span class="preprocessor">#include "<a class="code" href="analyzer_8h.html">analyzer.h</a>"</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include "CMA_ME_Knowledge.h"</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include "<a class="code" href="sentence_8h.html">sentence.h</a>"</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include "<a class="code" href="cma__ctype_8h.html">cma_ctype.h</a>"</span>
-<a name="l00015"></a>00015 
-<a name="l00016"></a>00016 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00017"></a>00017 
-<a name="l00018"></a>00018 <span class="keyword">using namespace </span>std;
-<a name="l00019"></a>00019 
-<a name="l00020"></a>00020 <span class="keyword">namespace </span>cma
-<a name="l00021"></a>00021 {
-<a name="l00022"></a>00022 
+<h1>source/include/CMA_ME_Analyzer.h</h1><a href="CMA__ME__Analyzer_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<a name="l00008"></a>00008 <span class="preprocessor">#ifndef _CMA_ME_ANALYZER_H</span>
+<a name="l00009"></a>00009 <span class="preprocessor"></span><span class="preprocessor">#define _CMA_ME_ANALYZER_H</span>
+<a name="l00010"></a>00010 <span class="preprocessor"></span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include "<a class="code" href="cmacconfig_8h.html" title="shared configuration header file for the whole CMAC project">cmacconfig.h</a>"</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include "<a class="code" href="analyzer_8h.html" title="Analyzer executes the Chinese morphological analysis.">analyzer.h</a>"</span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include "<a class="code" href="CMA__ME__Knowledge_8h.html" title="The Knowledge class of the CMAC.">CMA_ME_Knowledge.h</a>"</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#include "<a class="code" href="sentence_8h.html" title="Sentence saves the results of Chinese morphological analysis.">sentence.h</a>"</span>
+<a name="l00015"></a>00015 <span class="preprocessor">#include "<a class="code" href="cma__ctype_8h.html" title="CMA_CType gives the character type information.">cma_ctype.h</a>"</span>
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019 <span class="keyword">using namespace </span>std;
+<a name="l00020"></a>00020 
+<a name="l00021"></a>00021 <span class="keyword">namespace </span>cma
+<a name="l00022"></a>00022 {
+<a name="l00023"></a>00023 
 <a name="l00028"></a><a class="code" href="classcma_1_1CMA__ME__Analyzer.html">00028</a> <span class="keyword">class </span><a class="code" href="classcma_1_1CMA__ME__Analyzer.html" title="Analyzer for the CMAC.">CMA_ME_Analyzer</a> : <span class="keyword">public</span> <a class="code" href="classcma_1_1Analyzer.html" title="Analyzer executes the Chinese morphological analysis.">Analyzer</a>
 <a name="l00029"></a>00029 {
 <a name="l00030"></a>00030 <span class="keyword">public</span>:
@@ -59,17 +54,17 @@
 <a name="l00083"></a>00083 
 <a name="l00085"></a>00085     <span class="keywordtype">string</span> strBuf_;
 <a name="l00086"></a>00086 
-<a name="l00087"></a>00087     <a class="code" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a>* ctype_;
-<a name="l00088"></a>00088 };
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091 }
+<a name="l00090"></a>00090     <a class="code" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a>* ctype_;
+<a name="l00091"></a>00091 };
 <a name="l00092"></a>00092 
 <a name="l00093"></a>00093 
-<a name="l00094"></a>00094 <span class="preprocessor">#endif  </span><span class="comment">/* _CMA_ME_ANALYZER_H */</span>
+<a name="l00094"></a>00094 }
 <a name="l00095"></a>00095 
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097 <span class="preprocessor">#endif  </span><span class="comment">/* _CMA_ME_ANALYZER_H */</span>
+<a name="l00098"></a>00098 
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Apr 30 17:41:59 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 5 17:57:29 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

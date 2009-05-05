@@ -1,5 +1,5 @@
 /** \file knowledge.h
- * 
+ * \brief Knowledge manages the linguistic information for Chinese morphological analysis.
  * \author Jun Jiang
  * \version 0.1
  * \date Feb 17, 2009
@@ -14,7 +14,6 @@ namespace cma
 /**
  * \brief Knowledge manages the linguistic information for Chinese morphological analysis.
  *
- * Knowledge manages the linguistic information for Chinese morphological analysis.
  */
 class Knowledge
 {
@@ -57,6 +56,14 @@ public:
      * \return 0 for fail, 1 for success
      */
     virtual int loadPOSModel(const char* binFileName) = 0;
+
+    /**
+     * Load the configuration file, which is in text format.
+     * This file contains the configuration used in morphological analysis, such as part-of-speech configuration, etc.
+     * \param fileName the file name
+     * \return 0 for fail, 1 for success
+     */
+    virtual int loadConfig(const char* fileName) = 0;
 
     /**
      * Encode the system dictionary file from text to binary format.

@@ -1,0 +1,108 @@
+\section{source/vsynonym/VTrie.h File Reference}
+\label{VTrie_8h}\index{source/vsynonym/VTrie.h@{source/vsynonym/VTrie.h}}
+hold the \doxyref{VTrie}{p.}{classVTrie} and the \doxyref{VTrieNode}{p.}{classVTrieNode} 
+
+{\tt \#include $<$assert.h$>$}\par
+{\tt \#include $<$string.h$>$}\par
+{\tt \#include $<$vector$>$}\par
+{\tt \#include $<$iostream$>$}\par
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include \char`\"{}types.h\char`\"{}}\par
+\subsection*{Classes}
+\begin{CompactItemize}
+\item 
+class {\bf VTrieNode}
+\begin{CompactList}\small\item\em The node of the \doxyref{VTrie}{p.}{classVTrie}. \item\end{CompactList}\item 
+class {\bf VTrie}
+\begin{CompactList}\small\item\em \doxyref{VTrie}{p.}{classVTrie} is a variant of the Radix Tree. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\#define \textbf{DEBUGP}\label{VTrie_8h_15ee0d8ff2682d0453c65881249ef075}
+
+\item 
+\#define \textbf{VTPTR\_\-L}~4\label{VTrie_8h_181d475a9e1115a3ea72be3ddebdbf36}
+
+\item 
+\#define \textbf{VALUE\_\-L}~4\label{VTrie_8h_14a888430439e1aacba616e1c880fa55}
+
+\item 
+\#define {\bf VTENTRY\_\-L}~5
+\item 
+\#define {\bf MAX\_\-SAMEP\_\-LEN}~256
+\item 
+\#define {\bf VTKEY\_\-NUM}~256
+\item 
+\#define \textbf{MIN\_\-REMAIN}~3072\label{VTrie_8h_985a580b68094a518ad52ee30407b400}
+
+\item 
+\#define \textbf{INCRE\_\-SIZE}~204800\label{VTrie_8h_abaa47eab7bf68bff8cca95a6b72a3e3}
+
+\item 
+\#define {\bf VTCHILDS\_\-L}~1
+\item 
+\#define {\bf VTSAMEPS\_\-L}~1
+\end{CompactItemize}
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+typedef uint32\_\-t {\bf vtptr\_\-t}
+\end{CompactItemize}
+\subsection*{Variables}
+\begin{CompactItemize}
+\item 
+uint8\_\-t \textbf{VTRIE\_\-CODE} [$\,$]\label{VTrie_8h_5e22c21f82830f9c9bbe107271ead7dc}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+hold the \doxyref{VTrie}{p.}{classVTrie} and the \doxyref{VTrieNode}{p.}{classVTrieNode} 
+
+\begin{Desc}
+\item[Author:]vernkin \end{Desc}
+
+
+\subsection{Define Documentation}
+\index{VTrie.h@{VTrie.h}!MAX\_\-SAMEP\_\-LEN@{MAX\_\-SAMEP\_\-LEN}}
+\index{MAX\_\-SAMEP\_\-LEN@{MAX\_\-SAMEP\_\-LEN}!VTrie.h@{VTrie.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define MAX\_\-SAMEP\_\-LEN~256}\label{VTrie_8h_9a9e68898e971f9355933992f2adf710}
+
+
+max length of the same path \index{VTrie.h@{VTrie.h}!VTCHILDS\_\-L@{VTCHILDS\_\-L}}
+\index{VTCHILDS\_\-L@{VTCHILDS\_\-L}!VTrie.h@{VTrie.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define VTCHILDS\_\-L~1}\label{VTrie_8h_185e37e6c0f7233b86f8a46c2a0009a0}
+
+
+length of VTrie's child status byte 
+
+Referenced by VTrie::find(), VTrie::insert(), VTrie::optimize(), and VTrie::search().\index{VTrie.h@{VTrie.h}!VTENTRY\_\-L@{VTENTRY\_\-L}}
+\index{VTENTRY\_\-L@{VTENTRY\_\-L}!VTrie.h@{VTrie.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define VTENTRY\_\-L~5}\label{VTrie_8h_d8d79a76886a7c8f525acde651f828e3}
+
+
+Length of the \doxyref{VTrie}{p.}{classVTrie} Entry, INT\_\-LEN+1 
+
+Referenced by VTrie::find(), VTrie::insert(), and VTrie::search().\index{VTrie.h@{VTrie.h}!VTKEY\_\-NUM@{VTKEY\_\-NUM}}
+\index{VTKEY\_\-NUM@{VTKEY\_\-NUM}!VTrie.h@{VTrie.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define VTKEY\_\-NUM~256}\label{VTrie_8h_f07666697aee6f77c21041ad8f35e810}
+
+
+number of the slots in the \doxyref{VTrie}{p.}{classVTrie} keys 
+
+Referenced by VTrie::optimize().\index{VTrie.h@{VTrie.h}!VTSAMEPS\_\-L@{VTSAMEPS\_\-L}}
+\index{VTSAMEPS\_\-L@{VTSAMEPS\_\-L}!VTrie.h@{VTrie.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define VTSAMEPS\_\-L~1}\label{VTrie_8h_945c6d9dc6f0152166c132a7767ed05c}
+
+
+length of VTrie's same path status byte 
+
+Referenced by VTrie::insert().
+
+\subsection{Typedef Documentation}
+\index{VTrie.h@{VTrie.h}!vtptr\_\-t@{vtptr\_\-t}}
+\index{vtptr\_\-t@{vtptr\_\-t}!VTrie.h@{VTrie.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}typedef uint32\_\-t {\bf vtptr\_\-t}}\label{VTrie_8h_5a6a474c7e99c554a52d96974603cb1e}
+
+
+Type of the \doxyref{VTrie}{p.}{classVTrie} pointer 

@@ -1,5 +1,5 @@
 /** \file sentence.cpp
- * 
+ * \brief Sentence saves the results of Chinese morphological analysis.
  * \author Jun Jiang
  * \version 0.1
  * \date Feb 17, 2009

@@ -1,0 +1,40 @@
+\section{source/include/SeggerCMD.h File Reference}
+\label{SeggerCMD_8h}\index{source/include/SeggerCMD.h@{source/include/SeggerCMD.h}}
+the CMD tool for the Segger 
+
+{\tt \#include $<$iostream$>$}\par
+{\tt \#include \char`\"{}cma\_\-factory.h\char`\"{}}\par
+{\tt \#include \char`\"{}analyzer.h\char`\"{}}\par
+{\tt \#include \char`\"{}knowledge.h\char`\"{}}\par
+{\tt \#include \char`\"{}sentence.h\char`\"{}}\par
+{\tt \#include \char`\"{}cma\_\-ctype.h\char`\"{}}\par
+{\tt \#include \char`\"{}VTimer.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void {\bf beginSeg} (string mate, string inFile, string outFile, string enc, string posDelimiter)
+\item 
+int \textbf{seggerEntry} (int argc, char $\ast$$\ast$argv)\label{SeggerCMD_8h_e624a37c8cde5a86c57acff2b8e2b15a}
+
+\item 
+void \textbf{printSeggerUsage} ()\label{SeggerCMD_8h_7c87e8750f51eca3e1b15b7f252d5131}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+the CMD tool for the Segger 
+
+\begin{Desc}
+\item[Author:]vernkin \end{Desc}
+
+
+\subsection{Function Documentation}
+\index{SeggerCMD.h@{SeggerCMD.h}!beginSeg@{beginSeg}}
+\index{beginSeg@{beginSeg}!SeggerCMD.h@{SeggerCMD.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void beginSeg (string {\em mate}, \/  string {\em inFile}, \/  string {\em outFile}, \/  string {\em enc}, \/  string {\em posDelimiter})}\label{SeggerCMD_8h_b30a0cc7bae3e3976cb797d3f026c20b}
+
+
+To segment the file 
+
+References cma::CMA\_\-Factory::createAnalyzer(), cma::CMA\_\-Factory::createKnowledge(), cma::Knowledge::loadPOSModel(), cma::Knowledge::loadStatModel(), cma::Knowledge::loadUserDict(), cma::Analyzer::runWithStream(), cma::Knowledge::setEncodeType(), cma::Analyzer::setKnowledge(), cma::Analyzer::setOption(), and cma::Analyzer::setPOSDelimiter().

@@ -1,5 +1,5 @@
 /** \file knowledge.cpp
- * 
+ * \brief Knowledge manages the linguistic information for Chinese morphological analysis.
  * \author Jun Jiang
  * \version 0.1
  * \date Feb 17, 2009

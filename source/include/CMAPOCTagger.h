@@ -1,9 +1,6 @@
-/*
- * \brief for the POC tagger
+/** \file CMAPOCTagger.h
+ * \brief for the POC tagger using MaxEnt Model.
  *
- * for the POC tagger
- *
- * \file   CMAPOCTagger.h
  * \author vernkin
  *
  * Created on March 24, 2009, 8:52 PM
@@ -60,7 +57,6 @@ void poc_train(const char* file, const string& cateName,
 /**
  * \brief to hold the objects in the N-best algorithm
  *
- * to hold the objects in the N-best algorithm
  */
 struct POCTagUnit{
     /**
@@ -170,8 +166,10 @@ private:
             double initScore, int candidateNum);
 
 private:
+    /** The MaxEnt model Object */
     MaxentModel me;
 
+    /** The encoding type */
     CMA_CType *ctype_;
 
     /** Store the data to the POS tags */

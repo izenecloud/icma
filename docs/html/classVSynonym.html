@@ -79,7 +79,7 @@ It can hold the Synonym Entry list after query synonym from <a class="el" href="
 <p>
 Return the count of lines including query used in searching. <dl class="return" compact><dt><b>Returns:</b></dt><dd>number of the synonym entries matched </dd></dl>
 
-<p>Referenced by <a class="el" href="VSynonym_8h-source.html#l00110">size()</a>, and <a class="el" href="VSynonym_8h-source.html#l00148">testLoop()</a>.</p>
+<p>Referenced by <a class="el" href="VSynonym_8h-source.html#l00109">size()</a>, and <a class="el" href="VSynonym_8h-source.html#l00147">testLoop()</a>.</p>
 
 </div>
 </div><p>
@@ -108,7 +108,9 @@ After calling <a class="el" href="classVSynonym.html#fc7a33f76776609d88236781714
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the num of synonyms in the indexth synonym entry </dd></dl>
 
-<p>Referenced by <a class="el" href="VSynonym_8h-source.html#l00110">size()</a>, and <a class="el" href="VSynonym_8h-source.html#l00148">testLoop()</a>.</p>
+<p>References <a class="el" href="VSynonym_8h-source.html#l00026">VT_NUM_LEN</a>, and <a class="el" href="VSynonym_8h-source.html#l00031">VT_OFFSET_LEN</a>.</p>
+
+<p>Referenced by <a class="el" href="VSynonym_8h-source.html#l00109">size()</a>, and <a class="el" href="VSynonym_8h-source.html#l00147">testLoop()</a>.</p>
 
 </div>
 </div><p>
@@ -139,7 +141,9 @@ After calling <a class="el" href="classVSynonym.html#fc7a33f76776609d88236781714
 
 <p>
 Return the string which is placed on index and offset. This method won't take bound check 
-<p>Referenced by <a class="el" href="VSynonym_8h-source.html#l00102">getHeadWord()</a>, <a class="el" href="VSynonym_8h-source.html#l00110">size()</a>, and <a class="el" href="VSynonym_8h-source.html#l00148">testLoop()</a>.</p>
+<p>References <a class="el" href="VSynonym_8h-source.html#l00026">VT_NUM_LEN</a>, and <a class="el" href="VSynonym_8h-source.html#l00031">VT_OFFSET_LEN</a>.</p>
+
+<p>Referenced by <a class="el" href="VSynonym_8h-source.html#l00101">getHeadWord()</a>, <a class="el" href="VSynonym_8h-source.html#l00109">size()</a>, and <a class="el" href="VSynonym_8h-source.html#l00147">testLoop()</a>.</p>
 
 </div>
 </div><p>
@@ -168,7 +172,7 @@ Return the head word(entry word or first word in a line) which is placed on inde
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>first word in the ith lap. </dd></dl>
 
-<p>References <a class="el" href="VSynonym_8h-source.html#l00084">getWord()</a>.</p>
+<p>References <a class="el" href="VSynonym_8h-source.html#l00083">getWord()</a>.</p>
 
 </div>
 </div><p>
@@ -190,7 +194,7 @@ Return the head word(entry word or first word in a line) which is placed on inde
 <p>
 Get the size of the <a class="el" href="classVSynonym.html" title="VSynonym the Param Type of the VSynonymDictionary.">VSynonym</a> <dl class="return" compact><dt><b>Returns:</b></dt><dd>the size of the <a class="el" href="classVSynonym.html" title="VSynonym the Param Type of the VSynonymDictionary.">VSynonym</a> </dd></dl>
 
-<p>References <a class="el" href="VSynonym_8h-source.html#l00059">getMatchedCount()</a>, <a class="el" href="VSynonym_8h-source.html#l00072">getSynonymCount()</a>, and <a class="el" href="VSynonym_8h-source.html#l00084">getWord()</a>.</p>
+<p>References <a class="el" href="VSynonym_8h-source.html#l00058">getMatchedCount()</a>, <a class="el" href="VSynonym_8h-source.html#l00071">getSynonymCount()</a>, <a class="el" href="VSynonym_8h-source.html#l00083">getWord()</a>, <a class="el" href="VSynonym_8h-source.html#l00026">VT_NUM_LEN</a>, and <a class="el" href="VSynonym_8h-source.html#l00031">VT_OFFSET_LEN</a>.</p>
 
 </div>
 </div><p>
@@ -211,14 +215,14 @@ Get the size of the <a class="el" href="classVSynonym.html" title="VSynonym the 
 
 <p>
 For testing the speed of iterating all the words 
-<p>References <a class="el" href="VSynonym_8h-source.html#l00059">getMatchedCount()</a>, <a class="el" href="VSynonym_8h-source.html#l00072">getSynonymCount()</a>, and <a class="el" href="VSynonym_8h-source.html#l00084">getWord()</a>.</p>
+<p>References <a class="el" href="VSynonym_8h-source.html#l00058">getMatchedCount()</a>, <a class="el" href="VSynonym_8h-source.html#l00071">getSynonymCount()</a>, and <a class="el" href="VSynonym_8h-source.html#l00083">getWord()</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>source/vsynonym/<a class="el" href="VSynonym_8h-source.html">VSynonym.h</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Apr 30 17:41:59 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 5 17:57:29 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

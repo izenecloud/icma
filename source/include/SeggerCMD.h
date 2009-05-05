@@ -78,7 +78,7 @@
  * The result with pos tagging can be found in the outFile.
  */
  
- /*
+ /** 
  * \brief the CMD tool for the Segger
  * \file SeggerCMD.h
  * \author vernkin

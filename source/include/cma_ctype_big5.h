@@ -1,5 +1,5 @@
 /** \file cma_ctype_big5.h
- * 
+ * \brief CMA_CType_Big5 gives the character type information in Big5 encoding.
  * \author Vernkin
  * \version 0.2
  * \date April 06, 2009
@@ -16,7 +16,6 @@ namespace cma
 /**
  * \brief CMA_CType_Big5 gives the character type information in Big5 encoding.
  *
- * CMA_CType_Big5 gives the character type information in Big5 encoding.
  */
 class CMA_CType_Big5 : public CMA_CType
 {
@@ -45,6 +44,9 @@ public:
             const char* nextP) const;
 
 protected:
+    /**
+     * Avoid invoked directly
+     */
     CMA_CType_Big5();
 
 private:

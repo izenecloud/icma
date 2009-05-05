@@ -84,9 +84,9 @@ If insert failed, return 0, otherwise any value bigger than 0 And the informatio
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>return 0 if insert fails </dd></dl>
 
-<p>References <a class="el" href="VTrie_8h-source.html#l00122">VTrieNode::data</a>, and <a class="el" href="VTrie_8h-source.html#l00131">VTrieNode::moreLong</a>.</p>
+<p>References <a class="el" href="VTrie_8h-source.html#l00121">VTrieNode::data</a>, <a class="el" href="VTrie_8h-source.html#l00130">VTrieNode::moreLong</a>, <a class="el" href="VTrie_8h-source.html#l00043">VTCHILDS_L</a>, <a class="el" href="VTrie_8h-source.html#l00025">VTENTRY_L</a>, and <a class="el" href="VTrie_8h-source.html#l00046">VTSAMEPS_L</a>.</p>
 
-<p>Referenced by <a class="el" href="CMAPOSTagger_8cc-source.html#l00427">cma::POSTagger::appendWordPOS()</a>, and <a class="el" href="VSynonym_8h-source.html#l00443">VSynonymContainer::loadSynonyms()</a>.</p>
+<p>Referenced by <a class="el" href="CMAPOSTagger_8cc-source.html#l00434">cma::POSTagger::appendWordPOS()</a>, and <a class="el" href="VSynonym_8h-source.html#l00442">VSynonymContainer::loadSynonyms()</a>.</p>
 
 </div>
 </div><p>
@@ -107,6 +107,8 @@ If insert failed, return 0, otherwise any value bigger than 0 And the informatio
 
 <p>
 Optimize the data structure of the <a class="el" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a>, it makes querying faster and use less memory. 
+<p>References <a class="el" href="VTrie_8h-source.html#l00043">VTCHILDS_L</a>, and <a class="el" href="VTrie_8h-source.html#l00034">VTKEY_NUM</a>.</p>
+
 </div>
 </div><p>
 <a class="anchor" name="cd15d39e9bb2b8b55f59693a13647a2a"></a><!-- doxytag: member="VTrie::search" ref="cd15d39e9bb2b8b55f59693a13647a2a" args="(const char *key, VTrieNode *node)" -->
@@ -143,9 +145,9 @@ If string is not found, return 0, otherwise any value bigger than 0. And the inf
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>return 0 if search fails </dd></dl>
 
-<p>References <a class="el" href="VTrie_8h-source.html#l00122">VTrieNode::data</a>, and <a class="el" href="VTrie_8h-source.html#l00131">VTrieNode::moreLong</a>.</p>
+<p>References <a class="el" href="VTrie_8h-source.html#l00121">VTrieNode::data</a>, <a class="el" href="VTrie_8h-source.html#l00130">VTrieNode::moreLong</a>, <a class="el" href="VTrie_8h-source.html#l00043">VTCHILDS_L</a>, and <a class="el" href="VTrie_8h-source.html#l00025">VTENTRY_L</a>.</p>
 
-<p>Referenced by <a class="el" href="CMAPOSTagger_8cc-source.html#l00427">cma::POSTagger::appendWordPOS()</a>, <a class="el" href="VSynonym_8h-source.html#l00338">VSynonymContainer::get_synonyms()</a>, <a class="el" href="VSynonym_8h-source.html#l00443">VSynonymContainer::loadSynonyms()</a>, and <a class="el" href="VSynonym_8h-source.html#l00355">VSynonymContainer::searchNgetSynonym()</a>.</p>
+<p>Referenced by <a class="el" href="CMAPOSTagger_8cc-source.html#l00434">cma::POSTagger::appendWordPOS()</a>, <a class="el" href="VSynonym_8h-source.html#l00337">VSynonymContainer::get_synonyms()</a>, <a class="el" href="VSynonym_8h-source.html#l00442">VSynonymContainer::loadSynonyms()</a>, and <a class="el" href="VSynonym_8h-source.html#l00354">VSynonymContainer::searchNgetSynonym()</a>.</p>
 
 </div>
 </div><p>
@@ -183,9 +185,9 @@ The function of this method is to iterate trie node by each character. Parameter
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>If following node does not exist, return value is 0, other wise bigger than 0. </dd></dl>
 
-<p>References <a class="el" href="VTrie_8h-source.html#l00122">VTrieNode::data</a>, <a class="el" href="VTrie_8h-source.html#l00131">VTrieNode::moreLong</a>, <a class="el" href="VTrie_8h-source.html#l00128">VTrieNode::offset</a>, and <a class="el" href="VTrie_8h-source.html#l00125">VTrieNode::state</a>.</p>
+<p>References <a class="el" href="VTrie_8h-source.html#l00121">VTrieNode::data</a>, <a class="el" href="VTrie_8h-source.html#l00130">VTrieNode::moreLong</a>, <a class="el" href="VTrie_8h-source.html#l00127">VTrieNode::offset</a>, <a class="el" href="VTrie_8h-source.html#l00124">VTrieNode::state</a>, <a class="el" href="VTrie_8h-source.html#l00043">VTCHILDS_L</a>, and <a class="el" href="VTrie_8h-source.html#l00025">VTENTRY_L</a>.</p>
 
-<p>Referenced by <a class="el" href="CMAPOCTagger_8cc-source.html#l00249">cma::pocinner::StrBasedVTrie::search()</a>.</p>
+<p>Referenced by <a class="el" href="CMAPOCTagger_8cc-source.html#l00257">cma::pocinner::StrBasedVTrie::search()</a>.</p>
 
 </div>
 </div><p>
@@ -206,14 +208,14 @@ The function of this method is to iterate trie node by each character. Parameter
 
 <p>
 Get the size of the structure 
-<p>Referenced by <a class="el" href="VSynonym_8h-source.html#l00521">VSynonymContainer::size()</a>.</p>
+<p>Referenced by <a class="el" href="VSynonym_8h-source.html#l00520">VSynonymContainer::size()</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>source/vsynonym/<a class="el" href="VTrie_8h-source.html">VTrie.h</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Apr 30 17:41:59 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 5 17:57:29 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

@@ -14,6 +14,8 @@ Inheritance diagram for cma::CMA\_\-CType::\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{CompactItemize}
 \item 
+virtual {\bf $\sim$CMA\_\-CType} ()
+\item 
 virtual unsigned int {\bf getByteCount} (const char $\ast$p) const =0
 \item 
 virtual CharType {\bf getCharType} (const char $\ast$p, CharType preType, const char $\ast$nextP) const =0
@@ -27,8 +29,7 @@ size\_\-t {\bf length} (const char $\ast$p) const
 \item 
 static {\bf CMA\_\-CType} $\ast$ {\bf instance} ({\bf Knowledge::EncodeType} type)
 \item 
-static {\bf Knowledge::EncodeType} \textbf{getEncType} (string encType)\label{classcma_1_1CMA__CType_2a912dfae4c56e70a20f920ac564890b}
-
+static {\bf Knowledge::EncodeType} {\bf getEncType} (string encType)
 \end{CompactItemize}
 
 
@@ -36,6 +37,14 @@ static {\bf Knowledge::EncodeType} \textbf{getEncType} (string encType)\label{cl
 \doxyref{CMA\_\-CType}{p.}{classcma_1_1CMA__CType} gives the character type information. 
 
 \doxyref{CMA\_\-CType}{p.}{classcma_1_1CMA__CType} gives the character type information. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!$\sim$CMA\_\-CType@{$\sim$CMA\_\-CType}}
+\index{$\sim$CMA\_\-CType@{$\sim$CMA\_\-CType}!cma::CMA_CType@{cma::CMA\_\-CType}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}cma::CMA\_\-CType::$\sim$CMA\_\-CType ()\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__CType_a5069cd1dc6794e4744e3fbcac7afbd6}
+
+
+Destrucor 
 
 \subsection{Member Function Documentation}
 \index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!instance@{instance}}
@@ -54,7 +63,23 @@ Create an instance of {\em \doxyref{CMA\_\-CType}{p.}{classcma_1_1CMA__CType}\/}
 
 References cma::Knowledge::ENCODE\_\-TYPE\_\-BIG5, cma::Knowledge::ENCODE\_\-TYPE\_\-GB2312, cma::CMA\_\-CType\_\-Big5::instance(), and cma::CMA\_\-CType\_\-GB2312::instance().
 
-Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getByteCount@{getByteCount}}
+Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getEncType@{getEncType}}
+\index{getEncType@{getEncType}!cma::CMA_CType@{cma::CMA\_\-CType}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf Knowledge::EncodeType} cma::CMA\_\-CType::getEncType (string {\em encType})\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1CMA__CType_2a912dfae4c56e70a20f920ac564890b}
+
+
+Get the encoding type by the encode type string
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em encType}]encode type string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]assicated \doxyref{Knowledge::EncodeType}{p.}{classcma_1_1Knowledge_2f725921dec755cdd496e81a95389f1d} in the class \doxyref{Knowledge}{p.}{classcma_1_1Knowledge} \end{Desc}
+
+
+References cma::Knowledge::ENCODE\_\-TYPE\_\-BIG5, cma::Knowledge::ENCODE\_\-TYPE\_\-GB2312, and cma::Knowledge::ENCODE\_\-TYPE\_\-NUM.\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getByteCount@{getByteCount}}
 \index{getByteCount@{getByteCount}!cma::CMA_CType@{cma::CMA\_\-CType}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int cma::CMA\_\-CType::getByteCount (const char $\ast$ {\em p}) const\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1CMA__CType_00f7e99cea12e9db504629c4a6cdb2d4}
 
@@ -86,7 +111,7 @@ Get the character type. \begin{Desc}
 
 Implemented in {\bf cma::CMA\_\-CType\_\-Big5} \doxyref{}{p.}{classcma_1_1CMA__CType__Big5_a125ef224739df73781aa6ee55d28b38}, and {\bf cma::CMA\_\-CType\_\-GB2312} \doxyref{}{p.}{classcma_1_1CMA__CType__GB2312_e0edf1c74d7a66ba6425b9010401456e}.
 
-Referenced by cma::CMA\_\-WType::getWordType(), and isPunct().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!isPunct@{isPunct}}
+Referenced by cma::CMA\_\-WType::getWordType(), isPunct(), and cma::CateStrTokenizer::next().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!isPunct@{isPunct}}
 \index{isPunct@{isPunct}!cma::CMA_CType@{cma::CMA\_\-CType}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-CType::isPunct (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_b9fbb6aa32fd36bb3838b48ffb92bf24}
 

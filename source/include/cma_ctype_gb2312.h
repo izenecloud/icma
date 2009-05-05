@@ -1,5 +1,5 @@
 /** \file cma_ctype_gb2312.h
- * 
+ * \brief CMA_CType_GB2312 gives the character type information in GB2312 encoding.
  * \author Vernkin
  * \version 0.2
  * \date Mar 11, 2009
@@ -16,7 +16,6 @@ namespace cma
 /**
  * \brief CMA_CType_GB2312 gives the character type information in GB2312 encoding.
  *
- * CMA_CType_GB2312 gives the character type information in GB2312 encoding.
  */
 class CMA_CType_GB2312 : public CMA_CType
 {
@@ -45,6 +44,9 @@ public:
             const char* nextP) const;
 
 protected:
+    /**
+     * Avoid invoked directly
+     */
     CMA_CType_GB2312();
 
 private:

@@ -60,6 +60,8 @@ Inheritance diagram for cma::Knowledge:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1Knowledge.html#4ceb02d9154efd5bd8e35dfab9777644">loadPOSModel</a> (const char *binFileName)=0</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1Knowledge.html#e4e24baf6f35004fd1d788b1b28a7ad1">loadConfig</a> (const char *fileName)=0</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1Knowledge.html#7c89dffabc4e75961d760586db283d1d">encodeSystemDict</a> (const char *txtFileName, const char *binFileName)=0</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1Knowledge.html#199293f2ec784e7883805117e59b109c">setEncodeType</a> (<a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a> type)</td></tr>
@@ -68,8 +70,6 @@ Inheritance diagram for cma::Knowledge:</div>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
-<a class="el" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a> manages the linguistic information for Chinese morphological analysis. 
-<p>
 <a class="el" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a> manages the linguistic information for Chinese morphological analysis. <hr><h2>Member Enumeration Documentation</h2>
 <a class="anchor" name="2f725921dec755cdd496e81a95389f1d"></a><!-- doxytag: member="cma::Knowledge::EncodeType" ref="2f725921dec755cdd496e81a95389f1d" args="" -->
 <div class="memitem">
@@ -153,6 +153,8 @@ Load the user dictionary file, which is in text format. <dl compact><dt><b>Param
 
 <p>Implemented in <a class="el" href="classcma_1_1CMA__ME__Knowledge.html#d0dac8d22ab4c3c97a281f26c95ee9e2">cma::CMA_ME_Knowledge</a>.</p>
 
+<p>Referenced by <a class="el" href="SeggerCMD_8cc-source.html#l00005">beginSeg()</a>.</p>
+
 </div>
 </div><p>
 <a class="anchor" name="992bf7b7cd77c8846bc1c6cd22067d07"></a><!-- doxytag: member="cma::Knowledge::loadStopWordDict" ref="992bf7b7cd77c8846bc1c6cd22067d07" args="(const char *fileName)=0" -->
@@ -209,6 +211,8 @@ Load the model file in binary format, which contains statistical information for
 
 <p>Implemented in <a class="el" href="classcma_1_1CMA__ME__Knowledge.html#cc8f15814d4e6a248f29636a29116756">cma::CMA_ME_Knowledge</a>.</p>
 
+<p>Referenced by <a class="el" href="SeggerCMD_8cc-source.html#l00005">beginSeg()</a>.</p>
+
 </div>
 </div><p>
 <a class="anchor" name="4ceb02d9154efd5bd8e35dfab9777644"></a><!-- doxytag: member="cma::Knowledge::loadPOSModel" ref="4ceb02d9154efd5bd8e35dfab9777644" args="(const char *binFileName)=0" -->
@@ -236,6 +240,36 @@ Load the model file in binary format, which contains statistical information for
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>0 for fail, 1 for success </dd></dl>
 
 <p>Implemented in <a class="el" href="classcma_1_1CMA__ME__Knowledge.html#29a87c6902ebaf8364fbee0e4aa20127">cma::CMA_ME_Knowledge</a>.</p>
+
+<p>Referenced by <a class="el" href="SeggerCMD_8cc-source.html#l00005">beginSeg()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="e4e24baf6f35004fd1d788b1b28a7ad1"></a><!-- doxytag: member="cma::Knowledge::loadConfig" ref="e4e24baf6f35004fd1d788b1b28a7ad1" args="(const char *fileName)=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual int cma::Knowledge::loadConfig           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Load the configuration file, which is in text format. This file contains the configuration used in morphological analysis, such as part-of-speech configuration, etc. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>fileName</em>&nbsp;</td><td>the file name </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>0 for fail, 1 for success </dd></dl>
+
+<p>Implemented in <a class="el" href="classcma_1_1CMA__ME__Knowledge.html#74836fae9065f4c4869a2dde144a5f63">cma::CMA_ME_Knowledge</a>.</p>
 
 </div>
 </div><p>
@@ -300,6 +334,8 @@ Set the character encode type. If this function is not called, the default value
   </table>
 </dl>
 
+<p>Referenced by <a class="el" href="SeggerCMD_8cc-source.html#l00005">beginSeg()</a>.</p>
+
 </div>
 </div><p>
 <a class="anchor" name="26dac4378bb4192a598118abdef70ad9"></a><!-- doxytag: member="cma::Knowledge::getEncodeType" ref="26dac4378bb4192a598118abdef70ad9" args="() const " -->
@@ -320,14 +356,14 @@ Set the character encode type. If this function is not called, the default value
 <p>
 Get the character encode type. <dl class="return" compact><dt><b>Returns:</b></dt><dd>the encode type </dd></dl>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00136">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00142">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="knowledge_8h-source.html">knowledge.h</a><li>source/src/<a class="el" href="knowledge_8cpp.html">knowledge.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Apr 30 17:41:59 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 5 17:57:29 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

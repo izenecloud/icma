@@ -1,0 +1,71 @@
+\section{source/vsynonym/VSynonym.h File Reference}
+\label{VSynonym_8h}\index{source/vsynonym/VSynonym.h@{source/vsynonym/VSynonym.h}}
+contains associated files for the \doxyref{VSynonym}{p.}{classVSynonym} 
+
+{\tt \#include $<$map$>$}\par
+{\tt \#include $<$vector$>$}\par
+{\tt \#include $<$algorithm$>$}\par
+{\tt \#include $<$set$>$}\par
+{\tt \#include $<$string.h$>$}\par
+{\tt \#include $<$math.h$>$}\par
+{\tt \#include \char`\"{}strutil.h\char`\"{}}\par
+{\tt \#include \char`\"{}VTrie.h\char`\"{}}\par
+\subsection*{Classes}
+\begin{CompactItemize}
+\item 
+class {\bf VSynonym}
+\begin{CompactList}\small\item\em \doxyref{VSynonym}{p.}{classVSynonym} the Param Type of the VSynonymDictionary. \item\end{CompactList}\item 
+class {\bf VSynRetUnit}
+\begin{CompactList}\small\item\em The Unit of the \doxyref{VExpandedQuery}{p.}{classVExpandedQuery}. \item\end{CompactList}\item 
+class {\bf VExpandedQuery}
+\begin{CompactList}\small\item\em The type the of Expanded Query. \item\end{CompactList}\item 
+class {\bf VSynonymContainer}
+\begin{CompactList}\small\item\em the \doxyref{VTrie}{p.}{classVTrie} version of the Synonym Dictionary \item\end{CompactList}\end{CompactItemize}
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\#define {\bf VSYN\_\-INCRE\_\-SIZE}~51200
+\item 
+\#define {\bf VT\_\-NUM\_\-LEN}~2
+\item 
+\#define {\bf VT\_\-OFFSET\_\-LEN}~2
+\end{CompactItemize}
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+typedef uint16\_\-t \textbf{vtnum\_\-t}\label{VSynonym_8h_058bf89b42cca4f9144314fd37ae3e7f}
+
+\item 
+typedef uint16\_\-t \textbf{vtoffset\_\-t}\label{VSynonym_8h_c5c532362a6e6049a1376182267d897d}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+contains associated files for the \doxyref{VSynonym}{p.}{classVSynonym} 
+
+\begin{Desc}
+\item[Author:]vernkin \end{Desc}
+
+
+\subsection{Define Documentation}
+\index{VSynonym.h@{VSynonym.h}!VSYN\_\-INCRE\_\-SIZE@{VSYN\_\-INCRE\_\-SIZE}}
+\index{VSYN\_\-INCRE\_\-SIZE@{VSYN\_\-INCRE\_\-SIZE}!VSynonym.h@{VSynonym.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define VSYN\_\-INCRE\_\-SIZE~51200}\label{VSynonym_8h_560419fd93aa66cdfd64071decbad7df}
+
+
+50k \index{VSynonym.h@{VSynonym.h}!VT\_\-NUM\_\-LEN@{VT\_\-NUM\_\-LEN}}
+\index{VT\_\-NUM\_\-LEN@{VT\_\-NUM\_\-LEN}!VSynonym.h@{VSynonym.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define VT\_\-NUM\_\-LEN~2}\label{VSynonym_8h_468c7d54015432ae922f2ebf5c81aa3d}
+
+
+length of the number in the syns array 
+
+Referenced by VSynonym::getSynonymCount(), VSynonym::getWord(), and VSynonym::size().\index{VSynonym.h@{VSynonym.h}!VT\_\-OFFSET\_\-LEN@{VT\_\-OFFSET\_\-LEN}}
+\index{VT\_\-OFFSET\_\-LEN@{VT\_\-OFFSET\_\-LEN}!VSynonym.h@{VSynonym.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define VT\_\-OFFSET\_\-LEN~2}\label{VSynonym_8h_e2a1db0688a4679b0fcabc58a2628551}
+
+
+length of the offset in the syns array 
+
+Referenced by VSynonym::getSynonymCount(), VSynonym::getWord(), and VSynonym::size().

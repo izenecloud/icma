@@ -46,14 +46,16 @@ If insert failed, return 0, otherwise any value bigger than 0 And the informatio
 \item[Returns:]return 0 if insert fails \end{Desc}
 
 
-References VTrieNode::data, and VTrieNode::moreLong.
+References VTrieNode::data, VTrieNode::moreLong, VTCHILDS\_\-L, VTENTRY\_\-L, and VTSAMEPS\_\-L.
 
 Referenced by cma::POSTagger::appendWordPOS(), and VSynonymContainer::loadSynonyms().\index{VTrie@{VTrie}!optimize@{optimize}}
 \index{optimize@{optimize}!VTrie@{VTrie}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}void VTrie::optimize ()\hspace{0.3cm}{\tt  [inline]}}\label{classVTrie_29b855fd67fa0cb316c62c2fe59ec203}
 
 
-Optimize the data structure of the \doxyref{VTrie}{p.}{classVTrie}, it makes querying faster and use less memory. \index{VTrie@{VTrie}!search@{search}}
+Optimize the data structure of the \doxyref{VTrie}{p.}{classVTrie}, it makes querying faster and use less memory. 
+
+References VTCHILDS\_\-L, and VTKEY\_\-NUM.\index{VTrie@{VTrie}!search@{search}}
 \index{search@{search}!VTrie@{VTrie}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}int VTrie::search (const char $\ast$ {\em key}, \/  {\bf VTrieNode} $\ast$ {\em node})\hspace{0.3cm}{\tt  [inline]}}\label{classVTrie_cd15d39e9bb2b8b55f59693a13647a2a}
 
@@ -67,7 +69,7 @@ If string is not found, return 0, otherwise any value bigger than 0. And the inf
 \item[Returns:]return 0 if search fails \end{Desc}
 
 
-References VTrieNode::data, and VTrieNode::moreLong.
+References VTrieNode::data, VTrieNode::moreLong, VTCHILDS\_\-L, and VTENTRY\_\-L.
 
 Referenced by cma::POSTagger::appendWordPOS(), VSynonymContainer::get\_\-synonyms(), VSynonymContainer::loadSynonyms(), and VSynonymContainer::searchNgetSynonym().\index{VTrie@{VTrie}!find@{find}}
 \index{find@{find}!VTrie@{VTrie}}
@@ -83,7 +85,7 @@ The function of this method is to iterate trie node by each character. Parameter
 \item[Returns:]If following node does not exist, return value is 0, other wise bigger than 0. \end{Desc}
 
 
-References VTrieNode::data, VTrieNode::moreLong, VTrieNode::offset, and VTrieNode::state.
+References VTrieNode::data, VTrieNode::moreLong, VTrieNode::offset, VTrieNode::state, VTCHILDS\_\-L, and VTENTRY\_\-L.
 
 Referenced by cma::pocinner::StrBasedVTrie::search().\index{VTrie@{VTrie}!size@{size}}
 \index{size@{size}!VTrie@{VTrie}}
@@ -96,4 +98,4 @@ Referenced by VSynonymContainer::size().
 
 The documentation for this class was generated from the following file:\begin{CompactItemize}
 \item 
-source/vsynonym/VTrie.h\end{CompactItemize}
+source/vsynonym/{\bf VTrie.h}\end{CompactItemize}

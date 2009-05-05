@@ -1,0 +1,73 @@
+\section{source/src/CMAPOCTagger.cc File Reference}
+\label{CMAPOCTagger_8cc}\index{source/src/CMAPOCTagger.cc@{source/src/CMAPOCTagger.cc}}
+for the POC tagger using MaxEnt Model. 
+
+{\tt \#include $<$vector$>$}\par
+{\tt \#include \char`\"{}CMAPOCTagger.h\char`\"{}}\par
+{\tt \#include \char`\"{}CPPStringUtils.h\char`\"{}}\par
+{\tt \#include \char`\"{}strutil.h\char`\"{}}\par
+{\tt \#include \char`\"{}tokenizer.h\char`\"{}}\par
+{\tt \#include \char`\"{}cma\_\-ctype.h\char`\"{}}\par
+\subsection*{Namespaces}
+\begin{CompactItemize}
+\item 
+namespace \textbf{cma}
+\item 
+namespace \textbf{cma::pocinner}
+\end{CompactItemize}
+\subsection*{Classes}
+\begin{CompactItemize}
+\item 
+class {\bf cma::pocinner::StrBasedVTrie}
+\begin{CompactList}\small\item\em The utility class to search the string one by one. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\#define \textbf{POC\_\-TAG\_\-B}~1\label{CMAPOCTagger_8cc_357022548e14d085e3c93f3906bcccd9}
+
+\item 
+\#define \textbf{POC\_\-TAG\_\-E}~2\label{CMAPOCTagger_8cc_9bdb1f3b570b2741da85e468e4d9f6c9}
+
+\item 
+\#define \textbf{POC\_\-TAG\_\-B\_\-NAME}~\char`\"{}B\char`\"{}\label{CMAPOCTagger_8cc_d335e18aeb001bbc74ae9991723398d9}
+
+\item 
+\#define \textbf{POC\_\-TAG\_\-E\_\-NAME}~\char`\"{}E\char`\"{}\label{CMAPOCTagger_8cc_a88cc556dbff3f12beefe55268610c91}
+
+\item 
+\#define \textbf{DEFAULT\_\-POC}~POC\_\-TAG\_\-B\label{CMAPOCTagger_8cc_491f74f500e8d8fba02698dc4035719c}
+
+\item 
+\#define \textbf{POC\_\-TEMPLATE\_\-SIZE}~10\label{CMAPOCTagger_8cc_3685a42953194139b2746ed970c98059}
+
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void {\bf cma::pocinner::get\_\-poc\_\-zh\_\-context\_\-1} (vector$<$ string $>$ \&words, CharType $\ast$types, size\_\-t index, vector$<$ string $>$ \&context, CMA\_\-CType $\ast$ctype)
+\item 
+void {\bf cma::pocinner::insertCandidate} (uint8\_\-t pocCode, int index, double score, POCTagUnit $\ast$candidates, int \&lastIndex, size\_\-t \&canSize, size\_\-t N)
+\item 
+void {\bf cma::pocinner::combinePOCToWord} (vector$<$ string $>$ \&words, size\_\-t n, uint8\_\-t $\ast$tags, vector$<$ string $>$ \&seg)
+\item 
+void {\bf cma::get\_\-poc\_\-zh\_\-context} (vector$<$ string $>$ \&words, vector$<$ string $>$ \&tags, size\_\-t i, bool rareWord, vector$<$ string $>$ \&context, CMA\_\-CType $\ast$ctype)
+\item 
+void {\bf cma::poc\_\-train} (const char $\ast$file, const string \&cateName, Knowledge::EncodeType encType, string posDelimiter, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian)
+\end{CompactItemize}
+\subsection*{Variables}
+\begin{CompactItemize}
+\item 
+bool \textbf{cma::POC\_\-INIT\_\-FLAG} = false\label{namespacecma_835f0d6dd48a8037cf3d4a5a415a7323}
+
+\item 
+const string \textbf{cma::POC\_\-BOUNDARY} = \char`\"{}BoUnD\char`\"{}\label{namespacecma_6a315ae82b1eb14e31c1c281af3b041c}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+for the POC tagger using MaxEnt Model. 
+
+\begin{Desc}
+\item[Author:]vernkin\end{Desc}
+Created on March 24, 2009, 8:52 PM 

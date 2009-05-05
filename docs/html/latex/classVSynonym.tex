@@ -69,12 +69,16 @@ After calling \doxyref{getMatchedCount( )}{p.}{classVSynonym_fc7a33f76776609d882
 \item[Returns:]the num of synonyms in the indexth synonym entry \end{Desc}
 
 
+References VT\_\-NUM\_\-LEN, and VT\_\-OFFSET\_\-LEN.
+
 Referenced by size(), and testLoop().\index{VSynonym@{VSynonym}!getWord@{getWord}}
 \index{getWord@{getWord}!VSynonym@{VSynonym}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ VSynonym::getWord (int {\em index}, \/  int {\em offset})\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonym_67470a91b7c8e2f4b8f7240bbef78281}
 
 
 Return the string which is placed on index and offset. This method won't take bound check 
+
+References VT\_\-NUM\_\-LEN, and VT\_\-OFFSET\_\-LEN.
 
 Referenced by getHeadWord(), size(), and testLoop().\index{VSynonym@{VSynonym}!getHeadWord@{getHeadWord}}
 \index{getHeadWord@{getHeadWord}!VSynonym@{VSynonym}}
@@ -101,7 +105,7 @@ Get the size of the \doxyref{VSynonym}{p.}{classVSynonym} \begin{Desc}
 \item[Returns:]the size of the \doxyref{VSynonym}{p.}{classVSynonym} \end{Desc}
 
 
-References getMatchedCount(), getSynonymCount(), and getWord().\index{VSynonym@{VSynonym}!testLoop@{testLoop}}
+References getMatchedCount(), getSynonymCount(), getWord(), VT\_\-NUM\_\-LEN, and VT\_\-OFFSET\_\-LEN.\index{VSynonym@{VSynonym}!testLoop@{testLoop}}
 \index{testLoop@{testLoop}!VSynonym@{VSynonym}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}void VSynonym::testLoop ()\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonym_a66ade66fd6f36fa46b995e40c6a78b9}
 
@@ -112,4 +116,4 @@ References getMatchedCount(), getSynonymCount(), and getWord().
 
 The documentation for this class was generated from the following file:\begin{CompactItemize}
 \item 
-source/vsynonym/VSynonym.h\end{CompactItemize}
+source/vsynonym/{\bf VSynonym.h}\end{CompactItemize}

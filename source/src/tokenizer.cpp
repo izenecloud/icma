@@ -1,5 +1,5 @@
 /** \file tokenizer.cpp
- * 
+ * \brief Tokenizer tokenizes a raw input string in specific encoding to a sequence of characters.
  * \author Jun Jiang
  * \version 0.1
  * \date Mar 16, 2009

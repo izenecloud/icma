@@ -1,0 +1,45 @@
+\section{source/src/CMAPOSTagger.cc File Reference}
+\label{CMAPOSTagger_8cc}\index{source/src/CMAPOSTagger.cc@{source/src/CMAPOSTagger.cc}}
+for the POS tagger using MaxEnt Model. 
+
+{\tt \#include $<$vector$>$}\par
+{\tt \#include \char`\"{}VTrie.h\char`\"{}}\par
+{\tt \#include \char`\"{}cma\_\-wtype.h\char`\"{}}\par
+{\tt \#include \char`\"{}CMAPOSTagger.h\char`\"{}}\par
+\subsection*{Namespaces}
+\begin{CompactItemize}
+\item 
+namespace \textbf{cma}
+\item 
+namespace \textbf{cma::posinner}
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void \textbf{cma::posinner::get\_\-pos\_\-zh\_\-scontext\_\-1} (vector$<$ string $>$ \&words, string \&tag\_\-1, string \&tag\_\-2, int index, vector$<$ string $>$ \&context, CMA\_\-WType \&wtype)\label{namespacecma_1_1posinner_f49e6c147898b0b7d3e88af33c64e8f1}
+
+\item 
+void {\bf cma::get\_\-pos\_\-zh\_\-scontext} (vector$<$ string $>$ \&words, vector$<$ string $>$ \&tags, size\_\-t i, bool rareWord, vector$<$ string $>$ \&context, CMA\_\-CType $\ast$ctype)
+\item 
+void {\bf cma::pos\_\-train} (const char $\ast$file, const string \&cateFile, Knowledge::EncodeType encType, string posDelimiter, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian)
+\item 
+void \textbf{cma::insertCandidate} (string \&pos, int index, double score, POSTagUnit $\ast$candidates, int \&lastIndex, size\_\-t \&canSize, size\_\-t N)\label{namespacecma_dbf7620e7e9b8dd78dbcb87e648fa8ae}
+
+\end{CompactItemize}
+\subsection*{Variables}
+\begin{CompactItemize}
+\item 
+const string \textbf{cma::DEFAULT\_\-POS} = \char`\"{}n\char`\"{}\label{namespacecma_04d12652e76d2d5baa4c07f09fa9b639}
+
+\item 
+string \textbf{cma::POS\_\-BOUNDARY} = \char`\"{}BoUnD\char`\"{}\label{namespacecma_6d33cf1fe0a06dac555f3a85fec6c4a6}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+for the POS tagger using MaxEnt Model. 
+
+\begin{Desc}
+\item[Author:]vernkin\end{Desc}
+Created on March 20, 2009, 10:46 AM 

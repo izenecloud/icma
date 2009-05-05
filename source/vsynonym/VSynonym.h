@@ -1,8 +1,7 @@
-/* 
- * File:   VSynonym.h
- * Author: vernkin
- *
- * Created on January 21, 2009, 12:01 AM
+/**
+ * \file VSynonym.h
+ * \author vernkin
+ * \brief contains associated files for the VSynonym
  */
 
 #ifndef _VSYNONYM_H

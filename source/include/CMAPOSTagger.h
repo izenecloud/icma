@@ -1,9 +1,6 @@
-/* 
- * \brief for the POS tagger
+/** \file CMAPOSTagger.h
+ * \brief for the POS tagger using MaxEnt Model.
  *
- * for the POS tagger
- *
- * \file   CMAPOSTagger.h
  * \author vernkin
  *
  * Created on March 20, 2009, 10:46 AM
@@ -65,7 +62,6 @@ void pos_train(const char* file, const string& cateFile,
 /**
  * \brief to hold the objects in the N-best algorithm
  *
- * to hold the objects in the N-best algorithm
  */
 struct POSTagUnit{
     /**
@@ -201,10 +197,13 @@ private:
      */
     VTrie *trie_;
 
+    /** Whether the trie is created by the constructor */
     bool isInnerTrie_;
 
+    /** vector to hold the POS information */
     vector<set<string> > posVec_;
 
+    /** the encoding type */
     CMA_CType *ctype_;
 };
 

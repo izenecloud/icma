@@ -1,8 +1,11 @@
-/* 
+/** \file CMA_ME_Knowledge.h
  * 
+ * \brief The Knowledge class of the CMAC
+ *
  * \author vernkin
+ * \version 0.1
+ * \date Feb 17, 2009
  */
-
 #ifndef _CMA_ME_KNOWLEDGE_H
 #define	_CMA_ME_KNOWLEDGE_H
 
@@ -27,7 +30,6 @@ extern vector<string> ENCODING_VEC;
 /**
  * \brief Knowledge for the CMAC
  *
- * Knowledge for the CMAC
  */
 class CMA_ME_Knowledge : public Knowledge{
 

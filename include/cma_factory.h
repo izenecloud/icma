@@ -1,4 +1,5 @@
 /** \file cma_factory.h
+ * \brief CMA_Factory creates instances for Chinese morphological analysis.
  * 
  * \author Jun Jiang
  * \version 0.1
@@ -17,7 +18,6 @@ class Knowledge;
 /**
  * \brief CMA_Factory creates instances for Chinese morphological analysis.
  *
- * CMA_Factory creates instances for Chinese morphological analysis.
  */
 class CMA_Factory
 {

@@ -1,5 +1,5 @@
 /** \file cma_ctype.h
- * 
+ * \brief CMA_CType gives the character type information.
  * \author Vernkin
  * \version 0.1
  * \date Mar 10, 2009
@@ -53,9 +53,17 @@ public:
      */
     static CMA_CType* instance(Knowledge::EncodeType type);
 
+    /**
+     * Get the encoding type by the encode type string
+     *
+     * \param encType encode type string
+     * \return assicated Knowledge::EncodeType in the class Knowledge
+     */
     static Knowledge::EncodeType getEncType(string encType);
 
-
+    /**
+     * Destrucor
+     */
     virtual ~CMA_CType();
 
     /**

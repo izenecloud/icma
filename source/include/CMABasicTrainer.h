@@ -1,6 +1,6 @@
-/* 
+/** \file CMABasicTrainer.h
+ * \brief shared module for training the POC and POS MaxEnt model
  * \author vernkin
- *
  */
 
 #ifndef _CMABASICTRAINER_H
@@ -52,9 +52,15 @@ public:
     }
 
 public:
+    /** Word Frequenty Map and its counter */
     map<string, int> wordFreq_;
+
+    /** Feature Dictionary and its counter */
     map<string, int> featDict_;
+
+    /** Tag Dictionary for each word */
     map<string, map<string, int> > tagDict_;
+
     /** use special feature for rare word with frequency &lt; RARE [default=2] */
     int rareFreq_;
 
@@ -69,13 +75,16 @@ public:
     /** The maxent model */
     MaxentModel me;
 
+    /** output stream for the */
     ofstream *training_data;
 
     /** words, tags, i, rare_word, ret */
     context_t get_context;
 
+    /** the encoding type */
     CMA_CType *ctype_;
 
+    /** the pos delimiter */
     string posDelimiter;
 };
 

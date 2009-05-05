@@ -1,3 +1,10 @@
+/** \file CateStrTokenizer.cc
+ * \brief Category String Tokenizier
+ *
+ * Segment the string based on the char types, line letters, digits and so on
+ *
+ * \author vernkin
+ */
 #include "CateStrTokenizer.h"
 
 namespace cma{

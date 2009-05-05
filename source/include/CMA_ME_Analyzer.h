@@ -1,4 +1,5 @@
-/* 
+/** \file CMA_ME_Analyzer.h
+ * \brief Analyzer for the CMAC
  * 
  * \author vernkin
  *
@@ -23,7 +24,6 @@ namespace cma
 /**
  * \brief Analyzer for the CMAC
  *
- * Analyzer for the CMAC
  */
 class CMA_ME_Analyzer : public Analyzer
 {
@@ -84,6 +84,9 @@ private:
     /** string buffer stores result for \e runWithString */
     string strBuf_;
 
+    /**
+     * The CMA_CType object to keep the encoding
+     */
     CMA_CType* ctype_;
 };
 

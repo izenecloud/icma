@@ -21,8 +21,8 @@
 <a name="l00012"></a>00012 
 <a name="l00013"></a>00013 <span class="keyword">using</span> std::string;
 <a name="l00014"></a>00014 
-<a name="l00015"></a>00015 <span class="preprocessor">#include "<a class="code" href="knowledge_8h.html">knowledge.h</a>"</span> <span class="comment">// Knowledge::EncodeType</span>
-<a name="l00016"></a>00016 <span class="preprocessor">#include "cmacconfig.h"</span>
+<a name="l00015"></a>00015 <span class="preprocessor">#include "<a class="code" href="knowledge_8h.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">knowledge.h</a>"</span> <span class="comment">// Knowledge::EncodeType</span>
+<a name="l00016"></a>00016 <span class="preprocessor">#include "<a class="code" href="cmacconfig_8h.html" title="shared configuration header file for the whole CMAC project">cmacconfig.h</a>"</span>
 <a name="l00017"></a>00017 
 <a name="l00018"></a>00018 <span class="keyword">namespace </span>cma
 <a name="l00019"></a>00019 {
@@ -47,26 +47,25 @@
 <a name="l00048"></a>00048 <span class="keyword">public</span>:
 <a name="l00054"></a>00054     <span class="keyword">static</span> <a class="code" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a>* <a class="code" href="classcma_1_1CMA__CType.html#a0a1b4e5959587032b22036c64790314">instance</a>(<a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> type);
 <a name="l00055"></a>00055 
-<a name="l00056"></a>00056     <span class="keyword">static</span> <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> getEncType(<span class="keywordtype">string</span> encType);
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059     <span class="keyword">virtual</span> ~<a class="code" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a>();
-<a name="l00060"></a>00060 
-<a name="l00067"></a>00067     <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__CType.html#00f7e99cea12e9db504629c4a6cdb2d4">getByteCount</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span> = 0;
+<a name="l00062"></a>00062     <span class="keyword">static</span> <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> <a class="code" href="classcma_1_1CMA__CType.html#2a912dfae4c56e70a20f920ac564890b">getEncType</a>(<span class="keywordtype">string</span> encType);
+<a name="l00063"></a>00063 
+<a name="l00067"></a>00067     <span class="keyword">virtual</span> <a class="code" href="classcma_1_1CMA__CType.html#a5069cd1dc6794e4744e3fbcac7afbd6">~CMA_CType</a>();
 <a name="l00068"></a>00068 
-<a name="l00076"></a>00076     <span class="keyword">virtual</span> CharType <a class="code" href="classcma_1_1CMA__CType.html#45412869e7ededc53dcc432d43d6a025">getCharType</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p, CharType preType,
-<a name="l00077"></a>00077             <span class="keyword">const</span> <span class="keywordtype">char</span>* nextP) <span class="keyword">const</span> = 0;
-<a name="l00078"></a>00078 
-<a name="l00084"></a>00084     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__CType.html#b9fbb6aa32fd36bb3838b48ffb92bf24">isPunct</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
-<a name="l00085"></a>00085 
-<a name="l00091"></a>00091     <span class="keywordtype">size_t</span> <a class="code" href="classcma_1_1CMA__CType.html#4583d638f7336cf0a548905e8e88f826">length</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
-<a name="l00092"></a>00092 };
+<a name="l00075"></a>00075     <span class="keyword">virtual</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__CType.html#00f7e99cea12e9db504629c4a6cdb2d4">getByteCount</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span> = 0;
+<a name="l00076"></a>00076 
+<a name="l00084"></a>00084     <span class="keyword">virtual</span> CharType <a class="code" href="classcma_1_1CMA__CType.html#45412869e7ededc53dcc432d43d6a025">getCharType</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p, CharType preType,
+<a name="l00085"></a>00085             <span class="keyword">const</span> <span class="keywordtype">char</span>* nextP) <span class="keyword">const</span> = 0;
+<a name="l00086"></a>00086 
+<a name="l00092"></a>00092     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__CType.html#b9fbb6aa32fd36bb3838b48ffb92bf24">isPunct</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
 <a name="l00093"></a>00093 
-<a name="l00094"></a>00094 } <span class="comment">// namespace cma</span>
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096 <span class="preprocessor">#endif // CMA_CTYPE_H</span>
+<a name="l00099"></a>00099     <span class="keywordtype">size_t</span> <a class="code" href="classcma_1_1CMA__CType.html#4583d638f7336cf0a548905e8e88f826">length</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
+<a name="l00100"></a>00100 };
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102 } <span class="comment">// namespace cma</span>
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104 <span class="preprocessor">#endif // CMA_CTYPE_H</span>
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Apr 30 17:41:59 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 5 17:57:29 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

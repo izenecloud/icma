@@ -1,0 +1,68 @@
+\section{source/include/CMABasicTrainer.h File Reference}
+\label{CMABasicTrainer_8h}\index{source/include/CMABasicTrainer.h@{source/include/CMABasicTrainer.h}}
+shared module for training the POC and POS MaxEnt model 
+
+{\tt \#include $<$string$>$}\par
+{\tt \#include $<$vector$>$}\par
+{\tt \#include $<$map$>$}\par
+{\tt \#include $<$boost/tokenizer.hpp$>$}\par
+{\tt \#include $<$fstream$>$}\par
+{\tt \#include \char`\"{}cmacconfig.h\char`\"{}}\par
+{\tt \#include \char`\"{}maxentmodel.hpp\char`\"{}}\par
+{\tt \#include \char`\"{}knowledge.h\char`\"{}}\par
+{\tt \#include \char`\"{}cma\_\-ctype.h\char`\"{}}\par
+\subsection*{Namespaces}
+\begin{CompactItemize}
+\item 
+namespace \textbf{cma}
+\end{CompactItemize}
+\subsection*{Classes}
+\begin{CompactItemize}
+\item 
+class {\bf cma::TrainerData}
+\begin{CompactList}\small\item\em The class to hold data required in the training process. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+typedef void($\ast$ {\bf cma::context\_\-t} )(vector$<$ string $>$ \&, vector$<$ string $>$ \&, size\_\-t, bool, vector$<$ string $>$ \&, CMA\_\-CType $\ast$ctype)
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void {\bf cma::split\_\-tag} (const string \&s, vector$<$ string $>$ \&words, vector$<$ string $>$ \&tags, string posDelimiter)
+\item 
+void {\bf cma::gather\_\-feature} (TrainerData $\ast$data, string \&word, vector$<$ string $>$ \&context, string \&tag)
+\item 
+void {\bf cma::add\_\-event} (TrainerData $\ast$data, string \&word, vector$<$ string $>$ \&context, string \&tag)
+\item 
+void {\bf cma::save\_\-training\_\-data} (TrainerData $\ast$data, string \&word, vector$<$ string $>$ \&context, string \&tag)
+\item 
+void {\bf cma::add\_\-heldout\_\-event} (TrainerData $\ast$data, string \&word, vector$<$ string $>$ \&context, string \&tag)
+\item 
+void {\bf cma::gather\_\-word\_\-freq} (TrainerData $\ast$data, const char $\ast$file)
+\item 
+void {\bf cma::extract\_\-feature} (TrainerData $\ast$data, const char $\ast$file, void($\ast$func)(TrainerData $\ast$, string \&, vector$<$ string $>$ \&, string \&))
+\item 
+void {\bf cma::save\_\-word\_\-freq} (TrainerData $\ast$data, const char $\ast$file)
+\item 
+void {\bf cma::save\_\-tag\_\-dict} (TrainerData $\ast$data, const char $\ast$file)
+\item 
+void {\bf cma::load\_\-tag\_\-dict} (map$<$ string, map$<$ string, int $>$ $>$ $\ast$tagDict, const char $\ast$file)
+\item 
+void {\bf cma::save\_\-features} (TrainerData $\ast$data, const char $\ast$file)
+\item 
+void {\bf cma::cutoff\_\-feature} (TrainerData $\ast$data)
+\item 
+void {\bf cma::train} (TrainerData $\ast$data, const char $\ast$file, const string cateName, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian, bool isPOS)
+\item 
+void {\bf cma::create\_\-poc\_\-meterial} (const char $\ast$inFile, const char $\ast$outFile, Knowledge::EncodeType type, string posDelimiter)
+\item 
+void {\bf cma::fetchSegmentedFile} (const char $\ast$inFile, const char $\ast$outFile, string posDelimiter, bool keepTag, bool keepSeparator)
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+shared module for training the POC and POS MaxEnt model 
+
+\begin{Desc}
+\item[Author:]vernkin \end{Desc}

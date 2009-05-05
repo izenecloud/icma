@@ -1,5 +1,10 @@
-/**
+/** \file CMA_ME_Knowledge.cc
+ *
+ * \brief The Knowledge class of the CMAC
+ *
  * \author vernkin
+ * \version 0.1
+ * \date Feb 17, 2009
  */
 
 #include <string>

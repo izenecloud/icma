@@ -1,8 +1,7 @@
-/*
- * File:   VTrie.h
- * Author: vernkin
- *
- * Created on January 19, 2009, 9:23 AM
+/**
+ * \file VTrie.h
+ * \author vernkin
+ * \brief hold the VTrie and the VTrieNode
  */
 
 #include <assert.h>

@@ -1,3 +1,9 @@
+/** \file CMA_ME_Analyzer.cc
+ * \brief Analyzer for the CMAC
+ *
+ * \author vernkin
+ *
+ */
 
 #include "VTrie.h"
 

@@ -1,0 +1,61 @@
+\section{source/src/CPPStringUtils.cc File Reference}
+\label{CPPStringUtils_8cc}\index{source/src/CPPStringUtils.cc@{source/src/CPPStringUtils.cc}}
+the CPP String Utility file 
+
+{\tt \#include \char`\"{}CPPStringUtils.h\char`\"{}}\par
+{\tt \#include $<$boost/tokenizer.hpp$>$}\par
+{\tt \#include $<$fstream$>$}\par
+{\tt \#include \char`\"{}tc\_\-sc.inc\char`\"{}}\par
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\#define \textbf{SIZE\_\-BUFFER}~512\label{CPPStringUtils_8cc_4dea39042071768c1e115b0ebbfc52f2}
+
+\item 
+\#define \textbf{SIZE\_\-BUFFER\_\-256}~256\label{CPPStringUtils_8cc_a4577a3eb0be47804f1ec7e20554d163}
+
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+const boost::char\_\-separator$<$ char $>$ \textbf{CPUNIT\_\-SEP} (\char`\"{} \char`\"{})\label{CPPStringUtils_8cc_704b52ee55bfc9528ac9a84441848f09}
+
+\end{CompactItemize}
+\subsection*{Variables}
+\begin{CompactItemize}
+\item 
+const string \textbf{UTF8\_\-N} = \char`\"{}utf8\char`\"{}\label{CPPStringUtils_8cc_4b94e31764062d505344847ad696ac2c}
+
+\item 
+const unsigned char \textbf{diacriticExchangeTable} [$\,$]
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+the CPP String Utility file 
+
+
+
+\subsection{Variable Documentation}
+\index{CPPStringUtils.cc@{CPPStringUtils.cc}!diacriticExchangeTable@{diacriticExchangeTable}}
+\index{diacriticExchangeTable@{diacriticExchangeTable}!CPPStringUtils.cc@{CPPStringUtils.cc}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const unsigned char diacriticExchangeTable[$\,$]}\label{CPPStringUtils_8cc_f72653d4ea4ec44c18974a29d6991d5e}
+
+
+\textbf{Initial value:}
+
+\begin{Code}\begin{verbatim}
+{
+        
+    
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x53, 0x00, 0x00, 0x00, 0x5a, 0x00, 
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x73, 0x00, 0x00, 0x00, 0x7a, 0x59, 
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+        0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x00, 0x43, 0x45, 0x45, 0x45, 0x45, 0x49, 0x49, 0x49, 0x49, 
+        0x44, 0x4E, 0x4F, 0x4F, 0x4F, 0x4F, 0x4F, 0x00, 0x4F, 0x55, 0x55, 0x55, 0x55, 0x59, 0x00, 0x00, 
+        0x61, 0x61, 0x61, 0x61, 0x61, 0x61, 0x00, 0x63, 0x65, 0x65, 0x65, 0x65, 0x69, 0x69, 0x69, 0x69, 
+        0x00, 0x6E, 0x6F, 0x6F, 0x6F, 0x6F, 0x6F, 0x00, 0x6f, 0x75, 0x75, 0x75, 0x75, 0x79, 0x00, 0x00, 
+}
+\end{verbatim}
+\end{Code}

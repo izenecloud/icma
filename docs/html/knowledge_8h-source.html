@@ -20,45 +20,47 @@
 <a name="l00011"></a>00011 <span class="keyword">namespace </span>cma
 <a name="l00012"></a>00012 {
 <a name="l00013"></a>00013 
-<a name="l00019"></a><a class="code" href="classcma_1_1Knowledge.html">00019</a> <span class="keyword">class </span><a class="code" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a>
-<a name="l00020"></a>00020 {
-<a name="l00021"></a>00021 <span class="keyword">public</span>:
-<a name="l00022"></a>00022     <a class="code" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a>();
-<a name="l00023"></a>00023     <span class="keyword">virtual</span> ~<a class="code" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a>();
-<a name="l00024"></a>00024 
-<a name="l00030"></a>00030     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#920159ccb5752992ea7ac7e87eedd1c0">loadSystemDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName) = 0;
-<a name="l00031"></a>00031 
-<a name="l00037"></a>00037     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#739fb78f864bef65fbb70b728492311f">loadUserDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName) = 0;
-<a name="l00038"></a>00038 
-<a name="l00045"></a>00045     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#992bf7b7cd77c8846bc1c6cd22067d07">loadStopWordDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName) = 0;
-<a name="l00046"></a>00046 
-<a name="l00052"></a>00052     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#c54810dbc59c5c5df69c7bef38fb0d51">loadStatModel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName) = 0;
-<a name="l00053"></a>00053 
-<a name="l00059"></a>00059     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#4ceb02d9154efd5bd8e35dfab9777644">loadPOSModel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName) = 0;
-<a name="l00060"></a>00060 
-<a name="l00067"></a>00067     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#7c89dffabc4e75961d760586db283d1d">encodeSystemDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* txtFileName, <span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName) = 0;
-<a name="l00068"></a>00068 
-<a name="l00072"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">00072</a>     <span class="keyword">enum</span> <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a>
-<a name="l00073"></a>00073     {
-<a name="l00074"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d763b86f1378cda2ae30f3690a8c67b0d">00074</a>         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d763b86f1378cda2ae30f3690a8c67b0d" title="GB 2312 character type.">ENCODE_TYPE_GB2312</a>, 
-<a name="l00075"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfd187e4741157876b1a805c0c3ddec27">00075</a>         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfd187e4741157876b1a805c0c3ddec27" title="Big 5 character type.">ENCODE_TYPE_BIG5</a>, 
-<a name="l00076"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dc1a4019681243fa73708e4879f3b951d">00076</a>         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dc1a4019681243fa73708e4879f3b951d" title="UTF8 character type.">ENCODE_TYPE_UTF8</a>, 
-<a name="l00077"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfeaa8f94b6c57c430302ea94c41b1d8a">00077</a>         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfeaa8f94b6c57c430302ea94c41b1d8a" title="the count of character types">ENCODE_TYPE_NUM</a> 
-<a name="l00078"></a>00078     };
-<a name="l00079"></a>00079 
-<a name="l00085"></a>00085     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Knowledge.html#199293f2ec784e7883805117e59b109c">setEncodeType</a>(<a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a> type);
+<a name="l00018"></a><a class="code" href="classcma_1_1Knowledge.html">00018</a> <span class="keyword">class </span><a class="code" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a>
+<a name="l00019"></a>00019 {
+<a name="l00020"></a>00020 <span class="keyword">public</span>:
+<a name="l00021"></a>00021     <a class="code" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a>();
+<a name="l00022"></a>00022     <span class="keyword">virtual</span> ~<a class="code" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a>();
+<a name="l00023"></a>00023 
+<a name="l00029"></a>00029     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#920159ccb5752992ea7ac7e87eedd1c0">loadSystemDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName) = 0;
+<a name="l00030"></a>00030 
+<a name="l00036"></a>00036     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#739fb78f864bef65fbb70b728492311f">loadUserDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName) = 0;
+<a name="l00037"></a>00037 
+<a name="l00044"></a>00044     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#992bf7b7cd77c8846bc1c6cd22067d07">loadStopWordDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName) = 0;
+<a name="l00045"></a>00045 
+<a name="l00051"></a>00051     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#c54810dbc59c5c5df69c7bef38fb0d51">loadStatModel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName) = 0;
+<a name="l00052"></a>00052 
+<a name="l00058"></a>00058     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#4ceb02d9154efd5bd8e35dfab9777644">loadPOSModel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName) = 0;
+<a name="l00059"></a>00059 
+<a name="l00066"></a>00066     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#e4e24baf6f35004fd1d788b1b28a7ad1">loadConfig</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName) = 0;
+<a name="l00067"></a>00067 
+<a name="l00074"></a>00074     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#7c89dffabc4e75961d760586db283d1d">encodeSystemDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* txtFileName, <span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName) = 0;
+<a name="l00075"></a>00075 
+<a name="l00079"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">00079</a>     <span class="keyword">enum</span> <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a>
+<a name="l00080"></a>00080     {
+<a name="l00081"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d763b86f1378cda2ae30f3690a8c67b0d">00081</a>         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d763b86f1378cda2ae30f3690a8c67b0d" title="GB 2312 character type.">ENCODE_TYPE_GB2312</a>, 
+<a name="l00082"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfd187e4741157876b1a805c0c3ddec27">00082</a>         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfd187e4741157876b1a805c0c3ddec27" title="Big 5 character type.">ENCODE_TYPE_BIG5</a>, 
+<a name="l00083"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dc1a4019681243fa73708e4879f3b951d">00083</a>         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dc1a4019681243fa73708e4879f3b951d" title="UTF8 character type.">ENCODE_TYPE_UTF8</a>, 
+<a name="l00084"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfeaa8f94b6c57c430302ea94c41b1d8a">00084</a>         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfeaa8f94b6c57c430302ea94c41b1d8a" title="the count of character types">ENCODE_TYPE_NUM</a> 
+<a name="l00085"></a>00085     };
 <a name="l00086"></a>00086 
-<a name="l00091"></a>00091     <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a> <a class="code" href="classcma_1_1Knowledge.html#26dac4378bb4192a598118abdef70ad9">getEncodeType</a>() <span class="keyword">const</span>;
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093 <span class="keyword">private</span>:
-<a name="l00095"></a>00095     <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a> encodeType_;
-<a name="l00096"></a>00096 };
-<a name="l00097"></a>00097 
-<a name="l00098"></a>00098 }
+<a name="l00092"></a>00092     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Knowledge.html#199293f2ec784e7883805117e59b109c">setEncodeType</a>(<a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a> type);
+<a name="l00093"></a>00093 
+<a name="l00098"></a>00098     <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a> <a class="code" href="classcma_1_1Knowledge.html#26dac4378bb4192a598118abdef70ad9">getEncodeType</a>() <span class="keyword">const</span>;
 <a name="l00099"></a>00099 
-<a name="l00100"></a>00100 <span class="preprocessor">#endif // CMA_KNOWLEDGE_H</span>
+<a name="l00100"></a>00100 <span class="keyword">private</span>:
+<a name="l00102"></a>00102     <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a> encodeType_;
+<a name="l00103"></a>00103 };
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105 }
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107 <span class="preprocessor">#endif // CMA_KNOWLEDGE_H</span>
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Apr 30 17:41:59 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 5 17:57:29 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

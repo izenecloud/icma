@@ -1,0 +1,42 @@
+\section{source/include/CMAPOSTagger.h File Reference}
+\label{CMAPOSTagger_8h}\index{source/include/CMAPOSTagger.h@{source/include/CMAPOSTagger.h}}
+for the POS tagger using MaxEnt Model. 
+
+{\tt \#include \char`\"{}CMABasicTrainer.h\char`\"{}}\par
+{\tt \#include \char`\"{}VTrie.h\char`\"{}}\par
+{\tt \#include \char`\"{}strutil.h\char`\"{}}\par
+{\tt \#include \char`\"{}CPPStringUtils.h\char`\"{}}\par
+{\tt \#include \char`\"{}cma\_\-ctype.h\char`\"{}}\par
+{\tt \#include \char`\"{}cma\_\-wtype.h\char`\"{}}\par
+{\tt \#include $<$algorithm$>$}\par
+{\tt \#include $<$math.h$>$}\par
+{\tt \#include $<$vector$>$}\par
+{\tt \#include $<$set$>$}\par
+{\tt \#include $<$string$>$}\par
+\subsection*{Namespaces}
+\begin{CompactItemize}
+\item 
+namespace \textbf{cma}
+\end{CompactItemize}
+\subsection*{Classes}
+\begin{CompactItemize}
+\item 
+struct {\bf cma::POSTagUnit}
+\begin{CompactList}\small\item\em to hold the objects in the N-best algorithm \item\end{CompactList}\item 
+class {\bf cma::POSTagger}
+\begin{CompactList}\small\item\em Tagging the POS Information Tagging the POS using the maxent model. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void {\bf cma::get\_\-pos\_\-zh\_\-scontext} (vector$<$ string $>$ \&words, vector$<$ string $>$ \&tags, size\_\-t i, bool rareWord, vector$<$ string $>$ \&context, CMA\_\-CType $\ast$ctype)
+\item 
+void {\bf cma::pos\_\-train} (const char $\ast$file, const string \&cateFile, Knowledge::EncodeType encType, string posDelimiter, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian)
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+for the POS tagger using MaxEnt Model. 
+
+\begin{Desc}
+\item[Author:]vernkin\end{Desc}
+Created on March 20, 2009, 10:46 AM 

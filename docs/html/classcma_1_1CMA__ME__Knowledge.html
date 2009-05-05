@@ -74,9 +74,7 @@ Inheritance diagram for cma::CMA_ME_Knowledge:</div>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
-<a class="el" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a> for the CMAC. 
-<p>
-<a class="el" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a> for the CMAC <hr><h2>Member Function Documentation</h2>
+<a class="el" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a> for the CMAC. <hr><h2>Member Function Documentation</h2>
 <a class="anchor" name="247a1219355019e39e7caecfb84a8636"></a><!-- doxytag: member="cma::CMA_ME_Knowledge::loadSystemDict" ref="247a1219355019e39e7caecfb84a8636" args="(const char *binFileName)" -->
 <div class="memitem">
 <div class="memproto">
@@ -103,7 +101,7 @@ Load the system dictionary file, which is in binary format. <dl compact><dt><b>P
 
 <p>Implements <a class="el" href="classcma_1_1Knowledge.html#920159ccb5752992ea7ac7e87eedd1c0">cma::Knowledge</a>.</p>
 
-<p>References <a class="el" href="CMAPOSTagger_8cc-source.html#l00427">cma::POSTagger::appendWordPOS()</a>.</p>
+<p>References <a class="el" href="CMAPOSTagger_8cc-source.html#l00434">cma::POSTagger::appendWordPOS()</a>.</p>
 
 </div>
 </div><p>
@@ -133,7 +131,7 @@ Load the user dictionary file, which is in text format. <dl compact><dt><b>Param
 
 <p>Implements <a class="el" href="classcma_1_1Knowledge.html#739fb78f864bef65fbb70b728492311f">cma::Knowledge</a>.</p>
 
-<p>References <a class="el" href="CMAPOSTagger_8cc-source.html#l00427">cma::POSTagger::appendWordPOS()</a>.</p>
+<p>References <a class="el" href="CMAPOSTagger_8cc-source.html#l00434">cma::POSTagger::appendWordPOS()</a>.</p>
 
 </div>
 </div><p>
@@ -196,7 +194,7 @@ Get the Synonyms of the specific word <dl compact><dt><b>Parameters:</b></dt><dd
   </table>
 </dl>
 
-<p>References <a class="el" href="VSynonym_8h-source.html#l00338">VSynonymContainer::get_synonyms()</a>.</p>
+<p>References <a class="el" href="VSynonym_8h-source.html#l00337">VSynonymContainer::get_synonyms()</a>.</p>
 
 </div>
 </div><p>
@@ -310,6 +308,8 @@ Load the configuration file, which is in text format. This file contains the con
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>0 for fail, 1 for success </dd></dl>
 
+<p>Implements <a class="el" href="classcma_1_1Knowledge.html#e4e24baf6f35004fd1d788b1b28a7ad1">cma::Knowledge</a>.</p>
+
 <p>References <a class="el" href="pos__table_8cpp-source.html#l00040">cma::POSTable::instance()</a>, and <a class="el" href="pos__table_8cpp-source.html#l00093">cma::POSTable::loadConfig()</a>.</p>
 
 </div>
@@ -370,7 +370,7 @@ Encode the system dictionary file from text to binary format. <dl compact><dt><b
 <p>
 Get the segment tagger. <dl class="return" compact><dt><b>Returns:</b></dt><dd>pointer to tagger </dd></dl>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00136">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00142">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
 
 </div>
 </div><p>
@@ -392,7 +392,7 @@ Get the segment tagger. <dl class="return" compact><dt><b>Returns:</b></dt><dd>p
 <p>
 Get the segment tagger. <dl class="return" compact><dt><b>Returns:</b></dt><dd>pointer to tagger </dd></dl>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00136">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00142">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
 
 </div>
 </div><p>
@@ -414,7 +414,7 @@ Get the segment tagger. <dl class="return" compact><dt><b>Returns:</b></dt><dd>p
 
 <p>
 Whether the specific word is stop word 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00023">cma::CMA_ME_Analyzer::runWithSentence()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00029">cma::CMA_ME_Analyzer::runWithSentence()</a>.</p>
 
 </div>
 </div><p>
@@ -456,14 +456,14 @@ Get the <a class="el" href="classVTrie.html" title="VTrie is a variant of the Ra
 
 <p>
 Invoked by the <a class="el" href="classcma_1_1CMA__ME__Knowledge.html" title="Knowledge for the CMAC.">CMA_ME_Knowledge</a> Constructor 
-<p>References <a class="el" href="knowledge_8h-source.html#l00075">cma::Knowledge::ENCODE_TYPE_BIG5</a>, <a class="el" href="knowledge_8h-source.html#l00074">cma::Knowledge::ENCODE_TYPE_GB2312</a>, <a class="el" href="knowledge_8h-source.html#l00077">cma::Knowledge::ENCODE_TYPE_NUM</a>, and <a class="el" href="knowledge_8h-source.html#l00076">cma::Knowledge::ENCODE_TYPE_UTF8</a>.</p>
+<p>References <a class="el" href="knowledge_8h-source.html#l00082">cma::Knowledge::ENCODE_TYPE_BIG5</a>, <a class="el" href="knowledge_8h-source.html#l00081">cma::Knowledge::ENCODE_TYPE_GB2312</a>, <a class="el" href="knowledge_8h-source.html#l00084">cma::Knowledge::ENCODE_TYPE_NUM</a>, and <a class="el" href="knowledge_8h-source.html#l00083">cma::Knowledge::ENCODE_TYPE_UTF8</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
-<li>source/include/<a class="el" href="CMA__ME__Knowledge_8h-source.html">CMA_ME_Knowledge.h</a><li>source/src/CMA_ME_Knowledge.cc</ul>
+<li>source/include/<a class="el" href="CMA__ME__Knowledge_8h-source.html">CMA_ME_Knowledge.h</a><li>source/src/<a class="el" href="CMA__ME__Knowledge_8cc.html">CMA_ME_Knowledge.cc</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Apr 30 17:41:59 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 5 17:57:29 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

@@ -1,0 +1,39 @@
+\section{source/include/CMAPOCTagger.h File Reference}
+\label{CMAPOCTagger_8h}\index{source/include/CMAPOCTagger.h@{source/include/CMAPOCTagger.h}}
+for the POC tagger using MaxEnt Model. 
+
+{\tt \#include \char`\"{}cmacconfig.h\char`\"{}}\par
+{\tt \#include \char`\"{}CMABasicTrainer.h\char`\"{}}\par
+{\tt \#include \char`\"{}types.h\char`\"{}}\par
+{\tt \#include \char`\"{}VTrie.h\char`\"{}}\par
+{\tt \#include $<$algorithm$>$}\par
+{\tt \#include $<$math.h$>$}\par
+{\tt \#include $<$set$>$}\par
+{\tt \#include $<$map$>$}\par
+\subsection*{Namespaces}
+\begin{CompactItemize}
+\item 
+namespace \textbf{cma}
+\end{CompactItemize}
+\subsection*{Classes}
+\begin{CompactItemize}
+\item 
+struct {\bf cma::POCTagUnit}
+\begin{CompactList}\small\item\em to hold the objects in the N-best algorithm \item\end{CompactList}\item 
+class {\bf cma::SegTagger}
+\begin{CompactList}\small\item\em segment the string segment the string using maxent model \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void {\bf cma::get\_\-poc\_\-zh\_\-scontext} (vector$<$ string $>$ \&words, vector$<$ string $>$ \&tags, size\_\-t i, bool rareWord, vector$<$ string $>$ \&context, CMA\_\-CType $\ast$ctype)
+\item 
+void {\bf cma::poc\_\-train} (const char $\ast$file, const string \&cateName, Knowledge::EncodeType encType, string posDelimiter, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian)
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+for the POC tagger using MaxEnt Model. 
+
+\begin{Desc}
+\item[Author:]vernkin\end{Desc}
+Created on March 24, 2009, 8:52 PM 

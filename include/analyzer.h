@@ -1,5 +1,5 @@
 /** \file analyzer.h
- *
+ * \brief Analyzer executes the Chinese morphological analysis.
  * \author Jun Jiang
  * \version 0.1
  * \date Feb 17, 2009

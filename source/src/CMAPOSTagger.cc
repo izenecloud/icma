@@ -1,3 +1,10 @@
+/** \file CMAPOSTagger.cc
+ * \brief for the POS tagger using MaxEnt Model.
+ *
+ * \author vernkin
+ *
+ * Created on March 20, 2009, 10:46 AM
+ */
 
 #include <vector>
 

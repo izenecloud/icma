@@ -1,8 +1,9 @@
-/* 
+/** \file CateStrTokenizer.h 
  * \brief Category String Tokenizier
  *
- * \author vernkin
+ * Segment the string based on the char types, line letters, digits and so on
  *
+ * \author vernkin
  */
 
 #ifndef _CATESTRTOKENIZER_H
@@ -24,14 +25,18 @@ namespace cma{
  * Record the index and category of the specific index
  */
 struct CatePoint{
+    /**
+     * The index in the whole string
+     */
     int index;
+
     /**
      * Three Type: Letter/Digit/Punctuation
      */
     CharType type;
 };
 
-/*
+/**
  * \brief Category String Tokenizier
  *
  * Segment the string based on the char types, line letters, digits and so on

@@ -44,6 +44,8 @@ Inheritance diagram for cma::CMA_CType:</div>
 <a href="classcma_1_1CMA__CType-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#a5069cd1dc6794e4744e3fbcac7afbd6">~CMA_CType</a> ()</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#00f7e99cea12e9db504629c4a6cdb2d4">getByteCount</a> (const char *p) const =0</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual CharType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#45412869e7ededc53dcc432d43d6a025">getCharType</a> (const char *p, CharType preType, const char *nextP) const =0</td></tr>
@@ -55,14 +57,33 @@ Inheritance diagram for cma::CMA_CType:</div>
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="classcma_1_1CMA__CType.html">CMA_CType</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#a0a1b4e5959587032b22036c64790314">instance</a> (<a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> type)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="2a912dfae4c56e70a20f920ac564890b"></a><!-- doxytag: member="cma::CMA_CType::getEncType" ref="2a912dfae4c56e70a20f920ac564890b" args="(string encType)" -->
-static <a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><b>getEncType</b> (string encType)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#2a912dfae4c56e70a20f920ac564890b">getEncType</a> (string encType)</td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 <a class="el" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a> gives the character type information. 
 <p>
-<a class="el" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a> gives the character type information. <hr><h2>Member Function Documentation</h2>
+<a class="el" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a> gives the character type information. <hr><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" name="a5069cd1dc6794e4744e3fbcac7afbd6"></a><!-- doxytag: member="cma::CMA_CType::~CMA_CType" ref="a5069cd1dc6794e4744e3fbcac7afbd6" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cma::CMA_CType::~CMA_CType           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Destrucor 
+</div>
+</div><p>
+<hr><h2>Member Function Documentation</h2>
 <a class="anchor" name="a0a1b4e5959587032b22036c64790314"></a><!-- doxytag: member="cma::CMA_CType::instance" ref="a0a1b4e5959587032b22036c64790314" args="(Knowledge::EncodeType type)" -->
 <div class="memitem">
 <div class="memproto">
@@ -87,9 +108,38 @@ Create an instance of <em><a class="el" href="classcma_1_1CMA__CType.html" title
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the pointer to instance </dd></dl>
 
-<p>References <a class="el" href="knowledge_8h-source.html#l00075">cma::Knowledge::ENCODE_TYPE_BIG5</a>, <a class="el" href="knowledge_8h-source.html#l00074">cma::Knowledge::ENCODE_TYPE_GB2312</a>, <a class="el" href="cma__ctype__big5_8cpp-source.html#l00164">cma::CMA_CType_Big5::instance()</a>, and <a class="el" href="cma__ctype__gb2312_8cpp-source.html#l00166">cma::CMA_CType_GB2312::instance()</a>.</p>
+<p>References <a class="el" href="knowledge_8h-source.html#l00082">cma::Knowledge::ENCODE_TYPE_BIG5</a>, <a class="el" href="knowledge_8h-source.html#l00081">cma::Knowledge::ENCODE_TYPE_GB2312</a>, <a class="el" href="cma__ctype__big5_8cpp-source.html#l00164">cma::CMA_CType_Big5::instance()</a>, and <a class="el" href="cma__ctype__gb2312_8cpp-source.html#l00166">cma::CMA_CType_GB2312::instance()</a>.</p>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00136">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00142">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="2a912dfae4c56e70a20f920ac564890b"></a><!-- doxytag: member="cma::CMA_CType::getEncType" ref="2a912dfae4c56e70a20f920ac564890b" args="(string encType)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> cma::CMA_CType::getEncType           </td>
+          <td>(</td>
+          <td class="paramtype">string&nbsp;</td>
+          <td class="paramname"> <em>encType</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Get the encoding type by the encode type string<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>encType</em>&nbsp;</td><td>encode type string </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>assicated <a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> in the class <a class="el" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a> </dd></dl>
+
+<p>References <a class="el" href="knowledge_8h-source.html#l00082">cma::Knowledge::ENCODE_TYPE_BIG5</a>, <a class="el" href="knowledge_8h-source.html#l00081">cma::Knowledge::ENCODE_TYPE_GB2312</a>, and <a class="el" href="knowledge_8h-source.html#l00084">cma::Knowledge::ENCODE_TYPE_NUM</a>.</p>
 
 </div>
 </div><p>
@@ -166,7 +216,7 @@ Get the character type. <dl compact><dt><b>Parameters:</b></dt><dd>
 
 <p>Implemented in <a class="el" href="classcma_1_1CMA__CType__Big5.html#a125ef224739df73781aa6ee55d28b38">cma::CMA_CType_Big5</a>, and <a class="el" href="classcma_1_1CMA__CType__GB2312.html#e0edf1c74d7a66ba6425b9010401456e">cma::CMA_CType_GB2312</a>.</p>
 
-<p>Referenced by <a class="el" href="cma__wtype_8cpp-source.html#l00024">cma::CMA_WType::getWordType()</a>, and <a class="el" href="cma__ctype_8cpp-source.html#l00050">isPunct()</a>.</p>
+<p>Referenced by <a class="el" href="cma__wtype_8cpp-source.html#l00024">cma::CMA_WType::getWordType()</a>, <a class="el" href="cma__ctype_8cpp-source.html#l00050">isPunct()</a>, and <a class="el" href="CateStrTokenizer_8cc-source.html#l00035">cma::CateStrTokenizer::next()</a>.</p>
 
 </div>
 </div><p>
@@ -229,7 +279,7 @@ Get the number of the characters in the p <dl compact><dt><b>Parameters:</b></dt
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>source/include/<a class="el" href="cma__ctype_8h-source.html">cma_ctype.h</a><li>source/src/<a class="el" href="cma__ctype_8cpp.html">cma_ctype.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Apr 30 17:41:59 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 5 17:57:29 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>
