@@ -44,37 +44,21 @@ Analyzer$\ast$ analyzer = ...; analyzer-$>$runWithSentence(s);
 // get one-best result int i= s.getOneBestIndex(); ... 
 
 \subsection{Member Function Documentation}
-\index{cma::Sentence@{cma::Sentence}!setString@{setString}}
-\index{setString@{setString}!cma::Sentence@{cma::Sentence}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::Sentence::setString (const char $\ast$ {\em pString})}\label{classcma_1_1Sentence_40fb665bd2b2a19e430d4e474f3534a3}
+\index{cma::Sentence@{cma::Sentence}!addList@{addList}}
+\index{addList@{addList}!cma::Sentence@{cma::Sentence}}
+\subsubsection[{addList}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Sentence::addList (const MorphemeList \& {\em morphemeList}, \/  double {\em score} = {\tt 0.0})}\label{classcma_1_1Sentence_39f0e77ac6f3705ae6dc1b8e15118760}
 
 
-Set the raw sentence string. \begin{Desc}
+Add a candidate result of morphological analysis. \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em pString}]value of the raw string \end{description}
+\item[{\em morphemeList}]the candidate result \item[{\em score}]the score value of the candidate \end{description}
 \end{Desc}
-\begin{Desc}
-\item[Attention:]the previous analysis results will be removed. \end{Desc}
-\index{cma::Sentence@{cma::Sentence}!getString@{getString}}
-\index{getString@{getString}!cma::Sentence@{cma::Sentence}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Sentence::getString (void) const}\label{classcma_1_1Sentence_ee44e192f67dacbe6bc0cfc433cabb30}
 
 
-Get the raw sentence string. \begin{Desc}
-\item[Returns:]value of the raw string \end{Desc}
-
-
-Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Sentence@{cma::Sentence}!getListSize@{getListSize}}
-\index{getListSize@{getListSize}!cma::Sentence@{cma::Sentence}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getListSize (void) const}\label{classcma_1_1Sentence_883c3773c3f2a82f3b3b9fcae13ceb66}
-
-
-Get the number of candidates of morphological analysis result. \begin{Desc}
-\item[Returns:]the number of candidates \end{Desc}
-\index{cma::Sentence@{cma::Sentence}!getCount@{getCount}}
+Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Sentence@{cma::Sentence}!getCount@{getCount}}
 \index{getCount@{getCount}!cma::Sentence@{cma::Sentence}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getCount (int {\em nPos}) const}\label{classcma_1_1Sentence_5dd92e59708ea8cc61d3edc0d1fd830d}
+\subsubsection[{getCount}]{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getCount (int {\em nPos}) const}\label{classcma_1_1Sentence_5dd92e59708ea8cc61d3edc0d1fd830d}
 
 
 Get the number of morphemes in candidate result {\em nPos\/}. \begin{Desc}
@@ -86,7 +70,7 @@ Get the number of morphemes in candidate result {\em nPos\/}. \begin{Desc}
 \item[Returns:]the number of morphemes \end{Desc}
 \index{cma::Sentence@{cma::Sentence}!getLexicon@{getLexicon}}
 \index{getLexicon@{getLexicon}!cma::Sentence@{cma::Sentence}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Sentence::getLexicon (int {\em nPos}, \/  int {\em nIdx}) const}\label{classcma_1_1Sentence_c8fd1b3aa8062fff6e88a31e723802ae}
+\subsubsection[{getLexicon}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Sentence::getLexicon (int {\em nPos}, \/  int {\em nIdx}) const}\label{classcma_1_1Sentence_c8fd1b3aa8062fff6e88a31e723802ae}
 
 
 Get the string of morpheme {\em nIdx\/} in candidate result {\em nPos\/}. \begin{Desc}
@@ -96,9 +80,23 @@ Get the string of morpheme {\em nIdx\/} in candidate result {\em nPos\/}. \begin
 \end{Desc}
 \begin{Desc}
 \item[Returns:]morpheme string \end{Desc}
+\index{cma::Sentence@{cma::Sentence}!getListSize@{getListSize}}
+\index{getListSize@{getListSize}!cma::Sentence@{cma::Sentence}}
+\subsubsection[{getListSize}]{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getListSize (void) const}\label{classcma_1_1Sentence_883c3773c3f2a82f3b3b9fcae13ceb66}
+
+
+Get the number of candidates of morphological analysis result. \begin{Desc}
+\item[Returns:]the number of candidates \end{Desc}
+\index{cma::Sentence@{cma::Sentence}!getOneBestIndex@{getOneBestIndex}}
+\index{getOneBestIndex@{getOneBestIndex}!cma::Sentence@{cma::Sentence}}
+\subsubsection[{getOneBestIndex}]{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getOneBestIndex (void) const}\label{classcma_1_1Sentence_f1ccc0e78beb1f7b8bd22e0c10efa8d4}
+
+
+Get the index of the candidate result, which has the highest score. \begin{Desc}
+\item[Returns:]candidate result index, -1 is returned if there is no candidate result. \end{Desc}
 \index{cma::Sentence@{cma::Sentence}!getPOS@{getPOS}}
 \index{getPOS@{getPOS}!cma::Sentence@{cma::Sentence}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getPOS (int {\em nPos}, \/  int {\em nIdx}) const}\label{classcma_1_1Sentence_7e03360cc524ea35245c1b5a61c348e0}
+\subsubsection[{getPOS}]{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getPOS (int {\em nPos}, \/  int {\em nIdx}) const}\label{classcma_1_1Sentence_7e03360cc524ea35245c1b5a61c348e0}
 
 
 Get the POS index code of morpheme {\em nIdx\/} in candidate result {\em nPos\/}. \begin{Desc}
@@ -110,9 +108,30 @@ Get the POS index code of morpheme {\em nIdx\/} in candidate result {\em nPos\/}
 \item[Returns:]POS index code, -1 for non POS available \end{Desc}
 
 
-Referenced by getStrPOS().\index{cma::Sentence@{cma::Sentence}!getStrPOS@{getStrPOS}}
+Referenced by getStrPOS().\index{cma::Sentence@{cma::Sentence}!getScore@{getScore}}
+\index{getScore@{getScore}!cma::Sentence@{cma::Sentence}}
+\subsubsection[{getScore}]{\setlength{\rightskip}{0pt plus 5cm}double cma::Sentence::getScore (int {\em nPos}) const}\label{classcma_1_1Sentence_850f236efa3fa2b75b5b40cf35fbdd95}
+
+
+Get the score of candidate result {\em nPos\/}. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em nPos}]candidate result index \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]the score value \end{Desc}
+\index{cma::Sentence@{cma::Sentence}!getString@{getString}}
+\index{getString@{getString}!cma::Sentence@{cma::Sentence}}
+\subsubsection[{getString}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Sentence::getString (void) const}\label{classcma_1_1Sentence_ee44e192f67dacbe6bc0cfc433cabb30}
+
+
+Get the raw sentence string. \begin{Desc}
+\item[Returns:]value of the raw string \end{Desc}
+
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Sentence@{cma::Sentence}!getStrPOS@{getStrPOS}}
 \index{getStrPOS@{getStrPOS}!cma::Sentence@{cma::Sentence}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Sentence::getStrPOS (int {\em nPos}, \/  int {\em nIdx}) const}\label{classcma_1_1Sentence_6cb05837a84acf7d30fadb5bca6314db}
+\subsubsection[{getStrPOS}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Sentence::getStrPOS (int {\em nPos}, \/  int {\em nIdx}) const}\label{classcma_1_1Sentence_6cb05837a84acf7d30fadb5bca6314db}
 
 
 Get the POS string of morpheme {\em nIdx\/} in candidate result {\em nPos\/}. \begin{Desc}
@@ -124,38 +143,19 @@ Get the POS string of morpheme {\em nIdx\/} in candidate result {\em nPos\/}. \b
 \item[Returns:]POS string, null pointer for non POS available \end{Desc}
 
 
-References getPOS(), cma::POSTable::getStrFromCode(), and cma::POSTable::instance().\index{cma::Sentence@{cma::Sentence}!getScore@{getScore}}
-\index{getScore@{getScore}!cma::Sentence@{cma::Sentence}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}double cma::Sentence::getScore (int {\em nPos}) const}\label{classcma_1_1Sentence_850f236efa3fa2b75b5b40cf35fbdd95}
+References getPOS(), cma::POSTable::getStrFromCode(), and cma::POSTable::instance().\index{cma::Sentence@{cma::Sentence}!setString@{setString}}
+\index{setString@{setString}!cma::Sentence@{cma::Sentence}}
+\subsubsection[{setString}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Sentence::setString (const char $\ast$ {\em pString})}\label{classcma_1_1Sentence_40fb665bd2b2a19e430d4e474f3534a3}
 
 
-Get the score of candidate result {\em nPos\/}. \begin{Desc}
+Set the raw sentence string. \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em nPos}]candidate result index \end{description}
+\item[{\em pString}]value of the raw string \end{description}
 \end{Desc}
 \begin{Desc}
-\item[Returns:]the score value \end{Desc}
-\index{cma::Sentence@{cma::Sentence}!getOneBestIndex@{getOneBestIndex}}
-\index{getOneBestIndex@{getOneBestIndex}!cma::Sentence@{cma::Sentence}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getOneBestIndex (void) const}\label{classcma_1_1Sentence_f1ccc0e78beb1f7b8bd22e0c10efa8d4}
+\item[Attention:]the previous analysis results will be removed. \end{Desc}
 
-
-Get the index of the candidate result, which has the highest score. \begin{Desc}
-\item[Returns:]candidate result index, -1 is returned if there is no candidate result. \end{Desc}
-\index{cma::Sentence@{cma::Sentence}!addList@{addList}}
-\index{addList@{addList}!cma::Sentence@{cma::Sentence}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::Sentence::addList (const MorphemeList \& {\em morphemeList}, \/  double {\em score} = {\tt 0.0})}\label{classcma_1_1Sentence_39f0e77ac6f3705ae6dc1b8e15118760}
-
-
-Add a candidate result of morphological analysis. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em morphemeList}]the candidate result \item[{\em score}]the score value of the candidate \end{description}
-\end{Desc}
-
-
-Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 

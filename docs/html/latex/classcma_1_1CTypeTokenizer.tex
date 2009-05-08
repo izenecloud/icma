@@ -37,7 +37,7 @@ Tokenizer tokenizes a raw input string in specific encoding to a sequence of cha
 \subsection{Constructor \& Destructor Documentation}
 \index{cma::CTypeTokenizer@{cma::CTypeTokenizer}!CTypeTokenizer@{CTypeTokenizer}}
 \index{CTypeTokenizer@{CTypeTokenizer}!cma::CTypeTokenizer@{cma::CTypeTokenizer}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}cma::CTypeTokenizer::CTypeTokenizer (const {\bf CMA\_\-CType} $\ast$ {\em ctype})}\label{classcma_1_1CTypeTokenizer_635764b2db741e1a0b936e2abc206335}
+\subsubsection[{CTypeTokenizer}]{\setlength{\rightskip}{0pt plus 5cm}cma::CTypeTokenizer::CTypeTokenizer (const {\bf CMA\_\-CType} $\ast$ {\em ctype})}\label{classcma_1_1CTypeTokenizer_635764b2db741e1a0b936e2abc206335}
 
 
 Constructor.
@@ -50,20 +50,9 @@ Constructor.
 
 
 \subsection{Member Function Documentation}
-\index{cma::CTypeTokenizer@{cma::CTypeTokenizer}!getCType@{getCType}}
-\index{getCType@{getCType}!cma::CTypeTokenizer@{cma::CTypeTokenizer}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const {\bf CMA\_\-CType}$\ast$ cma::CTypeTokenizer::getCType () const\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1CTypeTokenizer_fb77db9f2b7ca866104e986e1e6f8249}
-
-
-Get the reference to the specific character encoding
-
-\begin{Desc}
-\item[Returns:]reference to the specific character encoding \end{Desc}
-
-
-Referenced by cma::CateStrTokenizer::CateStrTokenizer().\index{cma::CTypeTokenizer@{cma::CTypeTokenizer}!assign@{assign}}
+\index{cma::CTypeTokenizer@{cma::CTypeTokenizer}!assign@{assign}}
 \index{assign@{assign}!cma::CTypeTokenizer@{cma::CTypeTokenizer}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::CTypeTokenizer::assign (const char $\ast$ {\em str})}\label{classcma_1_1CTypeTokenizer_4004cc1f54cd714e57bb0534496239c5}
+\subsubsection[{assign}]{\setlength{\rightskip}{0pt plus 5cm}void cma::CTypeTokenizer::assign (const char $\ast$ {\em str})}\label{classcma_1_1CTypeTokenizer_4004cc1f54cd714e57bb0534496239c5}
 
 
 Set a raw input string. \begin{Desc}
@@ -75,9 +64,20 @@ Set a raw input string. \begin{Desc}
 \item[Attention:]The raw input string should be encoded in {\em ctype\/} of Constructor. As {\em Tokenizer\/} doesn't make a copy of {\em str\/}, the caller must ensure the life time of {\em str\/} in the calling of {\em \doxyref{next()}{p.}{classcma_1_1CTypeTokenizer_df2de991ea5258b7237c7b2dca78efea}\/} afterward. \end{Desc}
 
 
-Referenced by cma::CMA\_\-WType::getWordType().\index{cma::CTypeTokenizer@{cma::CTypeTokenizer}!next@{next}}
+Referenced by cma::CMA\_\-WType::getWordType().\index{cma::CTypeTokenizer@{cma::CTypeTokenizer}!getCType@{getCType}}
+\index{getCType@{getCType}!cma::CTypeTokenizer@{cma::CTypeTokenizer}}
+\subsubsection[{getCType}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf CMA\_\-CType}$\ast$ cma::CTypeTokenizer::getCType () const\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1CTypeTokenizer_fb77db9f2b7ca866104e986e1e6f8249}
+
+
+Get the reference to the specific character encoding
+
+\begin{Desc}
+\item[Returns:]reference to the specific character encoding \end{Desc}
+
+
+Referenced by cma::CateStrTokenizer::CateStrTokenizer().\index{cma::CTypeTokenizer@{cma::CTypeTokenizer}!next@{next}}
 \index{next@{next}!cma::CTypeTokenizer@{cma::CTypeTokenizer}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::CTypeTokenizer::next ()}\label{classcma_1_1CTypeTokenizer_df2de991ea5258b7237c7b2dca78efea}
+\subsubsection[{next}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::CTypeTokenizer::next ()}\label{classcma_1_1CTypeTokenizer_df2de991ea5258b7237c7b2dca78efea}
 
 
 Get the next character in specific encoding. \begin{Desc}

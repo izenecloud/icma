@@ -17,7 +17,6 @@ enum {\bf POSType} \{ \par
 {\bf POS\_\-TYPE\_\-USER}, 
 {\bf POS\_\-TYPE\_\-MAX\_\-NUM}
  \}
-\end{CompactItemize}
 \subsection*{Public Member Functions}
 \begin{CompactItemize}
 \item 
@@ -48,7 +47,7 @@ static {\bf POSTable} $\ast$ {\bf instance} ()
 \subsection{Member Enumeration Documentation}
 \index{cma::POSTable@{cma::POSTable}!POSType@{POSType}}
 \index{POSType@{POSType}!cma::POSTable@{cma::POSTable}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}enum {\bf cma::POSTable::POSType}}\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c001}
+\subsubsection[{POSType}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf cma::POSTable::POSType}}\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c001}
 
 
 Special part-of-speech types. \begin{Desc}
@@ -72,18 +71,9 @@ POS\_\-TYPE\_\-MAX\_\-NUM\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b
 
 
 \subsection{Member Function Documentation}
-\index{cma::POSTable@{cma::POSTable}!instance@{instance}}
-\index{instance@{instance}!cma::POSTable@{cma::POSTable}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf POSTable} $\ast$ cma::POSTable::instance ()\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1POSTable_8ce731b2b76aced0b76092b5b216aa1d}
-
-
-Create an instance of {\em \doxyref{POSTable}{p.}{classcma_1_1POSTable}\/}. \begin{Desc}
-\item[Returns:]the pointer to instance \end{Desc}
-
-
-Referenced by cma::Sentence::getStrPOS(), cma::CMA\_\-ME\_\-Knowledge::loadConfig(), cma::CMA\_\-ME\_\-Knowledge::loadPOSModel(), and cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::POSTable@{cma::POSTable}!addPOS@{addPOS}}
+\index{cma::POSTable@{cma::POSTable}!addPOS@{addPOS}}
 \index{addPOS@{addPOS}!cma::POSTable@{cma::POSTable}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::addPOS (const std::string \& {\em pos})}\label{classcma_1_1POSTable_77898a33965a0eee826c41b7916d80ce}
+\subsubsection[{addPOS}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::addPOS (const std::string \& {\em pos})}\label{classcma_1_1POSTable_77898a33965a0eee826c41b7916d80ce}
 
 
 Add the POS string to the global part-of-speech table. \begin{Desc}
@@ -99,7 +89,7 @@ Add the POS string to the global part-of-speech table. \begin{Desc}
 
 Referenced by loadConfig(), and cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTable@{cma::POSTable}!getCodeFromStr@{getCodeFromStr}}
 \index{getCodeFromStr@{getCodeFromStr}!cma::POSTable@{cma::POSTable}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromStr (const std::string \& {\em pos}) const}\label{classcma_1_1POSTable_1692f43e2154d408265e09affd64d70a}
+\subsubsection[{getCodeFromStr}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromStr (const std::string \& {\em pos}) const}\label{classcma_1_1POSTable_1692f43e2154d408265e09affd64d70a}
 
 
 Get the POS index code from the POS string in the global part-of-speech table. \begin{Desc}
@@ -111,9 +101,21 @@ Get the POS index code from the POS string in the global part-of-speech table. \
 \item[Returns:]POS index code, -1 for non POS available \end{Desc}
 
 
-Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::POSTable@{cma::POSTable}!getStrFromCode@{getStrFromCode}}
+Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::POSTable@{cma::POSTable}!getCodeFromType@{getCodeFromType}}
+\index{getCodeFromType@{getCodeFromType}!cma::POSTable@{cma::POSTable}}
+\subsubsection[{getCodeFromType}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromType ({\bf POSType} {\em type}) const}\label{classcma_1_1POSTable_d6c9ee24dd82620d36d4de8018702546}
+
+
+Get the POS index code from the special POS type. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em type}]the POS type \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]POS index code, -1 for non POS available \end{Desc}
+\index{cma::POSTable@{cma::POSTable}!getStrFromCode@{getStrFromCode}}
 \index{getStrFromCode@{getStrFromCode}!cma::POSTable@{cma::POSTable}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::POSTable::getStrFromCode (int {\em index}) const}\label{classcma_1_1POSTable_cf9611088b3484dbaad11ef2b5b24f52}
+\subsubsection[{getStrFromCode}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::POSTable::getStrFromCode (int {\em index}) const}\label{classcma_1_1POSTable_cf9611088b3484dbaad11ef2b5b24f52}
 
 
 Get the POS string from the POS index code in the global part-of-speech table. \begin{Desc}
@@ -125,16 +127,18 @@ Get the POS string from the POS index code in the global part-of-speech table. \
 \item[Returns:]POS string, null pointer for non POS available \end{Desc}
 
 
-Referenced by cma::Sentence::getStrPOS().\index{cma::POSTable@{cma::POSTable}!size@{size}}
-\index{size@{size}!cma::POSTable@{cma::POSTable}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::size () const}\label{classcma_1_1POSTable_eb70793af427c7dd545f132e177ca26e}
+Referenced by cma::Sentence::getStrPOS().\index{cma::POSTable@{cma::POSTable}!instance@{instance}}
+\index{instance@{instance}!cma::POSTable@{cma::POSTable}}
+\subsubsection[{instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf POSTable} $\ast$ cma::POSTable::instance ()\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1POSTable_8ce731b2b76aced0b76092b5b216aa1d}
 
 
-Get the number of POS tags in the global part-of-speech table. \begin{Desc}
-\item[Returns:]the number of POS tags \end{Desc}
-\index{cma::POSTable@{cma::POSTable}!loadConfig@{loadConfig}}
+Create an instance of {\em \doxyref{POSTable}{p.}{classcma_1_1POSTable}\/}. \begin{Desc}
+\item[Returns:]the pointer to instance \end{Desc}
+
+
+Referenced by cma::Sentence::getStrPOS(), cma::CMA\_\-ME\_\-Knowledge::loadConfig(), cma::CMA\_\-ME\_\-Knowledge::loadPOSModel(), and cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::POSTable@{cma::POSTable}!loadConfig@{loadConfig}}
 \index{loadConfig@{loadConfig}!cma::POSTable@{cma::POSTable}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTable::loadConfig (const char $\ast$ {\em fileName})}\label{classcma_1_1POSTable_a70a1e82116a1855f9599aeb48cb5139}
+\subsubsection[{loadConfig}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTable::loadConfig (const char $\ast$ {\em fileName})}\label{classcma_1_1POSTable_a70a1e82116a1855f9599aeb48cb5139}
 
 
 Load the configuration file, which is in text format. This file contains the part-of-speech configuration, which format is \char`\"{}tag = value\char`\"{}. \begin{Desc}
@@ -148,18 +152,13 @@ Load the configuration file, which is in text format. This file contains the par
 
 References addPOS().
 
-Referenced by cma::CMA\_\-ME\_\-Knowledge::loadConfig().\index{cma::POSTable@{cma::POSTable}!getCodeFromType@{getCodeFromType}}
-\index{getCodeFromType@{getCodeFromType}!cma::POSTable@{cma::POSTable}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromType ({\bf POSType} {\em type}) const}\label{classcma_1_1POSTable_d6c9ee24dd82620d36d4de8018702546}
+Referenced by cma::CMA\_\-ME\_\-Knowledge::loadConfig().\index{cma::POSTable@{cma::POSTable}!size@{size}}
+\index{size@{size}!cma::POSTable@{cma::POSTable}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::size () const}\label{classcma_1_1POSTable_eb70793af427c7dd545f132e177ca26e}
 
 
-Get the POS index code from the special POS type. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em type}]the POS type \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]POS index code, -1 for non POS available \end{Desc}
+Get the number of POS tags in the global part-of-speech table. \begin{Desc}
+\item[Returns:]the number of POS tags \end{Desc}
 
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}

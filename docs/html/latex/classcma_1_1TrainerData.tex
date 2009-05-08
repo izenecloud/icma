@@ -50,62 +50,62 @@ The class to hold data required in the training process.
 The class to hold data required in the training process 
 
 \subsection{Member Data Documentation}
-\index{cma::TrainerData@{cma::TrainerData}!wordFreq\_\-@{wordFreq\_\-}}
-\index{wordFreq\_\-@{wordFreq\_\-}!cma::TrainerData@{cma::TrainerData}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}map$<$string, int$>$ {\bf cma::TrainerData::wordFreq\_\-}}\label{classcma_1_1TrainerData_1d9d4c16f23c5885d8dfa8c4989be181}
+\index{cma::TrainerData@{cma::TrainerData}!ctype\_\-@{ctype\_\-}}
+\index{ctype\_\-@{ctype\_\-}!cma::TrainerData@{cma::TrainerData}}
+\subsubsection[{ctype\_\-}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-CType}$\ast$ {\bf cma::TrainerData::ctype\_\-}}\label{classcma_1_1TrainerData_a415bd191302d39887f15f1511392ab3}
 
 
-Word Frequenty Map and its counter \index{cma::TrainerData@{cma::TrainerData}!featDict\_\-@{featDict\_\-}}
-\index{featDict\_\-@{featDict\_\-}!cma::TrainerData@{cma::TrainerData}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}map$<$string, int$>$ {\bf cma::TrainerData::featDict\_\-}}\label{classcma_1_1TrainerData_565db4b9101b4c17c9a6f8530a19d2f6}
-
-
-Feature Dictionary and its counter \index{cma::TrainerData@{cma::TrainerData}!tagDict\_\-@{tagDict\_\-}}
-\index{tagDict\_\-@{tagDict\_\-}!cma::TrainerData@{cma::TrainerData}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}map$<$string, map$<$string, int$>$ $>$ {\bf cma::TrainerData::tagDict\_\-}}\label{classcma_1_1TrainerData_9ecba8810e62c9a6bfb7446264654a28}
-
-
-Tag Dictionary for each word \index{cma::TrainerData@{cma::TrainerData}!rareFreq\_\-@{rareFreq\_\-}}
-\index{rareFreq\_\-@{rareFreq\_\-}!cma::TrainerData@{cma::TrainerData}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int {\bf cma::TrainerData::rareFreq\_\-}}\label{classcma_1_1TrainerData_c13b7242d3736c2d40772d093fc91a18}
-
-
-use special feature for rare word with frequency $<$ RARE [default=2] \index{cma::TrainerData@{cma::TrainerData}!cutoff\_\-@{cutoff\_\-}}
+the encoding type \index{cma::TrainerData@{cma::TrainerData}!cutoff\_\-@{cutoff\_\-}}
 \index{cutoff\_\-@{cutoff\_\-}!cma::TrainerData@{cma::TrainerData}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int {\bf cma::TrainerData::cutoff\_\-}}\label{classcma_1_1TrainerData_23c70e451c8ba9cf53e2eccec8fc421d}
+\subsubsection[{cutoff\_\-}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf cma::TrainerData::cutoff\_\-}}\label{classcma_1_1TrainerData_23c70e451c8ba9cf53e2eccec8fc421d}
 
 
 discard feature with frequency $<$ CUTOFF when training [default=5] \index{cma::TrainerData@{cma::TrainerData}!evCutoff\_\-@{evCutoff\_\-}}
 \index{evCutoff\_\-@{evCutoff\_\-}!cma::TrainerData@{cma::TrainerData}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int {\bf cma::TrainerData::evCutoff\_\-}}\label{classcma_1_1TrainerData_22eca27d2b88fc89251ed74fa9b1a255}
+\subsubsection[{evCutoff\_\-}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf cma::TrainerData::evCutoff\_\-}}\label{classcma_1_1TrainerData_22eca27d2b88fc89251ed74fa9b1a255}
 
 
-discard event with frequency $<$ evCutoff when training [default=1] \index{cma::TrainerData@{cma::TrainerData}!me@{me}}
-\index{me@{me}!cma::TrainerData@{cma::TrainerData}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}MaxentModel {\bf cma::TrainerData::me}}\label{classcma_1_1TrainerData_eebdd898115e74ed985c5b776bbb3074}
+discard event with frequency $<$ evCutoff when training [default=1] \index{cma::TrainerData@{cma::TrainerData}!featDict\_\-@{featDict\_\-}}
+\index{featDict\_\-@{featDict\_\-}!cma::TrainerData@{cma::TrainerData}}
+\subsubsection[{featDict\_\-}]{\setlength{\rightskip}{0pt plus 5cm}map$<$string, int$>$ {\bf cma::TrainerData::featDict\_\-}}\label{classcma_1_1TrainerData_565db4b9101b4c17c9a6f8530a19d2f6}
 
 
-The maxent model \index{cma::TrainerData@{cma::TrainerData}!training\_\-data@{training\_\-data}}
-\index{training\_\-data@{training\_\-data}!cma::TrainerData@{cma::TrainerData}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}ofstream$\ast$ {\bf cma::TrainerData::training\_\-data}}\label{classcma_1_1TrainerData_beca151a5af14873ecd25be4ff926d24}
-
-
-output stream for the \index{cma::TrainerData@{cma::TrainerData}!get\_\-context@{get\_\-context}}
+Feature Dictionary and its counter \index{cma::TrainerData@{cma::TrainerData}!get\_\-context@{get\_\-context}}
 \index{get\_\-context@{get\_\-context}!cma::TrainerData@{cma::TrainerData}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}context\_\-t {\bf cma::TrainerData::get\_\-context}}\label{classcma_1_1TrainerData_6a4496484d04a90c61f201011536d8c2}
+\subsubsection[{get\_\-context}]{\setlength{\rightskip}{0pt plus 5cm}context\_\-t {\bf cma::TrainerData::get\_\-context}}\label{classcma_1_1TrainerData_6a4496484d04a90c61f201011536d8c2}
 
 
-words, tags, i, rare\_\-word, ret \index{cma::TrainerData@{cma::TrainerData}!ctype\_\-@{ctype\_\-}}
-\index{ctype\_\-@{ctype\_\-}!cma::TrainerData@{cma::TrainerData}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-CType}$\ast$ {\bf cma::TrainerData::ctype\_\-}}\label{classcma_1_1TrainerData_a415bd191302d39887f15f1511392ab3}
+words, tags, i, rare\_\-word, ret \index{cma::TrainerData@{cma::TrainerData}!me@{me}}
+\index{me@{me}!cma::TrainerData@{cma::TrainerData}}
+\subsubsection[{me}]{\setlength{\rightskip}{0pt plus 5cm}MaxentModel {\bf cma::TrainerData::me}}\label{classcma_1_1TrainerData_eebdd898115e74ed985c5b776bbb3074}
 
 
-the encoding type \index{cma::TrainerData@{cma::TrainerData}!posDelimiter@{posDelimiter}}
+The maxent model \index{cma::TrainerData@{cma::TrainerData}!posDelimiter@{posDelimiter}}
 \index{posDelimiter@{posDelimiter}!cma::TrainerData@{cma::TrainerData}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::TrainerData::posDelimiter}}\label{classcma_1_1TrainerData_24b6c6f09b1ffe2c5228730901147224}
+\subsubsection[{posDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::TrainerData::posDelimiter}}\label{classcma_1_1TrainerData_24b6c6f09b1ffe2c5228730901147224}
 
 
-the pos delimiter 
+the pos delimiter \index{cma::TrainerData@{cma::TrainerData}!rareFreq\_\-@{rareFreq\_\-}}
+\index{rareFreq\_\-@{rareFreq\_\-}!cma::TrainerData@{cma::TrainerData}}
+\subsubsection[{rareFreq\_\-}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf cma::TrainerData::rareFreq\_\-}}\label{classcma_1_1TrainerData_c13b7242d3736c2d40772d093fc91a18}
+
+
+use special feature for rare word with frequency $<$ RARE [default=2] \index{cma::TrainerData@{cma::TrainerData}!tagDict\_\-@{tagDict\_\-}}
+\index{tagDict\_\-@{tagDict\_\-}!cma::TrainerData@{cma::TrainerData}}
+\subsubsection[{tagDict\_\-}]{\setlength{\rightskip}{0pt plus 5cm}map$<$string, map$<$string, int$>$ $>$ {\bf cma::TrainerData::tagDict\_\-}}\label{classcma_1_1TrainerData_9ecba8810e62c9a6bfb7446264654a28}
+
+
+Tag Dictionary for each word \index{cma::TrainerData@{cma::TrainerData}!training\_\-data@{training\_\-data}}
+\index{training\_\-data@{training\_\-data}!cma::TrainerData@{cma::TrainerData}}
+\subsubsection[{training\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}ofstream$\ast$ {\bf cma::TrainerData::training\_\-data}}\label{classcma_1_1TrainerData_beca151a5af14873ecd25be4ff926d24}
+
+
+output stream for the \index{cma::TrainerData@{cma::TrainerData}!wordFreq\_\-@{wordFreq\_\-}}
+\index{wordFreq\_\-@{wordFreq\_\-}!cma::TrainerData@{cma::TrainerData}}
+\subsubsection[{wordFreq\_\-}]{\setlength{\rightskip}{0pt plus 5cm}map$<$string, int$>$ {\bf cma::TrainerData::wordFreq\_\-}}\label{classcma_1_1TrainerData_1d9d4c16f23c5885d8dfa8c4989be181}
+
+
+Word Frequenty Map and its counter 
 
 The documentation for this class was generated from the following file:\begin{CompactItemize}
 \item 

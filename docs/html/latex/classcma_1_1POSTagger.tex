@@ -32,7 +32,7 @@ Tagging the POS Information Tagging the POS using the maxent model.
 \subsection{Constructor \& Destructor Documentation}
 \index{cma::POSTagger@{cma::POSTagger}!POSTagger@{POSTagger}}
 \index{POSTagger@{POSTagger}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}cma::POSTagger::POSTagger (const string \& {\em model}, \/  {\bf VTrie} $\ast$ {\em pTrie})}\label{classcma_1_1POSTagger_dd40a3098429d2febe81df1d943cc486}
+\subsubsection[{POSTagger}]{\setlength{\rightskip}{0pt plus 5cm}cma::POSTagger::POSTagger (const string \& {\em model}, \/  {\bf VTrie} $\ast$ {\em pTrie})}\label{classcma_1_1POSTagger_dd40a3098429d2febe81df1d943cc486}
 
 
 Construct the \doxyref{POSTagger}{p.}{classcma_1_1POSTagger} with outer \doxyref{VTrie}{p.}{classVTrie} \begin{Desc}
@@ -42,7 +42,7 @@ Construct the \doxyref{POSTagger}{p.}{classcma_1_1POSTagger} with outer \doxyref
 \end{Desc}
 \index{cma::POSTagger@{cma::POSTagger}!POSTagger@{POSTagger}}
 \index{POSTagger@{POSTagger}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}cma::POSTagger::POSTagger (const string \& {\em model}, \/  const char $\ast$ {\em dictFile})}\label{classcma_1_1POSTagger_678c73558ec8fb6f3ae1adc5a4d904bb}
+\subsubsection[{POSTagger}]{\setlength{\rightskip}{0pt plus 5cm}cma::POSTagger::POSTagger (const string \& {\em model}, \/  const char $\ast$ {\em dictFile})}\label{classcma_1_1POSTagger_678c73558ec8fb6f3ae1adc5a4d904bb}
 
 
 Construct the \doxyref{POSTagger}{p.}{classcma_1_1POSTagger} with inner \doxyref{VTrie}{p.}{classVTrie} (read from dictFile) 
@@ -50,57 +50,9 @@ Construct the \doxyref{POSTagger}{p.}{classcma_1_1POSTagger} with inner \doxyref
 References appendWordPOS().
 
 \subsection{Member Function Documentation}
-\index{cma::POSTagger@{cma::POSTagger}!tag\_\-file@{tag\_\-file}}
-\index{tag\_\-file@{tag\_\-file}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::tag\_\-file (const char $\ast$ {\em inFile}, \/  const char $\ast$ {\em outFile})}\label{classcma_1_1POSTagger_95aa58e81425e379ef7100c5311a003b}
-
-
-Tag the segmented file with pos (In UTF8 Encoding) \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em inFile}]the input file \item[{\em outFile}]the output file \end{description}
-\end{Desc}
-
-
-References tag\_\-sentence\_\-best().\index{cma::POSTagger@{cma::POSTagger}!tag\_\-sentence@{tag\_\-sentence}}
-\index{tag\_\-sentence@{tag\_\-sentence}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::tag\_\-sentence (vector$<$ string $>$ \& {\em words}, \/  size\_\-t {\em N}, \/  size\_\-t {\em retSize}, \/  vector$<$ pair$<$ vector$<$ string $>$, double $>$ $>$ \& {\em segment})}\label{classcma_1_1POSTagger_17818fb91478d21edcaa741c9d43d295}
-
-
-tagging given words list and return N best \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em words}]the given words list \item[{\em N}]return N best \item[{\em retSize}]retSize $<$= N, the size of segment \item[{\em to}]store the result value \end{description}
-\end{Desc}
-
-
-References cma::POSTagUnit::index, cma::POSTagUnit::pos, cma::POSTagUnit::previous, and cma::POSTagUnit::score.\index{cma::POSTagger@{cma::POSTagger}!tag\_\-sentence\_\-best@{tag\_\-sentence\_\-best}}
-\index{tag\_\-sentence\_\-best@{tag\_\-sentence\_\-best}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::tag\_\-sentence\_\-best (vector$<$ string $>$ \& {\em words}, \/  vector$<$ string $>$ \& {\em posRet}, \/  int {\em begin}, \/  int {\em end})}\label{classcma_1_1POSTagger_efb7b6cfd52c11d289fb8f2332dde7c4}
-
-
-Only return the best result \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em words}]words vector \item[{\em posRet}]to hold the result value \item[{\em begin}]the begin index (include) to check \item[{\em end}]the first index that should not check \end{description}
-\end{Desc}
-
-
-Referenced by tag\_\-file().\index{cma::POSTagger@{cma::POSTagger}!tag\_\-word\_\-best@{tag\_\-word\_\-best}}
-\index{tag\_\-word\_\-best@{tag\_\-word\_\-best}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}double cma::POSTagger::tag\_\-word\_\-best (vector$<$ string $>$ \& {\em words}, \/  vector$<$ string $>$ \& {\em poses}, \/  int {\em index}, \/  string \& {\em pos})}\label{classcma_1_1POSTagger_c7d4c9b62c95e138f39dc84624f11b2e}
-
-
-tag the word with the best POS and return its score \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em words}]words vector \item[{\em poses}]the previous pos vector, but the current pos won't store into the poses \item[{\em index}]the current index to check \item[{\em pos}]to store the best pos \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]return the score of the best pos \end{Desc}
 \index{cma::POSTagger@{cma::POSTagger}!appendWordPOS@{appendWordPOS}}
 \index{appendWordPOS@{appendWordPOS}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTagger::appendWordPOS (string \& {\em line})}\label{classcma_1_1POSTagger_e3a219f6213b4ec917255af7f508f343}
+\subsubsection[{appendWordPOS}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTagger::appendWordPOS (string \& {\em line})}\label{classcma_1_1POSTagger_e3a219f6213b4ec917255af7f508f343}
 
 
 Append the POS Information into Trie and POS Vector \begin{Desc}
@@ -116,7 +68,7 @@ References VTrieNode::data, VTrie::insert(), and VTrie::search().
 
 Referenced by cma::CMA\_\-ME\_\-Knowledge::loadSystemDict(), cma::CMA\_\-ME\_\-Knowledge::loadUserDict(), and POSTagger().\index{cma::POSTagger@{cma::POSTagger}!setCType@{setCType}}
 \index{setCType@{setCType}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::setCType ({\bf CMA\_\-CType} $\ast$ {\em ctype})\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1POSTagger_cf191ab0490ea004e681c93c901de355}
+\subsubsection[{setCType}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::setCType ({\bf CMA\_\-CType} $\ast$ {\em ctype})\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1POSTagger_cf191ab0490ea004e681c93c901de355}
 
 
 Set the reference to the specific character encoding
@@ -128,7 +80,55 @@ Set the reference to the specific character encoding
 \end{Desc}
 
 
-Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().
+Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::POSTagger@{cma::POSTagger}!tag\_\-file@{tag\_\-file}}
+\index{tag\_\-file@{tag\_\-file}!cma::POSTagger@{cma::POSTagger}}
+\subsubsection[{tag\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::tag\_\-file (const char $\ast$ {\em inFile}, \/  const char $\ast$ {\em outFile})}\label{classcma_1_1POSTagger_95aa58e81425e379ef7100c5311a003b}
+
+
+Tag the segmented file with pos (In UTF8 Encoding) \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em inFile}]the input file \item[{\em outFile}]the output file \end{description}
+\end{Desc}
+
+
+References tag\_\-sentence\_\-best().\index{cma::POSTagger@{cma::POSTagger}!tag\_\-sentence@{tag\_\-sentence}}
+\index{tag\_\-sentence@{tag\_\-sentence}!cma::POSTagger@{cma::POSTagger}}
+\subsubsection[{tag\_\-sentence}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::tag\_\-sentence (vector$<$ string $>$ \& {\em words}, \/  size\_\-t {\em N}, \/  size\_\-t {\em retSize}, \/  vector$<$ pair$<$ vector$<$ string $>$, double $>$ $>$ \& {\em segment})}\label{classcma_1_1POSTagger_17818fb91478d21edcaa741c9d43d295}
+
+
+tagging given words list and return N best \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em words}]the given words list \item[{\em N}]return N best \item[{\em retSize}]retSize $<$= N, the size of segment \item[{\em to}]store the result value \end{description}
+\end{Desc}
+
+
+References cma::POSTagUnit::index, cma::POSTagUnit::pos, cma::POSTagUnit::previous, and cma::POSTagUnit::score.\index{cma::POSTagger@{cma::POSTagger}!tag\_\-sentence\_\-best@{tag\_\-sentence\_\-best}}
+\index{tag\_\-sentence\_\-best@{tag\_\-sentence\_\-best}!cma::POSTagger@{cma::POSTagger}}
+\subsubsection[{tag\_\-sentence\_\-best}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::tag\_\-sentence\_\-best (vector$<$ string $>$ \& {\em words}, \/  vector$<$ string $>$ \& {\em posRet}, \/  int {\em begin}, \/  int {\em end})}\label{classcma_1_1POSTagger_efb7b6cfd52c11d289fb8f2332dde7c4}
+
+
+Only return the best result \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em words}]words vector \item[{\em posRet}]to hold the result value \item[{\em begin}]the begin index (include) to check \item[{\em end}]the first index that should not check \end{description}
+\end{Desc}
+
+
+Referenced by tag\_\-file().\index{cma::POSTagger@{cma::POSTagger}!tag\_\-word\_\-best@{tag\_\-word\_\-best}}
+\index{tag\_\-word\_\-best@{tag\_\-word\_\-best}!cma::POSTagger@{cma::POSTagger}}
+\subsubsection[{tag\_\-word\_\-best}]{\setlength{\rightskip}{0pt plus 5cm}double cma::POSTagger::tag\_\-word\_\-best (vector$<$ string $>$ \& {\em words}, \/  vector$<$ string $>$ \& {\em poses}, \/  int {\em index}, \/  string \& {\em pos})}\label{classcma_1_1POSTagger_c7d4c9b62c95e138f39dc84624f11b2e}
+
+
+tag the word with the best POS and return its score \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em words}]words vector \item[{\em poses}]the previous pos vector, but the current pos won't store into the poses \item[{\em index}]the current index to check \item[{\em pos}]to store the best pos \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]return the score of the best pos \end{Desc}
+
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
