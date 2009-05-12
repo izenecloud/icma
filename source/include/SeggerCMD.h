@@ -9,7 +9,7 @@
  *   <li> Using shell, go to the project root directory.
  *   <li> Type &quot;.mkdir build &quot;.
  *   <li> Type &quot;.cd build &quot;.
- *   <li> Type &quot;.cmake ../source &quot;.
+ *   <li> Under linux, type &quot;cmake ../source&quot;; Under windows, run in the msys, type &quot;cmake -G &quot;Unix Makefiles&quot; ../source &quot;.
  *   <li> Finally Type  &quot;.make &quot;. to compile all the source.
  * </ol>
  *

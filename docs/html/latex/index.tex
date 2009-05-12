@@ -1,6 +1,6 @@
 Chinese Morphological Analyzer(Chen) is using Maxent Model and Character-baed Segmentation to perform segmentation and pos tagging.\section{Compile the file}\label{index_compilefile}
 \begin{enumerate}
-\item Using shell, go to the project root directory. \item Type ".mkdir build ". \item Type ".cd build ". \item Type ".cmake ../source ". \item Finally Type ".make ". to compile all the source. \end{enumerate}
+\item Using shell, go to the project root directory. \item Type ".mkdir build ". \item Type ".cd build ". \item Under linux, type "cmake ../source"; Under windows, run in the msys, type "cmake -G "Unix Makefiles" ../source ". \item Finally Type ".make ". to compile all the source. \end{enumerate}
 
 
 If the external program uses the library, simply add all the header files in the \$include\$ directory under the project root directory, and add the build/cmac/libcmac.a into the library path.\section{Run the Trainer}\label{index_runtrainer}

@@ -8,8 +8,8 @@ using namespace std;
  */
 int main(int argc, char** argv) {
 
-    ios_base::sync_with_stdio(false);
-    wcout.imbue(locale("zh_CN.utf-8"));
+    //ios_base::sync_with_stdio(false);
+    //wcout.imbue(locale("zh_CN.utf-8"));
 
     string s = "中文and英文";
 

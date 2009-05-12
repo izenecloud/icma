@@ -313,7 +313,7 @@ inline size_t computeLength(const string& str, bool isWordLan){
 
 inline vector<size_t>* findTokens(const string& str, bool isWordLan){
     vector<size_t> *ret = new vector<size_t>();
-    ret->push_back(-1);
+    ret->push_back(0);
     size_t len = str.length();
     if(!isWordLan){
         for(size_t i=0;i<len;++i){

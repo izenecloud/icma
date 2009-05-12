@@ -334,7 +334,7 @@
 <a name="l00313"></a>00313 
 <a name="l00314"></a>00314 <span class="keyword">inline</span> vector&lt;size_t&gt;* findTokens(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; str, <span class="keywordtype">bool</span> isWordLan){
 <a name="l00315"></a>00315     vector&lt;size_t&gt; *ret = <span class="keyword">new</span> vector&lt;size_t&gt;();
-<a name="l00316"></a>00316     ret-&gt;push_back(-1);
+<a name="l00316"></a>00316     ret-&gt;push_back(0);
 <a name="l00317"></a>00317     <span class="keywordtype">size_t</span> len = str.length();
 <a name="l00318"></a>00318     <span class="keywordflow">if</span>(!isWordLan){
 <a name="l00319"></a>00319         <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> i=0;i&lt;len;++i){
@@ -366,7 +366,7 @@
 <a name="l00345"></a>00345 <span class="preprocessor">#endif  </span><span class="comment">/* _STRUTIL_H */</span>
 <a name="l00346"></a>00346 
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 8 15:15:18 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 12 11:22:32 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>
