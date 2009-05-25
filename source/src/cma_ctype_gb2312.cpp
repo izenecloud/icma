@@ -271,6 +271,54 @@ CharType CMA_CType_GB2312::getCharType(const char* p, CharType preType,
     return CHAR_TYPE_OTHER;
 }
 
+bool CMA_CType_GB2312::isSpace(const char* p) const
+{
+    assert(p);
 
+    const unsigned char* uc = (const unsigned char*)p;
+
+    if(uc[0] < 0x80)
+        return isspace(uc[0]); // check by std library
+
+    //full-width space in GB2312
+    if(uc[0] == 0xa1 && uc[1] == 0xa1)
+        return true;
+
+    return false;
+}
+
+bool CMA_CType_GB2312::isSentenceSeparator(const char* p) const
+{
+    assert(p);
+
+    const unsigned char* uc = (const unsigned char*)p;
+
+    if(uc[0] < 0x80)
+    {
+        switch(*p)
+        {
+            case '?':
+            case '!':
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    unsigned short value = uc[0] << 8 | uc[1];
+    //"。！？；："
+    switch(value)
+    {
+        case 0xa1a3:
+        case 0xa3a1:
+        case 0xa3bf:
+        case 0xa3bb:
+        case 0xa3ba:
+            return true;
+    }
+
+    return false;
+}
 
 } // namespace cma

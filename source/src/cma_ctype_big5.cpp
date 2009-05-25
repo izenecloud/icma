@@ -269,5 +269,55 @@ CharType CMA_CType_Big5::getCharType(const char* p, CharType preType,
     return CHAR_TYPE_OTHER;
 }
 
+bool CMA_CType_Big5::isSpace(const char* p) const
+{
+    assert(p);
+
+    const unsigned char* uc = (const unsigned char*)p;
+
+    if(uc[0] < 0x80)
+        return isspace(uc[0]); // check by std library
+
+    //full-width space in Big5
+    if(uc[0] == 0xa1 && uc[1] == 0x40)
+        return true;
+
+    return false;
+}
+
+bool CMA_CType_Big5::isSentenceSeparator(const char* p) const
+{
+    assert(p);
+
+    const unsigned char* uc = (const unsigned char*)p;
+
+    if(uc[0] < 0x80)
+    {
+        switch(*p)
+        {
+            case '?':
+            case '!':
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    unsigned short value = uc[0] << 8 | uc[1];
+    //"。！？；："
+    switch(value)
+    {
+        case 0xa143:
+        case 0xa149:
+        case 0xa148:
+        case 0xa146:
+        case 0xa147:
+            return true;
+    }
+
+    return false;
+}
+
 
 } // namespace cma

@@ -90,6 +90,14 @@ public:
     virtual int runWithStream(const char* inFileName, const char* outFileName) = 0;
 
     /**
+     * Split a paragraph string into sentences.
+     * \param paragraph paragraph string
+     * \param sentences sentence vector
+     * \attention the original elements in \e sentences would not be removed, and the splited sentences are appended into \e sentences.
+     */
+    virtual void splitSentence(const char* paragraph, std::vector<Sentence>& sentences) = 0;
+
+    /**
      * Option type for analysis.
      */
     enum OptionType

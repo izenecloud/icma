@@ -43,6 +43,21 @@ public:
     virtual CharType getCharType(const char* p, CharType preType,
             const char* nextP) const;
 
+    /**
+     * Check whether is white-space character.
+     * White-space characters are " \t\n\v\f\r", and also space character in specific encoding.
+     * \param p pointer to the character string
+     * \return true for white-space character, false for non white-space character.
+     */
+    virtual bool isSpace(const char* p) const;
+
+    /**
+     * Check whether is a separator of sentence.
+     * \param p pointer to the character string
+     * \return true for separator, false for non separator.
+     */
+    virtual bool isSentenceSeparator(const char* p) const;
+
 protected:
     /**
      * Avoid invoked directly

@@ -148,6 +148,54 @@ namespace cma {
             knowledge_->getSegTagger()->setCType(ctype_);
     }
 
+    void CMA_ME_Analyzer::splitSentence(const char* paragraph, std::vector<Sentence>& sentences)
+    {
+        if(! paragraph)
+            return;
+
+        Sentence result;
+        string sentenceStr;
+        CTypeTokenizer tokenizer(ctype_);
+        tokenizer.assign(paragraph);
+        for(const char* p=tokenizer.next(); p; p=tokenizer.next())
+        {
+            if(ctype_->isSentenceSeparator(p))
+            {
+                sentenceStr += p;
+
+                result.setString(sentenceStr.c_str());
+                sentences.push_back(result);
+
+                sentenceStr.clear();
+            }
+            // white-space characters are also used as sentence separator,
+            // but they are ignored in the sentence result
+            else if(ctype_->isSpace(p))
+            {
+                if(! sentenceStr.empty())
+                {
+                    result.setString(sentenceStr.c_str());
+                    sentences.push_back(result);
+
+                    sentenceStr.clear();
+                }
+            }
+            else
+            {
+                sentenceStr += p;
+            }
+        }
+
+        // in case the last character is not space or sentence separator
+        if(! sentenceStr.empty())
+        {
+            result.setString(sentenceStr.c_str());
+            sentences.push_back(result);
+
+            sentenceStr.clear();
+        }
+    }
+
 namespace meanainner{
 
     /**
