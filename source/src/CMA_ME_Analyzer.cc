@@ -370,12 +370,18 @@ namespace meanainner{
 
 
         VTrie *trie = knowledge_->getTrie();
+        //TODO, only combine the first result
         for (int i = 0; i < N; ++i) {
             pair<vector<string>, double>& srcPair = segment[i];
             pair<vector<string>, double>& destPair = segRet[i];
             destPair.second = srcPair.second;
-            meanainner::combineRetWithTrie( trie, srcPair.first, 
-                    destPair.first, ctype_);
+            if(i < 1){
+                meanainner::combineRetWithTrie( trie, srcPair.first,
+                        destPair.first, ctype_);
+            }
+            else{
+                destPair.first = srcPair.first;
+            }
         }
 
         if(!tagPOS)

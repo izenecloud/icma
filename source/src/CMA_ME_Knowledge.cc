@@ -44,7 +44,7 @@ int CMA_ME_Knowledge::loadPOSModel(const char* cateName){
     while(!posFile.eof()){
         getline(posFile, line);
         trimSelf(line);
-        if(!line.empty())
+        if(line.empty())
             continue;
         POSTable::instance()->addPOS(line);
     }
