@@ -28,7 +28,8 @@ namespace cma {
 
     int CMA_ME_Analyzer::runWithSentence(Sentence& sentence) {
         int N = (int) getOption(OPTION_TYPE_NBEST);
-
+        bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
+        
         vector<pair<vector<string>, double> > segment;
         vector<vector<string> > pos;
         analysis(sentence.getString(), N, pos, segment, true);
@@ -45,7 +46,9 @@ namespace cma {
                     continue;
                 Morpheme morp;
                 morp.lexicon_ = seg; //TODO change the encoding
-                morp.posCode_ = POSTable::instance()->getCodeFromStr(poses[j]);
+                if(printPOS)
+                    morp.posCode_ = POSTable::instance()->getCodeFromStr(poses[j]);
+
                 list.push_back(morp);
             }
             sentence.addList(list, segment[i].second);

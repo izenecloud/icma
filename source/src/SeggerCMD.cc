@@ -43,7 +43,7 @@ void printSeggerUsage(){
             "prefix should contains both path and name, such /dir1/dir2/n1"<<endl;
     cout<<"   inFile is the input file"<<endl;
     cout<<"   outFile is the output file"<<endl;
-    cout<<"   encoding is the encoding of the mateFile, and gb2312"<<
+    cout<<"   encoding is the encoding of the mateFile, and gb2312 "<<
             "is the default encoding. Only support gb2312 and big5 now"<<endl;
     cout<<"   posDelimiter is the delimiter between the word and the pos tag, "<<
             "like '/' and '_' and default is '/'"<<endl;

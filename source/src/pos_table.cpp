@@ -12,6 +12,8 @@
 
 using namespace std;
 
+const char* EMPTY = "";
+
 namespace cma
 {
 
@@ -79,7 +81,7 @@ int POSTable::getCodeFromStr(const std::string& pos) const
 const char* POSTable::getStrFromCode(int index) const
 {
     if(index < 0 || static_cast<unsigned int>(index) >= posTable_.size())
-	return 0;
+	return EMPTY;
 
     return posTable_[index].c_str();
 }
