@@ -259,7 +259,7 @@ CharType CMA_CType_GB2312::getCharType(const char* p, CharType preType,
         return CHAR_TYPE_PUNC;
 
     if(isAbsSpace(uc))
-        return CHAR_TYPE_SPACE;
+        return CHAR_TYPE_PUNC; //return punctuation here
 
     //other constraint to check day?
     if(isAbsDate(uc)){

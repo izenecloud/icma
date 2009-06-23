@@ -24,7 +24,6 @@ namespace posinner{
 inline void get_pos_zh_scontext_1(vector<string>& words, string& tag_1,
         string& tag_2, int index, vector<string>& context,
         CMA_WType& wtype){
-
     CMA_WType::WordType type = wtype.getWordType(words[index].data());
 
     switch(type){

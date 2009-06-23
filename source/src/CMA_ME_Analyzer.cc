@@ -5,6 +5,8 @@
  *
  */
 
+#include <string>
+
 #include "VTrie.h"
 
 #include "CMA_ME_Analyzer.h"
@@ -207,7 +209,9 @@ namespace meanainner{
     inline void toCombine(VTrie *trie, CMA_CType* type, vector<string>& src,
             int begin, int lastWordEnd, vector<string>& dest){
         if(begin == lastWordEnd){
-            dest.push_back(src[begin]);
+            string& str = src[begin];
+            if(!type->isSpace(str.c_str()))
+                dest.push_back(str);
             return;
         }
         bool isOK = true;
@@ -228,8 +232,11 @@ namespace meanainner{
                 buf.append(src[k]);
             dest.push_back(buf);
         }else{
-            for(int k=begin; k<=lastWordEnd; ++k)
-                dest.push_back(src[k]);
+            for(int k=begin; k<=lastWordEnd; ++k){
+                string& str = src[k];
+                if(!type->isSpace(str.c_str()))
+                    dest.push_back(str);
+            }
         }
     }
 
@@ -263,8 +270,11 @@ namespace meanainner{
             if (j < strLen) {
                 //no exist in the dictionary
                 if (begin < 0)
-                    dest.push_back(str);
-                else {
+                {
+                    if(!type->isSpace(str.c_str()))
+                        dest.push_back(str);
+                }
+                 else {
                     if(lastWordEnd < begin)
                         lastWordEnd = begin;
                     toCombine(trie, type, src, begin, lastWordEnd, dest);
@@ -281,7 +291,10 @@ namespace meanainner{
                         lastWordEnd = i;
                 } else {
                     if (begin < 0)
-                        dest.push_back(str);
+                    {
+                        if(!type->isSpace(str.c_str()))
+                            dest.push_back(str);
+                    }
                     else {
                         if(node.data > 0)
                             lastWordEnd = i;
@@ -383,7 +396,12 @@ namespace meanainner{
                         destPair.first, ctype_);
             }
             else{
-                destPair.first = srcPair.first;
+                size_t srcSize = srcPair.first.size();
+                for(size_t si = 0; si < srcSize; ++si){
+                    string& val = srcPair.first[si];
+                    if(!ctype_->isSpace(val.c_str()))
+                        destPair.first.push_back(val);
+                }
             }
         }
 

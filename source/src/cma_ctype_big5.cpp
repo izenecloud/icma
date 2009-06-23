@@ -257,7 +257,7 @@ CharType CMA_CType_Big5::getCharType(const char* p, CharType preType,
         return CHAR_TYPE_PUNC;
 
     if(isAbsSpace(uc))
-        return CHAR_TYPE_SPACE;
+        return CHAR_TYPE_PUNC;
 
     //other constraint to check day?
     if(isAbsDate(uc)){
