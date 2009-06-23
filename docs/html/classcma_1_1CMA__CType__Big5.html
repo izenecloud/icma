@@ -47,6 +47,10 @@ Inheritance diagram for cma::CMA_CType_Big5:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual CharType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType__Big5.html#a125ef224739df73781aa6ee55d28b38">getCharType</a> (const char *p, CharType preType, const char *nextP) const </td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType__Big5.html#47bc2f9c39675c8eb54c125fd9b79124">isSpace</a> (const char *p) const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType__Big5.html#89931722adca1ee8ee1ea5673c3435c7">isSentenceSeparator</a> (const char *p) const </td></tr>
+
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="classcma_1_1CMA__CType__Big5.html">CMA_CType_Big5</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType__Big5.html#ac103ebf44d2a2d35aef04312c064235">instance</a> ()</td></tr>
 
@@ -169,10 +173,66 @@ Create an instance of <em><a class="el" href="classcma_1_1CMA__CType__Big5.html"
 
 </div>
 </div><p>
+<a class="anchor" name="89931722adca1ee8ee1ea5673c3435c7"></a><!-- doxytag: member="cma::CMA_CType_Big5::isSentenceSeparator" ref="89931722adca1ee8ee1ea5673c3435c7" args="(const char *p) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cma::CMA_CType_Big5::isSentenceSeparator           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>p</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Check whether is a separator of sentence. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>p</em>&nbsp;</td><td>pointer to the character string </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>true for separator, false for non separator. </dd></dl>
+
+<p>Implements <a class="el" href="classcma_1_1CMA__CType.html#d53b4e758dae5bc9718eea3f9e3988d8">cma::CMA_CType</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="47bc2f9c39675c8eb54c125fd9b79124"></a><!-- doxytag: member="cma::CMA_CType_Big5::isSpace" ref="47bc2f9c39675c8eb54c125fd9b79124" args="(const char *p) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cma::CMA_CType_Big5::isSpace           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>p</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Check whether is white-space character. White-space characters are " \t\n\v\f\r", and also space character in specific encoding. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>p</em>&nbsp;</td><td>pointer to the character string </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>true for white-space character, false for non white-space character. </dd></dl>
+
+<p>Implements <a class="el" href="classcma_1_1CMA__CType.html#355d9f93a23d8af65fe63018c0558d4c">cma::CMA_CType</a>.</p>
+
+</div>
+</div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>source/include/<a class="el" href="cma__ctype__big5_8h-source.html">cma_ctype_big5.h</a><li>source/src/<a class="el" href="cma__ctype__big5_8cpp.html">cma_ctype_big5.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 12 11:22:32 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

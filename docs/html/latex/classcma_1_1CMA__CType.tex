@@ -23,6 +23,10 @@ virtual CharType {\bf getCharType} (const char $\ast$p, CharType preType, const 
 bool {\bf isPunct} (const char $\ast$p) const 
 \item 
 size\_\-t {\bf length} (const char $\ast$p) const 
+\item 
+virtual bool {\bf isSpace} (const char $\ast$p) const =0
+\item 
+virtual bool {\bf isSentenceSeparator} (const char $\ast$p) const =0
 \end{CompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{CompactItemize}
@@ -125,7 +129,39 @@ Whether the p is a punctuation \begin{Desc}
 \item[Returns:]true if the p is the punctuation \end{Desc}
 
 
-References getCharType().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!length@{length}}
+References getCharType().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!isSentenceSeparator@{isSentenceSeparator}}
+\index{isSentenceSeparator@{isSentenceSeparator}!cma::CMA_CType@{cma::CMA\_\-CType}}
+\subsubsection[{isSentenceSeparator}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool cma::CMA\_\-CType::isSentenceSeparator (const char $\ast$ {\em p}) const\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1CMA__CType_d53b4e758dae5bc9718eea3f9e3988d8}
+
+
+Check whether is a seperator of sentence. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]pointer to the character string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]true for separator, false for non separator. \end{Desc}
+
+
+Implemented in {\bf cma::CMA\_\-CType\_\-Big5} \doxyref{}{p.}{classcma_1_1CMA__CType__Big5_89931722adca1ee8ee1ea5673c3435c7}, and {\bf cma::CMA\_\-CType\_\-GB2312} \doxyref{}{p.}{classcma_1_1CMA__CType__GB2312_07cae6abcfed1aec270f81de6473c518}.
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::splitSentence().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!isSpace@{isSpace}}
+\index{isSpace@{isSpace}!cma::CMA_CType@{cma::CMA\_\-CType}}
+\subsubsection[{isSpace}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool cma::CMA\_\-CType::isSpace (const char $\ast$ {\em p}) const\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1CMA__CType_355d9f93a23d8af65fe63018c0558d4c}
+
+
+Check whether is white-space character. White-space characters are \char`\"{} $\backslash$t$\backslash$n$\backslash$v$\backslash$f$\backslash$r\char`\"{}, and also space character in specific encoding. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]pointer to the character string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]true for white-space character, false for non white-space character. \end{Desc}
+
+
+Implemented in {\bf cma::CMA\_\-CType\_\-Big5} \doxyref{}{p.}{classcma_1_1CMA__CType__Big5_47bc2f9c39675c8eb54c125fd9b79124}, and {\bf cma::CMA\_\-CType\_\-GB2312} \doxyref{}{p.}{classcma_1_1CMA__CType__GB2312_b8545abe4e27b3701d27f0a1067d80bf}.
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::splitSentence().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!length@{length}}
 \index{length@{length}!cma::CMA_CType@{cma::CMA\_\-CType}}
 \subsubsection[{length}]{\setlength{\rightskip}{0pt plus 5cm}size\_\-t cma::CMA\_\-CType::length (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_4583d638f7336cf0a548905e8e88f826}
 

@@ -38,18 +38,22 @@
 <a name="l00043"></a>00043     <span class="keyword">virtual</span> CharType <a class="code" href="classcma_1_1CMA__CType__GB2312.html#e0edf1c74d7a66ba6425b9010401456e">getCharType</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p, CharType preType,
 <a name="l00044"></a>00044             <span class="keyword">const</span> <span class="keywordtype">char</span>* nextP) <span class="keyword">const</span>;
 <a name="l00045"></a>00045 
-<a name="l00046"></a>00046 <span class="keyword">protected</span>:
-<a name="l00050"></a>00050     <a class="code" href="classcma_1_1CMA__CType__GB2312.html#74352ef545209d1b8fd55fac0bf515c0">CMA_CType_GB2312</a>();
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052 <span class="keyword">private</span>:
-<a name="l00054"></a>00054     <span class="keyword">static</span> <a class="code" href="classcma_1_1CMA__CType__GB2312.html" title="CMA_CType_GB2312 gives the character type information in GB2312 encoding.">CMA_CType_GB2312</a>* instance_;
-<a name="l00055"></a>00055 };
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057 } <span class="comment">// namespace cma</span>
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059 <span class="preprocessor">#endif // CMA_CTYPE_GB2312_H</span>
+<a name="l00052"></a>00052     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__CType__GB2312.html#b8545abe4e27b3701d27f0a1067d80bf">isSpace</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
+<a name="l00053"></a>00053 
+<a name="l00059"></a>00059     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__CType__GB2312.html#07cae6abcfed1aec270f81de6473c518">isSentenceSeparator</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061 <span class="keyword">protected</span>:
+<a name="l00065"></a>00065     <a class="code" href="classcma_1_1CMA__CType__GB2312.html#74352ef545209d1b8fd55fac0bf515c0">CMA_CType_GB2312</a>();
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067 <span class="keyword">private</span>:
+<a name="l00069"></a>00069     <span class="keyword">static</span> <a class="code" href="classcma_1_1CMA__CType__GB2312.html" title="CMA_CType_GB2312 gives the character type information in GB2312 encoding.">CMA_CType_GB2312</a>* instance_;
+<a name="l00070"></a>00070 };
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072 } <span class="comment">// namespace cma</span>
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074 <span class="preprocessor">#endif // CMA_CTYPE_GB2312_H</span>
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 12 11:22:32 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

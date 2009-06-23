@@ -64,7 +64,7 @@ Set a raw input string. \begin{Desc}
 \item[Attention:]The raw input string should be encoded in {\em ctype\/} of Constructor. As {\em Tokenizer\/} doesn't make a copy of {\em str\/}, the caller must ensure the life time of {\em str\/} in the calling of {\em \doxyref{next()}{p.}{classcma_1_1CTypeTokenizer_df2de991ea5258b7237c7b2dca78efea}\/} afterward. \end{Desc}
 
 
-Referenced by cma::CMA\_\-WType::getWordType().\index{cma::CTypeTokenizer@{cma::CTypeTokenizer}!getCType@{getCType}}
+Referenced by cma::CMA\_\-WType::getWordType(), and cma::CMA\_\-ME\_\-Analyzer::splitSentence().\index{cma::CTypeTokenizer@{cma::CTypeTokenizer}!getCType@{getCType}}
 \index{getCType@{getCType}!cma::CTypeTokenizer@{cma::CTypeTokenizer}}
 \subsubsection[{getCType}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf CMA\_\-CType}$\ast$ cma::CTypeTokenizer::getCType () const\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1CTypeTokenizer_fb77db9f2b7ca866104e986e1e6f8249}
 
@@ -88,7 +88,7 @@ Get the next character in specific encoding. \begin{Desc}
 
 References cma::CMA\_\-CType::getByteCount().
 
-Referenced by cma::CMA\_\-WType::getWordType(), and cma::CateStrTokenizer::next().
+Referenced by cma::CMA\_\-WType::getWordType(), cma::CateStrTokenizer::next(), and cma::CMA\_\-ME\_\-Analyzer::splitSentence().
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 

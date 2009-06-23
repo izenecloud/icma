@@ -45,38 +45,40 @@
 <a name="l00082"></a>00082 
 <a name="l00090"></a>00090     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Analyzer.html#ae19c787b296d086d52449cb1b6e3699">runWithStream</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* inFileName, <span class="keyword">const</span> <span class="keywordtype">char</span>* outFileName) = 0;
 <a name="l00091"></a>00091 
-<a name="l00095"></a><a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe">00095</a>     <span class="keyword">enum</span> <a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe">OptionType</a>
-<a name="l00096"></a>00096     {
-<a name="l00097"></a><a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efee6788d85d45be70c6b72ddf9948b43b2">00097</a>         <a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efee6788d85d45be70c6b72ddf9948b43b2" title="the value zero for not to tag part-of-speech tags in the result of runWithSentence()...">OPTION_TYPE_POS_TAGGING</a>, 
-<a name="l00098"></a><a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe7737be8d0d08f661301fb1b90f0a96bc">00098</a>         <a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe7737be8d0d08f661301fb1b90f0a96bc" title="a positive value to set the number of candidate results of runWithSentence(), which...">OPTION_TYPE_NBEST</a>, 
-<a name="l00099"></a><a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe2951e28fcefc2733d78dadcec45c15ac">00099</a>         <a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe2951e28fcefc2733d78dadcec45c15ac" title="the count of option types">OPTION_TYPE_NUM</a> 
-<a name="l00100"></a>00100     };
-<a name="l00101"></a>00101 
-<a name="l00108"></a>00108     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Analyzer.html#d461885573a34670730fcb7ebcd10d99">setOption</a>(<a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe">OptionType</a> nOption, <span class="keywordtype">double</span> nValue);
+<a name="l00098"></a>00098     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Analyzer.html#8ed5115519284c1ccf2bde9e289168dd">splitSentence</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* paragraph, std::vector&lt;Sentence&gt;&amp; sentences) = 0;
+<a name="l00099"></a>00099 
+<a name="l00103"></a><a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe">00103</a>     <span class="keyword">enum</span> <a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe">OptionType</a>
+<a name="l00104"></a>00104     {
+<a name="l00105"></a><a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efee6788d85d45be70c6b72ddf9948b43b2">00105</a>         <a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efee6788d85d45be70c6b72ddf9948b43b2" title="the value zero for not to tag part-of-speech tags in the result of runWithSentence()...">OPTION_TYPE_POS_TAGGING</a>, 
+<a name="l00106"></a><a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe7737be8d0d08f661301fb1b90f0a96bc">00106</a>         <a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe7737be8d0d08f661301fb1b90f0a96bc" title="a positive value to set the number of candidate results of runWithSentence(), which...">OPTION_TYPE_NBEST</a>, 
+<a name="l00107"></a><a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe2951e28fcefc2733d78dadcec45c15ac">00107</a>         <a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe2951e28fcefc2733d78dadcec45c15ac" title="the count of option types">OPTION_TYPE_NUM</a> 
+<a name="l00108"></a>00108     };
 <a name="l00109"></a>00109 
-<a name="l00115"></a>00115     <span class="keywordtype">double</span> <a class="code" href="classcma_1_1Analyzer.html#8df9e86073a5e3d0f44dce0c14f27706">getOption</a>(<a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe">OptionType</a> nOption) <span class="keyword">const</span>;
-<a name="l00116"></a>00116 
-<a name="l00121"></a>00121     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Analyzer.html#7c4b88bf29930661262f3c05be208471">setPOSDelimiter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* delimiter);
-<a name="l00122"></a>00122 
-<a name="l00127"></a>00127     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Analyzer.html#e5351b7f2fa7717b1b5af2be8a86c04f">getPOSDelimiter</a>() <span class="keyword">const</span>;
-<a name="l00128"></a>00128 
-<a name="l00133"></a>00133     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Analyzer.html#c9bba08c5455b6e640065e420d1974d7">setWordDelimiter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* delimiter);
-<a name="l00134"></a>00134 
-<a name="l00139"></a>00139     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Analyzer.html#bee23d91de22d6083c3ba41a126d43a6">getWordDelimiter</a>() <span class="keyword">const</span>;
-<a name="l00140"></a>00140 
-<a name="l00141"></a>00141 <span class="keyword">protected</span>:
-<a name="l00143"></a><a class="code" href="classcma_1_1Analyzer.html#e48091098a6b1e544ef3ac5517b5d1cc">00143</a>     std::vector&lt;double&gt; <a class="code" href="classcma_1_1Analyzer.html#e48091098a6b1e544ef3ac5517b5d1cc">options_</a>;
-<a name="l00144"></a>00144 
-<a name="l00146"></a><a class="code" href="classcma_1_1Analyzer.html#3649af9da4b6022fd9761ab59bb249c2">00146</a>     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Analyzer.html#3649af9da4b6022fd9761ab59bb249c2">posDelimiter_</a>;
-<a name="l00147"></a>00147 
-<a name="l00149"></a><a class="code" href="classcma_1_1Analyzer.html#2bc9276661a6c732dc52dbc3fda74817">00149</a>     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Analyzer.html#2bc9276661a6c732dc52dbc3fda74817">wordDelimiter_</a>;
-<a name="l00150"></a>00150 };
-<a name="l00151"></a>00151 
-<a name="l00152"></a>00152 } <span class="comment">// namespace cma</span>
-<a name="l00153"></a>00153 
-<a name="l00154"></a>00154 <span class="preprocessor">#endif // CMA_ANALYZER_H</span>
+<a name="l00116"></a>00116     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Analyzer.html#d461885573a34670730fcb7ebcd10d99">setOption</a>(<a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe">OptionType</a> nOption, <span class="keywordtype">double</span> nValue);
+<a name="l00117"></a>00117 
+<a name="l00123"></a>00123     <span class="keywordtype">double</span> <a class="code" href="classcma_1_1Analyzer.html#8df9e86073a5e3d0f44dce0c14f27706">getOption</a>(<a class="code" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe">OptionType</a> nOption) <span class="keyword">const</span>;
+<a name="l00124"></a>00124 
+<a name="l00129"></a>00129     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Analyzer.html#7c4b88bf29930661262f3c05be208471">setPOSDelimiter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* delimiter);
+<a name="l00130"></a>00130 
+<a name="l00135"></a>00135     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Analyzer.html#e5351b7f2fa7717b1b5af2be8a86c04f">getPOSDelimiter</a>() <span class="keyword">const</span>;
+<a name="l00136"></a>00136 
+<a name="l00141"></a>00141     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Analyzer.html#c9bba08c5455b6e640065e420d1974d7">setWordDelimiter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* delimiter);
+<a name="l00142"></a>00142 
+<a name="l00147"></a>00147     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Analyzer.html#bee23d91de22d6083c3ba41a126d43a6">getWordDelimiter</a>() <span class="keyword">const</span>;
+<a name="l00148"></a>00148 
+<a name="l00149"></a>00149 <span class="keyword">protected</span>:
+<a name="l00151"></a><a class="code" href="classcma_1_1Analyzer.html#e48091098a6b1e544ef3ac5517b5d1cc">00151</a>     std::vector&lt;double&gt; <a class="code" href="classcma_1_1Analyzer.html#e48091098a6b1e544ef3ac5517b5d1cc">options_</a>;
+<a name="l00152"></a>00152 
+<a name="l00154"></a><a class="code" href="classcma_1_1Analyzer.html#3649af9da4b6022fd9761ab59bb249c2">00154</a>     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Analyzer.html#3649af9da4b6022fd9761ab59bb249c2">posDelimiter_</a>;
+<a name="l00155"></a>00155 
+<a name="l00157"></a><a class="code" href="classcma_1_1Analyzer.html#2bc9276661a6c732dc52dbc3fda74817">00157</a>     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Analyzer.html#2bc9276661a6c732dc52dbc3fda74817">wordDelimiter_</a>;
+<a name="l00158"></a>00158 };
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160 } <span class="comment">// namespace cma</span>
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162 <span class="preprocessor">#endif // CMA_ANALYZER_H</span>
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 12 11:22:32 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

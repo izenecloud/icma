@@ -57,6 +57,8 @@ Inheritance diagram for cma::Analyzer:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1Analyzer.html#ae19c787b296d086d52449cb1b6e3699">runWithStream</a> (const char *inFileName, const char *outFileName)=0</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1Analyzer.html#8ed5115519284c1ccf2bde9e289168dd">splitSentence</a> (const char *paragraph, std::vector&lt; <a class="el" href="classcma_1_1Sentence.html">Sentence</a> &gt; &amp;sentences)=0</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1Analyzer.html#d461885573a34670730fcb7ebcd10d99">setOption</a> (<a class="el" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe">OptionType</a> nOption, double nValue)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1Analyzer.html#8df9e86073a5e3d0f44dce0c14f27706">getOption</a> (<a class="el" href="classcma_1_1Analyzer.html#828bd41bd7badd423d6cef5aa1454efe">OptionType</a> nOption) const </td></tr>
@@ -138,9 +140,9 @@ Get the option value. <dl compact><dt><b>Parameters:</b></dt><dd>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the option value </dd></dl>
 
-<p>References <a class="el" href="analyzer_8h-source.html#l00143">options_</a>.</p>
+<p>References <a class="el" href="analyzer_8h-source.html#l00151">options_</a>.</p>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00029">cma::CMA_ME_Analyzer::runWithSentence()</a>, <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00057">cma::CMA_ME_Analyzer::runWithStream()</a>, and <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00112">cma::CMA_ME_Analyzer::runWithString()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00031">cma::CMA_ME_Analyzer::runWithSentence()</a>, <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00062">cma::CMA_ME_Analyzer::runWithStream()</a>, and <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00117">cma::CMA_ME_Analyzer::runWithString()</a>.</p>
 
 </div>
 </div><p>
@@ -162,7 +164,7 @@ Get the option value. <dl compact><dt><b>Parameters:</b></dt><dd>
 <p>
 Get the delimiter between word and POS tag in the output result of <em><a class="el" href="classcma_1_1Analyzer.html#2d05785e30e19a390aa887f25bda2d2f">runWithString()</a></em> and <em><a class="el" href="classcma_1_1Analyzer.html#ae19c787b296d086d52449cb1b6e3699">runWithStream()</a></em>, which delimiter is "/" defaultly so that the result would be "word/pos  word/pos  ...". <dl class="return" compact><dt><b>Returns:</b></dt><dd>the delimiter between word and POS tag in the output result </dd></dl>
 
-<p>References <a class="el" href="analyzer_8h-source.html#l00146">posDelimiter_</a>.</p>
+<p>References <a class="el" href="analyzer_8h-source.html#l00154">posDelimiter_</a>.</p>
 
 </div>
 </div><p>
@@ -184,7 +186,7 @@ Get the delimiter between word and POS tag in the output result of <em><a class=
 <p>
 Get the delimiter between the pairs (word and POS tag) in the output result of <em><a class="el" href="classcma_1_1Analyzer.html#2d05785e30e19a390aa887f25bda2d2f">runWithString()</a></em> and <em><a class="el" href="classcma_1_1Analyzer.html#ae19c787b296d086d52449cb1b6e3699">runWithStream()</a></em>, which delimiter is "  " (double-space) defaultly so that the result would be "word/pos  word/pos  ...". <dl class="return" compact><dt><b>Returns:</b></dt><dd>the delimiter between the pairs (word and POS tag) in the output result </dd></dl>
 
-<p>References <a class="el" href="analyzer_8h-source.html#l00149">wordDelimiter_</a>.</p>
+<p>References <a class="el" href="analyzer_8h-source.html#l00157">wordDelimiter_</a>.</p>
 
 </div>
 </div><p>
@@ -350,7 +352,7 @@ Set the option value for analysis. <dl compact><dt><b>Parameters:</b></dt><dd>
 </dl>
 <dl class="attention" compact><dt><b>Attention:</b></dt><dd>when <em>nOption</em> is <em>OPTION_TYPE_NBEST</em>, the invalid <em>nValue</em> less than 1 will take no effect. </dd></dl>
 
-<p>References <a class="el" href="analyzer_8h-source.html#l00098">OPTION_TYPE_NBEST</a>, and <a class="el" href="analyzer_8h-source.html#l00143">options_</a>.</p>
+<p>References <a class="el" href="analyzer_8h-source.html#l00106">OPTION_TYPE_NBEST</a>, and <a class="el" href="analyzer_8h-source.html#l00151">options_</a>.</p>
 
 <p>Referenced by <a class="el" href="SeggerCMD_8cc-source.html#l00005">beginSeg()</a>.</p>
 
@@ -379,7 +381,7 @@ Set the delimiter between word and POS tag in the output result of <em><a class=
   </table>
 </dl>
 
-<p>References <a class="el" href="analyzer_8h-source.html#l00146">posDelimiter_</a>.</p>
+<p>References <a class="el" href="analyzer_8h-source.html#l00154">posDelimiter_</a>.</p>
 
 <p>Referenced by <a class="el" href="SeggerCMD_8cc-source.html#l00005">beginSeg()</a>.</p>
 
@@ -408,7 +410,45 @@ Set the delimiter between the pairs (word and POS tag) in the output result of <
   </table>
 </dl>
 
-<p>References <a class="el" href="analyzer_8h-source.html#l00149">wordDelimiter_</a>.</p>
+<p>References <a class="el" href="analyzer_8h-source.html#l00157">wordDelimiter_</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="8ed5115519284c1ccf2bde9e289168dd"></a><!-- doxytag: member="cma::Analyzer::splitSentence" ref="8ed5115519284c1ccf2bde9e289168dd" args="(const char *paragraph, std::vector&lt; Sentence &gt; &amp;sentences)=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void cma::Analyzer::splitSentence           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>paragraph</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="classcma_1_1Sentence.html">Sentence</a> &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>sentences</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Split a paragraph string into sentences. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>paragraph</em>&nbsp;</td><td>paragraph string </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>sentences</em>&nbsp;</td><td>sentence vector </td></tr>
+  </table>
+</dl>
+<dl class="attention" compact><dt><b>Attention:</b></dt><dd>the original elements in <em>sentences</em> would not be removed, and the splited sentences are appended into <em>sentences</em>. </dd></dl>
+
+<p>Implemented in <a class="el" href="classcma_1_1CMA__ME__Analyzer.html#b6d7b5e169207cca37337eceb07ac5fe">cma::CMA_ME_Analyzer</a>.</p>
 
 </div>
 </div><p>
@@ -443,7 +483,7 @@ option values
 
 <p>
 the delimiter between word and POS tag in the output result 
-<p>Referenced by <a class="el" href="analyzer_8cpp-source.html#l00058">getPOSDelimiter()</a>, <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00057">cma::CMA_ME_Analyzer::runWithStream()</a>, <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00112">cma::CMA_ME_Analyzer::runWithString()</a>, and <a class="el" href="analyzer_8cpp-source.html#l00053">setPOSDelimiter()</a>.</p>
+<p>Referenced by <a class="el" href="analyzer_8cpp-source.html#l00058">getPOSDelimiter()</a>, <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00062">cma::CMA_ME_Analyzer::runWithStream()</a>, <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00117">cma::CMA_ME_Analyzer::runWithString()</a>, and <a class="el" href="analyzer_8cpp-source.html#l00053">setPOSDelimiter()</a>.</p>
 
 </div>
 </div><p>
@@ -460,14 +500,14 @@ the delimiter between word and POS tag in the output result
 
 <p>
 the delimiter between the pairs (word and POS tag) in the output result 
-<p>Referenced by <a class="el" href="analyzer_8cpp-source.html#l00068">getWordDelimiter()</a>, <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00057">cma::CMA_ME_Analyzer::runWithStream()</a>, <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00112">cma::CMA_ME_Analyzer::runWithString()</a>, and <a class="el" href="analyzer_8cpp-source.html#l00063">setWordDelimiter()</a>.</p>
+<p>Referenced by <a class="el" href="analyzer_8cpp-source.html#l00068">getWordDelimiter()</a>, <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00062">cma::CMA_ME_Analyzer::runWithStream()</a>, <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00117">cma::CMA_ME_Analyzer::runWithString()</a>, and <a class="el" href="analyzer_8cpp-source.html#l00063">setWordDelimiter()</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="analyzer_8h-source.html">analyzer.h</a><li>source/src/<a class="el" href="analyzer_8cpp.html">analyzer.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 12 11:22:32 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

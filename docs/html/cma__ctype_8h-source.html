@@ -65,13 +65,17 @@
 <a name="l00092"></a>00092     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__CType.html#b9fbb6aa32fd36bb3838b48ffb92bf24">isPunct</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
 <a name="l00093"></a>00093 
 <a name="l00099"></a>00099     <span class="keywordtype">size_t</span> <a class="code" href="classcma_1_1CMA__CType.html#4583d638f7336cf0a548905e8e88f826">length</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
-<a name="l00100"></a>00100 };
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102 } <span class="comment">// namespace cma</span>
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104 <span class="preprocessor">#endif // CMA_CTYPE_H</span>
+<a name="l00100"></a>00100 
+<a name="l00107"></a>00107     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__CType.html#355d9f93a23d8af65fe63018c0558d4c">isSpace</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span> = 0;
+<a name="l00108"></a>00108 
+<a name="l00114"></a>00114     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__CType.html#d53b4e758dae5bc9718eea3f9e3988d8">isSentenceSeparator</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span> = 0;
+<a name="l00115"></a>00115 };
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117 } <span class="comment">// namespace cma</span>
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119 <span class="preprocessor">#endif // CMA_CTYPE_H</span>
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 12 11:22:32 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

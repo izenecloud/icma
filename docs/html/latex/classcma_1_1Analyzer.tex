@@ -29,6 +29,8 @@ virtual const char $\ast$ {\bf runWithString} (const char $\ast$inStr)=0
 \item 
 virtual int {\bf runWithStream} (const char $\ast$inFileName, const char $\ast$outFileName)=0
 \item 
+virtual void {\bf splitSentence} (const char $\ast$paragraph, std::vector$<$ {\bf Sentence} $>$ \&sentences)=0
+\item 
 void {\bf setOption} ({\bf OptionType} nOption, double nValue)
 \item 
 double {\bf getOption} ({\bf OptionType} nOption) const 
@@ -232,7 +234,21 @@ Set the delimiter between the pairs (word and POS tag) in the output result of {
 \end{Desc}
 
 
-References wordDelimiter\_\-.
+References wordDelimiter\_\-.\index{cma::Analyzer@{cma::Analyzer}!splitSentence@{splitSentence}}
+\index{splitSentence@{splitSentence}!cma::Analyzer@{cma::Analyzer}}
+\subsubsection[{splitSentence}]{\setlength{\rightskip}{0pt plus 5cm}virtual void cma::Analyzer::splitSentence (const char $\ast$ {\em paragraph}, \/  std::vector$<$ {\bf Sentence} $>$ \& {\em sentences})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Analyzer_8ed5115519284c1ccf2bde9e289168dd}
+
+
+Split a paragraph string into sentences. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em paragraph}]paragraph string \item[{\em sentences}]sentence vector \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Attention:]the original elements in {\em sentences\/} would not be removed, and the splited sentences are appended into {\em sentences\/}. \end{Desc}
+
+
+Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_b6d7b5e169207cca37337eceb07ac5fe}.
 
 \subsection{Member Data Documentation}
 \index{cma::Analyzer@{cma::Analyzer}!options\_\-@{options\_\-}}

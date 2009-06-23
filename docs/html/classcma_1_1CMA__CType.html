@@ -54,6 +54,10 @@ Inheritance diagram for cma::CMA_CType:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#4583d638f7336cf0a548905e8e88f826">length</a> (const char *p) const </td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#355d9f93a23d8af65fe63018c0558d4c">isSpace</a> (const char *p) const =0</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#d53b4e758dae5bc9718eea3f9e3988d8">isSentenceSeparator</a> (const char *p) const =0</td></tr>
+
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="classcma_1_1CMA__CType.html">CMA_CType</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#a0a1b4e5959587032b22036c64790314">instance</a> (<a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> type)</td></tr>
 
@@ -216,7 +220,7 @@ Create an instance of <em><a class="el" href="classcma_1_1CMA__CType.html" title
 
 <p>References <a class="el" href="knowledge_8h-source.html#l00082">cma::Knowledge::ENCODE_TYPE_BIG5</a>, and <a class="el" href="knowledge_8h-source.html#l00081">cma::Knowledge::ENCODE_TYPE_GB2312</a>.</p>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00142">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00147">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
 
 </div>
 </div><p>
@@ -245,6 +249,66 @@ Whether the p is a punctuation <dl compact><dt><b>Parameters:</b></dt><dd>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if the p is the punctuation </dd></dl>
 
 <p>References <a class="el" href="classcma_1_1CMA__CType.html#45412869e7ededc53dcc432d43d6a025">getCharType()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="d53b4e758dae5bc9718eea3f9e3988d8"></a><!-- doxytag: member="cma::CMA_CType::isSentenceSeparator" ref="d53b4e758dae5bc9718eea3f9e3988d8" args="(const char *p) const =0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool cma::CMA_CType::isSentenceSeparator           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>p</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Check whether is a seperator of sentence. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>p</em>&nbsp;</td><td>pointer to the character string </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>true for separator, false for non separator. </dd></dl>
+
+<p>Implemented in <a class="el" href="classcma_1_1CMA__CType__Big5.html#89931722adca1ee8ee1ea5673c3435c7">cma::CMA_CType_Big5</a>, and <a class="el" href="classcma_1_1CMA__CType__GB2312.html#07cae6abcfed1aec270f81de6473c518">cma::CMA_CType_GB2312</a>.</p>
+
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00156">cma::CMA_ME_Analyzer::splitSentence()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="355d9f93a23d8af65fe63018c0558d4c"></a><!-- doxytag: member="cma::CMA_CType::isSpace" ref="355d9f93a23d8af65fe63018c0558d4c" args="(const char *p) const =0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool cma::CMA_CType::isSpace           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>p</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Check whether is white-space character. White-space characters are " \t\n\v\f\r", and also space character in specific encoding. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>p</em>&nbsp;</td><td>pointer to the character string </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>true for white-space character, false for non white-space character. </dd></dl>
+
+<p>Implemented in <a class="el" href="classcma_1_1CMA__CType__Big5.html#47bc2f9c39675c8eb54c125fd9b79124">cma::CMA_CType_Big5</a>, and <a class="el" href="classcma_1_1CMA__CType__GB2312.html#b8545abe4e27b3701d27f0a1067d80bf">cma::CMA_CType_GB2312</a>.</p>
+
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00156">cma::CMA_ME_Analyzer::splitSentence()</a>.</p>
 
 </div>
 </div><p>
@@ -279,7 +343,7 @@ Get the number of the characters in the p <dl compact><dt><b>Parameters:</b></dt
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>source/include/<a class="el" href="cma__ctype_8h-source.html">cma_ctype.h</a><li>source/src/<a class="el" href="cma__ctype_8cpp.html">cma_ctype.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 12 11:22:32 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

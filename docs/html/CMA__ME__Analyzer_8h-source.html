@@ -51,26 +51,28 @@
 <a name="l00063"></a>00063 
 <a name="l00072"></a>00072     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#eb9e065c3cc25885f2ccb0c70f4a5964">runWithStream</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* inFileName, <span class="keyword">const</span> <span class="keywordtype">char</span>* outFileName);
 <a name="l00073"></a>00073 
-<a name="l00074"></a>00074 <span class="keyword">private</span>:
-<a name="l00078"></a>00078     <span class="keywordtype">void</span> analysis(<span class="keyword">const</span> <span class="keywordtype">char</span>* sentence, <span class="keywordtype">int</span> N, vector&lt;vector&lt;string&gt; &gt;&amp; pos,
-<a name="l00079"></a>00079             vector&lt;pair&lt;vector&lt;string&gt;, <span class="keywordtype">double</span>&gt; &gt;&amp; segment, <span class="keywordtype">bool</span> tagPOS = <span class="keyword">true</span>);
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081 <span class="keyword">private</span>:
-<a name="l00082"></a>00082     <a class="code" href="classcma_1_1CMA__ME__Knowledge.html" title="Knowledge for the CMAC.">CMA_ME_Knowledge</a> *knowledge_;
-<a name="l00083"></a>00083 
-<a name="l00085"></a>00085     <span class="keywordtype">string</span> strBuf_;
-<a name="l00086"></a>00086 
-<a name="l00090"></a>00090     <a class="code" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a>* ctype_;
-<a name="l00091"></a>00091 };
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094 }
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097 <span class="preprocessor">#endif  </span><span class="comment">/* _CMA_ME_ANALYZER_H */</span>
-<a name="l00098"></a>00098 
+<a name="l00080"></a>00080     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#b6d7b5e169207cca37337eceb07ac5fe">splitSentence</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* paragraph, std::vector&lt;Sentence&gt;&amp; sentences);
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082 <span class="keyword">private</span>:
+<a name="l00086"></a>00086     <span class="keywordtype">void</span> analysis(<span class="keyword">const</span> <span class="keywordtype">char</span>* sentence, <span class="keywordtype">int</span> N, vector&lt;vector&lt;string&gt; &gt;&amp; pos,
+<a name="l00087"></a>00087             vector&lt;pair&lt;vector&lt;string&gt;, <span class="keywordtype">double</span>&gt; &gt;&amp; segment, <span class="keywordtype">bool</span> tagPOS = <span class="keyword">true</span>);
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089 <span class="keyword">private</span>:
+<a name="l00090"></a>00090     <a class="code" href="classcma_1_1CMA__ME__Knowledge.html" title="Knowledge for the CMAC.">CMA_ME_Knowledge</a> *knowledge_;
+<a name="l00091"></a>00091 
+<a name="l00093"></a>00093     <span class="keywordtype">string</span> strBuf_;
+<a name="l00094"></a>00094 
+<a name="l00098"></a>00098     <a class="code" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a>* ctype_;
+<a name="l00099"></a>00099 };
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102 }
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105 <span class="preprocessor">#endif  </span><span class="comment">/* _CMA_ME_ANALYZER_H */</span>
+<a name="l00106"></a>00106 
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 12 11:22:32 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

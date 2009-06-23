@@ -1,7 +1,8 @@
 /*! \mainpage Document of the Chinese Morphological Analyzer(Chen)
  *
- * Chinese Morphological Analyzer(Chen) is using Maxent Model and Character-baed
- * Segmentation to perform segmentation and pos tagging.
+ * <b>CMA</b> (Chinese Morphological Analyzer) is a platform-independent C++ library for Chinese 
+ * word segmentation and POS tagging. And Chinese Morphological Analyzer(Chen) is using Maxent Model and Character-baed
+ * Segmentation to perform segmentation and POS tagging.
  *
  * \section compilefile Compile the file
  *
@@ -15,12 +16,12 @@
  *
  * If the external program uses the library, simply add all the header files
  * in the $include$ directory under the project root directory, and add the
- * build/cmac/libcmac.a into the library path.
+ * lib/libcmac.a into the library path.
  *
  * \section runtrainer Run the Trainer
  *
  * The dataset have to be trained by the Trainer. The Trainer is a executable 
- * file with name camctrainer under build/cmac.
+ * file with name camctrainer under directory bin.
  *
  * The SYNOPSIS for the trainer is: <BR>
  * ./cmactrainer mateFile cateFile [encoding] [posDelimiter] <BR>
@@ -57,7 +58,7 @@
  * \section rundemo Run the Demo
  *
  * After the training, you can run the demo to segment the file, The Demo is a 
- * executable file with name camcsegger under build/cmac.
+ * executable file with name camcsegger under directory bin.
  *
  * The SYNOPSIS for the trainer is: <BR>
  * ./cmacsegger cateFile inFile outFile [encoding] [posDelimiter] <BR>
@@ -76,6 +77,88 @@
  * </ul>
  *
  * The result with pos tagging can be found in the outFile.
+ 
+ \section useapi Use the API
+ 
+ First of the all, add the lib/libcmac.a into the library path.
+ 
+<i>Step 1: Include the header files in directory "include"</i>
+\code
+#include "cma_factory.h"
+#include "analyzer.h"
+#include "knowledge.h"
+#include "sentence.h"
+\endcode
+
+<i>Step 2: Use the library name space</i>
+\code
+using namespace cma;
+\endcode
+
+<i>Step 3: Call the interface and handle the result</i>
+
+\code
+// create instances
+CMA_Factory* factory = CMA_Factory::instance();
+Analyzer* analyzer = factory->createAnalyzer();
+Knowledge* knowledge = factory->createKnowledge();
+
+//It is suggested to set encoding after crate the Knowledge. Another supported encode type is big5.
+knowledge->setEncodeType(Knowledge::ENCODE_TYPE_GB2312);
+
+// If use /dir1/dir2/cate as the cateFile in the trainer (see section "Run the Trainer" 
+// in this webpage), the parameter for loadStatModel is /dir1/dir2/cate-poc and for the 
+// loadPOSModel is /dir1/dir2/cate.
+
+// load POC statistical model
+knowledge->loadStatModel("...");
+// loadPOSModel has to be invoked before loading XXX Dictionaries
+knowledge->loadPOSModel("...");
+
+// (optional) load dictionaries
+knowledge->loadSystemDict("...");
+knowledge->loadUserDict("...");
+knowledge->loadStopWordDict("...");
+ 
+// (optional) if POS tagging is not needed, call the function below to turn off the analysis and 
+// output for POS tagging, so that large execution time could be saved when execute 
+// Analyzer::runWithSentence(), Analyzer::runWithString(), Analyzer::runWithStream().
+analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
+
+// (optional) set the number of N-best results,
+// if this function is not called, one-best analysis is performed defaultly on Analyzer::runWithSentence().
+analyzer->setOption(Analyzer::OPTION_TYPE_NBEST, 5);
+
+// set knowledge
+analyzer->setKnowledge(knowledge);
+
+// 1. analyze a paragraph
+const char* result = analyzer->runWithString("...");
+...
+
+// 2. analyze a file
+analyzer->runWithStream("...", "...");
+
+// 3. split paragraphs into sentences
+string line;
+vector<Sentence> sentVec;
+while(getline(cin, line)) // get paragraph string from standard input
+{
+    sentVec.clear(); // remove previous sentences
+    analyzer->splitSentence(line.c_str(), sentVec);
+    for(size_t i=0; i<sentVec.size(); ++i)
+    {
+        analyzer->runWithSentence(sentVec[i]); // analyze each sentence
+        ...
+    }
+}
+
+// destroy instances
+delete knowledge;
+delete analyzer;
+\endcode
+
+ 
  */
  
  /** 

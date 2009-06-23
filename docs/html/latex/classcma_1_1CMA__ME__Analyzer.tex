@@ -23,6 +23,8 @@ virtual int {\bf runWithSentence} ({\bf Sentence} \&sentence)
 virtual const char $\ast$ {\bf runWithString} (const char $\ast$inStr)
 \item 
 virtual int {\bf runWithStream} (const char $\ast$inFileName, const char $\ast$outFileName)
+\item 
+virtual void {\bf splitSentence} (const char $\ast$paragraph, std::vector$<$ {\bf Sentence} $>$ \&sentences)
 \end{CompactItemize}
 
 
@@ -60,7 +62,7 @@ Execute the morphological analysis based on a sentence. \begin{Desc}
 
 Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_2274acc45dd1ccc6aa7ea87cd34ad0e7}.
 
-References cma::Sentence::addList(), cma::POSTable::getCodeFromStr(), cma::Analyzer::getOption(), cma::Sentence::getString(), cma::POSTable::instance(), cma::CMA\_\-ME\_\-Knowledge::isStopWord(), cma::Morpheme::lexicon\_\-, cma::Analyzer::OPTION\_\-TYPE\_\-NBEST, and cma::Morpheme::posCode\_\-.\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!runWithStream@{runWithStream}}
+References cma::Sentence::addList(), cma::POSTable::getCodeFromStr(), cma::Analyzer::getOption(), cma::Sentence::getString(), cma::POSTable::instance(), cma::CMA\_\-ME\_\-Knowledge::isStopWord(), cma::Morpheme::lexicon\_\-, cma::Analyzer::OPTION\_\-TYPE\_\-NBEST, cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, and cma::Morpheme::posCode\_\-.\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!runWithStream@{runWithStream}}
 \index{runWithStream@{runWithStream}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
 \subsubsection[{runWithStream}]{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Analyzer::runWithStream (const char $\ast$ {\em inFileName}, \/  const char $\ast$ {\em outFileName})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_eb9e065c3cc25885f2ccb0c70f4a5964}
 
@@ -108,7 +110,23 @@ Set the {\em \doxyref{Knowledge}{p.}{classcma_1_1Knowledge}\/} for analysis. \be
 
 Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_52d2462f2f05cec4a9c4d6773e7502cb}.
 
-References cma::Knowledge::getEncodeType(), cma::CMA\_\-ME\_\-Knowledge::getPOSTagger(), cma::CMA\_\-ME\_\-Knowledge::getSegTagger(), cma::CMA\_\-CType::instance(), cma::SegTagger::setCType(), and cma::POSTagger::setCType().
+References cma::Knowledge::getEncodeType(), cma::CMA\_\-ME\_\-Knowledge::getPOSTagger(), cma::CMA\_\-ME\_\-Knowledge::getSegTagger(), cma::CMA\_\-CType::instance(), cma::SegTagger::setCType(), and cma::POSTagger::setCType().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!splitSentence@{splitSentence}}
+\index{splitSentence@{splitSentence}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
+\subsubsection[{splitSentence}]{\setlength{\rightskip}{0pt plus 5cm}void cma::CMA\_\-ME\_\-Analyzer::splitSentence (const char $\ast$ {\em paragraph}, \/  std::vector$<$ {\bf Sentence} $>$ \& {\em sentences})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_b6d7b5e169207cca37337eceb07ac5fe}
+
+
+Split a paragraph string into sentences. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em paragraph}]paragraph string \item[{\em sentences}]sentence vector \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Attention:]the original elements in {\em sentences\/} would not be removed, and the splited sentences are appended into {\em sentences\/}. \end{Desc}
+
+
+Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_8ed5115519284c1ccf2bde9e289168dd}.
+
+References cma::CTypeTokenizer::assign(), cma::CMA\_\-CType::isSentenceSeparator(), cma::CMA\_\-CType::isSpace(), cma::CTypeTokenizer::next(), and cma::Sentence::setString().
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 

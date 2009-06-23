@@ -17,6 +17,10 @@ Inheritance diagram for cma::CMA\_\-CType\_\-GB2312::\begin{figure}[H]
 virtual unsigned int {\bf getByteCount} (const char $\ast$p) const 
 \item 
 virtual CharType {\bf getCharType} (const char $\ast$p, CharType preType, const char $\ast$nextP) const 
+\item 
+virtual bool {\bf isSpace} (const char $\ast$p) const 
+\item 
+virtual bool {\bf isSentenceSeparator} (const char $\ast$p) const 
 \end{CompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{CompactItemize}
@@ -77,7 +81,35 @@ Implements {\bf cma::CMA\_\-CType} \doxyref{}{p.}{classcma_1_1CMA__CType_4541286
 
 Create an instance of {\em \doxyref{CMA\_\-CType\_\-GB2312}{p.}{classcma_1_1CMA__CType__GB2312}\/}. \begin{Desc}
 \item[Returns:]the pointer to instance \end{Desc}
+\index{cma::CMA\_\-CType\_\-GB2312@{cma::CMA\_\-CType\_\-GB2312}!isSentenceSeparator@{isSentenceSeparator}}
+\index{isSentenceSeparator@{isSentenceSeparator}!cma::CMA_CType_GB2312@{cma::CMA\_\-CType\_\-GB2312}}
+\subsubsection[{isSentenceSeparator}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-CType\_\-GB2312::isSentenceSeparator (const char $\ast$ {\em p}) const\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__CType__GB2312_07cae6abcfed1aec270f81de6473c518}
 
+
+Check whether is a separator of sentence. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]pointer to the character string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]true for separator, false for non separator. \end{Desc}
+
+
+Implements {\bf cma::CMA\_\-CType} \doxyref{}{p.}{classcma_1_1CMA__CType_d53b4e758dae5bc9718eea3f9e3988d8}.\index{cma::CMA\_\-CType\_\-GB2312@{cma::CMA\_\-CType\_\-GB2312}!isSpace@{isSpace}}
+\index{isSpace@{isSpace}!cma::CMA_CType_GB2312@{cma::CMA\_\-CType\_\-GB2312}}
+\subsubsection[{isSpace}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-CType\_\-GB2312::isSpace (const char $\ast$ {\em p}) const\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__CType__GB2312_b8545abe4e27b3701d27f0a1067d80bf}
+
+
+Check whether is white-space character. White-space characters are \char`\"{} $\backslash$t$\backslash$n$\backslash$v$\backslash$f$\backslash$r\char`\"{}, and also space character in specific encoding. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]pointer to the character string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]true for white-space character, false for non white-space character. \end{Desc}
+
+
+Implements {\bf cma::CMA\_\-CType} \doxyref{}{p.}{classcma_1_1CMA__CType_355d9f93a23d8af65fe63018c0558d4c}.
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
