@@ -34,26 +34,46 @@ namespace cma {
         
         vector<pair<vector<string>, double> > segment;
         vector<vector<string> > pos;
-        analysis(sentence.getString(), N, pos, segment, true);
+        analysis(sentence.getString(), N, pos, segment, printPOS);
 
         size_t size = segment.size();
-        for (size_t i = 0; i < size; ++i) {
-            MorphemeList list;
-            vector<string>& segs = segment[i].first;
-            vector<string>& poses = pos[i];
-            size_t segSize = segs.size();
-            for (size_t j = 0; j < segSize; ++j) {
-                string& seg = segs[j];
-                if(knowledge_->isStopWord(seg))
-                    continue;
-                Morpheme morp;
-                morp.lexicon_ = seg; //TODO change the encoding
-                if(printPOS)
+
+        if(printPOS)
+        {
+            for (size_t i = 0; i < size; ++i) {
+                MorphemeList list;
+                vector<string>& segs = segment[i].first;
+                vector<string>& poses = pos[i];
+                size_t segSize = segs.size();
+                for (size_t j = 0; j < segSize; ++j) {
+                    string& seg = segs[j];
+                    if(knowledge_->isStopWord(seg))
+                        continue;
+                    Morpheme morp;
+                    morp.lexicon_ = seg; //TODO change the encoding
                     morp.posCode_ = POSTable::instance()->getCodeFromStr(poses[j]);
 
-                list.push_back(morp);
+                    list.push_back(morp);
+                }
+                sentence.addList(list, segment[i].second);
             }
-            sentence.addList(list, segment[i].second);
+        }
+        else
+        {
+            for (size_t i = 0; i < size; ++i) {
+                MorphemeList list;
+                vector<string>& segs = segment[i].first;
+                size_t segSize = segs.size();
+                for (size_t j = 0; j < segSize; ++j) {
+                    string& seg = segs[j];
+                    if(knowledge_->isStopWord(seg))
+                        continue;
+                    Morpheme morp;
+                    morp.lexicon_ = seg; //TODO change the encoding
+                    list.push_back(morp);
+                }
+                sentence.addList(list, segment[i].second);
+            }
         }
 
         return 1;
