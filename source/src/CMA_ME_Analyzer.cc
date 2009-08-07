@@ -21,6 +21,48 @@
 
 namespace cma {
 
+/**
+ * Whether the two MorphemeLists is the same
+ * \param list1 the MorphemeList 1
+ * \param list2 the MorphemeList 2
+ */
+inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* list2, bool printPOS )
+{
+	// if one is zero pointer, return null
+	if( !list1 || !list2 )
+	{
+		return false;
+	}
+
+	if( list1->size() != list2->size() )
+		return false;
+	//compare one by one
+	size_t N = list1->size();
+	if( printPOS )
+	{
+		for( size_t i = 0; i < N; ++i )
+		{
+			const Morpheme& m1 = (*list1)[i];
+			const Morpheme& m2 = (*list2)[i];
+			if( m1.lexicon_ != m2.lexicon_ || m1.posCode_ != m2.posCode_)
+			{
+				return false;
+			}
+		}
+	}
+	else
+	{
+		for( size_t i = 0; i < N; ++i )
+		{
+			if( (*list1)[i].lexicon_ != (*list2)[i].lexicon_ )
+				return false;
+		}
+	}
+	//all the elements are the same
+	return true;
+}
+
+
     CMA_ME_Analyzer::CMA_ME_Analyzer() : knowledge_(0), ctype_(0) {
     }
 
@@ -36,62 +78,104 @@ namespace cma {
         vector<vector<string> > pos;
         analysis(sentence.getString(), N, pos, segment, printPOS);
 
+        if(N <= 1)
+        {
+        	MorphemeList list;
+			vector<string>& segs = segment[0].first;
+			vector<string>& poses = pos[0];
+			size_t segSize = segs.size();
+			for (size_t j = 0; j < segSize; ++j) {
+				string& seg = segs[j];
+				if(knowledge_->isStopWord(seg))
+					continue;
+				Morpheme morp;
+				morp.lexicon_ = seg;
+				if(printPOS)
+					morp.posCode_ = POSTable::instance()->getCodeFromStr(poses[j]);
+				list.push_back(morp);
+			}
+			sentence.addList(list, 1.0);
+			return 1;
+        }
+
         size_t size = segment.size();
+        double totalScore = 0;
 
-        if(printPOS)
-        {
-            for (size_t i = 0; i < size; ++i) {
-                MorphemeList list;
-                vector<string>& segs = segment[i].first;
-                vector<string>& poses = pos[i];
-                size_t segSize = segs.size();
-                for (size_t j = 0; j < segSize; ++j) {
-                    string& seg = segs[j];
-                    if(knowledge_->isStopWord(seg))
-                        continue;
-                    Morpheme morp;
-                    morp.lexicon_ = seg; //TODO change the encoding
-                    morp.posCode_ = POSTable::instance()->getCodeFromStr(poses[j]);
+		for (size_t i = 0; i < size; ++i) {
+			MorphemeList list;
+			vector<string>& segs = segment[i].first;
+			vector<string>& poses = pos[i];
+			size_t segSize = segs.size();
+			for (size_t j = 0; j < segSize; ++j) {
+				string& seg = segs[j];
+				if(knowledge_->isStopWord(seg))
+					continue;
+				Morpheme morp;
+				morp.lexicon_ = seg;
+				if(printPOS)
+					morp.posCode_ = POSTable::instance()->getCodeFromStr(poses[j]);
 
-                    list.push_back(morp);
-                }
-                sentence.addList(list, segment[i].second);
-            }
-        }
-        else
-        {
-            for (size_t i = 0; i < size; ++i) {
-                MorphemeList list;
-                vector<string>& segs = segment[i].first;
-                size_t segSize = segs.size();
-                for (size_t j = 0; j < segSize; ++j) {
-                    string& seg = segs[j];
-                    if(knowledge_->isStopWord(seg))
-                        continue;
-                    Morpheme morp;
-                    morp.lexicon_ = seg; //TODO change the encoding
-                    list.push_back(morp);
-                }
-                sentence.addList(list, segment[i].second);
-            }
-        }
+				list.push_back(morp);
+			}
+
+			bool isDupl = false;
+
+			//check the current result with exits results
+			for( int listOffset = sentence.getListSize() - 1 ; listOffset >= 0; --listOffset )
+			{
+				if( isSameMorphemeList( sentence.getMorphemeList(listOffset), &list, printPOS ) )
+				{
+					isDupl = true;
+					break;
+				}
+			}
+			//ignore the duplicate results
+			if( isDupl )
+				continue;
+
+			double score = segment[i].second;
+			totalScore += score;
+			sentence.addList( list, score );
+		}
+
+		for ( size_t j = 0; j < size; ++j )
+		{
+			sentence.setScore(j, sentence.getScore(j) / totalScore );
+		}
 
         return 1;
     }
 
     int CMA_ME_Analyzer::runWithStream(const char* inFileName, const char* outFileName) {
-        int N = 1;
+
+    	assert(inFileName);
+    	assert(outFileName);
+
+    	ifstream in(inFileName);
+		if(!in)
+		{
+			cerr<<"[Error] The input file "<<inFileName<<" not exists!"<<endl;
+			return 0;
+		}
+
+		ofstream out(outFileName);
+		if(!out)
+		{
+			cerr<<"[Error] The output file "<<outFileName<<" could not be created!"<<endl;
+			return 0;
+		}
+
+    	int N = 1;
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
 
-        ifstream in(inFileName);
-        ofstream out(outFileName);
         string line;
         bool remains = !in.eof();
         while (remains) {
             getline(in, line);
             remains = !in.eof();
             if (!line.length()) {
-                out << endl;
+                if( remains )
+					out << endl;
                 continue;
             }
             vector<pair<vector<string>, double> > segment;
@@ -101,30 +185,28 @@ namespace cma {
             if (printPOS) {
                 vector<string>& best = segment[0].first;
                 vector<string>& bestPOS = pos[0];
-                size_t maxIndex = best.size() - 1;
-                for (size_t i = 0; i < maxIndex; ++i) {
-                    out << best[i] << posDelimiter_ << bestPOS[i] << wordDelimiter_;
+                size_t size = best.size();
+                for (size_t i = 0; i < size; ++i) {
+                    if(knowledge_->isStopWord(best[i]))
+                    	continue;
+                	out << best[i] << posDelimiter_ << bestPOS[i] << wordDelimiter_;
                 }
 
                 if (remains)
-                    out << best[maxIndex] << posDelimiter_ << bestPOS[maxIndex] << endl;
-                else {
-                    out << best[maxIndex] << posDelimiter_ << bestPOS[maxIndex];
+                    out << endl;
+                else
                     break;
-                }
             } else {
                 vector<string>& best = segment[0].first;
-                size_t maxIndex = best.size() - 1;
-                for (size_t i = 0; i < maxIndex; ++i) {
+                size_t size = best.size();
+                for (size_t i = 0; i < size; ++i) {
                     out << best[i] << wordDelimiter_;
                 }
 
                 if (remains)
-                    out << best[maxIndex] << endl;
-                else {
-                    out << best[maxIndex];
+                    out << endl;
+                else
                     break;
-                }
             }
         }
 
@@ -145,20 +227,21 @@ namespace cma {
         if (printPOS) {
             vector<string>& best = segment.begin()->first;
             vector<string>& bestPOS = pos[0];
-            size_t maxIndex = best.size() - 1;
-            for (size_t i = 0; i < maxIndex; ++i) {
-                strBuf_.append(best[i]).append(posDelimiter_).
+            size_t size = best.size();
+            for (size_t i = 0; i < size; ++i) {
+                if(knowledge_->isStopWord(best[i]))
+                	continue;
+            	strBuf_.append(best[i]).append(posDelimiter_).
                       append(bestPOS[i]).append(wordDelimiter_);
             }
-            strBuf_.append(best[maxIndex]).append(posDelimiter_).
-                  append(bestPOS[maxIndex]);
         } else {
             vector<string>& best = segment[0].first;
-            size_t maxIndex = best.size() - 1;
-            for (size_t i = 0; i < maxIndex; ++i) {
-                strBuf_.append(best[i]).append(wordDelimiter_);
+            size_t size = best.size();
+            for (size_t i = 0; i < size; ++i) {
+            	if(knowledge_->isStopWord(best[i]))
+            		continue;
+            	strBuf_.append(best[i]).append(wordDelimiter_);
             }
-            strBuf_.append(best[maxIndex]);
         }
 
         return strBuf_.c_str();

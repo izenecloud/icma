@@ -15,3 +15,6 @@ TARGET_LINK_LIBRARIES(cmactrainer ${LIBS_CMAC})
 ADD_EXECUTABLE(cmacsegger SeggerCMD.cc)
 TARGET_LINK_LIBRARIES(cmacsegger ${LIBS_CMAC})
 
+ADD_EXECUTABLE(cmac_run cmac_run.cc)
+TARGET_LINK_LIBRARIES(cmac_run ${LIBS_CMAC})
+

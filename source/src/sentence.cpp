@@ -58,9 +58,19 @@ const char* Sentence::getStrPOS(int nPos, int nIdx) const
     return POSTable::instance()->getStrFromCode(posIdx);
 }
 
+const MorphemeList* Sentence::getMorphemeList(int nPos) const
+{
+	return &candidates_[nPos];
+}
+
 double Sentence::getScore(int nPos) const
 {
     return scores_[nPos];
+}
+
+void Sentence::setScore(int nPos, double nScore)
+{
+	scores_[nPos] = nScore;
 }
 
 int Sentence::getOneBestIndex(void) const

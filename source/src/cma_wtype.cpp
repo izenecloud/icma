@@ -26,7 +26,7 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
     assert(word);
 
     CharType preType = CHAR_TYPE_INIT;
-    CharType curType;
+    CharType curType = CHAR_TYPE_INIT;
 
     tokenizer_.assign(word);
     const char* nextP = tokenizer_.next();
