@@ -142,6 +142,13 @@ private:
     /** Input maybe a line or a word*/
     string readEncryptLine(FILE *in);
 
+    /**
+     * Append the POS Information into Trie and POS Vector
+     * \param line a line like: word1 pos1 pos2 ... posN
+     * \return whether add successfully
+     */
+    bool appendWordPOS(string& line);
+
 private:
     /** tagger for segment */
     SegTagger *segT_;

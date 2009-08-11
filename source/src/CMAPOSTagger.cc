@@ -443,25 +443,24 @@ bool POSTagger::appendWordPOS(string& line){
     set<string>* posSet = 0;
     //try to search first
     VTrieNode node;
-    trie_->search(word.data(), &node);   
+    trie_->search(word.data(), &node);
     //already exits
     if(node.data > 0){
-        posSet = &(posVec_[node.data]);
+		posSet = &(posVec_[node.data]);
     }else{
-        //get the right offset (offset 0 is reserved)
-        node.data = (int)posVec_.size();
-        //insert new key
-        posVec_.push_back(set<string>());
-        posSet = &(posVec_.back());
+		//get the right offset (offset 0 is reserved)
+		node.data = (int)posVec_.size();
+		//insert new key
+		posVec_.push_back(set<string>());
+		posSet = &(posVec_.back());
 
-        trie_->insert(word.data(), &node);
-    }
-    
-    for(size_t i=1; i<n; ++i){
-        posSet->insert(tokens[i]);
+		trie_->insert(word.data(), &node);
     }
 
-    
+	for(size_t i=1; i<n; ++i){
+		posSet->insert(tokens[i]);
+	}
+
     return true;
 }
 

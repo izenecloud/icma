@@ -186,17 +186,17 @@ unsigned int CMA_CType_GB18030::getByteCount(const char* p) const
     			return 4;
     		assert(false && ("Invalid third and fourth bytes of gb18030: " +
     				(int)uc[2] + "," + (int)uc[3] + ",str=" + p));
-    		return 0;
+    		return 1;
     	}
     	else
     	{
     		assert(false && ("Invalid second byte of gb18030: " + (int)uc[1] + ",str=" + p));
-    		return 0;
+    		return 1;
     	}
 
     }
     assert(false && ("Invalid first byte of gb18030: " + (int)uc[0] + ",str=" + p));
-    return 0;
+    return 1;
 }
 
 CharType CMA_CType_GB18030::getCharType(const char* p, CharType preType,

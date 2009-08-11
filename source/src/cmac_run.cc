@@ -199,6 +199,10 @@ int main(int argc, char* argv[])
     // create instances
     CMA_Factory* factory = CMA_Factory::instance();
     Analyzer* analyzer = factory->createAnalyzer();
+
+    // no POS output
+    analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
+
     Knowledge* knowledge = factory->createKnowledge();
 
     // set default dictionary file
@@ -248,7 +252,20 @@ int main(int argc, char* argv[])
     string cate = sysdict;
     string poc_mate = cate + "-poc";
     knowledge->loadStatModel(poc_mate.data());
-    knowledge->loadPOSModel(cate.data());
+
+    //check whether exist pos model
+    ifstream posIn((cate + ".model").data());
+    if(posIn)
+    {
+    	posIn.close();
+    	knowledge->loadPOSModel(cate.data());
+    }
+    else
+    {
+    	cout<<"Cannot found POS model, ignore POS output "<<endl;
+    	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
+    }
+
     knowledge->loadUserDict((cate+".dic").data());
 
     knowledge->setEncodeType(Knowledge::ENCODE_TYPE_GB18030);
@@ -268,8 +285,7 @@ int main(int argc, char* argv[])
     // set knowledge
     analyzer->setKnowledge(knowledge);
 
-    // no POS output
-    analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
+
 
     switch(optionIndex)
     {

@@ -36,8 +36,8 @@ void printTainerUsage(){
     cout<<"   cateFile is the category file, there are several files are "<<
             "created after the training, and with cateFile as the prefix, "<<
             "prefix should contains both path and name, such /dir1/dir2/n1"<<endl;
-    cout<<"   encoding is the encoding of the mateFile, and gb2312"<<
-            "is the default encoding. Only support gb2312 and big5 now"<<endl;
+    cout<<"   encoding is the encoding of the mateFile, and gb18030 "<<
+            "is the default encoding. Only support gb2312, gb18030 and big5 now"<<endl;
     cout<<"   posDelimiter is the delimiter between the word and the pos tag, "<<
             "like '/' and '_' and default is '/'"<<endl;
 }
@@ -49,7 +49,7 @@ int tainerEntry(int argc, char** argv){
     }
     string pMateFile(argv[1]);
     string cateFile(argv[2]);
-    string encoding = "gb2312";
+    string encoding = "gb18030";
     if(argc > 3){
         encoding = argv[3];
     }
@@ -59,7 +59,7 @@ int tainerEntry(int argc, char** argv){
     }
     bool trainPOS = true;
     if(argc > 5){
-        trainPOS = strcmp(argv[5],"--notrain");
+        trainPOS = strcmp(argv[5],"--no-train-pos");
     }
 
     beginTrain(pMateFile, cateFile, encoding, posDelimiter, trainPOS);

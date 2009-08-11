@@ -331,7 +331,7 @@ void create_poc_meterial(const char* inFile, const char* outFile,
         if(line.length() == 0){
             continue;
         }
-
+        //cout<<"dealt line "<<line<<endl;
         POCTokenizer token(line, boost::char_separator<char>(" "));
         POCTokenizer::const_iterator itr = token.begin();
         if( itr == token.end() ){
@@ -340,12 +340,18 @@ void create_poc_meterial(const char* inFile, const char* outFile,
         }
         
         while(true){
-            size_t pos = itr->find_last_of(posDelimiter);
-            if(pos == string::npos || pos == 0 ||
-                    pos == (*itr).length() - posDeliLen){
-                cerr<<"The Format is word" << posDelimiter <<"tag, but not ("
-                        <<*itr<<")"<<endl;
-                exit(1);
+            //cout<<"dealt word "<<*itr<<","<<itr->length()<<","<<hex<<(int)(unsigned char)((*itr)[0])<<endl;
+        	size_t pos = itr->find_last_of(posDelimiter);
+            if(pos == string::npos || pos == 0){
+                //if not found POS separator, ignore it
+            	//cerr<<"The Format is word" << posDelimiter <<"tag, but not ("<<*itr<<")"<<endl;
+                //exit(1);
+            	pos = itr->length();
+            }
+            else if(pos == itr->length() - posDeliLen)
+            {
+            	pos = itr->length() - posDeliLen;
+
             }
 
             string word = itr->substr( 0 , pos);
@@ -354,7 +360,7 @@ void create_poc_meterial(const char* inFile, const char* outFile,
             vector<string> charVec;
             const char* nextPtr;
             while((nextPtr = ctypeToken.next())){
-                charVec.push_back(nextPtr);
+            	charVec.push_back(nextPtr);
             }
 
             size_t charLen = charVec.size();

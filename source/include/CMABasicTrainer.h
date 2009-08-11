@@ -38,7 +38,7 @@ public:
     TrainerData(context_t pGet_context, Knowledge::EncodeType encType, 
             string pPosDelimiter = "/") : get_context(pGet_context),
             posDelimiter(pPosDelimiter){
-        rareFreq_ = 1;
+        rareFreq_ = 4;
 
         cutoff_ = 10;
         rareCutoff_ = 5;

@@ -144,12 +144,6 @@ public:
     double tag_word_best(vector<string>& words, vector<string>& poses, int index,
             string& pos);
 
-    /**
-     * Append the POS Information into Trie and POS Vector
-     * \param line a line like: word1 pos1 pos2 ... posN
-     * \return whether add successfully
-     */
-    bool appendWordPOS(string& line);
 
     /**
      * Set the reference to the specific character encoding
@@ -159,6 +153,13 @@ public:
     void setCType(CMA_CType *ctype){
         ctype_ = ctype;
     }
+
+    /**
+     * Append the POS Information into Trie and POS Vector
+     * \param line a line like: word1 pos1 pos2 ... posN
+     * \return whether add successfully
+     */
+    bool appendWordPOS(string& line);
 
 private:
 
@@ -185,6 +186,10 @@ private:
     inline double tag_word_best_1(vector<string>& words, vector<string>& poses, 
             int index, string& pos, CMA_WType& wtype);
 
+public:
+    /** vector to hold the POS information */
+    vector<set<string> > posVec_;
+
 private:
     /**
      * The maxent model
@@ -199,9 +204,6 @@ private:
 
     /** Whether the trie is created by the constructor */
     bool isInnerTrie_;
-
-    /** vector to hold the POS information */
-    vector<set<string> > posVec_;
 
     /** the encoding type */
     CMA_CType *ctype_;

@@ -23,7 +23,7 @@ vector<string> ENCODING_VEC;
 
 bool ENC_VEC_INIT_FLAG = false;
 
-CMA_ME_Knowledge::CMA_ME_Knowledge(): segT_(0), posT_(0),vsynC_(0),trie_(0){
+CMA_ME_Knowledge::CMA_ME_Knowledge(): segT_(0), posT_(0),vsynC_(0),trie_(new VTrie()){
     CMA_ME_Knowledge::initialize();
 }
 
@@ -49,9 +49,6 @@ int CMA_ME_Knowledge::loadPOSModel(const char* cateName){
         POSTable::instance()->addPOS(line);
     }
 
-    if(!trie_)
-        trie_ = new VTrie();
-
     assert(!posT_);
     posT_ = new POSTagger((cateStr + ".model").data(), trie_);
 
@@ -60,8 +57,7 @@ int CMA_ME_Knowledge::loadPOSModel(const char* cateName){
 
 int CMA_ME_Knowledge::loadStatModel(const char* cateName){
     assert(!segT_);
-    if(!trie_)
-        trie_ = new VTrie();
+
     string cateStr(cateName);
     segT_ = new SegTagger(cateStr, trie_);
     return 1;
@@ -93,7 +89,6 @@ int CMA_ME_Knowledge::loadStopWordDict(const char* fileName){
 }
 
 int CMA_ME_Knowledge::loadSystemDict(const char* binFileName){
-    assert(posT_);
     if(!trie_)
         trie_ = new VTrie();
 
@@ -105,14 +100,13 @@ int CMA_ME_Knowledge::loadSystemDict(const char* binFileName){
         line = readEncryptLine(in);
         if(line.empty())
             break;
-        posT_->appendWordPOS(line);
+        appendWordPOS(line);
     }
     fclose(in);
     return 1;
 }
 
 int CMA_ME_Knowledge::loadUserDict(const char* fileName){
-    assert(posT_);
     if(!trie_)
         trie_ = new VTrie();
 
@@ -123,7 +117,7 @@ int CMA_ME_Knowledge::loadUserDict(const char* fileName){
     string line;
     while(!in.eof()){
         getline(in, line);
-        posT_->appendWordPOS(line);
+        appendWordPOS(line);
     }
 
     in.close();
@@ -248,6 +242,54 @@ int CMA_ME_Knowledge::loadConfig(const char* fileName)
     bool r = posTable->loadConfig(fileName);
 
     return r ? 1 : 0;
+}
+
+bool CMA_ME_Knowledge::appendWordPOS(string& line){
+    vector<string> tokens;
+    TOKEN_STR(line, tokens);
+    size_t n = tokens.size();
+    if(!n){
+        return false;
+    }
+    string word = tokens[0];
+    replaceAll(word, "_", " ");
+
+    set<string>* posSet = 0;
+    //try to search first
+    VTrieNode node;
+    trie_->search(word.data(), &node);
+    //already exits
+    if(node.data > 0){
+        if(posT_)
+			posSet = &(posT_->posVec_[node.data]);
+    }else{
+
+    	if(posT_)
+    	{
+			//get the right offset (offset 0 is reserved)
+			node.data = (int)posT_->posVec_.size();
+			//insert new key
+			posT_->posVec_.push_back(set<string>());
+			posSet = &(posT_->posVec_.back());
+
+			trie_->insert(word.data(), &node);
+    	}
+    	else
+    	{
+    		node.data = 1;
+    		trie_->insert(word.data(), &node);
+    	}
+    }
+
+    if(posT_)
+    {
+		for(size_t i=1; i<n; ++i){
+			posSet->insert(tokens[i]);
+		}
+    }
+
+
+    return true;
 }
 
 }
