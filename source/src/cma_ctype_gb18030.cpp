@@ -184,18 +184,18 @@ unsigned int CMA_CType_GB18030::getByteCount(const char* p) const
     	{
     		if(uc[2] >= 0x81 && uc[2] <= 0xfe && uc[3] >= 0x30 && uc[3] <= 0x39)
     			return 4;
-    		assert(false && ("Invalid third and fourth bytes of gb18030: " +
-    				(int)uc[2] + "," + (int)uc[3] + ",str=" + p));
+    		//assert(false && ("Invalid third and fourth bytes of gb18030: " +
+    		//		(int)uc[2] + "," + (int)uc[3] + ",str=" + p));
     		return 1;
     	}
     	else
     	{
-    		assert(false && ("Invalid second byte of gb18030: " + (int)uc[1] + ",str=" + p));
+    		//assert(false && ("Invalid second byte of gb18030: " + (int)uc[1] + ",str=" + p));
     		return 1;
     	}
 
     }
-    assert(false && ("Invalid first byte of gb18030: " + (int)uc[0] + ",str=" + p));
+    //assert(false && ("Invalid first byte of gb18030: " + (int)uc[0] + ",str=" + p));
     return 1;
 }
 
