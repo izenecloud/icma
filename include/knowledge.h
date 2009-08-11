@@ -80,7 +80,7 @@ public:
     {
 	ENCODE_TYPE_GB2312, ///< GB 2312 character type
 	ENCODE_TYPE_BIG5, ///< Big 5 character type
-        //ENCODE_TYPE_UTF8, ///< UTF8 character type
+    ENCODE_TYPE_GB18030, ///< GB18030 character type
 	ENCODE_TYPE_NUM ///< the count of character types
     };
 

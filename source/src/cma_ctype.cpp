@@ -8,8 +8,9 @@
 #include "cma_ctype.h"
 #include "cma_ctype_gb2312.h"
 #include "cma_ctype_big5.h"
+#include "cma_ctype_gb18030.h"
 
-#include <cassert>
+#include <assert.h>
 
 using namespace std;
 
@@ -18,28 +19,38 @@ namespace cma
 
 CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
 {
-    switch(type)
+   switch(type)
     {
 	case Knowledge::ENCODE_TYPE_GB2312:
-	    return CMA_CType_GB2312::instance();
+		return CMA_CType_GB2312::instance();
 
 	case Knowledge::ENCODE_TYPE_BIG5:
-	    return CMA_CType_Big5::instance();
+		return CMA_CType_Big5::instance();
+
+	case Knowledge::ENCODE_TYPE_GB18030:
+		return CMA_CType_GB18030::instance();
 
 	default:
-	    assert(false && "unkown character encode type");
+		assert(false && "unknown character encode type");
 	    return 0;
     }
 }
 
 Knowledge::EncodeType CMA_CType::getEncType(string encType){
-    if(encType == "gb2312" || encType == "GB2312"){
+    if(encType == "gb2312" || encType == "GB2312")
+    {
         return Knowledge::ENCODE_TYPE_GB2312;
-    }else if(encType == "big5" || encType == "BIG5"){
+    }
+    else if(encType == "big5" || encType == "BIG5")
+    {
         return Knowledge::ENCODE_TYPE_BIG5;
     }
+    else if(encType == "gb18030" || encType == "GB18030")
+    {
+        return Knowledge::ENCODE_TYPE_GB18030;
+    }
 
-    assert(false && "unkown character encode type");
+    assert(false && "unknown character encode type");
     return Knowledge::ENCODE_TYPE_NUM;
 }
 

@@ -239,7 +239,7 @@ void CMA_ME_Knowledge::initialize(){
     ENCODING_VEC.resize(ENCODE_TYPE_NUM + 1);
     ENCODING_VEC[ENCODE_TYPE_GB2312] = "gb2312";
     ENCODING_VEC[ENCODE_TYPE_BIG5] = "big5";
-    //ENCODING_VEC[ENCODE_TYPE_UTF8] = "utf8";
+    ENCODING_VEC[ENCODE_TYPE_GB18030] = "gb18030";
 }
 
 int CMA_ME_Knowledge::loadConfig(const char* fileName)
