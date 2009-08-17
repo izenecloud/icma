@@ -425,7 +425,7 @@ void SegTagger::tag_file(const char* inFile, const char* outFile,
 
     string line;
 
-    CMA_CType *cType = CMA_CType::instance(CMA_CType::getEncType(encType));
+    CMA_CType *cType = CMA_CType::instance(Knowledge::decodeEncodeType(encType.c_str()));
     CTypeTokenizer ctypeCt(cType);
 
     while(!in.eof()){

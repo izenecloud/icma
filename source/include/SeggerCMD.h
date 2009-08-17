@@ -178,7 +178,6 @@ using namespace std;
 #include "analyzer.h"
 #include "knowledge.h"
 #include "sentence.h"
-#include "cma_ctype.h"
 
 using namespace cma;
 

@@ -9,11 +9,11 @@
 #ifndef _TRAINERCMD_H
 #define	_TRAINERCMD_H
 
-#include "cma_ctype.h"
-
 #include "CMAPOCTagger.h"
 #include "CMAPOSTagger.h"
+
 #include <stdlib.h>
+
 using namespace cma;
 
 /**

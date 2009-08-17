@@ -54,14 +54,6 @@ public:
     static CMA_CType* instance(Knowledge::EncodeType type);
 
     /**
-     * Get the encoding type by the encode type string
-     *
-     * \param encType encode type string
-     * \return assicated Knowledge::EncodeType in the class Knowledge
-     */
-    static Knowledge::EncodeType getEncType(string encType);
-
-    /**
      * Destrucor
      */
     virtual ~CMA_CType();

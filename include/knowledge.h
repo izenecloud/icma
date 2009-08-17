@@ -97,6 +97,14 @@ public:
      */
     EncodeType getEncodeType() const;
 
+    /**
+     * Get the encoding type by the encode type string
+     *
+     * \param encType encode type string
+     * \return assicated Knowledge::EncodeType in the class Knowledge
+     */
+    static Knowledge::EncodeType decodeEncodeType(const char* encType);
+
 private:
     /** character encode type */
     EncodeType encodeType_;

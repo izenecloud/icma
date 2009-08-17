@@ -6,6 +6,10 @@
  */
 
 #include "knowledge.h"
+#include <string>
+#include <cassert>
+
+using std::string;
 
 namespace cma
 {
@@ -27,6 +31,25 @@ void Knowledge::setEncodeType(EncodeType type)
 Knowledge::EncodeType Knowledge::getEncodeType() const
 {
     return encodeType_;
+}
+
+Knowledge::EncodeType Knowledge::decodeEncodeType(const char* encType){
+    string enc(encType);
+	if(enc == "gb2312" || enc == "GB2312")
+    {
+        return Knowledge::ENCODE_TYPE_GB2312;
+    }
+    else if(enc == "big5" || enc == "BIG5")
+    {
+        return Knowledge::ENCODE_TYPE_BIG5;
+    }
+    else if(enc == "gb18030" || enc == "GB18030")
+    {
+        return Knowledge::ENCODE_TYPE_GB18030;
+    }
+
+    assert(false && "unknown character encode type");
+    return Knowledge::ENCODE_TYPE_GB18030;
 }
 
 } // namespace cma

@@ -6,7 +6,7 @@ void beginTrain(string pMateFile, string cateFile, string enc,
         string posDelimiter, bool trainPOS){
     string mateFile = pMateFile;
 
-    Knowledge::EncodeType encType = CMA_CType::getEncType(enc);
+    Knowledge::EncodeType encType = Knowledge::decodeEncodeType(enc.c_str());
 
     if(trainPOS){
         cout<<"#Start Training POS Model..."<<endl;

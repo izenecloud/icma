@@ -36,23 +36,6 @@ CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
     }
 }
 
-Knowledge::EncodeType CMA_CType::getEncType(string encType){
-    if(encType == "gb2312" || encType == "GB2312")
-    {
-        return Knowledge::ENCODE_TYPE_GB2312;
-    }
-    else if(encType == "big5" || encType == "BIG5")
-    {
-        return Knowledge::ENCODE_TYPE_BIG5;
-    }
-    else if(encType == "gb18030" || encType == "GB18030")
-    {
-        return Knowledge::ENCODE_TYPE_GB18030;
-    }
-
-    assert(false && "unknown character encode type");
-    return Knowledge::ENCODE_TYPE_NUM;
-}
 
 CMA_CType::~CMA_CType()
 {

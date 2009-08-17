@@ -208,9 +208,9 @@ int main(int argc, char* argv[])
     // set default dictionary file
     const char* sysdict = 0;
 #if defined(_WIN32) && !defined(__CYGWIN__)
-    sysdict = "../../db/ctb/ctbc";
+    sysdict = "../../db/icwb/gb18030/icwbc";
 #else
-    sysdict = "../db/ctb/ctbc";
+    sysdict = "../db/icwb/gb18030/icwbc";
 #endif
 
     switch(optionIndex)
@@ -271,16 +271,16 @@ int main(int argc, char* argv[])
     knowledge->setEncodeType(Knowledge::ENCODE_TYPE_GB18030);
 
     // set encoding type from the dictionary path
-    /*string sysdictStr(sysdict);
-    size_t first = sysdictStr.find_last_of('_');
-    size_t last = sysdictStr.find_last_not_of('/');
-    string encodeStr = sysdictStr.substr(first+1, last-first);
+    string sysdictStr(sysdict);
+    size_t last = sysdictStr.find_last_of('/');
+    size_t first = sysdictStr.find_last_of('/', last-1);
+    string encodeStr = sysdictStr.substr(first+1, last-first-1);
     Knowledge::EncodeType encode = Knowledge::decodeEncodeType(encodeStr.c_str());
     if(encode != Knowledge::ENCODE_TYPE_NUM)
     {
         cout << "set encoding type: " << encodeStr << endl;
         knowledge->setEncodeType(encode);
-    }*/
+    }
 
     // set knowledge
     analyzer->setKnowledge(knowledge);

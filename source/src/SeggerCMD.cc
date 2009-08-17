@@ -2,9 +2,11 @@
 
 #include "SeggerCMD.h"
 
+#include <fstream>
+
 void beginSeg(string cate, string inFile, string outFile, string enc,
         string posDelimiter){
-    Knowledge::EncodeType encType = CMA_CType::getEncType(enc);
+    Knowledge::EncodeType encType = Knowledge::decodeEncodeType(enc.c_str());
     
     string poc_mate = cate + "-poc";
 
@@ -13,17 +15,29 @@ void beginSeg(string cate, string inFile, string outFile, string enc,
 
     knowledge->setEncodeType(encType);
 
+    cout<<"Create Analyzer "<<endl;
+    Analyzer* analyzer = factory->createAnalyzer();
+    analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 1);
+
     cout<<"Load Stat Model "<<endl;
     knowledge->loadStatModel(poc_mate.data());
-    cout<<"Load POS Model "<<endl;
-    knowledge->loadPOSModel(cate.data());
+    //check whether exist pos model
+	ifstream posIn((cate + ".model").data());
+	if(posIn)
+	{
+		posIn.close();
+		cout<<"Load POS Model "<<endl;
+		knowledge->loadPOSModel(cate.data());
+	}
+	else
+	{
+		cout<<"Cannot found POS model, ignore POS output "<<endl;
+		analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
+	}
+
     cout<<"Load User Dictionary "<<endl;
     knowledge->loadUserDict((cate+".dic").data());
 
-    cout<<"Create Analyzer "<<endl;
-    Analyzer* analyzer = factory->createAnalyzer();
-    
-    analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 1);
     analyzer->setKnowledge(knowledge);
     analyzer->setPOSDelimiter(posDelimiter.data());
 
