@@ -23,6 +23,17 @@ vector<string> ENCODING_VEC;
 
 bool ENC_VEC_INIT_FLAG = false;
 
+inline bool fileExists(const char* path)
+{
+	ifstream posIn(path);
+	if(posIn)
+	{
+		posIn.close();
+		return true;
+	}
+	return false;
+}
+
 CMA_ME_Knowledge::CMA_ME_Knowledge(): segT_(0), posT_(0),vsynC_(0),trie_(new VTrie()){
     CMA_ME_Knowledge::initialize();
 }
@@ -60,6 +71,23 @@ int CMA_ME_Knowledge::loadStatModel(const char* cateName){
 
     string cateStr(cateName);
     segT_ = new SegTagger(cateStr, trie_);
+
+    //try to load black words here
+    string blackWordFile = cateStr.substr(0, cateStr.length() - 4) + ".black";
+    ifstream bwIn(blackWordFile.data());
+    if(bwIn)
+	{
+		string line;
+		while(!bwIn.eof()){
+			getline(bwIn, line);
+			trimSelf(line);
+			if(line.length() <= 0)
+				continue;
+			blackWords_.insert(line);
+		}
+		bwIn.close();
+	}
+
     return 1;
 }
 
@@ -75,7 +103,8 @@ void CMA_ME_Knowledge::getSynonyms(const string& word, VSynonym& synonym){
 
 int CMA_ME_Knowledge::loadStopWordDict(const char* fileName){
     ifstream in(fileName);
-    assert(in);
+    if(!in)
+    	return 0;
     string line;
     while(!in.eof()){
         getline(in, line);
@@ -88,12 +117,10 @@ int CMA_ME_Knowledge::loadStopWordDict(const char* fileName){
     return 1;
 }
 
-int CMA_ME_Knowledge::loadSystemDict(const char* binFileName){
-    if(!trie_)
-        trie_ = new VTrie();
-
-    FILE *in = fopen(binFileName, "r");
-    assert(in);
+int CMA_ME_Knowledge::loadSystemDict_(const char* binFileName){
+	FILE *in = fopen(binFileName, "r");
+    if(!in)
+    	return 0;
     string line;
     while(!feof(in)){
         //may be another way get line
@@ -106,14 +133,29 @@ int CMA_ME_Knowledge::loadSystemDict(const char* binFileName){
     return 1;
 }
 
-int CMA_ME_Knowledge::loadUserDict(const char* fileName){
+int CMA_ME_Knowledge::loadSystemDict(const char* binFileName){
     if(!trie_)
         trie_ = new VTrie();
 
-    string destFile(fileName);
+    int curRet = loadSystemDict_(binFileName);
+    int ret = curRet;
+    string destFile(binFileName);
+    while(curRet)
+    {
+    	std::ostringstream buffer;
+    	buffer << destFile << "." << ret;
+    	curRet = loadSystemDict_(buffer.str().data());
+    	ret += curRet;
+    }
 
-    ifstream in(destFile.data());
-    assert(in);
+    return ret;
+}
+
+int CMA_ME_Knowledge::loadUserDict_(const char* fileName){
+	ifstream in(fileName);
+    if(!in)
+    	return 0;
+    cout<<"load user dic "<<fileName<<endl;
     string line;
     while(!in.eof()){
         getline(in, line);
@@ -122,6 +164,24 @@ int CMA_ME_Knowledge::loadUserDict(const char* fileName){
 
     in.close();
     return 1;
+}
+
+int CMA_ME_Knowledge::loadUserDict(const char* fileName){
+    if(!trie_)
+        trie_ = new VTrie();
+
+    int curRet = loadUserDict_(fileName);
+    int ret = curRet;
+    string destFile(fileName);
+    while(curRet)
+    {
+    	std::ostringstream buffer;
+    	buffer << destFile << "." << ret;
+    	curRet = loadUserDict_(buffer.str().data());
+    	ret += curRet;
+    }
+
+    return ret;
 }
 
 
@@ -254,6 +314,10 @@ bool CMA_ME_Knowledge::appendWordPOS(string& line){
     string word = tokens[0];
     replaceAll(word, "_", " ");
 
+    if(blackWords_.find(word) != blackWords_.end())
+    {
+    	return false;
+    }
     set<string>* posSet = 0;
     //try to search first
     VTrieNode node;

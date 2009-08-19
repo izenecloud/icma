@@ -149,6 +149,20 @@ private:
      */
     bool appendWordPOS(string& line);
 
+    /**
+     * Load the system dictionary file, which is in binary format.
+     * \param binFileName the file name
+     * \return 0 for fail, 1 for success
+     */
+    int loadSystemDict_(const char* binFileName);
+
+    /**
+     * Load the user dictionary file, which is in text format.
+     * \param fileName the file name
+     * \return 0 for fail, 1 for success
+     */
+    int loadUserDict_(const char* fileName);
+
 private:
     /** tagger for segment */
     SegTagger *segT_;
@@ -164,6 +178,9 @@ private:
 
     /** stop words set */
     set<string> stopWords_;
+
+    /** The word in blackWords_ won't be added to dictionary */
+    set<string> blackWords_;
 };
 
 }

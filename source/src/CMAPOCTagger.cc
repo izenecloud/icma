@@ -68,7 +68,7 @@ inline void get_poc_zh_context_1(vector<string>& words, CharType *types,
             wa[j] = words[offset];
             #ifdef USE_BE_TYPE_FEATURE
             if(types){
-                ta[j] = types[offset];
+                ta[j] = preType = types[offset];
             }else{
                 const char* lastP = 0;
                 if( offset < n - 1){
@@ -81,7 +81,11 @@ inline void get_poc_zh_context_1(vector<string>& words, CharType *types,
         }else{
             wa[j] = POC_BOUNDARY;
             #ifdef USE_BE_TYPE_FEATURE
-            ta[j] = CHAR_TYPE_INIT;
+            if(preType == CHAR_TYPE_NUMBER || preType == CHAR_TYPE_LETTER)
+            	ta[j] = preType;
+            else
+            	ta[j] = CHAR_TYPE_INIT;
+
             #endif
         }
     }
@@ -102,6 +106,12 @@ inline void get_poc_zh_context_1(vector<string>& words, CharType *types,
         context[++k] = "T-1=" + CharTypeArray[ta[1]];
         context[++k] = "T0=" + CharTypeArray[ta[2]];
         context[++k] = "T+1=" + CharTypeArray[ta[3]];
+
+		#ifdef DEBUG_POC_TAGGER
+        for(int jj=0;jj<4;++jj)
+        	cout<<"special context "<<jj<<" : "<<context[jj]<<endl;
+		#endif
+
         return;
     }
 

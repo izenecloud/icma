@@ -36,10 +36,11 @@
     //Print the Trie Node Information
     //#define DEBUG_TRIE_MATCH
 
-    /** Print the detail in the SegTagger*/
-    #define DEBUG_POC_TAGGER
     #endif
 #endif
+
+/** Print the detail in the SegTagger*/
+//#define DEBUG_POC_TAGGER
 
 #include <iostream>
 
