@@ -40,7 +40,7 @@
 #endif
 
 /** Print the detail in the SegTagger*/
-//#define DEBUG_POC_TAGGER
+#define DEBUG_POC_TAGGER
 
 #include <iostream>
 

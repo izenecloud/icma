@@ -93,7 +93,7 @@ inline void get_poc_zh_context_1(vector<string>& words, CharType *types,
     int k = -1;
 
      #ifdef USE_BE_TYPE_FEATURE
-     if(index > 0 && ta[1] == CHAR_TYPE_DATE){
+     if(index > 0 && (ta[1] == CHAR_TYPE_DATE || ta[1] == CHAR_TYPE_PUNC)){
         context.resize(1);
         context[0] = "afEnt";
         return;
