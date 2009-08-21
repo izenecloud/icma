@@ -38,10 +38,10 @@ public:
     TrainerData(context_t pGet_context, Knowledge::EncodeType encType, 
             string pPosDelimiter = "/") : get_context(pGet_context),
             posDelimiter(pPosDelimiter){
-        rareFreq_ = 4;
+        rareFreq_ = 2;
 
-        cutoff_ = 10;
-        rareCutoff_ = 5;
+        cutoff_ = 5;
+        rareCutoff_ = 1;
         evCutoff_ = 1;
 
         ctype_ = CMA_CType::instance(encType);

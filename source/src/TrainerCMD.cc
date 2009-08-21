@@ -29,7 +29,7 @@ void beginTrain(string pMateFile, string cateFile, string enc,
 }
 
 void printTainerUsage(){
-    cout<<"SYNOPSIS\n     ./cmactrainer mateFile cateFile [encoding] [posDelimiter]"<<endl;
+    cout<<"SYNOPSIS\n     ./cmactrainer mateFile cateFile [encoding] [posDelimiter] [--no-train-pos]"<<endl;
     cout<<"Description"<<endl;
     cout<<"   mateFile is the material file, it should be in the form "<<
             "word1/pos1 word2/pos2 word3/pos3 ..."<<endl;
@@ -40,6 +40,7 @@ void printTainerUsage(){
             "is the default encoding. Only support gb2312, gb18030 and big5 now"<<endl;
     cout<<"   posDelimiter is the delimiter between the word and the pos tag, "<<
             "like '/' and '_' and default is '/'"<<endl;
+    cout<<"   --no-train-pos indicates don't train POS information"<<endl;
 }
 
 int tainerEntry(int argc, char** argv){

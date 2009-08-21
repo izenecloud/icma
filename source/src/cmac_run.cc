@@ -76,14 +76,12 @@ void testWithSentence(Analyzer* analyzer)
         }
         else
         {
-            cout << "n-best result:" << endl;
+            cout << "n-best result ( " << s.getListSize() << " ):" << endl;
             for(int i=0; i<s.getListSize(); ++i)
             {
-                for(int j=0; j<s.getCount(i); ++j)
+            	cout << "\t" << i << ": ";
+            	for(int j=0; j<s.getCount(i); ++j)
                 {
-                    if(j == 0)
-                        cout << "\t" << i << ": ";
-
                     const char* pLexicon = s.getLexicon(i, j);
                     cout << pLexicon << "/" << s.getStrPOS(i, j) << "  ";
                 }

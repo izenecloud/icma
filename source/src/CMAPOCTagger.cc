@@ -16,6 +16,7 @@
 
 namespace cma{
 
+#define POC_TAG_INIT 0
 #define POC_TAG_B 1
 #define POC_TAG_E 2
 
@@ -290,6 +291,14 @@ public:
         return search(p);
     }
 
+    /**
+     * Whether exists in the dictionary
+     */
+    bool exists()
+    {
+    	return completeSearch && node.data;
+    }
+
 public:
     /**
      * The VTrie
@@ -330,12 +339,18 @@ void poc_train(const char* file, const string& cateName,
 }
 
 
-SegTagger::SegTagger(const string& cateName, VTrie* posTrie, double eScore){
+SegTagger::SegTagger(const string& cateName, VTrie* posTrie, double eScore) : wtype_(0)
+{
     SegTagger::initialize();
     //cout<<"Load poc model"<<(cateName + ".model")<<endl;
     me.load(cateName + ".model");
     trie_ = posTrie;
     setEScore(eScore);
+}
+
+SegTagger::~SegTagger()
+{
+	delete wtype_;
 }
 
 void SegTagger::tag_word(vector<string>& words, CharType* types,
@@ -361,6 +376,59 @@ void SegTagger::tag_word(vector<string>& words, CharType* types,
     }
 }
 
+void SegTagger::preProcess(vector<string>& words, uint8_t* tags)
+{
+	memset(tags, POC_TAG_INIT, words.size());
+	tags[0] = POC_TAG_B;
+	pocinner::StrBasedVTrie strTrie(trie_);
+
+	int size = words.size();
+	int start = 0;
+	while(start < size)
+	{
+		int idx = start;
+		strTrie.firstSearch(words[idx++].data());
+		int maxLastIdx = 0; //exclude the maxLastIdx itself
+		while(strTrie.completeSearch && idx < size)
+		{
+			strTrie.search(words[idx++].data());
+			if(strTrie.exists())
+				maxLastIdx = idx;
+		}
+
+		// exists word begin with start index and length at least MIN_PRE_WORD_LEN
+		if((maxLastIdx - start) >= MIN_PRE_WORD_LEN)
+		{
+			//check the wtype
+			string init(words[start]);
+			for(int i=start+1; i<maxLastIdx; ++i)
+			{
+				init.append(words[i]);
+			}
+
+			//here don't dealt with digits, letters, data and other entities
+			if(wtype_->getWordType(init.data()) == CMA_WType::WORD_TYPE_OTHER)
+			{
+				#ifdef DEBUG_POC_TAGGER
+					cout<<"PreProcess combine "<<init<<",start="<<start<<
+							",maxLastIdx="<<maxLastIdx<<endl;
+				#endif
+				tags[start] = POC_TAG_B;
+				for( ++start; start < maxLastIdx; ++start)
+					tags[start] = POC_TAG_E;
+				tags[start] = POC_TAG_B; //here also finish reset start
+			}
+			else
+			{
+				++start; //simply increment
+			}
+		}
+		else
+		{
+			++start; //simply increment
+		}
+	}
+}
 
 
 void SegTagger::seg_sentence(vector<string>& words, CharType* types,
@@ -371,6 +439,17 @@ void SegTagger::seg_sentence(vector<string>& words, CharType* types,
     //h0, h1 and score don't need to initialize
     uint8_t _array1[N][n];
     uint8_t _array2[N][n];
+
+    //pre-process
+    preProcess(words, _array1[0]);
+    memcpy(_array2[0], _array1[0], n);
+    //initialize all the array
+    for(size_t i=1; i<N; ++i)
+    {
+    	memcpy(_array1[i], _array1[0], n);
+    	memcpy(_array2[i], _array1[0], n);
+    }
+
 
     uint8_t (*h0)[n] = _array1;
     uint8_t (*h1)[n] = _array2;
@@ -389,7 +468,9 @@ void SegTagger::seg_sentence(vector<string>& words, CharType* types,
     size_t canSize;
 
     for(size_t i=0; i<n; ++i){
-        lastIndex = -1;
+        if(_array1[0][i] != POC_TAG_INIT )
+        	continue;
+    	lastIndex = -1;
         canSize = 0;
         #ifdef EN_ASSERT
             assert(h0Size <= N);
@@ -418,14 +499,14 @@ void SegTagger::seg_sentence(vector<string>& words, CharType* types,
     }
     if(retSize < h0Size)
         h0Size = retSize;
-
+    if(segment.size() != h0Size)
+		segment.resize(h0Size);
     for(size_t k=0; k<h0Size; ++k){
         uint8_t* tags = h0[k];
         pair<vector<string>,double>& pair = segment[k];
         pair.second = (pair.second > 0) ? (pair.second * scores[k]) : scores[k];
         pocinner::combinePOCToWord(words, n, tags, pair.first);
     }
-    
 }
 
 void SegTagger::tag_file(const char* inFile, const char* outFile,
@@ -492,10 +573,20 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
 
     #ifdef USE_STRTRIE
         pocinner::StrBasedVTrie strTrie(trie_);
+        int wordLen = 0;
+        preProcess(words, pocRet);
     #endif
 
     for(size_t index=0; index<n; ++index){
-         #ifdef USE_STRTRIE
+        if( pocRet[index] != POC_TAG_INIT )
+        {
+        	if( pocRet[index] == POC_TAG_B )
+        		wordLen = 1;
+        	else if( pocRet[index] == POC_TAG_E )
+        		++wordLen;
+        	continue;
+        }
+    	#ifdef USE_STRTRIE
             const char* curPtr = words[ index ].c_str();
         #endif
             
@@ -526,6 +617,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
         //no check if the POC tag is B
         if(tagEScore <= 0.5){
             pocRet[index] = POC_TAG_B;
+            wordLen = 1;
             #ifdef USE_STRTRIE
             if(types[index] == CHAR_TYPE_OTHER)
                 strTrie.firstSearch(curPtr);
@@ -542,15 +634,28 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
             #endif
 
             if(tagEScore >= eScore_){
-                pocRet[index] = POC_TAG_E;
-                continue;
+                ++wordLen;
+            	if(types[index] != CHAR_TYPE_OTHER || wordLen < MAX_PROP_WORD_LEN || strTrie.completeSearch)
+					pocRet[index] = POC_TAG_E;
+            	else
+            	{
+            		pocRet[index] = POC_TAG_B;
+            		strTrie.firstSearch(curPtr);
+            		wordLen = 1;
+            	}
+            	continue;
             }
 
             if(strTrie.completeSearch)
+            {
                 pocRet[index] = POC_TAG_E;
-            else{
+                ++wordLen;
+            }
+            else
+            {
                 strTrie.firstSearch(curPtr);
                 pocRet[index] = POC_TAG_B;
+                wordLen = 1;
             }
         #endif
 

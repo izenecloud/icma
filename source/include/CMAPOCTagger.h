@@ -13,12 +13,19 @@
 #include "CMABasicTrainer.h"
 #include "types.h"
 #include "VTrie.h"
+#include "cma_wtype.h"
 
 #include <algorithm>
 #include <math.h>
 #include <set>
 #include <map>
 using namespace maxent::me;
+
+/** max word length that combined by probability but not dictionary */
+#define MAX_PROP_WORD_LEN 2
+
+/** min word length found in the pre-processing */
+#define MIN_PRE_WORD_LEN 4
 
 namespace cma{
 
@@ -98,6 +105,8 @@ public:
      */
     SegTagger(const string& cateName, VTrie* posTrie, double eScore = 0.7);
 
+    ~SegTagger();
+
     void tag_file(const char* inFile, const char *outFile, 
             string encType = "gb2312");
 
@@ -126,6 +135,8 @@ public:
 
     void setCType(CMA_CType *ctype){
         ctype_ = ctype;
+        delete wtype_;
+        wtype_ = new CMA_WType(ctype_);
     }
 
     /**
@@ -165,12 +176,18 @@ private:
             uint8_t* tags, POCTagUnit* candidates, int& lastIndex, size_t& canSize,
             double initScore, int candidateNum);
 
+    /** Find out the words contains at least 4 characters */
+    void preProcess(vector<string>& words, uint8_t* tags);
+
 private:
     /** The MaxEnt model Object */
     MaxentModel me;
 
     /** The encoding type */
     CMA_CType *ctype_;
+
+    /** The word type */
+    CMA_WType *wtype_;
 
     /** Store the data to the POS tags */
     VTrie* trie_;

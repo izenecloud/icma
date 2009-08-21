@@ -138,7 +138,7 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
 			sentence.addList( list, score );
 		}
 
-		for ( size_t j = 0; j < size; ++j )
+		for ( int j = 0; j < sentence.getListSize(); ++j )
 		{
 			sentence.setScore(j, sentence.getScore(j) / totalScore );
 		}
@@ -369,7 +369,7 @@ namespace meanainner{
             cout<<"Check str "<<str<<",isEnd:"<<(j == strLen)<<node<<endl;
             #endif
 
-            //didnot reach the last bit
+            //did not reach the last bit
             if (j < strLen) {
                 //no exist in the dictionary
                 if (begin < 0)
@@ -424,9 +424,8 @@ namespace meanainner{
             vector<vector<string> >& posRet,
             vector<pair<vector<string>, double> >& segRet, bool tagPOS) {
         int segN = N;
-        segRet.resize(N);
 
-        vector<pair<vector<string>, double> > segment(N);
+        vector<pair<vector<string>, double> > segment(1);
 
         SegTagger* segTagger = knowledge_->getSegTagger();
 
@@ -487,6 +486,8 @@ namespace meanainner{
         }
         #endif
 
+        N = segment.size();
+        segRet.resize(N);
 
         VTrie *trie = knowledge_->getTrie();
         //TODO, only combine the first result
