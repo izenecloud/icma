@@ -580,10 +580,13 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
     for(size_t index=0; index<n; ++index){
         if( pocRet[index] != POC_TAG_INIT )
         {
-        	if( pocRet[index] == POC_TAG_B )
+        	if( pocRet[index] == POC_TAG_B && index < n -1 &&
+        			pocRet[index + 1] == POC_TAG_INIT)
+        	{
         		wordLen = 1;
-        	else if( pocRet[index] == POC_TAG_E )
-        		++wordLen;
+        		strTrie.firstSearch(words[ index ].c_str());
+        	}
+
         	continue;
         }
     	#ifdef USE_STRTRIE
@@ -619,8 +622,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
             pocRet[index] = POC_TAG_B;
             wordLen = 1;
             #ifdef USE_STRTRIE
-            if(types[index] == CHAR_TYPE_OTHER)
-                strTrie.firstSearch(curPtr);
+				strTrie.firstSearch(curPtr);
             #endif
             continue;
         }
