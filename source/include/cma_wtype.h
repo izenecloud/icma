@@ -49,6 +49,15 @@ public:
      */
     WordType getWordType(const char* word);
 
+    /**
+	 * Get the word type.
+	 * \param types types that are already knows
+	 * \param begin index in types
+	 * \param the size of the types
+	 * \return the word type.
+	 */
+	WordType getWordType(CharType* types, size_t begin, size_t size);
+
 private:
     /** character encoding */
     const CMA_CType* ctype_;

@@ -93,4 +93,69 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
     return WORD_TYPE_OTHER;
 }
 
+
+CMA_WType::WordType CMA_WType::getWordType(CharType* types, size_t begin, size_t size)
+{
+	CharType preType = begin > 0 ? types[begin-1] : CHAR_TYPE_INIT;
+	CharType curType;
+	for(; begin < size; ++begin)
+    {
+        curType = types[begin];
+
+        if(preType == curType)
+            continue;
+
+        switch(curType){
+            case CHAR_TYPE_OTHER:
+                return WORD_TYPE_OTHER;
+            case CHAR_TYPE_PUNC:
+                if(preType == CHAR_TYPE_INIT && begin>= size)
+                    return WORD_TYPE_PUNC;
+                return WORD_TYPE_OTHER;
+            default:
+                break;
+        }
+
+        switch(preType){
+            case CHAR_TYPE_INIT:
+                preType = curType;
+                break;
+
+            case CHAR_TYPE_NUMBER:
+                switch(curType){
+                    case CHAR_TYPE_LETTER:
+                        preType = CHAR_TYPE_LETTER;
+                        break;
+                    case CHAR_TYPE_DATE:
+                        return (begin>= size) ? WORD_TYPE_OTHER : WORD_TYPE_DATE;
+                    default:
+                        assert(false && "unexpected arrive here (pre is number, cur is not-letter or non-date)");
+                        break;
+                }
+                break;
+
+            case CHAR_TYPE_LETTER:
+                if(curType == CHAR_TYPE_NUMBER)
+                    continue;
+                assert(false && "unexpected arrive here (pre is Letter and cur is non-digit)");
+                break;
+
+            default:
+                assert(false && "unexpected arrive here (preType)");
+                break;
+        }
+    }
+
+    switch(curType){
+        case CHAR_TYPE_LETTER:
+            return WORD_TYPE_LETTER;
+        case CHAR_TYPE_NUMBER:
+            return WORD_TYPE_NUMBER;
+        default:
+            assert(false && "unexpected arrive here");
+            return WORD_TYPE_OTHER;
+    }
+    return WORD_TYPE_OTHER;
+}
+
 } // namespace cma
