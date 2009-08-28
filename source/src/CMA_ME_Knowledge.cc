@@ -126,7 +126,7 @@ int CMA_ME_Knowledge::loadSystemDict_(const char* binFileName){
         //may be another way get line
         line = readEncryptLine(in);
         if(line.empty())
-            break;
+            continue;
         appendWordPOS(line);
     }
     fclose(in);
@@ -159,6 +159,8 @@ int CMA_ME_Knowledge::loadUserDict_(const char* fileName){
     string line;
     while(!in.eof()){
         getline(in, line);
+        if(line.empty())
+        	continue;
         appendWordPOS(line);
     }
 
