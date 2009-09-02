@@ -330,8 +330,8 @@ void MaxentModel::eval_all(const context_type& context,
         bool sort_result) const {
     assert(m_params);
 
-    //TODO:static?
-    static vector<double> probs;
+    //static vector<double> probs; //REMIND remove static here
+    vector<double> probs;
     if (probs.size() != m_outcome_map->size())
         probs.resize(m_outcome_map->size());
     fill(probs.begin(), probs.end(), 0.0);

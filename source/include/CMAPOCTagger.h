@@ -13,7 +13,6 @@
 #include "CMABasicTrainer.h"
 #include "types.h"
 #include "VTrie.h"
-#include "cma_wtype.h"
 
 #include <algorithm>
 #include <math.h>
@@ -135,8 +134,6 @@ public:
 
     void setCType(CMA_CType *ctype){
         ctype_ = ctype;
-        delete wtype_;
-        wtype_ = new CMA_WType(ctype_);
     }
 
     /**
@@ -185,9 +182,6 @@ private:
 
     /** The encoding type */
     CMA_CType *ctype_;
-
-    /** The word type */
-    CMA_WType *wtype_;
 
     /** Store the data to the POS tags */
     VTrie* trie_;

@@ -18,3 +18,6 @@ TARGET_LINK_LIBRARIES(cmacsegger ${LIBS_CMAC})
 ADD_EXECUTABLE(cmac_run cmac_run.cc)
 TARGET_LINK_LIBRARIES(cmac_run ${LIBS_CMAC})
 
+ADD_EXECUTABLE(cmac_run2 cmac_run2.cc)
+TARGET_LINK_LIBRARIES(cmac_run2 ${LIBS_CMAC} pthread)
+

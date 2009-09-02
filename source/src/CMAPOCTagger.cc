@@ -11,8 +11,7 @@
 #include "CMAPOCTagger.h"
 #include "CPPStringUtils.h"
 #include "strutil.h"
-#include "tokenizer.h"
-#include "cma_ctype.h"
+#include "cma_wtype.h"
 
 namespace cma{
 
@@ -339,7 +338,7 @@ void poc_train(const char* file, const string& cateName,
 }
 
 
-SegTagger::SegTagger(const string& cateName, VTrie* posTrie, double eScore) : wtype_(0)
+SegTagger::SegTagger(const string& cateName, VTrie* posTrie, double eScore)
 {
     SegTagger::initialize();
     //cout<<"Load poc model"<<(cateName + ".model")<<endl;
@@ -350,7 +349,6 @@ SegTagger::SegTagger(const string& cateName, VTrie* posTrie, double eScore) : wt
 
 SegTagger::~SegTagger()
 {
-	delete wtype_;
 }
 
 void SegTagger::tag_word(vector<string>& words, CharType* types,
@@ -378,6 +376,8 @@ void SegTagger::tag_word(vector<string>& words, CharType* types,
 
 void SegTagger::preProcess(vector<string>& words, uint8_t* tags)
 {
+	CMA_WType wtype(ctype_);
+
 	memset(tags, POC_TAG_INIT, words.size());
 	tags[0] = POC_TAG_B;
 	pocinner::StrBasedVTrie strTrie(trie_);
@@ -407,7 +407,7 @@ void SegTagger::preProcess(vector<string>& words, uint8_t* tags)
 			}
 
 			//here don't dealt with digits, letters, data and other entities
-			if(wtype_->getWordType(init.data()) == CMA_WType::WORD_TYPE_OTHER)
+			if(wtype.getWordType(init.data()) == CMA_WType::WORD_TYPE_OTHER)
 			{
 				#ifdef DEBUG_POC_TAGGER
 					cout<<"PreProcess combine "<<init<<",start="<<start<<
