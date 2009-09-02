@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
 	// set default dictionary file
 	const char* sysdict = 0;
 #if defined(_WIN32) && !defined(__CYGWIN__)
-	sysdict = "../../db/icwb/gb18030/icwbc";
+	sysdict = "../db/icwb/gb18030/icwbc";
 #else
 	sysdict = "../db/icwb/gb18030/icwbc";
 #endif

@@ -71,7 +71,7 @@ int seggerEntry(int argc, char** argv){
     string cateFile(argv[1]);
     string inFile(argv[2]);
     string outFile(argv[3]);
-    string encoding = "gb2312";
+    string encoding = "gb18030";
     if(argc > 4){
         encoding = argv[4];
     }
