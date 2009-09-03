@@ -37,18 +37,6 @@ bool Nocase::operator() (const std::string& x, const std::string& y) const
     return toupper(*p) < toupper(*q);
 }
 
-POSTable* POSTable::instance_;
-
-POSTable* POSTable::instance()
-{
-    if(instance_ == 0)
-    {
-	instance_ = new POSTable;
-    }
-
-    return instance_;
-}
-
 POSTable::POSTable()
 {
 }

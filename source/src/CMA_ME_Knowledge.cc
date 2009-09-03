@@ -12,7 +12,6 @@
 
 #include "CMA_ME_Knowledge.h"
 #include "strutil.h"
-#include "pos_table.h"
 
 #include <assert.h>
 using namespace std;
@@ -34,7 +33,8 @@ inline bool fileExists(const char* path)
 	return false;
 }
 
-CMA_ME_Knowledge::CMA_ME_Knowledge(): segT_(0), posT_(0),vsynC_(0),trie_(new VTrie()){
+CMA_ME_Knowledge::CMA_ME_Knowledge()
+		: segT_(0), posT_(0),vsynC_(0),trie_(new VTrie), posTable_(new POSTable){
     CMA_ME_Knowledge::initialize();
 }
 
@@ -43,6 +43,7 @@ CMA_ME_Knowledge::~CMA_ME_Knowledge(){
     delete posT_;
     delete vsynC_;
     delete trie_;
+    delete posTable_;
 }
 
 int CMA_ME_Knowledge::loadPOSModel(const char* cateName){
@@ -57,7 +58,7 @@ int CMA_ME_Knowledge::loadPOSModel(const char* cateName){
         trimSelf(line);
         if(line.empty())
             continue;
-        POSTable::instance()->addPOS(line);
+        posTable_->addPOS(line);
     }
 
     assert(!posT_);
@@ -300,8 +301,7 @@ void CMA_ME_Knowledge::initialize(){
 
 int CMA_ME_Knowledge::loadConfig(const char* fileName)
 {
-    POSTable* posTable = POSTable::instance();
-    bool r = posTable->loadConfig(fileName);
+    bool r = posTable_->loadConfig(fileName);
 
     return r ? 1 : 0;
 }
@@ -356,6 +356,11 @@ bool CMA_ME_Knowledge::appendWordPOS(string& line){
 
 
     return true;
+}
+
+const POSTable* CMA_ME_Knowledge::getPOSTable() const
+{
+	return posTable_;
 }
 
 }

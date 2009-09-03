@@ -78,6 +78,8 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
         vector<vector<string> > pos;
         analysis(sentence.getString(), N, pos, segment, printPOS);
 
+        const POSTable* posTable = knowledge_->getPOSTable();
+
         if(N <= 1)
         {
         	MorphemeList list;
@@ -91,7 +93,10 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
 				Morpheme morp;
 				morp.lexicon_ = seg;
 				if(printPOS)
-					morp.posCode_ = POSTable::instance()->getCodeFromStr(poses[j]);
+				{
+					morp.posStr_ = poses[j];
+					morp.posCode_ = posTable->getCodeFromStr(morp.posStr_);
+				}
 				list.push_back(morp);
 			}
 			sentence.addList(list, 1.0);
@@ -113,7 +118,10 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
 				Morpheme morp;
 				morp.lexicon_ = seg;
 				if(printPOS)
-					morp.posCode_ = POSTable::instance()->getCodeFromStr(poses[j]);
+				{
+					morp.posStr_ = poses[j];
+					morp.posCode_ = posTable->getCodeFromStr(morp.posStr_);
+				}
 
 				list.push_back(morp);
 			}

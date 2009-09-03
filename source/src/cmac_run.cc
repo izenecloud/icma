@@ -257,6 +257,8 @@ int main(int argc, char* argv[])
     {
     	posIn.close();
     	knowledge->loadPOSModel(cate.data());
+    	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 1);
+    	cout<<"Found POS model, output include POS information!"<<endl;
     }
     else
     {

@@ -19,6 +19,11 @@ Morpheme::Morpheme()
 {
 }
 
+Morpheme::Morpheme(std::string lexicon, int posCode, std::string& posStr)
+	: lexicon_(lexicon), posCode_(posCode), posStr_(posStr)
+{
+}
+
 void Sentence::setString(const char* pString)
 {
     raw_ = pString;
@@ -53,9 +58,7 @@ int Sentence::getPOS(int nPos, int nIdx) const
 
 const char* Sentence::getStrPOS(int nPos, int nIdx) const
 {
-    int posIdx = getPOS(nPos, nIdx);
-
-    return POSTable::instance()->getStrFromCode(posIdx);
+    return candidates_[nPos][nIdx].posStr_.c_str();
 }
 
 const MorphemeList* Sentence::getMorphemeList(int nPos) const

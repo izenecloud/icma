@@ -42,11 +42,8 @@ public:
 class POSTable
 {
 public:
-    /**
-     * Create an instance of \e POSTable.
-     * \return the pointer to instance
-     */
-    static POSTable* instance();
+
+    POSTable();
 
     /**
      * Add the POS string to the global part-of-speech table.
@@ -104,9 +101,6 @@ public:
      * \return POS index code, -1 for non POS available
      */
     int getCodeFromType(POSType type) const;
-
-protected:
-    POSTable();
 
 private:
     /** the instance of \e POSTable */

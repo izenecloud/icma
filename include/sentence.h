@@ -27,12 +27,22 @@ struct Morpheme
     /** the index code of part-of-speech tag */
     int posCode_;
 
+    /** the POS string value */
+    std::string posStr_;
+
     /**
      * Constructor.
      * The lexicon string value is initialized with empty string,
      * and the index code of part-of-speech tag is initialized with -1, meaning that no part-of-speech tag is available.
      */
     Morpheme();
+
+    /**
+     * Constructor
+     * \param posCode initial POS Code
+     * \param posStr initial POS string value
+     */
+    Morpheme(std::string lexicon, int posCode, std::string& posStr);
 };
 
 /** A list of morphemes. */

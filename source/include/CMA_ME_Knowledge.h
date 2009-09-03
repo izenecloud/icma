@@ -12,6 +12,7 @@
 #include "knowledge.h"
 #include "CMAPOCTagger.h"
 #include "CMAPOSTagger.h"
+#include "pos_table.h"
 
 #include "VSynonym.h"
 
@@ -138,6 +139,11 @@ public:
      */
     static void initialize();
 
+    /**
+     * Get POSTable
+     */
+    const POSTable* getPOSTable() const;
+
 private:
     /** Input maybe a line or a word*/
     string readEncryptLine(FILE *in);
@@ -175,6 +181,9 @@ private:
 
     /** The Trie to hold system and */
     VTrie* trie_;
+
+    /** POS Table */
+    POSTable* posTable_;
 
     /** stop words set */
     set<string> stopWords_;
