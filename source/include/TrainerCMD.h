@@ -17,16 +17,6 @@
 using namespace cma;
 
 /**
- * This function carry out the training
- *
- * \param pMateFile the meterial file
- * \param cateFile the category name
- * \param enc the encoding, only support gb2312 and big5
- * \param posDelimiter the pos delimiter
- */
-void beginTrain(string pMateFile, string cateFile, string enc, string posDelimiter);
-
-/**
  * Print the help information of the Trainer
  */
 void printTainerUsage();

@@ -101,9 +101,15 @@ void get_pos_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
 }
 
 void pos_train(const char* file, const string& cateFile, Knowledge::EncodeType encType,
-        string posDelimiter,
+        string posDelimiter, bool isLargeCorpus,
         const char* extractFile, string method, size_t iters,float gaussian){
       TrainerData data(get_pos_zh_scontext, encType, posDelimiter);
+      if(isLargeCorpus){
+    	  cout<<"[Info] As the corpus is large, some parameters are set larger."<<endl;
+    	  data.rareFreq_ = 4;
+    	  data.cutoff_ = 10;
+    	  data.rareCutoff_ = 5;
+      }
       train(&data, file, cateFile, extractFile, method, iters, gaussian, true);
 }
 

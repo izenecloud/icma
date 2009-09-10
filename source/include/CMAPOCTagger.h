@@ -47,7 +47,7 @@ void get_poc_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
  * \param file the source file, with formate "word1/tag1 word2/tag2 ..."
  * \param cateFile the cateFile (include the path) is the prefix of all the file
  *    that created while training
- * \param encType the encoding type, default is gb2312
+ * \param encType the encoding type, default is gb18030
  * \param extractFile if set, save the training data to the extractFile and exit
  * \param iters how many iterations are required for training[default=15]
  * \param method the method of Maximum Model Parameters Estimation [default = gis]
@@ -55,8 +55,8 @@ void get_poc_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
  * \param isPOS if true, output the tag dictioanry
  */
 void poc_train(const char* file, const string& cateName,
-        Knowledge::EncodeType encType = Knowledge::ENCODE_TYPE_GB2312,
-        string posDelimiter = "/",
+        Knowledge::EncodeType encType = Knowledge::ENCODE_TYPE_GB18030,
+        string pocDelimiter = "/", bool isLargeCorpus = false,
         const char* extractFile = 0, string method = "gis", size_t iters = 15,
         float gaussian = 0.0f);
 

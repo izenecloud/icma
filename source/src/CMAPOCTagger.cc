@@ -328,12 +328,18 @@ void get_poc_zh_context(vector<string>& words, vector<string>& tags, size_t i,
     pocinner::get_poc_zh_context_1(words, 0, i, context, ctype);
 }
 
-void poc_train(const char* file, const string& cateName,
-        Knowledge::EncodeType encType,
-        string posDelimiter, const char* extractFile,
-        string method, size_t iters,float gaussian){
+void poc_train(const char* file, const string& cateName, Knowledge::EncodeType encType,
+        string pocDelimiter,  bool isLargeCorpus,
+        const char* extractFile, string method, size_t iters,float gaussian)
+{
       SegTagger::initialize();
-      TrainerData data(get_poc_zh_context, encType, posDelimiter);
+      TrainerData data(get_poc_zh_context, encType, pocDelimiter);
+      if(isLargeCorpus){
+		  cout<<"[Info] As the corpus is large, some parameters are set larger."<<endl;
+		  data.rareFreq_ = 4;
+		  data.cutoff_ = 10;
+		  data.rareCutoff_ = 5;
+      }
       train(&data, file, cateName, extractFile, method, iters, gaussian, false);
 }
 

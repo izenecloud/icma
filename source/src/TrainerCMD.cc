@@ -3,33 +3,46 @@
 #include "TrainerCMD.h"
 
 void beginTrain(string pMateFile, string cateFile, string enc, 
-        string posDelimiter, bool trainPOS){
+        string posDelimiter, bool trainPOS = true, bool trainPOC = true,
+        bool largeCorpus = false){
     string mateFile = pMateFile;
 
     Knowledge::EncodeType encType = Knowledge::decodeEncodeType(enc.c_str());
 
-    if(trainPOS){
+    if(trainPOS)
+    {
         cout<<"#Start Training POS Model..."<<endl;
-        pos_train(mateFile.data(), cateFile, encType, posDelimiter);
+        pos_train(mateFile.data(), cateFile, encType, posDelimiter, largeCorpus);
+    }
+    else
+    {
+    	cout<<"#[Warning] User Cancel Training POS Model"<<endl;
     }
 
-    cout<<"#Generate POC Material File "<<endl;
-    string matePOC = mateFile + ".poc.tmp";
-    create_poc_meterial(mateFile.data(), matePOC.data(), encType, posDelimiter);
+    if(trainPOC)
+    {
+		cout<<"#Generate POC Material File "<<endl;
+		string matePOC = mateFile + ".poc.tmp";
+		create_poc_meterial(mateFile.data(), matePOC.data(), encType, posDelimiter);
 
-    string cateFilePOC = cateFile + "-poc";
-    cout<<"#Start Training POC Model..."<<endl;
-    poc_train(matePOC.data(), cateFilePOC, encType, posDelimiter);
+		string cateFilePOC = cateFile + "-poc";
+		cout<<"#Start Training POC Model..."<<endl;
+		poc_train(matePOC.data(), cateFilePOC, encType, posDelimiter, largeCorpus);
 
-    //remove matePOC and mateFile(if tmpMateFile is true)
-    cout<<"#Remove temporal files "<<endl;
-    remove(matePOC.data());
-
+		//remove matePOC and mateFile(if tmpMateFile is true)
+		cout<<"#Remove temporal files "<<endl;
+		remove(matePOC.data());
+    }
+    else
+	{
+		cout<<"#[Warning] User Cancel Training POC Model"<<endl;
+	}
     cout<<"#Training Finished!"<<endl;
 }
 
 void printTainerUsage(){
-    cout<<"SYNOPSIS\n     ./cmactrainer mateFile cateFile [encoding] [posDelimiter] [--no-train-pos]"<<endl;
+    cout<<"SYNOPSIS\n     ./cmactrainer mateFile cateFile [encoding] [posDelimiter] "<<
+    		"[pos | poc | pos+poc] [large-corpus]"<<endl;
     cout<<"Description"<<endl;
     cout<<"   mateFile is the material file, it should be in the form "<<
             "word1/pos1 word2/pos2 word3/pos3 ..."<<endl;
@@ -40,7 +53,8 @@ void printTainerUsage(){
             "is the default encoding. Only support gb2312, gb18030 and big5 now"<<endl;
     cout<<"   posDelimiter is the delimiter between the word and the pos tag, "<<
             "like '/' and '_' and default is '/'"<<endl;
-    cout<<"   --no-train-pos indicates don't train POS information"<<endl;
+    cout<<"   pos | poc | pos+poc indicate only train POS | POC |POS and POC models"<<endl;
+    cout<<"   large-corpus indicates the corpus is large, some parameters are set larger"<<endl;
 }
 
 int tainerEntry(int argc, char** argv){
@@ -59,11 +73,26 @@ int tainerEntry(int argc, char** argv){
         posDelimiter = argv[4];
     }
     bool trainPOS = true;
+    bool trainPOC = true;
     if(argc > 5){
-        trainPOS = strcmp(argv[5],"--no-train-pos");
+    	if(!strcmp(argv[5],"pos"))
+        	trainPOC = false;
+        else if(!strcmp(argv[5],"poc"))
+        	trainPOS = false;
+        else if(strcmp(argv[5],"pos+poc")){
+        	cout<<"[Error] Can't find parameter 5: should be pos | poc | pos+poc, "<<
+        			"your input is "<<argv[5]<<"."<<endl;
+        	printTainerUsage();
+        	return 0;
+        }
     }
 
-    beginTrain(pMateFile, cateFile, encoding, posDelimiter, trainPOS);
+    bool largeCorpus = false;
+    if(argc > 6){
+    	largeCorpus = !strcmp(argv[6],"large-corpus");
+    }
+
+    beginTrain(pMateFile, cateFile, encoding, posDelimiter, trainPOS, trainPOC, largeCorpus);
     return 1;
 }
 
