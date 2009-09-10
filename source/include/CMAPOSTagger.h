@@ -190,6 +190,21 @@ public:
     /** vector to hold the POS information */
     vector<set<string> > posVec_;
 
+    /** default POS */
+    string defaultPOS;
+
+    /** Number POS */
+    string numberPOS;
+
+    /** Letter POS */
+    string letterPOS;
+
+    /** Punctuation POS */
+    string puncPOS;
+
+    /** Date POS */
+    string datePOS;
+
 private:
     /**
      * The maxent model

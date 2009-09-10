@@ -15,8 +15,6 @@
 
 namespace cma{
 
-const string DEFAULT_POS = "n";
-
 string POS_BOUNDARY = "BoUnD";
 
 namespace posinner{
@@ -360,9 +358,26 @@ void POSTagger::tag_file(const char* inFile, const char* outFile){
 
 double POSTagger::tag_word_best_1(vector<string>& words, vector<string>& poses,
         int index, string& pos, CMA_WType& wtype){
-    vector<string> context;
+    const char* word = words[index].data();
+    CMA_WType::WordType wordT = wtype.getWordType(word);
+    switch(wordT){
+		case CMA_WType::WORD_TYPE_PUNC:
+			pos = puncPOS;
+			return 1.0;
+		case CMA_WType::WORD_TYPE_NUMBER:
+			pos = numberPOS;
+			return 1.0;
+		case CMA_WType::WORD_TYPE_LETTER:
+			pos = letterPOS;
+			return 1.0;
+		case CMA_WType::WORD_TYPE_DATE:
+			pos = datePOS;
+			return 1.0;
+    }
+
+	vector<string> context;
     VTrieNode node;
-    trie_->search( words[index].data(), &node );
+    trie_->search( word, &node );
     string& tag_1 = index > 0 ? poses[index-1] : POS_BOUNDARY;
     string& tag_2 = index > 1 ? poses[index-2] : POS_BOUNDARY;
     posinner::get_pos_zh_scontext_1(words, tag_1, tag_2, index, context, wtype);
@@ -370,7 +385,7 @@ double POSTagger::tag_word_best_1(vector<string>& words, vector<string>& poses,
         set<string>& posSet = posVec_[node.data];
         //FIXME avoid default POS here
         if(posSet.empty()){
-            pos = DEFAULT_POS;
+            pos = defaultPOS;
             return 1.0;
         }else if(posSet.size() == 1){
             pos = *posSet.begin();

@@ -169,6 +169,14 @@ private:
      */
     int loadUserDict_(const char* fileName);
 
+    /**
+	 * Load property config file, with format key = value
+	 * \param filename the target file name
+	 * \param map the return values are stored in this map
+	 * \return true for success, false for failure.
+	 */
+	bool loadConfig0(const char *filename, map<string, string>& map, bool required = true);
+
 private:
     /** tagger for segment */
     SegTagger *segT_;

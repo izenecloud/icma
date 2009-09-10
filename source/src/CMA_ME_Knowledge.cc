@@ -64,6 +64,23 @@ int CMA_ME_Knowledge::loadPOSModel(const char* cateName){
     assert(!posT_);
     posT_ = new POSTagger((cateStr + ".model").data(), trie_);
 
+    map<string, string> configMap;
+    loadConfig0((cateStr + ".config").data(), configMap, false);
+    string ret = configMap["defaultPOS"];
+    posT_->defaultPOS = ret.empty() ? "N" : ret;
+
+    ret = configMap["numberPOS"];
+    posT_->numberPOS = ret.empty() ? "M" : ret;
+
+    ret = configMap["letterPOS"];
+    posT_->letterPOS = ret.empty() ? "NX" : ret;
+
+    ret = configMap["puncPOS"];
+    posT_->puncPOS = ret.empty() ? "W" : ret;
+
+    ret = configMap["datePOS"];
+    posT_->datePOS = ret.empty() ? "T" : ret;
+
     return 1;
 }
 
@@ -361,6 +378,33 @@ bool CMA_ME_Knowledge::appendWordPOS(string& line){
 const POSTable* CMA_ME_Knowledge::getPOSTable() const
 {
 	return posTable_;
+}
+
+bool CMA_ME_Knowledge::loadConfig0(const char *filename, map<string, string>& map,
+		bool required) {
+  std::ifstream ifs(filename);
+  if(required)
+	  assert(ifs);
+  else if(!ifs)
+	  return false;
+
+  std::string line;
+  while (std::getline(ifs, line)) {
+    if (!line.size() ||
+        (line.size() && (line[0] == ';' || line[0] == '#'))) continue;
+
+    size_t pos = line.find('=');
+    assert(pos != std::string::npos && "format error: ");
+
+    size_t s1, s2;
+    for (s1 = pos+1; s1 < line.size() && isspace(line[s1]); s1++);
+    for (s2 = pos-1; static_cast<long>(s2) >= 0 && isspace(line[s2]); s2--);
+    //const std::string value = line.substr(s1, line.size() - s1);
+    //const std::string key   = line.substr(0, s2 + 1);
+    map[line.substr(0, s2 + 1)] = line.substr(s1, line.size() - s1);
+  }
+
+  return true;
 }
 
 }
