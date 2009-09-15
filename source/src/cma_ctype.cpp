@@ -58,4 +58,35 @@ size_t CMA_CType::length(const char* p) const{
     return ret;
 }
 
+unsigned int CMA_CType::getEncodeValue(const char* p) const
+{
+	unsigned int bytes = getByteCount( p );
+	if(!bytes)
+		return 0;
+
+	const unsigned char* uc = (const unsigned char*)p;
+
+	unsigned int val = 0;
+	switch(bytes)
+	{
+			case 1:
+					val = uc[0];
+					break;
+			case 2:
+					val = uc[0] << 8 | uc[1];
+					break;
+			case 3:
+					val =  uc[0] << 16 | uc[1] << 8 | uc[2];
+					break;
+			case 4:
+					val = uc[0] << 24 | uc[1] << 16 | uc[2] << 8 | uc[3] ;
+					break;
+			default:
+					assert(false && "Cannot handle 'Character's length > 4'");
+					return 0;
+	}
+
+	return val;
+}
+
 } // namespace cma

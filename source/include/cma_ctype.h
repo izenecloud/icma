@@ -90,7 +90,15 @@ public:
      */
     size_t length(const char* p) const;
 
-        /**
+    /**
+     * Get the encoding value in unsigned int type
+     *
+     * param p the character with pointer p
+     * \return unsigned int value of p, 0 if error occurs
+     */
+    unsigned int getEncodeValue(const char* p) const;
+
+    /**
      * Check whether is white-space character.
      * White-space characters are " \t\n\v\f\r", and also space character in specific encoding.
      * \param p pointer to the character string

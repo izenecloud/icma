@@ -21,6 +21,8 @@ namespace gb18030type{
 
     const unsigned short DOT_1 = 0xa3ae; //．
 
+    const unsigned int DOT_2 = 0x8136a634; //‧
+
     const unsigned char COMMA = (unsigned char)(','); ///< comma
 
     const unsigned char HYPHEN = (unsigned char)('-'); ///< hyphen
@@ -31,7 +33,7 @@ namespace gb18030type{
 
     const unsigned short DIAN_CH = 0xb5e3; ///< 点
 
-    const unsigned short DIAN_1_CH = 0xfc63; ///< 點
+    const unsigned short DIAN_CH_1 = 0xfc63; ///< 點
 
     const unsigned short FEN_CH = 0xb7d6; ///< 分
 
@@ -39,10 +41,19 @@ namespace gb18030type{
 
     const unsigned short YU_CH = 0xd3e0; ///< 余
 
+    const unsigned short YU_CH_1 = 0xf04e; //餘
+
     const unsigned short CHENG_CH = 0xb3c9; ///< 成
 
     const unsigned short BAN_CH = 0xb0eb; ///< 半
 
+    const unsigned short ZHAO_CH = 0xd5d7; //兆
+
+    const unsigned short DI_ZH = 0xb5da; //第
+
+    const unsigned short SHU_ZH = 0xcafd; //数
+
+    const unsigned short SHANG_ZH = 0xc9cf; //上
 
     /**
      * Whether it is punctuation in any cases
@@ -93,11 +104,13 @@ namespace gb18030type{
             case 0xcee5: case 0xc1f9: case 0xc6df: case 0xb0cb: case 0xbec5: //五六七八九
             case 0xcaae: case 0xb0d9: case 0xc7a7: case 0xcdf2: case 0xd2da: //十百千万亿
             case 0xc1bd: //两
+            case 0x83c9: //兩
             case 0xa1eb: //‰
             case 0xc866: //萬
             case 0xd8a6: //卅
             case 0xd8a5: //廿
             case 0x837c: //億
+            case 0xbcb8: case 0x8ed7: //几幾
                 return true;
 
         }
@@ -151,7 +164,7 @@ namespace gb18030type{
             case 0xc4ea: case 0xd4c2: case 0xc8d5: //年月日
             case 0xcab1: case 0xb7d6: case 0xc3eb: //时分秒
             case DIAN_CH: //点
-            case DIAN_1_CH:
+            case DIAN_CH_1:
                 return true;
         }
         return false;
@@ -219,11 +232,12 @@ CharType CMA_CType_GB18030::getCharType(const char* p, CharType preType,
     const unsigned char* uc = (const unsigned char*)p;
     const unsigned char* nextUc = (const unsigned char*)nextP;
 
-    unsigned short value = (uc[0] < 0x80) ? uc[0] : uc[0] << 8 | uc[1];
+    unsigned int value = getEncodeValue(p);
 
     switch(value){
         case DOT:
         case DOT_1:
+        case DOT_2:
             if( nextUc && (preType == CHAR_TYPE_LETTER || preType == CHAR_TYPE_NUMBER)
                     && (isAbsLetter(nextUc) || isAbsDigit(nextUc)) )
                 return CHAR_TYPE_LETTER;
@@ -243,7 +257,7 @@ CharType CMA_CType_GB18030::getCharType(const char* p, CharType preType,
 
         case ZHI_CH:
         case DIAN_CH:
-        case DIAN_1_CH:
+        case DIAN_CH_1:
         case CHENG_CH:
         case BAN_CH:
             if( nextUc && preType == CHAR_TYPE_NUMBER && isAbsDigit(nextUc) )
@@ -260,10 +274,18 @@ CharType CMA_CType_GB18030::getCharType(const char* p, CharType preType,
             break;
 
         case DUO_CH:
-        case YU_CH:
+        case YU_CH: case YU_CH_1:
+        case ZHAO_CH:
             if(preType == CHAR_TYPE_NUMBER)
                 return CHAR_TYPE_NUMBER;
             break;
+
+        case DI_ZH:
+        case SHU_ZH:
+        case SHANG_ZH:
+        	if(isAbsDigit(nextUc))
+        		return CHAR_TYPE_NUMBER;
+        	break;
     }
 
 

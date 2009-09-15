@@ -571,6 +571,9 @@ void SegTagger::tag_file(const char* inFile, const char* outFile,
     out.close();
 }
 
+#define BACK_FIX_END_TAG if(!strTrie.exists()){ \
+		for(int i=index-1; i>=0 && pocRet[i] == POC_TAG_E && types[i] == CHAR_TYPE_OTHER; --i) \
+			pocRet[i] = POC_TAG_B;}
 
 void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
         vector<string>& segment){
@@ -625,6 +628,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
 
         //no check if the POC tag is B
         if(tagEScore <= 0.5){
+        	BACK_FIX_END_TAG
             pocRet[index] = POC_TAG_B;
             wordLen = 1;
             #ifdef USE_STRTRIE
@@ -647,6 +651,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
 					pocRet[index] = POC_TAG_E;
             	else
             	{
+            		BACK_FIX_END_TAG
             		pocRet[index] = POC_TAG_B;
             		strTrie.firstSearch(curPtr);
             		wordLen = 1;
@@ -661,7 +666,8 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
             }
             else
             {
-                strTrie.firstSearch(curPtr);
+            	BACK_FIX_END_TAG
+            	strTrie.firstSearch(curPtr);
                 pocRet[index] = POC_TAG_B;
                 wordLen = 1;
             }
@@ -671,6 +677,8 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
 
     pocinner::combinePOCToWord(words, n, pocRet, segment);
 }
+
+#undef BACK_FIX_END_TAG
 
 void SegTagger::initialize(){
     if(POC_INIT_FLAG)

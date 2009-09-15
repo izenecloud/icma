@@ -48,6 +48,44 @@ namespace
     const char* OPTION_DICT = "--dict";
 }
 
+vector<string> testSrcVec;
+
+void loadSpecialSentence(string& inout)
+{
+	if(inout.find("@@") == 0)
+	{
+		if(testSrcVec.empty()){
+			const char* testFile = "/home/vernkin/temp/cmac/icwb2/icwb_test.gb18030";
+			ifstream in(testFile);
+			if(!in){
+				cout<<"[Error] Cannot open test file "<<testFile<<endl;
+				inout = "";
+				return;
+			}
+
+			string line;
+			while(!in.eof())
+			{
+				getline(in, line);
+				testSrcVec.push_back(line);
+			}
+
+			in.close();
+		}
+
+		int lineNo = atoi(inout.substr(2).data());
+		if(lineNo < 1 || lineNo > testSrcVec.size())
+		{
+			cout<<"[Error] Valid Line Number is 1 to "<<testSrcVec.size()<<endl;
+			inout = "";
+			return;
+		}
+
+		inout = testSrcVec[lineNo-1];
+		return;
+	}
+}
+
 /**
  * Analyze a sentence.
  */
@@ -60,7 +98,10 @@ void testWithSentence(Analyzer* analyzer)
     cout << "please input sentence ended with newline:" << endl;
     while(getline(cin, line))
     {
-        s.setString(line.c_str());
+    	loadSpecialSentence(line);
+    	if(line.empty())
+    		continue;
+    	s.setString(line.c_str());
 
         int result = analyzer->runWithSentence(s);
         if(result != 1)
@@ -114,6 +155,8 @@ void testWithSentence(Analyzer* analyzer)
     }
 }
 
+
+
 /**
  * Analyze a string.
  */
@@ -125,7 +168,10 @@ void testWithString(Analyzer* analyzer)
     string line;
     while(getline(cin, line))
     {
-        cout << endl << "result:" << endl << analyzer->runWithString(line.c_str()) << endl;
+    	loadSpecialSentence(line);
+    	if(line.empty())
+    	    continue;
+    	cout << endl << "result:" << endl << analyzer->runWithString(line.c_str()) << endl;
         cout << endl << "please input string ended with newline:" << endl;
     }
 }
@@ -253,7 +299,7 @@ int main(int argc, char* argv[])
 
     //check whether exist pos model
     ifstream posIn((cate + ".model").data());
-    if(posIn)
+    if(posIn && optionIndex != 2 )
     {
     	posIn.close();
     	knowledge->loadPOSModel(cate.data());
