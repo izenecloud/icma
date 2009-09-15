@@ -42,6 +42,10 @@
 /** Print the detail in the SegTagger*/
 //#define DEBUG_POC_TAGGER
 
+#ifdef DEBUG_POC_TAGGER
+	//#define DEBUG_POC_TAGGER_TRIE
+#endif
+
 #include <iostream>
 
 #endif	/* _CMACCONFIG_H */

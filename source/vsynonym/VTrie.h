@@ -13,7 +13,7 @@
 
 using namespace std;
 
-#define DEBUGP
+//#define DEBUGP
 
 #ifndef _VTRIE_H
 #define	_VTRIE_H
@@ -160,7 +160,7 @@ public:
      * \return return 0 if insert fails
      */
     int insert( const char* key, VTrieNode* node ){
-        //remaining length of the key
+    	//remaining length of the key
         size_t remainLen = strlen(key);
         ensureDataLength(remainLen);
 
@@ -179,9 +179,9 @@ public:
                         + VTCHILDS_L + VTPTR_L * VTRIE_CODE[(unsigned char)*key]);
         if(!*childPtr){
             *childPtr = (size_t)(endPtr_ - data_);
-            //if(VTRIE_CODE[(unsigned char)*key] == 254){
-            //    cout<<"Create "<<(uint8_t*)childPtr - data_ <<endl;
-            //}
+			#ifdef DEBUGP
+				cout<<"Create "<<(uint8_t*)childPtr - data_ <<endl;
+			#endif
             appendLeafNode(key, node);
             return 1;
         }
@@ -215,7 +215,7 @@ public:
 
                     uint8_t* nStart = endPtr_;
                     *childPtr = (vtptr_t)(nStart - data_);
-                    //copy the same begining
+                    //copy the same beginning
                     memcpy(nStart, nodeStart, copyLen);
                     //new same path status byte
                     *nStart = entryNum;
@@ -461,6 +461,10 @@ public:
             dataPtr = data_ + node->offset;
         }
 
+		#ifdef DEBUGP
+			cout<<"Compare Value Bit: ("<<(unsigned int)(uint8_t)ch<<" == "<<(unsigned int)*dataPtr <<
+				") = "<<((uint8_t)ch == *dataPtr)<<" at "<<(unsigned int)(dataPtr - data_)<<endl;
+		#endif
         if((uint8_t)ch == *dataPtr){
             node->data = *reinterpret_cast<int*>(dataPtr+1);
         }else{
@@ -578,9 +582,17 @@ private:
     inline void copyLeafNodeValue(uint8_t* dataPtr, const char* key, VTrieNode* node){
         while(*key){
             *dataPtr = (uint8_t)*key++;
+			#ifdef DEBUGP
+				cout<<"Set Ptr "<< (unsigned int)(*dataPtr)<<" at "
+					<<(unsigned int)(dataPtr-data_)<<endl;
+			#endif
             dataPtr += VTENTRY_L;
         }
         *reinterpret_cast<int*>(dataPtr-VALUE_L) = node->data;
+		#ifdef DEBUGP
+			cout<<"Copy value at "<<(unsigned int)(dataPtr-data_ - VALUE_L)
+				<<" with "<<*reinterpret_cast<int*>(dataPtr-VALUE_L)<<endl;
+		#endif
         //with no child status
         *dataPtr++ = 0;
         node->moreLong = false;
@@ -643,7 +655,7 @@ private:
 
         uint16_t nMinMod = 1 + getModMinSize(keyVec);
         if(minMod == nMinMod){
-            cout<<"same mod "<<minMod<<endl;
+            //cout<<"same mod "<<minMod<<endl;
             for(size_t i=0; i<keyVec.size(); ++i){
                 cout<<keyVec[i]<<",";
             }

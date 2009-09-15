@@ -330,9 +330,7 @@ bool CMA_ME_Knowledge::appendWordPOS(string& line){
     if(!n){
         return false;
     }
-    string word = tokens[0];
-    replaceAll(word, "_", " ");
-
+    string& word = tokens[0];
     if(blackWords_.find(word) != blackWords_.end())
     {
     	return false;

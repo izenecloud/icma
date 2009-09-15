@@ -265,20 +265,24 @@ public:
      * string is the combination of the previous strings and p
      */
     bool search(const char *p){
-        //cout<<"To search "<<p<<endl;
+		#ifdef DEBUG_POC_TAGGER_TRIE
+			cout<<"To search "<<p<<"("<<strlen(p)<<")"<<endl;
+		#endif
+
         if(!completeSearch)
             return false;        
         
         while(node.moreLong && *p){
             trie->find(*p, &node);
+            //cout<<"finding,"<<node<<endl;
             ++p;
         }
 
         //the node.data can be negative (as no pos tags)
         completeSearch = !(*p) && (node.data || node.moreLong);
-
-        //cout<<"isEnd="<<!(*p)<<",data="<<node.data<<",moreLong="<<node.moreLong<<endl;
-
+		#ifdef DEBUG_POC_TAGGER_TRIE
+			cout<<"isEnd="<<!(*p)<<",data="<<node.data<<",moreLong="<<node.moreLong<<endl;
+		#endif
         return completeSearch;
     }
 
@@ -401,6 +405,11 @@ void SegTagger::preProcess(vector<string>& words, uint8_t* tags)
 			if(strTrie.exists())
 				maxLastIdx = idx;
 		}
+
+		#ifdef DEBUG_POC_TAGGER_TRIE
+			cout<<"Loop A Circle, begin with " << words[start] <<": start="<<start
+				<<",maxLastIdx="<<maxLastIdx<<endl;
+		#endif
 
 		// exists word begin with start index and length at least MIN_PRE_WORD_LEN
 		if((maxLastIdx - start) >= MIN_PRE_WORD_LEN)
@@ -645,7 +654,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
                 cout<<"Search StrVTrie "<<strTrie.completeSearch<<endl;
             #endif
 
-            if(tagEScore >= eScore_){
+            if(tagEScore >= eScore_ || types[index] != CHAR_TYPE_OTHER){
                 ++wordLen;
             	if(types[index] != CHAR_TYPE_OTHER || wordLen < MAX_PROP_WORD_LEN || strTrie.completeSearch)
 					pocRet[index] = POC_TAG_E;
