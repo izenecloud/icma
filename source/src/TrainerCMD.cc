@@ -41,11 +41,11 @@ void beginTrain(string pMateFile, string cateFile, string enc,
 }
 
 void printTainerUsage(){
-    cout<<"SYNOPSIS\n     ./cmactrainer mateFile cateFile [encoding] [posDelimiter] "<<
+    cout<<"SYNOPSIS\n     ./cmactrainer modelPath cateFile [encoding] [posDelimiter] "<<
     		"[pos | poc | pos+poc] [large-corpus]"<<endl;
     cout<<"Description"<<endl;
-    cout<<"   mateFile is the material file, it should be in the form "<<
-            "word1/pos1 word2/pos2 word3/pos3 ..."<<endl;
+    cout<<"   modelPath is the path of the directory what will contains all the model, like "<<
+            "poc.model, sys.dic and so on."<<endl;
     cout<<"   cateFile is the category file, there are several files are "<<
             "created after the training, and with cateFile as the prefix, "<<
             "prefix should contains both path and name, such /dir1/dir2/n1"<<endl;

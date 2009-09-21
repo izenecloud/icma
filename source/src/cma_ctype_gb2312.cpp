@@ -127,7 +127,7 @@ namespace gb2312type{
      * Whether it is letter in any cases
      */
     inline bool isAbsLetter(const unsigned char* uc){
-        if(uc[0] < 0x80)
+    	if(uc[0] < 0x80)
         {
             if(isalpha(uc[0])) //A-Za-z
                 return true; // check letter by std library

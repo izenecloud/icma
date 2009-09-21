@@ -49,32 +49,36 @@ namespace
 }
 
 vector<string> testSrcVec;
+bool srcVecLoadError = false;
 
 void loadSpecialSentence(string& inout)
 {
-	if(inout.find("@@") == 0)
-	{
-		if(testSrcVec.empty()){
-			const char* testFile = "/home/vernkin/temp/cmac/icwb2/icwb_test.gb18030";
-			ifstream in(testFile);
-			if(!in){
-				cout<<"[Error] Cannot open test file "<<testFile<<endl;
-				inout = "";
-				return;
-			}
-
-			string line;
-			while(!in.eof())
-			{
-				getline(in, line);
-				testSrcVec.push_back(line);
-			}
-
-			in.close();
+	if(!srcVecLoadError && testSrcVec.empty()){
+		const char* testFile = "/home/vernkin/temp/cmac/icwb2/icwb_test.gb18030";
+		ifstream in(testFile);
+		if(!in){
+			cout<<"[Error] Cannot open test file "<<testFile<<endl;
+			inout = "";
+			srcVecLoadError = true;
+			return;
 		}
 
+		string line;
+		while(!in.eof())
+		{
+			getline(in, line);
+			testSrcVec.push_back(line);
+		}
+
+		in.close();
+	}
+
+	if(inout.find("@@") == 0)
+	{
+
+
 		int lineNo = atoi(inout.substr(2).data());
-		if(lineNo < 1 || lineNo > testSrcVec.size())
+		if(lineNo < 1 || lineNo > (int)testSrcVec.size())
 		{
 			cout<<"[Error] Valid Line Number is 1 to "<<testSrcVec.size()<<endl;
 			inout = "";
@@ -82,6 +86,33 @@ void loadSpecialSentence(string& inout)
 		}
 
 		inout = testSrcVec[lineNo-1];
+		return;
+	}
+
+	if(inout.find("!!") == 0)
+	{
+		string dest = "";
+		for(size_t i=2; i<inout.length(); ++i)
+		{
+			if(inout[i] != ' ')
+				dest.append(inout.substr(i, 1));
+		}
+
+		if(dest.empty())
+		{
+			inout = "";
+			return;
+		}
+
+		inout = "";
+		int len = (int)testSrcVec.size();
+		for(int i=0; i<len; ++i)
+		{
+			string& line = testSrcVec[i];
+			if(line.find(dest) != line.npos)
+				inout.append(line);
+		}
+
 		return;
 	}
 }
@@ -244,17 +275,14 @@ int main(int argc, char* argv[])
     CMA_Factory* factory = CMA_Factory::instance();
     Analyzer* analyzer = factory->createAnalyzer();
 
-    // no POS output
-    analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
-
     Knowledge* knowledge = factory->createKnowledge();
 
     // set default dictionary file
-    const char* sysdict = 0;
+    const char* modelPath = 0;
 #if defined(_WIN32) && !defined(__CYGWIN__)
-    sysdict = "../db/icwb/gb18030/icwbc";
+    modelPath = "../db/icwb/gb18030/";
 #else
-    sysdict = "../db/icwb/gb18030/icwbc";
+    modelPath = "../db/icwb/gb18030/";
 #endif
 
     switch(optionIndex)
@@ -267,7 +295,7 @@ int main(int argc, char* argv[])
         // command option: "--sentence N-best --dict DICT_PATH"
         if(argc == 5 && ! strcmp(argv[3], OPTION_DICT))
         {
-            sysdict = argv[4];
+        	modelPath = argv[4];
         }
         break;
 
@@ -275,7 +303,7 @@ int main(int argc, char* argv[])
         // command option: "--string --dict DICT_PATH"
         if(argc == 4 && ! strcmp(argv[2], OPTION_DICT))
         {
-            sysdict = argv[3];
+        	modelPath = argv[3];
         }
         break;
 
@@ -283,7 +311,7 @@ int main(int argc, char* argv[])
         // command option: "--stream INPUT OUTPUT --dict DICT_PATH"
         if(argc == 6 && ! strcmp(argv[4], OPTION_DICT))
         {
-            sysdict = argv[5];
+        	modelPath = argv[5];
         }
         break;
 
@@ -292,46 +320,22 @@ int main(int argc, char* argv[])
         exit(1);
     }
 
-    // load dictioanry files
-    string cate = sysdict;
-    string poc_mate = cate + "-poc";
-    knowledge->loadStatModel(poc_mate.data());
-
-    //check whether exist pos model
-    ifstream posIn((cate + ".model").data());
-    if(posIn && optionIndex != 2 )
-    {
-    	posIn.close();
-    	knowledge->loadPOSModel(cate.data());
-    	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 1);
-    	cout<<"Found POS model, output include POS information!"<<endl;
-    }
-    else
-    {
-    	cout<<"Cannot found POS model, ignore POS output "<<endl;
-    	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
-    }
-
-    knowledge->loadUserDict((cate+".dic").data());
-
-    knowledge->setEncodeType(Knowledge::ENCODE_TYPE_GB18030);
-
     // set encoding type from the dictionary path
-    string sysdictStr(sysdict);
-    size_t last = sysdictStr.find_last_of('/');
-    size_t first = sysdictStr.find_last_of('/', last-1);
-    string encodeStr = sysdictStr.substr(first+1, last-first-1);
-    Knowledge::EncodeType encode = Knowledge::decodeEncodeType(encodeStr.c_str());
-    if(encode != Knowledge::ENCODE_TYPE_NUM)
-    {
-        cout << "set encoding type: " << encodeStr << endl;
-        knowledge->setEncodeType(encode);
-    }
+    string modelPathStr(modelPath);
+    if(modelPathStr[ modelPathStr.length() -  1] != '/' )
+    	modelPathStr += "/";
+    size_t last = modelPathStr.find_last_of('/');
+    size_t first = modelPathStr.find_last_of('/', last-1);
+    string encodeStr = modelPathStr.substr(first+1, last-first-1);
+
+    knowledge->loadModel( encodeStr.data(), modelPath );
 
     // set knowledge
     analyzer->setKnowledge(knowledge);
 
-
+    // disable POS output for runWithStream
+    if( optionIndex == 2 )
+    	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
 
     switch(optionIndex)
     {

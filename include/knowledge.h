@@ -105,6 +105,21 @@ public:
      */
     static Knowledge::EncodeType decodeEncodeType(const char* encType);
 
+    /**
+     * Auto load POS model, Stat Model and System Dictionaries.
+     * Encoding must be set here.
+     * \encoding like gb18030 and utf8
+     * \modelPath the directory that contains all the models
+     * \return whether perform success
+     */
+    virtual int loadModel(const char* encoding, const char* modelPath) = 0;
+
+    /**
+     * Whether contains POS model
+     * \return true if contains POS model
+     */
+    virtual bool isSupportPOS() const = 0;
+
 private:
     /** character encode type */
     EncodeType encodeType_;

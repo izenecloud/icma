@@ -14,6 +14,25 @@ using std::string;
 namespace cma
 {
 
+/**
+ * Get a string in lower alphabets.
+ * \param s the original string
+ * \return the converted string with lower alphabets. For example, "gb2312" is returned when "GB2312" is input.
+ */
+string toLower(const char* s) {
+    string str(s);
+    for(size_t i=0; i<str.size(); ++i)
+    {
+        char c = str[i];
+        if((c >= 'A') && (c <= 'Z'))
+        {
+            c += 'a' - 'A';
+            str[i] = c;
+        }
+    }
+    return str;
+}
+
 Knowledge::Knowledge()
     : encodeType_(ENCODE_TYPE_GB2312)
 {
@@ -34,16 +53,16 @@ Knowledge::EncodeType Knowledge::getEncodeType() const
 }
 
 Knowledge::EncodeType Knowledge::decodeEncodeType(const char* encType){
-    string enc(encType);
-	if(enc == "gb2312" || enc == "GB2312")
+    string enc = toLower(encType);
+	if(enc == "gb2312" || enc == "gb 2312")
     {
         return Knowledge::ENCODE_TYPE_GB2312;
     }
-    else if(enc == "big5" || enc == "BIG5")
+    else if(enc == "big5" || enc == "big 5")
     {
         return Knowledge::ENCODE_TYPE_BIG5;
     }
-    else if(enc == "gb18030" || enc == "GB18030")
+    else if(enc == "gb18030" || enc == "gb 18030")
     {
         return Knowledge::ENCODE_TYPE_GB18030;
     }

@@ -98,7 +98,7 @@ void get_pos_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
     posinner::get_pos_zh_scontext_1(words, tag_1, tag_2, (int)i, context, wtype);
 }
 
-void pos_train(const char* file, const string& cateFile, Knowledge::EncodeType encType,
+void pos_train(const char* file, const string& modelPath, Knowledge::EncodeType encType,
         string posDelimiter, bool isLargeCorpus,
         const char* extractFile, string method, size_t iters,float gaussian){
       TrainerData data(get_pos_zh_scontext, encType, posDelimiter);
@@ -108,7 +108,7 @@ void pos_train(const char* file, const string& cateFile, Knowledge::EncodeType e
     	  data.cutoff_ = 10;
     	  data.rareCutoff_ = 5;
       }
-      train(&data, file, cateFile, extractFile, method, iters, gaussian, true);
+      train(&data, file, modelPath, extractFile, method, iters, gaussian, true);
 }
 
 
@@ -373,6 +373,8 @@ double POSTagger::tag_word_best_1(vector<string>& words, vector<string>& poses,
 		case CMA_WType::WORD_TYPE_DATE:
 			pos = datePOS;
 			return 1.0;
+		default:
+			break;
     }
 
 	vector<string> context;

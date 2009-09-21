@@ -45,8 +45,8 @@ void get_poc_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
  * Training the POC Maxent model
  *
  * \param file the source file, with formate "word1/tag1 word2/tag2 ..."
- * \param cateFile the cateFile (include the path) is the prefix of all the file
- *    that created while training
+ * \param modelPath is the path of the directory that contains all the model, like
+		poc.model, sys.dic and so on.
  * \param encType the encoding type, default is gb18030
  * \param extractFile if set, save the training data to the extractFile and exit
  * \param iters how many iterations are required for training[default=15]
@@ -54,7 +54,7 @@ void get_poc_zh_scontext(vector<string>& words, vector<string>& tags, size_t i,
  * \param gaussian apply Gaussian penality when training [default=0.0]
  * \param isPOS if true, output the tag dictioanry
  */
-void poc_train(const char* file, const string& cateName,
+void poc_train(const char* file, const string& modelPath,
         Knowledge::EncodeType encType = Knowledge::ENCODE_TYPE_GB18030,
         string pocDelimiter = "/", bool isLargeCorpus = false,
         const char* extractFile = 0, string method = "gis", size_t iters = 15,

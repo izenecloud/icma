@@ -86,16 +86,14 @@ namespace gb18030type{
     /**
      * Whether it is digit in any cases
      */
-    inline bool isAbsDigit(const unsigned char* uc){
-        if((uc[0] >= 0x30 && uc[0] <= 0x39) //0123456789
+    inline bool isAbsDigit(const unsigned char* uc, unsigned int value){
+    	if((uc[0] >= 0x30 && uc[0] <= 0x39) //0123456789
             || (uc[0] == 0x25) //%
             || (uc[0] == 0xa3 && uc[1] >= 0xb0 && uc[1] <= 0xb9)) //０１２３４５６７８９
             return true;
-
         if(uc[0] < 0x80)
             return false;
 
-        unsigned short value = uc[0] << 8 | uc[1];
         switch(value)
         {
             case 0xa1f0: //○
@@ -118,6 +116,20 @@ namespace gb18030type{
         return false;
     }
 
+    inline bool isAbsDigitUnit(unsigned int value){
+        switch(value)
+        {
+            case 0xcaae: case 0xb0d9: case 0xc7a7: case 0xcdf2: case 0xd2da: //十百千万亿
+            case 0xc866: //萬
+            case 0xd8a6: //卅
+            case 0xd8a5: //廿
+            case 0x837c: //億
+                return true;
+
+        }
+        return false;
+    }
+
     /**
      * Whether it is space in any cases
      */
@@ -136,7 +148,7 @@ namespace gb18030type{
      * Whether it is letter in any cases
      */
     inline bool isAbsLetter(const unsigned char* uc){
-        if(uc[0] < 0x80)
+    	if(uc[0] < 0x80)
         {
             if(isalpha(uc[0])) //A-Za-z
                 return true; // check letter by std library
@@ -155,10 +167,9 @@ namespace gb18030type{
     /**
      * Whether it is date in any cases
      */
-    inline bool isAbsDate(const unsigned char* uc){
+    inline bool isAbsDate(const unsigned char* uc, unsigned int value){
         if(uc[0] < 0x80)
             return false;
-        unsigned short value = uc[0] << 8 | uc[1];
         switch(value)
         {
             case 0xc4ea: case 0xd4c2: case 0xc8d5: //年月日
@@ -233,25 +244,27 @@ CharType CMA_CType_GB18030::getCharType(const char* p, CharType preType,
     const unsigned char* nextUc = (const unsigned char*)nextP;
 
     unsigned int value = getEncodeValue(p);
+    unsigned int nextValue = nextP ? getEncodeValue(nextP) : 0;
+
 
     switch(value){
         case DOT:
         case DOT_1:
         case DOT_2:
             if( nextUc && (preType == CHAR_TYPE_LETTER || preType == CHAR_TYPE_NUMBER)
-                    && (isAbsLetter(nextUc) || isAbsDigit(nextUc)) )
+                    && (isAbsLetter(nextUc) || isAbsDigit(nextUc, nextValue)) )
                 return CHAR_TYPE_LETTER;
             return CHAR_TYPE_PUNC;
 
         case COMMA:
-            if( nextUc && preType == CHAR_TYPE_NUMBER && isAbsDigit(nextUc) )
+            if( nextUc && preType == CHAR_TYPE_NUMBER && isAbsDigit(nextUc, nextValue) )
                 return CHAR_TYPE_LETTER;
             return CHAR_TYPE_PUNC;
 
         case HYPHEN:
         case HYPHEN_1:
            if( nextUc && (preType == CHAR_TYPE_LETTER || preType == CHAR_TYPE_NUMBER)
-                    && (isAbsLetter(nextUc) || isAbsDigit(nextUc)) )
+                    && (isAbsLetter(nextUc) || isAbsDigit(nextUc, nextValue)) )
                 return CHAR_TYPE_LETTER;
             return CHAR_TYPE_PUNC;
 
@@ -260,16 +273,14 @@ CharType CMA_CType_GB18030::getCharType(const char* p, CharType preType,
         case DIAN_CH_1:
         case CHENG_CH:
         case BAN_CH:
-            if( nextUc && preType == CHAR_TYPE_NUMBER && isAbsDigit(nextUc) )
+            if( nextUc && preType == CHAR_TYPE_NUMBER && isAbsDigit(nextUc, nextValue) )
                 return CHAR_TYPE_NUMBER;
             break;
 
         case FEN_CH:
             // x分之x
-            if(nextUc && nextUc[0] >= 0x80){
-                unsigned short nextValue = nextUc[0] << 8 | nextUc[1];
-                if(nextValue == ZHI_CH)
-                    return CHAR_TYPE_NUMBER;
+            if(nextValue == ZHI_CH){
+            	return CHAR_TYPE_NUMBER;
             }
             break;
 
@@ -281,11 +292,20 @@ CharType CMA_CType_GB18030::getCharType(const char* p, CharType preType,
             break;
 
         case DI_ZH:
+        	if(preType != CHAR_TYPE_NUMBER && nextUc && isAbsDigit(nextUc, nextValue))
+        	{
+        		return CHAR_TYPE_NUMBER;
+        	}
+        	break;
+
         case SHU_ZH:
         case SHANG_ZH:
-        	if(isAbsDigit(nextUc))
-        		return CHAR_TYPE_NUMBER;
-        	break;
+        	if(preType != CHAR_TYPE_NUMBER && nextUc && isAbsDigitUnit(nextValue))
+			{
+				return CHAR_TYPE_NUMBER;
+			}
+			break;
+
     }
 
 
@@ -293,7 +313,7 @@ CharType CMA_CType_GB18030::getCharType(const char* p, CharType preType,
     if(isAbsLetter(uc))
         return CHAR_TYPE_LETTER;
 
-    if(isAbsDigit(uc))
+    if(isAbsDigit(uc, value))
         return CHAR_TYPE_NUMBER;
 
     if(isAbsPunt(uc))
@@ -303,7 +323,7 @@ CharType CMA_CType_GB18030::getCharType(const char* p, CharType preType,
         return CHAR_TYPE_PUNC; //return punctuation here
 
     //other constraint to check day?
-    if(isAbsDate(uc)){
+    if(isAbsDate(uc, value)){
         if(preType == CHAR_TYPE_NUMBER)
             return CHAR_TYPE_DATE;
         return CHAR_TYPE_OTHER;

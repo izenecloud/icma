@@ -11,16 +11,13 @@
 
 
 #include "CMA_ME_Knowledge.h"
+#include "CMABasicTrainer.h"
 #include "strutil.h"
 
 #include <assert.h>
 using namespace std;
 
 namespace cma{
-
-vector<string> ENCODING_VEC;
-
-bool ENC_VEC_INIT_FLAG = false;
 
 inline bool fileExists(const char* path)
 {
@@ -35,7 +32,6 @@ inline bool fileExists(const char* path)
 
 CMA_ME_Knowledge::CMA_ME_Knowledge()
 		: segT_(0), posT_(0),vsynC_(0),trie_(new VTrie), posTable_(new POSTable){
-    CMA_ME_Knowledge::initialize();
 }
 
 CMA_ME_Knowledge::~CMA_ME_Knowledge(){
@@ -91,7 +87,7 @@ int CMA_ME_Knowledge::loadStatModel(const char* cateName){
     segT_ = new SegTagger(cateStr, trie_);
 
     //try to load black words here
-    string blackWordFile = cateStr.substr(0, cateStr.length() - 4) + ".black";
+    string blackWordFile = cateStr.substr(0, cateStr.length() - 3) + "blackwords";
     ifstream bwIn(blackWordFile.data());
     if(bwIn)
 	{
@@ -173,7 +169,7 @@ int CMA_ME_Knowledge::loadUserDict_(const char* fileName){
 	ifstream in(fileName);
     if(!in)
     	return 0;
-    cout<<"load user dic "<<fileName<<endl;
+    cout<<"Load User Dic "<<fileName<<endl;
     string line;
     while(!in.eof()){
         getline(in, line);
@@ -253,6 +249,39 @@ int CMA_ME_Knowledge::encodeSystemDict(const char* txtFileName,
     return 1;
 }
 
+int CMA_ME_Knowledge::loadModel(const char* encoding, const char* modelPath)
+{
+	//set encoding
+	Knowledge::EncodeType encode = Knowledge::decodeEncodeType(encoding);
+	assert(encode != Knowledge::ENCODE_TYPE_NUM);
+	setEncodeType(encode);
+
+	assert(modelPath);
+	string path = formatModelPath(modelPath);
+
+	// load the STAT model
+	loadStatModel( ( path + "poc").data() );
+
+	// load the POS model
+	ifstream posIn( ( path + "pos.model").data() );
+	if(posIn)
+	{
+		posIn.close();
+		loadPOSModel( ( path + "pos" ).data() );
+	}
+
+	//TODO here have to change to load system dictionary
+	// load the system dictionaries
+	loadUserDict( ( path + "sys.dic").data() );
+
+	return 1;
+}
+
+bool CMA_ME_Knowledge::isSupportPOS() const
+{
+	return posT_;
+}
+
 SegTagger* CMA_ME_Knowledge::getSegTagger() const{
     return segT_;
 }
@@ -303,17 +332,6 @@ bool CMA_ME_Knowledge::isStopWord(const string& word){
 
 VTrie* CMA_ME_Knowledge::getTrie(){
     return trie_;
-}
-
-void CMA_ME_Knowledge::initialize(){
-    if(ENC_VEC_INIT_FLAG)
-        return;
-
-    ENC_VEC_INIT_FLAG = true;
-    ENCODING_VEC.resize(ENCODE_TYPE_NUM + 1);
-    ENCODING_VEC[ENCODE_TYPE_GB2312] = "gb2312";
-    ENCODING_VEC[ENCODE_TYPE_BIG5] = "big5";
-    ENCODING_VEC[ENCODE_TYPE_GB18030] = "gb18030";
 }
 
 int CMA_ME_Knowledge::loadConfig(const char* fileName)

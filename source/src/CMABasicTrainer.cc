@@ -22,6 +22,25 @@ typedef boost::tokenizer <boost::char_separator<char>,
 
 const boost::char_separator<char> UNIT_SEP(" ");
 
+string formatModelPath( const char* in )
+{
+	string path(in);
+
+	//adjust the model path
+	char* pathPtr = (char*)path.data();
+	while(*pathPtr)
+	{
+		if(*pathPtr == '\\')
+			*pathPtr = '/';
+		++pathPtr;
+	}
+
+	if(path[path.length()-1] != '/')
+		path += "/";
+
+	return path;
+}
+
 /**
  * Here take posDelimiter as '/' <BR>
  * split out word and pos/poc in s into two separate lists.<br>
@@ -253,37 +272,38 @@ void cutoff_feature(TrainerData* data){
     data->featDict_ = tmp;
 }
 
-void train(TrainerData* data, const char* file, const string cateName,
+void train(TrainerData* data, const char* file, const string modelPath,
         const char* extractFile, string method, size_t iters, float gaussian,
         bool isPOS){
-
+	string path = formatModelPath(modelPath.data());
+	string unitName = isPOS ? "pos" : "poc";
     //First pass: gather word frequency information {{{
-    cout<<"First pass: gather word frequency information"<<endl;
+    cout<<"First Step: Gather word frequency information"<<endl;
     gather_word_freq(data, file);
     #ifdef DEBUG_TRAINING
-        string wordFreqFile = cateName + ".wordfreq";
+        string wordFreqFile = path + "." + unitName + ".wordfreq";
         save_word_freq(data, wordFreqFile.data());
     #endif
     // }}}
 
     //Second pass: gather features and tag dict {{{
-    cout<<"Second pass: gather features and tag dict to be used in tagger"<<endl;
+    cout<<"Second Step: Gather features and tag dict to be used in tagger"<<endl;
     extract_feature(data, file, gather_feature);
     cutoff_feature(data);
     #ifdef DEBUG_TRAINING
-        string featureFile = cateName + ".features";
-        save_features(data, featureFile.data());
-        string tagFile = cateName + ".dic";
+        string featureFile = path + "." + unitName + ".features";
+        save_features( data, featureFile.data() );
+        string tagFile = path + "." + unitName + ".tag";
         save_tag_dict(data, tagFile.data());
     #else
         if(isPOS){
-            string sysDictFile = cateName + ".dic";
+            string sysDictFile = path + "sys.dic";
             save_tag_dict(data, sysDictFile.data());
         }
     #endif
         
     if(isPOS){
-        string posFile = cateName + ".pos";
+        string posFile = path + "pos.pos";
         save_pos_list(data, posFile.data());
     }
 
@@ -300,14 +320,14 @@ void train(TrainerData* data, const char* file, const string cateName,
     }
 
     // Third pass:training ME model...{{{
-    cout<<"Third pass:training ME model..."<<endl;
+    cout<<"Third Step: Training ME model..."<<endl;
     data->me.begin_add_event();
     extract_feature(data, file, add_event);
     data->me.end_add_event(data->evCutoff_);
 
     data->me.train(iters, method, gaussian);
     cout<<"training finished"<<endl;
-    string destFile = cateName + ".model";
+    string destFile = path + unitName + ".model";
     cout<<"saving tagger model to "<<destFile<<endl;
     data->me.save(destFile);
     // }}}

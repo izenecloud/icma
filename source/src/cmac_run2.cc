@@ -83,22 +83,20 @@ int main(int argc, char* argv[])
 	CMA_Factory* factory = CMA_Factory::instance();
 
 	// set default dictionary file
-	const char* sysdict = 0;
+	const char* modelPath = 0;
 #if defined(_WIN32) && !defined(__CYGWIN__)
-	sysdict = "../db/icwb/gb18030/icwbc";
+	modelPath = "../db/icwb/gb18030/";
 #else
-	sysdict = "../db/icwb/gb18030/icwbc";
+	modelPath = "../db/icwb/gb18030/";
 #endif
+
+string encoding = "gb18030";
 	
 #ifdef USE_SAME_KNOWLEDGE
 	// create instances
 	Knowledge* knowledge = factory->createKnowledge();
-	// load dictioanry files
-	string cate = sysdict;
-	string poc_mate = cate + "-poc";	
-	knowledge->loadStatModel(poc_mate.data());
-	knowledge->loadUserDict((cate+".dic").data());
-	knowledge->setEncodeType(Knowledge::ENCODE_TYPE_GB18030);
+	// load model files
+	knowledge->loadModel( encoding.data(), modelPath );
 #endif
 
 
@@ -121,12 +119,8 @@ int main(int argc, char* argv[])
 
 	#ifndef USE_SAME_KNOWLEDGE
 		Knowledge* knowledge = factory->createKnowledge();
-		// load dictioanry files
-		string cate = sysdict;
-		string poc_mate = cate + "-poc";
-		knowledge->loadStatModel(poc_mate.data());
-		knowledge->loadUserDict((cate+".dic").data());
-		knowledge->setEncodeType(Knowledge::ENCODE_TYPE_GB18030);
+		// load model files
+		knowledge->loadModel( encoding.data(), modelPath );
 	#endif
 
 	#ifdef USE_SAME_ANALYZER

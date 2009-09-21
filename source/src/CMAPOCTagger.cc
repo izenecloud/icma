@@ -332,7 +332,7 @@ void get_poc_zh_context(vector<string>& words, vector<string>& tags, size_t i,
     pocinner::get_poc_zh_context_1(words, 0, i, context, ctype);
 }
 
-void poc_train(const char* file, const string& cateName, Knowledge::EncodeType encType,
+void poc_train(const char* file, const string& modelPath, Knowledge::EncodeType encType,
         string pocDelimiter,  bool isLargeCorpus,
         const char* extractFile, string method, size_t iters,float gaussian)
 {
@@ -344,7 +344,7 @@ void poc_train(const char* file, const string& cateName, Knowledge::EncodeType e
 		  data.cutoff_ = 10;
 		  data.rareCutoff_ = 5;
       }
-      train(&data, file, cateName, extractFile, method, iters, gaussian, false);
+      train(&data, file, modelPath, extractFile, method, iters, gaussian, false);
 }
 
 
@@ -581,7 +581,7 @@ void SegTagger::tag_file(const char* inFile, const char* outFile,
 }
 
 #define BACK_FIX_END_TAG if(!strTrie.exists()){ \
-		for(int i=index-1; i>=0 && pocRet[i] == POC_TAG_E && types[i] == CHAR_TYPE_OTHER; --i) \
+		for(size_t i=index-1; i>lastExistIndex && types[i] == CHAR_TYPE_OTHER; --i) \
 			pocRet[i] = POC_TAG_B;}
 
 void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
@@ -595,6 +595,8 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
         preProcess(words, pocRet);
     #endif
 
+    size_t lastExistIndex = 0;
+
     for(size_t index=0; index<n; ++index){
         if( pocRet[index] != POC_TAG_INIT )
         {
@@ -602,6 +604,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
         			pocRet[index + 1] == POC_TAG_INIT)
         	{
         		wordLen = 1;
+        		lastExistIndex = index;
         		strTrie.firstSearch(words[ index ].c_str());
         	}
 
@@ -639,6 +642,10 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
         if(tagEScore <= 0.5){
         	BACK_FIX_END_TAG
             pocRet[index] = POC_TAG_B;
+        	lastExistIndex = index;
+			#ifdef DEBUG_POC_TAGGER
+				cout<<"BACK_FIX_END_TAG by tagEScore"<<endl;
+			#endif
             wordLen = 1;
             #ifdef USE_STRTRIE
 				strTrie.firstSearch(curPtr);
@@ -650,8 +657,11 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
             pocRet[index] = POC_TAG_E;
         #else
             strTrie.search(curPtr);
+            if(strTrie.exists())
+            	lastExistIndex = index;
             #ifdef DEBUG_POC_TAGGER
-                cout<<"Search StrVTrie "<<strTrie.completeSearch<<endl;
+                cout<<"Search StrVTrie, finish: "<<strTrie.completeSearch<<
+					", exists: "<<strTrie.exists()<<endl;
             #endif
 
             if(tagEScore >= eScore_ || types[index] != CHAR_TYPE_OTHER){
@@ -660,10 +670,15 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
 					pocRet[index] = POC_TAG_E;
             	else
             	{
+					#ifdef DEBUG_POC_TAGGER
+						cout<<"BACK_FIX_END_TAG"<<endl;
+					#endif
             		BACK_FIX_END_TAG
             		pocRet[index] = POC_TAG_B;
-            		strTrie.firstSearch(curPtr);
+            		lastExistIndex = index;
             		wordLen = 1;
+
+            		strTrie.firstSearch(curPtr);
             	}
             	continue;
             }
@@ -675,10 +690,16 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
             }
             else
             {
+				#ifdef DEBUG_POC_TAGGER
+							cout<<"BACK_FIX_END_TAG"<<endl;
+				#endif
             	BACK_FIX_END_TAG
-            	strTrie.firstSearch(curPtr);
-                pocRet[index] = POC_TAG_B;
+
+            	pocRet[index] = POC_TAG_B;
+                lastExistIndex = index;
                 wordLen = 1;
+
+                strTrie.firstSearch(curPtr);
             }
         #endif
 

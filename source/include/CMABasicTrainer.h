@@ -28,6 +28,14 @@ typedef void(*context_t)(vector<string>&, vector<string>&, size_t,
         bool, vector<string>&, CMA_CType *ctype);
 
 /**
+ * Format the the modelPath, replace '/' with '\', and add
+ * appending '\'.
+ * \param in origin modelPath
+ * \return modelPath after be formatted
+ */
+string formatModelPath( const char* in );
+
+/**
  * \brief The class to hold data required in the training process
  * 
  * The class to hold data required in the training process
@@ -201,15 +209,15 @@ void cutoff_feature(TrainerData* data);
  *
  * \param data the TrainerData to hold the data used in the training process.
  * \param file the source file, with formate "word1/tag1 word2/tag2 ..."
- * \param cateFile the cateFile (include the path) is the prefix of all the file
- *    that created while training
+ * \param modelPath is the path of the directory that contains all the model, like
+		poc.model, sys.dic and so on.
  * \param extractFile if set, save the training data to the extractFile and exit
  * \param iters how many iterations are required for training[default=15]
  * \param method the method of Maximum Model Parameters Estimation [default = gis]
  * \param gaussian apply Gaussian penality when training [default=0.0]
  * \param isPOS if true, output the tag dictioanry
  */
-void train(TrainerData* data, const char* file, const string cateFile,
+void train(TrainerData* data, const char* file, const string modelPath,
         const char* extractFile = 0, string method = "gis",
         size_t iters = 15, float gaussian = 0.0f, bool isPOS = true);
 

@@ -26,8 +26,6 @@ using namespace std;
 
 namespace cma{
 
-extern vector<string> ENCODING_VEC;
-
 /**
  * \brief Knowledge for the CMAC
  *
@@ -111,6 +109,21 @@ public:
     virtual int encodeSystemDict(const char* txtFileName, const char* binFileName);
 
     /**
+     * Auto load POS model, Stat Model and System Dictionaries.
+     * Encoding must be set here.
+     * \encoding like gb18030 and utf8
+     * \modelPath the directory that contains all the models
+     * \return whether perform success
+     */
+    virtual int loadModel(const char* encoding, const char* modelPath);
+
+    /**
+     * Whether contains POS model
+     * \return true if contains POS model
+     */
+    virtual bool isSupportPOS() const;
+
+    /**
      * Get the segment tagger.
      * \return pointer to tagger
      */
@@ -133,11 +146,6 @@ public:
      * \return the VTrie that Knowledge holds
      */
     VTrie* getTrie();
-
-    /**
-     * Invoked by the CMA_ME_Knowledge Constructor
-     */
-    static void initialize();
 
     /**
      * Get POSTable

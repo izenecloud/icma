@@ -38,3 +38,6 @@ TARGET_LINK_LIBRARIES(t_pfr_preprocess ${LIBS_CORPUS})
 
 ADD_EXECUTABLE(fetch_suspected_word fetch_suspected_word.cc)
 TARGET_LINK_LIBRARIES(fetch_suspected_word ${LIBS_CMAC})
+
+ADD_EXECUTABLE(fetch_special_word fetch_special_word.cc)
+TARGET_LINK_LIBRARIES(fetch_special_word ${LIBS_CMAC})

@@ -257,6 +257,10 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
 
     void CMA_ME_Analyzer::setKnowledge(Knowledge* pKnowledge) {
         knowledge_ = (CMA_ME_Knowledge*) pKnowledge;
+        // close the POS output automatically
+        if(!knowledge_->isSupportPOS())
+        	setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
+
         ctype_ = CMA_CType::instance(knowledge_->getEncodeType());
         if(knowledge_->getPOSTagger())
             knowledge_->getPOSTagger()->setCType(ctype_);
