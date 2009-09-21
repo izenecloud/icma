@@ -152,6 +152,13 @@ public:
      */
     const POSTable* getPOSTable() const;
 
+    /**
+     * Get System Property
+     * \param key the name of that system property
+     * \return if not exists, return 0.
+     */
+    const string* getSystemProperty( const string& key );
+
 private:
     /** Input maybe a line or a word*/
     string readEncryptLine(FILE *in);
@@ -206,6 +213,9 @@ private:
 
     /** The word in blackWords_ won't be added to dictionary */
     set<string> blackWords_;
+
+    /** The System Config (from poc.config) */
+    map<string, string> sysConfig_;
 };
 
 }

@@ -190,29 +190,34 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
             vector<vector<string> > pos;
             analysis(line.data(), N, pos, segment, printPOS);
 
-            if (printPOS) {
+            if (printPOS)
+            {
                 vector<string>& best = segment[0].first;
                 vector<string>& bestPOS = pos[0];
-                size_t size = best.size();
-                for (size_t i = 0; i < size; ++i) {
+                int maxIndex = (int)best.size();
+                for (int i = 0; i < maxIndex; ++i) {
                     if(knowledge_->isStopWord(best[i]))
                     	continue;
                 	out << best[i] << posDelimiter_ << bestPOS[i] << wordDelimiter_;
                 }
 
                 if (remains)
-                    out << endl;
+                    out << sentenceDelimiter_ << endl;
                 else
                     break;
-            } else {
+            }
+            else
+            {
                 vector<string>& best = segment[0].first;
-                size_t size = best.size();
-                for (size_t i = 0; i < size; ++i) {
-                    out << best[i] << wordDelimiter_;
+                int maxIndex = (int)best.size();
+                for (int i = 0; i < size; ++i) {
+                	if(knowledge_->isStopWord(best[i]))
+                		continue;
+                	out << best[i] << wordDelimiter_;
                 }
 
                 if (remains)
-                    out << endl;
+                	out << sentenceDelimiter_ << endl;
                 else
                     break;
             }
@@ -232,7 +237,8 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
         analysis(inStr, 1, pos, segment, printPOS);
 
         strBuf_.clear();
-        if (printPOS) {
+        if (printPOS)
+        {
             vector<string>& best = segment.begin()->first;
             vector<string>& bestPOS = pos[0];
             size_t size = best.size();
@@ -242,7 +248,9 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
             	strBuf_.append(best[i]).append(posDelimiter_).
                       append(bestPOS[i]).append(wordDelimiter_);
             }
-        } else {
+        }
+        else
+        {
             vector<string>& best = segment[0].first;
             size_t size = best.size();
             for (size_t i = 0; i < size; ++i) {
@@ -266,6 +274,19 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
             knowledge_->getPOSTagger()->setCType(ctype_);
         if(knowledge_->getSegTagger())
             knowledge_->getSegTagger()->setCType(ctype_);
+
+        const string* val = knowledge_->getSystemProperty( "pos_delimiter" );
+        if( val )
+        	setPOSDelimiter( val->data() );
+
+        val = knowledge_->getSystemProperty( "word_delimiter" );
+		if( val )
+			setWordDelimiter( val->data() );
+
+		val = knowledge_->getSystemProperty( "sentence_delimiter" );
+		if( val )
+			setSentenceDelimiter( val->data() );
+
     }
 
     void CMA_ME_Analyzer::splitSentence(const char* paragraph, std::vector<Sentence>& sentences)

@@ -16,6 +16,10 @@ const char* DEFAULT_POS_DELIMITER = "/";
 
 /** the default delimiter between the pairs (word and POS tag) in the output result of \e runWithString() and \e runWithStream() */
 const char* DEFAULT_WORD_DELIMITER = "  ";
+
+/** the default value of the sentence delimiter */
+const char* DEFAULT_SENTENCE_DEMIMITER = "";
+
 }
 
 namespace cma
@@ -24,7 +28,8 @@ namespace cma
 Analyzer::Analyzer()
     : options_(OPTION_TYPE_NUM),
     posDelimiter_(DEFAULT_POS_DELIMITER),
-    wordDelimiter_(DEFAULT_WORD_DELIMITER)
+    wordDelimiter_(DEFAULT_WORD_DELIMITER),
+    sentenceDelimiter_(DEFAULT_SENTENCE_DEMIMITER)
 {
     options_[OPTION_TYPE_POS_TAGGING] = 1; // tag part-of-speech tags defaultly
     options_[OPTION_TYPE_NBEST] = 1; // set the default number of candidate results of runWithSentence()
@@ -68,6 +73,16 @@ void Analyzer::setWordDelimiter(const char* delimiter)
 const char* Analyzer::getWordDelimiter() const
 {
     return wordDelimiter_;
+}
+
+void Analyzer::setSentenceDelimiter(const char* delimiter)
+{
+    sentenceDelimiter_ = delimiter;
+}
+
+const char* Analyzer::getSentenceDelimiter() const
+{
+    return sentenceDelimiter_;
 }
 
 } // namespace cma

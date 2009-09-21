@@ -270,6 +270,9 @@ int CMA_ME_Knowledge::loadModel(const char* encoding, const char* modelPath)
 		loadPOSModel( ( path + "pos" ).data() );
 	}
 
+	// load the configuration
+	loadConfig( ( path + "poc.config" ).data() );
+
 	//TODO here have to change to load system dictionary
 	// load the system dictionaries
 	loadUserDict( ( path + "sys.dic").data() );
@@ -336,7 +339,7 @@ VTrie* CMA_ME_Knowledge::getTrie(){
 
 int CMA_ME_Knowledge::loadConfig(const char* fileName)
 {
-    bool r = posTable_->loadConfig(fileName);
+    bool r = loadConfig0( fileName, sysConfig_, true);
 
     return r ? 1 : 0;
 }
@@ -405,6 +408,7 @@ bool CMA_ME_Knowledge::loadConfig0(const char *filename, map<string, string>& ma
 	  return false;
 
   std::string line;
+  CMA_CType* ctype = CMA_CType::instance( getEncodeType() );
   while (std::getline(ifs, line)) {
     if (!line.size() ||
         (line.size() && (line[0] == ';' || line[0] == '#'))) continue;
@@ -415,12 +419,94 @@ bool CMA_ME_Knowledge::loadConfig0(const char *filename, map<string, string>& ma
     size_t s1, s2;
     for (s1 = pos+1; s1 < line.size() && isspace(line[s1]); s1++);
     for (s2 = pos-1; static_cast<long>(s2) >= 0 && isspace(line[s2]); s2--);
-    //const std::string value = line.substr(s1, line.size() - s1);
-    //const std::string key   = line.substr(0, s2 + 1);
-    map[line.substr(0, s2 + 1)] = line.substr(s1, line.size() - s1);
+
+    string key   = trimLeft(line.substr(0, s2 + 1));
+
+    string valueTmp = line.substr(s1, line.size() - s1);
+    const char* valuePtr = valueTmp.data();
+    int len = static_cast<int>( valueTmp.length() );
+
+    //analysis the value
+    string value;
+    int i = 0;
+    while( i < len )
+    {
+    	unsigned short bytes = ctype->getByteCount( valuePtr + i );
+    	if( bytes == 0 )
+    		break;
+
+    	if(bytes == 1)
+    	{
+    		if(valuePtr[i] == '\\')
+    		{
+    			++i;
+
+    			switch( valuePtr[i] )
+    			{
+    			case '\'':
+					value += "\'";
+					break;
+    			case '\"':
+					value += "\"";
+					break;
+    			case '\\':
+					value += "\\";
+					break;
+    			case '0':
+					value += "\0";
+					break;
+    			case 'a':
+					value += "\a";
+					break;
+    			case 'b':
+					value += "\b";
+					break;
+    			case 'f':
+					value += "\f";
+					break;
+    			case 'n':
+					value += "\n";
+					break;
+    			case 'r':
+					value += "\r";
+					break;
+    			case 't':
+					value += "\t";
+					break;
+    			case 'v':
+					value += "v";
+					break;
+    			case ' ':
+					value += " ";
+					break;
+    			default:
+    				cerr<<"Unknown Escape Sequence "<<valuePtr[i]<<endl;
+    				return 0;
+    			}
+    		}
+    		else
+    			value += valueTmp.substr(i, 1);
+    	}
+    	else
+    	{
+    		value += valueTmp.substr(i, bytes);
+    	}
+    	i += bytes;
+    }
+
+    map[key] = value;
+    //cout<<"Get "<<key<<" = "<<value<<endl;
   }
 
   return true;
+}
+
+const string* CMA_ME_Knowledge::getSystemProperty( const string& key )
+{
+	map<string, string>::iterator itr = sysConfig_.find( key );
+	if( itr == sysConfig_.end() )
+		return 0;
+	return &itr->second;
 }
 
 }

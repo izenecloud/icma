@@ -146,6 +146,18 @@ public:
      */
     const char* getWordDelimiter() const;
 
+    /**
+     * Set the delimiter between sentences, default is empty.
+     * \param delimiter the delimiter between the pairs (word and POS tag) in the output result
+     */
+    void setSentenceDelimiter(const char* delimiter);
+
+    /**
+     * Get the delimiter between sentences.
+     * \return the delimiter between the pairs (word and POS tag) in the output result
+     */
+    const char* getSentenceDelimiter() const;
+
 protected:
     /** option values */
     std::vector<double> options_;
@@ -155,6 +167,9 @@ protected:
 
     /** the delimiter between the pairs (word and POS tag) in the output result */
     const char* wordDelimiter_;
+
+    /** the delimiter between sentences */
+    const char* sentenceDelimiter_;
 };
 
 } // namespace cma
