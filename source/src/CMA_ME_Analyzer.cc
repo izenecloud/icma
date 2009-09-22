@@ -210,7 +210,7 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
             {
                 vector<string>& best = segment[0].first;
                 int maxIndex = (int)best.size();
-                for (int i = 0; i < size; ++i) {
+                for (int i = 0; i < maxIndex; ++i) {
                 	if(knowledge_->isStopWord(best[i]))
                 		continue;
                 	out << best[i] << wordDelimiter_;
@@ -510,7 +510,7 @@ namespace meanainner{
                 }
             } else {
                 #ifdef DEBUG_POC_TAGGER
-                    cout<<"Get Speical String "<<ct.getSpecialStr()<<endl;
+                    cout<<"Get Special String "<<ct.getSpecialStr()<<endl;
                 #endif
                 for (int i = 0; i < N; ++i) {
                     segment[i].first.push_back(ct.getSpecialStr());

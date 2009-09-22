@@ -41,3 +41,6 @@ TARGET_LINK_LIBRARIES(fetch_suspected_word ${LIBS_CMAC})
 
 ADD_EXECUTABLE(fetch_special_word fetch_special_word.cc)
 TARGET_LINK_LIBRARIES(fetch_special_word ${LIBS_CMAC})
+
+ADD_EXECUTABLE(t_tinyxml t_tinyxml.cc)
+TARGET_LINK_LIBRARIES(t_tinyxml ${LIBS_XML})
