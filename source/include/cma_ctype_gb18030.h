@@ -40,8 +40,8 @@ public:
      * \param nextP the pointer of the next character, it can be 0
      * \return the character type.
      */
-    virtual CharType getCharType(const char* p, CharType preType,
-            const char* nextP) const;
+    //virtual CharType getCharType(const char* p, CharType preType,
+    //        const char* nextP) const;
 
     /**
      * Check whether is white-space character.
@@ -49,14 +49,14 @@ public:
      * \param p pointer to the character string
      * \return true for white-space character, false for non white-space character.
      */
-    virtual bool isSpace(const char* p) const;
+    //virtual bool isSpace(const char* p) const;
 
     /**
      * Check whether is a separator of sentence.
      * \param p pointer to the character string
      * \return true for separator, false for non separator.
      */
-    virtual bool isSentenceSeparator(const char* p) const;
+    //virtual bool isSentenceSeparator(const char* p) const;
 
 protected:
     /**

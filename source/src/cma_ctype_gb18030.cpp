@@ -198,6 +198,7 @@ CMA_CType_GB18030::CMA_CType_GB18030()
 {
 }
 
+
 unsigned int CMA_CType_GB18030::getByteCount(const char* p) const
 {
     assert(p);
@@ -233,6 +234,7 @@ unsigned int CMA_CType_GB18030::getByteCount(const char* p) const
     return 1;
 }
 
+/*
 CharType CMA_CType_GB18030::getCharType(const char* p, CharType preType,
         const char* nextP) const
 {
@@ -251,6 +253,8 @@ CharType CMA_CType_GB18030::getCharType(const char* p, CharType preType,
         case DOT:
         case DOT_1:
         case DOT_2:
+        case HYPHEN:
+        case HYPHEN_1:
             if( nextUc && (preType == CHAR_TYPE_LETTER || preType == CHAR_TYPE_NUMBER)
                     && (isAbsLetter(nextUc) || isAbsDigit(nextUc, nextValue)) )
                 return CHAR_TYPE_LETTER;
@@ -258,13 +262,6 @@ CharType CMA_CType_GB18030::getCharType(const char* p, CharType preType,
 
         case COMMA:
             if( nextUc && preType == CHAR_TYPE_NUMBER && isAbsDigit(nextUc, nextValue) )
-                return CHAR_TYPE_LETTER;
-            return CHAR_TYPE_PUNC;
-
-        case HYPHEN:
-        case HYPHEN_1:
-           if( nextUc && (preType == CHAR_TYPE_LETTER || preType == CHAR_TYPE_NUMBER)
-                    && (isAbsLetter(nextUc) || isAbsDigit(nextUc, nextValue)) )
                 return CHAR_TYPE_LETTER;
             return CHAR_TYPE_PUNC;
 
@@ -380,6 +377,6 @@ bool CMA_CType_GB18030::isSentenceSeparator(const char* p) const
     }
 
     return false;
-}
+}*/
 
 } // namespace cma

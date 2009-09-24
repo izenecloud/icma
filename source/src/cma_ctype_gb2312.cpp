@@ -192,6 +192,7 @@ unsigned int CMA_CType_GB2312::getByteCount(const char* p) const
     return 2; // encoding in GB2312
 }
 
+/*
 CharType CMA_CType_GB2312::getCharType(const char* p, CharType preType,
         const char* nextP) const
 {
@@ -320,5 +321,5 @@ bool CMA_CType_GB2312::isSentenceSeparator(const char* p) const
 
     return false;
 }
-
+*/
 } // namespace cma

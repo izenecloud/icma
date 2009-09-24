@@ -190,6 +190,7 @@ unsigned int CMA_CType_Big5::getByteCount(const char* p) const
     return 2; // encoding in Big5
 }
 
+/*
 CharType CMA_CType_Big5::getCharType(const char* p, CharType preType,
         const char* nextP) const
 {
@@ -318,6 +319,6 @@ bool CMA_CType_Big5::isSentenceSeparator(const char* p) const
 
     return false;
 }
-
+*/
 
 } // namespace cma

@@ -615,7 +615,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
         #endif
             
         #ifdef DEBUG_POC_TAGGER
-            cout<<"Check "<<index<<":"<<words[index]<<endl;
+            cout<<"Check "<<index<<":"<<words[index]<<", type="<<CharTypeArray[types[index]]<<endl;
         #endif
 
         vector<string> context(POC_TEMPLATE_SIZE);
@@ -718,6 +718,8 @@ void SegTagger::initialize(){
     #ifdef USE_BE_TYPE_FEATURE
     CharTypeArray[CHAR_TYPE_INIT] = "I";
     CharTypeArray[CHAR_TYPE_NUMBER] = "N";
+    // It is OK to use the same name as CHAR_TYPE_NUMBER
+    CharTypeArray[CHAR_TYPE_CHARDIGIT] = "N";
     CharTypeArray[CHAR_TYPE_PUNC] = "P";
     CharTypeArray[CHAR_TYPE_SPACE] = "S";
     CharTypeArray[CHAR_TYPE_DATE] = "D";

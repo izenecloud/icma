@@ -57,6 +57,7 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
                 break;
 
             case CHAR_TYPE_NUMBER:
+            case CHAR_TYPE_CHARDIGIT:
                 switch(curType){
                     case CHAR_TYPE_LETTER:
                         preType = CHAR_TYPE_LETTER;
@@ -70,7 +71,7 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
                 break;
 
             case CHAR_TYPE_LETTER:
-                if(curType == CHAR_TYPE_NUMBER)
+                if(curType == CHAR_TYPE_NUMBER || curType == CHAR_TYPE_CHARDIGIT)
                     continue;              
                 assert(false && "unexpected arrive here (pre is Letter and cur is non-digit)");
                 break;
@@ -85,6 +86,7 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
         case CHAR_TYPE_LETTER:
             return WORD_TYPE_LETTER;
         case CHAR_TYPE_NUMBER:
+        case CHAR_TYPE_CHARDIGIT:
             return WORD_TYPE_NUMBER;
         default:
             assert(false && "unexpected arrive here");
@@ -122,6 +124,7 @@ CMA_WType::WordType CMA_WType::getWordType(CharType* types, size_t begin, size_t
                 break;
 
             case CHAR_TYPE_NUMBER:
+            case CHAR_TYPE_CHARDIGIT:
                 switch(curType){
                     case CHAR_TYPE_LETTER:
                         preType = CHAR_TYPE_LETTER;
@@ -135,7 +138,7 @@ CMA_WType::WordType CMA_WType::getWordType(CharType* types, size_t begin, size_t
                 break;
 
             case CHAR_TYPE_LETTER:
-                if(curType == CHAR_TYPE_NUMBER)
+                if(curType == CHAR_TYPE_NUMBER || curType == CHAR_TYPE_CHARDIGIT)
                     continue;
                 assert(false && "unexpected arrive here (pre is Letter and cur is non-digit)");
                 break;
@@ -150,6 +153,7 @@ CMA_WType::WordType CMA_WType::getWordType(CharType* types, size_t begin, size_t
         case CHAR_TYPE_LETTER:
             return WORD_TYPE_LETTER;
         case CHAR_TYPE_NUMBER:
+        case CHAR_TYPE_CHARDIGIT:
             return WORD_TYPE_NUMBER;
         default:
             assert(false && "unexpected arrive here");

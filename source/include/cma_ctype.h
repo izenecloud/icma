@@ -15,28 +15,10 @@ using std::string;
 #include "knowledge.h" // Knowledge::EncodeType
 #include "cmacconfig.h"
 
+#include "cma_ctype_core.h"
+
 namespace cma
 {
-
-/**
- * \brief Character type.
- *
- * Character type.
- */
-enum CharType
-{
-    CHAR_TYPE_INIT, ///< initial type, used to identify the type
-    
-    CHAR_TYPE_OTHER, ///< other character
-    
-    //special type have to put after CHAR_TYPE_OTHER
-    CHAR_TYPE_NUMBER, ///< digit character
-    CHAR_TYPE_PUNC, ///< puntuation character
-    CHAR_TYPE_SPACE, ///< space character, like ' '
-    CHAR_TYPE_DATE, ///< date character
-    CHAR_TYPE_LETTER, ///< letter character    
-    CHAR_TYPE_NUM
-};
 
 /**
  * \brief CMA_CType gives the character type information.
@@ -52,6 +34,13 @@ public:
      * \return the pointer to instance
      */
     static CMA_CType* instance(Knowledge::EncodeType type);
+
+    /**
+     * The naming in the poc.xml, include digit, chardigit, space, letter, punctuation
+     * \param noDefault if true, an assert error will occur
+     * \return if not found, return CHAR_TYPE_OTHER
+     */
+    static CharType getCharTypeByXmlName( const char* name, bool noDefault = false );
 
     /**
      * Destrucor
@@ -73,8 +62,8 @@ public:
      * \param nextP the pointer of the next character, it can be 0
      * \return the character type.
      */
-    virtual CharType getCharType(const char* p, CharType preType,
-            const char* nextP) const = 0;
+    CharType getCharType(const char* p, CharType preType,
+            const char* nextP) const;
 
     /**
      * Whether the p is a punctuation
@@ -104,14 +93,31 @@ public:
      * \param p pointer to the character string
      * \return true for white-space character, false for non white-space character.
      */
-    virtual bool isSpace(const char* p) const = 0;
+    bool isSpace(const char* p) const;
 
     /**
      * Check whether is a seperator of sentence.
      * \param p pointer to the character string
      * \return true for separator, false for non separator.
      */
-    virtual bool isSentenceSeparator(const char* p) const = 0;
+    bool isSentenceSeparator(const char* p) const;
+
+	/**
+	 * Load the poc.xml
+	 * \return 1 if load successfully
+	 */
+	int loadConfiguration( const char* file);
+
+private:
+	/** Character to types map */
+	map< CharValue, CharConditions > typeMap_;
+
+	/** Spaces Set */
+	set<CharValue> spaceSet_;
+
+	/** Sentence Separator Set */
+	set<CharValue> senSepSet_;
+
 };
 
 } // namespace cma

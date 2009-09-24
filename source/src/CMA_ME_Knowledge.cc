@@ -81,13 +81,23 @@ int CMA_ME_Knowledge::loadPOSModel(const char* cateName){
 }
 
 int CMA_ME_Knowledge::loadStatModel(const char* cateName){
-    assert(!segT_);
+	string cateStr(cateName);
 
-    string cateStr(cateName);
+	int ret = CMA_CType::instance( getEncodeType() )->loadConfiguration( (cateStr + ".xml" ).data() );
+	if( !ret )
+	{
+		cerr<<" Fail to load poc.xml, please check that file! "<<endl;
+		exit(1);
+		return 0;
+	}
+
+	assert(!segT_);
     segT_ = new SegTagger(cateStr, trie_);
 
     //try to load black words here
     string blackWordFile = cateStr.substr(0, cateStr.length() - 3) + "blackwords";
+
+
     ifstream bwIn(blackWordFile.data());
     if(bwIn)
 	{
