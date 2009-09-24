@@ -107,10 +107,10 @@ inline void get_poc_zh_context_1(vector<string>& words, CharType *types,
         context[++k] = "T0=" + CharTypeArray[ta[2]];
         context[++k] = "T+1=" + CharTypeArray[ta[3]];
 
-		#ifdef DEBUG_POC_TAGGER
+		/*#ifdef DEBUG_POC_TAGGER
         for(int jj=0;jj<4;++jj)
         	cout<<"special context "<<jj<<" : "<<context[jj]<<endl;
-		#endif
+		#endif*/
 
         return;
     }
@@ -598,7 +598,12 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
     size_t lastExistIndex = 0;
 
     for(size_t index=0; index<n; ++index){
-        if( pocRet[index] != POC_TAG_INIT )
+		#ifdef DEBUG_POC_TAGGER
+            cout << "Check " << index << ":" << words[index] << ", type = " <<
+				  CharTypeArray[types[index]]<<endl;
+        #endif
+
+    	if( pocRet[index] != POC_TAG_INIT )
         {
         	if( pocRet[index] == POC_TAG_B && index < n -1 &&
         			pocRet[index + 1] == POC_TAG_INIT)
@@ -614,10 +619,6 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
             const char* curPtr = words[ index ].c_str();
         #endif
             
-        #ifdef DEBUG_POC_TAGGER
-            cout<<"Check "<<index<<":"<<words[index]<<", type="<<CharTypeArray[types[index]]<<endl;
-        #endif
-
         vector<string> context(POC_TEMPLATE_SIZE);
         pocinner::get_poc_zh_context_1(words, types, index, context, ctype_);
 

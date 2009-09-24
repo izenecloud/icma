@@ -25,7 +25,7 @@
 			<char><![CDATA[日]]></char>
 			<condition>
 				<type>other</type>
-				<nextchar><![CDATA[圆元]]></nextchar>
+				<nextchar><![CDATA[圆元圓]]></nextchar>
 			</condition>
 		</rule>
 
@@ -33,7 +33,7 @@
 			<char><![CDATA[年]]></char>
 			<condition>
 				<type>other</type>
-				<nextchar><![CDATA[度代级後]]></nextchar>
+				<nextchar><![CDATA[度代级後初]]></nextchar>
 			</condition>
 		</rule>
 

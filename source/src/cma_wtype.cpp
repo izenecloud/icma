@@ -99,7 +99,7 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
 CMA_WType::WordType CMA_WType::getWordType(CharType* types, size_t begin, size_t size)
 {
 	CharType preType = begin > 0 ? types[begin-1] : CHAR_TYPE_INIT;
-	CharType curType;
+	CharType curType = CHAR_TYPE_INIT;
 	for(; begin < size; ++begin)
     {
         curType = types[begin];

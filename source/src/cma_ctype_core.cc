@@ -76,6 +76,7 @@ void Condition::setTypesArray( bool& isSegFlag, bool *noTypes, vector<CharType>&
 		for( vector<CharType>::iterator itr = forbidTypes.begin();
 				itr !=  forbidTypes.end(); ++itr )
 			noTypes[*itr] = true;
+		return;
 	}
 
 	// there are not empty, set the allowTypes first, then forbidTypes
