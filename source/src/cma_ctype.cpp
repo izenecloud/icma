@@ -250,7 +250,12 @@ void loadRule(const TiXmlNode* ruleNode, CTypeTokenizer& tokenizer, map< CharVal
 
 	//update the conditions
 	for( set<uint>::iterator itr = values.begin(); itr != values.end(); ++itr)
-		ret[ *itr ].addConditions( conds );
+	{
+		CharConditions& charCond = ret[ *itr ];
+		charCond.addConditions( conds );
+		if( charCond.baseType_ == CHAR_TYPE_INIT )
+			charCond.baseType_ = CHAR_TYPE_OTHER;
+	}
 }
 
 int CMA_CType::loadConfiguration( const char* file )

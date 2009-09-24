@@ -33,7 +33,7 @@
 			<char><![CDATA[年]]></char>
 			<condition>
 				<type>other</type>
-				<nextchar><![CDATA[度代级後初]]></nextchar>
+				<nextchar><![CDATA[度代级]]></nextchar>
 			</condition>
 		</rule>
 
@@ -41,7 +41,7 @@
 			<char><![CDATA[分]]></char>
 			<condition>
 				<type>other</type>
-				<nextchar><![CDATA[贝貝钱]]></nextchar>
+				<nextchar><![CDATA[贝貝钱钟步]]></nextchar>
 			</condition>
 			<condition>
 				<type>chardigit</type>
@@ -134,7 +134,7 @@
 			<condition>
 				<type>chardigit</type>
 				<pretype>chardigit</pretype>
-				<nonexttype>chardigit</nonexttype>
+				<nexttype>chardigit</nexttype>
 			</condition>
 		</rule>
 

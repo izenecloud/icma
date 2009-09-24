@@ -81,10 +81,11 @@ inline void get_poc_zh_context_1(vector<string>& words, CharType *types,
         }else{
             wa[j] = POC_BOUNDARY;
             #ifdef USE_BE_TYPE_FEATURE
-            if(preType == CHAR_TYPE_NUMBER || preType == CHAR_TYPE_LETTER)
+            if(preType == CHAR_TYPE_NUMBER || preType == CHAR_TYPE_LETTER
+            		|| preType == CHAR_TYPE_CHARDIGIT)
             	ta[j] = preType;
             else
-            	ta[j] = CHAR_TYPE_INIT;
+            	ta[j] = CHAR_TYPE_OTHER;
 
             #endif
         }
@@ -107,10 +108,10 @@ inline void get_poc_zh_context_1(vector<string>& words, CharType *types,
         context[++k] = "T0=" + CharTypeArray[ta[2]];
         context[++k] = "T+1=" + CharTypeArray[ta[3]];
 
-		/*#ifdef DEBUG_POC_TAGGER
+		#ifdef DEBUG_POC_TAGGER
         for(int jj=0;jj<4;++jj)
         	cout<<"special context "<<jj<<" : "<<context[jj]<<endl;
-		#endif*/
+		#endif
 
         return;
     }
@@ -599,7 +600,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
 
     for(size_t index=0; index<n; ++index){
 		#ifdef DEBUG_POC_TAGGER
-            cout << "Check " << index << ":" << words[index] << ", type = " <<
+            cout << "Check at " << index << ": " << words[index] << ", type = " <<
 				  CharTypeArray[types[index]]<<endl;
         #endif
 
@@ -645,7 +646,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
             pocRet[index] = POC_TAG_B;
         	lastExistIndex = index;
 			#ifdef DEBUG_POC_TAGGER
-				cout<<"BACK_FIX_END_TAG by tagEScore"<<endl;
+				cout<<"BACK_FIX_END_TAG by tagEScore <= 0.5 [1]"<<endl;
 			#endif
             wordLen = 1;
             #ifdef USE_STRTRIE
@@ -672,7 +673,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
             	else
             	{
 					#ifdef DEBUG_POC_TAGGER
-						cout<<"BACK_FIX_END_TAG"<<endl;
+						cout<<"BACK_FIX_END_TAG when tagEScore >= eScore_ [2]"<<endl;
 					#endif
             		BACK_FIX_END_TAG
             		pocRet[index] = POC_TAG_B;
@@ -692,7 +693,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
             else
             {
 				#ifdef DEBUG_POC_TAGGER
-							cout<<"BACK_FIX_END_TAG"<<endl;
+					cout<<"BACK_FIX_END_TAG when cannot complete search [3]"<<endl;
 				#endif
             	BACK_FIX_END_TAG
 

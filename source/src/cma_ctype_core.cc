@@ -163,10 +163,30 @@ bool CharConditions::addCondition( Condition& newCondition )
 	}
 
 	// add the CHAR_TYPE_OTHER at the begin of the conditions
-	if( newCondition.getType() == CHAR_TYPE_OTHER )
+	switch( newCondition.getType() )
+	{
+	case CHAR_TYPE_OTHER:
 		conditions_.insert( conditions_.begin(), newCondition );
-	else
+		break;
+
+	case CHAR_TYPE_DATE:
 		conditions_.push_back( newCondition );
+		break;
+
+	default:
+		// before the date
+		vector<Condition>::iterator itr = conditions_.begin();
+		while( true )
+		{
+			if( itr == conditions_.end() || itr->type_ == CHAR_TYPE_DATE )
+			{
+				conditions_.insert( itr, newCondition );
+				break;
+			}
+			++itr;
+		}
+		break;
+	}
 	++conditionSize_;
 	return true;
 }
