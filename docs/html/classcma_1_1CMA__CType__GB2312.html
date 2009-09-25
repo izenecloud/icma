@@ -45,12 +45,6 @@ Inheritance diagram for cma::CMA_CType_GB2312:</div>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType__GB2312.html#057ccee8e82b0a22a30b79fb2f059b8f">getByteCount</a> (const char *p) const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual CharType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType__GB2312.html#e0edf1c74d7a66ba6425b9010401456e">getCharType</a> (const char *p, CharType preType, const char *nextP) const </td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType__GB2312.html#b8545abe4e27b3701d27f0a1067d80bf">isSpace</a> (const char *p) const </td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType__GB2312.html#07cae6abcfed1aec270f81de6473c518">isSentenceSeparator</a> (const char *p) const </td></tr>
-
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="classcma_1_1CMA__CType__GB2312.html">CMA_CType_GB2312</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType__GB2312.html#f34c920bf4afbc1a764f97e8b8b6e8cd">instance</a> ()</td></tr>
 
@@ -76,7 +70,27 @@ Inheritance diagram for cma::CMA_CType_GB2312:</div>
 <div class="memdoc">
 
 <p>
-Avoid invoked directly 
+Get the character type. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>p</em>&nbsp;</td><td>pointer to the string to be checked </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>preType</em>&nbsp;</td><td>the chartype of the previous character </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>nextP</em>&nbsp;</td><td>the pointer of the next character, it can be 0 </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>the character type. Check whether is white-space character. White-space characters are " \t\n\v\f\r", and also space character in specific encoding. </dd></dl>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>p</em>&nbsp;</td><td>pointer to the character string </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>true for white-space character, false for non white-space character. Check whether is a separator of sentence. </dd></dl>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>p</em>&nbsp;</td><td>pointer to the character string </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>true for separator, false for non separator. Avoid invoked directly </dd></dl>
+
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
@@ -108,51 +122,6 @@ Get the byte count of the first character pointed by <em>p</em>, which character
 
 </div>
 </div><p>
-<a class="anchor" name="e0edf1c74d7a66ba6425b9010401456e"></a><!-- doxytag: member="cma::CMA_CType_GB2312::getCharType" ref="e0edf1c74d7a66ba6425b9010401456e" args="(const char *p, CharType preType, const char *nextP) const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">CharType cma::CMA_CType_GB2312::getCharType           </td>
-          <td>(</td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>p</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">CharType&nbsp;</td>
-          <td class="paramname"> <em>preType</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>nextP</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td> const<code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Get the character type. <dl compact><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>p</em>&nbsp;</td><td>pointer to the string to be checked </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>preType</em>&nbsp;</td><td>the chartype of the previous character </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>nextP</em>&nbsp;</td><td>the pointer of the next character, it can be 0 </td></tr>
-  </table>
-</dl>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd>the character type. </dd></dl>
-
-<p>Implements <a class="el" href="classcma_1_1CMA__CType.html#45412869e7ededc53dcc432d43d6a025">cma::CMA_CType</a>.</p>
-
-</div>
-</div><p>
 <a class="anchor" name="f34c920bf4afbc1a764f97e8b8b6e8cd"></a><!-- doxytag: member="cma::CMA_CType_GB2312::instance" ref="f34c920bf4afbc1a764f97e8b8b6e8cd" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -173,66 +142,10 @@ Create an instance of <em><a class="el" href="classcma_1_1CMA__CType__GB2312.htm
 
 </div>
 </div><p>
-<a class="anchor" name="07cae6abcfed1aec270f81de6473c518"></a><!-- doxytag: member="cma::CMA_CType_GB2312::isSentenceSeparator" ref="07cae6abcfed1aec270f81de6473c518" args="(const char *p) const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool cma::CMA_CType_GB2312::isSentenceSeparator           </td>
-          <td>(</td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>p</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td> const<code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Check whether is a separator of sentence. <dl compact><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>p</em>&nbsp;</td><td>pointer to the character string </td></tr>
-  </table>
-</dl>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd>true for separator, false for non separator. </dd></dl>
-
-<p>Implements <a class="el" href="classcma_1_1CMA__CType.html#d53b4e758dae5bc9718eea3f9e3988d8">cma::CMA_CType</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="b8545abe4e27b3701d27f0a1067d80bf"></a><!-- doxytag: member="cma::CMA_CType_GB2312::isSpace" ref="b8545abe4e27b3701d27f0a1067d80bf" args="(const char *p) const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool cma::CMA_CType_GB2312::isSpace           </td>
-          <td>(</td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>p</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td> const<code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Check whether is white-space character. White-space characters are " \t\n\v\f\r", and also space character in specific encoding. <dl compact><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>p</em>&nbsp;</td><td>pointer to the character string </td></tr>
-  </table>
-</dl>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd>true for white-space character, false for non white-space character. </dd></dl>
-
-<p>Implements <a class="el" href="classcma_1_1CMA__CType.html#355d9f93a23d8af65fe63018c0558d4c">cma::CMA_CType</a>.</p>
-
-</div>
-</div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
-<li>source/include/<a class="el" href="cma__ctype__gb2312_8h-source.html">cma_ctype_gb2312.h</a><li>source/src/<a class="el" href="cma__ctype__gb2312_8cpp.html">cma_ctype_gb2312.cpp</a></ul>
+<li>/home/vernkin/projects/chinese-ma-chen/source/include/<a class="el" href="cma__ctype__gb2312_8h-source.html">cma_ctype_gb2312.h</a><li>/home/vernkin/projects/chinese-ma-chen/source/src/<a class="el" href="cma__ctype__gb2312_8cpp.html">cma_ctype_gb2312.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:06 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

@@ -45,7 +45,7 @@ Inheritance diagram for cma::Knowledge:</div>
 <tr><td colspan="2"><br><h2>Public Types</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a> { <a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d763b86f1378cda2ae30f3690a8c67b0d">ENCODE_TYPE_GB2312</a>, 
 <a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfd187e4741157876b1a805c0c3ddec27">ENCODE_TYPE_BIG5</a>, 
-<a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dc1a4019681243fa73708e4879f3b951d">ENCODE_TYPE_UTF8</a>, 
+<a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d01479a3bd80149d4f5e89a50fc4122a0">ENCODE_TYPE_GB18030</a>, 
 <a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfeaa8f94b6c57c430302ea94c41b1d8a">ENCODE_TYPE_NUM</a>
  }</td></tr>
 
@@ -68,6 +68,13 @@ Inheritance diagram for cma::Knowledge:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1Knowledge.html#26dac4378bb4192a598118abdef70ad9">getEncodeType</a> () const </td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1Knowledge.html#ee11a77da864e824c55b9bf1b22c032c">loadModel</a> (const char *encoding, const char *modelPath)=0</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1Knowledge.html#bd68fed5c90c2e04facc6a760670b0a4">isSupportPOS</a> () const =0</td></tr>
+
+<tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1Knowledge.html#5b506216f981d35174af4e5066073275">decodeEncodeType</a> (const char *encType)</td></tr>
+
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 <a class="el" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a> manages the linguistic information for Chinese morphological analysis. <hr><h2>Member Enumeration Documentation</h2>
@@ -89,8 +96,8 @@ Encode type of characters. <dl compact><dt><b>Enumerator: </b></dt><dd>
 GB 2312 character type. </td></tr>
 <tr><td valign="top"><em><a class="anchor" name="2f725921dec755cdd496e81a95389f1dfd187e4741157876b1a805c0c3ddec27"></a><!-- doxytag: member="ENCODE_TYPE_BIG5" ref="2f725921dec755cdd496e81a95389f1dfd187e4741157876b1a805c0c3ddec27" args="" -->ENCODE_TYPE_BIG5</em>&nbsp;</td><td>
 Big 5 character type. </td></tr>
-<tr><td valign="top"><em><a class="anchor" name="2f725921dec755cdd496e81a95389f1dc1a4019681243fa73708e4879f3b951d"></a><!-- doxytag: member="ENCODE_TYPE_UTF8" ref="2f725921dec755cdd496e81a95389f1dc1a4019681243fa73708e4879f3b951d" args="" -->ENCODE_TYPE_UTF8</em>&nbsp;</td><td>
-UTF8 character type. </td></tr>
+<tr><td valign="top"><em><a class="anchor" name="2f725921dec755cdd496e81a95389f1d01479a3bd80149d4f5e89a50fc4122a0"></a><!-- doxytag: member="ENCODE_TYPE_GB18030" ref="2f725921dec755cdd496e81a95389f1d01479a3bd80149d4f5e89a50fc4122a0" args="" -->ENCODE_TYPE_GB18030</em>&nbsp;</td><td>
+GB18030 character type. </td></tr>
 <tr><td valign="top"><em><a class="anchor" name="2f725921dec755cdd496e81a95389f1dfeaa8f94b6c57c430302ea94c41b1d8a"></a><!-- doxytag: member="ENCODE_TYPE_NUM" ref="2f725921dec755cdd496e81a95389f1dfeaa8f94b6c57c430302ea94c41b1d8a" args="" -->ENCODE_TYPE_NUM</em>&nbsp;</td><td>
 the count of character types </td></tr>
 </table>
@@ -99,6 +106,37 @@ the count of character types </td></tr>
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
+<a class="anchor" name="5b506216f981d35174af4e5066073275"></a><!-- doxytag: member="cma::Knowledge::decodeEncodeType" ref="5b506216f981d35174af4e5066073275" args="(const char *encType)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> cma::Knowledge::decodeEncodeType           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>encType</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Get the encoding type by the encode type string<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>encType</em>&nbsp;</td><td>encode type string </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>assicated <a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> in the class <a class="el" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a> </dd></dl>
+
+<p>References <a class="el" href="knowledge_8h-source.html#l00082">ENCODE_TYPE_BIG5</a>, <a class="el" href="knowledge_8h-source.html#l00083">ENCODE_TYPE_GB18030</a>, and <a class="el" href="knowledge_8h-source.html#l00081">ENCODE_TYPE_GB2312</a>.</p>
+
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00262">cma::CMA_ME_Knowledge::loadModel()</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="7c89dffabc4e75961d760586db283d1d"></a><!-- doxytag: member="cma::Knowledge::encodeSystemDict" ref="7c89dffabc4e75961d760586db283d1d" args="(const char *txtFileName, const char *binFileName)=0" -->
 <div class="memitem">
 <div class="memproto">
@@ -155,7 +193,29 @@ Encode the system dictionary file from text to binary format. <dl compact><dt><b
 <p>
 Get the character encode type. <dl class="return" compact><dt><b>Returns:</b></dt><dd>the encode type </dd></dl>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00147">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00083">cma::CMA_ME_Knowledge::loadStatModel()</a>, and <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00266">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="bd68fed5c90c2e04facc6a760670b0a4"></a><!-- doxytag: member="cma::Knowledge::isSupportPOS" ref="bd68fed5c90c2e04facc6a760670b0a4" args="() const =0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool cma::Knowledge::isSupportPOS           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Whether contains POS model <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if contains POS model </dd></dl>
+
+<p>Implemented in <a class="el" href="classcma_1_1CMA__ME__Knowledge.html#85107400ebf7d621078103a76c586ca8">cma::CMA_ME_Knowledge</a>.</p>
 
 </div>
 </div><p>
@@ -187,6 +247,40 @@ Load the configuration file, which is in text format. This file contains the con
 
 </div>
 </div><p>
+<a class="anchor" name="ee11a77da864e824c55b9bf1b22c032c"></a><!-- doxytag: member="cma::Knowledge::loadModel" ref="ee11a77da864e824c55b9bf1b22c032c" args="(const char *encoding, const char *modelPath)=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual int cma::Knowledge::loadModel           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>encoding</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>modelPath</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Auto load POS model, Stat Model and System Dictionaries. Encoding must be set here.  like gb18030 and utf8  the directory that contains all the models <dl class="return" compact><dt><b>Returns:</b></dt><dd>whether perform success </dd></dl>
+
+<p>Implemented in <a class="el" href="classcma_1_1CMA__ME__Knowledge.html#a557407ae67263ecc163f3d199c8abed">cma::CMA_ME_Knowledge</a>.</p>
+
+<p>Referenced by <a class="el" href="SeggerCMD_8cc-source.html#l00007">beginSeg()</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="4ceb02d9154efd5bd8e35dfab9777644"></a><!-- doxytag: member="cma::Knowledge::loadPOSModel" ref="4ceb02d9154efd5bd8e35dfab9777644" args="(const char *binFileName)=0" -->
 <div class="memitem">
 <div class="memproto">
@@ -212,8 +306,6 @@ Load the model file in binary format, which contains statistical information for
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>0 for fail, 1 for success </dd></dl>
 
 <p>Implemented in <a class="el" href="classcma_1_1CMA__ME__Knowledge.html#29a87c6902ebaf8364fbee0e4aa20127">cma::CMA_ME_Knowledge</a>.</p>
-
-<p>Referenced by <a class="el" href="SeggerCMD_8cc-source.html#l00005">beginSeg()</a>.</p>
 
 </div>
 </div><p>
@@ -242,8 +334,6 @@ Load the model file in binary format, which contains statistical information for
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>0 for fail, 1 for success </dd></dl>
 
 <p>Implemented in <a class="el" href="classcma_1_1CMA__ME__Knowledge.html#cc8f15814d4e6a248f29636a29116756">cma::CMA_ME_Knowledge</a>.</p>
-
-<p>Referenced by <a class="el" href="SeggerCMD_8cc-source.html#l00005">beginSeg()</a>.</p>
 
 </div>
 </div><p>
@@ -329,8 +419,6 @@ Load the user dictionary file, which is in text format. <dl compact><dt><b>Param
 
 <p>Implemented in <a class="el" href="classcma_1_1CMA__ME__Knowledge.html#d0dac8d22ab4c3c97a281f26c95ee9e2">cma::CMA_ME_Knowledge</a>.</p>
 
-<p>Referenced by <a class="el" href="SeggerCMD_8cc-source.html#l00005">beginSeg()</a>.</p>
-
 </div>
 </div><p>
 <a class="anchor" name="199293f2ec784e7883805117e59b109c"></a><!-- doxytag: member="cma::Knowledge::setEncodeType" ref="199293f2ec784e7883805117e59b109c" args="(EncodeType type)" -->
@@ -356,14 +444,14 @@ Set the character encode type. If this function is not called, the default value
   </table>
 </dl>
 
-<p>Referenced by <a class="el" href="SeggerCMD_8cc-source.html#l00005">beginSeg()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00262">cma::CMA_ME_Knowledge::loadModel()</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
-<li>include/<a class="el" href="knowledge_8h-source.html">knowledge.h</a><li>source/src/<a class="el" href="knowledge_8cpp.html">knowledge.cpp</a></ul>
+<li>/home/vernkin/projects/chinese-ma-chen/include/<a class="el" href="knowledge_8h-source.html">knowledge.h</a><li>/home/vernkin/projects/chinese-ma-chen/source/src/<a class="el" href="knowledge_8cpp.html">knowledge.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:07 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

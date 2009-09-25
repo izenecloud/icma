@@ -1,12 +1,37 @@
-\section{source/src/cma\_\-ctype.cpp File Reference}
-\label{cma__ctype_8cpp}\index{source/src/cma\_\-ctype.cpp@{source/src/cma\_\-ctype.cpp}}
+\section{/home/vernkin/projects/chinese-ma-chen/source/src/cma\_\-ctype.cpp File Reference}
+\label{cma__ctype_8cpp}\index{/home/vernkin/projects/chinese-ma-chen/source/src/cma\_\-ctype.cpp@{/home/vernkin/projects/chinese-ma-chen/source/src/cma\_\-ctype.cpp}}
 CMA\_\-CType gives the character type information.  
 
 
 {\tt \#include \char`\"{}cma\_\-ctype.h\char`\"{}}\par
 {\tt \#include \char`\"{}cma\_\-ctype\_\-gb2312.h\char`\"{}}\par
 {\tt \#include \char`\"{}cma\_\-ctype\_\-big5.h\char`\"{}}\par
-{\tt \#include $<$cassert$>$}\par
+{\tt \#include \char`\"{}cma\_\-ctype\_\-gb18030.h\char`\"{}}\par
+{\tt \#include \char`\"{}tinyxml.h\char`\"{}}\par
+{\tt \#include \char`\"{}tokenizer.h\char`\"{}}\par
+{\tt \#include \char`\"{}strutil.h\char`\"{}}\par
+{\tt \#include $<$assert.h$>$}\par
+{\tt \#include $<$stdlib.h$>$}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+const char $\ast$ \textbf{cma::getTinyXmlText} (const TiXmlNode $\ast$textNode)\label{namespacecma_9e262f7d98782e77249652852109952a}
+
+\item 
+void \textbf{cma::loadCharsValue} (const char $\ast$str, CTypeTokenizer \&tokenizer, set$<$ CharValue $>$ \&ret)\label{namespacecma_ab115ac8f5f6e8aa470f025bf114773b}
+
+\item 
+void {\bf cma::loadTypes} (const char $\ast$typeStr, vector$<$ CharType $>$ \&ret)
+\item 
+void \textbf{cma::loadEntity} (const TiXmlNode $\ast$textNode, CTypeTokenizer \&tokenizer, CharType type, map$<$ CharValue, CharConditions $>$ \&ret)\label{namespacecma_a633d17ab2db100f6da72cf5736f8d45}
+
+\item 
+void \textbf{cma::loadCondition} (const TiXmlNode $\ast$condNode, CTypeTokenizer \&tokenizer, Condition \&ret)\label{namespacecma_fc9de2d3ab1659aa8e628b95a490270e}
+
+\item 
+void \textbf{cma::loadRule} (const TiXmlNode $\ast$ruleNode, CTypeTokenizer \&tokenizer, map$<$ CharValue, CharConditions $>$ \&ret)\label{namespacecma_fa2a411436584a8e37139dffd9f44c1a}
+
+\end{CompactItemize}
 
 
 \subsection{Detailed Description}

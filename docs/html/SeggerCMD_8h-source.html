@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Chinese&nbsp;Morphological&nbsp;Analyzer(Chen): source/include/SeggerCMD.h Source File</title>
+<title>Chinese&nbsp;Morphological&nbsp;Analyzer(Chen): /home/vernkin/projects/chinese-ma-chen/source/include/SeggerCMD.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 </head><body>
@@ -19,35 +19,34 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>source/include/SeggerCMD.h</h1><a href="SeggerCMD_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00170"></a>00170 <span class="preprocessor">#ifndef _SEGGERCMD_H</span>
-<a name="l00171"></a>00171 <span class="preprocessor"></span><span class="preprocessor">#define _SEGGERCMD_H</span>
-<a name="l00172"></a>00172 <span class="preprocessor"></span>
-<a name="l00173"></a>00173 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<h1>/home/vernkin/projects/chinese-ma-chen/source/include/SeggerCMD.h</h1><a href="SeggerCMD_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<a name="l00161"></a>00161 <span class="preprocessor">#ifndef _SEGGERCMD_H</span>
+<a name="l00162"></a>00162 <span class="preprocessor"></span><span class="preprocessor">#define _SEGGERCMD_H</span>
+<a name="l00163"></a>00163 <span class="preprocessor"></span>
+<a name="l00164"></a>00164 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00165"></a>00165 
+<a name="l00166"></a>00166 <span class="keyword">using namespace </span>std;
+<a name="l00167"></a>00167 
+<a name="l00168"></a>00168 <span class="preprocessor">#include "<a class="code" href="cma__factory_8h.html" title="CMA_Factory creates instances for Chinese morphological analysis.">cma_factory.h</a>"</span>
+<a name="l00169"></a>00169 <span class="preprocessor">#include "<a class="code" href="analyzer_8h.html" title="Analyzer executes the Chinese morphological analysis.">analyzer.h</a>"</span>
+<a name="l00170"></a>00170 <span class="preprocessor">#include "<a class="code" href="knowledge_8h.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">knowledge.h</a>"</span>
+<a name="l00171"></a>00171 <span class="preprocessor">#include "<a class="code" href="sentence_8h.html" title="Sentence saves the results of Chinese morphological analysis.">sentence.h</a>"</span>
+<a name="l00172"></a>00172 
+<a name="l00173"></a>00173 <span class="keyword">using namespace </span>cma;
 <a name="l00174"></a>00174 
-<a name="l00175"></a>00175 <span class="keyword">using namespace </span>std;
+<a name="l00175"></a>00175 <span class="preprocessor">#include "VTimer.h"</span>
 <a name="l00176"></a>00176 
-<a name="l00177"></a>00177 <span class="preprocessor">#include "<a class="code" href="cma__factory_8h.html" title="CMA_Factory creates instances for Chinese morphological analysis.">cma_factory.h</a>"</span>
-<a name="l00178"></a>00178 <span class="preprocessor">#include "<a class="code" href="analyzer_8h.html" title="Analyzer executes the Chinese morphological analysis.">analyzer.h</a>"</span>
-<a name="l00179"></a>00179 <span class="preprocessor">#include "<a class="code" href="knowledge_8h.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">knowledge.h</a>"</span>
-<a name="l00180"></a>00180 <span class="preprocessor">#include "<a class="code" href="sentence_8h.html" title="Sentence saves the results of Chinese morphological analysis.">sentence.h</a>"</span>
-<a name="l00181"></a>00181 <span class="preprocessor">#include "<a class="code" href="cma__ctype_8h.html" title="CMA_CType gives the character type information.">cma_ctype.h</a>"</span>
+<a name="l00180"></a>00180 <span class="keywordtype">void</span> beginSeg(<span class="keywordtype">string</span> mate, <span class="keywordtype">string</span> inFile, <span class="keywordtype">string</span> outFile, <span class="keywordtype">string</span> enc,
+<a name="l00181"></a>00181         <span class="keywordtype">string</span> posDelimiter);
 <a name="l00182"></a>00182 
-<a name="l00183"></a>00183 <span class="keyword">using namespace </span>cma;
+<a name="l00183"></a>00183 <span class="keywordtype">int</span> seggerEntry(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv);
 <a name="l00184"></a>00184 
-<a name="l00185"></a>00185 <span class="preprocessor">#include "VTimer.h"</span>
+<a name="l00185"></a>00185 <span class="keywordtype">void</span> printSeggerUsage();
 <a name="l00186"></a>00186 
-<a name="l00190"></a>00190 <span class="keywordtype">void</span> beginSeg(<span class="keywordtype">string</span> mate, <span class="keywordtype">string</span> inFile, <span class="keywordtype">string</span> outFile, <span class="keywordtype">string</span> enc,
-<a name="l00191"></a>00191         <span class="keywordtype">string</span> posDelimiter);
-<a name="l00192"></a>00192 
-<a name="l00193"></a>00193 <span class="keywordtype">int</span> seggerEntry(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv);
-<a name="l00194"></a>00194 
-<a name="l00195"></a>00195 <span class="keywordtype">void</span> printSeggerUsage();
-<a name="l00196"></a>00196 
-<a name="l00197"></a>00197 <span class="preprocessor">#endif  </span><span class="comment">/* _SEGGERCMD_H */</span>
-<a name="l00198"></a>00198 
+<a name="l00187"></a>00187 <span class="preprocessor">#endif  </span><span class="comment">/* _SEGGERCMD_H */</span>
+<a name="l00188"></a>00188 
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:06 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

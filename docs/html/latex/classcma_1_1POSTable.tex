@@ -32,11 +32,6 @@ bool {\bf loadConfig} (const char $\ast$fileName)
 \item 
 int {\bf getCodeFromType} ({\bf POSType} type) const 
 \end{CompactItemize}
-\subsection*{Static Public Member Functions}
-\begin{CompactItemize}
-\item 
-static {\bf POSTable} $\ast$ {\bf instance} ()
-\end{CompactItemize}
 
 
 \subsection{Detailed Description}
@@ -99,9 +94,7 @@ Get the POS index code from the POS string in the global part-of-speech table. \
 \end{Desc}
 \begin{Desc}
 \item[Returns:]POS index code, -1 for non POS available \end{Desc}
-
-
-Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::POSTable@{cma::POSTable}!getCodeFromType@{getCodeFromType}}
+\index{cma::POSTable@{cma::POSTable}!getCodeFromType@{getCodeFromType}}
 \index{getCodeFromType@{getCodeFromType}!cma::POSTable@{cma::POSTable}}
 \subsubsection[{getCodeFromType}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromType ({\bf POSType} {\em type}) const}\label{classcma_1_1POSTable_d6c9ee24dd82620d36d4de8018702546}
 
@@ -125,18 +118,7 @@ Get the POS string from the POS index code in the global part-of-speech table. \
 \end{Desc}
 \begin{Desc}
 \item[Returns:]POS string, null pointer for non POS available \end{Desc}
-
-
-Referenced by cma::Sentence::getStrPOS().\index{cma::POSTable@{cma::POSTable}!instance@{instance}}
-\index{instance@{instance}!cma::POSTable@{cma::POSTable}}
-\subsubsection[{instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf POSTable} $\ast$ cma::POSTable::instance ()\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1POSTable_8ce731b2b76aced0b76092b5b216aa1d}
-
-
-Create an instance of {\em \doxyref{POSTable}{p.}{classcma_1_1POSTable}\/}. \begin{Desc}
-\item[Returns:]the pointer to instance \end{Desc}
-
-
-Referenced by cma::Sentence::getStrPOS(), cma::CMA\_\-ME\_\-Knowledge::loadConfig(), cma::CMA\_\-ME\_\-Knowledge::loadPOSModel(), and cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::POSTable@{cma::POSTable}!loadConfig@{loadConfig}}
+\index{cma::POSTable@{cma::POSTable}!loadConfig@{loadConfig}}
 \index{loadConfig@{loadConfig}!cma::POSTable@{cma::POSTable}}
 \subsubsection[{loadConfig}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTable::loadConfig (const char $\ast$ {\em fileName})}\label{classcma_1_1POSTable_a70a1e82116a1855f9599aeb48cb5139}
 
@@ -150,9 +132,7 @@ Load the configuration file, which is in text format. This file contains the par
 \item[Returns:]0 for fail, 1 for success \end{Desc}
 
 
-References addPOS().
-
-Referenced by cma::CMA\_\-ME\_\-Knowledge::loadConfig().\index{cma::POSTable@{cma::POSTable}!size@{size}}
+References addPOS().\index{cma::POSTable@{cma::POSTable}!size@{size}}
 \index{size@{size}!cma::POSTable@{cma::POSTable}}
 \subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::size () const}\label{classcma_1_1POSTable_eb70793af427c7dd545f132e177ca26e}
 
@@ -163,5 +143,5 @@ Get the number of POS tags in the global part-of-speech table. \begin{Desc}
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
-source/include/{\bf pos\_\-table.h}\item 
-source/src/{\bf pos\_\-table.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-ma-chen/source/include/{\bf pos\_\-table.h}\item 
+/home/vernkin/projects/chinese-ma-chen/source/src/{\bf pos\_\-table.cpp}\end{CompactItemize}

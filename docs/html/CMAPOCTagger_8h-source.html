@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Chinese&nbsp;Morphological&nbsp;Analyzer(Chen): source/include/CMAPOCTagger.h Source File</title>
+<title>Chinese&nbsp;Morphological&nbsp;Analyzer(Chen): /home/vernkin/projects/chinese-ma-chen/source/include/CMAPOCTagger.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 </head><body>
@@ -19,7 +19,7 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>source/include/CMAPOCTagger.h</h1><a href="CMAPOCTagger_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<h1>/home/vernkin/projects/chinese-ma-chen/source/include/CMAPOCTagger.h</h1><a href="CMAPOCTagger_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00009"></a>00009 <span class="preprocessor">#ifndef _CMAPOCTAGGER_H</span>
 <a name="l00010"></a>00010 <span class="preprocessor"></span><span class="preprocessor">#define _CMAPOCTAGGER_H</span>
 <a name="l00011"></a>00011 <span class="preprocessor"></span>
@@ -34,78 +34,86 @@
 <a name="l00020"></a>00020 <span class="preprocessor">#include &lt;map&gt;</span>
 <a name="l00021"></a>00021 <span class="keyword">using namespace </span>maxent::me;
 <a name="l00022"></a>00022 
-<a name="l00023"></a>00023 <span class="keyword">namespace </span>cma{
-<a name="l00024"></a>00024 
-<a name="l00035"></a>00035 <span class="keywordtype">void</span> get_poc_zh_scontext(vector&lt;string&gt;&amp; words, vector&lt;string&gt;&amp; tags, <span class="keywordtype">size_t</span> i,
-<a name="l00036"></a>00036         <span class="keywordtype">bool</span> rareWord, vector&lt;string&gt;&amp; context, CMA_CType *ctype);
-<a name="l00037"></a>00037 
-<a name="l00051"></a>00051 <span class="keywordtype">void</span> poc_train(<span class="keyword">const</span> <span class="keywordtype">char</span>* file, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; cateName,
-<a name="l00052"></a>00052         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> encType = <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d763b86f1378cda2ae30f3690a8c67b0d" title="GB 2312 character type.">Knowledge::ENCODE_TYPE_GB2312</a>,
-<a name="l00053"></a>00053         <span class="keywordtype">string</span> posDelimiter = <span class="stringliteral">"/"</span>,
-<a name="l00054"></a>00054         <span class="keyword">const</span> <span class="keywordtype">char</span>* extractFile = 0, <span class="keywordtype">string</span> method = <span class="stringliteral">"gis"</span>, <span class="keywordtype">size_t</span> iters = 15,
-<a name="l00055"></a>00055         <span class="keywordtype">float</span> gaussian = 0.0f);
-<a name="l00056"></a>00056 
-<a name="l00061"></a><a class="code" href="structcma_1_1POCTagUnit.html">00061</a> <span class="keyword">struct </span><a class="code" href="structcma_1_1POCTagUnit.html" title="to hold the objects in the N-best algorithm">POCTagUnit</a>{
-<a name="l00065"></a><a class="code" href="structcma_1_1POCTagUnit.html#a4a0e15baeb1ad18bbe2103284d5edb9">00065</a>     uint8_t <a class="code" href="structcma_1_1POCTagUnit.html#a4a0e15baeb1ad18bbe2103284d5edb9">pocCode</a>;
-<a name="l00066"></a>00066     
-<a name="l00070"></a><a class="code" href="structcma_1_1POCTagUnit.html#dee6f742a3e599ee2093d224d447832f">00070</a>     <span class="keywordtype">double</span> <a class="code" href="structcma_1_1POCTagUnit.html#dee6f742a3e599ee2093d224d447832f">score</a>;
-<a name="l00071"></a>00071 
-<a name="l00075"></a><a class="code" href="structcma_1_1POCTagUnit.html#408429985543c203e36a6e8c6921935c">00075</a>     <span class="keywordtype">int</span> <a class="code" href="structcma_1_1POCTagUnit.html#408429985543c203e36a6e8c6921935c">index</a>;
-<a name="l00076"></a>00076 
-<a name="l00080"></a><a class="code" href="structcma_1_1POCTagUnit.html#65a1e27d97dfa822fee58fbe3dc2a2a3">00080</a>     <span class="keywordtype">int</span> <a class="code" href="structcma_1_1POCTagUnit.html#65a1e27d97dfa822fee58fbe3dc2a2a3">previous</a>;
-<a name="l00081"></a>00081 };
+<a name="l00024"></a><a class="code" href="CMAPOCTagger_8h.html#8fc9320f6cd5f28fb162b4827bb441e5">00024</a> <span class="preprocessor">#define MAX_PROP_WORD_LEN 2</span>
+<a name="l00025"></a>00025 <span class="preprocessor"></span>
+<a name="l00027"></a><a class="code" href="CMAPOCTagger_8h.html#9447760a054b1929f095f9ba142b9b21">00027</a> <span class="preprocessor">#define MIN_PRE_WORD_LEN 4</span>
+<a name="l00028"></a>00028 <span class="preprocessor"></span>
+<a name="l00029"></a>00029 <span class="keyword">namespace </span>cma{
+<a name="l00030"></a>00030 
+<a name="l00041"></a>00041 <span class="keywordtype">void</span> get_poc_zh_scontext(vector&lt;string&gt;&amp; words, vector&lt;string&gt;&amp; tags, <span class="keywordtype">size_t</span> i,
+<a name="l00042"></a>00042         <span class="keywordtype">bool</span> rareWord, vector&lt;string&gt;&amp; context, CMA_CType *ctype);
+<a name="l00043"></a>00043 
+<a name="l00057"></a>00057 <span class="keywordtype">void</span> poc_train(<span class="keyword">const</span> <span class="keywordtype">char</span>* file, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; modelPath,
+<a name="l00058"></a>00058         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> encType = <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d01479a3bd80149d4f5e89a50fc4122a0" title="GB18030 character type.">Knowledge::ENCODE_TYPE_GB18030</a>,
+<a name="l00059"></a>00059         <span class="keywordtype">string</span> pocDelimiter = <span class="stringliteral">"/"</span>, <span class="keywordtype">bool</span> isLargeCorpus = <span class="keyword">false</span>,
+<a name="l00060"></a>00060         <span class="keyword">const</span> <span class="keywordtype">char</span>* extractFile = 0, <span class="keywordtype">string</span> method = <span class="stringliteral">"gis"</span>, <span class="keywordtype">size_t</span> iters = 15,
+<a name="l00061"></a>00061         <span class="keywordtype">float</span> gaussian = 0.0f);
+<a name="l00062"></a>00062 
+<a name="l00067"></a><a class="code" href="structcma_1_1POCTagUnit.html">00067</a> <span class="keyword">struct </span><a class="code" href="structcma_1_1POCTagUnit.html" title="to hold the objects in the N-best algorithm">POCTagUnit</a>{
+<a name="l00071"></a><a class="code" href="structcma_1_1POCTagUnit.html#a4a0e15baeb1ad18bbe2103284d5edb9">00071</a>     uint8_t <a class="code" href="structcma_1_1POCTagUnit.html#a4a0e15baeb1ad18bbe2103284d5edb9">pocCode</a>;
+<a name="l00072"></a>00072     
+<a name="l00076"></a><a class="code" href="structcma_1_1POCTagUnit.html#dee6f742a3e599ee2093d224d447832f">00076</a>     <span class="keywordtype">double</span> <a class="code" href="structcma_1_1POCTagUnit.html#dee6f742a3e599ee2093d224d447832f">score</a>;
+<a name="l00077"></a>00077 
+<a name="l00081"></a><a class="code" href="structcma_1_1POCTagUnit.html#408429985543c203e36a6e8c6921935c">00081</a>     <span class="keywordtype">int</span> <a class="code" href="structcma_1_1POCTagUnit.html#408429985543c203e36a6e8c6921935c">index</a>;
 <a name="l00082"></a>00082 
-<a name="l00087"></a><a class="code" href="classcma_1_1SegTagger.html">00087</a> <span class="keyword">class </span><a class="code" href="classcma_1_1SegTagger.html" title="segment the string segment the string using maxent model">SegTagger</a>{
-<a name="l00088"></a>00088 <span class="keyword">public</span>:
-<a name="l00089"></a>00089 
-<a name="l00099"></a>00099     <a class="code" href="classcma_1_1SegTagger.html#f43fe12512609241653aeb28d02a3811">SegTagger</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; cateName, <a class="code" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a>* posTrie, <span class="keywordtype">double</span> eScore = 0.7);
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101     <span class="keywordtype">void</span> tag_file(<span class="keyword">const</span> <span class="keywordtype">char</span>* inFile, <span class="keyword">const</span> <span class="keywordtype">char</span> *outFile, 
-<a name="l00102"></a>00102             <span class="keywordtype">string</span> encType = <span class="stringliteral">"gb2312"</span>);
-<a name="l00103"></a>00103 
-<a name="l00110"></a>00110     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1SegTagger.html#1bc4a830d793b5e0bb142ea5061fff09">seg_sentence</a>(vector&lt;string&gt;&amp; words, CharType *types,
-<a name="l00111"></a>00111             <span class="keywordtype">size_t</span> N, <span class="keywordtype">size_t</span> retSize,
-<a name="l00112"></a>00112             vector&lt;pair&lt;vector&lt;string&gt;, <span class="keywordtype">double</span>&gt; &gt;&amp; segment);
-<a name="l00113"></a>00113 
-<a name="l00119"></a>00119     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1SegTagger.html#c2b95d3cfb82743cf5cc29f8e196a6e1">seg_sentence_best</a>(vector&lt;string&gt;&amp; words, CharType *types,
-<a name="l00120"></a>00120             vector&lt;string&gt;&amp; segment);
+<a name="l00086"></a><a class="code" href="structcma_1_1POCTagUnit.html#65a1e27d97dfa822fee58fbe3dc2a2a3">00086</a>     <span class="keywordtype">int</span> <a class="code" href="structcma_1_1POCTagUnit.html#65a1e27d97dfa822fee58fbe3dc2a2a3">previous</a>;
+<a name="l00087"></a>00087 };
+<a name="l00088"></a>00088 
+<a name="l00093"></a><a class="code" href="classcma_1_1SegTagger.html">00093</a> <span class="keyword">class </span><a class="code" href="classcma_1_1SegTagger.html" title="segment the string segment the string using maxent model">SegTagger</a>{
+<a name="l00094"></a>00094 <span class="keyword">public</span>:
+<a name="l00095"></a>00095 
+<a name="l00105"></a>00105     <a class="code" href="classcma_1_1SegTagger.html#f43fe12512609241653aeb28d02a3811">SegTagger</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; cateName, <a class="code" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a>* posTrie, <span class="keywordtype">double</span> eScore = 0.7);
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107     ~<a class="code" href="classcma_1_1SegTagger.html" title="segment the string segment the string using maxent model">SegTagger</a>();
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109     <span class="keywordtype">void</span> tag_file(<span class="keyword">const</span> <span class="keywordtype">char</span>* inFile, <span class="keyword">const</span> <span class="keywordtype">char</span> *outFile, 
+<a name="l00110"></a>00110             <span class="keywordtype">string</span> encType = <span class="stringliteral">"gb2312"</span>);
+<a name="l00111"></a>00111 
+<a name="l00118"></a>00118     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1SegTagger.html#1bc4a830d793b5e0bb142ea5061fff09">seg_sentence</a>(vector&lt;string&gt;&amp; words, CharType *types,
+<a name="l00119"></a>00119             <span class="keywordtype">size_t</span> N, <span class="keywordtype">size_t</span> retSize,
+<a name="l00120"></a>00120             vector&lt;pair&lt;vector&lt;string&gt;, <span class="keywordtype">double</span>&gt; &gt;&amp; segment);
 <a name="l00121"></a>00121 
-<a name="l00125"></a>00125     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1SegTagger.html#03888848517344bd7e221d61aa7954d4">initialize</a>();
-<a name="l00126"></a>00126 
-<a name="l00127"></a>00127     <span class="keywordtype">void</span> setCType(<a class="code" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a> *ctype){
-<a name="l00128"></a>00128         ctype_ = ctype;
-<a name="l00129"></a>00129     }
-<a name="l00130"></a>00130 
-<a name="l00139"></a><a class="code" href="classcma_1_1SegTagger.html#695b30814b6c10cbdfb92434979a284c">00139</a>     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1SegTagger.html#695b30814b6c10cbdfb92434979a284c">setEScore</a>(<span class="keywordtype">double</span> eScore){
-<a name="l00140"></a>00140         assert( eScore &gt; 0.5 &amp;&amp; eScore &lt;= 1.0 &amp;&amp; <span class="stringliteral">"eScore should between 0.5 and 1.0"</span>);
-<a name="l00141"></a>00141         eScore_ = eScore;
-<a name="l00142"></a>00142     }
-<a name="l00143"></a>00143 
-<a name="l00152"></a><a class="code" href="classcma_1_1SegTagger.html#864f555f4a72d46a6f395b1e4bfe1459">00152</a>     <span class="keywordtype">double</span> <a class="code" href="classcma_1_1SegTagger.html#864f555f4a72d46a6f395b1e4bfe1459">getEScore</a>(){
-<a name="l00153"></a>00153         <span class="keywordflow">return</span> eScore_;
-<a name="l00154"></a>00154     }
-<a name="l00155"></a>00155 
-<a name="l00156"></a>00156 <span class="keyword">private</span>:
-<a name="l00157"></a>00157 
-<a name="l00164"></a>00164     <span class="keywordtype">void</span> tag_word(vector&lt;string&gt;&amp; words, CharType *type, <span class="keywordtype">int</span> index, <span class="keywordtype">size_t</span> N,
-<a name="l00165"></a>00165             uint8_t* tags, <a class="code" href="structcma_1_1POCTagUnit.html" title="to hold the objects in the N-best algorithm">POCTagUnit</a>* candidates, <span class="keywordtype">int</span>&amp; lastIndex, <span class="keywordtype">size_t</span>&amp; canSize,
-<a name="l00166"></a>00166             <span class="keywordtype">double</span> initScore, <span class="keywordtype">int</span> candidateNum);
-<a name="l00167"></a>00167 
-<a name="l00168"></a>00168 <span class="keyword">private</span>:
-<a name="l00170"></a>00170     MaxentModel me;
-<a name="l00171"></a>00171 
-<a name="l00173"></a>00173     <a class="code" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a> *ctype_;
-<a name="l00174"></a>00174 
-<a name="l00176"></a>00176     <a class="code" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a>* trie_;
-<a name="l00177"></a>00177 
-<a name="l00182"></a>00182     <span class="keywordtype">double</span> eScore_;
-<a name="l00183"></a>00183 };
-<a name="l00184"></a>00184 
-<a name="l00185"></a>00185 }
-<a name="l00186"></a>00186 <span class="preprocessor">#endif  </span><span class="comment">/* _CMAPOCTAGGER_H */</span>
-<a name="l00187"></a>00187 
+<a name="l00127"></a>00127     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1SegTagger.html#c2b95d3cfb82743cf5cc29f8e196a6e1">seg_sentence_best</a>(vector&lt;string&gt;&amp; words, CharType *types,
+<a name="l00128"></a>00128             vector&lt;string&gt;&amp; segment);
+<a name="l00129"></a>00129 
+<a name="l00133"></a>00133     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1SegTagger.html#03888848517344bd7e221d61aa7954d4">initialize</a>();
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135     <span class="keywordtype">void</span> setCType(<a class="code" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a> *ctype){
+<a name="l00136"></a>00136         ctype_ = ctype;
+<a name="l00137"></a>00137     }
+<a name="l00138"></a>00138 
+<a name="l00147"></a><a class="code" href="classcma_1_1SegTagger.html#695b30814b6c10cbdfb92434979a284c">00147</a>     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1SegTagger.html#695b30814b6c10cbdfb92434979a284c">setEScore</a>(<span class="keywordtype">double</span> eScore){
+<a name="l00148"></a>00148         assert( eScore &gt; 0.5 &amp;&amp; eScore &lt;= 1.0 &amp;&amp; <span class="stringliteral">"eScore should between 0.5 and 1.0"</span>);
+<a name="l00149"></a>00149         eScore_ = eScore;
+<a name="l00150"></a>00150     }
+<a name="l00151"></a>00151 
+<a name="l00160"></a><a class="code" href="classcma_1_1SegTagger.html#864f555f4a72d46a6f395b1e4bfe1459">00160</a>     <span class="keywordtype">double</span> <a class="code" href="classcma_1_1SegTagger.html#864f555f4a72d46a6f395b1e4bfe1459">getEScore</a>(){
+<a name="l00161"></a>00161         <span class="keywordflow">return</span> eScore_;
+<a name="l00162"></a>00162     }
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164 <span class="keyword">private</span>:
+<a name="l00165"></a>00165 
+<a name="l00172"></a>00172     <span class="keywordtype">void</span> tag_word(vector&lt;string&gt;&amp; words, CharType *type, <span class="keywordtype">int</span> index, <span class="keywordtype">size_t</span> N,
+<a name="l00173"></a>00173             uint8_t* tags, <a class="code" href="structcma_1_1POCTagUnit.html" title="to hold the objects in the N-best algorithm">POCTagUnit</a>* candidates, <span class="keywordtype">int</span>&amp; lastIndex, <span class="keywordtype">size_t</span>&amp; canSize,
+<a name="l00174"></a>00174             <span class="keywordtype">double</span> initScore, <span class="keywordtype">int</span> candidateNum);
+<a name="l00175"></a>00175 
+<a name="l00177"></a>00177     <span class="keywordtype">void</span> preProcess(vector&lt;string&gt;&amp; words, uint8_t* tags);
+<a name="l00178"></a>00178 
+<a name="l00179"></a>00179 <span class="keyword">private</span>:
+<a name="l00181"></a>00181     MaxentModel me;
+<a name="l00182"></a>00182 
+<a name="l00184"></a>00184     <a class="code" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a> *ctype_;
+<a name="l00185"></a>00185 
+<a name="l00187"></a>00187     <a class="code" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a>* trie_;
+<a name="l00188"></a>00188 
+<a name="l00193"></a>00193     <span class="keywordtype">double</span> eScore_;
+<a name="l00194"></a>00194 };
+<a name="l00195"></a>00195 
+<a name="l00196"></a>00196 }
+<a name="l00197"></a>00197 <span class="preprocessor">#endif  </span><span class="comment">/* _CMAPOCTAGGER_H */</span>
+<a name="l00198"></a>00198 
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:06 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

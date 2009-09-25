@@ -20,9 +20,24 @@ void {\bf tag\_\-sentence\_\-best} (vector$<$ string $>$ \&words, vector$<$ stri
 \item 
 double {\bf tag\_\-word\_\-best} (vector$<$ string $>$ \&words, vector$<$ string $>$ \&poses, int index, string \&pos)
 \item 
-bool {\bf appendWordPOS} (string \&line)
-\item 
 void {\bf setCType} ({\bf CMA\_\-CType} $\ast$ctype)
+\item 
+bool {\bf appendWordPOS} (string \&line)
+\end{CompactItemize}
+\subsection*{Public Attributes}
+\begin{CompactItemize}
+\item 
+vector$<$ set$<$ string $>$ $>$ {\bf posVec\_\-}
+\item 
+string {\bf defaultPOS}
+\item 
+string {\bf numberPOS}
+\item 
+string {\bf letterPOS}
+\item 
+string {\bf puncPOS}
+\item 
+string {\bf datePOS}
 \end{CompactItemize}
 
 
@@ -40,14 +55,16 @@ Construct the \doxyref{POSTagger}{p.}{classcma_1_1POSTagger} with outer \doxyref
 \begin{description}
 \item[{\em model}]POS model name \end{description}
 \end{Desc}
-\index{cma::POSTagger@{cma::POSTagger}!POSTagger@{POSTagger}}
+
+
+References posVec\_\-.\index{cma::POSTagger@{cma::POSTagger}!POSTagger@{POSTagger}}
 \index{POSTagger@{POSTagger}!cma::POSTagger@{cma::POSTagger}}
 \subsubsection[{POSTagger}]{\setlength{\rightskip}{0pt plus 5cm}cma::POSTagger::POSTagger (const string \& {\em model}, \/  const char $\ast$ {\em dictFile})}\label{classcma_1_1POSTagger_678c73558ec8fb6f3ae1adc5a4d904bb}
 
 
 Construct the \doxyref{POSTagger}{p.}{classcma_1_1POSTagger} with inner \doxyref{VTrie}{p.}{classVTrie} (read from dictFile) 
 
-References appendWordPOS().
+References appendWordPOS(), and posVec\_\-.
 
 \subsection{Member Function Documentation}
 \index{cma::POSTagger@{cma::POSTagger}!appendWordPOS@{appendWordPOS}}
@@ -64,9 +81,9 @@ Append the POS Information into Trie and POS Vector \begin{Desc}
 \item[Returns:]whether add successfully \end{Desc}
 
 
-References VTrieNode::data, VTrie::insert(), and VTrie::search().
+References VTrieNode::data, VTrie::insert(), posVec\_\-, and VTrie::search().
 
-Referenced by cma::CMA\_\-ME\_\-Knowledge::loadSystemDict(), cma::CMA\_\-ME\_\-Knowledge::loadUserDict(), and POSTagger().\index{cma::POSTagger@{cma::POSTagger}!setCType@{setCType}}
+Referenced by POSTagger().\index{cma::POSTagger@{cma::POSTagger}!setCType@{setCType}}
 \index{setCType@{setCType}!cma::POSTagger@{cma::POSTagger}}
 \subsubsection[{setCType}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::setCType ({\bf CMA\_\-CType} $\ast$ {\em ctype})\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1POSTagger_cf191ab0490ea004e681c93c901de355}
 
@@ -130,7 +147,52 @@ tag the word with the best POS and return its score \begin{Desc}
 \item[Returns:]return the score of the best pos \end{Desc}
 
 
+\subsection{Member Data Documentation}
+\index{cma::POSTagger@{cma::POSTagger}!datePOS@{datePOS}}
+\index{datePOS@{datePOS}!cma::POSTagger@{cma::POSTagger}}
+\subsubsection[{datePOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::datePOS}}\label{classcma_1_1POSTagger_fff8339645c620fa045c11a95d7997ea}
+
+
+Date POS 
+
+Referenced by cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTagger@{cma::POSTagger}!defaultPOS@{defaultPOS}}
+\index{defaultPOS@{defaultPOS}!cma::POSTagger@{cma::POSTagger}}
+\subsubsection[{defaultPOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::defaultPOS}}\label{classcma_1_1POSTagger_198603e682fe22173f63cd25fb43f605}
+
+
+default POS 
+
+Referenced by cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTagger@{cma::POSTagger}!letterPOS@{letterPOS}}
+\index{letterPOS@{letterPOS}!cma::POSTagger@{cma::POSTagger}}
+\subsubsection[{letterPOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::letterPOS}}\label{classcma_1_1POSTagger_0691e0b96cb49d0ea81804a4c589b105}
+
+
+Letter POS 
+
+Referenced by cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTagger@{cma::POSTagger}!numberPOS@{numberPOS}}
+\index{numberPOS@{numberPOS}!cma::POSTagger@{cma::POSTagger}}
+\subsubsection[{numberPOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::numberPOS}}\label{classcma_1_1POSTagger_9d5f03411ee4e43ad1cb225198e7eb27}
+
+
+Number POS 
+
+Referenced by cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTagger@{cma::POSTagger}!posVec\_\-@{posVec\_\-}}
+\index{posVec\_\-@{posVec\_\-}!cma::POSTagger@{cma::POSTagger}}
+\subsubsection[{posVec\_\-}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$set$<$string$>$ $>$ {\bf cma::POSTagger::posVec\_\-}}\label{classcma_1_1POSTagger_06aced1751c71a0970b6d1de06b2d058}
+
+
+vector to hold the POS information 
+
+Referenced by appendWordPOS(), and POSTagger().\index{cma::POSTagger@{cma::POSTagger}!puncPOS@{puncPOS}}
+\index{puncPOS@{puncPOS}!cma::POSTagger@{cma::POSTagger}}
+\subsubsection[{puncPOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::puncPOS}}\label{classcma_1_1POSTagger_ab545623b29696b86686241272f7d5bb}
+
+
+Punctuation POS 
+
+Referenced by cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().
+
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
-source/include/{\bf CMAPOSTagger.h}\item 
-source/src/{\bf CMAPOSTagger.cc}\end{CompactItemize}
+/home/vernkin/projects/chinese-ma-chen/source/include/{\bf CMAPOSTagger.h}\item 
+/home/vernkin/projects/chinese-ma-chen/source/src/{\bf CMAPOSTagger.cc}\end{CompactItemize}

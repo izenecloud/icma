@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Chinese&nbsp;Morphological&nbsp;Analyzer(Chen): source/include/CMA_ME_Knowledge.h Source File</title>
+<title>Chinese&nbsp;Morphological&nbsp;Analyzer(Chen): /home/vernkin/projects/chinese-ma-chen/source/include/CMA_ME_Knowledge.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 </head><body>
@@ -19,83 +19,102 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>source/include/CMA_ME_Knowledge.h</h1><a href="CMA__ME__Knowledge_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<h1>/home/vernkin/projects/chinese-ma-chen/source/include/CMA_ME_Knowledge.h</h1><a href="CMA__ME__Knowledge_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00009"></a>00009 <span class="preprocessor">#ifndef _CMA_ME_KNOWLEDGE_H</span>
 <a name="l00010"></a>00010 <span class="preprocessor"></span><span class="preprocessor">#define _CMA_ME_KNOWLEDGE_H</span>
 <a name="l00011"></a>00011 <span class="preprocessor"></span>
 <a name="l00012"></a>00012 <span class="preprocessor">#include "<a class="code" href="knowledge_8h.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">knowledge.h</a>"</span>
 <a name="l00013"></a>00013 <span class="preprocessor">#include "<a class="code" href="CMAPOCTagger_8h.html" title="for the POC tagger using MaxEnt Model.">CMAPOCTagger.h</a>"</span>
 <a name="l00014"></a>00014 <span class="preprocessor">#include "<a class="code" href="CMAPOSTagger_8h.html" title="for the POS tagger using MaxEnt Model.">CMAPOSTagger.h</a>"</span>
-<a name="l00015"></a>00015 
-<a name="l00016"></a>00016 <span class="preprocessor">#include "<a class="code" href="VSynonym_8h.html" title="contains associated files for the VSynonym">VSynonym.h</a>"</span>
-<a name="l00017"></a>00017 
-<a name="l00018"></a>00018 <span class="preprocessor">#include &lt;set&gt;</span>
-<a name="l00019"></a>00019 <span class="preprocessor">#include &lt;vector&gt;</span>
-<a name="l00020"></a>00020 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00021"></a>00021 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<a name="l00022"></a>00022 <span class="preprocessor">#include &lt;fstream&gt;</span>
-<a name="l00023"></a>00023 
-<a name="l00024"></a>00024 <span class="keyword">using namespace </span>std;
-<a name="l00025"></a>00025 
-<a name="l00026"></a>00026 <span class="keyword">namespace </span>cma{
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="keyword">extern</span> vector&lt;string&gt; ENCODING_VEC;
-<a name="l00029"></a>00029 
-<a name="l00034"></a><a class="code" href="classcma_1_1CMA__ME__Knowledge.html">00034</a> <span class="keyword">class </span><a class="code" href="classcma_1_1CMA__ME__Knowledge.html" title="Knowledge for the CMAC.">CMA_ME_Knowledge</a> : <span class="keyword">public</span> <a class="code" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a>{
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="keyword">public</span>:
-<a name="l00037"></a>00037     <a class="code" href="classcma_1_1CMA__ME__Knowledge.html" title="Knowledge for the CMAC.">CMA_ME_Knowledge</a>();
-<a name="l00038"></a>00038     <span class="keyword">virtual</span> ~<a class="code" href="classcma_1_1CMA__ME__Knowledge.html" title="Knowledge for the CMAC.">CMA_ME_Knowledge</a>();
-<a name="l00039"></a>00039 
-<a name="l00045"></a>00045     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#247a1219355019e39e7caecfb84a8636">loadSystemDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName);
-<a name="l00046"></a>00046 
-<a name="l00052"></a>00052     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#d0dac8d22ab4c3c97a281f26c95ee9e2">loadUserDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName);
-<a name="l00053"></a>00053 
-<a name="l00059"></a>00059     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#962ff06df53eefe2306fba200ed2c303">loadSynonymDictionary</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName);
-<a name="l00060"></a>00060 
-<a name="l00066"></a>00066     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#1fad8852687c5489ea17f2d36e7e280a">getSynonyms</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; word, <a class="code" href="classVSynonym.html" title="VSynonym the Param Type of the VSynonymDictionary.">VSynonym</a>&amp; synonym);
-<a name="l00067"></a>00067 
-<a name="l00074"></a>00074     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#ef7750521cda2746bae8325f37dc9a48">loadStopWordDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName);
-<a name="l00075"></a>00075 
-<a name="l00084"></a>00084     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#cc8f15814d4e6a248f29636a29116756">loadStatModel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* cateName);
-<a name="l00085"></a>00085 
-<a name="l00094"></a>00094     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#29a87c6902ebaf8364fbee0e4aa20127">loadPOSModel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* cateName);
-<a name="l00095"></a>00095 
-<a name="l00102"></a>00102     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#74836fae9065f4c4869a2dde144a5f63">loadConfig</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName);
-<a name="l00103"></a>00103     
-<a name="l00110"></a>00110     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#578eab67c328dcde77c359f54cb6557f">encodeSystemDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* txtFileName, <span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName);
-<a name="l00111"></a>00111 
-<a name="l00116"></a>00116     <a class="code" href="classcma_1_1SegTagger.html" title="segment the string segment the string using maxent model">SegTagger</a>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#7f48d3975405b9e41217705142f85061">getSegTagger</a>() <span class="keyword">const</span>;
-<a name="l00117"></a>00117 
-<a name="l00122"></a>00122     <a class="code" href="classcma_1_1POSTagger.html" title="Tagging the POS Information Tagging the POS using the maxent model.">POSTagger</a>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#860d74235119267a3c58344e53eabd32">getPOSTagger</a>() <span class="keyword">const</span>;
-<a name="l00123"></a>00123 
-<a name="l00127"></a>00127     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#4a25b70f78ec7309cb5cab8f08cc1248">isStopWord</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; word);
-<a name="l00128"></a>00128 
-<a name="l00134"></a>00134     <a class="code" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#c02421f6bb9c214fc389d13aa04671b1">getTrie</a>();
-<a name="l00135"></a>00135 
-<a name="l00139"></a>00139     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#76b7b94d614802f87589fddee4b6a9a0">initialize</a>();
-<a name="l00140"></a>00140 
-<a name="l00141"></a>00141 <span class="keyword">private</span>:
-<a name="l00143"></a>00143     <span class="keywordtype">string</span> readEncryptLine(FILE *in);
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145 <span class="keyword">private</span>:
-<a name="l00147"></a>00147     <a class="code" href="classcma_1_1SegTagger.html" title="segment the string segment the string using maxent model">SegTagger</a> *segT_;
-<a name="l00148"></a>00148 
-<a name="l00150"></a>00150     <a class="code" href="classcma_1_1POSTagger.html" title="Tagging the POS Information Tagging the POS using the maxent model.">POSTagger</a> *posT_;
-<a name="l00151"></a>00151 
-<a name="l00153"></a>00153     <a class="code" href="classVSynonymContainer.html" title="the VTrie version of the Synonym Dictionary">VSynonymContainer</a> *vsynC_;
+<a name="l00015"></a>00015 <span class="preprocessor">#include "<a class="code" href="pos__table_8h.html" title="POSTable stores the global table of part-of-speech tags.">pos_table.h</a>"</span>
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 <span class="preprocessor">#include "<a class="code" href="VSynonym_8h.html" title="contains associated files for the VSynonym">VSynonym.h</a>"</span>
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019 <span class="preprocessor">#include &lt;set&gt;</span>
+<a name="l00020"></a>00020 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00022"></a>00022 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;fstream&gt;</span>
+<a name="l00024"></a>00024 
+<a name="l00025"></a>00025 <span class="keyword">using namespace </span>std;
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="keyword">namespace </span>cma{
+<a name="l00028"></a>00028 
+<a name="l00033"></a><a class="code" href="classcma_1_1CMA__ME__Knowledge.html">00033</a> <span class="keyword">class </span><a class="code" href="classcma_1_1CMA__ME__Knowledge.html" title="Knowledge for the CMAC.">CMA_ME_Knowledge</a> : <span class="keyword">public</span> <a class="code" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a>{
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 <span class="keyword">public</span>:
+<a name="l00036"></a>00036     <a class="code" href="classcma_1_1CMA__ME__Knowledge.html" title="Knowledge for the CMAC.">CMA_ME_Knowledge</a>();
+<a name="l00037"></a>00037     <span class="keyword">virtual</span> ~<a class="code" href="classcma_1_1CMA__ME__Knowledge.html" title="Knowledge for the CMAC.">CMA_ME_Knowledge</a>();
+<a name="l00038"></a>00038 
+<a name="l00044"></a>00044     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#247a1219355019e39e7caecfb84a8636">loadSystemDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName);
+<a name="l00045"></a>00045 
+<a name="l00051"></a>00051     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#d0dac8d22ab4c3c97a281f26c95ee9e2">loadUserDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName);
+<a name="l00052"></a>00052 
+<a name="l00058"></a>00058     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#962ff06df53eefe2306fba200ed2c303">loadSynonymDictionary</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName);
+<a name="l00059"></a>00059 
+<a name="l00065"></a>00065     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#1fad8852687c5489ea17f2d36e7e280a">getSynonyms</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; word, <a class="code" href="classVSynonym.html" title="VSynonym the Param Type of the VSynonymDictionary.">VSynonym</a>&amp; synonym);
+<a name="l00066"></a>00066 
+<a name="l00073"></a>00073     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#ef7750521cda2746bae8325f37dc9a48">loadStopWordDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName);
+<a name="l00074"></a>00074 
+<a name="l00083"></a>00083     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#cc8f15814d4e6a248f29636a29116756">loadStatModel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* cateName);
+<a name="l00084"></a>00084 
+<a name="l00093"></a>00093     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#29a87c6902ebaf8364fbee0e4aa20127">loadPOSModel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* cateName);
+<a name="l00094"></a>00094 
+<a name="l00101"></a>00101     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#74836fae9065f4c4869a2dde144a5f63">loadConfig</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName);
+<a name="l00102"></a>00102     
+<a name="l00109"></a>00109     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#578eab67c328dcde77c359f54cb6557f">encodeSystemDict</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* txtFileName, <span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName);
+<a name="l00110"></a>00110 
+<a name="l00118"></a>00118     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#a557407ae67263ecc163f3d199c8abed">loadModel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* encoding, <span class="keyword">const</span> <span class="keywordtype">char</span>* modelPath);
+<a name="l00119"></a>00119 
+<a name="l00124"></a>00124     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#85107400ebf7d621078103a76c586ca8">isSupportPOS</a>() <span class="keyword">const</span>;
+<a name="l00125"></a>00125 
+<a name="l00130"></a>00130     <a class="code" href="classcma_1_1SegTagger.html" title="segment the string segment the string using maxent model">SegTagger</a>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#7f48d3975405b9e41217705142f85061">getSegTagger</a>() <span class="keyword">const</span>;
+<a name="l00131"></a>00131 
+<a name="l00136"></a>00136     <a class="code" href="classcma_1_1POSTagger.html" title="Tagging the POS Information Tagging the POS using the maxent model.">POSTagger</a>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#860d74235119267a3c58344e53eabd32">getPOSTagger</a>() <span class="keyword">const</span>;
+<a name="l00137"></a>00137 
+<a name="l00141"></a>00141     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#4a25b70f78ec7309cb5cab8f08cc1248">isStopWord</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; word);
+<a name="l00142"></a>00142 
+<a name="l00148"></a>00148     <a class="code" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#c02421f6bb9c214fc389d13aa04671b1">getTrie</a>();
+<a name="l00149"></a>00149 
+<a name="l00153"></a>00153     <span class="keyword">const</span> <a class="code" href="classcma_1_1POSTable.html" title="POSTable stores the global table of part-of-speech tags.">POSTable</a>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#19af09ab57d7d68495d6359d7fdf0a6b">getPOSTable</a>() <span class="keyword">const</span>;
 <a name="l00154"></a>00154 
-<a name="l00156"></a>00156     <a class="code" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a>* trie_;
-<a name="l00157"></a>00157 
-<a name="l00159"></a>00159     set&lt;string&gt; stopWords_;
-<a name="l00160"></a>00160 };
+<a name="l00160"></a>00160     <span class="keyword">const</span> <span class="keywordtype">string</span>* <a class="code" href="classcma_1_1CMA__ME__Knowledge.html#a7b6f80e0598fd8e0db91b557550eb3f">getSystemProperty</a>( <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; key );
 <a name="l00161"></a>00161 
-<a name="l00162"></a>00162 }
-<a name="l00163"></a>00163 
-<a name="l00164"></a>00164 <span class="preprocessor">#endif  </span><span class="comment">/* _CMA_ME_KNOWLEDGE_H */</span>
+<a name="l00162"></a>00162 <span class="keyword">private</span>:
+<a name="l00164"></a>00164     <span class="keywordtype">string</span> readEncryptLine(FILE *in);
 <a name="l00165"></a>00165 
+<a name="l00171"></a>00171     <span class="keywordtype">bool</span> appendWordPOS(<span class="keywordtype">string</span>&amp; line);
+<a name="l00172"></a>00172 
+<a name="l00178"></a>00178     <span class="keywordtype">int</span> loadSystemDict_(<span class="keyword">const</span> <span class="keywordtype">char</span>* binFileName);
+<a name="l00179"></a>00179 
+<a name="l00185"></a>00185     <span class="keywordtype">int</span> loadUserDict_(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName);
+<a name="l00186"></a>00186 
+<a name="l00193"></a>00193         <span class="keywordtype">bool</span> loadConfig0(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename, map&lt;string, string&gt;&amp; map, <span class="keywordtype">bool</span> required = <span class="keyword">true</span>);
+<a name="l00194"></a>00194 
+<a name="l00195"></a>00195 <span class="keyword">private</span>:
+<a name="l00197"></a>00197     <a class="code" href="classcma_1_1SegTagger.html" title="segment the string segment the string using maxent model">SegTagger</a> *segT_;
+<a name="l00198"></a>00198 
+<a name="l00200"></a>00200     <a class="code" href="classcma_1_1POSTagger.html" title="Tagging the POS Information Tagging the POS using the maxent model.">POSTagger</a> *posT_;
+<a name="l00201"></a>00201 
+<a name="l00203"></a>00203     <a class="code" href="classVSynonymContainer.html" title="the VTrie version of the Synonym Dictionary">VSynonymContainer</a> *vsynC_;
+<a name="l00204"></a>00204 
+<a name="l00206"></a>00206     <a class="code" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a>* trie_;
+<a name="l00207"></a>00207 
+<a name="l00209"></a>00209     <a class="code" href="classcma_1_1POSTable.html" title="POSTable stores the global table of part-of-speech tags.">POSTable</a>* posTable_;
+<a name="l00210"></a>00210 
+<a name="l00212"></a>00212     set&lt;string&gt; stopWords_;
+<a name="l00213"></a>00213 
+<a name="l00215"></a>00215     set&lt;string&gt; blackWords_;
+<a name="l00216"></a>00216 
+<a name="l00218"></a>00218     map&lt;string, string&gt; sysConfig_;
+<a name="l00219"></a>00219 };
+<a name="l00220"></a>00220 
+<a name="l00221"></a>00221 }
+<a name="l00222"></a>00222 
+<a name="l00223"></a>00223 <span class="preprocessor">#endif  </span><span class="comment">/* _CMA_ME_KNOWLEDGE_H */</span>
+<a name="l00224"></a>00224 
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:06 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

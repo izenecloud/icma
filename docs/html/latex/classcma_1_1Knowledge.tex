@@ -16,7 +16,7 @@ Inheritance diagram for cma::Knowledge::\begin{figure}[H]
 \item 
 enum {\bf EncodeType} \{ {\bf ENCODE\_\-TYPE\_\-GB2312}, 
 {\bf ENCODE\_\-TYPE\_\-BIG5}, 
-{\bf ENCODE\_\-TYPE\_\-UTF8}, 
+{\bf ENCODE\_\-TYPE\_\-GB18030}, 
 {\bf ENCODE\_\-TYPE\_\-NUM}
  \}
 \subsection*{Public Member Functions}
@@ -39,6 +39,15 @@ virtual int {\bf encodeSystemDict} (const char $\ast$txtFileName, const char $\a
 void {\bf setEncodeType} ({\bf EncodeType} type)
 \item 
 {\bf EncodeType} {\bf getEncodeType} () const 
+\item 
+virtual int {\bf loadModel} (const char $\ast$encoding, const char $\ast$modelPath)=0
+\item 
+virtual bool {\bf isSupportPOS} () const =0
+\end{CompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{CompactItemize}
+\item 
+static {\bf Knowledge::EncodeType} {\bf decodeEncodeType} (const char $\ast$encType)
 \end{CompactItemize}
 
 
@@ -58,9 +67,9 @@ Encode type of characters. \begin{Desc}
 ENCODE\_\-TYPE\_\-GB2312\label{classcma_1_1Knowledge_2f725921dec755cdd496e81a95389f1d763b86f1378cda2ae30f3690a8c67b0d}
 }]GB 2312 character type. \index{ENCODE\_\-TYPE\_\-BIG5@{ENCODE\_\-TYPE\_\-BIG5}!cma::Knowledge@{cma::Knowledge}}\index{cma::Knowledge@{cma::Knowledge}!ENCODE\_\-TYPE\_\-BIG5@{ENCODE\_\-TYPE\_\-BIG5}}\item[{\em 
 ENCODE\_\-TYPE\_\-BIG5\label{classcma_1_1Knowledge_2f725921dec755cdd496e81a95389f1dfd187e4741157876b1a805c0c3ddec27}
-}]Big 5 character type. \index{ENCODE\_\-TYPE\_\-UTF8@{ENCODE\_\-TYPE\_\-UTF8}!cma::Knowledge@{cma::Knowledge}}\index{cma::Knowledge@{cma::Knowledge}!ENCODE\_\-TYPE\_\-UTF8@{ENCODE\_\-TYPE\_\-UTF8}}\item[{\em 
-ENCODE\_\-TYPE\_\-UTF8\label{classcma_1_1Knowledge_2f725921dec755cdd496e81a95389f1dc1a4019681243fa73708e4879f3b951d}
-}]UTF8 character type. \index{ENCODE\_\-TYPE\_\-NUM@{ENCODE\_\-TYPE\_\-NUM}!cma::Knowledge@{cma::Knowledge}}\index{cma::Knowledge@{cma::Knowledge}!ENCODE\_\-TYPE\_\-NUM@{ENCODE\_\-TYPE\_\-NUM}}\item[{\em 
+}]Big 5 character type. \index{ENCODE\_\-TYPE\_\-GB18030@{ENCODE\_\-TYPE\_\-GB18030}!cma::Knowledge@{cma::Knowledge}}\index{cma::Knowledge@{cma::Knowledge}!ENCODE\_\-TYPE\_\-GB18030@{ENCODE\_\-TYPE\_\-GB18030}}\item[{\em 
+ENCODE\_\-TYPE\_\-GB18030\label{classcma_1_1Knowledge_2f725921dec755cdd496e81a95389f1d01479a3bd80149d4f5e89a50fc4122a0}
+}]GB18030 character type. \index{ENCODE\_\-TYPE\_\-NUM@{ENCODE\_\-TYPE\_\-NUM}!cma::Knowledge@{cma::Knowledge}}\index{cma::Knowledge@{cma::Knowledge}!ENCODE\_\-TYPE\_\-NUM@{ENCODE\_\-TYPE\_\-NUM}}\item[{\em 
 ENCODE\_\-TYPE\_\-NUM\label{classcma_1_1Knowledge_2f725921dec755cdd496e81a95389f1dfeaa8f94b6c57c430302ea94c41b1d8a}
 }]the count of character types \end{description}
 \end{Desc}
@@ -68,7 +77,25 @@ ENCODE\_\-TYPE\_\-NUM\label{classcma_1_1Knowledge_2f725921dec755cdd496e81a95389f
 
 
 \subsection{Member Function Documentation}
-\index{cma::Knowledge@{cma::Knowledge}!encodeSystemDict@{encodeSystemDict}}
+\index{cma::Knowledge@{cma::Knowledge}!decodeEncodeType@{decodeEncodeType}}
+\index{decodeEncodeType@{decodeEncodeType}!cma::Knowledge@{cma::Knowledge}}
+\subsubsection[{decodeEncodeType}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Knowledge::EncodeType} cma::Knowledge::decodeEncodeType (const char $\ast$ {\em encType})\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1Knowledge_5b506216f981d35174af4e5066073275}
+
+
+Get the encoding type by the encode type string
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em encType}]encode type string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]assicated \doxyref{Knowledge::EncodeType}{p.}{classcma_1_1Knowledge_2f725921dec755cdd496e81a95389f1d} in the class \doxyref{Knowledge}{p.}{classcma_1_1Knowledge} \end{Desc}
+
+
+References ENCODE\_\-TYPE\_\-BIG5, ENCODE\_\-TYPE\_\-GB18030, and ENCODE\_\-TYPE\_\-GB2312.
+
+Referenced by cma::CMA\_\-ME\_\-Knowledge::loadModel().\index{cma::Knowledge@{cma::Knowledge}!encodeSystemDict@{encodeSystemDict}}
 \index{encodeSystemDict@{encodeSystemDict}!cma::Knowledge@{cma::Knowledge}}
 \subsubsection[{encodeSystemDict}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Knowledge::encodeSystemDict (const char $\ast$ {\em txtFileName}, \/  const char $\ast$ {\em binFileName})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Knowledge_7c89dffabc4e75961d760586db283d1d}
 
@@ -91,7 +118,16 @@ Get the character encode type. \begin{Desc}
 \item[Returns:]the encode type \end{Desc}
 
 
-Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::Knowledge@{cma::Knowledge}!loadConfig@{loadConfig}}
+Referenced by cma::CMA\_\-ME\_\-Knowledge::loadStatModel(), and cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::Knowledge@{cma::Knowledge}!isSupportPOS@{isSupportPOS}}
+\index{isSupportPOS@{isSupportPOS}!cma::Knowledge@{cma::Knowledge}}
+\subsubsection[{isSupportPOS}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool cma::Knowledge::isSupportPOS () const\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Knowledge_bd68fed5c90c2e04facc6a760670b0a4}
+
+
+Whether contains POS model \begin{Desc}
+\item[Returns:]true if contains POS model \end{Desc}
+
+
+Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_85107400ebf7d621078103a76c586ca8}.\index{cma::Knowledge@{cma::Knowledge}!loadConfig@{loadConfig}}
 \index{loadConfig@{loadConfig}!cma::Knowledge@{cma::Knowledge}}
 \subsubsection[{loadConfig}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Knowledge::loadConfig (const char $\ast$ {\em fileName})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Knowledge_e4e24baf6f35004fd1d788b1b28a7ad1}
 
@@ -105,7 +141,18 @@ Load the configuration file, which is in text format. This file contains the con
 \item[Returns:]0 for fail, 1 for success \end{Desc}
 
 
-Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_74836fae9065f4c4869a2dde144a5f63}.\index{cma::Knowledge@{cma::Knowledge}!loadPOSModel@{loadPOSModel}}
+Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_74836fae9065f4c4869a2dde144a5f63}.\index{cma::Knowledge@{cma::Knowledge}!loadModel@{loadModel}}
+\index{loadModel@{loadModel}!cma::Knowledge@{cma::Knowledge}}
+\subsubsection[{loadModel}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Knowledge::loadModel (const char $\ast$ {\em encoding}, \/  const char $\ast$ {\em modelPath})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Knowledge_ee11a77da864e824c55b9bf1b22c032c}
+
+
+Auto load POS model, Stat Model and System Dictionaries. Encoding must be set here.  like gb18030 and utf8  the directory that contains all the models \begin{Desc}
+\item[Returns:]whether perform success \end{Desc}
+
+
+Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_a557407ae67263ecc163f3d199c8abed}.
+
+Referenced by beginSeg().\index{cma::Knowledge@{cma::Knowledge}!loadPOSModel@{loadPOSModel}}
 \index{loadPOSModel@{loadPOSModel}!cma::Knowledge@{cma::Knowledge}}
 \subsubsection[{loadPOSModel}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Knowledge::loadPOSModel (const char $\ast$ {\em binFileName})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Knowledge_4ceb02d9154efd5bd8e35dfab9777644}
 
@@ -119,9 +166,7 @@ Load the model file in binary format, which contains statistical information for
 \item[Returns:]0 for fail, 1 for success \end{Desc}
 
 
-Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_29a87c6902ebaf8364fbee0e4aa20127}.
-
-Referenced by beginSeg().\index{cma::Knowledge@{cma::Knowledge}!loadStatModel@{loadStatModel}}
+Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_29a87c6902ebaf8364fbee0e4aa20127}.\index{cma::Knowledge@{cma::Knowledge}!loadStatModel@{loadStatModel}}
 \index{loadStatModel@{loadStatModel}!cma::Knowledge@{cma::Knowledge}}
 \subsubsection[{loadStatModel}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Knowledge::loadStatModel (const char $\ast$ {\em binFileName})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Knowledge_c54810dbc59c5c5df69c7bef38fb0d51}
 
@@ -135,9 +180,7 @@ Load the model file in binary format, which contains statistical information for
 \item[Returns:]0 for fail, 1 for success \end{Desc}
 
 
-Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_cc8f15814d4e6a248f29636a29116756}.
-
-Referenced by beginSeg().\index{cma::Knowledge@{cma::Knowledge}!loadStopWordDict@{loadStopWordDict}}
+Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_cc8f15814d4e6a248f29636a29116756}.\index{cma::Knowledge@{cma::Knowledge}!loadStopWordDict@{loadStopWordDict}}
 \index{loadStopWordDict@{loadStopWordDict}!cma::Knowledge@{cma::Knowledge}}
 \subsubsection[{loadStopWordDict}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Knowledge::loadStopWordDict (const char $\ast$ {\em fileName})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Knowledge_992bf7b7cd77c8846bc1c6cd22067d07}
 
@@ -179,9 +222,7 @@ Load the user dictionary file, which is in text format. \begin{Desc}
 \item[Returns:]0 for fail, 1 for success \end{Desc}
 
 
-Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_d0dac8d22ab4c3c97a281f26c95ee9e2}.
-
-Referenced by beginSeg().\index{cma::Knowledge@{cma::Knowledge}!setEncodeType@{setEncodeType}}
+Implemented in {\bf cma::CMA\_\-ME\_\-Knowledge} \doxyref{}{p.}{classcma_1_1CMA__ME__Knowledge_d0dac8d22ab4c3c97a281f26c95ee9e2}.\index{cma::Knowledge@{cma::Knowledge}!setEncodeType@{setEncodeType}}
 \index{setEncodeType@{setEncodeType}!cma::Knowledge@{cma::Knowledge}}
 \subsubsection[{setEncodeType}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Knowledge::setEncodeType ({\bf EncodeType} {\em type})}\label{classcma_1_1Knowledge_199293f2ec784e7883805117e59b109c}
 
@@ -193,9 +234,9 @@ Set the character encode type. If this function is not called, the default value
 \end{Desc}
 
 
-Referenced by beginSeg().
+Referenced by cma::CMA\_\-ME\_\-Knowledge::loadModel().
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
-include/{\bf knowledge.h}\item 
-source/src/{\bf knowledge.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-ma-chen/include/{\bf knowledge.h}\item 
+/home/vernkin/projects/chinese-ma-chen/source/src/{\bf knowledge.cpp}\end{CompactItemize}

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Chinese&nbsp;Morphological&nbsp;Analyzer(Chen): include/sentence.h Source File</title>
+<title>Chinese&nbsp;Morphological&nbsp;Analyzer(Chen): /home/vernkin/projects/chinese-ma-chen/include/sentence.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 </head><body>
@@ -19,7 +19,7 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>include/sentence.h</h1><a href="sentence_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<h1>/home/vernkin/projects/chinese-ma-chen/include/sentence.h</h1><a href="sentence_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00008"></a>00008 <span class="preprocessor">#ifndef CMA_SENTENCE_H</span>
 <a name="l00009"></a>00009 <span class="preprocessor"></span><span class="preprocessor">#define CMA_SENTENCE_H</span>
 <a name="l00010"></a>00010 <span class="preprocessor"></span>
@@ -36,47 +36,55 @@
 <a name="l00026"></a>00026 
 <a name="l00028"></a><a class="code" href="structcma_1_1Morpheme.html#883d0df2e303ce7bd5953bfa913a88ef">00028</a>     <span class="keywordtype">int</span> <a class="code" href="structcma_1_1Morpheme.html#883d0df2e303ce7bd5953bfa913a88ef">posCode_</a>;
 <a name="l00029"></a>00029 
-<a name="l00035"></a>00035     <a class="code" href="structcma_1_1Morpheme.html#79ab5404cd959f89daadb8a7714334cb">Morpheme</a>();
-<a name="l00036"></a>00036 };
-<a name="l00037"></a>00037 
-<a name="l00039"></a>00039 <span class="keyword">typedef</span> std::vector&lt;Morpheme&gt; MorphemeList;
-<a name="l00040"></a>00040 
-<a name="l00070"></a><a class="code" href="classcma_1_1Sentence.html">00070</a> <span class="keyword">class </span><a class="code" href="classcma_1_1Sentence.html" title="Sentence saves the results of Chinese morphological analysis.">Sentence</a>
-<a name="l00071"></a>00071 {
-<a name="l00072"></a>00072 <span class="keyword">public</span>:
-<a name="l00078"></a>00078     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Sentence.html#40fb665bd2b2a19e430d4e474f3534a3">setString</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* pString);
-<a name="l00079"></a>00079 
-<a name="l00084"></a>00084     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Sentence.html#ee44e192f67dacbe6bc0cfc433cabb30">getString</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>;
-<a name="l00085"></a>00085 
-<a name="l00090"></a>00090     <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Sentence.html#883c3773c3f2a82f3b3b9fcae13ceb66">getListSize</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>;
-<a name="l00091"></a>00091 
-<a name="l00097"></a>00097     <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Sentence.html#5dd92e59708ea8cc61d3edc0d1fd830d">getCount</a>(<span class="keywordtype">int</span> nPos) <span class="keyword">const</span>;
-<a name="l00098"></a>00098 
-<a name="l00105"></a>00105     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Sentence.html#c8fd1b3aa8062fff6e88a31e723802ae">getLexicon</a>(<span class="keywordtype">int</span> nPos, <span class="keywordtype">int</span> nIdx) <span class="keyword">const</span>;
-<a name="l00106"></a>00106 
-<a name="l00113"></a>00113     <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Sentence.html#7e03360cc524ea35245c1b5a61c348e0">getPOS</a>(<span class="keywordtype">int</span> nPos, <span class="keywordtype">int</span> nIdx) <span class="keyword">const</span>;
-<a name="l00114"></a>00114 
-<a name="l00121"></a>00121     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Sentence.html#6cb05837a84acf7d30fadb5bca6314db">getStrPOS</a>(<span class="keywordtype">int</span> nPos, <span class="keywordtype">int</span> nIdx) <span class="keyword">const</span>;
-<a name="l00122"></a>00122 
-<a name="l00128"></a>00128     <span class="keywordtype">double</span> <a class="code" href="classcma_1_1Sentence.html#850f236efa3fa2b75b5b40cf35fbdd95">getScore</a>(<span class="keywordtype">int</span> nPos) <span class="keyword">const</span>;
-<a name="l00129"></a>00129 
-<a name="l00134"></a>00134     <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Sentence.html#f1ccc0e78beb1f7b8bd22e0c10efa8d4">getOneBestIndex</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>;
-<a name="l00135"></a>00135 
-<a name="l00141"></a>00141     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Sentence.html#39f0e77ac6f3705ae6dc1b8e15118760">addList</a>(<span class="keyword">const</span> MorphemeList&amp; morphemeList, <span class="keywordtype">double</span> score = 0.0);
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143 <span class="keyword">private</span>:
-<a name="l00145"></a>00145     std::string raw_;
+<a name="l00031"></a><a class="code" href="structcma_1_1Morpheme.html#21b273edef21e9efd50956f926cdaeab">00031</a>     std::string <a class="code" href="structcma_1_1Morpheme.html#21b273edef21e9efd50956f926cdaeab">posStr_</a>;
+<a name="l00032"></a>00032 
+<a name="l00038"></a>00038     <a class="code" href="structcma_1_1Morpheme.html#79ab5404cd959f89daadb8a7714334cb">Morpheme</a>();
+<a name="l00039"></a>00039 
+<a name="l00045"></a>00045     <a class="code" href="structcma_1_1Morpheme.html#79ab5404cd959f89daadb8a7714334cb">Morpheme</a>(std::string lexicon, <span class="keywordtype">int</span> posCode, std::string&amp; posStr);
+<a name="l00046"></a>00046 };
+<a name="l00047"></a>00047 
+<a name="l00049"></a>00049 <span class="keyword">typedef</span> std::vector&lt;Morpheme&gt; MorphemeList;
+<a name="l00050"></a>00050 
+<a name="l00080"></a><a class="code" href="classcma_1_1Sentence.html">00080</a> <span class="keyword">class </span><a class="code" href="classcma_1_1Sentence.html" title="Sentence saves the results of Chinese morphological analysis.">Sentence</a>
+<a name="l00081"></a>00081 {
+<a name="l00082"></a>00082 <span class="keyword">public</span>:
+<a name="l00088"></a>00088     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Sentence.html#40fb665bd2b2a19e430d4e474f3534a3">setString</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* pString);
+<a name="l00089"></a>00089 
+<a name="l00094"></a>00094     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Sentence.html#ee44e192f67dacbe6bc0cfc433cabb30">getString</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>;
+<a name="l00095"></a>00095 
+<a name="l00100"></a>00100     <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Sentence.html#883c3773c3f2a82f3b3b9fcae13ceb66">getListSize</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>;
+<a name="l00101"></a>00101 
+<a name="l00107"></a>00107     <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Sentence.html#5dd92e59708ea8cc61d3edc0d1fd830d">getCount</a>(<span class="keywordtype">int</span> nPos) <span class="keyword">const</span>;
+<a name="l00108"></a>00108 
+<a name="l00115"></a>00115     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Sentence.html#c8fd1b3aa8062fff6e88a31e723802ae">getLexicon</a>(<span class="keywordtype">int</span> nPos, <span class="keywordtype">int</span> nIdx) <span class="keyword">const</span>;
+<a name="l00116"></a>00116 
+<a name="l00123"></a>00123     <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Sentence.html#7e03360cc524ea35245c1b5a61c348e0">getPOS</a>(<span class="keywordtype">int</span> nPos, <span class="keywordtype">int</span> nIdx) <span class="keyword">const</span>;
+<a name="l00124"></a>00124 
+<a name="l00131"></a>00131     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1Sentence.html#6cb05837a84acf7d30fadb5bca6314db">getStrPOS</a>(<span class="keywordtype">int</span> nPos, <span class="keywordtype">int</span> nIdx) <span class="keyword">const</span>;
+<a name="l00132"></a>00132 
+<a name="l00138"></a>00138     <span class="keyword">const</span> MorphemeList* <a class="code" href="classcma_1_1Sentence.html#d782589b716eee9f5d25dfb60f5211ab">getMorphemeList</a>(<span class="keywordtype">int</span> nPos) <span class="keyword">const</span>;
+<a name="l00139"></a>00139 
+<a name="l00145"></a>00145     <span class="keywordtype">double</span> <a class="code" href="classcma_1_1Sentence.html#850f236efa3fa2b75b5b40cf35fbdd95">getScore</a>(<span class="keywordtype">int</span> nPos) <span class="keyword">const</span>;
 <a name="l00146"></a>00146 
-<a name="l00148"></a>00148     std::vector&lt;MorphemeList&gt; candidates_;
-<a name="l00149"></a>00149 
-<a name="l00151"></a>00151     std::vector&lt;double&gt; scores_;
-<a name="l00152"></a>00152 };
+<a name="l00152"></a>00152     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Sentence.html#e7676fbf7d34dc879ecbf448025cb080">setScore</a>(<span class="keywordtype">int</span> nPos, <span class="keywordtype">double</span> nScore);
 <a name="l00153"></a>00153 
-<a name="l00154"></a>00154 } <span class="comment">// namespace cma</span>
-<a name="l00155"></a>00155 
-<a name="l00156"></a>00156 <span class="preprocessor">#endif // CMA_SENTENCE_H</span>
+<a name="l00158"></a>00158     <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Sentence.html#f1ccc0e78beb1f7b8bd22e0c10efa8d4">getOneBestIndex</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>;
+<a name="l00159"></a>00159 
+<a name="l00165"></a>00165     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1Sentence.html#39f0e77ac6f3705ae6dc1b8e15118760">addList</a>(<span class="keyword">const</span> MorphemeList&amp; morphemeList, <span class="keywordtype">double</span> score = 0.0);
+<a name="l00166"></a>00166 
+<a name="l00167"></a>00167 <span class="keyword">private</span>:
+<a name="l00169"></a>00169     std::string raw_;
+<a name="l00170"></a>00170 
+<a name="l00172"></a>00172     std::vector&lt;MorphemeList&gt; candidates_;
+<a name="l00173"></a>00173 
+<a name="l00175"></a>00175     std::vector&lt;double&gt; scores_;
+<a name="l00176"></a>00176 };
+<a name="l00177"></a>00177 
+<a name="l00178"></a>00178 } <span class="comment">// namespace cma</span>
+<a name="l00179"></a>00179 
+<a name="l00180"></a>00180 <span class="preprocessor">#endif // CMA_SENTENCE_H</span>
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:06 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

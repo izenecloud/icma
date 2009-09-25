@@ -15,12 +15,6 @@ Inheritance diagram for cma::CMA\_\-CType\_\-GB2312::\begin{figure}[H]
 \begin{CompactItemize}
 \item 
 virtual unsigned int {\bf getByteCount} (const char $\ast$p) const 
-\item 
-virtual CharType {\bf getCharType} (const char $\ast$p, CharType preType, const char $\ast$nextP) const 
-\item 
-virtual bool {\bf isSpace} (const char $\ast$p) const 
-\item 
-virtual bool {\bf isSentenceSeparator} (const char $\ast$p) const 
 \end{CompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{CompactItemize}
@@ -43,7 +37,28 @@ static {\bf CMA\_\-CType\_\-GB2312} $\ast$ {\bf instance} ()
 \subsubsection[{CMA\_\-CType\_\-GB2312}]{\setlength{\rightskip}{0pt plus 5cm}cma::CMA\_\-CType\_\-GB2312::CMA\_\-CType\_\-GB2312 ()\hspace{0.3cm}{\tt  [protected]}}\label{classcma_1_1CMA__CType__GB2312_74352ef545209d1b8fd55fac0bf515c0}
 
 
-Avoid invoked directly 
+Get the character type. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]pointer to the string to be checked \item[{\em preType}]the chartype of the previous character \item[{\em nextP}]the pointer of the next character, it can be 0 \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]the character type. Check whether is white-space character. White-space characters are \char`\"{} $\backslash$t$\backslash$n$\backslash$v$\backslash$f$\backslash$r\char`\"{}, and also space character in specific encoding. \end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]pointer to the character string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]true for white-space character, false for non white-space character. Check whether is a separator of sentence. \end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em p}]pointer to the character string \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]true for separator, false for non separator. Avoid invoked directly \end{Desc}
+
 
 \subsection{Member Function Documentation}
 \index{cma::CMA\_\-CType\_\-GB2312@{cma::CMA\_\-CType\_\-GB2312}!getByteCount@{getByteCount}}
@@ -60,58 +75,16 @@ Get the byte count of the first character pointed by {\em p\/}, which character 
 \item[Returns:]the count of bytes. \end{Desc}
 
 
-Implements {\bf cma::CMA\_\-CType} \doxyref{}{p.}{classcma_1_1CMA__CType_00f7e99cea12e9db504629c4a6cdb2d4}.\index{cma::CMA\_\-CType\_\-GB2312@{cma::CMA\_\-CType\_\-GB2312}!getCharType@{getCharType}}
-\index{getCharType@{getCharType}!cma::CMA_CType_GB2312@{cma::CMA\_\-CType\_\-GB2312}}
-\subsubsection[{getCharType}]{\setlength{\rightskip}{0pt plus 5cm}CharType cma::CMA\_\-CType\_\-GB2312::getCharType (const char $\ast$ {\em p}, \/  CharType {\em preType}, \/  const char $\ast$ {\em nextP}) const\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__CType__GB2312_e0edf1c74d7a66ba6425b9010401456e}
-
-
-Get the character type. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em p}]pointer to the string to be checked \item[{\em preType}]the chartype of the previous character \item[{\em nextP}]the pointer of the next character, it can be 0 \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]the character type. \end{Desc}
-
-
-Implements {\bf cma::CMA\_\-CType} \doxyref{}{p.}{classcma_1_1CMA__CType_45412869e7ededc53dcc432d43d6a025}.\index{cma::CMA\_\-CType\_\-GB2312@{cma::CMA\_\-CType\_\-GB2312}!instance@{instance}}
+Implements {\bf cma::CMA\_\-CType} \doxyref{}{p.}{classcma_1_1CMA__CType_00f7e99cea12e9db504629c4a6cdb2d4}.\index{cma::CMA\_\-CType\_\-GB2312@{cma::CMA\_\-CType\_\-GB2312}!instance@{instance}}
 \index{instance@{instance}!cma::CMA_CType_GB2312@{cma::CMA\_\-CType\_\-GB2312}}
 \subsubsection[{instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-CType\_\-GB2312} $\ast$ cma::CMA\_\-CType\_\-GB2312::instance ()\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1CMA__CType__GB2312_f34c920bf4afbc1a764f97e8b8b6e8cd}
 
 
 Create an instance of {\em \doxyref{CMA\_\-CType\_\-GB2312}{p.}{classcma_1_1CMA__CType__GB2312}\/}. \begin{Desc}
 \item[Returns:]the pointer to instance \end{Desc}
-\index{cma::CMA\_\-CType\_\-GB2312@{cma::CMA\_\-CType\_\-GB2312}!isSentenceSeparator@{isSentenceSeparator}}
-\index{isSentenceSeparator@{isSentenceSeparator}!cma::CMA_CType_GB2312@{cma::CMA\_\-CType\_\-GB2312}}
-\subsubsection[{isSentenceSeparator}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-CType\_\-GB2312::isSentenceSeparator (const char $\ast$ {\em p}) const\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__CType__GB2312_07cae6abcfed1aec270f81de6473c518}
 
-
-Check whether is a separator of sentence. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em p}]pointer to the character string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]true for separator, false for non separator. \end{Desc}
-
-
-Implements {\bf cma::CMA\_\-CType} \doxyref{}{p.}{classcma_1_1CMA__CType_d53b4e758dae5bc9718eea3f9e3988d8}.\index{cma::CMA\_\-CType\_\-GB2312@{cma::CMA\_\-CType\_\-GB2312}!isSpace@{isSpace}}
-\index{isSpace@{isSpace}!cma::CMA_CType_GB2312@{cma::CMA\_\-CType\_\-GB2312}}
-\subsubsection[{isSpace}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-CType\_\-GB2312::isSpace (const char $\ast$ {\em p}) const\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__CType__GB2312_b8545abe4e27b3701d27f0a1067d80bf}
-
-
-Check whether is white-space character. White-space characters are \char`\"{} $\backslash$t$\backslash$n$\backslash$v$\backslash$f$\backslash$r\char`\"{}, and also space character in specific encoding. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em p}]pointer to the character string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]true for white-space character, false for non white-space character. \end{Desc}
-
-
-Implements {\bf cma::CMA\_\-CType} \doxyref{}{p.}{classcma_1_1CMA__CType_355d9f93a23d8af65fe63018c0558d4c}.
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
-source/include/{\bf cma\_\-ctype\_\-gb2312.h}\item 
-source/src/{\bf cma\_\-ctype\_\-gb2312.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-ma-chen/source/include/{\bf cma\_\-ctype\_\-gb2312.h}\item 
+/home/vernkin/projects/chinese-ma-chen/source/src/{\bf cma\_\-ctype\_\-gb2312.cpp}\end{CompactItemize}

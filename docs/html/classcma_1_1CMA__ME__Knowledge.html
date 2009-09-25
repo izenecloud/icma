@@ -61,6 +61,10 @@ Inheritance diagram for cma::CMA_ME_Knowledge:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Knowledge.html#578eab67c328dcde77c359f54cb6557f">encodeSystemDict</a> (const char *txtFileName, const char *binFileName)</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Knowledge.html#a557407ae67263ecc163f3d199c8abed">loadModel</a> (const char *encoding, const char *modelPath)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Knowledge.html#85107400ebf7d621078103a76c586ca8">isSupportPOS</a> () const </td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classcma_1_1SegTagger.html">SegTagger</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Knowledge.html#7f48d3975405b9e41217705142f85061">getSegTagger</a> () const </td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classcma_1_1POSTagger.html">POSTagger</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Knowledge.html#860d74235119267a3c58344e53eabd32">getPOSTagger</a> () const </td></tr>
@@ -69,8 +73,9 @@ Inheritance diagram for cma::CMA_ME_Knowledge:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classVTrie.html">VTrie</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Knowledge.html#c02421f6bb9c214fc389d13aa04671b1">getTrie</a> ()</td></tr>
 
-<tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Knowledge.html#76b7b94d614802f87589fddee4b6a9a0">initialize</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const <a class="el" href="classcma_1_1POSTable.html">POSTable</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Knowledge.html#19af09ab57d7d68495d6359d7fdf0a6b">getPOSTable</a> () const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const string *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Knowledge.html#a7b6f80e0598fd8e0db91b557550eb3f">getSystemProperty</a> (const string &amp;key)</td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
@@ -113,6 +118,27 @@ Encode the system dictionary file from text to binary format. <dl compact><dt><b
 
 </div>
 </div><p>
+<a class="anchor" name="19af09ab57d7d68495d6359d7fdf0a6b"></a><!-- doxytag: member="cma::CMA_ME_Knowledge::getPOSTable" ref="19af09ab57d7d68495d6359d7fdf0a6b" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classcma_1_1POSTable.html">POSTable</a> * cma::CMA_ME_Knowledge::getPOSTable           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Get <a class="el" href="classcma_1_1POSTable.html" title="POSTable stores the global table of part-of-speech tags.">POSTable</a> 
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00073">cma::CMA_ME_Analyzer::runWithSentence()</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="860d74235119267a3c58344e53eabd32"></a><!-- doxytag: member="cma::CMA_ME_Knowledge::getPOSTagger" ref="860d74235119267a3c58344e53eabd32" args="() const " -->
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +157,7 @@ Encode the system dictionary file from text to binary format. <dl compact><dt><b
 <p>
 Get the segment tagger. <dl class="return" compact><dt><b>Returns:</b></dt><dd>pointer to tagger </dd></dl>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00147">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00266">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
 
 </div>
 </div><p>
@@ -153,7 +179,7 @@ Get the segment tagger. <dl class="return" compact><dt><b>Returns:</b></dt><dd>p
 <p>
 Get the segment tagger. <dl class="return" compact><dt><b>Returns:</b></dt><dd>pointer to tagger </dd></dl>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00147">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00266">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
 
 </div>
 </div><p>
@@ -194,6 +220,34 @@ Get the Synonyms of the specific word <dl compact><dt><b>Parameters:</b></dt><dd
 
 </div>
 </div><p>
+<a class="anchor" name="a7b6f80e0598fd8e0db91b557550eb3f"></a><!-- doxytag: member="cma::CMA_ME_Knowledge::getSystemProperty" ref="a7b6f80e0598fd8e0db91b557550eb3f" args="(const string &amp;key)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const string * cma::CMA_ME_Knowledge::getSystemProperty           </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&nbsp;</td>
+          <td class="paramname"> <em>key</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Get System Property <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>key</em>&nbsp;</td><td>the name of that system property </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>if not exists, return 0. </dd></dl>
+
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00266">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="c02421f6bb9c214fc389d13aa04671b1"></a><!-- doxytag: member="cma::CMA_ME_Knowledge::getTrie" ref="c02421f6bb9c214fc389d13aa04671b1" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -215,27 +269,6 @@ Get the <a class="el" href="classVTrie.html" title="VTrie is a variant of the Ra
 
 </div>
 </div><p>
-<a class="anchor" name="76b7b94d614802f87589fddee4b6a9a0"></a><!-- doxytag: member="cma::CMA_ME_Knowledge::initialize" ref="76b7b94d614802f87589fddee4b6a9a0" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void cma::CMA_ME_Knowledge::initialize           </td>
-          <td>(</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [static]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Invoked by the <a class="el" href="classcma_1_1CMA__ME__Knowledge.html" title="Knowledge for the CMAC.">CMA_ME_Knowledge</a> Constructor 
-<p>References <a class="el" href="knowledge_8h-source.html#l00082">cma::Knowledge::ENCODE_TYPE_BIG5</a>, <a class="el" href="knowledge_8h-source.html#l00081">cma::Knowledge::ENCODE_TYPE_GB2312</a>, <a class="el" href="knowledge_8h-source.html#l00084">cma::Knowledge::ENCODE_TYPE_NUM</a>, and <a class="el" href="knowledge_8h-source.html#l00083">cma::Knowledge::ENCODE_TYPE_UTF8</a>.</p>
-
-</div>
-</div><p>
 <a class="anchor" name="4a25b70f78ec7309cb5cab8f08cc1248"></a><!-- doxytag: member="cma::CMA_ME_Knowledge::isStopWord" ref="4a25b70f78ec7309cb5cab8f08cc1248" args="(const string &amp;word)" -->
 <div class="memitem">
 <div class="memproto">
@@ -254,7 +287,31 @@ Invoked by the <a class="el" href="classcma_1_1CMA__ME__Knowledge.html" title="K
 
 <p>
 Whether the specific word is stop word 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00031">cma::CMA_ME_Analyzer::runWithSentence()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00073">cma::CMA_ME_Analyzer::runWithSentence()</a>, <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00157">cma::CMA_ME_Analyzer::runWithStream()</a>, and <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00232">cma::CMA_ME_Analyzer::runWithString()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="85107400ebf7d621078103a76c586ca8"></a><!-- doxytag: member="cma::CMA_ME_Knowledge::isSupportPOS" ref="85107400ebf7d621078103a76c586ca8" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cma::CMA_ME_Knowledge::isSupportPOS           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Whether contains POS model <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if contains POS model </dd></dl>
+
+<p>Implements <a class="el" href="classcma_1_1Knowledge.html#bd68fed5c90c2e04facc6a760670b0a4">cma::Knowledge</a>.</p>
+
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00266">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
 
 </div>
 </div><p>
@@ -284,7 +341,41 @@ Load the configuration file, which is in text format. This file contains the con
 
 <p>Implements <a class="el" href="classcma_1_1Knowledge.html#e4e24baf6f35004fd1d788b1b28a7ad1">cma::Knowledge</a>.</p>
 
-<p>References <a class="el" href="pos__table_8cpp-source.html#l00042">cma::POSTable::instance()</a>, and <a class="el" href="pos__table_8cpp-source.html#l00095">cma::POSTable::loadConfig()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00262">loadModel()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="a557407ae67263ecc163f3d199c8abed"></a><!-- doxytag: member="cma::CMA_ME_Knowledge::loadModel" ref="a557407ae67263ecc163f3d199c8abed" args="(const char *encoding, const char *modelPath)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int cma::CMA_ME_Knowledge::loadModel           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>encoding</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>modelPath</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Auto load POS model, Stat Model and System Dictionaries. Encoding must be set here.  like gb18030 and utf8  the directory that contains all the models <dl class="return" compact><dt><b>Returns:</b></dt><dd>whether perform success </dd></dl>
+
+<p>Implements <a class="el" href="classcma_1_1Knowledge.html#ee11a77da864e824c55b9bf1b22c032c">cma::Knowledge</a>.</p>
+
+<p>References <a class="el" href="knowledge_8cpp-source.html#l00055">cma::Knowledge::decodeEncodeType()</a>, <a class="el" href="knowledge_8h-source.html#l00084">cma::Knowledge::ENCODE_TYPE_NUM</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00350">loadConfig()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00045">loadPOSModel()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00083">loadStatModel()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00195">loadUserDict()</a>, and <a class="el" href="knowledge_8cpp-source.html#l00045">cma::Knowledge::setEncodeType()</a>.</p>
 
 </div>
 </div><p>
@@ -314,7 +405,9 @@ Load the model file in binary format, which contains statistical information for
 
 <p>Implements <a class="el" href="classcma_1_1Knowledge.html#4ceb02d9154efd5bd8e35dfab9777644">cma::Knowledge</a>.</p>
 
-<p>References <a class="el" href="pos__table_8cpp-source.html#l00056">cma::POSTable::addPOS()</a>, and <a class="el" href="pos__table_8cpp-source.html#l00042">cma::POSTable::instance()</a>.</p>
+<p>References <a class="el" href="pos__table_8cpp-source.html#l00044">cma::POSTable::addPOS()</a>, <a class="el" href="CMAPOSTagger_8h-source.html#l00206">cma::POSTagger::datePOS</a>, <a class="el" href="CMAPOSTagger_8h-source.html#l00194">cma::POSTagger::defaultPOS</a>, <a class="el" href="CMAPOSTagger_8h-source.html#l00200">cma::POSTagger::letterPOS</a>, <a class="el" href="CMAPOSTagger_8h-source.html#l00197">cma::POSTagger::numberPOS</a>, and <a class="el" href="CMAPOSTagger_8h-source.html#l00203">cma::POSTagger::puncPOS</a>.</p>
+
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00262">loadModel()</a>.</p>
 
 </div>
 </div><p>
@@ -343,6 +436,10 @@ Load the model file in binary format, which contains statistical information for
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>0 for fail, 1 for success </dd></dl>
 
 <p>Implements <a class="el" href="classcma_1_1Knowledge.html#c54810dbc59c5c5df69c7bef38fb0d51">cma::Knowledge</a>.</p>
+
+<p>References <a class="el" href="knowledge_8cpp-source.html#l00050">cma::Knowledge::getEncodeType()</a>, <a class="el" href="cma__ctype_8cpp-source.html#l00024">cma::CMA_CType::instance()</a>, and <a class="el" href="cma__ctype_8cpp-source.html#l00261">cma::CMA_CType::loadConfiguration()</a>.</p>
+
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00262">loadModel()</a>.</p>
 
 </div>
 </div><p>
@@ -426,8 +523,6 @@ Load the system dictionary file, which is in binary format. <dl compact><dt><b>P
 
 <p>Implements <a class="el" href="classcma_1_1Knowledge.html#920159ccb5752992ea7ac7e87eedd1c0">cma::Knowledge</a>.</p>
 
-<p>References <a class="el" href="CMAPOSTagger_8cc-source.html#l00433">cma::POSTagger::appendWordPOS()</a>.</p>
-
 </div>
 </div><p>
 <a class="anchor" name="d0dac8d22ab4c3c97a281f26c95ee9e2"></a><!-- doxytag: member="cma::CMA_ME_Knowledge::loadUserDict" ref="d0dac8d22ab4c3c97a281f26c95ee9e2" args="(const char *fileName)" -->
@@ -456,14 +551,14 @@ Load the user dictionary file, which is in text format. <dl compact><dt><b>Param
 
 <p>Implements <a class="el" href="classcma_1_1Knowledge.html#739fb78f864bef65fbb70b728492311f">cma::Knowledge</a>.</p>
 
-<p>References <a class="el" href="CMAPOSTagger_8cc-source.html#l00433">cma::POSTagger::appendWordPOS()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00262">loadModel()</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
-<li>source/include/<a class="el" href="CMA__ME__Knowledge_8h-source.html">CMA_ME_Knowledge.h</a><li>source/src/<a class="el" href="CMA__ME__Knowledge_8cc.html">CMA_ME_Knowledge.cc</a></ul>
+<li>/home/vernkin/projects/chinese-ma-chen/source/include/<a class="el" href="CMA__ME__Knowledge_8h-source.html">CMA_ME_Knowledge.h</a><li>/home/vernkin/projects/chinese-ma-chen/source/src/<a class="el" href="CMA__ME__Knowledge_8cc.html">CMA_ME_Knowledge.cc</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:06 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

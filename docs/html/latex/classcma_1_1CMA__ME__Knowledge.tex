@@ -32,6 +32,10 @@ virtual int {\bf loadConfig} (const char $\ast$fileName)
 \item 
 virtual int {\bf encodeSystemDict} (const char $\ast$txtFileName, const char $\ast$binFileName)
 \item 
+virtual int {\bf loadModel} (const char $\ast$encoding, const char $\ast$modelPath)
+\item 
+virtual bool {\bf isSupportPOS} () const 
+\item 
 {\bf SegTagger} $\ast$ {\bf getSegTagger} () const 
 \item 
 {\bf POSTagger} $\ast$ {\bf getPOSTagger} () const 
@@ -39,11 +43,10 @@ virtual int {\bf encodeSystemDict} (const char $\ast$txtFileName, const char $\a
 bool {\bf isStopWord} (const string \&word)
 \item 
 {\bf VTrie} $\ast$ {\bf getTrie} ()
-\end{CompactItemize}
-\subsection*{Static Public Member Functions}
-\begin{CompactItemize}
 \item 
-static void {\bf initialize} ()
+const {\bf POSTable} $\ast$ {\bf getPOSTable} () const 
+\item 
+const string $\ast$ {\bf getSystemProperty} (const string \&key)
 \end{CompactItemize}
 
 
@@ -65,7 +68,14 @@ Encode the system dictionary file from text to binary format. \begin{Desc}
 \item[Returns:]0 for fail, 1 for success \end{Desc}
 
 
-Implements {\bf cma::Knowledge} \doxyref{}{p.}{classcma_1_1Knowledge_7c89dffabc4e75961d760586db283d1d}.\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!getPOSTagger@{getPOSTagger}}
+Implements {\bf cma::Knowledge} \doxyref{}{p.}{classcma_1_1Knowledge_7c89dffabc4e75961d760586db283d1d}.\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!getPOSTable@{getPOSTable}}
+\index{getPOSTable@{getPOSTable}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
+\subsubsection[{getPOSTable}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf POSTable} $\ast$ cma::CMA\_\-ME\_\-Knowledge::getPOSTable () const}\label{classcma_1_1CMA__ME__Knowledge_19af09ab57d7d68495d6359d7fdf0a6b}
+
+
+Get \doxyref{POSTable}{p.}{classcma_1_1POSTable} 
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!getPOSTagger@{getPOSTagger}}
 \index{getPOSTagger@{getPOSTagger}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
 \subsubsection[{getPOSTagger}]{\setlength{\rightskip}{0pt plus 5cm}{\bf POSTagger} $\ast$ cma::CMA\_\-ME\_\-Knowledge::getPOSTagger () const}\label{classcma_1_1CMA__ME__Knowledge_860d74235119267a3c58344e53eabd32}
 
@@ -95,7 +105,21 @@ Get the Synonyms of the specific word \begin{Desc}
 \end{Desc}
 
 
-References VSynonymContainer::get\_\-synonyms().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!getTrie@{getTrie}}
+References VSynonymContainer::get\_\-synonyms().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!getSystemProperty@{getSystemProperty}}
+\index{getSystemProperty@{getSystemProperty}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
+\subsubsection[{getSystemProperty}]{\setlength{\rightskip}{0pt plus 5cm}const string $\ast$ cma::CMA\_\-ME\_\-Knowledge::getSystemProperty (const string \& {\em key})}\label{classcma_1_1CMA__ME__Knowledge_a7b6f80e0598fd8e0db91b557550eb3f}
+
+
+Get System Property \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em key}]the name of that system property \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]if not exists, return 0. \end{Desc}
+
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!getTrie@{getTrie}}
 \index{getTrie@{getTrie}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
 \subsubsection[{getTrie}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VTrie} $\ast$ cma::CMA\_\-ME\_\-Knowledge::getTrie ()}\label{classcma_1_1CMA__ME__Knowledge_c02421f6bb9c214fc389d13aa04671b1}
 
@@ -104,21 +128,25 @@ Get the \doxyref{VTrie}{p.}{classVTrie} that \doxyref{Knowledge}{p.}{classcma_1_
 
 \begin{Desc}
 \item[Returns:]the \doxyref{VTrie}{p.}{classVTrie} that \doxyref{Knowledge}{p.}{classcma_1_1Knowledge} holds \end{Desc}
-\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!initialize@{initialize}}
-\index{initialize@{initialize}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
-\subsubsection[{initialize}]{\setlength{\rightskip}{0pt plus 5cm}void cma::CMA\_\-ME\_\-Knowledge::initialize ()\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1CMA__ME__Knowledge_76b7b94d614802f87589fddee4b6a9a0}
-
-
-Invoked by the \doxyref{CMA\_\-ME\_\-Knowledge}{p.}{classcma_1_1CMA__ME__Knowledge} Constructor 
-
-References cma::Knowledge::ENCODE\_\-TYPE\_\-BIG5, cma::Knowledge::ENCODE\_\-TYPE\_\-GB2312, cma::Knowledge::ENCODE\_\-TYPE\_\-NUM, and cma::Knowledge::ENCODE\_\-TYPE\_\-UTF8.\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!isStopWord@{isStopWord}}
+\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!isStopWord@{isStopWord}}
 \index{isStopWord@{isStopWord}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
 \subsubsection[{isStopWord}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-ME\_\-Knowledge::isStopWord (const string \& {\em word})}\label{classcma_1_1CMA__ME__Knowledge_4a25b70f78ec7309cb5cab8f08cc1248}
 
 
 Whether the specific word is stop word 
 
-Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!loadConfig@{loadConfig}}
+Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence(), cma::CMA\_\-ME\_\-Analyzer::runWithStream(), and cma::CMA\_\-ME\_\-Analyzer::runWithString().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!isSupportPOS@{isSupportPOS}}
+\index{isSupportPOS@{isSupportPOS}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
+\subsubsection[{isSupportPOS}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-ME\_\-Knowledge::isSupportPOS () const\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Knowledge_85107400ebf7d621078103a76c586ca8}
+
+
+Whether contains POS model \begin{Desc}
+\item[Returns:]true if contains POS model \end{Desc}
+
+
+Implements {\bf cma::Knowledge} \doxyref{}{p.}{classcma_1_1Knowledge_bd68fed5c90c2e04facc6a760670b0a4}.
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!loadConfig@{loadConfig}}
 \index{loadConfig@{loadConfig}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
 \subsubsection[{loadConfig}]{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Knowledge::loadConfig (const char $\ast$ {\em fileName})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Knowledge_74836fae9065f4c4869a2dde144a5f63}
 
@@ -134,7 +162,18 @@ Load the configuration file, which is in text format. This file contains the con
 
 Implements {\bf cma::Knowledge} \doxyref{}{p.}{classcma_1_1Knowledge_e4e24baf6f35004fd1d788b1b28a7ad1}.
 
-References cma::POSTable::instance(), and cma::POSTable::loadConfig().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!loadPOSModel@{loadPOSModel}}
+Referenced by loadModel().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!loadModel@{loadModel}}
+\index{loadModel@{loadModel}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
+\subsubsection[{loadModel}]{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Knowledge::loadModel (const char $\ast$ {\em encoding}, \/  const char $\ast$ {\em modelPath})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Knowledge_a557407ae67263ecc163f3d199c8abed}
+
+
+Auto load POS model, Stat Model and System Dictionaries. Encoding must be set here.  like gb18030 and utf8  the directory that contains all the models \begin{Desc}
+\item[Returns:]whether perform success \end{Desc}
+
+
+Implements {\bf cma::Knowledge} \doxyref{}{p.}{classcma_1_1Knowledge_ee11a77da864e824c55b9bf1b22c032c}.
+
+References cma::Knowledge::decodeEncodeType(), cma::Knowledge::ENCODE\_\-TYPE\_\-NUM, loadConfig(), loadPOSModel(), loadStatModel(), loadUserDict(), and cma::Knowledge::setEncodeType().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!loadPOSModel@{loadPOSModel}}
 \index{loadPOSModel@{loadPOSModel}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
 \subsubsection[{loadPOSModel}]{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Knowledge::loadPOSModel (const char $\ast$ {\em cateName})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Knowledge_29a87c6902ebaf8364fbee0e4aa20127}
 
@@ -150,7 +189,9 @@ Load the model file in binary format, which contains statistical information for
 
 Implements {\bf cma::Knowledge} \doxyref{}{p.}{classcma_1_1Knowledge_4ceb02d9154efd5bd8e35dfab9777644}.
 
-References cma::POSTable::addPOS(), and cma::POSTable::instance().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!loadStatModel@{loadStatModel}}
+References cma::POSTable::addPOS(), cma::POSTagger::datePOS, cma::POSTagger::defaultPOS, cma::POSTagger::letterPOS, cma::POSTagger::numberPOS, and cma::POSTagger::puncPOS.
+
+Referenced by loadModel().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!loadStatModel@{loadStatModel}}
 \index{loadStatModel@{loadStatModel}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
 \subsubsection[{loadStatModel}]{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Knowledge::loadStatModel (const char $\ast$ {\em cateName})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Knowledge_cc8f15814d4e6a248f29636a29116756}
 
@@ -164,7 +205,11 @@ Load the model file in binary format, which contains statistical information for
 \item[Returns:]0 for fail, 1 for success \end{Desc}
 
 
-Implements {\bf cma::Knowledge} \doxyref{}{p.}{classcma_1_1Knowledge_c54810dbc59c5c5df69c7bef38fb0d51}.\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!loadStopWordDict@{loadStopWordDict}}
+Implements {\bf cma::Knowledge} \doxyref{}{p.}{classcma_1_1Knowledge_c54810dbc59c5c5df69c7bef38fb0d51}.
+
+References cma::Knowledge::getEncodeType(), cma::CMA\_\-CType::instance(), and cma::CMA\_\-CType::loadConfiguration().
+
+Referenced by loadModel().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!loadStopWordDict@{loadStopWordDict}}
 \index{loadStopWordDict@{loadStopWordDict}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
 \subsubsection[{loadStopWordDict}]{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Knowledge::loadStopWordDict (const char $\ast$ {\em fileName})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Knowledge_ef7750521cda2746bae8325f37dc9a48}
 
@@ -204,9 +249,7 @@ Load the system dictionary file, which is in binary format. \begin{Desc}
 \item[Returns:]0 for fail, 1 for success \end{Desc}
 
 
-Implements {\bf cma::Knowledge} \doxyref{}{p.}{classcma_1_1Knowledge_920159ccb5752992ea7ac7e87eedd1c0}.
-
-References cma::POSTagger::appendWordPOS().\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!loadUserDict@{loadUserDict}}
+Implements {\bf cma::Knowledge} \doxyref{}{p.}{classcma_1_1Knowledge_920159ccb5752992ea7ac7e87eedd1c0}.\index{cma::CMA\_\-ME\_\-Knowledge@{cma::CMA\_\-ME\_\-Knowledge}!loadUserDict@{loadUserDict}}
 \index{loadUserDict@{loadUserDict}!cma::CMA_ME_Knowledge@{cma::CMA\_\-ME\_\-Knowledge}}
 \subsubsection[{loadUserDict}]{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Knowledge::loadUserDict (const char $\ast$ {\em fileName})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Knowledge_d0dac8d22ab4c3c97a281f26c95ee9e2}
 
@@ -222,9 +265,9 @@ Load the user dictionary file, which is in text format. \begin{Desc}
 
 Implements {\bf cma::Knowledge} \doxyref{}{p.}{classcma_1_1Knowledge_739fb78f864bef65fbb70b728492311f}.
 
-References cma::POSTagger::appendWordPOS().
+Referenced by loadModel().
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
-source/include/{\bf CMA\_\-ME\_\-Knowledge.h}\item 
-source/src/{\bf CMA\_\-ME\_\-Knowledge.cc}\end{CompactItemize}
+/home/vernkin/projects/chinese-ma-chen/source/include/{\bf CMA\_\-ME\_\-Knowledge.h}\item 
+/home/vernkin/projects/chinese-ma-chen/source/src/{\bf CMA\_\-ME\_\-Knowledge.cc}\end{CompactItemize}

@@ -58,9 +58,6 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#d6c9ee24dd82620d36d4de8018702546">getCodeFromType</a> (<a class="el" href="classcma_1_1POSTable.html#b65c0d7bf4f492aeff968cf462b6c001">POSType</a> type) const </td></tr>
 
-<tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="classcma_1_1POSTable.html">POSTable</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#8ce731b2b76aced0b76092b5b216aa1d">instance</a> ()</td></tr>
-
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 <a class="el" href="classcma_1_1POSTable.html" title="POSTable stores the global table of part-of-speech tags.">POSTable</a> stores the global table of part-of-speech tags. 
@@ -123,7 +120,7 @@ Add the POS string to the global part-of-speech table. <dl compact><dt><b>Parame
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the index code of the POS string added, if the POS string has been added before, its index code previously added is returned. </dd></dl>
 <dl class="attention" compact><dt><b>Attention:</b></dt><dd>Note that the POS string is case-insensitively. </dd></dl>
 
-<p>Referenced by <a class="el" href="pos__table_8cpp-source.html#l00095">loadConfig()</a>, and <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00037">cma::CMA_ME_Knowledge::loadPOSModel()</a>.</p>
+<p>Referenced by <a class="el" href="pos__table_8cpp-source.html#l00083">loadConfig()</a>, and <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00045">cma::CMA_ME_Knowledge::loadPOSModel()</a>.</p>
 
 </div>
 </div><p>
@@ -150,8 +147,6 @@ Get the POS index code from the POS string in the global part-of-speech table. <
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>POS index code, -1 for non POS available </dd></dl>
-
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00031">cma::CMA_ME_Analyzer::runWithSentence()</a>.</p>
 
 </div>
 </div><p>
@@ -205,30 +200,6 @@ Get the POS string from the POS index code in the global part-of-speech table. <
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>POS string, null pointer for non POS available </dd></dl>
 
-<p>Referenced by <a class="el" href="sentence_8cpp-source.html#l00054">cma::Sentence::getStrPOS()</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="8ce731b2b76aced0b76092b5b216aa1d"></a><!-- doxytag: member="cma::POSTable::instance" ref="8ce731b2b76aced0b76092b5b216aa1d" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classcma_1_1POSTable.html">POSTable</a> * cma::POSTable::instance           </td>
-          <td>(</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [static]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Create an instance of <em><a class="el" href="classcma_1_1POSTable.html" title="POSTable stores the global table of part-of-speech tags.">POSTable</a></em>. <dl class="return" compact><dt><b>Returns:</b></dt><dd>the pointer to instance </dd></dl>
-
-<p>Referenced by <a class="el" href="sentence_8cpp-source.html#l00054">cma::Sentence::getStrPOS()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00245">cma::CMA_ME_Knowledge::loadConfig()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00037">cma::CMA_ME_Knowledge::loadPOSModel()</a>, and <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00031">cma::CMA_ME_Analyzer::runWithSentence()</a>.</p>
-
 </div>
 </div><p>
 <a class="anchor" name="a70a1e82116a1855f9599aeb48cb5139"></a><!-- doxytag: member="cma::POSTable::loadConfig" ref="a70a1e82116a1855f9599aeb48cb5139" args="(const char *fileName)" -->
@@ -255,9 +226,7 @@ Load the configuration file, which is in text format. This file contains the par
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>0 for fail, 1 for success </dd></dl>
 
-<p>References <a class="el" href="pos__table_8cpp-source.html#l00056">addPOS()</a>.</p>
-
-<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00245">cma::CMA_ME_Knowledge::loadConfig()</a>.</p>
+<p>References <a class="el" href="pos__table_8cpp-source.html#l00044">addPOS()</a>.</p>
 
 </div>
 </div><p>
@@ -282,9 +251,9 @@ Get the number of POS tags in the global part-of-speech table. <dl class="return
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
-<li>source/include/<a class="el" href="pos__table_8h-source.html">pos_table.h</a><li>source/src/<a class="el" href="pos__table_8cpp.html">pos_table.cpp</a></ul>
+<li>/home/vernkin/projects/chinese-ma-chen/source/include/<a class="el" href="pos__table_8h-source.html">pos_table.h</a><li>/home/vernkin/projects/chinese-ma-chen/source/src/<a class="el" href="pos__table_8cpp.html">pos_table.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:06 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Chinese&nbsp;Morphological&nbsp;Analyzer(Chen): include/knowledge.h Source File</title>
+<title>Chinese&nbsp;Morphological&nbsp;Analyzer(Chen): /home/vernkin/projects/chinese-ma-chen/include/knowledge.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 </head><body>
@@ -19,7 +19,7 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>include/knowledge.h</h1><a href="knowledge_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<h1>/home/vernkin/projects/chinese-ma-chen/include/knowledge.h</h1><a href="knowledge_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00008"></a>00008 <span class="preprocessor">#ifndef CMA_KNOWLEDGE_H</span>
 <a name="l00009"></a>00009 <span class="preprocessor"></span><span class="preprocessor">#define CMA_KNOWLEDGE_H</span>
 <a name="l00010"></a>00010 <span class="preprocessor"></span>
@@ -50,7 +50,7 @@
 <a name="l00080"></a>00080     {
 <a name="l00081"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d763b86f1378cda2ae30f3690a8c67b0d">00081</a>         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d763b86f1378cda2ae30f3690a8c67b0d" title="GB 2312 character type.">ENCODE_TYPE_GB2312</a>, 
 <a name="l00082"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfd187e4741157876b1a805c0c3ddec27">00082</a>         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfd187e4741157876b1a805c0c3ddec27" title="Big 5 character type.">ENCODE_TYPE_BIG5</a>, 
-<a name="l00083"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dc1a4019681243fa73708e4879f3b951d">00083</a>         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dc1a4019681243fa73708e4879f3b951d" title="UTF8 character type.">ENCODE_TYPE_UTF8</a>, 
+<a name="l00083"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d01479a3bd80149d4f5e89a50fc4122a0">00083</a>     <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d01479a3bd80149d4f5e89a50fc4122a0" title="GB18030 character type.">ENCODE_TYPE_GB18030</a>, 
 <a name="l00084"></a><a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfeaa8f94b6c57c430302ea94c41b1d8a">00084</a>         <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1dfeaa8f94b6c57c430302ea94c41b1d8a" title="the count of character types">ENCODE_TYPE_NUM</a> 
 <a name="l00085"></a>00085     };
 <a name="l00086"></a>00086 
@@ -58,15 +58,21 @@
 <a name="l00093"></a>00093 
 <a name="l00098"></a>00098     <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a> <a class="code" href="classcma_1_1Knowledge.html#26dac4378bb4192a598118abdef70ad9">getEncodeType</a>() <span class="keyword">const</span>;
 <a name="l00099"></a>00099 
-<a name="l00100"></a>00100 <span class="keyword">private</span>:
-<a name="l00102"></a>00102     <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a> encodeType_;
-<a name="l00103"></a>00103 };
-<a name="l00104"></a>00104 
-<a name="l00105"></a>00105 }
-<a name="l00106"></a>00106 
-<a name="l00107"></a>00107 <span class="preprocessor">#endif // CMA_KNOWLEDGE_H</span>
+<a name="l00106"></a>00106     <span class="keyword">static</span> <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> <a class="code" href="classcma_1_1Knowledge.html#5b506216f981d35174af4e5066073275">decodeEncodeType</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* encType);
+<a name="l00107"></a>00107 
+<a name="l00115"></a>00115     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1Knowledge.html#ee11a77da864e824c55b9bf1b22c032c">loadModel</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* encoding, <span class="keyword">const</span> <span class="keywordtype">char</span>* modelPath) = 0;
+<a name="l00116"></a>00116 
+<a name="l00121"></a>00121     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1Knowledge.html#bd68fed5c90c2e04facc6a760670b0a4">isSupportPOS</a>() <span class="keyword">const</span> = 0;
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123 <span class="keyword">private</span>:
+<a name="l00125"></a>00125     <a class="code" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">EncodeType</a> encodeType_;
+<a name="l00126"></a>00126 };
+<a name="l00127"></a>00127 
+<a name="l00128"></a>00128 }
+<a name="l00129"></a>00129 
+<a name="l00130"></a>00130 <span class="preprocessor">#endif // CMA_KNOWLEDGE_H</span>
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:06 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

@@ -35,8 +35,9 @@ Inheritance diagram for cma::CMA_CType:</div>
 
 <p><center><img src="classcma_1_1CMA__CType.png" usemap="#cma::CMA_CType_map" border="0" alt=""></center>
 <map name="cma::CMA_CType_map">
-<area href="classcma_1_1CMA__CType__Big5.html" alt="cma::CMA_CType_Big5" shape="rect" coords="0,56,166,80">
-<area href="classcma_1_1CMA__CType__GB2312.html" alt="cma::CMA_CType_GB2312" shape="rect" coords="176,56,342,80">
+<area href="classcma_1_1CMA__CType__Big5.html" alt="cma::CMA_CType_Big5" shape="rect" coords="0,56,173,80">
+<area href="classcma_1_1CMA__CType__GB18030.html" alt="cma::CMA_CType_GB18030" shape="rect" coords="183,56,356,80">
+<area href="classcma_1_1CMA__CType__GB2312.html" alt="cma::CMA_CType_GB2312" shape="rect" coords="366,56,539,80">
 </map>
 </div>
 
@@ -48,20 +49,24 @@ Inheritance diagram for cma::CMA_CType:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#00f7e99cea12e9db504629c4a6cdb2d4">getByteCount</a> (const char *p) const =0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual CharType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#45412869e7ededc53dcc432d43d6a025">getCharType</a> (const char *p, CharType preType, const char *nextP) const =0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">CharType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#36e9b60205fad71d91f60752d47135a4">getCharType</a> (const char *p, CharType preType, const char *nextP) const </td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#b9fbb6aa32fd36bb3838b48ffb92bf24">isPunct</a> (const char *p) const </td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#4583d638f7336cf0a548905e8e88f826">length</a> (const char *p) const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#355d9f93a23d8af65fe63018c0558d4c">isSpace</a> (const char *p) const =0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#493df55a7117400553d64b63d0809e0d">getEncodeValue</a> (const char *p) const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#d53b4e758dae5bc9718eea3f9e3988d8">isSentenceSeparator</a> (const char *p) const =0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#9570155ad79775281e9042b796f85f3c">isSpace</a> (const char *p) const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#d6d58ef5f016e64e07ded48d434d24f2">isSentenceSeparator</a> (const char *p) const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#c8a0564b888569e891e00ee72e03ead8">loadConfiguration</a> (const char *file)</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="classcma_1_1CMA__CType.html">CMA_CType</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#a0a1b4e5959587032b22036c64790314">instance</a> (<a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> type)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#2a912dfae4c56e70a20f920ac564890b">getEncType</a> (string encType)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static CharType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#b6de8d1bf6014e5caf7f8b638f3d24cc">getCharTypeByXmlName</a> (const char *name, bool noDefault=false)</td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
@@ -112,18 +117,18 @@ Get the byte count of the first character pointed by <em>p</em>, which character
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true for punctuation, false for non punctuation. </dd></dl>
 
-<p>Implemented in <a class="el" href="classcma_1_1CMA__CType__Big5.html#0e471b0985214eb074b69fe273cde7f5">cma::CMA_CType_Big5</a>, and <a class="el" href="classcma_1_1CMA__CType__GB2312.html#057ccee8e82b0a22a30b79fb2f059b8f">cma::CMA_CType_GB2312</a>.</p>
+<p>Implemented in <a class="el" href="classcma_1_1CMA__CType__Big5.html#0e471b0985214eb074b69fe273cde7f5">cma::CMA_CType_Big5</a>, <a class="el" href="classcma_1_1CMA__CType__GB18030.html#1d6d026a400245efbf365f1b21698318">cma::CMA_CType_GB18030</a>, and <a class="el" href="classcma_1_1CMA__CType__GB2312.html#057ccee8e82b0a22a30b79fb2f059b8f">cma::CMA_CType_GB2312</a>.</p>
 
-<p>Referenced by <a class="el" href="cma__ctype_8cpp-source.html#l00054">length()</a>, and <a class="el" href="tokenizer_8cpp-source.html#l00040">cma::CTypeTokenizer::next()</a>.</p>
+<p>Referenced by <a class="el" href="cma__ctype_8cpp-source.html#l00090">getEncodeValue()</a>, <a class="el" href="cma__ctype_8cpp-source.html#l00077">length()</a>, and <a class="el" href="tokenizer_8cpp-source.html#l00040">cma::CTypeTokenizer::next()</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="45412869e7ededc53dcc432d43d6a025"></a><!-- doxytag: member="cma::CMA_CType::getCharType" ref="45412869e7ededc53dcc432d43d6a025" args="(const char *p, CharType preType, const char *nextP) const =0" -->
+<a class="anchor" name="36e9b60205fad71d91f60752d47135a4"></a><!-- doxytag: member="cma::CMA_CType::getCharType" ref="36e9b60205fad71d91f60752d47135a4" args="(const char *p, CharType preType, const char *nextP) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual CharType cma::CMA_CType::getCharType           </td>
+          <td class="memname">CharType cma::CMA_CType::getCharType           </td>
           <td>(</td>
           <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>p</em>, </td>
@@ -143,7 +148,7 @@ Get the byte count of the first character pointed by <em>p</em>, which character
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td> const<code> [pure virtual]</code></td>
+          <td></td><td></td><td> const</td>
         </tr>
       </table>
 </div>
@@ -159,38 +164,70 @@ Get the character type. <dl compact><dt><b>Parameters:</b></dt><dd>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the character type. </dd></dl>
 
-<p>Implemented in <a class="el" href="classcma_1_1CMA__CType__Big5.html#a125ef224739df73781aa6ee55d28b38">cma::CMA_CType_Big5</a>, and <a class="el" href="classcma_1_1CMA__CType__GB2312.html#e0edf1c74d7a66ba6425b9010401456e">cma::CMA_CType_GB2312</a>.</p>
+<p>References <a class="el" href="cma__ctype__core_8h-source.html#l00174">cma::CharConditions::baseType_</a>, <a class="el" href="cma__ctype_8cpp-source.html#l00090">getEncodeValue()</a>, and <a class="el" href="cma__ctype__core_8cc-source.html#l00201">cma::CharConditions::match()</a>.</p>
 
-<p>Referenced by <a class="el" href="cma__wtype_8cpp-source.html#l00024">cma::CMA_WType::getWordType()</a>, <a class="el" href="cma__ctype_8cpp-source.html#l00050">isPunct()</a>, and <a class="el" href="CateStrTokenizer_8cc-source.html#l00035">cma::CateStrTokenizer::next()</a>.</p>
+<p>Referenced by <a class="el" href="cma__wtype_8cpp-source.html#l00024">cma::CMA_WType::getWordType()</a>, <a class="el" href="cma__ctype_8cpp-source.html#l00073">isPunct()</a>, and <a class="el" href="CateStrTokenizer_8cc-source.html#l00035">cma::CateStrTokenizer::next()</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="2a912dfae4c56e70a20f920ac564890b"></a><!-- doxytag: member="cma::CMA_CType::getEncType" ref="2a912dfae4c56e70a20f920ac564890b" args="(string encType)" -->
+<a class="anchor" name="b6de8d1bf6014e5caf7f8b638f3d24cc"></a><!-- doxytag: member="cma::CMA_CType::getCharTypeByXmlName" ref="b6de8d1bf6014e5caf7f8b638f3d24cc" args="(const char *name, bool noDefault=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> cma::CMA_CType::getEncType           </td>
+          <td class="memname">CharType cma::CMA_CType::getCharTypeByXmlName           </td>
           <td>(</td>
-          <td class="paramtype">string&nbsp;</td>
-          <td class="paramname"> <em>encType</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [static]</code></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>noDefault</em> = <code>false</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [static]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>
-Get the encoding type by the encode type string<p>
-<dl compact><dt><b>Parameters:</b></dt><dd>
+The naming in the poc.xml, include digit, chardigit, space, letter, punctuation <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>encType</em>&nbsp;</td><td>encode type string </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>noDefault</em>&nbsp;</td><td>if true, an assert error will occur </td></tr>
   </table>
 </dl>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd>assicated <a class="el" href="classcma_1_1Knowledge.html#2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> in the class <a class="el" href="classcma_1_1Knowledge.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">Knowledge</a> </dd></dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>if not found, return CHAR_TYPE_OTHER </dd></dl>
 
-<p>References <a class="el" href="knowledge_8h-source.html#l00082">cma::Knowledge::ENCODE_TYPE_BIG5</a>, <a class="el" href="knowledge_8h-source.html#l00081">cma::Knowledge::ENCODE_TYPE_GB2312</a>, and <a class="el" href="knowledge_8h-source.html#l00084">cma::Knowledge::ENCODE_TYPE_NUM</a>.</p>
+</div>
+</div><p>
+<a class="anchor" name="493df55a7117400553d64b63d0809e0d"></a><!-- doxytag: member="cma::CMA_CType::getEncodeValue" ref="493df55a7117400553d64b63d0809e0d" args="(const char *p) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int cma::CMA_CType::getEncodeValue           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>p</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Get the encoding value in unsigned int type<p>
+param p the character with pointer p <dl class="return" compact><dt><b>Returns:</b></dt><dd>unsigned int value of p, 0 if error occurs </dd></dl>
+
+<p>References <a class="el" href="classcma_1_1CMA__CType.html#00f7e99cea12e9db504629c4a6cdb2d4">getByteCount()</a>.</p>
+
+<p>Referenced by <a class="el" href="cma__ctype_8cpp-source.html#l00317">getCharType()</a>, <a class="el" href="cma__ctype_8cpp-source.html#l00338">isSentenceSeparator()</a>, and <a class="el" href="cma__ctype_8cpp-source.html#l00332">isSpace()</a>.</p>
 
 </div>
 </div><p>
@@ -218,9 +255,9 @@ Create an instance of <em><a class="el" href="classcma_1_1CMA__CType.html" title
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the pointer to instance </dd></dl>
 
-<p>References <a class="el" href="knowledge_8h-source.html#l00082">cma::Knowledge::ENCODE_TYPE_BIG5</a>, and <a class="el" href="knowledge_8h-source.html#l00081">cma::Knowledge::ENCODE_TYPE_GB2312</a>.</p>
+<p>References <a class="el" href="knowledge_8h-source.html#l00082">cma::Knowledge::ENCODE_TYPE_BIG5</a>, <a class="el" href="knowledge_8h-source.html#l00083">cma::Knowledge::ENCODE_TYPE_GB18030</a>, and <a class="el" href="knowledge_8h-source.html#l00081">cma::Knowledge::ENCODE_TYPE_GB2312</a>.</p>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00147">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00083">cma::CMA_ME_Knowledge::loadStatModel()</a>, and <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00266">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
 
 </div>
 </div><p>
@@ -248,21 +285,21 @@ Whether the p is a punctuation <dl compact><dt><b>Parameters:</b></dt><dd>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if the p is the punctuation </dd></dl>
 
-<p>References <a class="el" href="classcma_1_1CMA__CType.html#45412869e7ededc53dcc432d43d6a025">getCharType()</a>.</p>
+<p>References <a class="el" href="cma__ctype_8cpp-source.html#l00317">getCharType()</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="d53b4e758dae5bc9718eea3f9e3988d8"></a><!-- doxytag: member="cma::CMA_CType::isSentenceSeparator" ref="d53b4e758dae5bc9718eea3f9e3988d8" args="(const char *p) const =0" -->
+<a class="anchor" name="d6d58ef5f016e64e07ded48d434d24f2"></a><!-- doxytag: member="cma::CMA_CType::isSentenceSeparator" ref="d6d58ef5f016e64e07ded48d434d24f2" args="(const char *p) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool cma::CMA_CType::isSentenceSeparator           </td>
+          <td class="memname">bool cma::CMA_CType::isSentenceSeparator           </td>
           <td>(</td>
           <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>p</em>          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td> const<code> [pure virtual]</code></td>
+          <td> const</td>
         </tr>
       </table>
 </div>
@@ -276,23 +313,23 @@ Check whether is a seperator of sentence. <dl compact><dt><b>Parameters:</b></dt
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true for separator, false for non separator. </dd></dl>
 
-<p>Implemented in <a class="el" href="classcma_1_1CMA__CType__Big5.html#89931722adca1ee8ee1ea5673c3435c7">cma::CMA_CType_Big5</a>, and <a class="el" href="classcma_1_1CMA__CType__GB2312.html#07cae6abcfed1aec270f81de6473c518">cma::CMA_CType_GB2312</a>.</p>
+<p>References <a class="el" href="cma__ctype_8cpp-source.html#l00090">getEncodeValue()</a>.</p>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00156">cma::CMA_ME_Analyzer::splitSentence()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00292">cma::CMA_ME_Analyzer::splitSentence()</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="355d9f93a23d8af65fe63018c0558d4c"></a><!-- doxytag: member="cma::CMA_CType::isSpace" ref="355d9f93a23d8af65fe63018c0558d4c" args="(const char *p) const =0" -->
+<a class="anchor" name="9570155ad79775281e9042b796f85f3c"></a><!-- doxytag: member="cma::CMA_CType::isSpace" ref="9570155ad79775281e9042b796f85f3c" args="(const char *p) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool cma::CMA_CType::isSpace           </td>
+          <td class="memname">bool cma::CMA_CType::isSpace           </td>
           <td>(</td>
           <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>p</em>          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td> const<code> [pure virtual]</code></td>
+          <td> const</td>
         </tr>
       </table>
 </div>
@@ -306,9 +343,9 @@ Check whether is white-space character. White-space characters are " \t\n\v\f\r"
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true for white-space character, false for non white-space character. </dd></dl>
 
-<p>Implemented in <a class="el" href="classcma_1_1CMA__CType__Big5.html#47bc2f9c39675c8eb54c125fd9b79124">cma::CMA_CType_Big5</a>, and <a class="el" href="classcma_1_1CMA__CType__GB2312.html#b8545abe4e27b3701d27f0a1067d80bf">cma::CMA_CType_GB2312</a>.</p>
+<p>References <a class="el" href="cma__ctype_8cpp-source.html#l00090">getEncodeValue()</a>.</p>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00156">cma::CMA_ME_Analyzer::splitSentence()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00292">cma::CMA_ME_Analyzer::splitSentence()</a>.</p>
 
 </div>
 </div><p>
@@ -340,10 +377,33 @@ Get the number of the characters in the p <dl compact><dt><b>Parameters:</b></dt
 
 </div>
 </div><p>
-<hr>The documentation for this class was generated from the following files:<ul>
-<li>source/include/<a class="el" href="cma__ctype_8h-source.html">cma_ctype.h</a><li>source/src/<a class="el" href="cma__ctype_8cpp.html">cma_ctype.cpp</a></ul>
+<a class="anchor" name="c8a0564b888569e891e00ee72e03ead8"></a><!-- doxytag: member="cma::CMA_CType::loadConfiguration" ref="c8a0564b888569e891e00ee72e03ead8" args="(const char *file)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int cma::CMA_CType::loadConfiguration           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>file</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<div class="memdoc">
+
+<p>
+Load the poc.xml <dl class="return" compact><dt><b>Returns:</b></dt><dd>1 if load successfully </dd></dl>
+
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00083">cma::CMA_ME_Knowledge::loadStatModel()</a>.</p>
+
+</div>
+</div><p>
+<hr>The documentation for this class was generated from the following files:<ul>
+<li>/home/vernkin/projects/chinese-ma-chen/source/include/<a class="el" href="cma__ctype_8h-source.html">cma_ctype.h</a><li>/home/vernkin/projects/chinese-ma-chen/source/src/<a class="el" href="cma__ctype_8cpp.html">cma_ctype.cpp</a></ul>
+</div>
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:06 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

@@ -1,0 +1,55 @@
+\section{/home/vernkin/projects/chinese-ma-chen/source/include/cma\_\-ctype\_\-core.h File Reference}
+\label{cma__ctype__core_8h}\index{/home/vernkin/projects/chinese-ma-chen/source/include/cma\_\-ctype\_\-core.h@{/home/vernkin/projects/chinese-ma-chen/source/include/cma\_\-ctype\_\-core.h}}
+Gives the logic of analysis character types.  
+
+
+{\tt \#include $<$vector$>$}\par
+{\tt \#include $<$map$>$}\par
+{\tt \#include $<$set$>$}\par
+{\tt \#include $<$iostream$>$}\par
+\subsection*{Classes}
+\begin{CompactItemize}
+\item 
+class {\bf cma::Condition}
+\begin{CompactList}\small\item\em This class check the previous/next characters and their types to check whether match the \doxyref{Condition}{p.}{classcma_1_1Condition}. \item\end{CompactList}\item 
+class {\bf cma::CharConditions}
+\begin{CompactList}\small\item\em all the conditions of a specific character Each character has at most one \doxyref{CharConditions}{p.}{classcma_1_1CharConditions} \item\end{CompactList}\end{CompactItemize}
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+typedef unsigned int \textbf{cma::CharValue}\label{namespacecma_252d009a6e0b14f7a211a7498d5f28f6}
+
+\end{CompactItemize}
+\subsection*{Enumerations}
+\begin{CompactItemize}
+\item 
+enum \textbf{CharType} \{ \par
+{\bf cma::CHAR\_\-TYPE\_\-INIT}, 
+{\bf cma::CHAR\_\-TYPE\_\-OTHER}, 
+{\bf cma::CHAR\_\-TYPE\_\-NUMBER}, 
+\textbf{CHAR\_\-TYPE\_\-CHARDIGIT}, 
+\par
+{\bf cma::CHAR\_\-TYPE\_\-PUNC}, 
+{\bf cma::CHAR\_\-TYPE\_\-SPACE}, 
+{\bf cma::CHAR\_\-TYPE\_\-DATE}, 
+{\bf cma::CHAR\_\-TYPE\_\-LETTER}, 
+\par
+\textbf{CHAR\_\-TYPE\_\-NUM}
+ \}
+\begin{CompactList}\small\item\em Character type. [Warn] Don't set the value for following enum types Character type. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+string {\bf cma::getDecodeChar} (CharValue value)
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+Gives the logic of analysis character types. 
+
+\begin{Desc}
+\item[Author:]Vernkin \end{Desc}
+\begin{Desc}
+\item[Version:]0.1 \end{Desc}
+\begin{Desc}
+\item[Date:]Mar 10, 2009 \end{Desc}

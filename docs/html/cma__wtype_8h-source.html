@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Chinese&nbsp;Morphological&nbsp;Analyzer(Chen): source/include/cma_wtype.h Source File</title>
+<title>Chinese&nbsp;Morphological&nbsp;Analyzer(Chen): /home/vernkin/projects/chinese-ma-chen/source/include/cma_wtype.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 </head><body>
@@ -19,7 +19,7 @@
       <li><a href="globals.html"><span>File&nbsp;Members</span></a></li>
     </ul>
   </div>
-<h1>source/include/cma_wtype.h</h1><a href="cma__wtype_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<h1>/home/vernkin/projects/chinese-ma-chen/source/include/cma_wtype.h</h1><a href="cma__wtype_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00008"></a>00008 <span class="preprocessor">#ifndef CMA_WTYPE_H</span>
 <a name="l00009"></a>00009 <span class="preprocessor"></span><span class="preprocessor">#define CMA_WTYPE_H</span>
 <a name="l00010"></a>00010 <span class="preprocessor"></span>
@@ -48,17 +48,19 @@
 <a name="l00044"></a>00044 
 <a name="l00050"></a>00050     <a class="code" href="classcma_1_1CMA__WType.html#a59e535f8492ec7becc8531e8ce064d7">WordType</a> <a class="code" href="classcma_1_1CMA__WType.html#296589f1bc4f6288797003315d4bfc49">getWordType</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* word);
 <a name="l00051"></a>00051 
-<a name="l00052"></a>00052 <span class="keyword">private</span>:
-<a name="l00054"></a>00054     <span class="keyword">const</span> <a class="code" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a>* ctype_;
-<a name="l00055"></a>00055 
-<a name="l00057"></a>00057     <a class="code" href="classcma_1_1CTypeTokenizer.html" title="Tokenizer tokenizes a raw input string in specific encoding to a sequence of characters...">CTypeTokenizer</a> tokenizer_;
-<a name="l00058"></a>00058 };
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060 } <span class="comment">// namespace cma</span>
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062 <span class="preprocessor">#endif // CMA_WTYPE_H</span>
+<a name="l00059"></a>00059         <a class="code" href="classcma_1_1CMA__WType.html#a59e535f8492ec7becc8531e8ce064d7">WordType</a> <a class="code" href="classcma_1_1CMA__WType.html#296589f1bc4f6288797003315d4bfc49">getWordType</a>(CharType* types, <span class="keywordtype">size_t</span> begin, <span class="keywordtype">size_t</span> size);
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061 <span class="keyword">private</span>:
+<a name="l00063"></a>00063     <span class="keyword">const</span> <a class="code" href="classcma_1_1CMA__CType.html" title="CMA_CType gives the character type information.">CMA_CType</a>* ctype_;
+<a name="l00064"></a>00064 
+<a name="l00066"></a>00066     <a class="code" href="classcma_1_1CTypeTokenizer.html" title="Tokenizer tokenizes a raw input string in specific encoding to a sequence of characters...">CTypeTokenizer</a> tokenizer_;
+<a name="l00067"></a>00067 };
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069 } <span class="comment">// namespace cma</span>
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071 <span class="preprocessor">#endif // CMA_WTYPE_H</span>
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:06 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

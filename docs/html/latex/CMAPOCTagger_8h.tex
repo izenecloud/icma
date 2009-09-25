@@ -1,5 +1,5 @@
-\section{source/include/CMAPOCTagger.h File Reference}
-\label{CMAPOCTagger_8h}\index{source/include/CMAPOCTagger.h@{source/include/CMAPOCTagger.h}}
+\section{/home/vernkin/projects/chinese-ma-chen/source/include/CMAPOCTagger.h File Reference}
+\label{CMAPOCTagger_8h}\index{/home/vernkin/projects/chinese-ma-chen/source/include/CMAPOCTagger.h@{/home/vernkin/projects/chinese-ma-chen/source/include/CMAPOCTagger.h}}
 for the POC tagger using MaxEnt Model.  
 
 
@@ -18,12 +18,19 @@ struct {\bf cma::POCTagUnit}
 \begin{CompactList}\small\item\em to hold the objects in the N-best algorithm \item\end{CompactList}\item 
 class {\bf cma::SegTagger}
 \begin{CompactList}\small\item\em segment the string segment the string using maxent model \item\end{CompactList}\end{CompactItemize}
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\#define {\bf MAX\_\-PROP\_\-WORD\_\-LEN}~2
+\item 
+\#define {\bf MIN\_\-PRE\_\-WORD\_\-LEN}~4
+\end{CompactItemize}
 \subsection*{Functions}
 \begin{CompactItemize}
 \item 
 void {\bf cma::get\_\-poc\_\-zh\_\-scontext} (vector$<$ string $>$ \&words, vector$<$ string $>$ \&tags, size\_\-t i, bool rareWord, vector$<$ string $>$ \&context, CMA\_\-CType $\ast$ctype)
 \item 
-void {\bf cma::poc\_\-train} (const char $\ast$file, const string \&cateName, Knowledge::EncodeType encType, string posDelimiter, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian)
+void {\bf cma::poc\_\-train} (const char $\ast$file, const string \&modelPath, Knowledge::EncodeType encType, string pocDelimiter, bool isLargeCorpus, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian)
 \end{CompactItemize}
 
 
@@ -33,3 +40,18 @@ for the POC tagger using MaxEnt Model.
 \begin{Desc}
 \item[Author:]vernkin\end{Desc}
 Created on March 24, 2009, 8:52 PM 
+
+\subsection{Define Documentation}
+\index{CMAPOCTagger.h@{CMAPOCTagger.h}!MAX\_\-PROP\_\-WORD\_\-LEN@{MAX\_\-PROP\_\-WORD\_\-LEN}}
+\index{MAX\_\-PROP\_\-WORD\_\-LEN@{MAX\_\-PROP\_\-WORD\_\-LEN}!CMAPOCTagger.h@{CMAPOCTagger.h}}
+\subsubsection[{MAX\_\-PROP\_\-WORD\_\-LEN}]{\setlength{\rightskip}{0pt plus 5cm}\#define MAX\_\-PROP\_\-WORD\_\-LEN~2}\label{CMAPOCTagger_8h_8fc9320f6cd5f28fb162b4827bb441e5}
+
+
+max word length that combined by probability but not dictionary 
+
+Referenced by cma::SegTagger::seg\_\-sentence\_\-best().\index{CMAPOCTagger.h@{CMAPOCTagger.h}!MIN\_\-PRE\_\-WORD\_\-LEN@{MIN\_\-PRE\_\-WORD\_\-LEN}}
+\index{MIN\_\-PRE\_\-WORD\_\-LEN@{MIN\_\-PRE\_\-WORD\_\-LEN}!CMAPOCTagger.h@{CMAPOCTagger.h}}
+\subsubsection[{MIN\_\-PRE\_\-WORD\_\-LEN}]{\setlength{\rightskip}{0pt plus 5cm}\#define MIN\_\-PRE\_\-WORD\_\-LEN~4}\label{CMAPOCTagger_8h_9447760a054b1929f095f9ba142b9b21}
+
+
+min word length found in the pre-processing 

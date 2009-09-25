@@ -7,16 +7,16 @@ If the external program uses the library, simply add all the header files in the
 The dataset have to be trained by the Trainer. The Trainer is a executable file with name camctrainer under directory bin.
 
 The SYNOPSIS for the trainer is: \par
- ./cmactrainer mateFile cateFile [encoding] [posDelimiter] \par
+ ./cmactrainer mateFile modelPath [encoding] [posDelimiter] \par
 
 
 \par
 The Description for the parameters: \begin{itemize}
-\item mateFile is the material file, it should be in the form word1/pos1 word2/pos2 word3/pos3 ... \item cateFile is the category file, there are several files are created after the training, and with cateFile as the prefix, prefix should contains both path and name, such /dir1/dir2/n1. \item encoding is the encoding of the mateFile, and gb2312 is the default encoding. Only support gb2312 and big5 now. \item posDelimiter is the delimiter between the word and the pos tag, like '/' and '\_\-' and default is '/'. \end{itemize}
+\item mateFile is the material file, it should be in the form word1/pos1 word2/pos2 word3/pos3 ... \item modelPath is the directory to hold all the output files (include trained model files and dictionaries). \item encoding is the encoding of the mateFile, and gb18030 is the default encoding. Support utf8, gb18030, gb2312 and big5 now. \item posDelimiter is the delimiter between the word and the POS tag, like '/' and '\_\-' and default is '/'. \end{itemize}
 
 
-Take "/dir1/dir2/cate " as the cateFile, after the training. The following files are created (All under directory /dir1/dir2): \begin{enumerate}
-\item cate.model is the POS statistical model file. \item cate.pos is the all the POS gained from the training dataset. \item cate.dic is the dictionary (include words and POS tags) gained from the training dataset. This file is plain text and should be loaded as user dictionary. To convert it to the system dictionary, use Knowledge::encodeSystemDict(const char$\ast$ txtFileName, const char$\ast$ binFileName), then the binFileName can be loaded as the system dictioanry. \item cate-poc.model is the POC statistical model file. \end{enumerate}
+Take "/dir1/dir2 " as the cateFile, after the training. The following files are created (All under directory /dir1/dir2): \begin{enumerate}
+\item {\bf pos.model} is the POS statistical model file. \item {\bf pos.pos} is the all the POS gained from the training dataset. \item {\bf sys.dic} is the dictionary (include words and POS tags) gained from the training dataset. This file is plain text and should be loaded as user dictionary. To convert it to the system dictionary, use Knowledge::encodeSystemDict(const char$\ast$ txtFileName, const char$\ast$ binFileName), then the binFileName can be loaded as the system dictioanry. \item {\bf poc.model} is the POC statistical model file. \end{enumerate}
 
 
 All the files are required to run the program.\par
@@ -24,12 +24,12 @@ All the files are required to run the program.\par
 After the training, you can run the demo to segment the file, The Demo is a executable file with name camcsegger under directory bin.
 
 The SYNOPSIS for the trainer is: \par
- ./cmacsegger cateFile inFile outFile [encoding] [posDelimiter] \par
+ ./cmacsegger modelPath inFile outFile [encoding] [posDelimiter] \par
 
 
 \par
 The Description for the parameters: \begin{itemize}
-\item cateFile is the category file, there are several files are created after the training, and with cateFile as the prefix, prefix should contains both path and name, such /dir1/dir2/n1. \item inFile the input file. \item outFile the output file. \item encoding is the encoding of the mateFile, and gb2312 is the default encoding. Only support gb2312 and big5 now. \item posDelimiter is the delimiter between the word and the pos tag, like '/' and '\_\-' and default is '/'. \end{itemize}
+\item modelPath is the directory contains all the tained models, dictionaries and configuration.  \item inFile the input file. \item outFile the output file. \item encoding is the encoding of the mateFile, and gb2312 is the default encoding. Only support gb2312 and big5 now. \item posDelimiter is the delimiter between the word and the pos tag, like '/' and '\_\-' and default is '/'. \end{itemize}
 
 
 The result with pos tagging can be found in the outFile.\section{Use the API}\label{index_useapi}
@@ -66,17 +66,10 @@ Knowledge* knowledge = factory->createKnowledge();
 //It is suggested to set encoding after crate the Knowledge. Another supported encode type is big5.
 knowledge->setEncodeType(Knowledge::ENCODE_TYPE_GB2312);
 
-// If use /dir1/dir2/cate as the cateFile in the trainer (see section "Run the Trainer" 
-// in this webpage), the parameter for loadStatModel is /dir1/dir2/cate-poc and for the 
-// loadPOSModel is /dir1/dir2/cate.
+// Load all the model by specific modelPath and encoding
+knowledge->loadModel( "gb18030", "..." ).
 
-// load POC statistical model
-knowledge->loadStatModel("...");
-// loadPOSModel has to be invoked before loading XXX Dictionaries
-knowledge->loadPOSModel("...");
-
-// (optional) load dictionaries
-knowledge->loadSystemDict("...");
+// Load User Dictionaries and Stop Words if neccessary.
 knowledge->loadUserDict("...");
 knowledge->loadStopWordDict("...");
  

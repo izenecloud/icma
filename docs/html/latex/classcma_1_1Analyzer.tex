@@ -42,6 +42,10 @@ const char $\ast$ {\bf getPOSDelimiter} () const
 void {\bf setWordDelimiter} (const char $\ast$delimiter)
 \item 
 const char $\ast$ {\bf getWordDelimiter} () const 
+\item 
+void {\bf setSentenceDelimiter} (const char $\ast$delimiter)
+\item 
+const char $\ast$ {\bf getSentenceDelimiter} () const 
 \end{CompactItemize}
 \subsection*{Protected Attributes}
 \begin{CompactItemize}
@@ -51,6 +55,8 @@ std::vector$<$ double $>$ {\bf options\_\-}
 const char $\ast$ {\bf posDelimiter\_\-}
 \item 
 const char $\ast$ {\bf wordDelimiter\_\-}
+\item 
+const char $\ast$ {\bf sentenceDelimiter\_\-}
 \end{CompactItemize}
 
 
@@ -119,7 +125,16 @@ Get the delimiter between word and POS tag in the output result of {\em \doxyref
 \item[Returns:]the delimiter between word and POS tag in the output result \end{Desc}
 
 
-References posDelimiter\_\-.\index{cma::Analyzer@{cma::Analyzer}!getWordDelimiter@{getWordDelimiter}}
+References posDelimiter\_\-.\index{cma::Analyzer@{cma::Analyzer}!getSentenceDelimiter@{getSentenceDelimiter}}
+\index{getSentenceDelimiter@{getSentenceDelimiter}!cma::Analyzer@{cma::Analyzer}}
+\subsubsection[{getSentenceDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Analyzer::getSentenceDelimiter () const}\label{classcma_1_1Analyzer_eee55c792c0397bc4a58fa162d4fbe01}
+
+
+Get the delimiter between sentences. \begin{Desc}
+\item[Returns:]the delimiter between the pairs (word and POS tag) in the output result \end{Desc}
+
+
+References sentenceDelimiter\_\-.\index{cma::Analyzer@{cma::Analyzer}!getWordDelimiter@{getWordDelimiter}}
 \index{getWordDelimiter@{getWordDelimiter}!cma::Analyzer@{cma::Analyzer}}
 \subsubsection[{getWordDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Analyzer::getWordDelimiter () const}\label{classcma_1_1Analyzer_bee23d91de22d6083c3ba41a126d43a6}
 
@@ -208,7 +223,7 @@ Set the option value for analysis. \begin{Desc}
 
 References OPTION\_\-TYPE\_\-NBEST, and options\_\-.
 
-Referenced by beginSeg().\index{cma::Analyzer@{cma::Analyzer}!setPOSDelimiter@{setPOSDelimiter}}
+Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::Analyzer@{cma::Analyzer}!setPOSDelimiter@{setPOSDelimiter}}
 \index{setPOSDelimiter@{setPOSDelimiter}!cma::Analyzer@{cma::Analyzer}}
 \subsubsection[{setPOSDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Analyzer::setPOSDelimiter (const char $\ast$ {\em delimiter})}\label{classcma_1_1Analyzer_7c4b88bf29930661262f3c05be208471}
 
@@ -222,7 +237,21 @@ Set the delimiter between word and POS tag in the output result of {\em \doxyref
 
 References posDelimiter\_\-.
 
-Referenced by beginSeg().\index{cma::Analyzer@{cma::Analyzer}!setWordDelimiter@{setWordDelimiter}}
+Referenced by beginSeg(), and cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::Analyzer@{cma::Analyzer}!setSentenceDelimiter@{setSentenceDelimiter}}
+\index{setSentenceDelimiter@{setSentenceDelimiter}!cma::Analyzer@{cma::Analyzer}}
+\subsubsection[{setSentenceDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Analyzer::setSentenceDelimiter (const char $\ast$ {\em delimiter})}\label{classcma_1_1Analyzer_2d609843fe10cb82795e06c91d85cc06}
+
+
+Set the delimiter between sentences, default is empty. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em delimiter}]the delimiter between the pairs (word and POS tag) in the output result \end{description}
+\end{Desc}
+
+
+References sentenceDelimiter\_\-.
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::Analyzer@{cma::Analyzer}!setWordDelimiter@{setWordDelimiter}}
 \index{setWordDelimiter@{setWordDelimiter}!cma::Analyzer@{cma::Analyzer}}
 \subsubsection[{setWordDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Analyzer::setWordDelimiter (const char $\ast$ {\em delimiter})}\label{classcma_1_1Analyzer_c9bba08c5455b6e640065e420d1974d7}
 
@@ -234,7 +263,9 @@ Set the delimiter between the pairs (word and POS tag) in the output result of {
 \end{Desc}
 
 
-References wordDelimiter\_\-.\index{cma::Analyzer@{cma::Analyzer}!splitSentence@{splitSentence}}
+References wordDelimiter\_\-.
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::Analyzer@{cma::Analyzer}!splitSentence@{splitSentence}}
 \index{splitSentence@{splitSentence}!cma::Analyzer@{cma::Analyzer}}
 \subsubsection[{splitSentence}]{\setlength{\rightskip}{0pt plus 5cm}virtual void cma::Analyzer::splitSentence (const char $\ast$ {\em paragraph}, \/  std::vector$<$ {\bf Sentence} $>$ \& {\em sentences})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Analyzer_8ed5115519284c1ccf2bde9e289168dd}
 
@@ -265,7 +296,14 @@ Referenced by getOption(), and setOption().\index{cma::Analyzer@{cma::Analyzer}!
 
 the delimiter between word and POS tag in the output result 
 
-Referenced by getPOSDelimiter(), cma::CMA\_\-ME\_\-Analyzer::runWithStream(), cma::CMA\_\-ME\_\-Analyzer::runWithString(), and setPOSDelimiter().\index{cma::Analyzer@{cma::Analyzer}!wordDelimiter\_\-@{wordDelimiter\_\-}}
+Referenced by getPOSDelimiter(), cma::CMA\_\-ME\_\-Analyzer::runWithStream(), cma::CMA\_\-ME\_\-Analyzer::runWithString(), and setPOSDelimiter().\index{cma::Analyzer@{cma::Analyzer}!sentenceDelimiter\_\-@{sentenceDelimiter\_\-}}
+\index{sentenceDelimiter\_\-@{sentenceDelimiter\_\-}!cma::Analyzer@{cma::Analyzer}}
+\subsubsection[{sentenceDelimiter\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ {\bf cma::Analyzer::sentenceDelimiter\_\-}\hspace{0.3cm}{\tt  [protected]}}\label{classcma_1_1Analyzer_27a50ef21d77fa99011cd20bba13768e}
+
+
+the delimiter between sentences 
+
+Referenced by getSentenceDelimiter(), cma::CMA\_\-ME\_\-Analyzer::runWithStream(), and setSentenceDelimiter().\index{cma::Analyzer@{cma::Analyzer}!wordDelimiter\_\-@{wordDelimiter\_\-}}
 \index{wordDelimiter\_\-@{wordDelimiter\_\-}!cma::Analyzer@{cma::Analyzer}}
 \subsubsection[{wordDelimiter\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ {\bf cma::Analyzer::wordDelimiter\_\-}\hspace{0.3cm}{\tt  [protected]}}\label{classcma_1_1Analyzer_2bc9276661a6c732dc52dbc3fda74817}
 
@@ -276,5 +314,5 @@ Referenced by getWordDelimiter(), cma::CMA\_\-ME\_\-Analyzer::runWithStream(), c
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
-include/{\bf analyzer.h}\item 
-source/src/{\bf analyzer.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-ma-chen/include/{\bf analyzer.h}\item 
+/home/vernkin/projects/chinese-ma-chen/source/src/{\bf analyzer.cpp}\end{CompactItemize}

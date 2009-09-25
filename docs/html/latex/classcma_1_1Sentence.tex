@@ -22,7 +22,11 @@ int {\bf getPOS} (int nPos, int nIdx) const
 \item 
 const char $\ast$ {\bf getStrPOS} (int nPos, int nIdx) const 
 \item 
+const MorphemeList $\ast$ {\bf getMorphemeList} (int nPos) const 
+\item 
 double {\bf getScore} (int nPos) const 
+\item 
+void {\bf setScore} (int nPos, double nScore)
 \item 
 int {\bf getOneBestIndex} (void) const 
 \item 
@@ -87,7 +91,23 @@ Get the string of morpheme {\em nIdx\/} in candidate result {\em nPos\/}. \begin
 
 Get the number of candidates of morphological analysis result. \begin{Desc}
 \item[Returns:]the number of candidates \end{Desc}
-\index{cma::Sentence@{cma::Sentence}!getOneBestIndex@{getOneBestIndex}}
+
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Sentence@{cma::Sentence}!getMorphemeList@{getMorphemeList}}
+\index{getMorphemeList@{getMorphemeList}!cma::Sentence@{cma::Sentence}}
+\subsubsection[{getMorphemeList}]{\setlength{\rightskip}{0pt plus 5cm}const MorphemeList $\ast$ cma::Sentence::getMorphemeList (int {\em nPos}) const}\label{classcma_1_1Sentence_d782589b716eee9f5d25dfb60f5211ab}
+
+
+Get the MorphemeList of candidate result {\em nPos\/}. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em nPos}]candidate result index \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]the MorphemeList \end{Desc}
+
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Sentence@{cma::Sentence}!getOneBestIndex@{getOneBestIndex}}
 \index{getOneBestIndex@{getOneBestIndex}!cma::Sentence@{cma::Sentence}}
 \subsubsection[{getOneBestIndex}]{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getOneBestIndex (void) const}\label{classcma_1_1Sentence_f1ccc0e78beb1f7b8bd22e0c10efa8d4}
 
@@ -106,9 +126,7 @@ Get the POS index code of morpheme {\em nIdx\/} in candidate result {\em nPos\/}
 \end{Desc}
 \begin{Desc}
 \item[Returns:]POS index code, -1 for non POS available \end{Desc}
-
-
-Referenced by getStrPOS().\index{cma::Sentence@{cma::Sentence}!getScore@{getScore}}
+\index{cma::Sentence@{cma::Sentence}!getScore@{getScore}}
 \index{getScore@{getScore}!cma::Sentence@{cma::Sentence}}
 \subsubsection[{getScore}]{\setlength{\rightskip}{0pt plus 5cm}double cma::Sentence::getScore (int {\em nPos}) const}\label{classcma_1_1Sentence_850f236efa3fa2b75b5b40cf35fbdd95}
 
@@ -120,7 +138,9 @@ Get the score of candidate result {\em nPos\/}. \begin{Desc}
 \end{Desc}
 \begin{Desc}
 \item[Returns:]the score value \end{Desc}
-\index{cma::Sentence@{cma::Sentence}!getString@{getString}}
+
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Sentence@{cma::Sentence}!getString@{getString}}
 \index{getString@{getString}!cma::Sentence@{cma::Sentence}}
 \subsubsection[{getString}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Sentence::getString (void) const}\label{classcma_1_1Sentence_ee44e192f67dacbe6bc0cfc433cabb30}
 
@@ -141,9 +161,19 @@ Get the POS string of morpheme {\em nIdx\/} in candidate result {\em nPos\/}. \b
 \end{Desc}
 \begin{Desc}
 \item[Returns:]POS string, null pointer for non POS available \end{Desc}
+\index{cma::Sentence@{cma::Sentence}!setScore@{setScore}}
+\index{setScore@{setScore}!cma::Sentence@{cma::Sentence}}
+\subsubsection[{setScore}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Sentence::setScore (int {\em nPos}, \/  double {\em nScore})}\label{classcma_1_1Sentence_e7676fbf7d34dc879ecbf448025cb080}
 
 
-References getPOS(), cma::POSTable::getStrFromCode(), and cma::POSTable::instance().\index{cma::Sentence@{cma::Sentence}!setString@{setString}}
+Set the score of candidate result {\em nPos\/}. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em nPos}]candidate result index \item[{\em nScore}]the score value \end{description}
+\end{Desc}
+
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Sentence@{cma::Sentence}!setString@{setString}}
 \index{setString@{setString}!cma::Sentence@{cma::Sentence}}
 \subsubsection[{setString}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Sentence::setString (const char $\ast$ {\em pString})}\label{classcma_1_1Sentence_40fb665bd2b2a19e430d4e474f3534a3}
 
@@ -161,5 +191,5 @@ Referenced by cma::CMA\_\-ME\_\-Analyzer::splitSentence().
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
-include/{\bf sentence.h}\item 
-source/src/{\bf sentence.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-ma-chen/include/{\bf sentence.h}\item 
+/home/vernkin/projects/chinese-ma-chen/source/src/{\bf sentence.cpp}\end{CompactItemize}

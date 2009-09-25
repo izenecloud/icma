@@ -22,6 +22,8 @@ enum {\bf WordType} \{ \par
 {\bf CMA\_\-WType} (const {\bf CMA\_\-CType} $\ast$ctype)
 \item 
 {\bf WordType} {\bf getWordType} (const char $\ast$word)
+\item 
+{\bf WordType} {\bf getWordType} (CharType $\ast$types, size\_\-t begin, size\_\-t size)
 \end{CompactItemize}
 
 
@@ -66,6 +68,20 @@ Constructor. \begin{Desc}
 \subsection{Member Function Documentation}
 \index{cma::CMA\_\-WType@{cma::CMA\_\-WType}!getWordType@{getWordType}}
 \index{getWordType@{getWordType}!cma::CMA_WType@{cma::CMA\_\-WType}}
+\subsubsection[{getWordType}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-WType::WordType} cma::CMA\_\-WType::getWordType (CharType $\ast$ {\em types}, \/  size\_\-t {\em begin}, \/  size\_\-t {\em size})}\label{classcma_1_1CMA__WType_1dc5edf5c48a5e5394396cd0aef0b29b}
+
+
+Get the word type. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em types}]types that are already knows \item[{\em begin}]index in types \item[{\em the}]size of the types \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]the word type. \end{Desc}
+
+
+References WORD\_\-TYPE\_\-DATE, WORD\_\-TYPE\_\-LETTER, WORD\_\-TYPE\_\-NUMBER, and WORD\_\-TYPE\_\-OTHER.\index{cma::CMA\_\-WType@{cma::CMA\_\-WType}!getWordType@{getWordType}}
+\index{getWordType@{getWordType}!cma::CMA_WType@{cma::CMA\_\-WType}}
 \subsubsection[{getWordType}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-WType::WordType} cma::CMA\_\-WType::getWordType (const char $\ast$ {\em word})}\label{classcma_1_1CMA__WType_296589f1bc4f6288797003315d4bfc49}
 
 
@@ -82,5 +98,5 @@ References cma::CTypeTokenizer::assign(), cma::CMA\_\-CType::getCharType(), cma:
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
-source/include/{\bf cma\_\-wtype.h}\item 
-source/src/{\bf cma\_\-wtype.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-ma-chen/source/include/{\bf cma\_\-wtype.h}\item 
+/home/vernkin/projects/chinese-ma-chen/source/src/{\bf cma\_\-wtype.cpp}\end{CompactItemize}

@@ -234,6 +234,7 @@
 				<end>true</end>
 			</condition>
 		</rule>
+		
 		<rule>
 			<char><![CDATA[数上]]></char>
 			<condition>
@@ -242,6 +243,15 @@
 				<nextchar><![CDATA[十百千万亿萬億兆]]></nextchar>
 			</condition>
 		</rule>
+		
+		<rule>
+			<char><![CDATA[十百千万亿萬億兆]]></char>
+			<condition>
+				<type>digit</type>
+				<pretype>digit</pretype>
+			</condition>
+		</rule>
+
 	</rules>
 
 </cma>

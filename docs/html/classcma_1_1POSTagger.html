@@ -46,9 +46,22 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTagger.html#c7d4c9b62c95e138f39dc84624f11b2e">tag_word_best</a> (vector&lt; string &gt; &amp;words, vector&lt; string &gt; &amp;poses, int index, string &amp;pos)</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTagger.html#cf191ab0490ea004e681c93c901de355">setCType</a> (<a class="el" href="classcma_1_1CMA__CType.html">CMA_CType</a> *ctype)</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTagger.html#e3a219f6213b4ec917255af7f508f343">appendWordPOS</a> (string &amp;line)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTagger.html#cf191ab0490ea004e681c93c901de355">setCType</a> (<a class="el" href="classcma_1_1CMA__CType.html">CMA_CType</a> *ctype)</td></tr>
+<tr><td colspan="2"><br><h2>Public Attributes</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">vector&lt; set&lt; string &gt; &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTagger.html#06aced1751c71a0970b6d1de06b2d058">posVec_</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTagger.html#198603e682fe22173f63cd25fb43f605">defaultPOS</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTagger.html#9d5f03411ee4e43ad1cb225198e7eb27">numberPOS</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTagger.html#0691e0b96cb49d0ea81804a4c589b105">letterPOS</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTagger.html#ab545623b29696b86686241272f7d5bb">puncPOS</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTagger.html#fff8339645c620fa045c11a95d7997ea">datePOS</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
@@ -85,6 +98,8 @@ Construct the <a class="el" href="classcma_1_1POSTagger.html" title="Tagging the
   </table>
 </dl>
 
+<p>References <a class="el" href="CMAPOSTagger_8h-source.html#l00191">posVec_</a>.</p>
+
 </div>
 </div><p>
 <a class="anchor" name="678c73558ec8fb6f3ae1adc5a4d904bb"></a><!-- doxytag: member="cma::POSTagger::POSTagger" ref="678c73558ec8fb6f3ae1adc5a4d904bb" args="(const string &amp;model, const char *dictFile)" -->
@@ -114,7 +129,7 @@ Construct the <a class="el" href="classcma_1_1POSTagger.html" title="Tagging the
 
 <p>
 Construct the <a class="el" href="classcma_1_1POSTagger.html" title="Tagging the POS Information Tagging the POS using the maxent model.">POSTagger</a> with inner <a class="el" href="classVTrie.html" title="VTrie is a variant of the Radix Tree.">VTrie</a> (read from dictFile) 
-<p>References <a class="el" href="CMAPOSTagger_8cc-source.html#l00433">appendWordPOS()</a>.</p>
+<p>References <a class="el" href="CMAPOSTagger_8cc-source.html#l00456">appendWordPOS()</a>, and <a class="el" href="CMAPOSTagger_8h-source.html#l00191">posVec_</a>.</p>
 
 </div>
 </div><p>
@@ -143,9 +158,9 @@ Append the POS Information into Trie and POS Vector <dl compact><dt><b>Parameter
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>whether add successfully </dd></dl>
 
-<p>References <a class="el" href="VTrie_8h-source.html#l00121">VTrieNode::data</a>, <a class="el" href="VTrie_8h-source.html#l00162">VTrie::insert()</a>, and <a class="el" href="VTrie_8h-source.html#l00333">VTrie::search()</a>.</p>
+<p>References <a class="el" href="VTrie_8h-source.html#l00121">VTrieNode::data</a>, <a class="el" href="VTrie_8h-source.html#l00162">VTrie::insert()</a>, <a class="el" href="CMAPOSTagger_8h-source.html#l00191">posVec_</a>, and <a class="el" href="VTrie_8h-source.html#l00333">VTrie::search()</a>.</p>
 
-<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00095">cma::CMA_ME_Knowledge::loadSystemDict()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00114">cma::CMA_ME_Knowledge::loadUserDict()</a>, and <a class="el" href="CMAPOSTagger_8cc-source.html#l00180">POSTagger()</a>.</p>
+<p>Referenced by <a class="el" href="CMAPOSTagger_8cc-source.html#l00184">POSTagger()</a>.</p>
 
 </div>
 </div><p>
@@ -173,7 +188,7 @@ Set the reference to the specific character encoding<p>
   </table>
 </dl>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00147">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc-source.html#l00266">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
 
 </div>
 </div><p>
@@ -210,7 +225,7 @@ Tag the segmented file with pos (In UTF8 Encoding) <dl compact><dt><b>Parameters
   </table>
 </dl>
 
-<p>References <a class="el" href="CMAPOSTagger_8cc-source.html#l00417">tag_sentence_best()</a>.</p>
+<p>References <a class="el" href="CMAPOSTagger_8cc-source.html#l00440">tag_sentence_best()</a>.</p>
 
 </div>
 </div><p>
@@ -312,7 +327,7 @@ Only return the best result <dl compact><dt><b>Parameters:</b></dt><dd>
   </table>
 </dl>
 
-<p>Referenced by <a class="el" href="CMAPOSTagger_8cc-source.html#l00320">tag_file()</a>.</p>
+<p>Referenced by <a class="el" href="CMAPOSTagger_8cc-source.html#l00324">tag_file()</a>.</p>
 
 </div>
 </div><p>
@@ -366,10 +381,113 @@ tag the word with the best POS and return its score <dl compact><dt><b>Parameter
 
 </div>
 </div><p>
-<hr>The documentation for this class was generated from the following files:<ul>
-<li>source/include/<a class="el" href="CMAPOSTagger_8h-source.html">CMAPOSTagger.h</a><li>source/src/<a class="el" href="CMAPOSTagger_8cc.html">CMAPOSTagger.cc</a></ul>
+<hr><h2>Member Data Documentation</h2>
+<a class="anchor" name="fff8339645c620fa045c11a95d7997ea"></a><!-- doxytag: member="cma::POSTagger::datePOS" ref="fff8339645c620fa045c11a95d7997ea" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classcma_1_1POSTagger.html#fff8339645c620fa045c11a95d7997ea">cma::POSTagger::datePOS</a>          </td>
+        </tr>
+      </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<div class="memdoc">
+
+<p>
+Date POS 
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00045">cma::CMA_ME_Knowledge::loadPOSModel()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="198603e682fe22173f63cd25fb43f605"></a><!-- doxytag: member="cma::POSTagger::defaultPOS" ref="198603e682fe22173f63cd25fb43f605" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classcma_1_1POSTagger.html#198603e682fe22173f63cd25fb43f605">cma::POSTagger::defaultPOS</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+default POS 
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00045">cma::CMA_ME_Knowledge::loadPOSModel()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="0691e0b96cb49d0ea81804a4c589b105"></a><!-- doxytag: member="cma::POSTagger::letterPOS" ref="0691e0b96cb49d0ea81804a4c589b105" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classcma_1_1POSTagger.html#0691e0b96cb49d0ea81804a4c589b105">cma::POSTagger::letterPOS</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Letter POS 
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00045">cma::CMA_ME_Knowledge::loadPOSModel()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="9d5f03411ee4e43ad1cb225198e7eb27"></a><!-- doxytag: member="cma::POSTagger::numberPOS" ref="9d5f03411ee4e43ad1cb225198e7eb27" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classcma_1_1POSTagger.html#9d5f03411ee4e43ad1cb225198e7eb27">cma::POSTagger::numberPOS</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Number POS 
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00045">cma::CMA_ME_Knowledge::loadPOSModel()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="06aced1751c71a0970b6d1de06b2d058"></a><!-- doxytag: member="cma::POSTagger::posVec_" ref="06aced1751c71a0970b6d1de06b2d058" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;set&lt;string&gt; &gt; <a class="el" href="classcma_1_1POSTagger.html#06aced1751c71a0970b6d1de06b2d058">cma::POSTagger::posVec_</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+vector to hold the POS information 
+<p>Referenced by <a class="el" href="CMAPOSTagger_8cc-source.html#l00456">appendWordPOS()</a>, and <a class="el" href="CMAPOSTagger_8cc-source.html#l00176">POSTagger()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ab545623b29696b86686241272f7d5bb"></a><!-- doxytag: member="cma::POSTagger::puncPOS" ref="ab545623b29696b86686241272f7d5bb" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classcma_1_1POSTagger.html#ab545623b29696b86686241272f7d5bb">cma::POSTagger::puncPOS</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Punctuation POS 
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00045">cma::CMA_ME_Knowledge::loadPOSModel()</a>.</p>
+
+</div>
+</div><p>
+<hr>The documentation for this class was generated from the following files:<ul>
+<li>/home/vernkin/projects/chinese-ma-chen/source/include/<a class="el" href="CMAPOSTagger_8h-source.html">CMAPOSTagger.h</a><li>/home/vernkin/projects/chinese-ma-chen/source/src/<a class="el" href="CMAPOSTagger_8cc.html">CMAPOSTagger.cc</a></ul>
+</div>
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:06 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

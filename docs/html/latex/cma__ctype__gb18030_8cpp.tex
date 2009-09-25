@@ -1,0 +1,95 @@
+\section{/home/vernkin/projects/chinese-ma-chen/source/src/cma\_\-ctype\_\-gb18030.cpp File Reference}
+\label{cma__ctype__gb18030_8cpp}\index{/home/vernkin/projects/chinese-ma-chen/source/src/cma\_\-ctype\_\-gb18030.cpp@{/home/vernkin/projects/chinese-ma-chen/source/src/cma\_\-ctype\_\-gb18030.cpp}}
+CMA\_\-CType\_\-GB18030 gives the character type information in GB18030 encoding.  
+
+
+{\tt \#include \char`\"{}cma\_\-ctype\_\-gb18030.h\char`\"{}}\par
+{\tt \#include $<$cassert$>$}\par
+{\tt \#include $<$cctype$>$}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+bool {\bf cma::gb18030type::isAbsPunt} (const unsigned char $\ast$uc)
+\item 
+bool {\bf cma::gb18030type::isAbsDigit} (const unsigned char $\ast$uc, unsigned int value)
+\item 
+bool \textbf{cma::gb18030type::isAbsDigitUnit} (unsigned int value)\label{namespacecma_1_1gb18030type_9d7cf1c182cc8c70085b21162ca74a47}
+
+\item 
+bool {\bf cma::gb18030type::isAbsSpace} (const unsigned char $\ast$uc)
+\item 
+bool {\bf cma::gb18030type::isAbsLetter} (const unsigned char $\ast$uc)
+\item 
+bool {\bf cma::gb18030type::isAbsDate} (const unsigned char $\ast$uc, unsigned int value)
+\end{CompactItemize}
+\subsection*{Variables}
+\begin{CompactItemize}
+\item 
+const unsigned char {\bf cma::gb18030type::DOT} = (unsigned char)('.')\label{namespacecma_1_1gb18030type_e1e6608ed06b63d14d8c447aa1d8c563}
+
+\begin{CompactList}\small\item\em dot \item\end{CompactList}\item 
+const unsigned short \textbf{cma::gb18030type::DOT\_\-1} = 0xa3ae\label{namespacecma_1_1gb18030type_d0fa8f1808749c9ce7ce991f030b0769}
+
+\item 
+const unsigned int \textbf{cma::gb18030type::DOT\_\-2} = 0x8136a634\label{namespacecma_1_1gb18030type_b20d26021db9062dcaec5fcb6096e614}
+
+\item 
+const unsigned char {\bf cma::gb18030type::COMMA} = (unsigned char)(',')\label{namespacecma_1_1gb18030type_6485cf20b1cf0b5db94998f2186a8a24}
+
+\begin{CompactList}\small\item\em comma \item\end{CompactList}\item 
+const unsigned char {\bf cma::gb18030type::HYPHEN} = (unsigned char)('-')\label{namespacecma_1_1gb18030type_c2d50f13df77e6af70fc59c36ec4ec26}
+
+\begin{CompactList}\small\item\em hyphen \item\end{CompactList}\item 
+const unsigned short {\bf cma::gb18030type::HYPHEN\_\-1} = 0xa3ad\label{namespacecma_1_1gb18030type_93eb7a5f422222b1cee4391d8da44807}
+
+\begin{CompactList}\small\item\em － \item\end{CompactList}\item 
+const unsigned short {\bf cma::gb18030type::ZHI\_\-CH} = 0xd6ae\label{namespacecma_1_1gb18030type_80eb455c3adf0ffe638fd13f70b99176}
+
+\begin{CompactList}\small\item\em 之 \item\end{CompactList}\item 
+const unsigned short {\bf cma::gb18030type::DIAN\_\-CH} = 0xb5e3\label{namespacecma_1_1gb18030type_249089d45bc259767148e2aa565b6316}
+
+\begin{CompactList}\small\item\em 点 \item\end{CompactList}\item 
+const unsigned short {\bf cma::gb18030type::DIAN\_\-CH\_\-1} = 0xfc63\label{namespacecma_1_1gb18030type_de869695ecde35a0727ce2f4883820af}
+
+\begin{CompactList}\small\item\em 點 \item\end{CompactList}\item 
+const unsigned short {\bf cma::gb18030type::FEN\_\-CH} = 0xb7d6\label{namespacecma_1_1gb18030type_c216d94107d4637a8f871a83275f9f63}
+
+\begin{CompactList}\small\item\em 分 \item\end{CompactList}\item 
+const unsigned short {\bf cma::gb18030type::DUO\_\-CH} = 0xb6e0\label{namespacecma_1_1gb18030type_d2e2292024645f6e80865482925613ae}
+
+\begin{CompactList}\small\item\em 多 \item\end{CompactList}\item 
+const unsigned short {\bf cma::gb18030type::YU\_\-CH} = 0xd3e0\label{namespacecma_1_1gb18030type_e5bb6bf858939fb4428cd65e87d3f9a8}
+
+\begin{CompactList}\small\item\em 余 \item\end{CompactList}\item 
+const unsigned short \textbf{cma::gb18030type::YU\_\-CH\_\-1} = 0xf04e\label{namespacecma_1_1gb18030type_8b51c8d05c19b0fe874049282eaa10e9}
+
+\item 
+const unsigned short {\bf cma::gb18030type::CHENG\_\-CH} = 0xb3c9\label{namespacecma_1_1gb18030type_c031d33ff77a29a5a008e8c80c42ee88}
+
+\begin{CompactList}\small\item\em 成 \item\end{CompactList}\item 
+const unsigned short {\bf cma::gb18030type::BAN\_\-CH} = 0xb0eb\label{namespacecma_1_1gb18030type_db33c9ba0b580bdf34bc7b2031a49f64}
+
+\begin{CompactList}\small\item\em 半 \item\end{CompactList}\item 
+const unsigned short \textbf{cma::gb18030type::ZHAO\_\-CH} = 0xd5d7\label{namespacecma_1_1gb18030type_cce42ca6a3fe4b4b0ffd3b8a25c00b77}
+
+\item 
+const unsigned short \textbf{cma::gb18030type::DI\_\-ZH} = 0xb5da\label{namespacecma_1_1gb18030type_a9e23d9b5d6fe9d1b94531b0fad274f1}
+
+\item 
+const unsigned short \textbf{cma::gb18030type::SHU\_\-ZH} = 0xcafd\label{namespacecma_1_1gb18030type_c22b819289c6a7ce1a187928fed53c1d}
+
+\item 
+const unsigned short \textbf{cma::gb18030type::SHANG\_\-ZH} = 0xc9cf\label{namespacecma_1_1gb18030type_176dec87e9ab2c45eb44d53efe0cf579}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+CMA\_\-CType\_\-GB18030 gives the character type information in GB18030 encoding. 
+
+\begin{Desc}
+\item[Author:]Vernkin \end{Desc}
+\begin{Desc}
+\item[Version:]0.1 \end{Desc}
+\begin{Desc}
+\item[Date:]Mar 11, 2009 \end{Desc}

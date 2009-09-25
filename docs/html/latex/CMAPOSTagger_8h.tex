@@ -1,5 +1,5 @@
-\section{source/include/CMAPOSTagger.h File Reference}
-\label{CMAPOSTagger_8h}\index{source/include/CMAPOSTagger.h@{source/include/CMAPOSTagger.h}}
+\section{/home/vernkin/projects/chinese-ma-chen/source/include/CMAPOSTagger.h File Reference}
+\label{CMAPOSTagger_8h}\index{/home/vernkin/projects/chinese-ma-chen/source/include/CMAPOSTagger.h@{/home/vernkin/projects/chinese-ma-chen/source/include/CMAPOSTagger.h}}
 for the POS tagger using MaxEnt Model.  
 
 
@@ -26,7 +26,7 @@ class {\bf cma::POSTagger}
 \item 
 void {\bf cma::get\_\-pos\_\-zh\_\-scontext} (vector$<$ string $>$ \&words, vector$<$ string $>$ \&tags, size\_\-t i, bool rareWord, vector$<$ string $>$ \&context, CMA\_\-CType $\ast$ctype)
 \item 
-void {\bf cma::pos\_\-train} (const char $\ast$file, const string \&cateFile, Knowledge::EncodeType encType, string posDelimiter, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian)
+void {\bf cma::pos\_\-train} (const char $\ast$file, const string \&modelPath, Knowledge::EncodeType encType, string posDelimiter, bool isLargeCorpus, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian)
 \end{CompactItemize}
 
 

@@ -1,5 +1,5 @@
-\section{source/include/CMABasicTrainer.h File Reference}
-\label{CMABasicTrainer_8h}\index{source/include/CMABasicTrainer.h@{source/include/CMABasicTrainer.h}}
+\section{/home/vernkin/projects/chinese-ma-chen/source/include/CMABasicTrainer.h File Reference}
+\label{CMABasicTrainer_8h}\index{/home/vernkin/projects/chinese-ma-chen/source/include/CMABasicTrainer.h@{/home/vernkin/projects/chinese-ma-chen/source/include/CMABasicTrainer.h}}
 shared module for training the POC and POS MaxEnt model  
 
 
@@ -25,6 +25,8 @@ typedef void($\ast$ {\bf cma::context\_\-t} )(vector$<$ string $>$ \&, vector$<$
 \subsection*{Functions}
 \begin{CompactItemize}
 \item 
+string {\bf cma::formatModelPath} (const char $\ast$in)
+\item 
 void {\bf cma::split\_\-tag} (const string \&s, vector$<$ string $>$ \&words, vector$<$ string $>$ \&tags, string posDelimiter)
 \item 
 void {\bf cma::gather\_\-feature} (TrainerData $\ast$data, string \&word, vector$<$ string $>$ \&context, string \&tag)
@@ -49,7 +51,7 @@ void {\bf cma::save\_\-features} (TrainerData $\ast$data, const char $\ast$file)
 \item 
 void {\bf cma::cutoff\_\-feature} (TrainerData $\ast$data)
 \item 
-void {\bf cma::train} (TrainerData $\ast$data, const char $\ast$file, const string cateName, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian, bool isPOS)
+void {\bf cma::train} (TrainerData $\ast$data, const char $\ast$file, const string modelPath, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian, bool isPOS)
 \item 
 void {\bf cma::create\_\-poc\_\-meterial} (const char $\ast$inFile, const char $\ast$outFile, Knowledge::EncodeType type, string posDelimiter)
 \item 

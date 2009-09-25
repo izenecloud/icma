@@ -107,7 +107,7 @@ Execute the morphological analysis based on a sentence. <dl compact><dt><b>Param
 
 <p>Implements <a class="el" href="classcma_1_1Analyzer.html#2274acc45dd1ccc6aa7ea87cd34ad0e7">cma::Analyzer</a>.</p>
 
-<p>References <a class="el" href="sentence_8cpp-source.html#l00076">cma::Sentence::addList()</a>, <a class="el" href="pos__table_8cpp-source.html#l00072">cma::POSTable::getCodeFromStr()</a>, <a class="el" href="analyzer_8cpp-source.html#l00048">cma::Analyzer::getOption()</a>, <a class="el" href="sentence_8cpp-source.html#l00029">cma::Sentence::getString()</a>, <a class="el" href="pos__table_8cpp-source.html#l00042">cma::POSTable::instance()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00226">cma::CMA_ME_Knowledge::isStopWord()</a>, <a class="el" href="sentence_8h-source.html#l00025">cma::Morpheme::lexicon_</a>, <a class="el" href="analyzer_8h-source.html#l00106">cma::Analyzer::OPTION_TYPE_NBEST</a>, <a class="el" href="analyzer_8h-source.html#l00105">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, and <a class="el" href="sentence_8h-source.html#l00028">cma::Morpheme::posCode_</a>.</p>
+<p>References <a class="el" href="sentence_8cpp-source.html#l00089">cma::Sentence::addList()</a>, <a class="el" href="sentence_8cpp-source.html#l00039">cma::Sentence::getListSize()</a>, <a class="el" href="sentence_8cpp-source.html#l00064">cma::Sentence::getMorphemeList()</a>, <a class="el" href="analyzer_8cpp-source.html#l00053">cma::Analyzer::getOption()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00407">cma::CMA_ME_Knowledge::getPOSTable()</a>, <a class="el" href="sentence_8cpp-source.html#l00069">cma::Sentence::getScore()</a>, <a class="el" href="sentence_8cpp-source.html#l00034">cma::Sentence::getString()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00342">cma::CMA_ME_Knowledge::isStopWord()</a>, <a class="el" href="sentence_8h-source.html#l00025">cma::Morpheme::lexicon_</a>, <a class="el" href="analyzer_8h-source.html#l00106">cma::Analyzer::OPTION_TYPE_NBEST</a>, <a class="el" href="analyzer_8h-source.html#l00105">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="sentence_8h-source.html#l00028">cma::Morpheme::posCode_</a>, <a class="el" href="sentence_8h-source.html#l00031">cma::Morpheme::posStr_</a>, and <a class="el" href="sentence_8cpp-source.html#l00074">cma::Sentence::setScore()</a>.</p>
 
 </div>
 </div><p>
@@ -148,7 +148,7 @@ Execute the morphological analysis based on a file. <dl compact><dt><b>Parameter
 
 <p>Implements <a class="el" href="classcma_1_1Analyzer.html#ae19c787b296d086d52449cb1b6e3699">cma::Analyzer</a>.</p>
 
-<p>References <a class="el" href="analyzer_8cpp-source.html#l00048">cma::Analyzer::getOption()</a>, <a class="el" href="analyzer_8h-source.html#l00105">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="analyzer_8h-source.html#l00154">cma::Analyzer::posDelimiter_</a>, and <a class="el" href="analyzer_8h-source.html#l00157">cma::Analyzer::wordDelimiter_</a>.</p>
+<p>References <a class="el" href="analyzer_8cpp-source.html#l00053">cma::Analyzer::getOption()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00342">cma::CMA_ME_Knowledge::isStopWord()</a>, <a class="el" href="analyzer_8h-source.html#l00105">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="analyzer_8h-source.html#l00166">cma::Analyzer::posDelimiter_</a>, <a class="el" href="analyzer_8h-source.html#l00172">cma::Analyzer::sentenceDelimiter_</a>, and <a class="el" href="analyzer_8h-source.html#l00169">cma::Analyzer::wordDelimiter_</a>.</p>
 
 </div>
 </div><p>
@@ -178,7 +178,7 @@ Execute the morphological analysis based on a paragraph string. <dl compact><dt>
 
 <p>Implements <a class="el" href="classcma_1_1Analyzer.html#2d05785e30e19a390aa887f25bda2d2f">cma::Analyzer</a>.</p>
 
-<p>References <a class="el" href="analyzer_8cpp-source.html#l00048">cma::Analyzer::getOption()</a>, <a class="el" href="analyzer_8h-source.html#l00105">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="analyzer_8h-source.html#l00154">cma::Analyzer::posDelimiter_</a>, and <a class="el" href="analyzer_8h-source.html#l00157">cma::Analyzer::wordDelimiter_</a>.</p>
+<p>References <a class="el" href="analyzer_8cpp-source.html#l00053">cma::Analyzer::getOption()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00342">cma::CMA_ME_Knowledge::isStopWord()</a>, <a class="el" href="analyzer_8h-source.html#l00105">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="analyzer_8h-source.html#l00166">cma::Analyzer::posDelimiter_</a>, and <a class="el" href="analyzer_8h-source.html#l00169">cma::Analyzer::wordDelimiter_</a>.</p>
 
 </div>
 </div><p>
@@ -207,7 +207,7 @@ Set the <em><a class="el" href="classcma_1_1Knowledge.html" title="Knowledge man
 
 <p>Implements <a class="el" href="classcma_1_1Analyzer.html#52d2462f2f05cec4a9c4d6773e7502cb">cma::Analyzer</a>.</p>
 
-<p>References <a class="el" href="knowledge_8cpp-source.html#l00027">cma::Knowledge::getEncodeType()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00186">cma::CMA_ME_Knowledge::getPOSTagger()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00182">cma::CMA_ME_Knowledge::getSegTagger()</a>, <a class="el" href="cma__ctype_8cpp-source.html#l00019">cma::CMA_CType::instance()</a>, <a class="el" href="CMAPOCTagger_8h-source.html#l00127">cma::SegTagger::setCType()</a>, and <a class="el" href="CMAPOSTagger_8h-source.html#l00159">cma::POSTagger::setCType()</a>.</p>
+<p>References <a class="el" href="knowledge_8cpp-source.html#l00050">cma::Knowledge::getEncodeType()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00302">cma::CMA_ME_Knowledge::getPOSTagger()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00298">cma::CMA_ME_Knowledge::getSegTagger()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00514">cma::CMA_ME_Knowledge::getSystemProperty()</a>, <a class="el" href="cma__ctype_8cpp-source.html#l00024">cma::CMA_CType::instance()</a>, <a class="el" href="CMA__ME__Knowledge_8cc-source.html#l00293">cma::CMA_ME_Knowledge::isSupportPOS()</a>, <a class="el" href="analyzer_8h-source.html#l00105">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="CMAPOCTagger_8h-source.html#l00135">cma::SegTagger::setCType()</a>, <a class="el" href="CMAPOSTagger_8h-source.html#l00153">cma::POSTagger::setCType()</a>, <a class="el" href="analyzer_8cpp-source.html#l00042">cma::Analyzer::setOption()</a>, <a class="el" href="analyzer_8cpp-source.html#l00058">cma::Analyzer::setPOSDelimiter()</a>, <a class="el" href="analyzer_8cpp-source.html#l00078">cma::Analyzer::setSentenceDelimiter()</a>, and <a class="el" href="analyzer_8cpp-source.html#l00068">cma::Analyzer::setWordDelimiter()</a>.</p>
 
 </div>
 </div><p>
@@ -247,14 +247,14 @@ Split a paragraph string into sentences. <dl compact><dt><b>Parameters:</b></dt>
 
 <p>Implements <a class="el" href="classcma_1_1Analyzer.html#8ed5115519284c1ccf2bde9e289168dd">cma::Analyzer</a>.</p>
 
-<p>References <a class="el" href="tokenizer_8cpp-source.html#l00033">cma::CTypeTokenizer::assign()</a>, <a class="el" href="classcma_1_1CMA__CType.html#d53b4e758dae5bc9718eea3f9e3988d8">cma::CMA_CType::isSentenceSeparator()</a>, <a class="el" href="classcma_1_1CMA__CType.html#355d9f93a23d8af65fe63018c0558d4c">cma::CMA_CType::isSpace()</a>, <a class="el" href="tokenizer_8cpp-source.html#l00040">cma::CTypeTokenizer::next()</a>, and <a class="el" href="sentence_8cpp-source.html#l00022">cma::Sentence::setString()</a>.</p>
+<p>References <a class="el" href="tokenizer_8cpp-source.html#l00033">cma::CTypeTokenizer::assign()</a>, <a class="el" href="cma__ctype_8cpp-source.html#l00338">cma::CMA_CType::isSentenceSeparator()</a>, <a class="el" href="cma__ctype_8cpp-source.html#l00332">cma::CMA_CType::isSpace()</a>, <a class="el" href="tokenizer_8cpp-source.html#l00040">cma::CTypeTokenizer::next()</a>, and <a class="el" href="sentence_8cpp-source.html#l00027">cma::Sentence::setString()</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
-<li>source/include/<a class="el" href="CMA__ME__Analyzer_8h-source.html">CMA_ME_Analyzer.h</a><li>source/src/<a class="el" href="CMA__ME__Analyzer_8cc.html">CMA_ME_Analyzer.cc</a></ul>
+<li>/home/vernkin/projects/chinese-ma-chen/source/include/<a class="el" href="CMA__ME__Analyzer_8h-source.html">CMA_ME_Analyzer.h</a><li>/home/vernkin/projects/chinese-ma-chen/source/src/<a class="el" href="CMA__ME__Analyzer_8cc.html">CMA_ME_Analyzer.cc</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:06 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

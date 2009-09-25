@@ -13,6 +13,8 @@ void {\bf reset} ()
 bool {\bf search} (const char $\ast$p)
 \item 
 bool {\bf firstSearch} (const char $\ast$p)
+\item 
+bool {\bf exists} ()
 \end{CompactItemize}
 \subsection*{Public Attributes}
 \begin{CompactItemize}
@@ -46,7 +48,16 @@ Create an instance
 
 
 \subsection{Member Function Documentation}
-\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!firstSearch@{firstSearch}}
+\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!exists@{exists}}
+\index{exists@{exists}!cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}}
+\subsubsection[{exists}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::pocinner::StrBasedVTrie::exists ()\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1pocinner_1_1StrBasedVTrie_4a4128570a2e395dfd056cdbf63983e1}
+
+
+Whether exists in the dictionary 
+
+References completeSearch, VTrieNode::data, and node.
+
+Referenced by cma::SegTagger::seg\_\-sentence\_\-best().\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!firstSearch@{firstSearch}}
 \index{firstSearch@{firstSearch}!cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}}
 \subsubsection[{firstSearch}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::pocinner::StrBasedVTrie::firstSearch (const char $\ast$ {\em p})\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1pocinner_1_1StrBasedVTrie_587a002d4d1945a9a474ccc22c42a305}
 
@@ -92,14 +103,14 @@ Referenced by firstSearch(), and cma::SegTagger::seg\_\-sentence\_\-best().
 
 true if the search over all the characters in the input string 
 
-Referenced by reset(), search(), and cma::SegTagger::seg\_\-sentence\_\-best().\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!node@{node}}
+Referenced by exists(), reset(), search(), and cma::SegTagger::seg\_\-sentence\_\-best().\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!node@{node}}
 \index{node@{node}!cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}}
 \subsubsection[{node}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VTrieNode} {\bf cma::pocinner::StrBasedVTrie::node}}\label{classcma_1_1pocinner_1_1StrBasedVTrie_2ec5c19acfe8fc118535d0e7914e4e6d}
 
 
 The \doxyref{VTrieNode}{p.}{classVTrieNode} 
 
-Referenced by reset(), and search().\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!trie@{trie}}
+Referenced by exists(), reset(), and search().\index{cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}!trie@{trie}}
 \index{trie@{trie}!cma::pocinner::StrBasedVTrie@{cma::pocinner::StrBasedVTrie}}
 \subsubsection[{trie}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VTrie}$\ast$ {\bf cma::pocinner::StrBasedVTrie::trie}}\label{classcma_1_1pocinner_1_1StrBasedVTrie_82eb8f8fc465d8a163c2391d54385a1d}
 
@@ -110,4 +121,4 @@ Referenced by search().
 
 The documentation for this class was generated from the following file:\begin{CompactItemize}
 \item 
-source/src/{\bf CMAPOCTagger.cc}\end{CompactItemize}
+/home/vernkin/projects/chinese-ma-chen/source/src/{\bf CMAPOCTagger.cc}\end{CompactItemize}

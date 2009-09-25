@@ -62,7 +62,7 @@ Execute the morphological analysis based on a sentence. \begin{Desc}
 
 Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_2274acc45dd1ccc6aa7ea87cd34ad0e7}.
 
-References cma::Sentence::addList(), cma::POSTable::getCodeFromStr(), cma::Analyzer::getOption(), cma::Sentence::getString(), cma::POSTable::instance(), cma::CMA\_\-ME\_\-Knowledge::isStopWord(), cma::Morpheme::lexicon\_\-, cma::Analyzer::OPTION\_\-TYPE\_\-NBEST, cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, and cma::Morpheme::posCode\_\-.\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!runWithStream@{runWithStream}}
+References cma::Sentence::addList(), cma::Sentence::getListSize(), cma::Sentence::getMorphemeList(), cma::Analyzer::getOption(), cma::CMA\_\-ME\_\-Knowledge::getPOSTable(), cma::Sentence::getScore(), cma::Sentence::getString(), cma::CMA\_\-ME\_\-Knowledge::isStopWord(), cma::Morpheme::lexicon\_\-, cma::Analyzer::OPTION\_\-TYPE\_\-NBEST, cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, cma::Morpheme::posCode\_\-, cma::Morpheme::posStr\_\-, and cma::Sentence::setScore().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!runWithStream@{runWithStream}}
 \index{runWithStream@{runWithStream}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
 \subsubsection[{runWithStream}]{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Analyzer::runWithStream (const char $\ast$ {\em inFileName}, \/  const char $\ast$ {\em outFileName})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_eb9e065c3cc25885f2ccb0c70f4a5964}
 
@@ -80,7 +80,7 @@ Execute the morphological analysis based on a file. \begin{Desc}
 
 Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_ae19c787b296d086d52449cb1b6e3699}.
 
-References cma::Analyzer::getOption(), cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, cma::Analyzer::posDelimiter\_\-, and cma::Analyzer::wordDelimiter\_\-.\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!runWithString@{runWithString}}
+References cma::Analyzer::getOption(), cma::CMA\_\-ME\_\-Knowledge::isStopWord(), cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, cma::Analyzer::posDelimiter\_\-, cma::Analyzer::sentenceDelimiter\_\-, and cma::Analyzer::wordDelimiter\_\-.\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!runWithString@{runWithString}}
 \index{runWithString@{runWithString}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
 \subsubsection[{runWithString}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::CMA\_\-ME\_\-Analyzer::runWithString (const char $\ast$ {\em inStr})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_50b039c84be34cc7c83ce8aef97058f2}
 
@@ -96,7 +96,7 @@ Execute the morphological analysis based on a paragraph string. \begin{Desc}
 
 Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_2d05785e30e19a390aa887f25bda2d2f}.
 
-References cma::Analyzer::getOption(), cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, cma::Analyzer::posDelimiter\_\-, and cma::Analyzer::wordDelimiter\_\-.\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!setKnowledge@{setKnowledge}}
+References cma::Analyzer::getOption(), cma::CMA\_\-ME\_\-Knowledge::isStopWord(), cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, cma::Analyzer::posDelimiter\_\-, and cma::Analyzer::wordDelimiter\_\-.\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!setKnowledge@{setKnowledge}}
 \index{setKnowledge@{setKnowledge}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
 \subsubsection[{setKnowledge}]{\setlength{\rightskip}{0pt plus 5cm}void cma::CMA\_\-ME\_\-Analyzer::setKnowledge ({\bf Knowledge} $\ast$ {\em pKnowledge})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_04d6b5c7b7dcd199c8e96a06afa5ea44}
 
@@ -110,7 +110,7 @@ Set the {\em \doxyref{Knowledge}{p.}{classcma_1_1Knowledge}\/} for analysis. \be
 
 Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_52d2462f2f05cec4a9c4d6773e7502cb}.
 
-References cma::Knowledge::getEncodeType(), cma::CMA\_\-ME\_\-Knowledge::getPOSTagger(), cma::CMA\_\-ME\_\-Knowledge::getSegTagger(), cma::CMA\_\-CType::instance(), cma::SegTagger::setCType(), and cma::POSTagger::setCType().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!splitSentence@{splitSentence}}
+References cma::Knowledge::getEncodeType(), cma::CMA\_\-ME\_\-Knowledge::getPOSTagger(), cma::CMA\_\-ME\_\-Knowledge::getSegTagger(), cma::CMA\_\-ME\_\-Knowledge::getSystemProperty(), cma::CMA\_\-CType::instance(), cma::CMA\_\-ME\_\-Knowledge::isSupportPOS(), cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, cma::SegTagger::setCType(), cma::POSTagger::setCType(), cma::Analyzer::setOption(), cma::Analyzer::setPOSDelimiter(), cma::Analyzer::setSentenceDelimiter(), and cma::Analyzer::setWordDelimiter().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!splitSentence@{splitSentence}}
 \index{splitSentence@{splitSentence}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
 \subsubsection[{splitSentence}]{\setlength{\rightskip}{0pt plus 5cm}void cma::CMA\_\-ME\_\-Analyzer::splitSentence (const char $\ast$ {\em paragraph}, \/  std::vector$<$ {\bf Sentence} $>$ \& {\em sentences})\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_b6d7b5e169207cca37337eceb07ac5fe}
 
@@ -130,5 +130,5 @@ References cma::CTypeTokenizer::assign(), cma::CMA\_\-CType::isSentenceSeparator
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
-source/include/{\bf CMA\_\-ME\_\-Analyzer.h}\item 
-source/src/{\bf CMA\_\-ME\_\-Analyzer.cc}\end{CompactItemize}
+/home/vernkin/projects/chinese-ma-chen/source/include/{\bf CMA\_\-ME\_\-Analyzer.h}\item 
+/home/vernkin/projects/chinese-ma-chen/source/src/{\bf CMA\_\-ME\_\-Analyzer.cc}\end{CompactItemize}

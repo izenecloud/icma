@@ -1,0 +1,90 @@
+\section{cma::CharConditions Class Reference}
+\label{classcma_1_1CharConditions}\index{cma::CharConditions@{cma::CharConditions}}
+all the conditions of a specific character Each character has at most one \doxyref{CharConditions}{p.}{classcma_1_1CharConditions}  
+
+
+{\tt \#include $<$cma\_\-ctype\_\-core.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+void \textbf{setBaseType} (CharType baseType)\label{classcma_1_1CharConditions_5984c624d6c64ee9fba4428465666326}
+
+\item 
+bool {\bf addCondition} ({\bf Condition} \&newCondition)
+\item 
+bool \textbf{addConditions} (vector$<$ {\bf Condition} $>$ \&vec)\label{classcma_1_1CharConditions_fe2006d4ba4230fa2bab5f95db258534}
+
+\item 
+CharType {\bf match} (CharType preType, CharValue nextValue, CharType nextType, CharType defaultType=CHAR\_\-TYPE\_\-INIT) const 
+\end{CompactItemize}
+\subsection*{Public Attributes}
+\begin{CompactItemize}
+\item 
+CharType {\bf baseType\_\-}
+\item 
+vector$<$ {\bf Condition} $>$ {\bf conditions\_\-}
+\item 
+int {\bf conditionSize\_\-}
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+all the conditions of a specific character Each character has at most one \doxyref{CharConditions}{p.}{classcma_1_1CharConditions} 
+
+\subsection{Member Function Documentation}
+\index{cma::CharConditions@{cma::CharConditions}!addCondition@{addCondition}}
+\index{addCondition@{addCondition}!cma::CharConditions@{cma::CharConditions}}
+\subsubsection[{addCondition}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CharConditions::addCondition ({\bf Condition} \& {\em newCondition})}\label{classcma_1_1CharConditions_bfa4085aa3dac5b6f54b206a562b3605}
+
+
+If the Condition's type is CHAR\_\-TYPE\_\-OTHER, it would insert as the first element
+
+\begin{Desc}
+\item[Returns:]whether add successfully \end{Desc}
+
+
+References conditions\_\-, conditionSize\_\-, cma::Condition::equals(), and cma::Condition::getType().\index{cma::CharConditions@{cma::CharConditions}!match@{match}}
+\index{match@{match}!cma::CharConditions@{cma::CharConditions}}
+\subsubsection[{match}]{\setlength{\rightskip}{0pt plus 5cm}CharType cma::CharConditions::match (CharType {\em preType}, \/  CharValue {\em nextValue}, \/  CharType {\em nextType}, \/  CharType {\em defaultType} = {\tt CHAR\_\-TYPE\_\-INIT}) const}\label{classcma_1_1CharConditions_337a9a9932873512007ddaf4a7672f8d}
+
+
+Get the Proper CharType, if not found, return defaultType \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em defaultType}]if not match, return this type \end{description}
+\end{Desc}
+
+
+References conditions\_\-, conditionSize\_\-, cma::Condition::match(), and cma::Condition::type\_\-.
+
+Referenced by cma::CMA\_\-CType::getCharType().
+
+\subsection{Member Data Documentation}
+\index{cma::CharConditions@{cma::CharConditions}!baseType\_\-@{baseType\_\-}}
+\index{baseType\_\-@{baseType\_\-}!cma::CharConditions@{cma::CharConditions}}
+\subsubsection[{baseType\_\-}]{\setlength{\rightskip}{0pt plus 5cm}CharType {\bf cma::CharConditions::baseType\_\-}}\label{classcma_1_1CharConditions_f4e469f3ba7f757c86d1ecf251a4ebff}
+
+
+basis CharType 
+
+Referenced by cma::CMA\_\-CType::getCharType().\index{cma::CharConditions@{cma::CharConditions}!conditions\_\-@{conditions\_\-}}
+\index{conditions\_\-@{conditions\_\-}!cma::CharConditions@{cma::CharConditions}}
+\subsubsection[{conditions\_\-}]{\setlength{\rightskip}{0pt plus 5cm}vector$<${\bf Condition}$>$ {\bf cma::CharConditions::conditions\_\-}}\label{classcma_1_1CharConditions_d34f47feccbb2aa1822a52f1b37cdcc4}
+
+
+list of conditions 
+
+Referenced by addCondition(), and match().\index{cma::CharConditions@{cma::CharConditions}!conditionSize\_\-@{conditionSize\_\-}}
+\index{conditionSize\_\-@{conditionSize\_\-}!cma::CharConditions@{cma::CharConditions}}
+\subsubsection[{conditionSize\_\-}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf cma::CharConditions::conditionSize\_\-}}\label{classcma_1_1CharConditions_cbd9dcaf30b047556b8c829c1962a4b7}
+
+
+size of the conditions 
+
+Referenced by addCondition(), and match().
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+/home/vernkin/projects/chinese-ma-chen/source/include/{\bf cma\_\-ctype\_\-core.h}\item 
+/home/vernkin/projects/chinese-ma-chen/source/src/cma\_\-ctype\_\-core.cc\end{CompactItemize}

@@ -40,6 +40,8 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1pocinner_1_1StrBasedVTrie.html#587a002d4d1945a9a474ccc22c42a305">firstSearch</a> (const char *p)</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1pocinner_1_1StrBasedVTrie.html#4a4128570a2e395dfd056cdbf63983e1">exists</a> ()</td></tr>
+
 <tr><td colspan="2"><br><h2>Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classVTrie.html">VTrie</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1pocinner_1_1StrBasedVTrie.html#82eb8f8fc465d8a163c2391d54385a1d">trie</a></td></tr>
 
@@ -79,6 +81,29 @@ Create an instance<p>
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
+<a class="anchor" name="4a4128570a2e395dfd056cdbf63983e1"></a><!-- doxytag: member="cma::pocinner::StrBasedVTrie::exists" ref="4a4128570a2e395dfd056cdbf63983e1" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cma::pocinner::StrBasedVTrie::exists           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Whether exists in the dictionary 
+<p>References <a class="el" href="CMAPOCTagger_8cc-source.html#l00309">completeSearch</a>, <a class="el" href="VTrie_8h-source.html#l00121">VTrieNode::data</a>, and <a class="el" href="CMAPOCTagger_8cc-source.html#l00304">node</a>.</p>
+
+<p>Referenced by <a class="el" href="CMAPOCTagger_8cc-source.html#l00576">cma::SegTagger::seg_sentence_best()</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="587a002d4d1945a9a474ccc22c42a305"></a><!-- doxytag: member="cma::pocinner::StrBasedVTrie::firstSearch" ref="587a002d4d1945a9a474ccc22c42a305" args="(const char *p)" -->
 <div class="memitem">
 <div class="memproto">
@@ -99,7 +124,7 @@ Create an instance<p>
 First reset then search 
 <p>References <a class="el" href="CMAPOCTagger_8cc-source.html#l00245">reset()</a>, and <a class="el" href="CMAPOCTagger_8cc-source.html#l00257">search()</a>.</p>
 
-<p>Referenced by <a class="el" href="CMAPOCTagger_8cc-source.html#l00478">cma::SegTagger::seg_sentence_best()</a>.</p>
+<p>Referenced by <a class="el" href="CMAPOCTagger_8cc-source.html#l00576">cma::SegTagger::seg_sentence_best()</a>.</p>
 
 </div>
 </div><p>
@@ -120,9 +145,9 @@ First reset then search
 
 <p>
 Reset all the status 
-<p>References <a class="el" href="CMAPOCTagger_8cc-source.html#l00297">completeSearch</a>, <a class="el" href="VTrie_8h-source.html#l00106">VTrieNode::init()</a>, and <a class="el" href="CMAPOCTagger_8cc-source.html#l00292">node</a>.</p>
+<p>References <a class="el" href="CMAPOCTagger_8cc-source.html#l00309">completeSearch</a>, <a class="el" href="VTrie_8h-source.html#l00106">VTrieNode::init()</a>, and <a class="el" href="CMAPOCTagger_8cc-source.html#l00304">node</a>.</p>
 
-<p>Referenced by <a class="el" href="CMAPOCTagger_8cc-source.html#l00278">firstSearch()</a>.</p>
+<p>Referenced by <a class="el" href="CMAPOCTagger_8cc-source.html#l00282">firstSearch()</a>.</p>
 
 </div>
 </div><p>
@@ -151,9 +176,9 @@ search the specific string<p>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if have extending string or just the right string, here string is the combination of the previous strings and p </dd></dl>
 
-<p>References <a class="el" href="CMAPOCTagger_8cc-source.html#l00297">completeSearch</a>, <a class="el" href="VTrie_8h-source.html#l00121">VTrieNode::data</a>, <a class="el" href="VTrie_8h-source.html#l00420">VTrie::find()</a>, <a class="el" href="VTrie_8h-source.html#l00130">VTrieNode::moreLong</a>, <a class="el" href="CMAPOCTagger_8cc-source.html#l00292">node</a>, and <a class="el" href="CMAPOCTagger_8cc-source.html#l00287">trie</a>.</p>
+<p>References <a class="el" href="CMAPOCTagger_8cc-source.html#l00309">completeSearch</a>, <a class="el" href="VTrie_8h-source.html#l00121">VTrieNode::data</a>, <a class="el" href="VTrie_8h-source.html#l00420">VTrie::find()</a>, <a class="el" href="VTrie_8h-source.html#l00130">VTrieNode::moreLong</a>, <a class="el" href="CMAPOCTagger_8cc-source.html#l00304">node</a>, and <a class="el" href="CMAPOCTagger_8cc-source.html#l00299">trie</a>.</p>
 
-<p>Referenced by <a class="el" href="CMAPOCTagger_8cc-source.html#l00278">firstSearch()</a>, and <a class="el" href="CMAPOCTagger_8cc-source.html#l00478">cma::SegTagger::seg_sentence_best()</a>.</p>
+<p>Referenced by <a class="el" href="CMAPOCTagger_8cc-source.html#l00282">firstSearch()</a>, and <a class="el" href="CMAPOCTagger_8cc-source.html#l00576">cma::SegTagger::seg_sentence_best()</a>.</p>
 
 </div>
 </div><p>
@@ -171,7 +196,7 @@ search the specific string<p>
 
 <p>
 true if the search over all the characters in the input string 
-<p>Referenced by <a class="el" href="CMAPOCTagger_8cc-source.html#l00245">reset()</a>, <a class="el" href="CMAPOCTagger_8cc-source.html#l00257">search()</a>, and <a class="el" href="CMAPOCTagger_8cc-source.html#l00478">cma::SegTagger::seg_sentence_best()</a>.</p>
+<p>Referenced by <a class="el" href="CMAPOCTagger_8cc-source.html#l00290">exists()</a>, <a class="el" href="CMAPOCTagger_8cc-source.html#l00245">reset()</a>, <a class="el" href="CMAPOCTagger_8cc-source.html#l00257">search()</a>, and <a class="el" href="CMAPOCTagger_8cc-source.html#l00576">cma::SegTagger::seg_sentence_best()</a>.</p>
 
 </div>
 </div><p>
@@ -188,7 +213,7 @@ true if the search over all the characters in the input string
 
 <p>
 The <a class="el" href="classVTrieNode.html" title="The node of the VTrie.">VTrieNode</a> 
-<p>Referenced by <a class="el" href="CMAPOCTagger_8cc-source.html#l00245">reset()</a>, and <a class="el" href="CMAPOCTagger_8cc-source.html#l00257">search()</a>.</p>
+<p>Referenced by <a class="el" href="CMAPOCTagger_8cc-source.html#l00290">exists()</a>, <a class="el" href="CMAPOCTagger_8cc-source.html#l00245">reset()</a>, and <a class="el" href="CMAPOCTagger_8cc-source.html#l00257">search()</a>.</p>
 
 </div>
 </div><p>
@@ -210,9 +235,9 @@ The <a class="el" href="classVTrie.html" title="VTrie is a variant of the Radix 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
-<li>source/src/<a class="el" href="CMAPOCTagger_8cc.html">CMAPOCTagger.cc</a></ul>
+<li>/home/vernkin/projects/chinese-ma-chen/source/src/<a class="el" href="CMAPOCTagger_8cc.html">CMAPOCTagger.cc</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jun 23 11:27:51 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Sep 25 15:20:07 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

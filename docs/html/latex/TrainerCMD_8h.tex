@@ -1,16 +1,13 @@
-\section{source/include/TrainerCMD.h File Reference}
-\label{TrainerCMD_8h}\index{source/include/TrainerCMD.h@{source/include/TrainerCMD.h}}
+\section{/home/vernkin/projects/chinese-ma-chen/source/include/TrainerCMD.h File Reference}
+\label{TrainerCMD_8h}\index{/home/vernkin/projects/chinese-ma-chen/source/include/TrainerCMD.h@{/home/vernkin/projects/chinese-ma-chen/source/include/TrainerCMD.h}}
 Command tool for the dataset training.  
 
 
-{\tt \#include \char`\"{}cma\_\-ctype.h\char`\"{}}\par
 {\tt \#include \char`\"{}CMAPOCTagger.h\char`\"{}}\par
 {\tt \#include \char`\"{}CMAPOSTagger.h\char`\"{}}\par
 {\tt \#include $<$stdlib.h$>$}\par
 \subsection*{Functions}
 \begin{CompactItemize}
-\item 
-void {\bf beginTrain} (string pMateFile, string cateFile, string enc, string posDelimiter)
 \item 
 void {\bf printTainerUsage} ()
 \item 
@@ -26,21 +23,7 @@ Command tool for the dataset training.
 
 
 \subsection{Function Documentation}
-\index{TrainerCMD.h@{TrainerCMD.h}!beginTrain@{beginTrain}}
-\index{beginTrain@{beginTrain}!TrainerCMD.h@{TrainerCMD.h}}
-\subsubsection[{beginTrain}]{\setlength{\rightskip}{0pt plus 5cm}void beginTrain (string {\em pMateFile}, \/  string {\em cateFile}, \/  string {\em enc}, \/  string {\em posDelimiter})}\label{TrainerCMD_8h_412f108b13959fdc8d7a91eabb2ba536}
-
-
-This function carry out the training
-
-\begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em pMateFile}]the meterial file \item[{\em cateFile}]the category name \item[{\em enc}]the encoding, only support gb2312 and big5 \item[{\em posDelimiter}]the pos delimiter \end{description}
-\end{Desc}
-
-
-Referenced by tainerEntry().\index{TrainerCMD.h@{TrainerCMD.h}!printTainerUsage@{printTainerUsage}}
+\index{TrainerCMD.h@{TrainerCMD.h}!printTainerUsage@{printTainerUsage}}
 \index{printTainerUsage@{printTainerUsage}!TrainerCMD.h@{TrainerCMD.h}}
 \subsubsection[{printTainerUsage}]{\setlength{\rightskip}{0pt plus 5cm}void printTainerUsage ()}\label{TrainerCMD_8h_cadfbf3ad2e202a3d175a59bac8079a1}
 
@@ -59,6 +42,3 @@ The main function simply invoke this function
 \end{Desc}
 \begin{Desc}
 \item[Returns:]the exit value \end{Desc}
-
-
-References beginTrain().
