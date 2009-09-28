@@ -26,6 +26,9 @@
 #include "knowledge.h"
 #include "sentence.h"
 
+// CMA_ME_Knowledge.h is just for test here, don't include it for other purpose
+#include "CMA_ME_Knowledge.h"
+
 #include <iostream>
 #include <fstream>
 #include <cassert>
@@ -329,7 +332,9 @@ int main(int argc, char* argv[])
     string encodeStr = modelPathStr.substr(first+1, last-first-1);
 
     knowledge->loadModel( encodeStr.data(), modelPath );
-
+    size_t dicSize = ((CMA_ME_Knowledge*)knowledge)->getTrie()->size();
+    printf("[Info] All Dictionaries' Size: %.2fm.\n", dicSize/1048576.0);
+    //cout<<"[Info] All Dictionary Size: "<<(dicSize/1048576.0)<<"m"<<endl;
     // set knowledge
     analyzer->setKnowledge(knowledge);
 

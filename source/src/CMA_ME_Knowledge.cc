@@ -280,12 +280,12 @@ int CMA_ME_Knowledge::loadModel(const char* encoding, const char* modelPath)
 		loadPOSModel( ( path + "pos" ).data() );
 	}
 
-	// load the configuration
-	loadConfig( ( path + "poc.config" ).data() );
-
 	//TODO here have to change to load system dictionary
 	// load the system dictionaries
 	loadUserDict( ( path + "sys.dic").data() );
+
+	// load the configuration
+	loadConfig( ( path + "cma.config" ).data() );
 
 	return 1;
 }

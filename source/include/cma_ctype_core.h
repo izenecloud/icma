@@ -49,6 +49,10 @@ typedef unsigned int CharValue;
  */
 string getDecodeChar( CharValue value );
 
+/**
+ * \brief This class check the previous/next characters and their types to check whether
+ * match the Condition.
+ */
 class Condition
 {
 public:

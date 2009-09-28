@@ -24,32 +24,31 @@
  * file with name camctrainer under directory bin.
  *
  * The SYNOPSIS for the trainer is: <BR>
- * ./cmactrainer mateFile cateFile [encoding] [posDelimiter] <BR>
+ * ./cmactrainer mateFile modelPath [encoding] [posDelimiter] <BR>
  *
  * <BR>The Description for the parameters:
  * <ul>
  *    <li> mateFile is the material file, it should be in the form word1/pos1 
  * word2/pos2 word3/pos3 ...</li>
- *    <li> cateFile is the category file, there are several files are created
- * after the training, and with cateFile as the prefix, prefix should contains
- * both path and name, such /dir1/dir2/n1.</li>
- *    <li> encoding is the encoding of the mateFile, and gb2312 is the default
- * encoding. Only support gb2312 and big5 now.</li>
- *    <li> posDelimiter is the delimiter between the word and the pos tag, like
+ *    <li> modelPath is the directory to hold all the output files (include
+ * trained model files and dictionaries).</li>
+ *    <li> encoding is the encoding of the mateFile, and gb18030 is the default
+ * encoding. Support utf8, gb18030, gb2312 and big5 now.</li>
+ *    <li> posDelimiter is the delimiter between the word and the POS tag, like
  * '/' and '_' and default is '/'.</li>
  * </ul>
  *
- * Take  &quot;/dir1/dir2/cate &quot; as the cateFile, after the training. The
+ * Take  &quot;/dir1/dir2 &quot; as the cateFile, after the training. The
  * following files are created (All under directory /dir1/dir2):
  * <ol>
- *  <li> cate.model is the POS statistical model file.</li>
- *  <li> cate.pos is the all the POS gained from the training dataset.</li>
- *  <li> cate.dic is the dictionary (include words and POS tags) gained from the
+ *  <li> <b>pos.model</b> is the POS statistical model file.</li>
+ *  <li> <b>pos.pos</b> is the all the POS gained from the training dataset.</li>
+ *  <li> <b>sys.dic</b> is the dictionary (include words and POS tags) gained from the
  * training dataset. This file is plain text and should be loaded as user
  * dictionary. To convert it to the system dictionary, use
  * Knowledge::encodeSystemDict(const char* txtFileName, const char* binFileName),
  * then the binFileName can be loaded as the system dictioanry.</li>
- *  <li>cate-poc.model is the POC statistical model file.</li>
+ *  <li> <b>poc.model</b> is the POC statistical model file.</li>
  * </ol>
  *
  * All the files are required to run the program.<BR>
@@ -61,17 +60,16 @@
  * executable file with name camcsegger under directory bin.
  *
  * The SYNOPSIS for the trainer is: <BR>
- * ./cmacsegger cateFile inFile outFile [encoding] [posDelimiter] <BR>
+ * ./cmacsegger modelPath inFile outFile [encoding] [posDelimiter] <BR>
  *
  * <BR>The Description for the parameters:
  * <ul>
- *    <li> cateFile is the category file, there are several files are created
- * after the training, and with cateFile as the prefix, prefix should contains
- * both path and name, such /dir1/dir2/n1.</li>
- *    <li>inFile the input file.</li>
- *    <li>outFile the output file.</li>
+ *    <li> modelPath is the directory contains all the tained models, dictionaries
+ *    and configuration. </li>
+ *    <li> inFile the input file.</li>
+ *    <li> outFile the output file.</li>
  *    <li> encoding is the encoding of the mateFile, and gb2312 is the default
- * encoding. Only support gb2312 and big5 now.</li>
+ * encoding. Support utf8, gb18030, gb2312 and big5.</li>
  *    <li> posDelimiter is the delimiter between the word and the pos tag, like
  * '/' and '_' and default is '/'.</li>
  * </ul>
@@ -106,17 +104,10 @@ Knowledge* knowledge = factory->createKnowledge();
 //It is suggested to set encoding after crate the Knowledge. Another supported encode type is big5.
 knowledge->setEncodeType(Knowledge::ENCODE_TYPE_GB2312);
 
-// If use /dir1/dir2/cate as the cateFile in the trainer (see section "Run the Trainer" 
-// in this webpage), the parameter for loadStatModel is /dir1/dir2/cate-poc and for the 
-// loadPOSModel is /dir1/dir2/cate.
+// Load all the model by specific modelPath and encoding
+knowledge->loadModel( "gb18030", "..." ).
 
-// load POC statistical model
-knowledge->loadStatModel("...");
-// loadPOSModel has to be invoked before loading XXX Dictionaries
-knowledge->loadPOSModel("...");
-
-// (optional) load dictionaries
-knowledge->loadSystemDict("...");
+// Load User Dictionaries and Stop Words if neccessary.
 knowledge->loadUserDict("...");
 knowledge->loadStopWordDict("...");
  

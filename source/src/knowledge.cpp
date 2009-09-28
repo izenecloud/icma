@@ -66,6 +66,10 @@ Knowledge::EncodeType Knowledge::decodeEncodeType(const char* encType){
     {
         return Knowledge::ENCODE_TYPE_GB18030;
     }
+    else if(enc == "utf8")
+	{
+		return Knowledge::ENCODE_TYPE_UTF8;
+	}
 
     assert(false && "unknown character encode type");
     return Knowledge::ENCODE_TYPE_GB18030;

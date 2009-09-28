@@ -9,6 +9,7 @@
 #include "cma_ctype_gb2312.h"
 #include "cma_ctype_big5.h"
 #include "cma_ctype_gb18030.h"
+#include "cma_ctype_utf8.h"
 #include "tinyxml.h"
 #include "tokenizer.h"
 #include "strutil.h"
@@ -33,6 +34,9 @@ CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
 
 	case Knowledge::ENCODE_TYPE_GB18030:
 		return CMA_CType_GB18030::instance();
+
+	case Knowledge::ENCODE_TYPE_UTF8:
+		return CMA_CType_UTF8::instance();
 
 	default:
 		assert(false && "unknown character encode type");
@@ -339,6 +343,14 @@ bool CMA_CType::isSentenceSeparator(const char* p) const
 {
 	CharValue curV = getEncodeValue(p);
 	return senSepSet_.find(curV) != senSepSet_.end();
+}
+
+CharType CMA_CType::getDefaultEndType( CharType preType )
+{
+	if(preType == CHAR_TYPE_NUMBER || preType == CHAR_TYPE_LETTER
+	            		|| preType == CHAR_TYPE_CHARDIGIT)
+		return preType;
+	return CHAR_TYPE_OTHER;
 }
 
 } // namespace cma

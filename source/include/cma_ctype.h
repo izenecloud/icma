@@ -108,6 +108,13 @@ public:
 	 */
 	int loadConfiguration( const char* file);
 
+	/**
+	 * Invoke this function when the last word not exists
+	 * \param preType type of the previous character
+	 * \return the default next type
+	 */
+	CharType getDefaultEndType( CharType preType );
+
 private:
 	/** Character to types map */
 	map< CharValue, CharConditions > typeMap_;
