@@ -33,10 +33,104 @@ string CharTypeArray[CHAR_TYPE_NUM];
 namespace pocinner{
 
 #define CONTEXT_CHAR_LEN 4
-// start with c[-2], then c[-1] and c[0]
-#define CONTEXT_PRE_LEN 2
-// the current index i + CONTEXT_NEXT_OFFSET is the upper bound
-#define CONTEXT_NEXT_OFFSET 2
+
+/**
+ * Inner function to get the context of the POC, invoked by segmentation method
+ */
+inline void get_poc_zh_context_seg(vector<string>& words, CharType *types,
+        size_t index, vector<string>& context, CMA_CType *ctype){
+
+	CharType t_1 = index > 0 ? types[index - 1] : CHAR_TYPE_INIT;
+	CharType t0 = types[ index ];
+	if( index > 0 )
+	{
+		bool match = false;
+		switch( t_1 )
+		{
+		case CHAR_TYPE_DATE:
+		case CHAR_TYPE_PUNC:
+			match = true;
+			break;
+		case CHAR_TYPE_OTHER:
+			match = t0 != CHAR_TYPE_OTHER;
+			break;
+		default:
+			break;
+		}
+
+		if( !match && t0 == CHAR_TYPE_OTHER && t_1 != CHAR_TYPE_OTHER )
+		{
+			match = true;
+		}
+
+		if(match)
+		{
+			#ifdef DEBUG_POC_TAGGER
+				cout<<"[Context] Set afEnt."<<endl;
+			#endif
+			context.push_back("afEnt");
+			return;
+		}
+	}
+
+    int n = static_cast<int>(words.size());
+
+
+    if( t0 != CHAR_TYPE_OTHER )
+    {
+    	CharType t1;
+    	string c1;
+		if( (index + 1) < n )
+		{
+			c1 = words[ index + 1 ];
+			t1 = types[ index + 1 ];
+		}
+		else
+			t1 = ctype->getDefaultEndType( t0 );
+
+    	context.resize(4);
+        //context[++k] = "C0=" + wa[2];
+        context[0] = "C1=" + c1;
+        context[1] = "T-1=" + CharTypeArray[ t_1 ];
+        context[2] = "T0=" + CharTypeArray[ t0 ];
+        context[3] = "T+1=" + CharTypeArray[ t1 ];
+
+		#ifdef DEBUG_POC_TAGGER
+        for(int jj=0;jj<4;++jj)
+        	cout<<"[Context] Seg Special Context "<<jj<<" : "<<context[jj]<<endl;
+		#endif
+
+        return;
+    }
+
+    string c0 = words[ index ];
+    string c_2, c_1, c1;
+
+    if( index > 0 )
+    	c_1 = words[ index - 1 ];
+    if( index > 1 )
+        c_2 = words[ index - 2 ];
+    if( (index + 1) < n )
+    	c1 = words[ index + 1 ];
+
+    // normal feature set
+    context.resize(8);
+
+    // Cn , n ∈ [−2, 1]
+    context[0] = "C-2=" + c_2;
+    context[1] = "C-1=" + c_1;
+    context[2] = "C0=" + c0;
+    context[3] = "C1=" + c1;
+
+    //Cn Cn+1 , n ∈ [−2, 0]
+    context[4] = "C-2,-1=" + c_2 + "," + c_1;
+    context[5] = "C-1,0=" + c_1 + "," + c0;
+    context[6] = "C0,1=" + c0 + "," + c1;
+
+    //C−1 C1
+    context[7] = "C-1,1=" + c_1 + "," + c1;
+}
+
 /**
  * Inner function to get the context of the POC
  */
@@ -312,70 +406,6 @@ public:
 void get_poc_zh_context(vector<string>& words, vector<string>& tags, size_t index,
         bool rareWord, vector<string>& context, CMA_CType *ctype){
 
-
-    /*string wa[ CONTEXT_CHAR_LEN + 1 ]; //word array, add the last one
-    CharType ta[ 1 + CONTEXT_CHAR_LEN ]; //add the previous one
-
-    int n = static_cast<int>(words.size());
-    // exclude end
-    int end = index + CONTEXT_NEXT_OFFSET + 1; // +1 is the last one
-    if( end > n )
-    	end = n;
-
-    int begin = index - CONTEXT_PRE_LEN;
-    if( begin < 0 )
-    	begin = 0;
-
-    // set the word array, those not in the bound let in empty
-    int i = 0;
-    for( i = begin; i < end; ++i )
-    	wa[ i - CONTEXT_PRE_LEN ] = words[i];
-
-    //set the first type
-    ta[0] = begin > 0 ? ctype->getCharType(words[begin-1].data(), CHAR_TYPE_INIT,
-    		wa[0]) : CHAR_TYPE_INIT;
-
-    int taIdx = 1;
-    //reset the begin here
-    begin = begin - CONTEXT_PRE_LEN;
-    if( begin < 0 )
-    {
-    	CharType defType = ctype->getDefaultEndType(ta[0]);
-    	do{
-    		ta[ taIdx ] = defType;
-    		++taIdx;
-    		++begin;
-    	}while( begin >= 0 );
-    }
-
-    CharType preType = CHAR_TYPE_INIT;
-    if(!types && offset > 0){
-        preType = ctype->getCharType(words[offset-1].data(), preType, words[offset].data());
-    }
-
-    for(int j = 0; j < CONTEXT_CHAR_LEN; ++j, ++offset){
-        if(offset >= 0 && offset < n){
-            wa[j] = words[offset];
-            if(types){
-                ta[j] = preType = types[offset];
-            }else{
-                const char* lastP = 0;
-                if( offset < n - 1){
-                    lastP = words[offset + 1].data();
-                }
-                preType = ctype->getCharType(wa[j].c_str(), preType, lastP);
-                ta[j] = preType;
-            }
-        }else{
-            wa[j] = POC_BOUNDARY;
-            if(preType == CHAR_TYPE_NUMBER || preType == CHAR_TYPE_LETTER
-            		|| preType == CHAR_TYPE_CHARDIGIT)
-            	ta[j] = preType;
-            else
-            	ta[j] = CHAR_TYPE_OTHER;
-        }
-    }*/
-
     pocinner::get_poc_zh_context_1(words, 0, index, context, ctype);
 }
 
@@ -414,7 +444,7 @@ void SegTagger::tag_word(vector<string>& words, CharType* types,
 
     vector<string> context;
 
-    pocinner::get_poc_zh_context_1(words, types, index, context, ctype_);
+    pocinner::get_poc_zh_context_seg(words, types, index, context, ctype_);
 
     vector<pair<outcome_type, double> > outcomes;
     me.eval_all(context, outcomes, false);
@@ -667,7 +697,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
         #endif
             
         vector<string> context;
-        pocinner::get_poc_zh_context_1(words, types, index, context, ctype_);
+        pocinner::get_poc_zh_context_seg(words, types, index, context, ctype_);
 
         #ifdef DEBUG_POC_TAGGER
         /*int n = context.size();
