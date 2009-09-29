@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="gb18030" ?>
+<?xml version="1.0" encoding="utf8" ?>
 
 <cma>
 	<entities>
@@ -28,6 +28,22 @@
 				<nextchar><![CDATA[圆元圓]]></nextchar>
 			</condition>
 		</rule>
+		
+		<rule>
+			<char><![CDATA[秒]]></char>
+			<condition>
+				<type>other</type>
+				<nextchar><![CDATA[钟]]></nextchar>
+			</condition>
+		</rule>
+
+		<rule>
+			<char><![CDATA[月]]></char>
+			<condition>
+				<type>other</type>
+				<nextchar><![CDATA[份]]></nextchar>
+			</condition>
+		</rule>
 
 		<rule>
 			<char><![CDATA[年]]></char>
@@ -48,10 +64,15 @@
 				<pretype>chardigit</pretype>
 				<nextchar><![CDATA[之]]></nextchar>
 			</condition>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
+				<nexttype>chardigit</nexttype>
+			</condition>
 		</rule>
 
 		<rule>
-			<char><![CDATA[年月日时分秒点點]]></char>
+			<char><![CDATA[年月日时時分秒点點]]></char>
 			<condition>
 				<type>date</type>
 				<pretype>digit, chardigit</pretype>
@@ -63,13 +84,12 @@
 			<char><![CDATA[.．‧-－]]></char>
 			<condition>
 				<type>letter</type>
-				<pretype>digit,letter</pretype>
 				<nexttype>letter</nexttype>
 			</condition>
 			<condition>
 				<type>letter</type>
-				<pretype>digit</pretype>
-				<nexttype>letter</nexttype>
+				<pretype>letter</pretype>
+				<nexttype>digit</nexttype>
 			</condition>
 			<condition>
 				<type>digit</type>
@@ -109,6 +129,14 @@
 				<end>true</end>
 			</condition>
 		</rule>
+
+		<rule>
+			<char><![CDATA[多]]></char>
+			<condition>
+				<type>digit</type>
+				<pretype>digit</pretype>
+			</condition>
+		</rule>
 		
 		<rule>
 			<char><![CDATA[第]]></char>
@@ -129,11 +157,6 @@
 			<condition>
 				<type>chardigit</type>
 				<nopretype>chardigit</nopretype>
-				<nexttype>chardigit</nexttype>
-			</condition>
-			<condition>
-				<type>chardigit</type>
-				<pretype>chardigit</pretype>
 				<nexttype>chardigit</nexttype>
 			</condition>
 		</rule>
@@ -176,6 +199,89 @@
 			<condition>
 				<type>digit</type>
 				<pretype>digit</pretype>
+				<nexttype>digit</nexttype>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[-－]]></char>
+			<condition>
+				<type>digit</type>
+				<nopretype>digit</nopretype>
+				<nexttype>digit</nexttype>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[第]]></char>
+			<condition>
+				<type>chardigit</type>
+				<nopretype>chardigit</nopretype>
+				<nexttype>chardigit</nexttype>
+			</condition>
+			<condition>
+				<type>digit</type>
+				<nopretype>digit</nopretype>
+				<nexttype>digit</nexttype>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[两兩]]></char>
+			<condition>
+				<type>chardigit</type>
+				<nopretype>chardigit</nopretype>
+				<nexttype>chardigit</nexttype>
+			</condition>
+		</rule>
+
+		<rule>
+			<char><![CDATA[%％‰]]></char>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
+				<end>true</end>
+			</condition>
+		</rule>
+
+		<rule>
+			<char><![CDATA[.．‧-－﹒]]></char>
+			<condition>
+				<type>letter</type>
+				<pretype>digit,letter</pretype>
+				<nexttype>letter</nexttype>
+			</condition>
+			<condition>
+				<type>letter</type>
+				<pretype>digit</pretype>
+				<nexttype>letter</nexttype>
+			</condition>
+			<condition>
+				<type>digit</type>
+				<pretype>digit</pretype>
+				<nexttype>digit</nexttype>
+			</condition>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
+				<nexttype>chardigit</nexttype>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[,]]></char>
+			<condition>
+				<type>digit</type>
+				<pretype>digit</pretype>
+				<nexttype>digit</nexttype>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[-－]]></char>
+			<condition>
+				<type>digit</type>
+				<nopretype>digit</nopretype>
 				<nexttype>digit</nexttype>
 			</condition>
 		</rule>
