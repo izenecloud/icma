@@ -40,6 +40,10 @@ project(CMA-CHEN)
 
 add_definitions("-Wall -Wno-deprecated -Wno-write-strings")# -O3
 
+SET(USE_IZENEWISELIB FALSE)
+
+
+IF(USE_IZENEWISELIB)
 
 FIND_PACKAGE(Threads REQUIRED)
 
@@ -90,8 +94,20 @@ ELSE(izenelib_FOUND)
 	MESSAGE(STATUS "izenelib: not found")
 ENDIF(izenelib_FOUND)
 
+
+LINK_DIRECTORIES(
+    	${wiselib_LIBRARY_DIRS}
+    	${izenelib_LIBRARY_DIRS}
+	)
+
+SET(LIBS_WISELIB wiselib)
+#SET(LIBS_IZENELIB izene)
+
 include_directories(${izenelib_INCLUDE_DIRS})
 include_directories(${wiselib_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+
+ENDIF(USE_IZENEWISELIB)
+
 include_directories(../include)
 include_directories(./include)
 include_directories(./corpus)
@@ -99,10 +115,6 @@ include_directories(./maxent)
 include_directories(./vsynonym)
 include_directories(./tinyxml)
 
-LINK_DIRECTORIES(
-    	${wiselib_LIBRARY_DIRS}
-    	${izenelib_LIBRARY_DIRS}
-	)
 
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../lib)
 #set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../bin)
@@ -111,8 +123,6 @@ SET(LIBS_ME maxent)
 SET(LIBS_CORPUS corpus)
 SET(LIBS_CMAC cmac)
 SET(LIBS_XML tinyxml)
-SET(LIBS_WISELIB wiselib)
-#SET(LIBS_IZENELIB izene)
 
 add_subdirectory(tinyxml)
 add_subdirectory(maxent)

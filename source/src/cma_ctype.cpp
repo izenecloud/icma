@@ -6,7 +6,10 @@
  */
 #include <assert.h>
 #include <stdlib.h>
-#include <wiselib/ustring/UString.h>
+
+#ifdef USE_UTF_16
+	#include <wiselib/ustring/UString.h>
+#endif
 
 #include "cma_ctype.h"
 #include "cma_ctype_gb2312.h"
