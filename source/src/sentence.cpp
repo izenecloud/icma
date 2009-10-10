@@ -24,6 +24,15 @@ Morpheme::Morpheme(std::string lexicon, int posCode, std::string& posStr)
 {
 }
 
+Sentence::Sentence()
+{
+	//do nothing
+}
+
+Sentence::Sentence(const char* pString) : raw_( pString )
+{
+}
+
 void Sentence::setString(const char* pString)
 {
     raw_ = pString;

@@ -56,7 +56,7 @@ void printTainerUsage(){
     cout<<"   modelPath is the path of the directory what will contains all the model, like "<<
             "poc.model, sys.dic and so on."<<endl;
     cout<<"   encoding is the encoding of the mateFile, and gb18030 "<<
-            "is the default encoding. Support utf8, gb2312, gb18030 and big5 now"<<endl;
+            "is the default encoding. Support utf16, utf8, gb2312, gb18030 and big5 now"<<endl;
     cout<<"   posDelimiter is the delimiter between the word and the pos tag, "<<
             "like '/' and '_' and default is '/'"<<endl;
     cout<<"   pos | poc | pos+poc indicate only train POS | POC |POS and POC models"<<endl;

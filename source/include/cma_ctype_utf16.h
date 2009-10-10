@@ -1,12 +1,12 @@
 /*
- * cma_ctype_utf8.h
+ * cma_ctype_utf16.h
  *
- *  Created on: Sep 28, 2009
+ *  Created on: Oct 9, 2009
  *      Author: vernkin
  */
 
-#ifndef CMA_CTYPE_UTF8_H_
-#define CMA_CTYPE_UTF8_H_
+#ifndef CMA_CTYPE_UTF16_H_
+#define CMA_CTYPE_UTF16_H_
 
 #include "cma_ctype.h"
 
@@ -17,14 +17,14 @@ namespace cma
  * \brief CMA_CType_UTF8 gives the character type information in UTF8 encoding.
  *
  */
-class CMA_CType_UTF8 : public CMA_CType
+class CMA_CType_UTF16 : public CMA_CType
 {
 public:
     /**
      * Create an instance of \e CMA_CType_UTF8.
      * \return the pointer to instance
      */
-    static CMA_CType_UTF8* instance();
+    static CMA_CType_UTF16* instance();
 
     /**
      * Get the byte count of the first character pointed by \e p, which character is in a specific encoding.
@@ -38,13 +38,13 @@ protected:
     /**
      * Avoid invoked directly
      */
-    CMA_CType_UTF8();
+    CMA_CType_UTF16();
 
 private:
-    /** the instance of \e CMA_CType_UTF8 */
-    static CMA_CType_UTF8* instance_;
+    /** the instance of \e CMA_CType_UTF16 */
+    static CMA_CType_UTF16* instance_;
 };
 
 } // namespace cma
 
-#endif /* CMA_CTYPE_UTF8_H_ */
+#endif /* CMA_CTYPE_UTF16_H_ */

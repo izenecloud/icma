@@ -9,7 +9,6 @@
 
 #include <string>
 
-
 #include "CMA_ME_Knowledge.h"
 #include "CMABasicTrainer.h"
 #include "strutil.h"

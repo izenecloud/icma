@@ -17,6 +17,8 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#include <wiselib/ustring/UString.h>
+
 using namespace std;
 
 namespace cma

@@ -31,7 +31,7 @@ void printSeggerUsage(){
     cout<<"   inFile is the input file"<<endl;
     cout<<"   outFile is the output file"<<endl;
     cout<<"   encoding is the encoding of the mateFile, and gb2312 "<<
-            "is the default encoding. Support utf8, gb2312, big5 and gb18030 now"<<endl;
+            "is the default encoding. Support utf16, utf8, gb2312, big5 and gb18030 now"<<endl;
     cout<<"   posDelimiter is the delimiter between the word and the pos tag, "<<
             "like '/' and '_' and default is '/'"<<endl;
 }

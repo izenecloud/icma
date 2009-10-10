@@ -40,12 +40,69 @@ project(CMA-CHEN)
 
 add_definitions("-Wall -Wno-deprecated -Wno-write-strings")# -O3
 
+
+FIND_PACKAGE(Threads REQUIRED)
+
+SET(Boost_ADDITIONAL_VERSIONS 1.39 1.39.0 1.38 1.38.0 1.37 1.37.0)
+FIND_PACKAGE(Boost 1.35.0 REQUIRED COMPONENTS thread serialization)
+
+
+SET(wiselib_FOUND FALSE)
+IF(IS_DIRECTORY "$ENV{WISELIB}"
+    	AND IS_DIRECTORY "$ENV{WISELIB}/include"
+		AND IS_DIRECTORY "$ENV{WISELIB}/lib")
+	SET(wiselib_FOUND TRUE)
+	SET(wiselib_INCLUDE_DIRS "$ENV{WISELIB}/include")
+	SET(wiselib_LIBRARY_DIRS "$ENV{WISELIB}/lib")
+ENDIF(IS_DIRECTORY "$ENV{WISELIB}"
+		AND IS_DIRECTORY "$ENV{WISELIB}/include"
+		AND IS_DIRECTORY "$ENV{WISELIB}/lib")
+IF(NOT wiselib_FOUND)
+	MESSAGE(FATAL_ERROR "cannot found wiselib, please set env variable WISELIB")
+ENDIF(NOT wiselib_FOUND)
+
+SET(izenelib_FOUND FALSE)
+IF(IS_DIRECTORY "$ENV{IZENELIB}"
+    AND IS_DIRECTORY "$ENV{IZENELIB}/include"
+    AND IS_DIRECTORY "$ENV{IZENELIB}/lib")
+  SET(izenelib_FOUND TRUE)
+  SET(izenelib_INCLUDE_DIRS "$ENV{IZENELIB}/include")
+  SET(izenelib_LIBRARY_DIRS "$ENV{IZENELIB}/lib")
+ENDIF(IS_DIRECTORY "$ENV{IZENELIB}"
+  AND IS_DIRECTORY "$ENV{IZENELIB}/include"
+  AND IS_DIRECTORY "$ENV{IZENELIB}/lib")
+IF(NOT izenelib_FOUND)
+  MESSAGE(FATAL_ERROR "cannot found izenelib, please set env variable IZENELIB")
+ENDIF(NOT izenelib_FOUND)
+
+
+IF(wiselib_FOUND)
+    MESSAGE(STATUS "wiselib:")
+	MESSAGE(STATUS "  header: ${wiselib_INCLUDE_DIRS}")
+ELSE(wiselib_FOUND)
+	MESSAGE(STATUS "wiselib: not found")
+ENDIF(wiselib_FOUND)
+
+IF(izenelib_FOUND)
+	MESSAGE(STATUS "izenelib:")
+	MESSAGE(STATUS "  header: ${izenelib_INCLUDE_DIRS}")
+ELSE(izenelib_FOUND)
+	MESSAGE(STATUS "izenelib: not found")
+ENDIF(izenelib_FOUND)
+
+include_directories(${izenelib_INCLUDE_DIRS})
+include_directories(${wiselib_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 include_directories(../include)
 include_directories(./include)
 include_directories(./corpus)
 include_directories(./maxent)
 include_directories(./vsynonym)
 include_directories(./tinyxml)
+
+LINK_DIRECTORIES(
+    	${wiselib_LIBRARY_DIRS}
+    	${izenelib_LIBRARY_DIRS}
+	)
 
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../lib)
 #set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../bin)
@@ -54,6 +111,8 @@ SET(LIBS_ME maxent)
 SET(LIBS_CORPUS corpus)
 SET(LIBS_CMAC cmac)
 SET(LIBS_XML tinyxml)
+SET(LIBS_WISELIB wiselib)
+#SET(LIBS_IZENELIB izene)
 
 add_subdirectory(tinyxml)
 add_subdirectory(maxent)

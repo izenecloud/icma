@@ -80,6 +80,18 @@ typedef std::vector<Morpheme> MorphemeList;
 class Sentence
 {
 public:
+
+	/**
+	 * Default Constructor and do nothing
+	 */
+	Sentence();
+
+	/**
+	 * Constructor with initial raw sentence string
+	 * \param pString value of the raw string
+	 */
+	Sentence(const char* pString);
+
     /**
      * Set the raw sentence string.
      * \param pString value of the raw string
