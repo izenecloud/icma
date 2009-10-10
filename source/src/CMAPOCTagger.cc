@@ -73,7 +73,7 @@ inline void get_poc_zh_context_seg(vector<string>& words, CharType *types,
 		}
 	}
 
-    int n = static_cast<int>(words.size());
+    size_t n = words.size();
 
 
     if( t0 != CHAR_TYPE_OTHER )
@@ -323,7 +323,8 @@ public:
      *
      * \param pTrie the VTrie
      */
-    StrBasedVTrie( VTrie* pTrie ) : trie(pTrie){
+    StrBasedVTrie( VTrie* pTrie ) : trie(pTrie), completeSearch(false)
+    {
     }
 
     /**

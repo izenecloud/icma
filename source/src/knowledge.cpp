@@ -70,13 +70,14 @@ Knowledge::EncodeType Knowledge::decodeEncodeType(const char* encType){
 	{
 		return Knowledge::ENCODE_TYPE_UTF8;
 	}
+#ifdef USE_UTF_16
     else if(enc == "utf16" || enc == "utf-16" || enc == "ucs2" || enc == "ucs-2")
 	{
 		return Knowledge::ENCODE_TYPE_UTF16;
 	}
-
+#endif
     assert(false && "unknown character encode type");
-    return Knowledge::ENCODE_TYPE_GB18030;
+    return Knowledge::ENCODE_TYPE_NUM;
 }
 
 } // namespace cma

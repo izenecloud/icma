@@ -4,7 +4,7 @@
  * \version 0.1
  * \date Mar 11, 2009
  */
-
+#ifdef USE_UTF_16
 #include "cma_ctype_utf16.h"
 
 #include <cassert>
@@ -29,6 +29,7 @@ CMA_CType_UTF16* CMA_CType_UTF16::instance()
 
 CMA_CType_UTF16::CMA_CType_UTF16()
 {
+	type_ = Knowledge::ENCODE_TYPE_UTF16;
 }
 
 unsigned int CMA_CType_UTF16::getByteCount(const char* p) const
@@ -37,3 +38,4 @@ unsigned int CMA_CType_UTF16::getByteCount(const char* p) const
 }
 
 }
+#endif

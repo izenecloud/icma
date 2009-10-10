@@ -48,5 +48,8 @@
 
 #include <iostream>
 
+// Whether use utf_16 encoding
+//#define USE_UTF_16
+
 #endif	/* _CMACCONFIG_H */
 

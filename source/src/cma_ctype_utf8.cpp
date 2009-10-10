@@ -4,7 +4,6 @@
  * \version 0.1
  * \date Mar 11, 2009
  */
-
 #include "cma_ctype_utf8.h"
 
 #include <cassert>
@@ -29,6 +28,7 @@ CMA_CType_UTF8* CMA_CType_UTF8::instance()
 
 CMA_CType_UTF8::CMA_CType_UTF8()
 {
+	type_ = Knowledge::ENCODE_TYPE_UTF8;
 }
 
 unsigned int CMA_CType_UTF8::getByteCount(const char* p) const

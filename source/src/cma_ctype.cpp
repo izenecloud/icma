@@ -1,23 +1,22 @@
 /** \file cma_ctype.cpp
  * \brief CMA_CType gives the character type information.
- * \author Jun Jiang
- * \version 0.1
+ * \author Jun Jiang, Vernkin
+ * \version 0.2
  * \date Mar 10, 2009
  */
+#include <assert.h>
+#include <stdlib.h>
+#include <wiselib/ustring/UString.h>
 
 #include "cma_ctype.h"
 #include "cma_ctype_gb2312.h"
 #include "cma_ctype_big5.h"
 #include "cma_ctype_gb18030.h"
 #include "cma_ctype_utf8.h"
+#include "cma_ctype_utf16.h"
 #include "tinyxml.h"
 #include "tokenizer.h"
 #include "strutil.h"
-
-#include <assert.h>
-#include <stdlib.h>
-
-#include <wiselib/ustring/UString.h>
 
 using namespace std;
 
@@ -39,6 +38,11 @@ CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
 
 	case Knowledge::ENCODE_TYPE_UTF8:
 		return CMA_CType_UTF8::instance();
+
+#ifdef USE_UTF_16
+	case Knowledge::ENCODE_TYPE_UTF16:
+			return CMA_CType_UTF16::instance();
+#endif
 
 	default:
 		assert(false && "unknown character encode type");
@@ -133,7 +137,8 @@ void loadCharsValue( const char* str, CTypeTokenizer& tokenizer, set<CharValue>&
 {
 	const CMA_CType *ctype = tokenizer.getCType();
 	const char* p = 0;
-	tokenizer.assign( str );
+	string instr = ctype->getPOCXmlStr(str);
+	tokenizer.assign( instr.c_str() );
 	while( ( p = tokenizer.next() ) )
 	{
 		//cout<<"load char "<<p<<endl;
@@ -169,8 +174,10 @@ void loadEntity( const TiXmlNode* textNode, CTypeTokenizer& tokenizer, CharType 
 	const char* text = getTinyXmlText( textNode );
 	const CMA_CType *ctype = tokenizer.getCType();
 
-	tokenizer.assign( text );
+	string instr = ctype->getPOCXmlStr(text);
+	tokenizer.assign( instr.c_str() );
 	const char* p = 0;
+
 	while( ( p = tokenizer.next() ) )
 	{
 		CharValue value = ctype->getEncodeValue( p );
@@ -353,6 +360,19 @@ CharType CMA_CType::getDefaultEndType( CharType preType )
 	            		|| preType == CHAR_TYPE_CHARDIGIT)
 		return preType;
 	return CHAR_TYPE_OTHER;
+}
+
+string CMA_CType::getPOCXmlStr( const char* p ) const
+{
+#ifdef USE_UTF_16
+	if(type_ == Knowledge::ENCODE_TYPE_UTF16)
+	{
+		wiselib::UString ustr(p, wiselib::UString::UTF_8);
+		string ret( (const char*)ustr.c_str(), ustr.length()*2 );
+		return ret;
+	}
+#endif
+	return string(p);
 }
 
 } // namespace cma

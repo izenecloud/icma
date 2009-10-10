@@ -8,6 +8,24 @@ void beginTrain(string pocXmlFile, string pMateFile, string cateFile, string enc
     string mateFile = pMateFile;
 
     Knowledge::EncodeType encType = Knowledge::decodeEncodeType(enc.c_str());
+
+    if( encType == Knowledge::ENCODE_TYPE_NUM )
+    {
+    	cerr<<"[Error] Can't find encoding "<<enc<<"."<<endl;
+    	exit(1);
+    }
+
+#ifdef USE_UTF_16
+    if(encType == Knowledge::ENCODE_TYPE_UTF16)
+    {
+    	const unsigned char* uc = (const unsigned char*)posDelimiter.c_str();
+    	if(uc[0] < 0x80)
+    	{
+    		posDelimiter = "\0" + posDelimiter;
+    	}
+    }
+#endif
+
     int loadXml = CMA_CType::instance(encType)->loadConfiguration(pocXmlFile.data());
     if( !loadXml )
 	{

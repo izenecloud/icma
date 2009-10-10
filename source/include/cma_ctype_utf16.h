@@ -4,7 +4,7 @@
  *  Created on: Oct 9, 2009
  *      Author: vernkin
  */
-
+#ifdef USE_UTF_16
 #ifndef CMA_CTYPE_UTF16_H_
 #define CMA_CTYPE_UTF16_H_
 
@@ -48,3 +48,4 @@ private:
 } // namespace cma
 
 #endif /* CMA_CTYPE_UTF16_H_ */
+#endif

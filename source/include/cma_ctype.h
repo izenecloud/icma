@@ -43,7 +43,7 @@ public:
     static CharType getCharTypeByXmlName( const char* name, bool noDefault = false );
 
     /**
-     * Destrucor
+     * Destructor
      */
     virtual ~CMA_CType();
 
@@ -114,6 +114,18 @@ public:
 	 * \return the default next type
 	 */
 	CharType getDefaultEndType( CharType preType );
+
+    /**
+     * Get the specific string with associated encoding in the poc.xml
+     * Except for utf-16, others encoding return the original form
+     * \param p the input string
+     * \return the target string
+     */
+    string getPOCXmlStr( const char* p) const;
+
+protected:
+	/** The encode type of the current cma_ctype class */
+	Knowledge::EncodeType type_;
 
 private:
 	/** Character to types map */
