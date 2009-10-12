@@ -403,7 +403,12 @@ bool CMA_ME_Knowledge::appendWordPOS(string& line){
     return true;
 }
 
-const POSTable* CMA_ME_Knowledge::getPOSTable() const
+POSTable* CMA_ME_Knowledge::getPOSTable() const
+{
+	return posTable_;
+}
+
+POSTable* CMA_ME_Knowledge::getPOSTable()
 {
 	return posTable_;
 }

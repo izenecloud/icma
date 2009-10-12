@@ -1,1 +1,2 @@
-libcmac.a
+*.a
+*.so

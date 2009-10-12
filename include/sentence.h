@@ -30,6 +30,9 @@ struct Morpheme
     /** the POS string value */
     std::string posStr_;
 
+    /** Whether is indexed word */
+    bool isIndexed;
+
     /**
      * Constructor.
      * The lexicon string value is initialized with empty string,
@@ -37,12 +40,6 @@ struct Morpheme
      */
     Morpheme();
 
-    /**
-     * Constructor
-     * \param posCode initial POS Code
-     * \param posStr initial POS string value
-     */
-    Morpheme(std::string lexicon, int posCode, std::string& posStr);
 };
 
 /** A list of morphemes. */
@@ -125,6 +122,14 @@ public:
      * \return morpheme string
      */
     const char* getLexicon(int nPos, int nIdx) const;
+
+    /**
+	 * Get the string of morpheme \e nIdx in candidate result \e nPos.
+	 * \param nPos candidate result index
+	 * \param nIdx morpheme index
+	 * \return morpheme string
+	 */
+    bool isIndexWord(int nPos, int nIdx) const;
 
     /**
      * Get the POS index code of morpheme \e nIdx in candidate result \e nPos.

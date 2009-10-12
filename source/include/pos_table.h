@@ -43,6 +43,8 @@ class POSTable
 {
 public:
 
+	typedef std::vector< std::pair<std::string, bool> > POSTableInfo;
+
     POSTable();
 
     /**
@@ -102,12 +104,50 @@ public:
      */
     int getCodeFromType(POSType type) const;
 
+    /**
+     * Whether the posCode indicates that word is index word, if the posCode is invalid,
+     * return true.
+     * \param posCode the specific pos Code
+     * \return true if posCode is the index POS
+     */
+    bool isIndexPOS( int posCode ) const;
+
+    /**
+     * Set the specific posCode whether is index
+     * \param posCode the specific POS code
+     * \param whether the index is posCode
+     * \return whether set successfully, if false, the posCode doesn't exists
+     */
+    bool setIndexPOS( int posCode, bool isIndex );
+
+    /**
+	 * Reset all the pos index Information as defVal
+	 * \return defVal default value to reset (default is true)
+	 */
+    void resetIndexPOSList(bool defVal = true);
+
+    /**
+	 * Set the POS index as true in the posList
+	 * \param posList the list that allowed in the posList
+	 * \return how many POS are set successfully (mainly because not exists).
+	 */
+	int setIndexPOSList( std::vector<std::string>& posList );
+
+    /**
+     * Get POSTable information, reserved Interface
+     * \return POSTable information
+     */
+    const POSTableInfo* getPOSTableInfo()
+    {
+    	return &posTable_;
+    }
+
 private:
     /** the instance of \e POSTable */
     static POSTable* instance_;
 
     /** the POS tag table */
-    std::vector<std::string> posTable_;
+    POSTableInfo posTable_;
 
     /** the POS tag map type from case-insensitive string to index code */
     typedef std::map<std::string, int, Nocase> POSMap;

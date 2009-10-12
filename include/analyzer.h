@@ -9,6 +9,7 @@
 #define CMA_ANALYZER_H
 
 #include <vector>
+#include <string>
 
 namespace cma
 {
@@ -96,6 +97,19 @@ public:
      * \attention the original elements in \e sentences would not be removed, and the splited sentences are appended into \e sentences.
      */
     virtual void splitSentence(const char* paragraph, std::vector<Sentence>& sentences) = 0;
+
+    /**
+     * Reset all the POS index Information as defVal
+     * \return defVal default value to reset (default is true)
+     */
+    virtual void resetIndexPOSList( bool defVal = true ) = 0;
+
+    /**
+     * Set the POS index as true in the posList
+     * \param posList the list that allowed in the posList
+     * \return how many POS are set successfully (mainly because not exists).
+     */
+    virtual int setIndexPOSList( std::vector< std::string >& posList ) = 0;
 
     /**
      * Option type for analysis.

@@ -38,7 +38,7 @@ ENDIF (CMAKE_COMPILER_IS_GNUCXX)
 
 project(CMA-CHEN)
 
-add_definitions("-Wall -Wno-deprecated -Wno-write-strings")# -O3
+add_definitions("-Wall -Wno-deprecated -Wno-write-strings -fPIC")# -O3
 
 SET(USE_IZENEWISELIB FALSE)
 
@@ -121,7 +121,7 @@ include_directories(./tinyxml)
 
 SET(LIBS_ME maxent)
 SET(LIBS_CORPUS corpus)
-SET(LIBS_CMAC cmac)
+SET(LIBS_CMAC cmac_static)
 SET(LIBS_XML tinyxml)
 
 add_subdirectory(tinyxml)

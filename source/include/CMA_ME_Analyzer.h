@@ -79,6 +79,19 @@ public:
      */
     virtual void splitSentence(const char* paragraph, std::vector<Sentence>& sentences);
 
+    /**
+     * Reset all the POS index Information as defVal
+     * \return defVal default value to reset (default is true)
+     */
+    virtual void resetIndexPOSList( bool defVal = true );
+
+    /**
+     * Set the POS index as true in the posList
+     * \param posList the list that allowed in the posList
+     * \return how many POS are set successfully (mainly because not exists).
+     */
+    virtual int setIndexPOSList( std::vector<std::string>& posList );
+
 private:
     /**
      * Each segment only map to one pos set

@@ -19,11 +19,6 @@ Morpheme::Morpheme()
 {
 }
 
-Morpheme::Morpheme(std::string lexicon, int posCode, std::string& posStr)
-	: lexicon_(lexicon), posCode_(posCode), posStr_(posStr)
-{
-}
-
 Sentence::Sentence()
 {
 	//do nothing
@@ -58,6 +53,11 @@ int Sentence::getCount(int nPos) const
 const char* Sentence::getLexicon(int nPos, int nIdx) const
 {
     return candidates_[nPos][nIdx].lexicon_.c_str();
+}
+
+bool Sentence::isIndexWord(int nPos, int nIdx) const
+{
+    return candidates_[nPos][nIdx].isIndexed;
 }
 
 int Sentence::getPOS(int nPos, int nIdx) const

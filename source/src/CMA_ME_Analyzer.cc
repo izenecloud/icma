@@ -96,6 +96,7 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
 				{
 					morp.posStr_ = poses[j];
 					morp.posCode_ = posTable->getCodeFromStr(morp.posStr_);
+					morp.isIndexed = posTable->isIndexPOS( morp.posCode_ );
 				}
 				list.push_back(morp);
 			}
@@ -121,6 +122,7 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
 				{
 					morp.posStr_ = poses[j];
 					morp.posCode_ = posTable->getCodeFromStr(morp.posStr_);
+					morp.isIndexed = posTable->isIndexPOS( morp.posCode_ );
 				}
 
 				list.push_back(morp);
@@ -555,6 +557,14 @@ namespace meanainner{
 
     }
 
+    void CMA_ME_Analyzer::resetIndexPOSList( bool defVal )
+    {
+    	knowledge_->getPOSTable()->resetIndexPOSList( defVal );
+    }
 
+    int CMA_ME_Analyzer::setIndexPOSList( std::vector<std::string>& posList )
+    {
+    	return knowledge_->getPOSTable()->setIndexPOSList( posList );
+    }
 
 }

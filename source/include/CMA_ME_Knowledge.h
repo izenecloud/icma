@@ -150,7 +150,12 @@ public:
     /**
      * Get POSTable
      */
-    const POSTable* getPOSTable() const;
+    POSTable* getPOSTable() const;
+
+    /**
+	 * Get POSTable
+	 */
+    POSTable* getPOSTable();
 
     /**
      * Get System Property
