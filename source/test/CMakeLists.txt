@@ -44,3 +44,9 @@ TARGET_LINK_LIBRARIES(fetch_special_word ${LIBS_CMAC})
 
 ADD_EXECUTABLE(t_tinyxml t_tinyxml.cc)
 TARGET_LINK_LIBRARIES(t_tinyxml ${LIBS_XML})
+
+IF( USE_MICROHTTPD )
+	ADD_EXECUTABLE(t_microhttpd t_microhttpd.cc)
+	TARGET_LINK_LIBRARIES(t_microhttpd pthread microhttpd)
+ENDIF( USE_MICROHTTPD )
+

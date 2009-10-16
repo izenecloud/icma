@@ -108,6 +108,14 @@ include_directories(${wiselib_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 ENDIF(USE_IZENEWISELIB)
 
+IF( USE_MICROHTTPD )
+	MESSAGE( STATUS "libmicrohttpd is the third library used for demo page, you should go to the directory source/libmicrohttpd first, then type: ./configure and make in sequence.")
+	SET(MHTTPD_HOME ./libmicrohttpd )
+	include_directories( ${MHTTPD_HOME} ${MHTTPD_HOME}/src/include)
+	link_directories( ${PROJECT_SOURCE_DIR}/${MHTTPD_HOME}/src/daemon/.libs )
+	add_definitions( -DUSE_MICROHTTPD=TRUE )
+ENDIF( USE_MICROHTTPD )
+
 include_directories(../include)
 include_directories(./include)
 include_directories(./corpus)
