@@ -178,7 +178,7 @@ int CMA_ME_Knowledge::loadUserDict_(const char* fileName){
 	ifstream in(fileName);
     if(!in)
     	return 0;
-    cout<<"Load User Dic "<<fileName<<endl;
+    //cout<<"Load User Dic "<<fileName<<endl;
     string line;
     while(!in.eof()){
         getline(in, line);
