@@ -13977,7 +13977,7 @@ fi
 
 
 
-ac_config_files="$ac_config_files libmicrohttpd.pc Makefile contrib/Makefile doc/Makefile m4/Makefile src/Makefile src/include/Makefile src/daemon/Makefile src/daemon/https/Makefile src/daemon/https/tls/Makefile src/daemon/https/x509/Makefile src/daemon/https/lgl/Makefile src/daemon/https/minitasn1/Makefile src/examples/Makefile src/testcurl/Makefile src/testcurl/https/Makefile src/testzzuf/Makefile"
+ac_config_files="$ac_config_files libmicrohttpd.pc Makefile contrib/Makefile  m4/Makefile src/Makefile src/include/Makefile src/daemon/Makefile src/daemon/https/Makefile src/daemon/https/tls/Makefile src/daemon/https/x509/Makefile src/daemon/https/lgl/Makefile src/daemon/https/minitasn1/Makefile src/examples/Makefile src/testcurl/Makefile src/testcurl/https/Makefile src/testzzuf/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -14937,7 +14937,6 @@ do
     "libmicrohttpd.pc") CONFIG_FILES="$CONFIG_FILES libmicrohttpd.pc" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "contrib/Makefile") CONFIG_FILES="$CONFIG_FILES contrib/Makefile" ;;
-    "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
     "m4/Makefile") CONFIG_FILES="$CONFIG_FILES m4/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "src/include/Makefile") CONFIG_FILES="$CONFIG_FILES src/include/Makefile" ;;
