@@ -4,6 +4,11 @@
 #include <stdio.h>
 #include <string>
 
+#include "cma_factory.h"
+#include "analyzer.h"
+#include "knowledge.h"
+#include "sentence.h"
+
 #define DEBUG_HTTP
 
 #define PORT            9999
@@ -12,6 +17,10 @@
 #define POST            1
 
 using namespace std;
+using namespace cma;
+
+Analyzer* analyzer = 0;
+Knowledge* knowledge = 0;
 
 class connection_info_struct {
 public:
@@ -193,8 +202,7 @@ int send_segment_page(struct MHD_Connection *connection, string& userinput,
 	string result;
 	if( !userinput.empty() )
 	{
-		//TODO perform segmentation
-		result = userinput;
+		result = analyzer->runWithString( userinput.c_str()) ;
 	}
 	int bufLen = askpage.length() + userinput.length() + result.length();
 	char *buf = new char[ bufLen ];
@@ -378,6 +386,19 @@ int answer_to_connection(void *cls, struct MHD_Connection *connection,
 
 int main()
 {
+	cout<<"## To initialize iCMA..."<<endl;
+	//initialize the iCMA
+	const char* modelPath = "../db/icwb/utf8/";
+	// create instances
+	CMA_Factory* factory = CMA_Factory::instance();
+	analyzer = factory->createAnalyzer();
+	knowledge = factory->createKnowledge();
+	knowledge->loadModel( "utf8", modelPath );
+	analyzer->setOption(Analyzer::OPTION_TYPE_NBEST, 1);
+	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 1);
+	analyzer->setKnowledge( knowledge );
+
+	cout<<"## To initialize HTTP Server..."<<endl;
 	struct MHD_Daemon *daemon;
 	daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, PORT, NULL, NULL,
 			&answer_to_connection, NULL, MHD_OPTION_NOTIFY_COMPLETED,
