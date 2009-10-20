@@ -1,6 +1,8 @@
 #include <platform.h>
 #include <microhttpd.h>
 #include <iostream>
+#include <stdio.h>
+#include <string>
 
 #define DEBUG_HTTP
 
@@ -19,35 +21,158 @@ public:
 	int answercode;
 };
 
-struct file_connection_info_struct {
-	int connectiontype;
-	struct MHD_PostProcessor *postprocessor;
-	FILE *fp;
-	const char *answerstring;
-	int answercode;
-};
+string EMPTY_STR = "";
 
-struct text_connection_info_struct {
-	int connectiontype;
-	char *answerstring;
-	struct MHD_PostProcessor *postprocessor;
-};
+const string askpage ="\
+<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n\
+<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\
+<head>\n\
+<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n\
+<title>iCMA' Demo</title>\n\
+\n\
+<style>\n\
+	body {\n\
+		margin:0px;\n\
+		font-size:13px;\n\
+		font-family:Arial, Helvetica, sans-serif;\n\
+		}\n\
+		\n\
+	#container {\n\
+		position:relative;\n\
+		width:80%;\n\
+		margin-left:10%;\n\
+		margin-right:10%;\n\
+		/*border:#666666 thin solid;*/\n\
+	}\n\
+	\n\
+	#banner {\n\
+		font-size:20px;\n\
+		text-align:center;\n\
+		border-bottom:grey thin solid;\n\
+		padding-top:15px;\n\
+		padding-bottom:10px;\n\
+		margin-bottom:5px;\n\
+	}\n\
+	\n\
+	/** Content Area */\n\
+	\n\
+	#content {\n\
+		width:100%;\n\
+		margin-bottom:15px;\n\
+	}\n\
+	\n\
+	#input {\n\
+		float:left;\n\
+		width:49%;\n\
+		margin-right:1%;\n\
+		height:inherit;\n\
+	}\n\
+	\n\
+	#result {\n\
+		float:right;\n\
+		width:48%;\n\
+		margin-left:1%;\n\
+		height:inherit;\n\
+	}\n\
+	\n\
+	.prompt {\n\
+		margin-top:2px;\n\
+		margin-bottom:2px;\n\
+		color:blue;\n\
+		text-align:left;\n\
+		display:block;\n\
+	}\n\
+	\n\
+	.userInput {\n\
+		margin-top:2px;\n\
+		margin-bottom:2px;\n\
+		font-size:14px;\n\
+		width:100%;\n\
+	}\n\
+	\n\
+	#inputbtns {\n\
+		text-align:center;\n\
+		margin-bottom:5px;\n\
+		width:100%;\n\
+	}\n\
+	\n\
+	.inputbtn {\n\
+		margin: 1px 3px 1px 3px;\n\
+		font-size:14px;\n\
+	} \n\
+	\n\
+	#uploadfilediv {\n\
+		text-align:left;\n\
+		margin-bottom:5px;\n\
+		width:100%;\n\
+	}\n\
+	\n\
+	#resultdisplay {\n\
+		font-size:14px;\n\
+		margin-top:3px;\n\
+		margin-bottom:5px;\n\
+	}\n\
+	\n\
+	/** footer */\n\
+	#footer { \n\
+		border-top:grey thin solid;\n\
+		margin-top: 10px;\n\
+		clear: both; \n\
+		text-align: center;\n\
+		color: #808080;\n\
+		padding: 5px 0;\n\
+	}\n\
+\n\
+	#footer a {\n\
+		color: #C3593C;\n\
+		background: inherit;\n\
+	}\n\
+</style>	\n\
+</head>\n\
+\n\
+<body>\n\
+<div id=\"container\">\n\
+	<div id=\"banner\">iCMA's Web Demo</div>\n\
+	\n\
+	<div id=\"content\">\n\
+		<div id=\"input\">\n\
+			<form method=\"post\" action=\"/textpost\">\n\
+			<span class=\"prompt\">Please input the Chinese Text:</span>\n\
+			<textarea  rows=\"15\" wrap=\"soft\" name=\"userInput\" class=\"userInput\">%s</textarea>\n\
+			<div id=\"inputbtns\">\n\
+				<input type=\"submit\" class=\"inputbtn\" value=\"Segment\"/>\n\
+				<input type=\"reset\" class=\"inputbtn\" value=\"Clear\"/>\n\
+			</div>\n\
+			</form>\n\
+			<span class=\"prompt\"></span>\n\
+			<span class=\"prompt\">Or upload a file with UTF-8 encoding:</span>\n\
+			\n\
+			<div id=\"uploadfilediv\">\n\
+				<form action=\"/filepost\" method=\"post\" enctype=\"multipart/form-data\">\n\
+                       <input name=\"file\" type=\"file\" size=\"35px\">\n\
+                       <input type=\"submit\" value=\" Upload \" class=\"inputbtn\">\n\
+				</form>			\n\
+			</div>\n\
+		</div>\n\
+		\n\
+		<div id=\"result\">\n\
+			<span class=\"prompt\">The Segmentation Result is:</span>\n\
+			<div id=\"resultdisplay\">%s</div>\n\
+		</div>\n\
+	\n\
+	</form>\n\
+	</div>\n\
+	\n\
+	<!-- footer -->\n\
+	<div id=\"footer\">\n\
+		<p><a href=\"http://www.izenesoft.com\" target=\"_blank\">Contact</a> | <a href=\"mailto:vernkin@gmail.com\">Advices</a> <br/>\n\
+		&copy; Copyright 2009 iZENEsoft (Shanghai) Co., Ltd.</p>\n\
+	</div>\n\
+</div>\n\
+</body>\n\
+</html>\n\
+				";
 
-const char
-		*askpage =
-				"<html><body>\n\
-                       Upload a file, please!<br>\n\
-                       <form action=\"/filepost\" method=\"post\" enctype=\"multipart/form-data\">\n\
-                       <input name=\"file\" type=\"file\">\n\
-                       <input type=\"submit\" value=\" Send \"></form><br>\n\
-						What’s your Favorite, Sir?<br>\
-                       <form action=\"/textpost\" method=\"post\">\
-                       <input name=\"textinput\" type=\"text\"\
-                       <input type=\"submit\" value=\" Send \"></form>\
-                       </body></html>";
-
-const char *completepage =
-		"<html><body>The upload has been completed.</body></html>";
 
 const char *errorpage =
 		"<html><body>This doesn’t seem to be right.</body></html>";
@@ -55,17 +180,42 @@ const char *errorpage =
 const char *servererrorpage =
 		"<html><body>An internal server error has occured.</body></html>";
 
-const char *fileexistspage =
-		"<html><body>This file already exists.</body></html>";
-
-
-const char *greatingpage =
-		"<html><body><h1>Hello you like %s!</h1><br><br></body></html>";
-
 /** Special Webpage */
 const char *invalidurlpage =
 		"<html><body>The Request URL <b>%s</b> is invalid. Back to <a href=\"/\">Home</a>.</body></html>";
 
+int send_segment_page(struct MHD_Connection *connection, string& userinput,
+		int status_code)
+{
+	int ret;
+	struct MHD_Response *response;
+
+	string result;
+	if( !userinput.empty() )
+	{
+		//TODO perform segmentation
+		result = userinput;
+	}
+	int bufLen = askpage.length() + userinput.length() + result.length();
+	char *buf = new char[ bufLen ];
+	memset( buf, 0x0, bufLen );
+	int writeBytes = sprintf( buf, askpage.c_str(), userinput.c_str(), result.c_str() );
+#ifdef DEBUG_HTTP
+	//cout<<"## send_segment_page userinput = "<<userinput<<" . "<<endl;
+	//cout<<"## send_segment_page return "<<writeBytes<<" bytes "<<endl;
+#endif
+
+	response = MHD_create_response_from_data(strlen(buf), (void *) buf,
+			MHD_NO, MHD_YES);
+
+	if (!response)
+		return MHD_NO;
+	ret = MHD_queue_response(connection, status_code, response);
+	MHD_destroy_response(response);
+	delete[] buf;
+
+	return ret;
+}
 
 int send_page(struct MHD_Connection *connection, const char *page,
 		int status_code)
@@ -79,6 +229,12 @@ int send_page(struct MHD_Connection *connection, const char *page,
 	ret = MHD_queue_response(connection, status_code, response);
 	MHD_destroy_response(response);
 	return ret;
+}
+
+int send_page(struct MHD_Connection *connection, string& page,
+		int status_code)
+{
+	send_page( connection, page.c_str(), status_code );
 }
 
 int iterate_post(void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
@@ -102,7 +258,7 @@ int iterate_post(void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
 	connection_info_struct *con_info =
 			(connection_info_struct *) coninfo_cls;
 
-	if (0 == strcmp(key, "textinput"))
+	if (0 == strcmp(key, "userInput"))
 	{
 		con_info->userinput.append(data);
 		return MHD_YES;
@@ -194,53 +350,6 @@ int answer_to_connection(void *cls, struct MHD_Connection *connection,
 			*con_cls = (void *) con_info;
 			//don't return if connectiontype is GET
 		}
-
-		/*if( isFilePost )
-		{
-			connection_info_struct *con_info;
-			con_info = (connection_info_struct*)malloc(sizeof(connection_info_struct));
-			if (NULL == con_info)
-				return MHD_NO;
-			if (0 == strcmp(method, "POST"))
-			{
-				con_info->postprocessor = MHD_create_post_processor(connection,
-						POSTBUFFERSIZE, iterate_post, (void *) con_info);
-				if (NULL == con_info->postprocessor)
-				{
-					free(con_info);
-					return MHD_NO;
-				}
-				con_info->connectiontype = POST;
-				con_info->userinput = completepage;
-			}
-			else
-				con_info->connectiontype = GET;
-			*con_cls = (void *) con_info;
-			return MHD_YES;
-		}
-
-		else if( isTextPost )
-		{
-			struct text_connection_info_struct *con_info;
-			con_info = (text_connection_info_struct*)malloc(sizeof(struct text_connection_info_struct));
-			if (NULL == con_info)
-				return MHD_NO;
-			con_info->answerstring = NULL;
-			if (0 == strcmp(method, "POST")) {
-				con_info->postprocessor = MHD_create_post_processor(connection,
-						POSTBUFFERSIZE, iterate_post, (void *) con_info);
-				if (NULL == con_info->postprocessor) {
-					free(con_info);
-					return MHD_NO;
-				}
-				con_info->connectiontype = POST;
-			} else
-				con_info->connectiontype = GET;
-			*con_cls = (void *) con_info;
-			return MHD_YES;
-		}
-
-		return MHD_YES;*/
 	}
 
 	if (0 == strcmp(method, "GET"))
@@ -248,7 +357,7 @@ int answer_to_connection(void *cls, struct MHD_Connection *connection,
 		//int ret;
 		//char buffer[1024] = { 0 };
 		//sprintf(buffer, askpage, nr_of_uploading_clients);
-		return send_page(connection, askpage, MHD_HTTP_OK);
+		return send_segment_page(connection, EMPTY_STR, MHD_HTTP_OK);
 	}
 
 	if (0 == strcmp(method, "POST"))
@@ -261,7 +370,7 @@ int answer_to_connection(void *cls, struct MHD_Connection *connection,
 			return MHD_YES;
 		}
 		else
-			return send_page(connection, con_info->userinput.c_str(), MHD_HTTP_OK);
+			return send_segment_page(connection, con_info->userinput, MHD_HTTP_OK);
 	}
 
 	return send_page(connection, errorpage, MHD_HTTP_BAD_REQUEST);
