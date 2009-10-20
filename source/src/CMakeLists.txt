@@ -32,3 +32,7 @@ TARGET_LINK_LIBRARIES(cmac_run ${LIBS_CMAC})
 ADD_EXECUTABLE(cmac_run2 cmac_run2.cc)
 TARGET_LINK_LIBRARIES(cmac_run2 ${LIBS_CMAC} pthread)
 
+IF( USE_MICROHTTPD )
+	ADD_EXECUTABLE(cma_webdemo cma_webdemo.cc)
+	TARGET_LINK_LIBRARIES(cma_webdemo pthread microhttpd)
+ENDIF( USE_MICROHTTPD )
