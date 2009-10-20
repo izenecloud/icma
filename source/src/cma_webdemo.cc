@@ -19,15 +19,20 @@
 using namespace std;
 using namespace cma;
 
-Analyzer* analyzer = 0;
 Knowledge* knowledge = 0;
 
-class connection_info_struct {
+class ConnectionInfo {
 public:
+	ConnectionInfo() : tagPOS(false), nbest(1)
+	{
+	}
+
 	int connectiontype;
 	struct MHD_PostProcessor *postprocessor;
 	string userinput;
 	int answercode;
+	bool tagPOS;
+	unsigned int nbest;
 };
 
 string EMPTY_STR = "";
@@ -92,7 +97,7 @@ const string askpage ="\
 		display:block;\n\
 	}\n\
 	\n\
-	.userInput {\n\
+	#userInput {\n\
 		margin-top:2px;\n\
 		margin-bottom:2px;\n\
 		font-size:14px;\n\
@@ -122,6 +127,19 @@ const string askpage ="\
 		margin-bottom:5px;\n\
 	}\n\
 	\n\
+	#optionsdiv {\n\
+		text-align:left;\n\
+		margin-bottom:5px;\n\
+		margin-top:2px;\n\
+		width:100%;\n\
+	}\n\
+	\n\
+	.optionprompt {\n\
+		color:black;\n\
+		margin-left:2px;\n\
+		margin-right:2px;\n\
+	}\n\
+	\n\
 	/** footer */\n\
 	#footer { \n\
 		border-top:grey thin solid;\n\
@@ -136,7 +154,108 @@ const string askpage ="\
 		color: #C3593C;\n\
 		background: inherit;\n\
 	}\n\
-</style>	\n\
+	\n\
+	/** POS Display */\n\
+	.showNbestDiv ol li{\n\
+		font-size:15px;\n\
+		color:black;\n\
+	}\n\
+	\n\
+	.scoreSpan {\n\
+		color:red;\n\
+		font-size:20px;\n\
+		padding-right:7px;\n\
+	}\n\
+	\n\
+	.possame {\n\
+		font-weight:bold;\n\
+	}\n\
+	\n\
+	.pos {\n\
+		color:Maroon;\n\
+	}\n\
+</style>\n\
+\n\
+<script>\n\
+\n\
+//functions\n\
+function getFirstEleByIdItr(ele, id){\n\
+	var children = ele.childNodes;\n\
+	for(var i=0;i<children.length;++i){		\n\
+		var child = children[i];\n\
+		if(child.id == id)\n\
+			return child;\n\
+		if(child.childNodes.length>0){\n\
+			var ret = getFirstEleByIdItr(child,id);\n\
+			if(ret != null)\n\
+				return ret;\n\
+		}\n\
+	}\n\
+	return null;\n\
+}\n\
+\n\
+function findParentById(node, id)\n\
+{\n\
+	var parent = node.parentNode;\n\
+	while(parent != undefined && parent != null)\n\
+	{\n\
+		if(parent.id == id)\n\
+			return parent;\n\
+		parent = parent.parentNode;\n\
+	}\n\
+	return null;\n\
+}\n\
+\n\
+function resetDirectInput( ele )\n\
+{\n\
+	var father = findParentById( ele, \"input\" );\n\
+	if( father == null )\n\
+		return;\n\
+	var userInput = getFirstEleByIdItr( father, \"userInput\" );\n\
+	if( userInput != null )\n\
+		userInput.value = \"\";\n\
+}\n\
+\n\
+function isUnsignedInteger(s) {\n\
+  return (s.toString().search(/^[0-9]+$/) == 0);\n\
+}\n\
+\n\
+function onPOSTagChange( )\n\
+{\n\
+	var cb = document.getElementById( \"tagposcheckbox\" );\n\
+	alert( cb.checked );\n\
+}\n\
+\n\
+var tempNBest;\n\
+\n\
+function onNBestChange( ele )\n\
+{\n\
+	if( !isUnsignedInteger(ele.value) )\n\
+	{\n\
+		alert(\"N Best must be a positive integer!\");\n\
+		tempNBest = ele;\n\
+    	setTimeout(\"tempNBest.focus();\",1);\n\
+		//ele.focus();\n\
+		return false;\n\
+	}\n\
+	return true;\n\
+}\n\
+\n\
+function onSubmit( form )\n\
+{\n\
+	var tagPOS = 0;\n\
+	if( document.getElementById( \"tagposcheckbox\" ).checked )\n\
+		tagPOS = 1;\n\
+	var nbest = document.getElementById( \"nbesttext\" ).value;\n\
+	\n\
+	form.tagpos.value = tagPOS;\n\
+	form.nbest.value = nbest;\n\
+	\n\
+	//alert(form+\",\"+form.tagpos+\",\"+form.tagpos.value+\",\"+form.nbest+\",\"+form.nbest.value);\n\
+	return true;\n\
+}\n\
+\n\
+</script>\n\
 </head>\n\
 \n\
 <body>\n\
@@ -145,22 +264,35 @@ const string askpage ="\
 	\n\
 	<div id=\"content\">\n\
 		<div id=\"input\">\n\
-			<form method=\"post\" action=\"/textpost\">\n\
+			<form method=\"post\" action=\"/textpost\" onsubmit=\"return onSubmit(this);\">\n\
 			<span class=\"prompt\">Please input the Chinese Text:</span>\n\
-			<textarea  rows=\"15\" wrap=\"soft\" name=\"userInput\" class=\"userInput\">%s</textarea>\n\
+			<textarea  rows=\"15\" wrap=\"soft\" name=\"userInput\" id=\"userInput\">%s</textarea>\n\
 			<div id=\"inputbtns\">\n\
+				<input type=\"hidden\" name=\"tagpos\" value=\"1\"/>\n\
+				<input type=\"hidden\" name=\"nbest\" value=\"1\"/>\n\
 				<input type=\"submit\" class=\"inputbtn\" value=\"Segment\"/>\n\
-				<input type=\"reset\" class=\"inputbtn\" value=\"Clear\"/>\n\
+				<input type=\"button\" class=\"inputbtn\" value=\"Clear\" onclick=\"resetDirectInput(this);\"/>\n\
 			</div>\n\
 			</form>\n\
 			<span class=\"prompt\"></span>\n\
 			<span class=\"prompt\">Or upload a file with UTF-8 encoding:</span>\n\
 			\n\
 			<div id=\"uploadfilediv\">\n\
-				<form action=\"/filepost\" method=\"post\" enctype=\"multipart/form-data\">\n\
-                       <input name=\"file\" type=\"file\" size=\"35px\">\n\
-                       <input type=\"submit\" value=\" Upload \" class=\"inputbtn\">\n\
+				<form action=\"/filepost\" method=\"post\" enctype=\"multipart/form-data\" onsubmit=\"return onSubmit(this);\">\n\
+					<input type=\"hidden\" name=\"tagpos\" value=\"1\"/>\n\
+					<input type=\"hidden\" name=\"nbest\" value=\"1\"/>\n\
+					<input name=\"file\" type=\"file\" size=\"35px\">\n\
+					<input type=\"submit\" value=\" Upload \" class=\"inputbtn\">\n\
 				</form>			\n\
+			</div>\n\
+			\n\
+			<span class=\"prompt\">Options:</span>\n\
+			<div id=\"optionsdiv\">\n\
+				<span class=\"optionprompt\">POS Output:</span>\n\
+				<input type=\"checkbox\" id=\"tagposcheckbox\" %s/>\n\
+				<span class=\"optionprompt\">&nbsp;&nbsp;</span>\n\
+				<span class=\"optionprompt\">N Best:</span>\n\
+				<input type=\"text\" size=\"5px\" id=\"nbesttext\" value=\"%d\" onblur=\"return onNBestChange(this);\"/>\n\
 			</div>\n\
 		</div>\n\
 		\n\
@@ -193,21 +325,41 @@ const char *servererrorpage =
 const char *invalidurlpage =
 		"<html><body>The Request URL <b>%s</b> is invalid. Back to <a href=\"/\">Home</a>.</body></html>";
 
+/**
+ * Before invoke this method, global variable knowledge should be initialized
+ */
+void init_analyzer( Analyzer* ana )
+{
+	ana->setKnowledge( knowledge );
+	ana->setOption(Analyzer::OPTION_TYPE_NBEST, 1);
+	ana->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 1);
+	ana->setPOSDelimiter( "<bold>/</bold>" );
+	ana->setWordDelimiter( "&nbsp;&nbsp;&nbsp;" );
+}
+
+
 int send_segment_page(struct MHD_Connection *connection, string& userinput,
-		int status_code)
+		bool tagPOS, unsigned int nbest, int status_code)
 {
 	int ret;
 	struct MHD_Response *response;
 
+	Analyzer* analyzer = 0;
+
 	string result;
 	if( !userinput.empty() )
 	{
+		analyzer = CMA_Factory::instance()->createAnalyzer();
+		init_analyzer( analyzer );
+		analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, tagPOS ? 1 : 0);
 		result = analyzer->runWithString( userinput.c_str()) ;
 	}
-	int bufLen = askpage.length() + userinput.length() + result.length();
+	size_t bufLen = askpage.length() + userinput.length() + result.length() + 50;
 	char *buf = new char[ bufLen ];
 	memset( buf, 0x0, bufLen );
-	int writeBytes = sprintf( buf, askpage.c_str(), userinput.c_str(), result.c_str() );
+	string tagPOSStr = tagPOS ? "checked" : "";
+	int writeBytes = sprintf( buf, askpage.c_str(), userinput.c_str(),
+			tagPOSStr.c_str(), nbest, result.c_str() );
 #ifdef DEBUG_HTTP
 	//cout<<"## send_segment_page userinput = "<<userinput<<" . "<<endl;
 	//cout<<"## send_segment_page return "<<writeBytes<<" bytes "<<endl;
@@ -221,7 +373,7 @@ int send_segment_page(struct MHD_Connection *connection, string& userinput,
 	ret = MHD_queue_response(connection, status_code, response);
 	MHD_destroy_response(response);
 	delete[] buf;
-
+	delete analyzer;
 	return ret;
 }
 
@@ -242,7 +394,7 @@ int send_page(struct MHD_Connection *connection, const char *page,
 int send_page(struct MHD_Connection *connection, string& page,
 		int status_code)
 {
-	send_page( connection, page.c_str(), status_code );
+	return send_page( connection, page.c_str(), status_code );
 }
 
 int iterate_post(void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
@@ -263,8 +415,8 @@ int iterate_post(void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
 	cout<<"\t size = "<<size<<endl;
 #endif
 
-	connection_info_struct *con_info =
-			(connection_info_struct *) coninfo_cls;
+	ConnectionInfo *con_info =
+			(ConnectionInfo *) coninfo_cls;
 
 	if (0 == strcmp(key, "userInput"))
 	{
@@ -275,6 +427,19 @@ int iterate_post(void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
 	if (0 == strcmp(key, "file"))
 	{
 		con_info->userinput.append(data);
+		return MHD_YES;
+	}
+
+	if (0 == strcmp(key, "tagpos")){
+		con_info->tagPOS = ( 0 != strcmp(data, "0") );
+		return MHD_YES;
+	}
+
+	if (0 == strcmp(key, "nbest")){
+		int intVal = atoi(data);
+		if( intVal < 1 )
+			intVal = 1;
+		con_info->nbest = intVal;
 		return MHD_YES;
 	}
 
@@ -292,7 +457,7 @@ void request_completed(void *cls, struct MHD_Connection *connection,
 	if (NULL == con_cls)
 		return;
 
-	connection_info_struct *con_info = (connection_info_struct *) *con_cls;
+	ConnectionInfo *con_info = (ConnectionInfo *) *con_cls;
 
 	if (con_info->connectiontype == POST)
 	{
@@ -337,7 +502,7 @@ int answer_to_connection(void *cls, struct MHD_Connection *connection,
 
 	if (NULL == *con_cls)
 	{
-		connection_info_struct *con_info = new connection_info_struct;
+		ConnectionInfo *con_info = new ConnectionInfo;
 
 		if ( 0 == strcmp(method, "POST") )
 		{
@@ -365,12 +530,12 @@ int answer_to_connection(void *cls, struct MHD_Connection *connection,
 		//int ret;
 		//char buffer[1024] = { 0 };
 		//sprintf(buffer, askpage, nr_of_uploading_clients);
-		return send_segment_page(connection, EMPTY_STR, MHD_HTTP_OK);
+		return send_segment_page(connection, EMPTY_STR, true, 1, MHD_HTTP_OK);
 	}
 
 	if (0 == strcmp(method, "POST"))
 	{
-		connection_info_struct *con_info = (connection_info_struct*)(*con_cls);
+		ConnectionInfo *con_info = (ConnectionInfo*)(*con_cls);
 		if (0 != *upload_data_size)
 		{
 			MHD_post_process(con_info->postprocessor, upload_data, *upload_data_size);
@@ -378,7 +543,8 @@ int answer_to_connection(void *cls, struct MHD_Connection *connection,
 			return MHD_YES;
 		}
 		else
-			return send_segment_page(connection, con_info->userinput, MHD_HTTP_OK);
+			return send_segment_page(connection, con_info->userinput,
+					con_info->tagPOS, con_info->nbest, MHD_HTTP_OK);
 	}
 
 	return send_page(connection, errorpage, MHD_HTTP_BAD_REQUEST);
@@ -391,12 +557,8 @@ int main()
 	const char* modelPath = "../db/icwb/utf8/";
 	// create instances
 	CMA_Factory* factory = CMA_Factory::instance();
-	analyzer = factory->createAnalyzer();
 	knowledge = factory->createKnowledge();
 	knowledge->loadModel( "utf8", modelPath );
-	analyzer->setOption(Analyzer::OPTION_TYPE_NBEST, 1);
-	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 1);
-	analyzer->setKnowledge( knowledge );
 
 	cout<<"## To initialize HTTP Server..."<<endl;
 	struct MHD_Daemon *daemon;
@@ -405,6 +567,7 @@ int main()
 			request_completed, NULL, MHD_OPTION_END);
 	if (NULL == daemon)
 		return 1;
+	cout<<"## The initialization is done!"<<endl;
 	getchar();
 	MHD_stop_daemon(daemon);
 	return 0;

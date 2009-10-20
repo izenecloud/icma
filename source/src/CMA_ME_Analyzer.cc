@@ -67,7 +67,6 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
     }
 
     CMA_ME_Analyzer::~CMA_ME_Analyzer() {
-        delete ctype_;
     }
 
     int CMA_ME_Analyzer::runWithSentence(Sentence& sentence) {
