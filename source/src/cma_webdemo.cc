@@ -12,7 +12,7 @@
 #include "knowledge.h"
 #include "sentence.h"
 
-#define DEBUG_HTTP
+//#define DEBUG_HTTP
 
 #define PORT            9999
 #define POSTBUFFERSIZE  512
@@ -364,7 +364,7 @@ const char* ODD_RESULT_ROW = "oddresult";
 const char* EVEN_RESULT_ROW = "evenresult";
 
 const string POS_DELIM = "<bold>/</bold>";
-const string WORD_DELIM = "&nbsp;&nbsp;&nbsp;";
+const string WORD_DELIM = " &nbsp; ";
 
 const char *errorpage =
 		"<html><body>This doesn’t seem to be right.</body></html>";
@@ -548,7 +548,7 @@ int iterate_post(void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
 	}
 
 	if (0 == strcmp(key, "tagpos")){
-		con_info->tagPOS = ( 0 != strcmp(data, "0") );
+		con_info->tagPOS = ( 0 != atoi(data) );
 		return MHD_YES;
 	}
 
