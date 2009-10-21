@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <string>
 
+#include <boost/tokenizer.hpp>
+
+#include "strutil.h"
 #include "cma_factory.h"
 #include "analyzer.h"
 #include "knowledge.h"
@@ -44,7 +47,7 @@ const string askpage ="\
 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n\
 <title>iCMA' Demo</title>\n\
 \n\
-<style>\n\
+<style type=\"text/css\">\n\
 	body {\n\
 		margin:0px;\n\
 		font-size:13px;\n\
@@ -53,16 +56,16 @@ const string askpage ="\
 		\n\
 	#container {\n\
 		position:relative;\n\
-		width:80%;\n\
-		margin-left:10%;\n\
-		margin-right:10%;\n\
+		width:90%;\n\
+		margin-left:5%;\n\
+		margin-right:5%;\n\
 		/*border:#666666 thin solid;*/\n\
 	}\n\
 	\n\
 	#banner {\n\
 		font-size:20px;\n\
 		text-align:center;\n\
-		border-bottom:grey thin solid;\n\
+		border-bottom:#CCCCCC thin solid;\n\
 		padding-top:15px;\n\
 		padding-bottom:10px;\n\
 		margin-bottom:5px;\n\
@@ -77,7 +80,7 @@ const string askpage ="\
 	\n\
 	#input {\n\
 		float:left;\n\
-		width:49%;\n\
+		width:48%;\n\
 		margin-right:1%;\n\
 		height:inherit;\n\
 	}\n\
@@ -140,9 +143,19 @@ const string askpage ="\
 		margin-right:2px;\n\
 	}\n\
 	\n\
+	.optioninfo {\n\
+		color:green;\n\
+		margin-left:2px;\n\
+	}\n\
+	\n\
+	.optionwarn {\n\
+		color:red;\n\
+		margin-left:2px;\n\
+	}\n\
+	\n\
 	/** footer */\n\
 	#footer { \n\
-		border-top:grey thin solid;\n\
+		border-top:#CCCCCC thin solid;\n\
 		margin-top: 10px;\n\
 		clear: both; \n\
 		text-align: center;\n\
@@ -155,16 +168,17 @@ const string askpage ="\
 		background: inherit;\n\
 	}\n\
 	\n\
-	/** POS Display */\n\
-	.showNbestDiv ol li{\n\
-		font-size:15px;\n\
+	/** POS Display */	\n\
+	.rankSpan {\n\
+		font-size:18px;\n\
 		color:black;\n\
+		font-weight:bold;\n\
+		padding-right:2px;\n\
 	}\n\
-	\n\
 	.scoreSpan {\n\
 		color:red;\n\
 		font-size:20px;\n\
-		padding-right:7px;\n\
+		padding-right:4px;\n\
 	}\n\
 	\n\
 	.possame {\n\
@@ -174,9 +188,28 @@ const string askpage ="\
 	.pos {\n\
 		color:Maroon;\n\
 	}\n\
+	\n\
+	.sentence {\n\
+		width:100%;\n\
+		border:#000000 thin solid;\n\
+		margin-bottom:15px;\n\
+	}\n\
+	\n\
+	.oddresult {\n\
+		width:100%;\n\
+		display:block;\n\
+		background-color:white;\n\
+	}\n\
+	\n\
+	.evenresult {\n\
+		width:100%;\n\
+		display:block;\n\
+		background-color:#CCCCCC;\n\
+	}\n\
+	\n\
 </style>\n\
 \n\
-<script>\n\
+<script type=\"text/javascript\">\n\
 \n\
 //functions\n\
 function getFirstEleByIdItr(ele, id){\n\
@@ -281,8 +314,8 @@ function onSubmit( form )\n\
 				<form action=\"/filepost\" method=\"post\" enctype=\"multipart/form-data\" onsubmit=\"return onSubmit(this);\">\n\
 					<input type=\"hidden\" name=\"tagpos\" value=\"1\"/>\n\
 					<input type=\"hidden\" name=\"nbest\" value=\"1\"/>\n\
-					<input name=\"file\" type=\"file\" size=\"35px\">\n\
-					<input type=\"submit\" value=\" Upload \" class=\"inputbtn\">\n\
+					<input name=\"file\" type=\"file\" size=\"35px\"/>\n\
+					<input type=\"submit\" value=\" Upload \" class=\"inputbtn\"/>\n\
 				</form>			\n\
 			</div>\n\
 			\n\
@@ -290,9 +323,14 @@ function onSubmit( form )\n\
 			<div id=\"optionsdiv\">\n\
 				<span class=\"optionprompt\">POS Output:</span>\n\
 				<input type=\"checkbox\" id=\"tagposcheckbox\" %s/>\n\
-				<span class=\"optionprompt\">&nbsp;&nbsp;</span>\n\
-				<span class=\"optionprompt\">N Best:</span>\n\
+				<span class=\"optioninfo\">Whether tags POS (Part-Of-Speech).</span>\n\
+			</div>\n\
+			\n\
+			<div id=\"optionsdiv\">\n\
+				<span class=\"optionprompt\">N-Best:</span>\n\
 				<input type=\"text\" size=\"5px\" id=\"nbesttext\" value=\"%d\" onblur=\"return onNBestChange(this);\"/>\n\
+				<span class=\"optioninfo\">Display at most N possible results. The N-best results are for each line in the input separately.</span>\n\
+				<span class=\"optionwarn\">If N &gt; 1, please don't input large text/file as it causes the browser to display too many contents at one time.</span>\n\
 			</div>\n\
 		</div>\n\
 		\n\
@@ -314,6 +352,19 @@ function onSubmit( form )\n\
 </html>\n\
 				";
 
+const string a_nbest_result = "\
+			<div class=\"%s\">\n\
+				<span class=\"rankSpan\">%d:</span>\n\
+				<span class=\"scoreSpan\">%.5f</span>\n\
+%s\n\
+			</div>\n\
+";
+
+const char* ODD_RESULT_ROW = "oddresult";
+const char* EVEN_RESULT_ROW = "evenresult";
+
+const string POS_DELIM = "<bold>/</bold>";
+const string WORD_DELIM = "&nbsp;&nbsp;&nbsp;";
 
 const char *errorpage =
 		"<html><body>This doesn’t seem to be right.</body></html>";
@@ -333,10 +384,84 @@ void init_analyzer( Analyzer* ana )
 	ana->setKnowledge( knowledge );
 	ana->setOption(Analyzer::OPTION_TYPE_NBEST, 1);
 	ana->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 1);
-	ana->setPOSDelimiter( "<bold>/</bold>" );
-	ana->setWordDelimiter( "&nbsp;&nbsp;&nbsp;" );
+	ana->setPOSDelimiter( POS_DELIM.c_str() );
+	ana->setWordDelimiter( WORD_DELIM.c_str() );
 }
 
+//Process the input first
+typedef boost::tokenizer <boost::char_separator<char>,
+	string::const_iterator, string> LineTokenizer;
+const boost::char_separator<char> LINE_SEP("\n");
+
+/**
+ * Perform the segment
+ */
+void perform_segment( string& input, bool tagPOS, int nbest, string& ret)
+{
+	Analyzer* analyzer = CMA_Factory::instance()->createAnalyzer();
+	init_analyzer( analyzer );
+	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, tagPOS ? 1 : 0);
+
+	replaceAll( input, "\r", " " ); //support windows format
+	LineTokenizer token(input, LINE_SEP);
+
+	if( nbest <= 1 )
+	{
+		analyzer->setOption( Analyzer::OPTION_TYPE_NBEST, 1 );
+		for(LineTokenizer::const_iterator itr = token.begin(); itr != token.end(); ++itr){
+			string line = *itr;
+			trimSelf(line);
+			const char* segRet = analyzer->runWithString( line.c_str());
+			ret.append( segRet );
+			ret.append("<BR>");
+		}
+		return;
+	}
+
+	// if nbest > 1
+	analyzer->setOption( Analyzer::OPTION_TYPE_NBEST, nbest );
+	for(LineTokenizer::const_iterator itr = token.begin(); itr != token.end(); ++itr)
+	{
+		// get a single line
+		string line = *itr;
+		trimSelf(line);
+		if( line.empty() ) // ignore empty line
+			continue;
+		ret.append("<div class=\"sentence\">\n");
+
+		Sentence sent( line.c_str() );
+		analyzer->runWithSentence( sent );
+
+		int resultNum = sent.getListSize();
+		for( int i = 0; i < resultNum; ++i )
+		{
+			string ithSegResult;
+			int ithResultCount = sent.getCount(i);
+			for( int j = 0; j < ithResultCount; ++j )
+			{
+				if( tagPOS )
+					ithSegResult += string(sent.getLexicon(i, j)) + POS_DELIM
+							+ string(sent.getStrPOS(i, j)) + WORD_DELIM;
+				else
+					ithSegResult += string(sent.getLexicon(i, j)) + WORD_DELIM;
+			}
+
+			const char* rowType= (i % 2 == 0 ) ? ODD_RESULT_ROW : EVEN_RESULT_ROW;
+
+			size_t bufLen = a_nbest_result.length() + ithSegResult.length() + 30;
+			char *buf = new char[bufLen];
+			memset( buf, 0x0, bufLen );
+			sprintf( buf, a_nbest_result.c_str(), rowType, (i+1),
+					sent.getScore(i), ithSegResult.c_str());
+
+			ret.append(buf);
+			delete[] buf;
+		}
+
+		ret.append("</div>\n"); //end <div class="sentence">
+	}
+
+}
 
 int send_segment_page(struct MHD_Connection *connection, string& userinput,
 		bool tagPOS, unsigned int nbest, int status_code)
@@ -344,16 +469,9 @@ int send_segment_page(struct MHD_Connection *connection, string& userinput,
 	int ret;
 	struct MHD_Response *response;
 
-	Analyzer* analyzer = 0;
-
 	string result;
 	if( !userinput.empty() )
-	{
-		analyzer = CMA_Factory::instance()->createAnalyzer();
-		init_analyzer( analyzer );
-		analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, tagPOS ? 1 : 0);
-		result = analyzer->runWithString( userinput.c_str()) ;
-	}
+		perform_segment( userinput, tagPOS, nbest, result );
 	size_t bufLen = askpage.length() + userinput.length() + result.length() + 50;
 	char *buf = new char[ bufLen ];
 	memset( buf, 0x0, bufLen );
@@ -373,7 +491,6 @@ int send_segment_page(struct MHD_Connection *connection, string& userinput,
 	ret = MHD_queue_response(connection, status_code, response);
 	MHD_destroy_response(response);
 	delete[] buf;
-	delete analyzer;
 	return ret;
 }
 

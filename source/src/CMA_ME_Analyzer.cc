@@ -70,7 +70,10 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
     }
 
     int CMA_ME_Analyzer::runWithSentence(Sentence& sentence) {
-        int N = (int) getOption(OPTION_TYPE_NBEST);
+        if( strlen( sentence.getString() ) == 0 )
+        	return 1;
+
+    	int N = (int) getOption(OPTION_TYPE_NBEST);
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
         
         vector<pair<vector<string>, double> > segment;
@@ -231,13 +234,17 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
     }
 
     const char* CMA_ME_Analyzer::runWithString(const char* inStr) {
-        bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
+    	strBuf_.clear();
+
+    	if( strlen( inStr ) == 0 )
+    	      return strBuf_.c_str();
+
+    	bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
       
         vector<pair<vector<string>, double> > segment;
         vector<vector<string> > pos;
         analysis(inStr, 1, pos, segment, printPOS);
 
-        strBuf_.clear();
         if (printPOS)
         {
             vector<string>& best = segment.begin()->first;
