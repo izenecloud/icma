@@ -14,7 +14,7 @@
 
 //#define DEBUG_HTTP
 
-#define PORT            9999
+#define PORT            8380
 #define POSTBUFFERSIZE  512
 #define GET             0
 #define POST            1
@@ -335,7 +335,7 @@ function onSubmit( form )\n\
 		</div>\n\
 		\n\
 		<div id=\"result\">\n\
-			<span class=\"prompt\">The Segmentation Result is:</span>\n\
+			<span class=\"prompt\">The Segmentation Result is:&nbsp;&nbsp;&nbsp;<a href=\"/icma_pos.html\" target=\"_blank\">View iCMA's POS Tag Set</a></span>\n\
 			<div id=\"resultdisplay\">%s</div>\n\
 		</div>\n\
 	\n\
@@ -351,6 +351,105 @@ function onSubmit( form )\n\
 </body>\n\
 </html>\n\
 				";
+
+const string iCMA_POS_PAGE = "\
+<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n\
+<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\
+<head>\n\
+<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n\
+<title>POS Tag Sets of Basis and iJMA</title>\n\
+</head>\n\
+\n\
+<style type=\"text/css\">\n\
+<!--\n\
+body {\n\
+	width:94%;\n\
+	margin-left:3%;\n\
+	margin-right:3%;\n\
+	font-size:15px;\n\
+}\n\
+\n\
+table {\n\
+	width:100%;\n\
+	margin-bottom:20px;\n\
+	margin-top:20px;\n\
+	border:solid 1px;\n\
+}\n\
+\n\
+table tr th, table tr td {\n\
+	border:solid 1px;\n\
+}\n\
+\n\
+.linkdiv {\n\
+	width:100%;\n\
+	text-align:center;\n\
+	margin-top:5px;\n\
+	margin-bottom:5px;\n\
+}\n\
+\n\
+.linkdiv a {\n\
+	padding-left:5px;\n\
+	padding-right:5px;\n\
+	font-size:16px;\n\
+}\n\
+\n\
+-->\n\
+</style>\n\
+\n\
+<body>\n\
+<div class=\"linkdiv\">\n\
+	<h1>iCMA's POS Tag Set</h1>\n\
+</div>\n\
+<table name=\"basis\">\n\
+<tr><th colspan=\"4\">iCMA's POS Tag Set</th></tr>\n\
+<tr><th>Tag</th><th>English Description</th><th>中文解释</th><th>Example</th></tr>\n\
+<tr><td>A</td><td>Adjective.</td><td>形容词。</td><td>上古, 美丽</td></tr>\n\
+<tr><td>AD</td><td>Adverbial adjective.</td><td>副形词直接作状语的形容词，形容词代码a和副词代码d并在一起。</td><td>不同，不够</td></tr>\n\
+<tr><td>AG</td><td>Adjective morpheme.</td><td>形语素形容词性语素。形容词代码为a，语素代码ｇ前面置以A。</td><td>举，乔</td></tr>\n\
+<tr><td>AN</td><td>Adjective with a Noun function.</td><td>名形词具有名词功能的形容词。形容词代码a和名词代码n并在一起。</td><td>亲昵，亮丽</td></tr>\n\
+<tr><td>B</td><td>Distinguish words.</td><td>区别词:大型一次性短效,取汉字'别'的声母。</td><td>亲自，人为</td></tr>\n\
+<tr><td>C</td><td>Conjunction.</td><td>连词。</td><td>和，以及</td></tr>\n\
+<tr><td>D</td><td>Adverb.</td><td>副词。</td><td>仅仅，仍旧</td></tr>\n\
+<tr><td>DG</td><td>Adverb Morpheme.</td><td>副语素是副词性语素。副词代码为d，语素代码ｇ前面置以D。</td><td>务，勉</td></tr>\n\
+<tr><td>E</td><td>Exclamation.</td><td>叹词。</td><td>呀，啊</td></tr>\n\
+<tr><td>F</td><td>Position.</td><td>方位词:后右下取汉字'方'。</td><td>（假期）期间，（本世纪）末</td></tr>\n\
+<tr><td>G</td><td>Morpheme.</td><td>语素绝大多数语素都能作为合成词的'词根'，取汉字'根'的声母。</td><td>呱，咪</td></tr>\n\
+<tr><td>H</td><td>Pre-access Component.</td><td>前接成分。</td><td>小（孩子），老（李）</td></tr>\n\
+<tr><td>I</td><td>Idiom.</td><td>成语。</td><td>龙马精神，欣欣向荣</td></tr>\n\
+<tr><td>J</td><td>Abbreviation.</td><td>简称略语取汉字'简'的声母。</td><td>中(国)，美（国）</td></tr>\n\
+<tr><td>K</td><td>Post-access Component.</td><td>后接成分。</td><td>（欧美）式，（突发）性</td></tr>\n\
+<tr><td>L</td><td>Temporal Idiom.</td><td>习语:有意思固定资产操作系统习用语尚未成为成语，有点'临时性'，取'临'的声母</td><td>突围而出，按捺不住</td></tr>\n\
+<tr><td>M</td><td>Numeral.</td><td>数词。</td><td>三万一千，四百</td></tr>\n\
+<tr><td>MQ</td><td>Quantifier.</td><td>数量词。</td><td>(三百)户，（五千）量</td></tr>\n\
+<tr><td>NG</td><td>Noun Morpheme.</td><td>名语素为名词性语素。名词代码为n，语素代码ｇ前面置以N。</td><td>扇，技</td></tr>\n\
+<tr><td>N</td><td>Noun.</td><td>名词。</td><td>桌子，花瓶</td></tr>\n\
+<tr><td>NR</td><td>Person's Name.</td><td>人名名词为代码n和“人(ren)”的声母并在一起。</td><td>爱因斯坦，周恩来</td></tr>\n\
+<tr><td>NS</td><td>Location's Name.</td><td>地名名词为代码n和处所词代码s并在一起。</td><td>上海，巴黎</td></tr>\n\
+<tr><td>NT</td><td>Organization's Name.</td><td>机构团体'团'的声母为t，名词代码n和t并在一起。</td><td>联合国，北京奥组委</td></tr>\n\
+<tr><td>NX</td><td>Foreign Characters.</td><td>外文字符英文或英文数字字符串。</td><td>Simple，Easy</td></tr>\n\
+<tr><td>NZ</td><td>Proper Noun.</td><td>其他专名'专'的声母的第1个字母为z，名词代码n和z并在一起。</td><td>抄表器，抑制器</td></tr>\n\
+<tr><td>O</td><td>Onomatopoeia.</td><td>拟声词。</td><td>扑通（一声），朗朗（上口）</td></tr>\n\
+<tr><td>P</td><td>Preposition.</td><td>介词。</td><td>本着（公平的原则），来自（山东）</td></tr>\n\
+<tr><td>Q </td><td>Quantity.</td><td>量词。</td><td>（三）杯，（一）枚</td></tr>\n\
+<tr><td>R</td><td>Pronoun.</td><td>代词。</td><td>我，他</td></tr>\n\
+<tr><td>S</td><td>Space.</td><td>处所词。</td><td>枯水区，柜中</td></tr>\n\
+<tr><td>TG</td><td>Time Morpheme.</td><td>时语素时间词性语素。时间词代码为t,在语素的代码g前面置以T。</td><td>汉，清</td></tr>\n\
+<tr><td>T</td><td>Time.</td><td>时间词。</td><td>去年，今天</td></tr>\n\
+<tr><td>U</td><td>Auxiliary.</td><td>助词。</td><td>然，物</td></tr>\n\
+<tr><td>VD</td><td>Adverbial Verb.</td><td>副动词直接作状语的动词。动词和副词的代码并在一起。</td><td>牵头，狡辩</td></tr>\n\
+<tr><td>VG</td><td>Verb Morpheme.</td><td>动语素动词性语素。动词代码为v。在语素的代码g前面置以V。</td><td>狩，率</td></tr>\n\
+<tr><td>VN</td><td>The Verb with a noun function.</td><td>名动词指具有名词功能的动词。动词和名词的代码并在一起。</td><td>玩乐，玩火</td></tr>\n\
+<tr><td>V</td><td>Verb.</td><td>动词。</td><td>玩闹，环抱</td></tr>\n\
+<tr><td>W</td><td>Punctuation.</td><td>标点符号。</td><td>【，？</td></tr>\n\
+<tr><td>X</td><td>Non-morpheme Word.</td><td>非语素字只是一个符号，字母x通常用于代表未知数、符号。</td><td>瑷，疬</td></tr>\n\
+<tr><td>Y</td><td>Modal.</td><td>语气词汉字“语”的声母。</td><td>的，着哪</td></tr>\n\
+<tr><td>Z</td><td>Status Word.</td><td>状态词，取汉字'状'的声母的前一个字母。</td><td>酷热，甜甜</td></tr>\n\
+<tr><td>un</td><td>Unknown.</td><td>未知。</td><td>滹，滷</td></tr>\n\
+</table>\n\
+\n\
+</body>\n\
+</html>\n\
+";
 
 const string a_nbest_result = "\
 			<div class=\"%s\">\n\
@@ -571,7 +670,7 @@ void request_completed(void *cls, struct MHD_Connection *connection,
 	cout<<"## request_completed begin ..."<<endl;
 #endif
 
-	if (NULL == con_cls)
+	if ( !con_cls || !*con_cls )
 		return;
 
 	ConnectionInfo *con_info = (ConnectionInfo *) *con_cls;
@@ -605,11 +704,16 @@ int answer_to_connection(void *cls, struct MHD_Connection *connection,
 	bool isFilePost = false;
 	bool isTextPost = false;
 
-	if( strcmp(url, "/filepost") == 0 )
+	string lowerURL( url );
+	toLowerSelf( lowerURL );
+
+	if( lowerURL == "/icma_pos.html")
+		return send_page(connection, iCMA_POS_PAGE.c_str(), MHD_HTTP_OK);
+	else if( lowerURL == "/filepost")
 		isFilePost = true;
-	else if( strcmp(url, "/textpost") == 0 )
+	else if( lowerURL == "/textpost" )
 		isTextPost = true;
-	else if( strcmp(url, "/favicon.ico") != 0 && strcmp(url, "/") != 0 )
+	else if( lowerURL != "/favicon.ico" && lowerURL != "/" )
 	{
 		char buffer[1024] = { 0 };
 		sprintf(buffer, invalidurlpage, url);
@@ -667,7 +771,7 @@ int answer_to_connection(void *cls, struct MHD_Connection *connection,
 	return send_page(connection, errorpage, MHD_HTTP_BAD_REQUEST);
 }
 
-int main()
+int main(int argc, char* argv[])
 {
 	cout<<"## To initialize iCMA..."<<endl;
 	//initialize the iCMA
@@ -677,9 +781,15 @@ int main()
 	knowledge = factory->createKnowledge();
 	knowledge->loadModel( "utf8", modelPath );
 
-	cout<<"## To initialize HTTP Server..."<<endl;
+	int port = PORT;
+	if( argc >= 2 )
+	{
+		port = atoi( argv[1] );
+	}
+
+	cout<<"## To initialize HTTP Server in port "<<port<<" ..."<<endl;
 	struct MHD_Daemon *daemon;
-	daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, PORT, NULL, NULL,
+	daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, port, NULL, NULL,
 			&answer_to_connection, NULL, MHD_OPTION_NOTIFY_COMPLETED,
 			request_completed, NULL, MHD_OPTION_END);
 	if (NULL == daemon)
