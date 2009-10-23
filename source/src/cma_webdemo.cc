@@ -12,7 +12,21 @@
 #include "knowledge.h"
 #include "sentence.h"
 
+// Deamon required header files
+#include <sys/types.h>
+#include <sys/stat.h>
+//#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+#include <syslog.h>
+#include <string.h>
+
+
 //#define DEBUG_HTTP
+
+#define USE_DEAMON
 
 #define PORT            8380
 #define POSTBUFFERSIZE  512
@@ -771,7 +785,7 @@ int answer_to_connection(void *cls, struct MHD_Connection *connection,
 	return send_page(connection, errorpage, MHD_HTTP_BAD_REQUEST);
 }
 
-int main(int argc, char* argv[])
+void run_webdemo( int port )
 {
 	cout<<"## To initialize iCMA..."<<endl;
 	//initialize the iCMA
@@ -781,21 +795,85 @@ int main(int argc, char* argv[])
 	knowledge = factory->createKnowledge();
 	knowledge->loadModel( "utf8", modelPath );
 
+
+
+	cout<<"## To initialize HTTP Server in port "<<port<<" ..."<<endl;
+	struct MHD_Daemon *daemon = 0;
+	daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, port, NULL, NULL,
+			&answer_to_connection, NULL, MHD_OPTION_NOTIFY_COMPLETED,
+			request_completed, NULL, MHD_OPTION_END);
+	if (NULL == daemon)
+		return;
+	cout<<"## The initialization is done!"<<endl;
+
+#ifndef USE_DEAMON
+	getchar();
+	if(daemon)
+		MHD_stop_daemon(daemon);
+#endif
+}
+
+int main(int argc, char* argv[])
+{
 	int port = PORT;
 	if( argc >= 2 )
 	{
 		port = atoi( argv[1] );
 	}
 
-	cout<<"## To initialize HTTP Server in port "<<port<<" ..."<<endl;
-	struct MHD_Daemon *daemon;
-	daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, port, NULL, NULL,
-			&answer_to_connection, NULL, MHD_OPTION_NOTIFY_COMPLETED,
-			request_completed, NULL, MHD_OPTION_END);
-	if (NULL == daemon)
-		return 1;
-	cout<<"## The initialization is done!"<<endl;
-	getchar();
-	MHD_stop_daemon(daemon);
+#ifdef USE_DEAMON
+	cout<<"## To become a daemon..."<<endl;
+	/* Our process ID and Session ID */
+	pid_t pid, sid;
+
+	/* Fork off the parent process */
+	pid = fork();
+	if (pid < 0) {
+			exit(EXIT_FAILURE);
+	}
+	/* If we got a good PID, then
+	   we can exit the parent process. */
+	if (pid > 0) {
+			exit(EXIT_SUCCESS);
+	}
+
+	/* Change the file mode mask */
+	umask(0);
+
+	/* Open any logs here */
+
+	/* Create a new SID for the child process */
+	sid = setsid();
+	if (sid < 0) {
+			/* Log the failure */
+			exit(EXIT_FAILURE);
+	}
+
+	/* Change the current working directory */
+	if ((chdir(".")) < 0) {
+			/* Log the failure */
+			exit(EXIT_FAILURE);
+	}
+
+	/* Close out the standard file descriptors */
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
+
+	/* Daemon-specific initialization goes here */
+
+	/* The Big Loop */
+	run_webdemo( port );
+	while(1)
+	{
+		sleep(60);
+	} // end big loop
+#else
+	run_webdemo( port );
+#endif
+
+
+
+	exit(EXIT_SUCCESS);
 	return 0;
 }
