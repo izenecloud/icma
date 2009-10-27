@@ -109,6 +109,11 @@ private:
      * The CMA_CType object to keep the encoding
      */
     CMA_CType* ctype_;
+
+    /**
+     * The Encode Type of Analyzer
+     */
+    Knowledge::EncodeType encodeType_;
 };
 
 

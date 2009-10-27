@@ -278,6 +278,7 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
         	setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
 
         ctype_ = CMA_CType::instance(knowledge_->getEncodeType());
+        encodeType_ = knowledge_->getEncodeType();
         if(knowledge_->getPOSTagger())
             knowledge_->getPOSTagger()->setCType(ctype_);
         if(knowledge_->getSegTagger())
@@ -464,7 +465,14 @@ namespace meanainner{
     void CMA_ME_Analyzer::analysis(const char* sentence, int N,
             vector<vector<string> >& posRet,
             vector<pair<vector<string>, double> >& segRet, bool tagPOS) {
-        int segN = N;
+        if( encodeType_ == Knowledge::ENCODE_TYPE_UTF8 )
+        {
+        	const unsigned char *uc = (const unsigned char *)sentence;
+        	if( uc[0] == 0xEF && uc[1] == 0xBB && uc[2] == 0xBF )
+        		sentence += 3;
+        }
+
+    	int segN = N;
 
         vector<pair<vector<string>, double> > segment(1);
 
