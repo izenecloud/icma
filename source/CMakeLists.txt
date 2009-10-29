@@ -40,6 +40,10 @@ project(CMA-CHEN)
 
 add_definitions("-Wall -Wno-deprecated -Wno-write-strings -fPIC")# -O3
 
+IF( DEBUG )
+	add_definitions(" -g ")
+ENDIF( DEBUG )
+
 SET(USE_IZENEWISELIB FALSE)
 
 

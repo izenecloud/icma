@@ -34,6 +34,11 @@ Condition::Condition()
 	//empty constructor
 }
 
+Condition::~Condition()
+{
+	//cout<<"Condition Destructor: "<<*this<<endl;
+}
+
 void Condition::init(CharType type, vector<CharType>& preTypes, vector<CharType>& noPreTypes,
 			vector<CharType>& nextTypes, vector<CharType>& noNextTypes,
 			set<CharValue>& nextChars, bool isEnd)
@@ -93,13 +98,19 @@ void Condition::setTypesArray( bool& isSegFlag, bool *noTypes, vector<CharType>&
 
 bool Condition::match( CharType preType, CharValue nextValue, CharType nextType ) const
 {
+	//cout<<"match "<<*this<<",preType="<<preType<<",nextValue="<<nextValue<<",nextType="<<nextType<<endl;
 	if( ( isSetPreTypes_ && noPreTypes_[preType] ) ||
 			( isSetNextTypes_ && noNextTypes_[nextType] ) )
+	{
+		//cout<<"match in if"<<endl;
 		return false;
-
+	}
 	if( !nextChars_.empty() )
+	{
+		//cout<<"match in nextChars"<<endl;
 		return nextChars_.find( nextValue ) != nextChars_.end();
-
+	}
+	//cout<<"match end"<<endl;
 	return true;
 }
 

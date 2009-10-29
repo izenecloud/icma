@@ -58,6 +58,8 @@ class Condition
 public:
 	Condition();
 
+	~Condition();
+
 	void init(CharType type, vector<CharType>& preTypes, vector<CharType>& noPreTypes,
 				vector<CharType>& NextTypes, vector<CharType>& noNextTypes,
 				set<CharValue>& nextChars, bool isEnd = false);

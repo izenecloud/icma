@@ -339,7 +339,7 @@ CharType CMA_CType::getCharType(const char* p, CharType preType, const char* nex
 
 	CharValue nextV = nextP ? getEncodeValue( nextP ) : 0;
 	map< CharValue, CharConditions >::const_iterator itr2 = typeMap_.find( nextV );
-	CharType nextType = itr == typeMap_.end() ? CHAR_TYPE_OTHER : itr2->second.baseType_;
+	CharType nextType = (itr2 == typeMap_.end()) ? CHAR_TYPE_OTHER : itr2->second.baseType_;
 
 	const CharConditions& charConds = itr->second;
 	return charConds.match(preType, nextV, nextType, charConds.baseType_);
