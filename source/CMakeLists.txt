@@ -38,11 +38,7 @@ ENDIF (CMAKE_COMPILER_IS_GNUCXX)
 
 project(CMA-CHEN)
 
-add_definitions("-Wall -Wno-deprecated -Wno-write-strings -fPIC")# -O3
-
-IF( DEBUG )
-	add_definitions(" -g ")
-ENDIF( DEBUG )
+#add_definitions("-Wall -Wno-deprecated -Wno-write-strings -fPIC")# -O3
 
 SET(USE_IZENEWISELIB FALSE)
 
