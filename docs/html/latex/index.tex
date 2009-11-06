@@ -1,9 +1,23 @@
-{\bf CMA} (Chinese Morphological Analyzer) is a platform-independent C++ library for Chinese word segmentation and POS tagging. And Chinese Morphological Analyzer(Chen) is using Maxent Model and Character-baed Segmentation to perform segmentation and POS tagging.\section{Compile the file}\label{index_compilefile}
-\begin{enumerate}
-\item Using shell, go to the project root directory. \item Type ".mkdir build ". \item Type ".cd build ". \item Under linux, type "cmake ../source"; Under windows, run in the msys, type "cmake -G "Unix Makefiles" ../source ". \item Finally Type ".make ". to compile all the source. \end{enumerate}
+{\bfseries CMA} (Chinese Morphological Analyzer) is a platform-\/independent C++ library for Chinese word segmentation and POS tagging. And Chinese Morphological Analyzer(Chen) is using Maxent Model and Character-\/baed Segmentation to perform segmentation and POS tagging.\section{Compile the file}\label{index_compilefile}
+Two approaches can be used to compile. For the final user, the second approach is recommended.
+
+1. Use the cmake directly.
 
 
-If the external program uses the library, simply add all the header files in the \$include\$ directory under the project root directory, and add the lib/libcmac.a into the library path.\section{Run the Trainer}\label{index_runtrainer}
+\begin{DoxyEnumerate}
+\item Using shell, go to the project root directory. 
+\item Type ".cd build ". 
+\item Under linux, type "cmake ../source"; Under windows, run in the msys, type "cmake -\/G "Unix Makefiles" ../source ". 
+\item Finally Type ".make ". to compile all the source. 
+\end{DoxyEnumerate}
+
+2. Use a script build/build.sh to compile. The usage is:\par
+ {\bfseries ./build.sh [ release $|$ debug $|$ profile $|$ clean ] [ linux $|$ win32 ]}\par
+
+
+The parameters contains four building types (default is {\bfseries release}) and two platforms (default is {\bfseries linux}). For the building type, {\bfseries debug} is compiled with debug information; {\bfseries release} is for release purpose with optimized code; {\bfseries profile} will add -\/pg which used by gprof; and {\bfseries clean} will clean all temporal files. For the platform, {\bfseries linux} represents linux platform while {\bfseries win32} represents windows platform.
+
+If the external program uses the library, simply add all the header files in the \$include\$ directory under the project root directory, and add the lib/libcmac.a into the library for static linking or lib/$\ast$.so for dynamic linking.\section{Run the Trainer}\label{index_runtrainer}
 The dataset have to be trained by the Trainer. The Trainer is a executable file with name camctrainer under directory bin.
 
 The SYNOPSIS for the trainer is: \par
@@ -11,13 +25,21 @@ The SYNOPSIS for the trainer is: \par
 
 
 \par
-The Description for the parameters: \begin{itemize}
-\item mateFile is the material file, it should be in the form word1/pos1 word2/pos2 word3/pos3 ... \item modelPath is the directory to hold all the output files (include trained model files and dictionaries). \item encoding is the encoding of the mateFile, and gb18030 is the default encoding. Support utf8, gb18030, gb2312 and big5 now. \item posDelimiter is the delimiter between the word and the POS tag, like '/' and '\_\-' and default is '/'. \end{itemize}
+The Description for the parameters: 
+\begin{DoxyItemize}
+\item mateFile is the material file, it should be in the form word1/pos1 word2/pos2 word3/pos3 ... 
+\item modelPath is the directory to hold all the output files (include trained model files and dictionaries). 
+\item encoding is the encoding of the mateFile, and gb18030 is the default encoding. Support utf8, gb18030, gb2312 and big5 now. 
+\item posDelimiter is the delimiter between the word and the POS tag, like '/' and '\_\-' and default is '/'. 
+\end{DoxyItemize}
 
-
-Take "/dir1/dir2 " as the cateFile, after the training. The following files are created (All under directory /dir1/dir2): \begin{enumerate}
-\item {\bf pos.model} is the POS statistical model file. \item {\bf pos.pos} is the all the POS gained from the training dataset. \item {\bf sys.dic} is the dictionary (include words and POS tags) gained from the training dataset. This file is plain text and should be loaded as user dictionary. To convert it to the system dictionary, use Knowledge::encodeSystemDict(const char$\ast$ txtFileName, const char$\ast$ binFileName), then the binFileName can be loaded as the system dictioanry. \item {\bf poc.model} is the POC statistical model file. \end{enumerate}
-
+Take "/dir1/dir2 " as the cateFile, after the training. The following files are created (All under directory /dir1/dir2): 
+\begin{DoxyEnumerate}
+\item {\bfseries pos.model} is the POS statistical model file. 
+\item {\bfseries pos.pos} is the all the POS gained from the training dataset. 
+\item {\bfseries sys.dic} is the dictionary (include words and POS tags) gained from the training dataset. This file is plain text and should be loaded as user dictionary. To convert it to the system dictionary, use Knowledge::encodeSystemDict(const char$\ast$ txtFileName, const char$\ast$ binFileName), then the binFileName can be loaded as the system dictioanry. 
+\item {\bfseries poc.model} is the POC statistical model file. 
+\end{DoxyEnumerate}
 
 All the files are required to run the program.\par
 \section{Run the Demo}\label{index_rundemo}
@@ -28,42 +50,44 @@ The SYNOPSIS for the trainer is: \par
 
 
 \par
-The Description for the parameters: \begin{itemize}
-\item modelPath is the directory contains all the tained models, dictionaries and configuration.  \item inFile the input file. \item outFile the output file. \item encoding is the encoding of the mateFile, and gb2312 is the default encoding. Only support gb2312 and big5 now. \item posDelimiter is the delimiter between the word and the pos tag, like '/' and '\_\-' and default is '/'. \end{itemize}
-
+The Description for the parameters: 
+\begin{DoxyItemize}
+\item modelPath is the directory contains all the tained models, dictionaries and configuration.  
+\item inFile the input file. 
+\item outFile the output file. 
+\item encoding is the encoding of the mateFile, and gb2312 is the default encoding. Support utf8, gb18030, gb2312 and big5. 
+\item posDelimiter is the delimiter between the word and the pos tag, like '/' and '\_\-' and default is '/'. 
+\end{DoxyItemize}
 
 The result with pos tagging can be found in the outFile.\section{Use the API}\label{index_useapi}
 First of the all, add the lib/libcmac.a into the library path.
 
-{\em Step 1: Include the header files in directory \char`\"{}include\char`\"{}\/} 
-
-\begin{Code}\begin{verbatim}#include "cma_factory.h"
+{\itshape Step 1: Include the header files in directory \char`\"{}include\char`\"{}\/} 
+\begin{DoxyCode}
+#include "cma_factory.h"
 #include "analyzer.h"
 #include "knowledge.h"
 #include "sentence.h"
-\end{verbatim}
-\end{Code}
+\end{DoxyCode}
 
 
-
-{\em Step 2: Use the library name space\/} 
-
-\begin{Code}\begin{verbatim}using namespace cma;
-\end{verbatim}
-\end{Code}
+{\itshape Step 2: Use the library name space\/} 
+\begin{DoxyCode}
+using namespace cma;
+\end{DoxyCode}
 
 
-
-{\em Step 3: Call the interface and handle the result\/}
-
+{\itshape Step 3: Call the interface and handle the result\/}
 
 
-\begin{Code}\begin{verbatim}// create instances
+\begin{DoxyCode}
+// create instances
 CMA_Factory* factory = CMA_Factory::instance();
 Analyzer* analyzer = factory->createAnalyzer();
 Knowledge* knowledge = factory->createKnowledge();
 
-//It is suggested to set encoding after crate the Knowledge. Another supported encode type is big5.
+//It is suggested to set encoding after crate the Knowledge. Another supported en
+      code type is big5.
 knowledge->setEncodeType(Knowledge::ENCODE_TYPE_GB2312);
 
 // Load all the model by specific modelPath and encoding
@@ -73,13 +97,17 @@ knowledge->loadModel( "gb18030", "..." ).
 knowledge->loadUserDict("...");
 knowledge->loadStopWordDict("...");
  
-// (optional) if POS tagging is not needed, call the function below to turn off the analysis and 
-// output for POS tagging, so that large execution time could be saved when execute 
-// Analyzer::runWithSentence(), Analyzer::runWithString(), Analyzer::runWithStream().
+// (optional) if POS tagging is not needed, call the function below to turn off t
+      he analysis and 
+// output for POS tagging, so that large execution time could be saved when execu
+      te 
+// Analyzer::runWithSentence(), Analyzer::runWithString(), Analyzer::runWithStrea
+      m().
 analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
 
 // (optional) set the number of N-best results,
-// if this function is not called, one-best analysis is performed defaultly on Analyzer::runWithSentence().
+// if this function is not called, one-best analysis is performed defaultly on An
+      alyzer::runWithSentence().
 analyzer->setOption(Analyzer::OPTION_TYPE_NBEST, 5);
 
 // set knowledge
@@ -109,7 +137,5 @@ while(getline(cin, line)) // get paragraph string from standard input
 // destroy instances
 delete knowledge;
 delete analyzer;
-\end{verbatim}
-\end{Code}
-
+\end{DoxyCode}
  

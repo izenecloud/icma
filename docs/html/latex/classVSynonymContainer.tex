@@ -1,12 +1,12 @@
 \section{VSynonymContainer Class Reference}
 \label{classVSynonymContainer}\index{VSynonymContainer@{VSynonymContainer}}
+
+
 the \doxyref{VTrie}{p.}{classVTrie} version of the Synonym Dictionary  
 
 
-{\tt \#include $<$VSynonym.h$>$}
-
-\subsection*{Public Member Functions}
-\begin{CompactItemize}
+{\ttfamily \#include $<$VSynonym.h$>$}\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
 \item 
 {\bf VSynonymContainer} ()
 \item 
@@ -24,47 +24,40 @@ void {\bf searchNgetSynonym} (char $\ast$query, {\bf VSynonym} $\ast$synonym)
 \item 
 {\bf VExpandedQuery} $\ast$ {\bf expandQuery} (const string \&query)
 \item 
-{\bf VTrie} $\ast$ \textbf{getData} ()\label{classVSynonymContainer_aedd50ac665c2a8417205db29fa8ff2b}
+{\bf VTrie} $\ast$ {\bfseries getData} ()\label{classVSynonymContainer_aaedd50ac665c2a8417205db29fa8ff2b}
 
 \item 
 int {\bf loadSynonyms} (const char $\ast$pathDic)
 \item 
 size\_\-t {\bf size} ()
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Static Public Attributes}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 static const size\_\-t {\bf MinLen} = 5
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-the \doxyref{VTrie}{p.}{classVTrie} version of the Synonym Dictionary 
+the \doxyref{VTrie}{p.}{classVTrie} version of the Synonym Dictionary The class keep the relation between the synonym and macthed synonym lists. \doxyref{VTrie}{p.}{classVTrie} is used to hold the all the synonyms, and a extra array to hold all the synonym entry lists.
 
-The class keep the relation between the synonym and macthed synonym lists. \doxyref{VTrie}{p.}{classVTrie} is used to hold the all the synonyms, and a extra array to hold all the synonym entry lists.
-
-\begin{Desc}
-\item[Author:]Vernkin \end{Desc}
+\begin{DoxyAuthor}{Author}
+Vernkin 
+\end{DoxyAuthor}
 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{VSynonymContainer@{VSynonymContainer}!VSynonymContainer@{VSynonymContainer}}
 \index{VSynonymContainer@{VSynonymContainer}!VSynonymContainer@{VSynonymContainer}}
-\subsubsection[{VSynonymContainer}]{\setlength{\rightskip}{0pt plus 5cm}VSynonymContainer::VSynonymContainer ()\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonymContainer_88ad1a260428ee734f860ba9c187697a}
-
-
+\subsubsection[{VSynonymContainer}]{\setlength{\rightskip}{0pt plus 5cm}VSynonymContainer::VSynonymContainer ()\hspace{0.3cm}{\ttfamily  [inline]}}\label{classVSynonymContainer_a88ad1a260428ee734f860ba9c187697a}
 Create the PHSynonymCntainer with default synonym delimiter (',') and word delimiter ('\_\-') 
 
 References setSynonymDelimiter(), and setWordDelimiter().\index{VSynonymContainer@{VSynonymContainer}!VSynonymContainer@{VSynonymContainer}}
 \index{VSynonymContainer@{VSynonymContainer}!VSynonymContainer@{VSynonymContainer}}
-\subsubsection[{VSynonymContainer}]{\setlength{\rightskip}{0pt plus 5cm}VSynonymContainer::VSynonymContainer (string {\em nameFile}, \/  const char $\ast$ {\em sep\_\-synonyms} = {\tt \char`\"{},\char`\"{}}, \/  const char $\ast$ {\em sep\_\-words} = {\tt \char`\"{}\_\-\char`\"{}})\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonymContainer_a593d62e58c8f58b7a15f83830298200}
-
-
-Create the PHSynonymCntainer with specific synonym and word delimiter, and the resource file \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em nameFile}]specific synonym resource file, each line is a synonym, each synonym is separated by sep\_\-synonyms in a synonym, and each individal word is separated by sep\_\-synonyms in a synonym entry. \item[{\em sep\_\-synonyms}]synonym entry delimiter in a synonym \item[{\em sep\_\-words}]word delimiter in a synonym entry \end{description}
-\end{Desc}
+\subsubsection[{VSynonymContainer}]{\setlength{\rightskip}{0pt plus 5cm}VSynonymContainer::VSynonymContainer (string {\em nameFile}, \/  const char $\ast$ {\em sep\_\-synonyms} = {\ttfamily \char`\"{},\char`\"{}}, \/  const char $\ast$ {\em sep\_\-words} = {\ttfamily \char`\"{}\_\-\char`\"{}})\hspace{0.3cm}{\ttfamily  [inline]}}\label{classVSynonymContainer_aa593d62e58c8f58b7a15f83830298200}
+Create the PHSynonymCntainer with specific synonym and word delimiter, and the resource file 
+\begin{DoxyParams}{Parameters}
+\item[{\em nameFile}]specific synonym resource file, each line is a synonym, each synonym is separated by sep\_\-synonyms in a synonym, and each individal word is separated by sep\_\-synonyms in a synonym entry. \item[{\em sep\_\-synonyms}]synonym entry delimiter in a synonym \item[{\em sep\_\-words}]word delimiter in a synonym entry \end{DoxyParams}
 
 
 References loadSynonyms(), setSynonymDelimiter(), and setWordDelimiter().
@@ -72,98 +65,72 @@ References loadSynonyms(), setSynonymDelimiter(), and setWordDelimiter().
 \subsection{Member Function Documentation}
 \index{VSynonymContainer@{VSynonymContainer}!expandQuery@{expandQuery}}
 \index{expandQuery@{expandQuery}!VSynonymContainer@{VSynonymContainer}}
-\subsubsection[{expandQuery}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VExpandedQuery}$\ast$ VSynonymContainer::expandQuery (const string \& {\em query})\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonymContainer_aed11605a29796a0aa3288ace86556cc}
-
-
+\subsubsection[{expandQuery}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VExpandedQuery}$\ast$ VSynonymContainer::expandQuery (const string \& {\em query})\hspace{0.3cm}{\ttfamily  [inline]}}\label{classVSynonymContainer_aaed11605a29796a0aa3288ace86556cc}
 Expand the query with all the possible synonyms 
 
-References VExpandedQuery::addUnit(), get\_\-synonyms(), and size().\index{VSynonymContainer@{VSynonymContainer}!get\_\-synonyms@{get\_\-synonyms}}
+References get\_\-synonyms(), and size().\index{VSynonymContainer@{VSynonymContainer}!get\_\-synonyms@{get\_\-synonyms}}
 \index{get\_\-synonyms@{get\_\-synonyms}!VSynonymContainer@{VSynonymContainer}}
-\subsubsection[{get\_\-synonyms}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VSynonym}$\ast$ VSynonymContainer::get\_\-synonyms (const string \& {\em key})\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonymContainer_70ae7fc4bdaa567c372c2850d67d8e00}
-
-
-Get the synonyms with specific key, if found nothing, return NULL. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em key}]specific key to find the synonyms \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]synonym \doxyref{VSynonym}{p.}{classVSynonym} object to store the data; return NULL if the key is not exists. \end{Desc}
+\subsubsection[{get\_\-synonyms}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VSynonym}$\ast$ VSynonymContainer::get\_\-synonyms (const string \& {\em key})\hspace{0.3cm}{\ttfamily  [inline]}}\label{classVSynonymContainer_a70ae7fc4bdaa567c372c2850d67d8e00}
+Get the synonyms with specific key, if found nothing, return NULL. 
+\begin{DoxyParams}{Parameters}
+\item[{\em key}]specific key to find the synonyms \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+synonym \doxyref{VSynonym}{p.}{classVSynonym} object to store the data; return NULL if the key is not exists. 
+\end{DoxyReturn}
 
 
 References VTrieNode::data, and VTrie::search().\index{VSynonymContainer@{VSynonymContainer}!get\_\-synonyms@{get\_\-synonyms}}
 \index{get\_\-synonyms@{get\_\-synonyms}!VSynonymContainer@{VSynonymContainer}}
-\subsubsection[{get\_\-synonyms}]{\setlength{\rightskip}{0pt plus 5cm}void VSynonymContainer::get\_\-synonyms (const string \& {\em key}, \/  {\bf VSynonym} \& {\em synonym})\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonymContainer_27f62dcf8f9ba4159012cacb30598bd7}
+\subsubsection[{get\_\-synonyms}]{\setlength{\rightskip}{0pt plus 5cm}void VSynonymContainer::get\_\-synonyms (const string \& {\em key}, \/  {\bf VSynonym} \& {\em synonym})\hspace{0.3cm}{\ttfamily  [inline]}}\label{classVSynonymContainer_a27f62dcf8f9ba4159012cacb30598bd7}
+Get the synonyms with specific key, if found nothing, data in the PHSynonym is set NULL. 
+\begin{DoxyParams}{Parameters}
+\item[{\em key}]specific key to find the synonyms \item[{\em synonym}]PHSynonym object to store the data \end{DoxyParams}
 
 
-Get the synonyms with specific key, if found nothing, data in the PHSynonym is set NULL. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em key}]specific key to find the synonyms \item[{\em synonym}]PHSynonym object to store the data \end{description}
-\end{Desc}
-
-
-References VTrieNode::data, VTrie::search(), and VSynonym::setData().
+References VTrieNode::data, and VTrie::search().
 
 Referenced by expandQuery(), and cma::CMA\_\-ME\_\-Knowledge::getSynonyms().\index{VSynonymContainer@{VSynonymContainer}!loadSynonyms@{loadSynonyms}}
 \index{loadSynonyms@{loadSynonyms}!VSynonymContainer@{VSynonymContainer}}
-\subsubsection[{loadSynonyms}]{\setlength{\rightskip}{0pt plus 5cm}int VSynonymContainer::loadSynonyms (const char $\ast$ {\em pathDic})\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonymContainer_2850295b0b57d3e9d1dedad15f1ca766}
-
-
-load the data from the file \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em pathDic}]the path of the synonym dictionary file \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]0 if occur error and 1 if works fine \end{Desc}
+\subsubsection[{loadSynonyms}]{\setlength{\rightskip}{0pt plus 5cm}int VSynonymContainer::loadSynonyms (const char $\ast$ {\em pathDic})\hspace{0.3cm}{\ttfamily  [inline]}}\label{classVSynonymContainer_a2850295b0b57d3e9d1dedad15f1ca766}
+load the data from the file 
+\begin{DoxyParams}{Parameters}
+\item[{\em pathDic}]the path of the synonym dictionary file \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if occur error and 1 if works fine 
+\end{DoxyReturn}
 
 
 References VTrieNode::data, VTrieNode::init(), VTrie::insert(), MinLen, and VTrie::search().
 
 Referenced by VSynonymContainer().\index{VSynonymContainer@{VSynonymContainer}!searchNgetSynonym@{searchNgetSynonym}}
 \index{searchNgetSynonym@{searchNgetSynonym}!VSynonymContainer@{VSynonymContainer}}
-\subsubsection[{searchNgetSynonym}]{\setlength{\rightskip}{0pt plus 5cm}void VSynonymContainer::searchNgetSynonym (char $\ast$ {\em query}, \/  {\bf VSynonym} $\ast$ {\em synonym})\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonymContainer_594863219aefd10e84dba6c7db267d34}
-
-
+\subsubsection[{searchNgetSynonym}]{\setlength{\rightskip}{0pt plus 5cm}void VSynonymContainer::searchNgetSynonym (char $\ast$ {\em query}, \/  {\bf VSynonym} $\ast$ {\em synonym})\hspace{0.3cm}{\ttfamily  [inline]}}\label{classVSynonymContainer_a594863219aefd10e84dba6c7db267d34}
 Search the query from \doxyref{VSynonymContainer}{p.}{classVSynonymContainer}. if searching fail, assign 0 or NULL to synonym parameter. otherwise, synonym parameter has a proper value.
 
-\begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em query}]word to be queried \item[{\em synonym}]to store the returned information \end{description}
-\end{Desc}
+
+\begin{DoxyParams}{Parameters}
+\item[{\em query}]word to be queried \item[{\em synonym}]to store the returned information \end{DoxyParams}
 
 
-References VTrieNode::data, VTrie::search(), and VSynonym::setData().\index{VSynonymContainer@{VSynonymContainer}!setSynonymDelimiter@{setSynonymDelimiter}}
+References VTrieNode::data, and VTrie::search().\index{VSynonymContainer@{VSynonymContainer}!setSynonymDelimiter@{setSynonymDelimiter}}
 \index{setSynonymDelimiter@{setSynonymDelimiter}!VSynonymContainer@{VSynonymContainer}}
-\subsubsection[{setSynonymDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}void VSynonymContainer::setSynonymDelimiter (const char $\ast$ {\em delim})\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonymContainer_3030aaabe05a63bb27986b15e31383fb}
-
-
-Set the synonym delimiter \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em delim}]new synonym delimiter \end{description}
-\end{Desc}
+\subsubsection[{setSynonymDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}void VSynonymContainer::setSynonymDelimiter (const char $\ast$ {\em delim})\hspace{0.3cm}{\ttfamily  [inline]}}\label{classVSynonymContainer_a3030aaabe05a63bb27986b15e31383fb}
+Set the synonym delimiter 
+\begin{DoxyParams}{Parameters}
+\item[{\em delim}]new synonym delimiter \end{DoxyParams}
 
 
 Referenced by VSynonymContainer().\index{VSynonymContainer@{VSynonymContainer}!setWordDelimiter@{setWordDelimiter}}
 \index{setWordDelimiter@{setWordDelimiter}!VSynonymContainer@{VSynonymContainer}}
-\subsubsection[{setWordDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}void VSynonymContainer::setWordDelimiter (const char $\ast$ {\em delim})\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonymContainer_f2e5c17faaace70ce513ebb15bd41969}
-
-
-Set the word delimiter \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em delim}]new word delimiter \end{description}
-\end{Desc}
+\subsubsection[{setWordDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}void VSynonymContainer::setWordDelimiter (const char $\ast$ {\em delim})\hspace{0.3cm}{\ttfamily  [inline]}}\label{classVSynonymContainer_af2e5c17faaace70ce513ebb15bd41969}
+Set the word delimiter 
+\begin{DoxyParams}{Parameters}
+\item[{\em delim}]new word delimiter \end{DoxyParams}
 
 
 Referenced by VSynonymContainer().\index{VSynonymContainer@{VSynonymContainer}!size@{size}}
 \index{size@{size}!VSynonymContainer@{VSynonymContainer}}
-\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}size\_\-t VSynonymContainer::size ()\hspace{0.3cm}{\tt  [inline]}}\label{classVSynonymContainer_738b00b0a69c58cd17707d597b5dd984}
-
-
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}size\_\-t VSynonymContainer::size ()\hspace{0.3cm}{\ttfamily  [inline]}}\label{classVSynonymContainer_a738b00b0a69c58cd17707d597b5dd984}
 Get the size of the whole \doxyref{VSynonymContainer}{p.}{classVSynonymContainer} used 
 
 References VTrie::size().
@@ -173,13 +140,11 @@ Referenced by expandQuery().
 \subsection{Member Data Documentation}
 \index{VSynonymContainer@{VSynonymContainer}!MinLen@{MinLen}}
 \index{MinLen@{MinLen}!VSynonymContainer@{VSynonymContainer}}
-\subsubsection[{MinLen}]{\setlength{\rightskip}{0pt plus 5cm}const size\_\-t {\bf VSynonymContainer::MinLen} = 5\hspace{0.3cm}{\tt  [static]}}\label{classVSynonymContainer_2ede03846c4411ca0e06c7766c94d9b6}
-
-
+\subsubsection[{MinLen}]{\setlength{\rightskip}{0pt plus 5cm}const size\_\-t {\bf VSynonymContainer::MinLen} = 5\hspace{0.3cm}{\ttfamily  [static]}}\label{classVSynonymContainer_a2ede03846c4411ca0e06c7766c94d9b6}
 The Mininum Length starts to record for the length map 
 
 Referenced by loadSynonyms().
 
-The documentation for this class was generated from the following file:\begin{CompactItemize}
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
 \item 
-/home/vernkin/projects/chinese-ma-chen/source/vsynonym/{\bf VSynonym.h}\end{CompactItemize}
+/home/vernkin/projects/chinese-\/ma-\/chen/source/vsynonym/{\bf VSynonym.h}\end{DoxyCompactItemize}

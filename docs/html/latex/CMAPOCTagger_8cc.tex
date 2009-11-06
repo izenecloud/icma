@@ -1,46 +1,48 @@
-\section{/home/vernkin/projects/chinese-ma-chen/source/src/CMAPOCTagger.cc File Reference}
-\label{CMAPOCTagger_8cc}\index{/home/vernkin/projects/chinese-ma-chen/source/src/CMAPOCTagger.cc@{/home/vernkin/projects/chinese-ma-chen/source/src/CMAPOCTagger.cc}}
+\section{/home/vernkin/projects/chinese-\/ma-\/chen/source/src/CMAPOCTagger.cc File Reference}
+\label{CMAPOCTagger_8cc}\index{/home/vernkin/projects/chinese-\/ma-\/chen/source/src/CMAPOCTagger.cc@{/home/vernkin/projects/chinese-\/ma-\/chen/source/src/CMAPOCTagger.cc}}
+
+
 for the POC tagger using MaxEnt Model.  
-
-
-{\tt \#include $<$vector$>$}\par
-{\tt \#include \char`\"{}CMAPOCTagger.h\char`\"{}}\par
-{\tt \#include \char`\"{}CPPStringUtils.h\char`\"{}}\par
-{\tt \#include \char`\"{}strutil.h\char`\"{}}\par
-{\tt \#include \char`\"{}cma\_\-wtype.h\char`\"{}}\par
+{\ttfamily \#include $<$vector$>$}\par
+{\ttfamily \#include \char`\"{}CMAPOCTagger.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}CPPStringUtils.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}strutil.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}cma\_\-wtype.h\char`\"{}}\par
 \subsection*{Classes}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 class {\bf cma::pocinner::StrBasedVTrie}
-\begin{CompactList}\small\item\em The utility class to search the string one by one. \item\end{CompactList}\end{CompactItemize}
+\begin{DoxyCompactList}\small\item\em The utility class to search the string one by one. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Defines}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
-\#define \textbf{POC\_\-TAG\_\-INIT}~0\label{CMAPOCTagger_8cc_daae9f7e842ab812942e2c8884c5e9fa}
+\#define {\bfseries POC\_\-TAG\_\-INIT}~0\label{CMAPOCTagger_8cc_adaae9f7e842ab812942e2c8884c5e9fa}
 
 \item 
-\#define \textbf{POC\_\-TAG\_\-B}~1\label{CMAPOCTagger_8cc_357022548e14d085e3c93f3906bcccd9}
+\#define {\bfseries POC\_\-TAG\_\-B}~1\label{CMAPOCTagger_8cc_a357022548e14d085e3c93f3906bcccd9}
 
 \item 
-\#define \textbf{POC\_\-TAG\_\-E}~2\label{CMAPOCTagger_8cc_9bdb1f3b570b2741da85e468e4d9f6c9}
+\#define {\bfseries POC\_\-TAG\_\-E}~2\label{CMAPOCTagger_8cc_a9bdb1f3b570b2741da85e468e4d9f6c9}
 
 \item 
-\#define \textbf{POC\_\-TAG\_\-B\_\-NAME}~\char`\"{}B\char`\"{}\label{CMAPOCTagger_8cc_d335e18aeb001bbc74ae9991723398d9}
+\#define {\bfseries POC\_\-TAG\_\-B\_\-NAME}~\char`\"{}B\char`\"{}\label{CMAPOCTagger_8cc_ad335e18aeb001bbc74ae9991723398d9}
 
 \item 
-\#define \textbf{POC\_\-TAG\_\-E\_\-NAME}~\char`\"{}E\char`\"{}\label{CMAPOCTagger_8cc_a88cc556dbff3f12beefe55268610c91}
+\#define {\bfseries POC\_\-TAG\_\-E\_\-NAME}~\char`\"{}E\char`\"{}\label{CMAPOCTagger_8cc_aa88cc556dbff3f12beefe55268610c91}
 
 \item 
-\#define \textbf{DEFAULT\_\-POC}~POC\_\-TAG\_\-B\label{CMAPOCTagger_8cc_491f74f500e8d8fba02698dc4035719c}
+\#define {\bfseries DEFAULT\_\-POC}~POC\_\-TAG\_\-B\label{CMAPOCTagger_8cc_a491f74f500e8d8fba02698dc4035719c}
 
 \item 
-\#define \textbf{CONTEXT\_\-CHAR\_\-LEN}~4\label{CMAPOCTagger_8cc_0049a1c5aec42be9da7a350ef77884b8}
+\#define {\bfseries CONTEXT\_\-CHAR\_\-LEN}~4\label{CMAPOCTagger_8cc_a0049a1c5aec42be9da7a350ef77884b8}
 
 \item 
-\#define \textbf{BACK\_\-FIX\_\-END\_\-TAG}
-\end{CompactItemize}
+\#define {\bfseries BACK\_\-FIX\_\-END\_\-TAG}
+\end{DoxyCompactItemize}
 \subsection*{Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf cma::pocinner::get\_\-poc\_\-zh\_\-context\_\-seg} (vector$<$ string $>$ \&words, CharType $\ast$types, size\_\-t index, vector$<$ string $>$ \&context, CMA\_\-CType $\ast$ctype)
 \item 
 void {\bf cma::pocinner::get\_\-poc\_\-zh\_\-context\_\-1} (vector$<$ string $>$ \&words, CharType $\ast$types, size\_\-t index, vector$<$ string $>$ \&context, CMA\_\-CType $\ast$ctype)
 \item 
@@ -48,38 +50,35 @@ void {\bf cma::pocinner::insertCandidate} (uint8\_\-t pocCode, int index, double
 \item 
 void {\bf cma::pocinner::combinePOCToWord} (vector$<$ string $>$ \&words, size\_\-t n, uint8\_\-t $\ast$tags, vector$<$ string $>$ \&seg)
 \item 
-void {\bf cma::get\_\-poc\_\-zh\_\-context} (vector$<$ string $>$ \&words, vector$<$ string $>$ \&tags, size\_\-t i, bool rareWord, vector$<$ string $>$ \&context, CMA\_\-CType $\ast$ctype)
+void {\bf cma::get\_\-poc\_\-zh\_\-context} (vector$<$ string $>$ \&words, vector$<$ string $>$ \&tags, size\_\-t index, bool rareWord, vector$<$ string $>$ \&context, CMA\_\-CType $\ast$ctype)
 \item 
 void {\bf cma::poc\_\-train} (const char $\ast$file, const string \&modelPath, Knowledge::EncodeType encType, string pocDelimiter, bool isLargeCorpus, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian)
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Variables}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
-const string \textbf{cma::POC\_\-BOUNDARY} = \char`\"{}BoUnD\char`\"{}\label{namespacecma_6a315ae82b1eb14e31c1c281af3b041c}
+const string {\bfseries cma::POC\_\-BOUNDARY} = \char`\"{}BoUnD\char`\"{}\label{namespacecma_a6a315ae82b1eb14e31c1c281af3b041c}
 
 \item 
-bool \textbf{cma::POC\_\-INIT\_\-FLAG} = false\label{namespacecma_835f0d6dd48a8037cf3d4a5a415a7323}
+bool {\bfseries cma::POC\_\-INIT\_\-FLAG} = false\label{namespacecma_a835f0d6dd48a8037cf3d4a5a415a7323}
 
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-for the POC tagger using MaxEnt Model. 
-
-\begin{Desc}
-\item[Author:]vernkin\end{Desc}
+for the POC tagger using MaxEnt Model. \begin{DoxyAuthor}{Author}
+vernkin
+\end{DoxyAuthor}
 Created on March 24, 2009, 8:52 PM 
 
 \subsection{Define Documentation}
 \index{CMAPOCTagger.cc@{CMAPOCTagger.cc}!BACK\_\-FIX\_\-END\_\-TAG@{BACK\_\-FIX\_\-END\_\-TAG}}
 \index{BACK\_\-FIX\_\-END\_\-TAG@{BACK\_\-FIX\_\-END\_\-TAG}!CMAPOCTagger.cc@{CMAPOCTagger.cc}}
-\subsubsection[{BACK\_\-FIX\_\-END\_\-TAG}]{\setlength{\rightskip}{0pt plus 5cm}\#define BACK\_\-FIX\_\-END\_\-TAG}\label{CMAPOCTagger_8cc_de4a8a577cf7ba922fe9fd16af219b2f}
-
-
-\textbf{Value:}
-
-\begin{Code}\begin{verbatim}if(!strTrie.exists()){ \
-                for(size_t i=index-1; i>lastExistIndex && types[i] == CHAR_TYPE_OTHER; --i) \
+\subsubsection[{BACK\_\-FIX\_\-END\_\-TAG}]{\setlength{\rightskip}{0pt plus 5cm}\#define BACK\_\-FIX\_\-END\_\-TAG}\label{CMAPOCTagger_8cc_ade4a8a577cf7ba922fe9fd16af219b2f}
+{\bfseries Value:}
+\begin{DoxyCode}
+if(!strTrie.exists()){ \
+                for(size_t i=index-1; i>lastExistIndex && types[i] == CHAR_TYPE_O
+      THER; --i) \
                         pocRet[i] = POC_TAG_B;}
-\end{verbatim}
-\end{Code}
+\end{DoxyCode}

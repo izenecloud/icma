@@ -1,38 +1,37 @@
-\section{/home/vernkin/projects/chinese-ma-chen/source/include/CMAPOSTagger.h File Reference}
-\label{CMAPOSTagger_8h}\index{/home/vernkin/projects/chinese-ma-chen/source/include/CMAPOSTagger.h@{/home/vernkin/projects/chinese-ma-chen/source/include/CMAPOSTagger.h}}
+\section{/home/vernkin/projects/chinese-\/ma-\/chen/source/include/CMAPOSTagger.h File Reference}
+\label{CMAPOSTagger_8h}\index{/home/vernkin/projects/chinese-\/ma-\/chen/source/include/CMAPOSTagger.h@{/home/vernkin/projects/chinese-\/ma-\/chen/source/include/CMAPOSTagger.h}}
+
+
 for the POS tagger using MaxEnt Model.  
-
-
-{\tt \#include \char`\"{}CMABasicTrainer.h\char`\"{}}\par
-{\tt \#include \char`\"{}VTrie.h\char`\"{}}\par
-{\tt \#include \char`\"{}strutil.h\char`\"{}}\par
-{\tt \#include \char`\"{}CPPStringUtils.h\char`\"{}}\par
-{\tt \#include \char`\"{}cma\_\-ctype.h\char`\"{}}\par
-{\tt \#include \char`\"{}cma\_\-wtype.h\char`\"{}}\par
-{\tt \#include $<$algorithm$>$}\par
-{\tt \#include $<$math.h$>$}\par
-{\tt \#include $<$vector$>$}\par
-{\tt \#include $<$set$>$}\par
-{\tt \#include $<$string$>$}\par
+{\ttfamily \#include \char`\"{}CMABasicTrainer.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}VTrie.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}strutil.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}CPPStringUtils.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}cma\_\-ctype.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}cma\_\-wtype.h\char`\"{}}\par
+{\ttfamily \#include $<$algorithm$>$}\par
+{\ttfamily \#include $<$math.h$>$}\par
+{\ttfamily \#include $<$vector$>$}\par
+{\ttfamily \#include $<$set$>$}\par
+{\ttfamily \#include $<$string$>$}\par
 \subsection*{Classes}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 struct {\bf cma::POSTagUnit}
-\begin{CompactList}\small\item\em to hold the objects in the N-best algorithm \item\end{CompactList}\item 
+\begin{DoxyCompactList}\small\item\em to hold the objects in the N-\/best algorithm \item\end{DoxyCompactList}\item 
 class {\bf cma::POSTagger}
-\begin{CompactList}\small\item\em Tagging the POS Information Tagging the POS using the maxent model. \item\end{CompactList}\end{CompactItemize}
+\begin{DoxyCompactList}\small\item\em Tagging the POS Information Tagging the POS using the maxent model. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 void {\bf cma::get\_\-pos\_\-zh\_\-scontext} (vector$<$ string $>$ \&words, vector$<$ string $>$ \&tags, size\_\-t i, bool rareWord, vector$<$ string $>$ \&context, CMA\_\-CType $\ast$ctype)
 \item 
 void {\bf cma::pos\_\-train} (const char $\ast$file, const string \&modelPath, Knowledge::EncodeType encType, string posDelimiter, bool isLargeCorpus, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian)
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-for the POS tagger using MaxEnt Model. 
-
-\begin{Desc}
-\item[Author:]vernkin\end{Desc}
+for the POS tagger using MaxEnt Model. \begin{DoxyAuthor}{Author}
+vernkin
+\end{DoxyAuthor}
 Created on March 20, 2009, 10:46 AM 

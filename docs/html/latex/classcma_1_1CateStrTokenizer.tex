@@ -1,12 +1,12 @@
 \section{cma::CateStrTokenizer Class Reference}
 \label{classcma_1_1CateStrTokenizer}\index{cma::CateStrTokenizer@{cma::CateStrTokenizer}}
+
+
 Category String Tokenizier.  
 
 
-{\tt \#include $<$CateStrTokenizer.h$>$}
-
-\subsection*{Public Member Functions}
-\begin{CompactItemize}
+{\ttfamily \#include $<$CateStrTokenizer.h$>$}\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
 \item 
 {\bf CateStrTokenizer} ({\bf CTypeTokenizer} $\ast$pCToken)
 \item 
@@ -19,24 +19,21 @@ vector$<$ string $>$ \& {\bf getWordSeq} ()
 CharType {\bf getType} ()
 \item 
 string \& {\bf getSpecialStr} ()
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Category String Tokenizier. 
+Category String Tokenizier. Segment the string based on the char types, line letters, digits and so on
 
-Segment the string based on the char types, line letters, digits and so on
-
-\begin{Desc}
-\item[Author:]vernkin \end{Desc}
+\begin{DoxyAuthor}{Author}
+vernkin 
+\end{DoxyAuthor}
 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{cma::CateStrTokenizer@{cma::CateStrTokenizer}!CateStrTokenizer@{CateStrTokenizer}}
 \index{CateStrTokenizer@{CateStrTokenizer}!cma::CateStrTokenizer@{cma::CateStrTokenizer}}
-\subsubsection[{CateStrTokenizer}]{\setlength{\rightskip}{0pt plus 5cm}cma::CateStrTokenizer::CateStrTokenizer ({\bf CTypeTokenizer} $\ast$ {\em pCToken})}\label{classcma_1_1CateStrTokenizer_95bad00876d4080f1c75c4db69319144}
-
-
+\subsubsection[{CateStrTokenizer}]{\setlength{\rightskip}{0pt plus 5cm}cma::CateStrTokenizer::CateStrTokenizer ({\bf CTypeTokenizer} $\ast$ {\em pCToken})}\label{classcma_1_1CateStrTokenizer_a95bad00876d4080f1c75c4db69319144}
 Create an instance 
 
 References cma::CTypeTokenizer::getCType().
@@ -44,46 +41,40 @@ References cma::CTypeTokenizer::getCType().
 \subsection{Member Function Documentation}
 \index{cma::CateStrTokenizer@{cma::CateStrTokenizer}!getSpecialStr@{getSpecialStr}}
 \index{getSpecialStr@{getSpecialStr}!cma::CateStrTokenizer@{cma::CateStrTokenizer}}
-\subsubsection[{getSpecialStr}]{\setlength{\rightskip}{0pt plus 5cm}string \& cma::CateStrTokenizer::getSpecialStr ()}\label{classcma_1_1CateStrTokenizer_02cbc7d28f30a5055ec200861a74869f}
-
-
+\subsubsection[{getSpecialStr}]{\setlength{\rightskip}{0pt plus 5cm}string \& cma::CateStrTokenizer::getSpecialStr ()}\label{classcma_1_1CateStrTokenizer_a02cbc7d28f30a5055ec200861a74869f}
 Get the special string if the current token is not with type CHAR\_\-TYPE\_\-OTHER \index{cma::CateStrTokenizer@{cma::CateStrTokenizer}!getType@{getType}}
 \index{getType@{getType}!cma::CateStrTokenizer@{cma::CateStrTokenizer}}
-\subsubsection[{getType}]{\setlength{\rightskip}{0pt plus 5cm}CharType cma::CateStrTokenizer::getType ()}\label{classcma_1_1CateStrTokenizer_eabc6af1b32fcd64a38b21d82f547b0b}
-
-
+\subsubsection[{getType}]{\setlength{\rightskip}{0pt plus 5cm}CharType cma::CateStrTokenizer::getType ()}\label{classcma_1_1CateStrTokenizer_aeabc6af1b32fcd64a38b21d82f547b0b}
 Get the type of the current token
 
-\begin{Desc}
-\item[Returns:]the type of the current token \end{Desc}
+\begin{DoxyReturn}{Returns}
+the type of the current token 
+\end{DoxyReturn}
 \index{cma::CateStrTokenizer@{cma::CateStrTokenizer}!getWordSeq@{getWordSeq}}
 \index{getWordSeq@{getWordSeq}!cma::CateStrTokenizer@{cma::CateStrTokenizer}}
-\subsubsection[{getWordSeq}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ string $>$ \& cma::CateStrTokenizer::getWordSeq ()}\label{classcma_1_1CateStrTokenizer_19d92e22cc622a591473651dbf5c4a8f}
-
-
+\subsubsection[{getWordSeq}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ string $>$ \& cma::CateStrTokenizer::getWordSeq ()}\label{classcma_1_1CateStrTokenizer_a19d92e22cc622a591473651dbf5c4a8f}
 Get the words vector
 
-\begin{Desc}
-\item[Returns:]the words vector \end{Desc}
+\begin{DoxyReturn}{Returns}
+the words vector 
+\end{DoxyReturn}
 \index{cma::CateStrTokenizer@{cma::CateStrTokenizer}!isWordSeq@{isWordSeq}}
 \index{isWordSeq@{isWordSeq}!cma::CateStrTokenizer@{cma::CateStrTokenizer}}
-\subsubsection[{isWordSeq}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CateStrTokenizer::isWordSeq ()}\label{classcma_1_1CateStrTokenizer_148ebad2990d9dceaab07899ab7f21c8}
-
-
-Whether is word sequence, the another possibility is sepecial string,. Like letters, digits and so on \begin{Desc}
-\item[Returns:]if true invoke \doxyref{getWordSeq()}{p.}{classcma_1_1CateStrTokenizer_19d92e22cc622a591473651dbf5c4a8f}, else invoke \end{Desc}
+\subsubsection[{isWordSeq}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CateStrTokenizer::isWordSeq ()}\label{classcma_1_1CateStrTokenizer_a148ebad2990d9dceaab07899ab7f21c8}
+Whether is word sequence, the another possibility is sepecial string,. Like letters, digits and so on \begin{DoxyReturn}{Returns}
+if true invoke \doxyref{getWordSeq()}{p.}{classcma_1_1CateStrTokenizer_a19d92e22cc622a591473651dbf5c4a8f}, else invoke 
+\end{DoxyReturn}
 \index{cma::CateStrTokenizer@{cma::CateStrTokenizer}!next@{next}}
 \index{next@{next}!cma::CateStrTokenizer@{cma::CateStrTokenizer}}
-\subsubsection[{next}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CateStrTokenizer::next ()}\label{classcma_1_1CateStrTokenizer_9aa4d3e7ff4f352e6927350ca2442caf}
-
-
-Move to next token \begin{Desc}
-\item[Returns:]if false their is not any more token \end{Desc}
+\subsubsection[{next}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CateStrTokenizer::next ()}\label{classcma_1_1CateStrTokenizer_a9aa4d3e7ff4f352e6927350ca2442caf}
+Move to next token \begin{DoxyReturn}{Returns}
+if false their is not any more token 
+\end{DoxyReturn}
 
 
 References cma::CMA\_\-CType::getCharType(), and cma::CTypeTokenizer::next().
 
-The documentation for this class was generated from the following files:\begin{CompactItemize}
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-/home/vernkin/projects/chinese-ma-chen/source/include/{\bf CateStrTokenizer.h}\item 
-/home/vernkin/projects/chinese-ma-chen/source/src/{\bf CateStrTokenizer.cc}\end{CompactItemize}
+/home/vernkin/projects/chinese-\/ma-\/chen/source/include/{\bf CateStrTokenizer.h}\item 
+/home/vernkin/projects/chinese-\/ma-\/chen/source/src/{\bf CateStrTokenizer.cc}\end{DoxyCompactItemize}

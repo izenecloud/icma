@@ -1,25 +1,25 @@
 \section{cma::Condition Class Reference}
 \label{classcma_1_1Condition}\index{cma::Condition@{cma::Condition}}
+
+
 This class check the previous/next characters and their types to check whether match the \doxyref{Condition}{p.}{classcma_1_1Condition}.  
 
 
-{\tt \#include $<$cma\_\-ctype\_\-core.h$>$}
-
-\subsection*{Public Member Functions}
-\begin{CompactItemize}
+{\ttfamily \#include $<$cma\_\-ctype\_\-core.h$>$}\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
 \item 
-void \textbf{init} (CharType type, vector$<$ CharType $>$ \&preTypes, vector$<$ CharType $>$ \&noPreTypes, vector$<$ CharType $>$ \&NextTypes, vector$<$ CharType $>$ \&noNextTypes, set$<$ CharValue $>$ \&nextChars, bool isEnd=false)\label{classcma_1_1Condition_53d9b92491bea84698643da6660989c3}
+void {\bfseries init} (CharType type, vector$<$ CharType $>$ \&preTypes, vector$<$ CharType $>$ \&noPreTypes, vector$<$ CharType $>$ \&NextTypes, vector$<$ CharType $>$ \&noNextTypes, set$<$ CharValue $>$ \&nextChars, bool isEnd=false)\label{classcma_1_1Condition_a53d9b92491bea84698643da6660989c3}
 
 \item 
-CharType \textbf{getType} () const \label{classcma_1_1Condition_7f489297cc51805aab8964b704b21755}
+CharType {\bfseries getType} () const \label{classcma_1_1Condition_a7f489297cc51805aab8964b704b21755}
 
 \item 
 bool {\bf match} (CharType preType, CharValue nextValue, CharType nextType) const 
 \item 
 bool {\bf equals} ({\bf Condition} \&other)
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 CharType {\bf type\_\-}
 \item 
@@ -31,18 +31,18 @@ bool {\bf isSetNextTypes\_\-}
 \item 
 bool {\bf noNextTypes\_\-} [CHAR\_\-TYPE\_\-NUM]
 \item 
-set$<$ CharValue $>$ \textbf{nextChars\_\-}\label{classcma_1_1Condition_66275f9bf012131ce0f3df8538bb6705}
+set$<$ CharValue $>$ {\bfseries nextChars\_\-}\label{classcma_1_1Condition_a66275f9bf012131ce0f3df8538bb6705}
 
 \item 
-bool \textbf{isEnd\_\-}\label{classcma_1_1Condition_125f38278e0ed6a390e4f1615972429c}
+bool {\bfseries isEnd\_\-}\label{classcma_1_1Condition_a125f38278e0ed6a390e4f1615972429c}
 
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Friends}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
-ostream \& \textbf{operator$<$$<$} (ostream \&sout, const {\bf Condition} \&cond)\label{classcma_1_1Condition_b5413f760f3427db55afc9700f5276e9}
+ostream \& {\bfseries operator$<$$<$} (ostream \&sout, const {\bf Condition} \&cond)\label{classcma_1_1Condition_ab5413f760f3427db55afc9700f5276e9}
 
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -51,18 +51,14 @@ This class check the previous/next characters and their types to check whether m
 \subsection{Member Function Documentation}
 \index{cma::Condition@{cma::Condition}!equals@{equals}}
 \index{equals@{equals}!cma::Condition@{cma::Condition}}
-\subsubsection[{equals}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::Condition::equals ({\bf Condition} \& {\em other})}\label{classcma_1_1Condition_99cc3af31db1e019223995a6d9504b4f}
-
-
+\subsubsection[{equals}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::Condition::equals ({\bf Condition} \& {\em other})}\label{classcma_1_1Condition_a99cc3af31db1e019223995a6d9504b4f}
 Whether the content are totally the same 
 
-References isSetNextTypes\_\-, isSetPreTypes\_\-, nextChars\_\-, noNextTypes\_\-, noPreTypes\_\-, and type\_\-.
+References isSetNextTypes\_\-, isSetPreTypes\_\-, noNextTypes\_\-, noPreTypes\_\-, and type\_\-.
 
 Referenced by cma::CharConditions::addCondition().\index{cma::Condition@{cma::Condition}!match@{match}}
 \index{match@{match}!cma::Condition@{cma::Condition}}
-\subsubsection[{match}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::Condition::match (CharType {\em preType}, \/  CharValue {\em nextValue}, \/  CharType {\em nextType}) const}\label{classcma_1_1Condition_813585422e05b5b8314eeaedd98f9c0a}
-
-
+\subsubsection[{match}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::Condition::match (CharType {\em preType}, \/  CharValue {\em nextValue}, \/  CharType {\em nextType}) const}\label{classcma_1_1Condition_a813585422e05b5b8314eeaedd98f9c0a}
 If next character doesn't exists, nextValue is 0 and nextType is CHAR\_\-TYPE\_\-OTHER 
 
 References isSetNextTypes\_\-, isSetPreTypes\_\-, noNextTypes\_\-, and noPreTypes\_\-.
@@ -72,42 +68,32 @@ Referenced by cma::CharConditions::match().
 \subsection{Member Data Documentation}
 \index{cma::Condition@{cma::Condition}!isSetNextTypes\_\-@{isSetNextTypes\_\-}}
 \index{isSetNextTypes\_\-@{isSetNextTypes\_\-}!cma::Condition@{cma::Condition}}
-\subsubsection[{isSetNextTypes\_\-}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf cma::Condition::isSetNextTypes\_\-}}\label{classcma_1_1Condition_bf081f9b869059f75dae92c0abc893dd}
-
-
+\subsubsection[{isSetNextTypes\_\-}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf cma::Condition::isSetNextTypes\_\-}}\label{classcma_1_1Condition_abf081f9b869059f75dae92c0abc893dd}
 Whether set the next types 
 
 Referenced by equals(), and match().\index{cma::Condition@{cma::Condition}!isSetPreTypes\_\-@{isSetPreTypes\_\-}}
 \index{isSetPreTypes\_\-@{isSetPreTypes\_\-}!cma::Condition@{cma::Condition}}
-\subsubsection[{isSetPreTypes\_\-}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf cma::Condition::isSetPreTypes\_\-}}\label{classcma_1_1Condition_8aaa6eec80131b012deb1fe65e4ad101}
-
-
+\subsubsection[{isSetPreTypes\_\-}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf cma::Condition::isSetPreTypes\_\-}}\label{classcma_1_1Condition_a8aaa6eec80131b012deb1fe65e4ad101}
 Whether set the previous types 
 
 Referenced by equals(), and match().\index{cma::Condition@{cma::Condition}!noNextTypes\_\-@{noNextTypes\_\-}}
 \index{noNextTypes\_\-@{noNextTypes\_\-}!cma::Condition@{cma::Condition}}
-\subsubsection[{noNextTypes\_\-}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf cma::Condition::noNextTypes\_\-}[CHAR\_\-TYPE\_\-NUM]}\label{classcma_1_1Condition_6e6334e4e4e04dbe3af7e767bc9d9bef}
-
-
+\subsubsection[{noNextTypes\_\-}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf cma::Condition::noNextTypes\_\-}[CHAR\_\-TYPE\_\-NUM]}\label{classcma_1_1Condition_a6e6334e4e4e04dbe3af7e767bc9d9bef}
 True indicates forbid and False indicates allow 
 
 Referenced by equals(), and match().\index{cma::Condition@{cma::Condition}!noPreTypes\_\-@{noPreTypes\_\-}}
 \index{noPreTypes\_\-@{noPreTypes\_\-}!cma::Condition@{cma::Condition}}
-\subsubsection[{noPreTypes\_\-}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf cma::Condition::noPreTypes\_\-}[CHAR\_\-TYPE\_\-NUM]}\label{classcma_1_1Condition_24ca3d506427c55f6b0d1bc535751ac3}
-
-
+\subsubsection[{noPreTypes\_\-}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf cma::Condition::noPreTypes\_\-}[CHAR\_\-TYPE\_\-NUM]}\label{classcma_1_1Condition_a24ca3d506427c55f6b0d1bc535751ac3}
 True indicates forbid and False indicates allow 
 
 Referenced by equals(), and match().\index{cma::Condition@{cma::Condition}!type\_\-@{type\_\-}}
 \index{type\_\-@{type\_\-}!cma::Condition@{cma::Condition}}
-\subsubsection[{type\_\-}]{\setlength{\rightskip}{0pt plus 5cm}CharType {\bf cma::Condition::type\_\-}}\label{classcma_1_1Condition_a508e264139f69c51fc8b9a8941e6831}
-
-
+\subsubsection[{type\_\-}]{\setlength{\rightskip}{0pt plus 5cm}CharType {\bf cma::Condition::type\_\-}}\label{classcma_1_1Condition_aa508e264139f69c51fc8b9a8941e6831}
 If match the condition, the type of the target character 
 
 Referenced by equals(), and cma::CharConditions::match().
 
-The documentation for this class was generated from the following files:\begin{CompactItemize}
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-/home/vernkin/projects/chinese-ma-chen/source/include/{\bf cma\_\-ctype\_\-core.h}\item 
-/home/vernkin/projects/chinese-ma-chen/source/src/cma\_\-ctype\_\-core.cc\end{CompactItemize}
+/home/vernkin/projects/chinese-\/ma-\/chen/source/include/{\bf cma\_\-ctype\_\-core.h}\item 
+/home/vernkin/projects/chinese-\/ma-\/chen/source/src/cma\_\-ctype\_\-core.cc\end{DoxyCompactItemize}

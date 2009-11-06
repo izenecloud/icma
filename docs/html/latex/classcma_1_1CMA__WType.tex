@@ -1,30 +1,31 @@
 \section{cma::CMA\_\-WType Class Reference}
 \label{classcma_1_1CMA__WType}\index{cma::CMA\_\-WType@{cma::CMA\_\-WType}}
+
+
 \doxyref{CMA\_\-WType}{p.}{classcma_1_1CMA__WType} gives the word type information.  
 
 
-{\tt \#include $<$cma\_\-wtype.h$>$}
-
-\subsection*{Public Types}
-\begin{CompactItemize}
+{\ttfamily \#include $<$cma\_\-wtype.h$>$}\subsection*{Public Types}
+\begin{DoxyCompactItemize}
 \item 
 enum {\bf WordType} \{ \par
 {\bf WORD\_\-TYPE\_\-NUMBER} =  1, 
 {\bf WORD\_\-TYPE\_\-DATE}, 
 {\bf WORD\_\-TYPE\_\-LETTER}, 
-\textbf{WORD\_\-TYPE\_\-PUNC}, 
+{\bfseries WORD\_\-TYPE\_\-PUNC}, 
 \par
 {\bf WORD\_\-TYPE\_\-OTHER}
  \}
+\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 {\bf CMA\_\-WType} (const {\bf CMA\_\-CType} $\ast$ctype)
 \item 
 {\bf WordType} {\bf getWordType} (const char $\ast$word)
 \item 
 {\bf WordType} {\bf getWordType} (CharType $\ast$types, size\_\-t begin, size\_\-t size)
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -33,20 +34,18 @@ enum {\bf WordType} \{ \par
 \subsection{Member Enumeration Documentation}
 \index{cma::CMA\_\-WType@{cma::CMA\_\-WType}!WordType@{WordType}}
 \index{WordType@{WordType}!cma::CMA_WType@{cma::CMA\_\-WType}}
-\subsubsection[{WordType}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf cma::CMA\_\-WType::WordType}}\label{classcma_1_1CMA__WType_a59e535f8492ec7becc8531e8ce064d7}
-
-
+\subsubsection[{WordType}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf cma::CMA\_\-WType::WordType}}\label{classcma_1_1CMA__WType_aa59e535f8492ec7becc8531e8ce064d7}
 Word type. \begin{Desc}
 \item[Enumerator: ]\par
 \begin{description}
 \index{WORD\_\-TYPE\_\-NUMBER@{WORD\_\-TYPE\_\-NUMBER}!cma::CMA\_\-WType@{cma::CMA\_\-WType}}\index{cma::CMA\_\-WType@{cma::CMA\_\-WType}!WORD\_\-TYPE\_\-NUMBER@{WORD\_\-TYPE\_\-NUMBER}}\item[{\em 
-WORD\_\-TYPE\_\-NUMBER\label{classcma_1_1CMA__WType_a59e535f8492ec7becc8531e8ce064d7717a15f2f40aad5dcda5f4efdd636481}
+WORD\_\-TYPE\_\-NUMBER\label{classcma_1_1CMA__WType_aa59e535f8492ec7becc8531e8ce064d7a717a15f2f40aad5dcda5f4efdd636481}
 }]number word, example: 632, 三百八十 \index{WORD\_\-TYPE\_\-DATE@{WORD\_\-TYPE\_\-DATE}!cma::CMA\_\-WType@{cma::CMA\_\-WType}}\index{cma::CMA\_\-WType@{cma::CMA\_\-WType}!WORD\_\-TYPE\_\-DATE@{WORD\_\-TYPE\_\-DATE}}\item[{\em 
-WORD\_\-TYPE\_\-DATE\label{classcma_1_1CMA__WType_a59e535f8492ec7becc8531e8ce064d774c95d180d0b3356d8dcd36024bb5e8f}
+WORD\_\-TYPE\_\-DATE\label{classcma_1_1CMA__WType_aa59e535f8492ec7becc8531e8ce064d7a74c95d180d0b3356d8dcd36024bb5e8f}
 }]date word, example: 2009年, 二零零九年, 5月, 6日 \index{WORD\_\-TYPE\_\-LETTER@{WORD\_\-TYPE\_\-LETTER}!cma::CMA\_\-WType@{cma::CMA\_\-WType}}\index{cma::CMA\_\-WType@{cma::CMA\_\-WType}!WORD\_\-TYPE\_\-LETTER@{WORD\_\-TYPE\_\-LETTER}}\item[{\em 
-WORD\_\-TYPE\_\-LETTER\label{classcma_1_1CMA__WType_a59e535f8492ec7becc8531e8ce064d7854fd29fff075753763980e891244e95}
+WORD\_\-TYPE\_\-LETTER\label{classcma_1_1CMA__WType_aa59e535f8492ec7becc8531e8ce064d7a854fd29fff075753763980e891244e95}
 }]letter word, example: Pentium4 \index{WORD\_\-TYPE\_\-OTHER@{WORD\_\-TYPE\_\-OTHER}!cma::CMA\_\-WType@{cma::CMA\_\-WType}}\index{cma::CMA\_\-WType@{cma::CMA\_\-WType}!WORD\_\-TYPE\_\-OTHER@{WORD\_\-TYPE\_\-OTHER}}\item[{\em 
-WORD\_\-TYPE\_\-OTHER\label{classcma_1_1CMA__WType_a59e535f8492ec7becc8531e8ce064d7499bbbeb091637af51dd17aae304b1b7}
+WORD\_\-TYPE\_\-OTHER\label{classcma_1_1CMA__WType_aa59e535f8492ec7becc8531e8ce064d7a499bbbeb091637af51dd17aae304b1b7}
 }]other word \end{description}
 \end{Desc}
 
@@ -55,48 +54,38 @@ WORD\_\-TYPE\_\-OTHER\label{classcma_1_1CMA__WType_a59e535f8492ec7becc8531e8ce06
 \subsection{Constructor \& Destructor Documentation}
 \index{cma::CMA\_\-WType@{cma::CMA\_\-WType}!CMA\_\-WType@{CMA\_\-WType}}
 \index{CMA\_\-WType@{CMA\_\-WType}!cma::CMA_WType@{cma::CMA\_\-WType}}
-\subsubsection[{CMA\_\-WType}]{\setlength{\rightskip}{0pt plus 5cm}cma::CMA\_\-WType::CMA\_\-WType (const {\bf CMA\_\-CType} $\ast$ {\em ctype})}\label{classcma_1_1CMA__WType_829e678628e4f4c1ee7ede857e7f890e}
-
-
-Constructor. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em ctype}]reference to the specific character encoding \end{description}
-\end{Desc}
+\subsubsection[{CMA\_\-WType}]{\setlength{\rightskip}{0pt plus 5cm}cma::CMA\_\-WType::CMA\_\-WType (const {\bf CMA\_\-CType} $\ast$ {\em ctype})}\label{classcma_1_1CMA__WType_a829e678628e4f4c1ee7ede857e7f890e}
+Constructor. 
+\begin{DoxyParams}{Parameters}
+\item[{\em ctype}]reference to the specific character encoding \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
 \index{cma::CMA\_\-WType@{cma::CMA\_\-WType}!getWordType@{getWordType}}
 \index{getWordType@{getWordType}!cma::CMA_WType@{cma::CMA\_\-WType}}
-\subsubsection[{getWordType}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-WType::WordType} cma::CMA\_\-WType::getWordType (CharType $\ast$ {\em types}, \/  size\_\-t {\em begin}, \/  size\_\-t {\em size})}\label{classcma_1_1CMA__WType_1dc5edf5c48a5e5394396cd0aef0b29b}
-
-
-Get the word type. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em types}]types that are already knows \item[{\em begin}]index in types \item[{\em the}]size of the types \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]the word type. \end{Desc}
+\subsubsection[{getWordType}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-WType::WordType} cma::CMA\_\-WType::getWordType (CharType $\ast$ {\em types}, \/  size\_\-t {\em begin}, \/  size\_\-t {\em size})}\label{classcma_1_1CMA__WType_a1dc5edf5c48a5e5394396cd0aef0b29b}
+Get the word type. 
+\begin{DoxyParams}{Parameters}
+\item[{\em types}]types that are already knows \item[{\em begin}]index in types \item[{\em the}]size of the types \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the word type. 
+\end{DoxyReturn}
 
 
 References WORD\_\-TYPE\_\-DATE, WORD\_\-TYPE\_\-LETTER, WORD\_\-TYPE\_\-NUMBER, and WORD\_\-TYPE\_\-OTHER.\index{cma::CMA\_\-WType@{cma::CMA\_\-WType}!getWordType@{getWordType}}
 \index{getWordType@{getWordType}!cma::CMA_WType@{cma::CMA\_\-WType}}
-\subsubsection[{getWordType}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-WType::WordType} cma::CMA\_\-WType::getWordType (const char $\ast$ {\em word})}\label{classcma_1_1CMA__WType_296589f1bc4f6288797003315d4bfc49}
-
-
-Get the word type. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em word}]pointer to the word string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]the word type. \end{Desc}
+\subsubsection[{getWordType}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-WType::WordType} cma::CMA\_\-WType::getWordType (const char $\ast$ {\em word})}\label{classcma_1_1CMA__WType_a296589f1bc4f6288797003315d4bfc49}
+Get the word type. 
+\begin{DoxyParams}{Parameters}
+\item[{\em word}]pointer to the word string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the word type. 
+\end{DoxyReturn}
 
 
 References cma::CTypeTokenizer::assign(), cma::CMA\_\-CType::getCharType(), cma::CTypeTokenizer::next(), WORD\_\-TYPE\_\-DATE, WORD\_\-TYPE\_\-LETTER, WORD\_\-TYPE\_\-NUMBER, and WORD\_\-TYPE\_\-OTHER.
 
-The documentation for this class was generated from the following files:\begin{CompactItemize}
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-/home/vernkin/projects/chinese-ma-chen/source/include/{\bf cma\_\-wtype.h}\item 
-/home/vernkin/projects/chinese-ma-chen/source/src/{\bf cma\_\-wtype.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-\/ma-\/chen/source/include/{\bf cma\_\-wtype.h}\item 
+/home/vernkin/projects/chinese-\/ma-\/chen/source/src/{\bf cma\_\-wtype.cpp}\end{DoxyCompactItemize}

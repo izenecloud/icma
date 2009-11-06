@@ -1,25 +1,26 @@
 \section{cma::Analyzer Class Reference}
 \label{classcma_1_1Analyzer}\index{cma::Analyzer@{cma::Analyzer}}
+
+
 \doxyref{Analyzer}{p.}{classcma_1_1Analyzer} executes the Chinese morphological analysis.  
 
 
-{\tt \#include $<$analyzer.h$>$}
-
-Inheritance diagram for cma::Analyzer::\begin{figure}[H]
+{\ttfamily \#include $<$analyzer.h$>$}Inheritance diagram for cma::Analyzer::\begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[height=2cm]{classcma_1_1Analyzer}
 \end{center}
 \end{figure}
 \subsection*{Public Types}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 enum {\bf OptionType} \{ {\bf OPTION\_\-TYPE\_\-POS\_\-TAGGING}, 
 {\bf OPTION\_\-TYPE\_\-NBEST}, 
 {\bf OPTION\_\-TYPE\_\-NUM}
  \}
+\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 virtual void {\bf setKnowledge} ({\bf Knowledge} $\ast$pKnowledge)=0
 \item 
@@ -30,6 +31,10 @@ virtual const char $\ast$ {\bf runWithString} (const char $\ast$inStr)=0
 virtual int {\bf runWithStream} (const char $\ast$inFileName, const char $\ast$outFileName)=0
 \item 
 virtual void {\bf splitSentence} (const char $\ast$paragraph, std::vector$<$ {\bf Sentence} $>$ \&sentences)=0
+\item 
+virtual void {\bf resetIndexPOSList} (bool defVal=true)=0
+\item 
+virtual int {\bf setIndexPOSList} (std::vector$<$ std::string $>$ \&posList)=0
 \item 
 void {\bf setOption} ({\bf OptionType} nOption, double nValue)
 \item 
@@ -46,9 +51,9 @@ const char $\ast$ {\bf getWordDelimiter} () const
 void {\bf setSentenceDelimiter} (const char $\ast$delimiter)
 \item 
 const char $\ast$ {\bf getSentenceDelimiter} () const 
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 std::vector$<$ double $>$ {\bf options\_\-}
 \item 
@@ -57,43 +62,39 @@ const char $\ast$ {\bf posDelimiter\_\-}
 const char $\ast$ {\bf wordDelimiter\_\-}
 \item 
 const char $\ast$ {\bf sentenceDelimiter\_\-}
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\doxyref{Analyzer}{p.}{classcma_1_1Analyzer} executes the Chinese morphological analysis. 
+\doxyref{Analyzer}{p.}{classcma_1_1Analyzer} executes the Chinese morphological analysis. \doxyref{Analyzer}{p.}{classcma_1_1Analyzer} executes the Chinese morphological analysis. Typically, the usage is like below:
 
-\doxyref{Analyzer}{p.}{classcma_1_1Analyzer} executes the Chinese morphological analysis. Typically, the usage is like below:
+// create instances CMA\_\-Factory$\ast$ factory = \doxyref{CMA\_\-Factory::instance()}{p.}{classcma_1_1CMA__Factory_a9a7abf5a22bc6aefd6994e54ccd745b8}; Analyzer$\ast$ analyzer = factory-\/$>$createAnalyzer(); Knowledge$\ast$ knowledge = factory-\/$>$createKnowledge();
 
-// create instances CMA\_\-Factory$\ast$ factory = \doxyref{CMA\_\-Factory::instance()}{p.}{classcma_1_1CMA__Factory_9a7abf5a22bc6aefd6994e54ccd745b8}; Analyzer$\ast$ analyzer = factory-$>$createAnalyzer(); Knowledge$\ast$ knowledge = factory-$>$createKnowledge();
+// load dictionaries knowledge-\/$>$loadSystemDict(\char`\"{}...\char`\"{}); knowledge-\/$>$loadUserDict(\char`\"{}...\char`\"{}); knowledge-\/$>$loadStopWordDict(\char`\"{}...\char`\"{}); knowledge-\/$>$loadStatModel(\char`\"{}...\char`\"{});
 
-// load dictionaries knowledge-$>$loadSystemDict(\char`\"{}...\char`\"{}); knowledge-$>$loadUserDict(\char`\"{}...\char`\"{}); knowledge-$>$loadStopWordDict(\char`\"{}...\char`\"{}); knowledge-$>$loadStatModel(\char`\"{}...\char`\"{});
+// set knowledge analyzer-\/$>$setKnowledge(knowledge);
 
-// set knowledge analyzer-$>$setKnowledge(knowledge);
+// analyze a sentence \doxyref{Sentence}{p.}{classcma_1_1Sentence} s; s.setString(\char`\"{}...\char`\"{}); analyzer-\/$>$runWithSentence(s); ...
 
-// analyze a sentence \doxyref{Sentence}{p.}{classcma_1_1Sentence} s; s.setString(\char`\"{}...\char`\"{}); analyzer-$>$runWithSentence(s); ...
+// analyze a paragraph const char$\ast$ result = analyzer-\/$>$runWithString(\char`\"{}...\char`\"{}); ...
 
-// analyze a paragraph const char$\ast$ result = analyzer-$>$runWithString(\char`\"{}...\char`\"{}); ...
-
-// analyze a file analyzer-$>$runWithStream(\char`\"{}...\char`\"{}, \char`\"{}...\char`\"{});
+// analyze a file analyzer-\/$>$runWithStream(\char`\"{}...\char`\"{}, \char`\"{}...\char`\"{});
 
 delete knowledge; delete analyzer; 
 
 \subsection{Member Enumeration Documentation}
 \index{cma::Analyzer@{cma::Analyzer}!OptionType@{OptionType}}
 \index{OptionType@{OptionType}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{OptionType}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf cma::Analyzer::OptionType}}\label{classcma_1_1Analyzer_828bd41bd7badd423d6cef5aa1454efe}
-
-
+\subsubsection[{OptionType}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf cma::Analyzer::OptionType}}\label{classcma_1_1Analyzer_a828bd41bd7badd423d6cef5aa1454efe}
 Option type for analysis. \begin{Desc}
 \item[Enumerator: ]\par
 \begin{description}
 \index{OPTION\_\-TYPE\_\-POS\_\-TAGGING@{OPTION\_\-TYPE\_\-POS\_\-TAGGING}!cma::Analyzer@{cma::Analyzer}}\index{cma::Analyzer@{cma::Analyzer}!OPTION\_\-TYPE\_\-POS\_\-TAGGING@{OPTION\_\-TYPE\_\-POS\_\-TAGGING}}\item[{\em 
-OPTION\_\-TYPE\_\-POS\_\-TAGGING\label{classcma_1_1Analyzer_828bd41bd7badd423d6cef5aa1454efee6788d85d45be70c6b72ddf9948b43b2}
-}]the value zero for not to tag part-of-speech tags in the result of {\em \doxyref{runWithSentence()}{p.}{classcma_1_1Analyzer_2274acc45dd1ccc6aa7ea87cd34ad0e7}\/}, {\em \doxyref{runWithString()}{p.}{classcma_1_1Analyzer_2d05785e30e19a390aa887f25bda2d2f}\/} and {\em \doxyref{runWithStream()}{p.}{classcma_1_1Analyzer_ae19c787b296d086d52449cb1b6e3699}\/}, which value is 1 defaultly. \index{OPTION\_\-TYPE\_\-NBEST@{OPTION\_\-TYPE\_\-NBEST}!cma::Analyzer@{cma::Analyzer}}\index{cma::Analyzer@{cma::Analyzer}!OPTION\_\-TYPE\_\-NBEST@{OPTION\_\-TYPE\_\-NBEST}}\item[{\em 
-OPTION\_\-TYPE\_\-NBEST\label{classcma_1_1Analyzer_828bd41bd7badd423d6cef5aa1454efe7737be8d0d08f661301fb1b90f0a96bc}
-}]a positive value to set the number of candidate results of {\em \doxyref{runWithSentence()}{p.}{classcma_1_1Analyzer_2274acc45dd1ccc6aa7ea87cd34ad0e7}\/}, which value is 1 defaultly. \index{OPTION\_\-TYPE\_\-NUM@{OPTION\_\-TYPE\_\-NUM}!cma::Analyzer@{cma::Analyzer}}\index{cma::Analyzer@{cma::Analyzer}!OPTION\_\-TYPE\_\-NUM@{OPTION\_\-TYPE\_\-NUM}}\item[{\em 
-OPTION\_\-TYPE\_\-NUM\label{classcma_1_1Analyzer_828bd41bd7badd423d6cef5aa1454efe2951e28fcefc2733d78dadcec45c15ac}
+OPTION\_\-TYPE\_\-POS\_\-TAGGING\label{classcma_1_1Analyzer_a828bd41bd7badd423d6cef5aa1454efeae6788d85d45be70c6b72ddf9948b43b2}
+}]the value zero for not to tag part-\/of-\/speech tags in the result of {\itshape \doxyref{runWithSentence()}{p.}{classcma_1_1Analyzer_a2274acc45dd1ccc6aa7ea87cd34ad0e7}\/}, {\itshape \doxyref{runWithString()}{p.}{classcma_1_1Analyzer_a2d05785e30e19a390aa887f25bda2d2f}\/} and {\itshape \doxyref{runWithStream()}{p.}{classcma_1_1Analyzer_aae19c787b296d086d52449cb1b6e3699}\/}, which value is 1 defaultly. \index{OPTION\_\-TYPE\_\-NBEST@{OPTION\_\-TYPE\_\-NBEST}!cma::Analyzer@{cma::Analyzer}}\index{cma::Analyzer@{cma::Analyzer}!OPTION\_\-TYPE\_\-NBEST@{OPTION\_\-TYPE\_\-NBEST}}\item[{\em 
+OPTION\_\-TYPE\_\-NBEST\label{classcma_1_1Analyzer_a828bd41bd7badd423d6cef5aa1454efea7737be8d0d08f661301fb1b90f0a96bc}
+}]a positive value to set the number of candidate results of {\itshape \doxyref{runWithSentence()}{p.}{classcma_1_1Analyzer_a2274acc45dd1ccc6aa7ea87cd34ad0e7}\/}, which value is 1 defaultly. \index{OPTION\_\-TYPE\_\-NUM@{OPTION\_\-TYPE\_\-NUM}!cma::Analyzer@{cma::Analyzer}}\index{cma::Analyzer@{cma::Analyzer}!OPTION\_\-TYPE\_\-NUM@{OPTION\_\-TYPE\_\-NUM}}\item[{\em 
+OPTION\_\-TYPE\_\-NUM\label{classcma_1_1Analyzer_a828bd41bd7badd423d6cef5aa1454efea2951e28fcefc2733d78dadcec45c15ac}
 }]the count of option types \end{description}
 \end{Desc}
 
@@ -102,217 +103,194 @@ OPTION\_\-TYPE\_\-NUM\label{classcma_1_1Analyzer_828bd41bd7badd423d6cef5aa1454ef
 \subsection{Member Function Documentation}
 \index{cma::Analyzer@{cma::Analyzer}!getOption@{getOption}}
 \index{getOption@{getOption}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{getOption}]{\setlength{\rightskip}{0pt plus 5cm}double cma::Analyzer::getOption ({\bf OptionType} {\em nOption}) const}\label{classcma_1_1Analyzer_8df9e86073a5e3d0f44dce0c14f27706}
-
-
-Get the option value. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em nOption}]the option type \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]the option value \end{Desc}
+\subsubsection[{getOption}]{\setlength{\rightskip}{0pt plus 5cm}double cma::Analyzer::getOption ({\bf OptionType} {\em nOption}) const}\label{classcma_1_1Analyzer_a8df9e86073a5e3d0f44dce0c14f27706}
+Get the option value. 
+\begin{DoxyParams}{Parameters}
+\item[{\em nOption}]the option type \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the option value 
+\end{DoxyReturn}
 
 
 References options\_\-.
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence(), cma::CMA\_\-ME\_\-Analyzer::runWithStream(), and cma::CMA\_\-ME\_\-Analyzer::runWithString().\index{cma::Analyzer@{cma::Analyzer}!getPOSDelimiter@{getPOSDelimiter}}
 \index{getPOSDelimiter@{getPOSDelimiter}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{getPOSDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Analyzer::getPOSDelimiter () const}\label{classcma_1_1Analyzer_e5351b7f2fa7717b1b5af2be8a86c04f}
-
-
-Get the delimiter between word and POS tag in the output result of {\em \doxyref{runWithString()}{p.}{classcma_1_1Analyzer_2d05785e30e19a390aa887f25bda2d2f}\/} and {\em \doxyref{runWithStream()}{p.}{classcma_1_1Analyzer_ae19c787b296d086d52449cb1b6e3699}\/}, which delimiter is \char`\"{}/\char`\"{} defaultly so that the result would be \char`\"{}word/pos  word/pos  ...\char`\"{}. \begin{Desc}
-\item[Returns:]the delimiter between word and POS tag in the output result \end{Desc}
+\subsubsection[{getPOSDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Analyzer::getPOSDelimiter () const}\label{classcma_1_1Analyzer_ae5351b7f2fa7717b1b5af2be8a86c04f}
+Get the delimiter between word and POS tag in the output result of {\itshape \doxyref{runWithString()}{p.}{classcma_1_1Analyzer_a2d05785e30e19a390aa887f25bda2d2f}\/} and {\itshape \doxyref{runWithStream()}{p.}{classcma_1_1Analyzer_aae19c787b296d086d52449cb1b6e3699}\/}, which delimiter is \char`\"{}/\char`\"{} defaultly so that the result would be \char`\"{}word/pos  word/pos  ...\char`\"{}. \begin{DoxyReturn}{Returns}
+the delimiter between word and POS tag in the output result 
+\end{DoxyReturn}
 
 
 References posDelimiter\_\-.\index{cma::Analyzer@{cma::Analyzer}!getSentenceDelimiter@{getSentenceDelimiter}}
 \index{getSentenceDelimiter@{getSentenceDelimiter}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{getSentenceDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Analyzer::getSentenceDelimiter () const}\label{classcma_1_1Analyzer_eee55c792c0397bc4a58fa162d4fbe01}
-
-
-Get the delimiter between sentences. \begin{Desc}
-\item[Returns:]the delimiter between the pairs (word and POS tag) in the output result \end{Desc}
+\subsubsection[{getSentenceDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Analyzer::getSentenceDelimiter () const}\label{classcma_1_1Analyzer_aeee55c792c0397bc4a58fa162d4fbe01}
+Get the delimiter between sentences. \begin{DoxyReturn}{Returns}
+the delimiter between the pairs (word and POS tag) in the output result 
+\end{DoxyReturn}
 
 
 References sentenceDelimiter\_\-.\index{cma::Analyzer@{cma::Analyzer}!getWordDelimiter@{getWordDelimiter}}
 \index{getWordDelimiter@{getWordDelimiter}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{getWordDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Analyzer::getWordDelimiter () const}\label{classcma_1_1Analyzer_bee23d91de22d6083c3ba41a126d43a6}
+\subsubsection[{getWordDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Analyzer::getWordDelimiter () const}\label{classcma_1_1Analyzer_abee23d91de22d6083c3ba41a126d43a6}
+Get the delimiter between the pairs (word and POS tag) in the output result of {\itshape \doxyref{runWithString()}{p.}{classcma_1_1Analyzer_a2d05785e30e19a390aa887f25bda2d2f}\/} and {\itshape \doxyref{runWithStream()}{p.}{classcma_1_1Analyzer_aae19c787b296d086d52449cb1b6e3699}\/}, which delimiter is \char`\"{}  \char`\"{} (double-\/space) defaultly so that the result would be \char`\"{}word/pos  word/pos  ...\char`\"{}. \begin{DoxyReturn}{Returns}
+the delimiter between the pairs (word and POS tag) in the output result 
+\end{DoxyReturn}
 
 
-Get the delimiter between the pairs (word and POS tag) in the output result of {\em \doxyref{runWithString()}{p.}{classcma_1_1Analyzer_2d05785e30e19a390aa887f25bda2d2f}\/} and {\em \doxyref{runWithStream()}{p.}{classcma_1_1Analyzer_ae19c787b296d086d52449cb1b6e3699}\/}, which delimiter is \char`\"{}  \char`\"{} (double-space) defaultly so that the result would be \char`\"{}word/pos  word/pos  ...\char`\"{}. \begin{Desc}
-\item[Returns:]the delimiter between the pairs (word and POS tag) in the output result \end{Desc}
+References wordDelimiter\_\-.\index{cma::Analyzer@{cma::Analyzer}!resetIndexPOSList@{resetIndexPOSList}}
+\index{resetIndexPOSList@{resetIndexPOSList}!cma::Analyzer@{cma::Analyzer}}
+\subsubsection[{resetIndexPOSList}]{\setlength{\rightskip}{0pt plus 5cm}virtual void cma::Analyzer::resetIndexPOSList (bool {\em defVal} = {\ttfamily true})\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1Analyzer_a4e2aad23b33ceeb60265dd68daf9da67}
+Reset all the POS index Information as defVal \begin{DoxyReturn}{Returns}
+defVal default value to reset (default is true) 
+\end{DoxyReturn}
 
 
-References wordDelimiter\_\-.\index{cma::Analyzer@{cma::Analyzer}!runWithSentence@{runWithSentence}}
+Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_afa513b05898ec374781c5889ed9714c8}.\index{cma::Analyzer@{cma::Analyzer}!runWithSentence@{runWithSentence}}
 \index{runWithSentence@{runWithSentence}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{runWithSentence}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Analyzer::runWithSentence ({\bf Sentence} \& {\em sentence})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Analyzer_2274acc45dd1ccc6aa7ea87cd34ad0e7}
+\subsubsection[{runWithSentence}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Analyzer::runWithSentence ({\bf Sentence} \& {\em sentence})\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1Analyzer_a2274acc45dd1ccc6aa7ea87cd34ad0e7}
+Execute the morphological analysis based on a sentence. 
+\begin{DoxyParams}{Parameters}
+\item[{\em sentence}]the instance containing the raw sentence string and also to save the analysis result \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 for fail, 1 for success 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+the raw sentence string could be got by {\itshape sentence.getString()\/}. 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+on successful return, the n-\/best results could be got by {\itshape sentence.getListSize()\/}, etc. 
+\end{DoxyPostcond}
 
 
-Execute the morphological analysis based on a sentence. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em sentence}]the instance containing the raw sentence string and also to save the analysis result \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]0 for fail, 1 for success \end{Desc}
-\begin{Desc}
-\item[Precondition:]the raw sentence string could be got by {\em sentence.getString()\/}. \end{Desc}
-\begin{Desc}
-\item[Postcondition:]on successful return, the n-best results could be got by {\em sentence.getListSize()\/}, etc. \end{Desc}
-
-
-Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_6bac993f470b61cc4fccdbd4a7217948}.\index{cma::Analyzer@{cma::Analyzer}!runWithStream@{runWithStream}}
+Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_a6bac993f470b61cc4fccdbd4a7217948}.\index{cma::Analyzer@{cma::Analyzer}!runWithStream@{runWithStream}}
 \index{runWithStream@{runWithStream}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{runWithStream}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Analyzer::runWithStream (const char $\ast$ {\em inFileName}, \/  const char $\ast$ {\em outFileName})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Analyzer_ae19c787b296d086d52449cb1b6e3699}
+\subsubsection[{runWithStream}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Analyzer::runWithStream (const char $\ast$ {\em inFileName}, \/  const char $\ast$ {\em outFileName})\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1Analyzer_aae19c787b296d086d52449cb1b6e3699}
+Execute the morphological analysis based on a file. 
+\begin{DoxyParams}{Parameters}
+\item[{\em inFileName}]input file name \item[{\em outFileName}]output file name \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 for fail, 1 for success 
+\end{DoxyReturn}
+\begin{DoxyPostcond}{Postcondition}
+on successful return, the one-\/best result is printed to file {\itshape outFileName\/}. 
+\end{DoxyPostcond}
 
 
-Execute the morphological analysis based on a file. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em inFileName}]input file name \item[{\em outFileName}]output file name \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]0 for fail, 1 for success \end{Desc}
-\begin{Desc}
-\item[Postcondition:]on successful return, the one-best result is printed to file {\em outFileName\/}. \end{Desc}
-
-
-Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_eb9e065c3cc25885f2ccb0c70f4a5964}.
+Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_aeb9e065c3cc25885f2ccb0c70f4a5964}.
 
 Referenced by beginSeg().\index{cma::Analyzer@{cma::Analyzer}!runWithString@{runWithString}}
 \index{runWithString@{runWithString}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{runWithString}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ cma::Analyzer::runWithString (const char $\ast$ {\em inStr})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Analyzer_2d05785e30e19a390aa887f25bda2d2f}
+\subsubsection[{runWithString}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ cma::Analyzer::runWithString (const char $\ast$ {\em inStr})\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1Analyzer_a2d05785e30e19a390aa887f25bda2d2f}
+Execute the morphological analysis based on a paragraph string. 
+\begin{DoxyParams}{Parameters}
+\item[{\em inStr}]paragraph string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 for fail, otherwise a non-\/zero string pointer for the one-\/best result 
+\end{DoxyReturn}
 
 
-Execute the morphological analysis based on a paragraph string. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em inStr}]paragraph string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]0 for fail, otherwise a non-zero string pointer for the one-best result \end{Desc}
+Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_a50b039c84be34cc7c83ce8aef97058f2}.\index{cma::Analyzer@{cma::Analyzer}!setIndexPOSList@{setIndexPOSList}}
+\index{setIndexPOSList@{setIndexPOSList}!cma::Analyzer@{cma::Analyzer}}
+\subsubsection[{setIndexPOSList}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Analyzer::setIndexPOSList (std::vector$<$ std::string $>$ \& {\em posList})\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1Analyzer_a3f4726b064b1197f069e2505ef093720}
+Set the POS index as true in the posList 
+\begin{DoxyParams}{Parameters}
+\item[{\em posList}]the list that allowed in the posList \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+how many POS are set successfully (mainly because not exists). 
+\end{DoxyReturn}
 
 
-Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_50b039c84be34cc7c83ce8aef97058f2}.\index{cma::Analyzer@{cma::Analyzer}!setKnowledge@{setKnowledge}}
+Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_a523e50a8c933c9dbc78ddd137666a666}.\index{cma::Analyzer@{cma::Analyzer}!setKnowledge@{setKnowledge}}
 \index{setKnowledge@{setKnowledge}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{setKnowledge}]{\setlength{\rightskip}{0pt plus 5cm}virtual void cma::Analyzer::setKnowledge ({\bf Knowledge} $\ast$ {\em pKnowledge})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Analyzer_52d2462f2f05cec4a9c4d6773e7502cb}
+\subsubsection[{setKnowledge}]{\setlength{\rightskip}{0pt plus 5cm}virtual void cma::Analyzer::setKnowledge ({\bf Knowledge} $\ast$ {\em pKnowledge})\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1Analyzer_a52d2462f2f05cec4a9c4d6773e7502cb}
+Set the {\itshape \doxyref{Knowledge}{p.}{classcma_1_1Knowledge}\/} for analysis. 
+\begin{DoxyParams}{Parameters}
+\item[{\em pKnowledge}]the pointer of {\itshape \doxyref{Knowledge}{p.}{classcma_1_1Knowledge}\/} \end{DoxyParams}
 
 
-Set the {\em \doxyref{Knowledge}{p.}{classcma_1_1Knowledge}\/} for analysis. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em pKnowledge}]the pointer of {\em \doxyref{Knowledge}{p.}{classcma_1_1Knowledge}\/} \end{description}
-\end{Desc}
-
-
-Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_04d6b5c7b7dcd199c8e96a06afa5ea44}.
+Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_a04d6b5c7b7dcd199c8e96a06afa5ea44}.
 
 Referenced by beginSeg().\index{cma::Analyzer@{cma::Analyzer}!setOption@{setOption}}
 \index{setOption@{setOption}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{setOption}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Analyzer::setOption ({\bf OptionType} {\em nOption}, \/  double {\em nValue})}\label{classcma_1_1Analyzer_d461885573a34670730fcb7ebcd10d99}
-
-
-Set the option value for analysis. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em nOption}]the option type \item[{\em nValue}]the option value \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Attention:]when {\em nOption\/} is {\em OPTION\_\-TYPE\_\-NBEST\/}, the invalid {\em nValue\/} less than 1 will take no effect. \end{Desc}
+\subsubsection[{setOption}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Analyzer::setOption ({\bf OptionType} {\em nOption}, \/  double {\em nValue})}\label{classcma_1_1Analyzer_ad461885573a34670730fcb7ebcd10d99}
+Set the option value for analysis. 
+\begin{DoxyParams}{Parameters}
+\item[{\em nOption}]the option type \item[{\em nValue}]the option value \end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+when {\itshape nOption\/} is {\itshape OPTION\_\-TYPE\_\-NBEST\/}, the invalid {\itshape nValue\/} less than 1 will take no effect. 
+\end{DoxyAttention}
 
 
 References OPTION\_\-TYPE\_\-NBEST, and options\_\-.
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::Analyzer@{cma::Analyzer}!setPOSDelimiter@{setPOSDelimiter}}
 \index{setPOSDelimiter@{setPOSDelimiter}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{setPOSDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Analyzer::setPOSDelimiter (const char $\ast$ {\em delimiter})}\label{classcma_1_1Analyzer_7c4b88bf29930661262f3c05be208471}
-
-
-Set the delimiter between word and POS tag in the output result of {\em \doxyref{runWithString()}{p.}{classcma_1_1Analyzer_2d05785e30e19a390aa887f25bda2d2f}\/} and {\em \doxyref{runWithStream()}{p.}{classcma_1_1Analyzer_ae19c787b296d086d52449cb1b6e3699}\/}, which delimiter is \char`\"{}/\char`\"{} defaultly so that the result would be \char`\"{}word/pos  word/pos  ...\char`\"{}. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em delimiter}]the delimiter between word and POS tag in the output result \end{description}
-\end{Desc}
+\subsubsection[{setPOSDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Analyzer::setPOSDelimiter (const char $\ast$ {\em delimiter})}\label{classcma_1_1Analyzer_a7c4b88bf29930661262f3c05be208471}
+Set the delimiter between word and POS tag in the output result of {\itshape \doxyref{runWithString()}{p.}{classcma_1_1Analyzer_a2d05785e30e19a390aa887f25bda2d2f}\/} and {\itshape \doxyref{runWithStream()}{p.}{classcma_1_1Analyzer_aae19c787b296d086d52449cb1b6e3699}\/}, which delimiter is \char`\"{}/\char`\"{} defaultly so that the result would be \char`\"{}word/pos  word/pos  ...\char`\"{}. 
+\begin{DoxyParams}{Parameters}
+\item[{\em delimiter}]the delimiter between word and POS tag in the output result \end{DoxyParams}
 
 
 References posDelimiter\_\-.
 
 Referenced by beginSeg(), and cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::Analyzer@{cma::Analyzer}!setSentenceDelimiter@{setSentenceDelimiter}}
 \index{setSentenceDelimiter@{setSentenceDelimiter}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{setSentenceDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Analyzer::setSentenceDelimiter (const char $\ast$ {\em delimiter})}\label{classcma_1_1Analyzer_2d609843fe10cb82795e06c91d85cc06}
-
-
-Set the delimiter between sentences, default is empty. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em delimiter}]the delimiter between the pairs (word and POS tag) in the output result \end{description}
-\end{Desc}
+\subsubsection[{setSentenceDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Analyzer::setSentenceDelimiter (const char $\ast$ {\em delimiter})}\label{classcma_1_1Analyzer_a2d609843fe10cb82795e06c91d85cc06}
+Set the delimiter between sentences, default is empty. 
+\begin{DoxyParams}{Parameters}
+\item[{\em delimiter}]the delimiter between the pairs (word and POS tag) in the output result \end{DoxyParams}
 
 
 References sentenceDelimiter\_\-.
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::Analyzer@{cma::Analyzer}!setWordDelimiter@{setWordDelimiter}}
 \index{setWordDelimiter@{setWordDelimiter}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{setWordDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Analyzer::setWordDelimiter (const char $\ast$ {\em delimiter})}\label{classcma_1_1Analyzer_c9bba08c5455b6e640065e420d1974d7}
-
-
-Set the delimiter between the pairs (word and POS tag) in the output result of {\em \doxyref{runWithString()}{p.}{classcma_1_1Analyzer_2d05785e30e19a390aa887f25bda2d2f}\/} and {\em \doxyref{runWithStream()}{p.}{classcma_1_1Analyzer_ae19c787b296d086d52449cb1b6e3699}\/}, which delimiter is \char`\"{}  \char`\"{} (double-space) defaultly so that the result would be \char`\"{}word/pos  word/pos  ...\char`\"{}. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em delimiter}]the delimiter between the pairs (word and POS tag) in the output result \end{description}
-\end{Desc}
+\subsubsection[{setWordDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Analyzer::setWordDelimiter (const char $\ast$ {\em delimiter})}\label{classcma_1_1Analyzer_ac9bba08c5455b6e640065e420d1974d7}
+Set the delimiter between the pairs (word and POS tag) in the output result of {\itshape \doxyref{runWithString()}{p.}{classcma_1_1Analyzer_a2d05785e30e19a390aa887f25bda2d2f}\/} and {\itshape \doxyref{runWithStream()}{p.}{classcma_1_1Analyzer_aae19c787b296d086d52449cb1b6e3699}\/}, which delimiter is \char`\"{}  \char`\"{} (double-\/space) defaultly so that the result would be \char`\"{}word/pos  word/pos  ...\char`\"{}. 
+\begin{DoxyParams}{Parameters}
+\item[{\em delimiter}]the delimiter between the pairs (word and POS tag) in the output result \end{DoxyParams}
 
 
 References wordDelimiter\_\-.
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::Analyzer@{cma::Analyzer}!splitSentence@{splitSentence}}
 \index{splitSentence@{splitSentence}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{splitSentence}]{\setlength{\rightskip}{0pt plus 5cm}virtual void cma::Analyzer::splitSentence (const char $\ast$ {\em paragraph}, \/  std::vector$<$ {\bf Sentence} $>$ \& {\em sentences})\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1Analyzer_8ed5115519284c1ccf2bde9e289168dd}
+\subsubsection[{splitSentence}]{\setlength{\rightskip}{0pt plus 5cm}virtual void cma::Analyzer::splitSentence (const char $\ast$ {\em paragraph}, \/  std::vector$<$ {\bf Sentence} $>$ \& {\em sentences})\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1Analyzer_a8ed5115519284c1ccf2bde9e289168dd}
+Split a paragraph string into sentences. 
+\begin{DoxyParams}{Parameters}
+\item[{\em paragraph}]paragraph string \item[{\em sentences}]sentence vector \end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+the original elements in {\itshape sentences\/} would not be removed, and the splited sentences are appended into {\itshape sentences\/}. 
+\end{DoxyAttention}
 
 
-Split a paragraph string into sentences. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em paragraph}]paragraph string \item[{\em sentences}]sentence vector \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Attention:]the original elements in {\em sentences\/} would not be removed, and the splited sentences are appended into {\em sentences\/}. \end{Desc}
-
-
-Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_b6d7b5e169207cca37337eceb07ac5fe}.
+Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_ab6d7b5e169207cca37337eceb07ac5fe}.
 
 \subsection{Member Data Documentation}
 \index{cma::Analyzer@{cma::Analyzer}!options\_\-@{options\_\-}}
 \index{options\_\-@{options\_\-}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{options\_\-}]{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$double$>$ {\bf cma::Analyzer::options\_\-}\hspace{0.3cm}{\tt  [protected]}}\label{classcma_1_1Analyzer_e48091098a6b1e544ef3ac5517b5d1cc}
-
-
+\subsubsection[{options\_\-}]{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$double$>$ {\bf cma::Analyzer::options\_\-}\hspace{0.3cm}{\ttfamily  [protected]}}\label{classcma_1_1Analyzer_ae48091098a6b1e544ef3ac5517b5d1cc}
 option values 
 
 Referenced by getOption(), and setOption().\index{cma::Analyzer@{cma::Analyzer}!posDelimiter\_\-@{posDelimiter\_\-}}
 \index{posDelimiter\_\-@{posDelimiter\_\-}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{posDelimiter\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ {\bf cma::Analyzer::posDelimiter\_\-}\hspace{0.3cm}{\tt  [protected]}}\label{classcma_1_1Analyzer_3649af9da4b6022fd9761ab59bb249c2}
-
-
+\subsubsection[{posDelimiter\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ {\bf cma::Analyzer::posDelimiter\_\-}\hspace{0.3cm}{\ttfamily  [protected]}}\label{classcma_1_1Analyzer_a3649af9da4b6022fd9761ab59bb249c2}
 the delimiter between word and POS tag in the output result 
 
 Referenced by getPOSDelimiter(), cma::CMA\_\-ME\_\-Analyzer::runWithStream(), cma::CMA\_\-ME\_\-Analyzer::runWithString(), and setPOSDelimiter().\index{cma::Analyzer@{cma::Analyzer}!sentenceDelimiter\_\-@{sentenceDelimiter\_\-}}
 \index{sentenceDelimiter\_\-@{sentenceDelimiter\_\-}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{sentenceDelimiter\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ {\bf cma::Analyzer::sentenceDelimiter\_\-}\hspace{0.3cm}{\tt  [protected]}}\label{classcma_1_1Analyzer_27a50ef21d77fa99011cd20bba13768e}
-
-
+\subsubsection[{sentenceDelimiter\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ {\bf cma::Analyzer::sentenceDelimiter\_\-}\hspace{0.3cm}{\ttfamily  [protected]}}\label{classcma_1_1Analyzer_a27a50ef21d77fa99011cd20bba13768e}
 the delimiter between sentences 
 
 Referenced by getSentenceDelimiter(), cma::CMA\_\-ME\_\-Analyzer::runWithStream(), and setSentenceDelimiter().\index{cma::Analyzer@{cma::Analyzer}!wordDelimiter\_\-@{wordDelimiter\_\-}}
 \index{wordDelimiter\_\-@{wordDelimiter\_\-}!cma::Analyzer@{cma::Analyzer}}
-\subsubsection[{wordDelimiter\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ {\bf cma::Analyzer::wordDelimiter\_\-}\hspace{0.3cm}{\tt  [protected]}}\label{classcma_1_1Analyzer_2bc9276661a6c732dc52dbc3fda74817}
-
-
+\subsubsection[{wordDelimiter\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ {\bf cma::Analyzer::wordDelimiter\_\-}\hspace{0.3cm}{\ttfamily  [protected]}}\label{classcma_1_1Analyzer_a2bc9276661a6c732dc52dbc3fda74817}
 the delimiter between the pairs (word and POS tag) in the output result 
 
 Referenced by getWordDelimiter(), cma::CMA\_\-ME\_\-Analyzer::runWithStream(), cma::CMA\_\-ME\_\-Analyzer::runWithString(), and setWordDelimiter().
 
-The documentation for this class was generated from the following files:\begin{CompactItemize}
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-/home/vernkin/projects/chinese-ma-chen/include/{\bf analyzer.h}\item 
-/home/vernkin/projects/chinese-ma-chen/source/src/{\bf analyzer.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-\/ma-\/chen/include/{\bf analyzer.h}\item 
+/home/vernkin/projects/chinese-\/ma-\/chen/source/src/{\bf analyzer.cpp}\end{DoxyCompactItemize}

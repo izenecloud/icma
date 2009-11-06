@@ -1,36 +1,35 @@
-\section{/home/vernkin/projects/chinese-ma-chen/source/src/CMAPOSTagger.cc File Reference}
-\label{CMAPOSTagger_8cc}\index{/home/vernkin/projects/chinese-ma-chen/source/src/CMAPOSTagger.cc@{/home/vernkin/projects/chinese-ma-chen/source/src/CMAPOSTagger.cc}}
+\section{/home/vernkin/projects/chinese-\/ma-\/chen/source/src/CMAPOSTagger.cc File Reference}
+\label{CMAPOSTagger_8cc}\index{/home/vernkin/projects/chinese-\/ma-\/chen/source/src/CMAPOSTagger.cc@{/home/vernkin/projects/chinese-\/ma-\/chen/source/src/CMAPOSTagger.cc}}
+
+
 for the POS tagger using MaxEnt Model.  
-
-
-{\tt \#include $<$vector$>$}\par
-{\tt \#include \char`\"{}VTrie.h\char`\"{}}\par
-{\tt \#include \char`\"{}cma\_\-wtype.h\char`\"{}}\par
-{\tt \#include \char`\"{}CMAPOSTagger.h\char`\"{}}\par
+{\ttfamily \#include $<$vector$>$}\par
+{\ttfamily \#include \char`\"{}VTrie.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}cma\_\-wtype.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}CMAPOSTagger.h\char`\"{}}\par
 \subsection*{Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
-void \textbf{cma::posinner::get\_\-pos\_\-zh\_\-scontext\_\-1} (vector$<$ string $>$ \&words, string \&tag\_\-1, string \&tag\_\-2, int index, vector$<$ string $>$ \&context, CMA\_\-WType \&wtype)\label{namespacecma_1_1posinner_f49e6c147898b0b7d3e88af33c64e8f1}
+void {\bfseries cma::posinner::get\_\-pos\_\-zh\_\-scontext\_\-1} (vector$<$ string $>$ \&words, string \&tag\_\-1, string \&tag\_\-2, int index, vector$<$ string $>$ \&context, CMA\_\-WType \&wtype)\label{namespacecma_1_1posinner_af49e6c147898b0b7d3e88af33c64e8f1}
 
 \item 
 void {\bf cma::get\_\-pos\_\-zh\_\-scontext} (vector$<$ string $>$ \&words, vector$<$ string $>$ \&tags, size\_\-t i, bool rareWord, vector$<$ string $>$ \&context, CMA\_\-CType $\ast$ctype)
 \item 
 void {\bf cma::pos\_\-train} (const char $\ast$file, const string \&modelPath, Knowledge::EncodeType encType, string posDelimiter, bool isLargeCorpus, const char $\ast$extractFile, string method, size\_\-t iters, float gaussian)
 \item 
-void \textbf{cma::insertCandidate} (string \&pos, int index, double score, POSTagUnit $\ast$candidates, int \&lastIndex, size\_\-t \&canSize, size\_\-t N)\label{namespacecma_dbf7620e7e9b8dd78dbcb87e648fa8ae}
+void {\bfseries cma::insertCandidate} (string \&pos, int index, double score, POSTagUnit $\ast$candidates, int \&lastIndex, size\_\-t \&canSize, size\_\-t N)\label{namespacecma_adbf7620e7e9b8dd78dbcb87e648fa8ae}
 
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Variables}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
-string \textbf{cma::POS\_\-BOUNDARY} = \char`\"{}BoUnD\char`\"{}\label{namespacecma_6d33cf1fe0a06dac555f3a85fec6c4a6}
+string {\bfseries cma::POS\_\-BOUNDARY} = \char`\"{}BoUnD\char`\"{}\label{namespacecma_a6d33cf1fe0a06dac555f3a85fec6c4a6}
 
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-for the POS tagger using MaxEnt Model. 
-
-\begin{Desc}
-\item[Author:]vernkin\end{Desc}
+for the POS tagger using MaxEnt Model. \begin{DoxyAuthor}{Author}
+vernkin
+\end{DoxyAuthor}
 Created on March 20, 2009, 10:46 AM 

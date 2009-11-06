@@ -6,17 +6,30 @@
  *
  * \section compilefile Compile the file
  *
+ * Two approaches can be used to compile. For the final user, the second approach is recommended.
+ *
+ * 1. Use the cmake directly.
+ *
  * <ol>
  *   <li> Using shell, go to the project root directory.
- *   <li> Type &quot;.mkdir build &quot;.
  *   <li> Type &quot;.cd build &quot;.
  *   <li> Under linux, type &quot;cmake ../source&quot;; Under windows, run in the msys, type &quot;cmake -G &quot;Unix Makefiles&quot; ../source &quot;.
  *   <li> Finally Type  &quot;.make &quot;. to compile all the source.
  * </ol>
  *
+ * 2. Use a script build/build.sh to compile. The usage is:<BR>
+ *   <B>./build.sh [ release | debug | profile | clean ] [ linux | win32 ]</B><BR>
+ *
+ * The parameters contains four building types (default is <B>release</B>) and two platforms
+ * (default is <B>linux</B>). For the building type, <B>debug</B> is compiled with debug information;
+ * <B>release</B> is for release purpose with optimized code; <B>profile</B> will add -pg which
+ * used by gprof; and <B>clean</B> will clean all temporal files. For the platform, <B>linux</B>
+ * represents linux platform while <B>win32</B> represents windows platform.
+ *
+ *
  * If the external program uses the library, simply add all the header files
  * in the $include$ directory under the project root directory, and add the
- * lib/libcmac.a into the library path.
+ * lib/libcmac.a into the library for static linking or lib/*.so for dynamic linking.
  *
  * \section runtrainer Run the Trainer
  *

@@ -1,74 +1,65 @@
 \section{VSynRetUnit Class Reference}
 \label{classVSynRetUnit}\index{VSynRetUnit@{VSynRetUnit}}
+
+
 The Unit of the \doxyref{VExpandedQuery}{p.}{classVExpandedQuery}.  
 
 
-{\tt \#include $<$VSynonym.h$>$}
-
-\subsection*{Public Member Functions}
-\begin{CompactItemize}
+{\ttfamily \#include $<$VSynonym.h$>$}\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
 \item 
-\textbf{VSynRetUnit} (string $\ast${\bf fragment})\label{classVSynRetUnit_f594894ee68dc1ed941abc08b1d75377}
+{\bfseries VSynRetUnit} (string $\ast${\bf fragment})\label{classVSynRetUnit_af594894ee68dc1ed941abc08b1d75377}
 
 \item 
-\textbf{VSynRetUnit} ({\bf VSynonym} $\ast${\bf synonyms})\label{classVSynRetUnit_05846da9ed0faf274642910509018781}
+{\bfseries VSynRetUnit} ({\bf VSynonym} $\ast${\bf synonyms})\label{classVSynRetUnit_a05846da9ed0faf274642910509018781}
 
 \item 
 bool {\bf isFragment} ()
 \item 
-bool \textbf{isSynonyms} ()\label{classVSynRetUnit_9aa673b36c1f44ac3d2bb83f3cf59e92}
+bool {\bfseries isSynonyms} ()\label{classVSynRetUnit_a9aa673b36c1f44ac3d2bb83f3cf59e92}
 
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 string $\ast$ {\bf fragment}
 \item 
 {\bf VSynonym} $\ast$ {\bf synonyms}
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Friends}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 ostream \& {\bf operator$<$$<$} (ostream \&sout, {\bf VSynRetUnit} \&retUnit)
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-The Unit of the \doxyref{VExpandedQuery}{p.}{classVExpandedQuery}. 
-
-\doxyref{VSynRetUnit}{p.}{classVSynRetUnit} contains two attributes, and at most and at least one can be set value. The fragment is the segments between the matched synonyms. 
+The Unit of the \doxyref{VExpandedQuery}{p.}{classVExpandedQuery}. \doxyref{VSynRetUnit}{p.}{classVSynRetUnit} contains two attributes, and at most and at least one can be set value. The fragment is the segments between the matched synonyms. 
 
 \subsection{Member Function Documentation}
 \index{VSynRetUnit@{VSynRetUnit}!isFragment@{isFragment}}
 \index{isFragment@{isFragment}!VSynRetUnit@{VSynRetUnit}}
-\subsubsection[{isFragment}]{\setlength{\rightskip}{0pt plus 5cm}bool VSynRetUnit::isFragment ()\hspace{0.3cm}{\tt  [inline]}}\label{classVSynRetUnit_cdc6c393274d5e267ea15be4576b9adf}
-
-
-Whether this Unit contains unit \begin{Desc}
-\item[Returns:]true if fragment is not null \end{Desc}
+\subsubsection[{isFragment}]{\setlength{\rightskip}{0pt plus 5cm}bool VSynRetUnit::isFragment ()\hspace{0.3cm}{\ttfamily  [inline]}}\label{classVSynRetUnit_acdc6c393274d5e267ea15be4576b9adf}
+Whether this Unit contains unit \begin{DoxyReturn}{Returns}
+true if fragment is not null 
+\end{DoxyReturn}
 
 
 \subsection{Friends And Related Function Documentation}
 \index{VSynRetUnit@{VSynRetUnit}!operator$<$$<$@{operator$<$$<$}}
 \index{operator$<$$<$@{operator$<$$<$}!VSynRetUnit@{VSynRetUnit}}
-\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}ostream\& operator$<$$<$ (ostream \& {\em sout}, \/  {\bf VSynRetUnit} \& {\em retUnit})\hspace{0.3cm}{\tt  [friend]}}\label{classVSynRetUnit_25621b21c2b039b206605d95de16176f}
-
-
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}ostream\& operator$<$$<$ (ostream \& {\em sout}, \/  {\bf VSynRetUnit} \& {\em retUnit})\hspace{0.3cm}{\ttfamily  [friend]}}\label{classVSynRetUnit_a25621b21c2b039b206605d95de16176f}
 Output the \doxyref{VSynRetUnit}{p.}{classVSynRetUnit} 
 
 \subsection{Member Data Documentation}
 \index{VSynRetUnit@{VSynRetUnit}!fragment@{fragment}}
 \index{fragment@{fragment}!VSynRetUnit@{VSynRetUnit}}
-\subsubsection[{fragment}]{\setlength{\rightskip}{0pt plus 5cm}string$\ast$ {\bf VSynRetUnit::fragment}}\label{classVSynRetUnit_f2c96d578ca35f124ec6fc56497c683f}
-
-
+\subsubsection[{fragment}]{\setlength{\rightskip}{0pt plus 5cm}string$\ast$ {\bf VSynRetUnit::fragment}}\label{classVSynRetUnit_af2c96d578ca35f124ec6fc56497c683f}
 store the fragment of the sentence \index{VSynRetUnit@{VSynRetUnit}!synonyms@{synonyms}}
 \index{synonyms@{synonyms}!VSynRetUnit@{VSynRetUnit}}
-\subsubsection[{synonyms}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VSynonym}$\ast$ {\bf VSynRetUnit::synonyms}}\label{classVSynRetUnit_4bca21e057320b4810a5f1f4d4f1ff2d}
-
-
+\subsubsection[{synonyms}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VSynonym}$\ast$ {\bf VSynRetUnit::synonyms}}\label{classVSynRetUnit_a4bca21e057320b4810a5f1f4d4f1ff2d}
 Synonym Objects 
 
-The documentation for this class was generated from the following file:\begin{CompactItemize}
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
 \item 
-/home/vernkin/projects/chinese-ma-chen/source/vsynonym/{\bf VSynonym.h}\end{CompactItemize}
+/home/vernkin/projects/chinese-\/ma-\/chen/source/vsynonym/{\bf VSynonym.h}\end{DoxyCompactItemize}

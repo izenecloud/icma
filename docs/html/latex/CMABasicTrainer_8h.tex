@@ -1,29 +1,29 @@
-\section{/home/vernkin/projects/chinese-ma-chen/source/include/CMABasicTrainer.h File Reference}
-\label{CMABasicTrainer_8h}\index{/home/vernkin/projects/chinese-ma-chen/source/include/CMABasicTrainer.h@{/home/vernkin/projects/chinese-ma-chen/source/include/CMABasicTrainer.h}}
+\section{/home/vernkin/projects/chinese-\/ma-\/chen/source/include/CMABasicTrainer.h File Reference}
+\label{CMABasicTrainer_8h}\index{/home/vernkin/projects/chinese-\/ma-\/chen/source/include/CMABasicTrainer.h@{/home/vernkin/projects/chinese-\/ma-\/chen/source/include/CMABasicTrainer.h}}
+
+
 shared module for training the POC and POS MaxEnt model  
-
-
-{\tt \#include $<$string$>$}\par
-{\tt \#include $<$vector$>$}\par
-{\tt \#include $<$map$>$}\par
-{\tt \#include $<$boost/tokenizer.hpp$>$}\par
-{\tt \#include $<$fstream$>$}\par
-{\tt \#include \char`\"{}cmacconfig.h\char`\"{}}\par
-{\tt \#include \char`\"{}maxentmodel.hpp\char`\"{}}\par
-{\tt \#include \char`\"{}knowledge.h\char`\"{}}\par
-{\tt \#include \char`\"{}cma\_\-ctype.h\char`\"{}}\par
+{\ttfamily \#include $<$string$>$}\par
+{\ttfamily \#include $<$vector$>$}\par
+{\ttfamily \#include $<$map$>$}\par
+{\ttfamily \#include $<$boost/tokenizer.hpp$>$}\par
+{\ttfamily \#include $<$fstream$>$}\par
+{\ttfamily \#include \char`\"{}cmacconfig.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}maxentmodel.hpp\char`\"{}}\par
+{\ttfamily \#include \char`\"{}knowledge.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}cma\_\-ctype.h\char`\"{}}\par
 \subsection*{Classes}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 class {\bf cma::TrainerData}
-\begin{CompactList}\small\item\em The class to hold data required in the training process. \item\end{CompactList}\end{CompactItemize}
+\begin{DoxyCompactList}\small\item\em The class to hold data required in the training process. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Typedefs}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 typedef void($\ast$ {\bf cma::context\_\-t} )(vector$<$ string $>$ \&, vector$<$ string $>$ \&, size\_\-t, bool, vector$<$ string $>$ \&, CMA\_\-CType $\ast$ctype)
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 string {\bf cma::formatModelPath} (const char $\ast$in)
 \item 
@@ -56,11 +56,10 @@ void {\bf cma::train} (TrainerData $\ast$data, const char $\ast$file, const stri
 void {\bf cma::create\_\-poc\_\-meterial} (const char $\ast$inFile, const char $\ast$outFile, Knowledge::EncodeType type, string posDelimiter)
 \item 
 void {\bf cma::fetchSegmentedFile} (const char $\ast$inFile, const char $\ast$outFile, string posDelimiter, bool keepTag, bool keepSeparator)
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-shared module for training the POC and POS MaxEnt model 
-
-\begin{Desc}
-\item[Author:]vernkin \end{Desc}
+shared module for training the POC and POS MaxEnt model \begin{DoxyAuthor}{Author}
+vernkin 
+\end{DoxyAuthor}

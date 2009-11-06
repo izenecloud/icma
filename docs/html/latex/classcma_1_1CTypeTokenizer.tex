@@ -1,16 +1,16 @@
 \section{cma::CTypeTokenizer Class Reference}
 \label{classcma_1_1CTypeTokenizer}\index{cma::CTypeTokenizer@{cma::CTypeTokenizer}}
+
+
 Tokenizer tokenizes a raw input string in specific encoding to a sequence of characters.  
 
 
-{\tt \#include $<$tokenizer.h$>$}
-
-\subsection*{Public Member Functions}
-\begin{CompactItemize}
+{\ttfamily \#include $<$tokenizer.h$>$}\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
 \item 
 {\bf CTypeTokenizer} (const {\bf CMA\_\-CType} $\ast$ctype)
 \item 
-\textbf{CTypeTokenizer} (const {\bf CMA\_\-CType} $\ast$ctype, const char $\ast$str)\label{classcma_1_1CTypeTokenizer_d771e98721b46c07cb3702b547e746aa}
+{\bfseries CTypeTokenizer} (const {\bf CMA\_\-CType} $\ast$ctype, const char $\ast$str)\label{classcma_1_1CTypeTokenizer_ad771e98721b46c07cb3702b547e746aa}
 
 \item 
 const {\bf CMA\_\-CType} $\ast$ {\bf getCType} () const 
@@ -18,79 +18,69 @@ const {\bf CMA\_\-CType} $\ast$ {\bf getCType} () const
 void {\bf assign} (const char $\ast$str)
 \item 
 const char $\ast$ {\bf next} ()
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Tokenizer tokenizes a raw input string in specific encoding to a sequence of characters. 
+Tokenizer tokenizes a raw input string in specific encoding to a sequence of characters. Tokenizer tokenizes a raw input string in specific encoding to a sequence of characters. Typically, the usage is like below:
 
-Tokenizer tokenizes a raw input string in specific encoding to a sequence of characters. Typically, the usage is like below:
-
-// create instance of encoding type CMA\_\-CType$\ast$ ctype = \doxyref{CMA\_\-CType\_\-GB2312::instance()}{p.}{classcma_1_1CMA__CType__GB2312_f34c920bf4afbc1a764f97e8b8b6e8cd};
+// create instance of encoding type CMA\_\-CType$\ast$ ctype = \doxyref{CMA\_\-CType\_\-GB2312::instance()}{p.}{classcma_1_1CMA__CType__GB2312_af34c920bf4afbc1a764f97e8b8b6e8cd};
 
 // create instance of Tokenizer Tokenizer tokenizer($\ast$ctype);
 
 // set the raw input string tokenizer.assign(\char`\"{}...\char`\"{});
 
-// get each character for(const char$\ast$ p=tokenizer.\doxyref{next()}{p.}{classcma_1_1CTypeTokenizer_df2de991ea5258b7237c7b2dca78efea}; p; p=tokenizer.\doxyref{next()}{p.}{classcma_1_1CTypeTokenizer_df2de991ea5258b7237c7b2dca78efea}) \{ // print the character cout $<$$<$ p $<$$<$ endl; \} 
+// get each character for(const char$\ast$ p=tokenizer.\doxyref{next()}{p.}{classcma_1_1CTypeTokenizer_adf2de991ea5258b7237c7b2dca78efea}; p; p=tokenizer.\doxyref{next()}{p.}{classcma_1_1CTypeTokenizer_adf2de991ea5258b7237c7b2dca78efea}) \{ // print the character cout $<$$<$ p $<$$<$ endl; \} 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{cma::CTypeTokenizer@{cma::CTypeTokenizer}!CTypeTokenizer@{CTypeTokenizer}}
 \index{CTypeTokenizer@{CTypeTokenizer}!cma::CTypeTokenizer@{cma::CTypeTokenizer}}
-\subsubsection[{CTypeTokenizer}]{\setlength{\rightskip}{0pt plus 5cm}cma::CTypeTokenizer::CTypeTokenizer (const {\bf CMA\_\-CType} $\ast$ {\em ctype})}\label{classcma_1_1CTypeTokenizer_635764b2db741e1a0b936e2abc206335}
-
-
+\subsubsection[{CTypeTokenizer}]{\setlength{\rightskip}{0pt plus 5cm}cma::CTypeTokenizer::CTypeTokenizer (const {\bf CMA\_\-CType} $\ast$ {\em ctype})}\label{classcma_1_1CTypeTokenizer_a635764b2db741e1a0b936e2abc206335}
 Constructor.
 
-\begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em ctype}]reference to the specific character encoding \end{description}
-\end{Desc}
+
+\begin{DoxyParams}{Parameters}
+\item[{\em ctype}]reference to the specific character encoding \end{DoxyParams}
 
 
 \subsection{Member Function Documentation}
 \index{cma::CTypeTokenizer@{cma::CTypeTokenizer}!assign@{assign}}
 \index{assign@{assign}!cma::CTypeTokenizer@{cma::CTypeTokenizer}}
-\subsubsection[{assign}]{\setlength{\rightskip}{0pt plus 5cm}void cma::CTypeTokenizer::assign (const char $\ast$ {\em str})}\label{classcma_1_1CTypeTokenizer_4004cc1f54cd714e57bb0534496239c5}
-
-
-Set a raw input string. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em str}]pointer to the raw input string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Attention:]The raw input string should be encoded in {\em ctype\/} of Constructor. As {\em Tokenizer\/} doesn't make a copy of {\em str\/}, the caller must ensure the life time of {\em str\/} in the calling of {\em \doxyref{next()}{p.}{classcma_1_1CTypeTokenizer_df2de991ea5258b7237c7b2dca78efea}\/} afterward. \end{Desc}
+\subsubsection[{assign}]{\setlength{\rightskip}{0pt plus 5cm}void cma::CTypeTokenizer::assign (const char $\ast$ {\em str})}\label{classcma_1_1CTypeTokenizer_a4004cc1f54cd714e57bb0534496239c5}
+Set a raw input string. 
+\begin{DoxyParams}{Parameters}
+\item[{\em str}]pointer to the raw input string \end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+The raw input string should be encoded in {\itshape ctype\/} of Constructor. As {\itshape Tokenizer\/} doesn't make a copy of {\itshape str\/}, the caller must ensure the life time of {\itshape str\/} in the calling of {\itshape \doxyref{next()}{p.}{classcma_1_1CTypeTokenizer_adf2de991ea5258b7237c7b2dca78efea}\/} afterward. 
+\end{DoxyAttention}
 
 
 Referenced by cma::CMA\_\-WType::getWordType(), and cma::CMA\_\-ME\_\-Analyzer::splitSentence().\index{cma::CTypeTokenizer@{cma::CTypeTokenizer}!getCType@{getCType}}
 \index{getCType@{getCType}!cma::CTypeTokenizer@{cma::CTypeTokenizer}}
-\subsubsection[{getCType}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf CMA\_\-CType}$\ast$ cma::CTypeTokenizer::getCType () const\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1CTypeTokenizer_fb77db9f2b7ca866104e986e1e6f8249}
-
-
+\subsubsection[{getCType}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf CMA\_\-CType}$\ast$ cma::CTypeTokenizer::getCType () const\hspace{0.3cm}{\ttfamily  [inline]}}\label{classcma_1_1CTypeTokenizer_afb77db9f2b7ca866104e986e1e6f8249}
 Get the reference to the specific character encoding
 
-\begin{Desc}
-\item[Returns:]reference to the specific character encoding \end{Desc}
+\begin{DoxyReturn}{Returns}
+reference to the specific character encoding 
+\end{DoxyReturn}
 
 
 Referenced by cma::CateStrTokenizer::CateStrTokenizer().\index{cma::CTypeTokenizer@{cma::CTypeTokenizer}!next@{next}}
 \index{next@{next}!cma::CTypeTokenizer@{cma::CTypeTokenizer}}
-\subsubsection[{next}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::CTypeTokenizer::next ()}\label{classcma_1_1CTypeTokenizer_df2de991ea5258b7237c7b2dca78efea}
-
-
-Get the next character in specific encoding. \begin{Desc}
-\item[Returns:]pointer to the next character \end{Desc}
-\begin{Desc}
-\item[Attention:]0 is returned if there is no character left. \end{Desc}
+\subsubsection[{next}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::CTypeTokenizer::next ()}\label{classcma_1_1CTypeTokenizer_adf2de991ea5258b7237c7b2dca78efea}
+Get the next character in specific encoding. \begin{DoxyReturn}{Returns}
+pointer to the next character 
+\end{DoxyReturn}
+\begin{DoxyAttention}{Attention}
+0 is returned if there is no character left. 
+\end{DoxyAttention}
 
 
 References cma::CMA\_\-CType::getByteCount().
 
 Referenced by cma::CMA\_\-WType::getWordType(), cma::CateStrTokenizer::next(), and cma::CMA\_\-ME\_\-Analyzer::splitSentence().
 
-The documentation for this class was generated from the following files:\begin{CompactItemize}
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-/home/vernkin/projects/chinese-ma-chen/source/include/{\bf tokenizer.h}\item 
-/home/vernkin/projects/chinese-ma-chen/source/src/{\bf tokenizer.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-\/ma-\/chen/source/include/{\bf tokenizer.h}\item 
+/home/vernkin/projects/chinese-\/ma-\/chen/source/src/{\bf tokenizer.cpp}\end{DoxyCompactItemize}

@@ -1,31 +1,31 @@
 \section{cma::CMA\_\-CType\_\-Big5 Class Reference}
 \label{classcma_1_1CMA__CType__Big5}\index{cma::CMA\_\-CType\_\-Big5@{cma::CMA\_\-CType\_\-Big5}}
+
+
 \doxyref{CMA\_\-CType\_\-Big5}{p.}{classcma_1_1CMA__CType__Big5} gives the character type information in Big5 encoding.  
 
 
-{\tt \#include $<$cma\_\-ctype\_\-big5.h$>$}
-
-Inheritance diagram for cma::CMA\_\-CType\_\-Big5::\begin{figure}[H]
+{\ttfamily \#include $<$cma\_\-ctype\_\-big5.h$>$}Inheritance diagram for cma::CMA\_\-CType\_\-Big5::\begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[height=2cm]{classcma_1_1CMA__CType__Big5}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 virtual unsigned int {\bf getByteCount} (const char $\ast$p) const 
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 static {\bf CMA\_\-CType\_\-Big5} $\ast$ {\bf instance} ()
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 {\bf CMA\_\-CType\_\-Big5} ()
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -34,57 +34,50 @@ static {\bf CMA\_\-CType\_\-Big5} $\ast$ {\bf instance} ()
 \subsection{Constructor \& Destructor Documentation}
 \index{cma::CMA\_\-CType\_\-Big5@{cma::CMA\_\-CType\_\-Big5}!CMA\_\-CType\_\-Big5@{CMA\_\-CType\_\-Big5}}
 \index{CMA\_\-CType\_\-Big5@{CMA\_\-CType\_\-Big5}!cma::CMA_CType_Big5@{cma::CMA\_\-CType\_\-Big5}}
-\subsubsection[{CMA\_\-CType\_\-Big5}]{\setlength{\rightskip}{0pt plus 5cm}cma::CMA\_\-CType\_\-Big5::CMA\_\-CType\_\-Big5 ()\hspace{0.3cm}{\tt  [protected]}}\label{classcma_1_1CMA__CType__Big5_6363b4086243edf9fa7ea68b80b677ed}
+\subsubsection[{CMA\_\-CType\_\-Big5}]{\setlength{\rightskip}{0pt plus 5cm}cma::CMA\_\-CType\_\-Big5::CMA\_\-CType\_\-Big5 ()\hspace{0.3cm}{\ttfamily  [protected]}}\label{classcma_1_1CMA__CType__Big5_a6363b4086243edf9fa7ea68b80b677ed}
+Get the character type. 
+\begin{DoxyParams}{Parameters}
+\item[{\em p}]pointer to the string to be checked \item[{\em preType}]the chartype of the previous character \item[{\em nextP}]the pointer of the next character, it can be 0 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the character type. Check whether is white-\/space character. White-\/space characters are \char`\"{} $\backslash$t$\backslash$n$\backslash$v$\backslash$f$\backslash$r\char`\"{}, and also space character in specific encoding. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+\item[{\em p}]pointer to the character string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for white-\/space character, false for non white-\/space character. Check whether is a separator of sentence. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+\item[{\em p}]pointer to the character string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for separator, false for non separator. Avoid invoked directly 
+\end{DoxyReturn}
 
 
-Get the character type. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em p}]pointer to the string to be checked \item[{\em preType}]the chartype of the previous character \item[{\em nextP}]the pointer of the next character, it can be 0 \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]the character type. Check whether is white-space character. White-space characters are \char`\"{} $\backslash$t$\backslash$n$\backslash$v$\backslash$f$\backslash$r\char`\"{}, and also space character in specific encoding. \end{Desc}
-\begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em p}]pointer to the character string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]true for white-space character, false for non white-space character. Check whether is a separator of sentence. \end{Desc}
-\begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em p}]pointer to the character string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]true for separator, false for non separator. Avoid invoked directly \end{Desc}
-
+References cma::Knowledge::ENCODE\_\-TYPE\_\-BIG5, and cma::CMA\_\-CType::type\_\-.
 
 \subsection{Member Function Documentation}
 \index{cma::CMA\_\-CType\_\-Big5@{cma::CMA\_\-CType\_\-Big5}!getByteCount@{getByteCount}}
 \index{getByteCount@{getByteCount}!cma::CMA_CType_Big5@{cma::CMA\_\-CType\_\-Big5}}
-\subsubsection[{getByteCount}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int cma::CMA\_\-CType\_\-Big5::getByteCount (const char $\ast$ {\em p}) const\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__CType__Big5_0e471b0985214eb074b69fe273cde7f5}
+\subsubsection[{getByteCount}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int cma::CMA\_\-CType\_\-Big5::getByteCount (const char $\ast$ {\em p}) const\hspace{0.3cm}{\ttfamily  [virtual]}}\label{classcma_1_1CMA__CType__Big5_a0e471b0985214eb074b69fe273cde7f5}
+Get the byte count of the first character pointed by {\itshape p\/}, which character is in a specific encoding. 
+\begin{DoxyParams}{Parameters}
+\item[{\em p}]pointer to the character string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the count of bytes. 
+\end{DoxyReturn}
 
 
-Get the byte count of the first character pointed by {\em p\/}, which character is in a specific encoding. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em p}]pointer to the character string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]the count of bytes. \end{Desc}
-
-
-Implements {\bf cma::CMA\_\-CType} \doxyref{}{p.}{classcma_1_1CMA__CType_00f7e99cea12e9db504629c4a6cdb2d4}.\index{cma::CMA\_\-CType\_\-Big5@{cma::CMA\_\-CType\_\-Big5}!instance@{instance}}
+Implements {\bf cma::CMA\_\-CType} \doxyref{}{p.}{classcma_1_1CMA__CType_a00f7e99cea12e9db504629c4a6cdb2d4}.\index{cma::CMA\_\-CType\_\-Big5@{cma::CMA\_\-CType\_\-Big5}!instance@{instance}}
 \index{instance@{instance}!cma::CMA_CType_Big5@{cma::CMA\_\-CType\_\-Big5}}
-\subsubsection[{instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-CType\_\-Big5} $\ast$ cma::CMA\_\-CType\_\-Big5::instance ()\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1CMA__CType__Big5_ac103ebf44d2a2d35aef04312c064235}
+\subsubsection[{instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-CType\_\-Big5} $\ast$ cma::CMA\_\-CType\_\-Big5::instance ()\hspace{0.3cm}{\ttfamily  [static]}}\label{classcma_1_1CMA__CType__Big5_aac103ebf44d2a2d35aef04312c064235}
+Create an instance of {\itshape \doxyref{CMA\_\-CType\_\-Big5}{p.}{classcma_1_1CMA__CType__Big5}\/}. \begin{DoxyReturn}{Returns}
+the pointer to instance 
+\end{DoxyReturn}
 
 
-Create an instance of {\em \doxyref{CMA\_\-CType\_\-Big5}{p.}{classcma_1_1CMA__CType__Big5}\/}. \begin{Desc}
-\item[Returns:]the pointer to instance \end{Desc}
-
-
-The documentation for this class was generated from the following files:\begin{CompactItemize}
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-/home/vernkin/projects/chinese-ma-chen/source/include/{\bf cma\_\-ctype\_\-big5.h}\item 
-/home/vernkin/projects/chinese-ma-chen/source/src/{\bf cma\_\-ctype\_\-big5.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-\/ma-\/chen/source/include/{\bf cma\_\-ctype\_\-big5.h}\item 
+/home/vernkin/projects/chinese-\/ma-\/chen/source/src/{\bf cma\_\-ctype\_\-big5.cpp}\end{DoxyCompactItemize}

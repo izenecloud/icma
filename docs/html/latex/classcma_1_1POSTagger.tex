@@ -1,12 +1,12 @@
 \section{cma::POSTagger Class Reference}
 \label{classcma_1_1POSTagger}\index{cma::POSTagger@{cma::POSTagger}}
+
+
 Tagging the POS Information Tagging the POS using the maxent model.  
 
 
-{\tt \#include $<$CMAPOSTagger.h$>$}
-
-\subsection*{Public Member Functions}
-\begin{CompactItemize}
+{\ttfamily \#include $<$CMAPOSTagger.h$>$}\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
 \item 
 {\bf POSTagger} (const string \&model, {\bf VTrie} $\ast$pTrie)
 \item 
@@ -23,9 +23,9 @@ double {\bf tag\_\-word\_\-best} (vector$<$ string $>$ \&words, vector$<$ string
 void {\bf setCType} ({\bf CMA\_\-CType} $\ast$ctype)
 \item 
 bool {\bf appendWordPOS} (string \&line)
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 vector$<$ set$<$ string $>$ $>$ {\bf posVec\_\-}
 \item 
@@ -38,7 +38,7 @@ string {\bf letterPOS}
 string {\bf puncPOS}
 \item 
 string {\bf datePOS}
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -47,21 +47,15 @@ Tagging the POS Information Tagging the POS using the maxent model.
 \subsection{Constructor \& Destructor Documentation}
 \index{cma::POSTagger@{cma::POSTagger}!POSTagger@{POSTagger}}
 \index{POSTagger@{POSTagger}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{POSTagger}]{\setlength{\rightskip}{0pt plus 5cm}cma::POSTagger::POSTagger (const string \& {\em model}, \/  {\bf VTrie} $\ast$ {\em pTrie})}\label{classcma_1_1POSTagger_dd40a3098429d2febe81df1d943cc486}
-
-
-Construct the \doxyref{POSTagger}{p.}{classcma_1_1POSTagger} with outer \doxyref{VTrie}{p.}{classVTrie} \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em model}]POS model name \end{description}
-\end{Desc}
+\subsubsection[{POSTagger}]{\setlength{\rightskip}{0pt plus 5cm}cma::POSTagger::POSTagger (const string \& {\em model}, \/  {\bf VTrie} $\ast$ {\em pTrie})}\label{classcma_1_1POSTagger_add40a3098429d2febe81df1d943cc486}
+Construct the \doxyref{POSTagger}{p.}{classcma_1_1POSTagger} with outer \doxyref{VTrie}{p.}{classVTrie} 
+\begin{DoxyParams}{Parameters}
+\item[{\em model}]POS model name \end{DoxyParams}
 
 
 References posVec\_\-.\index{cma::POSTagger@{cma::POSTagger}!POSTagger@{POSTagger}}
 \index{POSTagger@{POSTagger}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{POSTagger}]{\setlength{\rightskip}{0pt plus 5cm}cma::POSTagger::POSTagger (const string \& {\em model}, \/  const char $\ast$ {\em dictFile})}\label{classcma_1_1POSTagger_678c73558ec8fb6f3ae1adc5a4d904bb}
-
-
+\subsubsection[{POSTagger}]{\setlength{\rightskip}{0pt plus 5cm}cma::POSTagger::POSTagger (const string \& {\em model}, \/  const char $\ast$ {\em dictFile})}\label{classcma_1_1POSTagger_a678c73558ec8fb6f3ae1adc5a4d904bb}
 Construct the \doxyref{POSTagger}{p.}{classcma_1_1POSTagger} with inner \doxyref{VTrie}{p.}{classVTrie} (read from dictFile) 
 
 References appendWordPOS(), and posVec\_\-.
@@ -69,130 +63,96 @@ References appendWordPOS(), and posVec\_\-.
 \subsection{Member Function Documentation}
 \index{cma::POSTagger@{cma::POSTagger}!appendWordPOS@{appendWordPOS}}
 \index{appendWordPOS@{appendWordPOS}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{appendWordPOS}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTagger::appendWordPOS (string \& {\em line})}\label{classcma_1_1POSTagger_e3a219f6213b4ec917255af7f508f343}
-
-
-Append the POS Information into Trie and POS Vector \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em line}]a line like: word1 pos1 pos2 ... posN \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]whether add successfully \end{Desc}
+\subsubsection[{appendWordPOS}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTagger::appendWordPOS (string \& {\em line})}\label{classcma_1_1POSTagger_ae3a219f6213b4ec917255af7f508f343}
+Append the POS Information into Trie and POS Vector 
+\begin{DoxyParams}{Parameters}
+\item[{\em line}]a line like: word1 pos1 pos2 ... posN \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+whether add successfully 
+\end{DoxyReturn}
 
 
 References VTrieNode::data, VTrie::insert(), posVec\_\-, and VTrie::search().
 
 Referenced by POSTagger().\index{cma::POSTagger@{cma::POSTagger}!setCType@{setCType}}
 \index{setCType@{setCType}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{setCType}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::setCType ({\bf CMA\_\-CType} $\ast$ {\em ctype})\hspace{0.3cm}{\tt  [inline]}}\label{classcma_1_1POSTagger_cf191ab0490ea004e681c93c901de355}
-
-
+\subsubsection[{setCType}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::setCType ({\bf CMA\_\-CType} $\ast$ {\em ctype})\hspace{0.3cm}{\ttfamily  [inline]}}\label{classcma_1_1POSTagger_acf191ab0490ea004e681c93c901de355}
 Set the reference to the specific character encoding
 
-\begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em ctype}]new specific character encoding \end{description}
-\end{Desc}
+
+\begin{DoxyParams}{Parameters}
+\item[{\em ctype}]new specific character encoding \end{DoxyParams}
 
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::POSTagger@{cma::POSTagger}!tag\_\-file@{tag\_\-file}}
 \index{tag\_\-file@{tag\_\-file}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{tag\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::tag\_\-file (const char $\ast$ {\em inFile}, \/  const char $\ast$ {\em outFile})}\label{classcma_1_1POSTagger_95aa58e81425e379ef7100c5311a003b}
-
-
-Tag the segmented file with pos (In UTF8 Encoding) \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em inFile}]the input file \item[{\em outFile}]the output file \end{description}
-\end{Desc}
+\subsubsection[{tag\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::tag\_\-file (const char $\ast$ {\em inFile}, \/  const char $\ast$ {\em outFile})}\label{classcma_1_1POSTagger_a95aa58e81425e379ef7100c5311a003b}
+Tag the segmented file with pos (In UTF8 Encoding) 
+\begin{DoxyParams}{Parameters}
+\item[{\em inFile}]the input file \item[{\em outFile}]the output file \end{DoxyParams}
 
 
 References tag\_\-sentence\_\-best().\index{cma::POSTagger@{cma::POSTagger}!tag\_\-sentence@{tag\_\-sentence}}
 \index{tag\_\-sentence@{tag\_\-sentence}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{tag\_\-sentence}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::tag\_\-sentence (vector$<$ string $>$ \& {\em words}, \/  size\_\-t {\em N}, \/  size\_\-t {\em retSize}, \/  vector$<$ pair$<$ vector$<$ string $>$, double $>$ $>$ \& {\em segment})}\label{classcma_1_1POSTagger_17818fb91478d21edcaa741c9d43d295}
-
-
-tagging given words list and return N best \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em words}]the given words list \item[{\em N}]return N best \item[{\em retSize}]retSize $<$= N, the size of segment \item[{\em to}]store the result value \end{description}
-\end{Desc}
+\subsubsection[{tag\_\-sentence}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::tag\_\-sentence (vector$<$ string $>$ \& {\em words}, \/  size\_\-t {\em N}, \/  size\_\-t {\em retSize}, \/  vector$<$ pair$<$ vector$<$ string $>$, double $>$ $>$ \& {\em segment})}\label{classcma_1_1POSTagger_a17818fb91478d21edcaa741c9d43d295}
+tagging given words list and return N best 
+\begin{DoxyParams}{Parameters}
+\item[{\em words}]the given words list \item[{\em N}]return N best \item[{\em retSize}]retSize $<$= N, the size of segment \item[{\em to}]store the result value \end{DoxyParams}
 
 
 References cma::POSTagUnit::index, cma::POSTagUnit::pos, cma::POSTagUnit::previous, and cma::POSTagUnit::score.\index{cma::POSTagger@{cma::POSTagger}!tag\_\-sentence\_\-best@{tag\_\-sentence\_\-best}}
 \index{tag\_\-sentence\_\-best@{tag\_\-sentence\_\-best}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{tag\_\-sentence\_\-best}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::tag\_\-sentence\_\-best (vector$<$ string $>$ \& {\em words}, \/  vector$<$ string $>$ \& {\em posRet}, \/  int {\em begin}, \/  int {\em end})}\label{classcma_1_1POSTagger_efb7b6cfd52c11d289fb8f2332dde7c4}
-
-
-Only return the best result \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em words}]words vector \item[{\em posRet}]to hold the result value \item[{\em begin}]the begin index (include) to check \item[{\em end}]the first index that should not check \end{description}
-\end{Desc}
+\subsubsection[{tag\_\-sentence\_\-best}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTagger::tag\_\-sentence\_\-best (vector$<$ string $>$ \& {\em words}, \/  vector$<$ string $>$ \& {\em posRet}, \/  int {\em begin}, \/  int {\em end})}\label{classcma_1_1POSTagger_aefb7b6cfd52c11d289fb8f2332dde7c4}
+Only return the best result 
+\begin{DoxyParams}{Parameters}
+\item[{\em words}]words vector \item[{\em posRet}]to hold the result value \item[{\em begin}]the begin index (include) to check \item[{\em end}]the first index that should not check \end{DoxyParams}
 
 
 Referenced by tag\_\-file().\index{cma::POSTagger@{cma::POSTagger}!tag\_\-word\_\-best@{tag\_\-word\_\-best}}
 \index{tag\_\-word\_\-best@{tag\_\-word\_\-best}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{tag\_\-word\_\-best}]{\setlength{\rightskip}{0pt plus 5cm}double cma::POSTagger::tag\_\-word\_\-best (vector$<$ string $>$ \& {\em words}, \/  vector$<$ string $>$ \& {\em poses}, \/  int {\em index}, \/  string \& {\em pos})}\label{classcma_1_1POSTagger_c7d4c9b62c95e138f39dc84624f11b2e}
-
-
-tag the word with the best POS and return its score \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em words}]words vector \item[{\em poses}]the previous pos vector, but the current pos won't store into the poses \item[{\em index}]the current index to check \item[{\em pos}]to store the best pos \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]return the score of the best pos \end{Desc}
+\subsubsection[{tag\_\-word\_\-best}]{\setlength{\rightskip}{0pt plus 5cm}double cma::POSTagger::tag\_\-word\_\-best (vector$<$ string $>$ \& {\em words}, \/  vector$<$ string $>$ \& {\em poses}, \/  int {\em index}, \/  string \& {\em pos})}\label{classcma_1_1POSTagger_ac7d4c9b62c95e138f39dc84624f11b2e}
+tag the word with the best POS and return its score 
+\begin{DoxyParams}{Parameters}
+\item[{\em words}]words vector \item[{\em poses}]the previous pos vector, but the current pos won't store into the poses \item[{\em index}]the current index to check \item[{\em pos}]to store the best pos \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return the score of the best pos 
+\end{DoxyReturn}
 
 
 \subsection{Member Data Documentation}
 \index{cma::POSTagger@{cma::POSTagger}!datePOS@{datePOS}}
 \index{datePOS@{datePOS}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{datePOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::datePOS}}\label{classcma_1_1POSTagger_fff8339645c620fa045c11a95d7997ea}
-
-
+\subsubsection[{datePOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::datePOS}}\label{classcma_1_1POSTagger_afff8339645c620fa045c11a95d7997ea}
 Date POS 
 
 Referenced by cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTagger@{cma::POSTagger}!defaultPOS@{defaultPOS}}
 \index{defaultPOS@{defaultPOS}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{defaultPOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::defaultPOS}}\label{classcma_1_1POSTagger_198603e682fe22173f63cd25fb43f605}
-
-
+\subsubsection[{defaultPOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::defaultPOS}}\label{classcma_1_1POSTagger_a198603e682fe22173f63cd25fb43f605}
 default POS 
 
 Referenced by cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTagger@{cma::POSTagger}!letterPOS@{letterPOS}}
 \index{letterPOS@{letterPOS}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{letterPOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::letterPOS}}\label{classcma_1_1POSTagger_0691e0b96cb49d0ea81804a4c589b105}
-
-
+\subsubsection[{letterPOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::letterPOS}}\label{classcma_1_1POSTagger_a0691e0b96cb49d0ea81804a4c589b105}
 Letter POS 
 
 Referenced by cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTagger@{cma::POSTagger}!numberPOS@{numberPOS}}
 \index{numberPOS@{numberPOS}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{numberPOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::numberPOS}}\label{classcma_1_1POSTagger_9d5f03411ee4e43ad1cb225198e7eb27}
-
-
+\subsubsection[{numberPOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::numberPOS}}\label{classcma_1_1POSTagger_a9d5f03411ee4e43ad1cb225198e7eb27}
 Number POS 
 
 Referenced by cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTagger@{cma::POSTagger}!posVec\_\-@{posVec\_\-}}
 \index{posVec\_\-@{posVec\_\-}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{posVec\_\-}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$set$<$string$>$ $>$ {\bf cma::POSTagger::posVec\_\-}}\label{classcma_1_1POSTagger_06aced1751c71a0970b6d1de06b2d058}
-
-
+\subsubsection[{posVec\_\-}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$set$<$string$>$ $>$ {\bf cma::POSTagger::posVec\_\-}}\label{classcma_1_1POSTagger_a06aced1751c71a0970b6d1de06b2d058}
 vector to hold the POS information 
 
 Referenced by appendWordPOS(), and POSTagger().\index{cma::POSTagger@{cma::POSTagger}!puncPOS@{puncPOS}}
 \index{puncPOS@{puncPOS}!cma::POSTagger@{cma::POSTagger}}
-\subsubsection[{puncPOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::puncPOS}}\label{classcma_1_1POSTagger_ab545623b29696b86686241272f7d5bb}
-
-
+\subsubsection[{puncPOS}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf cma::POSTagger::puncPOS}}\label{classcma_1_1POSTagger_aab545623b29696b86686241272f7d5bb}
 Punctuation POS 
 
 Referenced by cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().
 
-The documentation for this class was generated from the following files:\begin{CompactItemize}
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-/home/vernkin/projects/chinese-ma-chen/source/include/{\bf CMAPOSTagger.h}\item 
-/home/vernkin/projects/chinese-ma-chen/source/src/{\bf CMAPOSTagger.cc}\end{CompactItemize}
+/home/vernkin/projects/chinese-\/ma-\/chen/source/include/{\bf CMAPOSTagger.h}\item 
+/home/vernkin/projects/chinese-\/ma-\/chen/source/src/{\bf CMAPOSTagger.cc}\end{DoxyCompactItemize}

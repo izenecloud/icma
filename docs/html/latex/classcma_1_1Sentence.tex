@@ -1,12 +1,16 @@
 \section{cma::Sentence Class Reference}
 \label{classcma_1_1Sentence}\index{cma::Sentence@{cma::Sentence}}
+
+
 \doxyref{Sentence}{p.}{classcma_1_1Sentence} saves the results of Chinese morphological analysis.  
 
 
-{\tt \#include $<$sentence.h$>$}
-
-\subsection*{Public Member Functions}
-\begin{CompactItemize}
+{\ttfamily \#include $<$sentence.h$>$}\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Sentence} ()
+\item 
+{\bf Sentence} (const char $\ast$pString)
 \item 
 void {\bf setString} (const char $\ast$pString)
 \item 
@@ -17,6 +21,8 @@ int {\bf getListSize} (void) const
 int {\bf getCount} (int nPos) const 
 \item 
 const char $\ast$ {\bf getLexicon} (int nPos, int nIdx) const 
+\item 
+bool {\bf isIndexWord} (int nPos, int nIdx) const 
 \item 
 int {\bf getPOS} (int nPos, int nIdx) const 
 \item 
@@ -31,165 +37,152 @@ void {\bf setScore} (int nPos, double nScore)
 int {\bf getOneBestIndex} (void) const 
 \item 
 void {\bf addList} (const MorphemeList \&morphemeList, double score=0.0)
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\doxyref{Sentence}{p.}{classcma_1_1Sentence} saves the results of Chinese morphological analysis. 
-
-\doxyref{Sentence}{p.}{classcma_1_1Sentence} saves the results of Chinese morphological analysis. Typically, the usage is like below:
+\doxyref{Sentence}{p.}{classcma_1_1Sentence} saves the results of Chinese morphological analysis. \doxyref{Sentence}{p.}{classcma_1_1Sentence} saves the results of Chinese morphological analysis. Typically, the usage is like below:
 
 \doxyref{Sentence}{p.}{classcma_1_1Sentence} s; s.setString(\char`\"{}...\char`\"{});
 
-Analyzer$\ast$ analyzer = ...; analyzer-$>$runWithSentence(s);
+Analyzer$\ast$ analyzer = ...; analyzer-\/$>$runWithSentence(s);
 
-// get n-best results for(int i=0; i$<$s.getListSize(); ++i) \{ for(int j=0; j$<$s.getCount(i); ++j) \{ const char$\ast$ pLexicon = s.getLexicon(i, j); const char$\ast$ strPOS = s.getStrPOS(i, j); ... \} double score = s.getScore(i); ... \}
+// get n-\/best results for(int i=0; i$<$s.getListSize(); ++i) \{ for(int j=0; j$<$s.getCount(i); ++j) \{ const char$\ast$ pLexicon = s.getLexicon(i, j); const char$\ast$ strPOS = s.getStrPOS(i, j); ... \} double score = s.getScore(i); ... \}
 
-// get one-best result int i= s.getOneBestIndex(); ... 
+// get one-\/best result int i= s.getOneBestIndex(); ... 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{cma::Sentence@{cma::Sentence}!Sentence@{Sentence}}
+\index{Sentence@{Sentence}!cma::Sentence@{cma::Sentence}}
+\subsubsection[{Sentence}]{\setlength{\rightskip}{0pt plus 5cm}cma::Sentence::Sentence ()}\label{classcma_1_1Sentence_ae81b2a99e64f106878b3b7adfcc546c4}
+Default Constructor and do nothing \index{cma::Sentence@{cma::Sentence}!Sentence@{Sentence}}
+\index{Sentence@{Sentence}!cma::Sentence@{cma::Sentence}}
+\subsubsection[{Sentence}]{\setlength{\rightskip}{0pt plus 5cm}cma::Sentence::Sentence (const char $\ast$ {\em pString})}\label{classcma_1_1Sentence_ab1a3fc1695c408eab9658bdd18e3b681}
+Constructor with initial raw sentence string 
+\begin{DoxyParams}{Parameters}
+\item[{\em pString}]value of the raw string \end{DoxyParams}
+
 
 \subsection{Member Function Documentation}
 \index{cma::Sentence@{cma::Sentence}!addList@{addList}}
 \index{addList@{addList}!cma::Sentence@{cma::Sentence}}
-\subsubsection[{addList}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Sentence::addList (const MorphemeList \& {\em morphemeList}, \/  double {\em score} = {\tt 0.0})}\label{classcma_1_1Sentence_39f0e77ac6f3705ae6dc1b8e15118760}
-
-
-Add a candidate result of morphological analysis. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em morphemeList}]the candidate result \item[{\em score}]the score value of the candidate \end{description}
-\end{Desc}
+\subsubsection[{addList}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Sentence::addList (const MorphemeList \& {\em morphemeList}, \/  double {\em score} = {\ttfamily 0.0})}\label{classcma_1_1Sentence_a39f0e77ac6f3705ae6dc1b8e15118760}
+Add a candidate result of morphological analysis. 
+\begin{DoxyParams}{Parameters}
+\item[{\em morphemeList}]the candidate result \item[{\em score}]the score value of the candidate \end{DoxyParams}
 
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Sentence@{cma::Sentence}!getCount@{getCount}}
 \index{getCount@{getCount}!cma::Sentence@{cma::Sentence}}
-\subsubsection[{getCount}]{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getCount (int {\em nPos}) const}\label{classcma_1_1Sentence_5dd92e59708ea8cc61d3edc0d1fd830d}
-
-
-Get the number of morphemes in candidate result {\em nPos\/}. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em nPos}]candidate result index \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]the number of morphemes \end{Desc}
+\subsubsection[{getCount}]{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getCount (int {\em nPos}) const}\label{classcma_1_1Sentence_a5dd92e59708ea8cc61d3edc0d1fd830d}
+Get the number of morphemes in candidate result {\itshape nPos\/}. 
+\begin{DoxyParams}{Parameters}
+\item[{\em nPos}]candidate result index \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the number of morphemes 
+\end{DoxyReturn}
 \index{cma::Sentence@{cma::Sentence}!getLexicon@{getLexicon}}
 \index{getLexicon@{getLexicon}!cma::Sentence@{cma::Sentence}}
-\subsubsection[{getLexicon}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Sentence::getLexicon (int {\em nPos}, \/  int {\em nIdx}) const}\label{classcma_1_1Sentence_c8fd1b3aa8062fff6e88a31e723802ae}
-
-
-Get the string of morpheme {\em nIdx\/} in candidate result {\em nPos\/}. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em nPos}]candidate result index \item[{\em nIdx}]morpheme index \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]morpheme string \end{Desc}
+\subsubsection[{getLexicon}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Sentence::getLexicon (int {\em nPos}, \/  int {\em nIdx}) const}\label{classcma_1_1Sentence_ac8fd1b3aa8062fff6e88a31e723802ae}
+Get the string of morpheme {\itshape nIdx\/} in candidate result {\itshape nPos\/}. 
+\begin{DoxyParams}{Parameters}
+\item[{\em nPos}]candidate result index \item[{\em nIdx}]morpheme index \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+morpheme string 
+\end{DoxyReturn}
 \index{cma::Sentence@{cma::Sentence}!getListSize@{getListSize}}
 \index{getListSize@{getListSize}!cma::Sentence@{cma::Sentence}}
-\subsubsection[{getListSize}]{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getListSize (void) const}\label{classcma_1_1Sentence_883c3773c3f2a82f3b3b9fcae13ceb66}
-
-
-Get the number of candidates of morphological analysis result. \begin{Desc}
-\item[Returns:]the number of candidates \end{Desc}
+\subsubsection[{getListSize}]{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getListSize (void) const}\label{classcma_1_1Sentence_a883c3773c3f2a82f3b3b9fcae13ceb66}
+Get the number of candidates of morphological analysis result. \begin{DoxyReturn}{Returns}
+the number of candidates 
+\end{DoxyReturn}
 
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Sentence@{cma::Sentence}!getMorphemeList@{getMorphemeList}}
 \index{getMorphemeList@{getMorphemeList}!cma::Sentence@{cma::Sentence}}
-\subsubsection[{getMorphemeList}]{\setlength{\rightskip}{0pt plus 5cm}const MorphemeList $\ast$ cma::Sentence::getMorphemeList (int {\em nPos}) const}\label{classcma_1_1Sentence_d782589b716eee9f5d25dfb60f5211ab}
-
-
-Get the MorphemeList of candidate result {\em nPos\/}. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em nPos}]candidate result index \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]the MorphemeList \end{Desc}
+\subsubsection[{getMorphemeList}]{\setlength{\rightskip}{0pt plus 5cm}const MorphemeList $\ast$ cma::Sentence::getMorphemeList (int {\em nPos}) const}\label{classcma_1_1Sentence_ad782589b716eee9f5d25dfb60f5211ab}
+Get the MorphemeList of candidate result {\itshape nPos\/}. 
+\begin{DoxyParams}{Parameters}
+\item[{\em nPos}]candidate result index \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the MorphemeList 
+\end{DoxyReturn}
 
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Sentence@{cma::Sentence}!getOneBestIndex@{getOneBestIndex}}
 \index{getOneBestIndex@{getOneBestIndex}!cma::Sentence@{cma::Sentence}}
-\subsubsection[{getOneBestIndex}]{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getOneBestIndex (void) const}\label{classcma_1_1Sentence_f1ccc0e78beb1f7b8bd22e0c10efa8d4}
-
-
-Get the index of the candidate result, which has the highest score. \begin{Desc}
-\item[Returns:]candidate result index, -1 is returned if there is no candidate result. \end{Desc}
+\subsubsection[{getOneBestIndex}]{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getOneBestIndex (void) const}\label{classcma_1_1Sentence_af1ccc0e78beb1f7b8bd22e0c10efa8d4}
+Get the index of the candidate result, which has the highest score. \begin{DoxyReturn}{Returns}
+candidate result index, -\/1 is returned if there is no candidate result. 
+\end{DoxyReturn}
 \index{cma::Sentence@{cma::Sentence}!getPOS@{getPOS}}
 \index{getPOS@{getPOS}!cma::Sentence@{cma::Sentence}}
-\subsubsection[{getPOS}]{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getPOS (int {\em nPos}, \/  int {\em nIdx}) const}\label{classcma_1_1Sentence_7e03360cc524ea35245c1b5a61c348e0}
-
-
-Get the POS index code of morpheme {\em nIdx\/} in candidate result {\em nPos\/}. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em nPos}]candidate result index \item[{\em nIdx}]morpheme index \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]POS index code, -1 for non POS available \end{Desc}
+\subsubsection[{getPOS}]{\setlength{\rightskip}{0pt plus 5cm}int cma::Sentence::getPOS (int {\em nPos}, \/  int {\em nIdx}) const}\label{classcma_1_1Sentence_a7e03360cc524ea35245c1b5a61c348e0}
+Get the POS index code of morpheme {\itshape nIdx\/} in candidate result {\itshape nPos\/}. 
+\begin{DoxyParams}{Parameters}
+\item[{\em nPos}]candidate result index \item[{\em nIdx}]morpheme index \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+POS index code, -\/1 for non POS available 
+\end{DoxyReturn}
 \index{cma::Sentence@{cma::Sentence}!getScore@{getScore}}
 \index{getScore@{getScore}!cma::Sentence@{cma::Sentence}}
-\subsubsection[{getScore}]{\setlength{\rightskip}{0pt plus 5cm}double cma::Sentence::getScore (int {\em nPos}) const}\label{classcma_1_1Sentence_850f236efa3fa2b75b5b40cf35fbdd95}
-
-
-Get the score of candidate result {\em nPos\/}. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em nPos}]candidate result index \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]the score value \end{Desc}
+\subsubsection[{getScore}]{\setlength{\rightskip}{0pt plus 5cm}double cma::Sentence::getScore (int {\em nPos}) const}\label{classcma_1_1Sentence_a850f236efa3fa2b75b5b40cf35fbdd95}
+Get the score of candidate result {\itshape nPos\/}. 
+\begin{DoxyParams}{Parameters}
+\item[{\em nPos}]candidate result index \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the score value 
+\end{DoxyReturn}
 
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Sentence@{cma::Sentence}!getString@{getString}}
 \index{getString@{getString}!cma::Sentence@{cma::Sentence}}
-\subsubsection[{getString}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Sentence::getString (void) const}\label{classcma_1_1Sentence_ee44e192f67dacbe6bc0cfc433cabb30}
-
-
-Get the raw sentence string. \begin{Desc}
-\item[Returns:]value of the raw string \end{Desc}
+\subsubsection[{getString}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Sentence::getString (void) const}\label{classcma_1_1Sentence_aee44e192f67dacbe6bc0cfc433cabb30}
+Get the raw sentence string. \begin{DoxyReturn}{Returns}
+value of the raw string 
+\end{DoxyReturn}
 
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Sentence@{cma::Sentence}!getStrPOS@{getStrPOS}}
 \index{getStrPOS@{getStrPOS}!cma::Sentence@{cma::Sentence}}
-\subsubsection[{getStrPOS}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Sentence::getStrPOS (int {\em nPos}, \/  int {\em nIdx}) const}\label{classcma_1_1Sentence_6cb05837a84acf7d30fadb5bca6314db}
-
-
-Get the POS string of morpheme {\em nIdx\/} in candidate result {\em nPos\/}. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em nPos}]candidate result index \item[{\em nIdx}]morpheme index \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]POS string, null pointer for non POS available \end{Desc}
+\subsubsection[{getStrPOS}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Sentence::getStrPOS (int {\em nPos}, \/  int {\em nIdx}) const}\label{classcma_1_1Sentence_a6cb05837a84acf7d30fadb5bca6314db}
+Get the POS string of morpheme {\itshape nIdx\/} in candidate result {\itshape nPos\/}. 
+\begin{DoxyParams}{Parameters}
+\item[{\em nPos}]candidate result index \item[{\em nIdx}]morpheme index \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+POS string, null pointer for non POS available 
+\end{DoxyReturn}
+\index{cma::Sentence@{cma::Sentence}!isIndexWord@{isIndexWord}}
+\index{isIndexWord@{isIndexWord}!cma::Sentence@{cma::Sentence}}
+\subsubsection[{isIndexWord}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::Sentence::isIndexWord (int {\em nPos}, \/  int {\em nIdx}) const}\label{classcma_1_1Sentence_a037d9dc3fafa889510fd811290621548}
+Get the string of morpheme {\itshape nIdx\/} in candidate result {\itshape nPos\/}. 
+\begin{DoxyParams}{Parameters}
+\item[{\em nPos}]candidate result index \item[{\em nIdx}]morpheme index \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+morpheme string 
+\end{DoxyReturn}
 \index{cma::Sentence@{cma::Sentence}!setScore@{setScore}}
 \index{setScore@{setScore}!cma::Sentence@{cma::Sentence}}
-\subsubsection[{setScore}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Sentence::setScore (int {\em nPos}, \/  double {\em nScore})}\label{classcma_1_1Sentence_e7676fbf7d34dc879ecbf448025cb080}
-
-
-Set the score of candidate result {\em nPos\/}. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em nPos}]candidate result index \item[{\em nScore}]the score value \end{description}
-\end{Desc}
+\subsubsection[{setScore}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Sentence::setScore (int {\em nPos}, \/  double {\em nScore})}\label{classcma_1_1Sentence_ae7676fbf7d34dc879ecbf448025cb080}
+Set the score of candidate result {\itshape nPos\/}. 
+\begin{DoxyParams}{Parameters}
+\item[{\em nPos}]candidate result index \item[{\em nScore}]the score value \end{DoxyParams}
 
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Sentence@{cma::Sentence}!setString@{setString}}
 \index{setString@{setString}!cma::Sentence@{cma::Sentence}}
-\subsubsection[{setString}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Sentence::setString (const char $\ast$ {\em pString})}\label{classcma_1_1Sentence_40fb665bd2b2a19e430d4e474f3534a3}
-
-
-Set the raw sentence string. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em pString}]value of the raw string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Attention:]the previous analysis results will be removed. \end{Desc}
+\subsubsection[{setString}]{\setlength{\rightskip}{0pt plus 5cm}void cma::Sentence::setString (const char $\ast$ {\em pString})}\label{classcma_1_1Sentence_a40fb665bd2b2a19e430d4e474f3534a3}
+Set the raw sentence string. 
+\begin{DoxyParams}{Parameters}
+\item[{\em pString}]value of the raw string \end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+the previous analysis results will be removed. 
+\end{DoxyAttention}
 
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::splitSentence().
 
-The documentation for this class was generated from the following files:\begin{CompactItemize}
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-/home/vernkin/projects/chinese-ma-chen/include/{\bf sentence.h}\item 
-/home/vernkin/projects/chinese-ma-chen/source/src/{\bf sentence.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-\/ma-\/chen/include/{\bf sentence.h}\item 
+/home/vernkin/projects/chinese-\/ma-\/chen/source/src/{\bf sentence.cpp}\end{DoxyCompactItemize}

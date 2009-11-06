@@ -1,40 +1,37 @@
-\section{/home/vernkin/projects/chinese-ma-chen/source/include/SeggerCMD.h File Reference}
-\label{SeggerCMD_8h}\index{/home/vernkin/projects/chinese-ma-chen/source/include/SeggerCMD.h@{/home/vernkin/projects/chinese-ma-chen/source/include/SeggerCMD.h}}
+\section{/home/vernkin/projects/chinese-\/ma-\/chen/source/include/SeggerCMD.h File Reference}
+\label{SeggerCMD_8h}\index{/home/vernkin/projects/chinese-\/ma-\/chen/source/include/SeggerCMD.h@{/home/vernkin/projects/chinese-\/ma-\/chen/source/include/SeggerCMD.h}}
+
+
 the CMD tool for the Segger  
-
-
-{\tt \#include $<$iostream$>$}\par
-{\tt \#include \char`\"{}cma\_\-factory.h\char`\"{}}\par
-{\tt \#include \char`\"{}analyzer.h\char`\"{}}\par
-{\tt \#include \char`\"{}knowledge.h\char`\"{}}\par
-{\tt \#include \char`\"{}sentence.h\char`\"{}}\par
-{\tt \#include \char`\"{}VTimer.h\char`\"{}}\par
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include \char`\"{}cma\_\-factory.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}analyzer.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}knowledge.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}sentence.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}VTimer.h\char`\"{}}\par
 \subsection*{Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 void {\bf beginSeg} (string mate, string inFile, string outFile, string enc, string posDelimiter)
 \item 
-int \textbf{seggerEntry} (int argc, char $\ast$$\ast$argv)\label{SeggerCMD_8h_e624a37c8cde5a86c57acff2b8e2b15a}
+int {\bfseries seggerEntry} (int argc, char $\ast$$\ast$argv)\label{SeggerCMD_8h_ae624a37c8cde5a86c57acff2b8e2b15a}
 
 \item 
-void \textbf{printSeggerUsage} ()\label{SeggerCMD_8h_7c87e8750f51eca3e1b15b7f252d5131}
+void {\bfseries printSeggerUsage} ()\label{SeggerCMD_8h_a7c87e8750f51eca3e1b15b7f252d5131}
 
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-the CMD tool for the Segger 
-
-\begin{Desc}
-\item[Author:]vernkin \end{Desc}
+the CMD tool for the Segger \begin{DoxyAuthor}{Author}
+vernkin 
+\end{DoxyAuthor}
 
 
 \subsection{Function Documentation}
 \index{SeggerCMD.h@{SeggerCMD.h}!beginSeg@{beginSeg}}
 \index{beginSeg@{beginSeg}!SeggerCMD.h@{SeggerCMD.h}}
-\subsubsection[{beginSeg}]{\setlength{\rightskip}{0pt plus 5cm}void beginSeg (string {\em mate}, \/  string {\em inFile}, \/  string {\em outFile}, \/  string {\em enc}, \/  string {\em posDelimiter})}\label{SeggerCMD_8h_b30a0cc7bae3e3976cb797d3f026c20b}
-
-
+\subsubsection[{beginSeg}]{\setlength{\rightskip}{0pt plus 5cm}void beginSeg (string {\em mate}, \/  string {\em inFile}, \/  string {\em outFile}, \/  string {\em enc}, \/  string {\em posDelimiter})}\label{SeggerCMD_8h_ab30a0cc7bae3e3976cb797d3f026c20b}
 To segment the file 
 
 References cma::CMA\_\-Factory::createAnalyzer(), cma::CMA\_\-Factory::createKnowledge(), cma::Knowledge::loadModel(), cma::Analyzer::runWithStream(), cma::Analyzer::setKnowledge(), and cma::Analyzer::setPOSDelimiter().

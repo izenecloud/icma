@@ -1,12 +1,12 @@
 \section{cma::POSTable Class Reference}
 \label{classcma_1_1POSTable}\index{cma::POSTable@{cma::POSTable}}
-\doxyref{POSTable}{p.}{classcma_1_1POSTable} stores the global table of part-of-speech tags.  
 
 
-{\tt \#include $<$pos\_\-table.h$>$}
+\doxyref{POSTable}{p.}{classcma_1_1POSTable} stores the global table of part-\/of-\/speech tags.  
 
-\subsection*{Public Types}
-\begin{CompactItemize}
+
+{\ttfamily \#include $<$pos\_\-table.h$>$}\subsection*{Public Types}
+\begin{DoxyCompactItemize}
 \item 
 enum {\bf POSType} \{ \par
 {\bf POS\_\-TYPE\_\-NUMBER}, 
@@ -17,8 +17,12 @@ enum {\bf POSType} \{ \par
 {\bf POS\_\-TYPE\_\-USER}, 
 {\bf POS\_\-TYPE\_\-MAX\_\-NUM}
  \}
+\item 
+typedef std::vector$<$ std::pair$<$ std::string, bool $>$ $>$ {\bfseries POSTableInfo}\label{classcma_1_1POSTable_a9bea1fc2a063a90e19e5bfa7e851eae3}
+
+\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 int {\bf addPOS} (const std::string \&pos)
 \item 
@@ -31,35 +35,41 @@ int {\bf size} () const
 bool {\bf loadConfig} (const char $\ast$fileName)
 \item 
 int {\bf getCodeFromType} ({\bf POSType} type) const 
-\end{CompactItemize}
+\item 
+bool {\bf isIndexPOS} (int posCode) const 
+\item 
+bool {\bf setIndexPOS} (int posCode, bool isIndex)
+\item 
+void {\bf resetIndexPOSList} (bool defVal=true)
+\item 
+int {\bf setIndexPOSList} (std::vector$<$ std::string $>$ \&posList)
+\item 
+const POSTableInfo $\ast$ {\bf getPOSTableInfo} ()
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\doxyref{POSTable}{p.}{classcma_1_1POSTable} stores the global table of part-of-speech tags. 
-
-\doxyref{POSTable}{p.}{classcma_1_1POSTable} stores the global table of part-of-speech tags, each tag includes a string value and its index code. Note that the string value of part-of-speech tag is case-insensitive. For example, 'Ng' equals to 'ng'. 
+\doxyref{POSTable}{p.}{classcma_1_1POSTable} stores the global table of part-\/of-\/speech tags. \doxyref{POSTable}{p.}{classcma_1_1POSTable} stores the global table of part-\/of-\/speech tags, each tag includes a string value and its index code. Note that the string value of part-\/of-\/speech tag is case-\/insensitive. For example, 'Ng' equals to 'ng'. 
 
 \subsection{Member Enumeration Documentation}
 \index{cma::POSTable@{cma::POSTable}!POSType@{POSType}}
 \index{POSType@{POSType}!cma::POSTable@{cma::POSTable}}
-\subsubsection[{POSType}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf cma::POSTable::POSType}}\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c001}
-
-
-Special part-of-speech types. \begin{Desc}
+\subsubsection[{POSType}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf cma::POSTable::POSType}}\label{classcma_1_1POSTable_ab65c0d7bf4f492aeff968cf462b6c001}
+Special part-\/of-\/speech types. \begin{Desc}
 \item[Enumerator: ]\par
 \begin{description}
 \index{POS\_\-TYPE\_\-NUMBER@{POS\_\-TYPE\_\-NUMBER}!cma::POSTable@{cma::POSTable}}\index{cma::POSTable@{cma::POSTable}!POS\_\-TYPE\_\-NUMBER@{POS\_\-TYPE\_\-NUMBER}}\item[{\em 
-POS\_\-TYPE\_\-NUMBER\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c001a9688ce10893fe5845f859eac8aa8341}
+POS\_\-TYPE\_\-NUMBER\label{classcma_1_1POSTable_ab65c0d7bf4f492aeff968cf462b6c001aa9688ce10893fe5845f859eac8aa8341}
 }]the POS type of numeral words, such as \char`\"{}123\char`\"{}, \char`\"{}一百\char`\"{}, etc \index{POS\_\-TYPE\_\-DATE@{POS\_\-TYPE\_\-DATE}!cma::POSTable@{cma::POSTable}}\index{cma::POSTable@{cma::POSTable}!POS\_\-TYPE\_\-DATE@{POS\_\-TYPE\_\-DATE}}\item[{\em 
-POS\_\-TYPE\_\-DATE\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c0012aedfaa1b656b4f9d284e9f697f70d7a}
+POS\_\-TYPE\_\-DATE\label{classcma_1_1POSTable_ab65c0d7bf4f492aeff968cf462b6c001a2aedfaa1b656b4f9d284e9f697f70d7a}
 }]the POS type of temporal nouns such as \char`\"{}今天\char`\"{}, \char`\"{}2009年\char`\"{}, etc \index{POS\_\-TYPE\_\-FOREIGN@{POS\_\-TYPE\_\-FOREIGN}!cma::POSTable@{cma::POSTable}}\index{cma::POSTable@{cma::POSTable}!POS\_\-TYPE\_\-FOREIGN@{POS\_\-TYPE\_\-FOREIGN}}\item[{\em 
-POS\_\-TYPE\_\-FOREIGN\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c001a8210d74c2fff14ee41eaab24708901e}
+POS\_\-TYPE\_\-FOREIGN\label{classcma_1_1POSTable_ab65c0d7bf4f492aeff968cf462b6c001aa8210d74c2fff14ee41eaab24708901e}
 }]the POS type of foreign words such as \char`\"{}ISO\char`\"{}, \char`\"{}ＣＨＩＮＡ\char`\"{}, etc \index{POS\_\-TYPE\_\-PUNCT@{POS\_\-TYPE\_\-PUNCT}!cma::POSTable@{cma::POSTable}}\index{cma::POSTable@{cma::POSTable}!POS\_\-TYPE\_\-PUNCT@{POS\_\-TYPE\_\-PUNCT}}\item[{\em 
-POS\_\-TYPE\_\-PUNCT\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c0010ef9758a5659c4e92a7f66cd853697a8}
+POS\_\-TYPE\_\-PUNCT\label{classcma_1_1POSTable_ab65c0d7bf4f492aeff968cf462b6c001a0ef9758a5659c4e92a7f66cd853697a8}
 }]the POS type of punctuations such as \char`\"{}，\char`\"{}, \char`\"{}。\char`\"{}, etc \index{POS\_\-TYPE\_\-USER@{POS\_\-TYPE\_\-USER}!cma::POSTable@{cma::POSTable}}\index{cma::POSTable@{cma::POSTable}!POS\_\-TYPE\_\-USER@{POS\_\-TYPE\_\-USER}}\item[{\em 
-POS\_\-TYPE\_\-USER\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c0018f8cf5a000c13742573f254677f24a70}
+POS\_\-TYPE\_\-USER\label{classcma_1_1POSTable_ab65c0d7bf4f492aeff968cf462b6c001a8f8cf5a000c13742573f254677f24a70}
 }]the POS type of user defined words \index{POS\_\-TYPE\_\-MAX\_\-NUM@{POS\_\-TYPE\_\-MAX\_\-NUM}!cma::POSTable@{cma::POSTable}}\index{cma::POSTable@{cma::POSTable}!POS\_\-TYPE\_\-MAX\_\-NUM@{POS\_\-TYPE\_\-MAX\_\-NUM}}\item[{\em 
-POS\_\-TYPE\_\-MAX\_\-NUM\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b6c001c5863d9717e733ba5f1234e1f0a64fbd}
+POS\_\-TYPE\_\-MAX\_\-NUM\label{classcma_1_1POSTable_ab65c0d7bf4f492aeff968cf462b6c001ac5863d9717e733ba5f1234e1f0a64fbd}
 }]the count of POS types \end{description}
 \end{Desc}
 
@@ -68,80 +78,108 @@ POS\_\-TYPE\_\-MAX\_\-NUM\label{classcma_1_1POSTable_b65c0d7bf4f492aeff968cf462b
 \subsection{Member Function Documentation}
 \index{cma::POSTable@{cma::POSTable}!addPOS@{addPOS}}
 \index{addPOS@{addPOS}!cma::POSTable@{cma::POSTable}}
-\subsubsection[{addPOS}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::addPOS (const std::string \& {\em pos})}\label{classcma_1_1POSTable_77898a33965a0eee826c41b7916d80ce}
-
-
-Add the POS string to the global part-of-speech table. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em pos}]the POS string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]the index code of the POS string added, if the POS string has been added before, its index code previously added is returned. \end{Desc}
-\begin{Desc}
-\item[Attention:]Note that the POS string is case-insensitively. \end{Desc}
+\subsubsection[{addPOS}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::addPOS (const std::string \& {\em pos})}\label{classcma_1_1POSTable_a77898a33965a0eee826c41b7916d80ce}
+Add the POS string to the global part-\/of-\/speech table. 
+\begin{DoxyParams}{Parameters}
+\item[{\em pos}]the POS string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the index code of the POS string added, if the POS string has been added before, its index code previously added is returned. 
+\end{DoxyReturn}
+\begin{DoxyAttention}{Attention}
+Note that the POS string is case-\/insensitively. 
+\end{DoxyAttention}
 
 
 Referenced by loadConfig(), and cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTable@{cma::POSTable}!getCodeFromStr@{getCodeFromStr}}
 \index{getCodeFromStr@{getCodeFromStr}!cma::POSTable@{cma::POSTable}}
-\subsubsection[{getCodeFromStr}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromStr (const std::string \& {\em pos}) const}\label{classcma_1_1POSTable_1692f43e2154d408265e09affd64d70a}
-
-
-Get the POS index code from the POS string in the global part-of-speech table. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em pos}]the POS string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]POS index code, -1 for non POS available \end{Desc}
+\subsubsection[{getCodeFromStr}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromStr (const std::string \& {\em pos}) const}\label{classcma_1_1POSTable_a1692f43e2154d408265e09affd64d70a}
+Get the POS index code from the POS string in the global part-\/of-\/speech table. 
+\begin{DoxyParams}{Parameters}
+\item[{\em pos}]the POS string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+POS index code, -\/1 for non POS available 
+\end{DoxyReturn}
 \index{cma::POSTable@{cma::POSTable}!getCodeFromType@{getCodeFromType}}
 \index{getCodeFromType@{getCodeFromType}!cma::POSTable@{cma::POSTable}}
-\subsubsection[{getCodeFromType}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromType ({\bf POSType} {\em type}) const}\label{classcma_1_1POSTable_d6c9ee24dd82620d36d4de8018702546}
-
-
-Get the POS index code from the special POS type. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em type}]the POS type \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]POS index code, -1 for non POS available \end{Desc}
+\subsubsection[{getCodeFromType}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromType ({\bf POSType} {\em type}) const}\label{classcma_1_1POSTable_ad6c9ee24dd82620d36d4de8018702546}
+Get the POS index code from the special POS type. 
+\begin{DoxyParams}{Parameters}
+\item[{\em type}]the POS type \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+POS index code, -\/1 for non POS available 
+\end{DoxyReturn}
+\index{cma::POSTable@{cma::POSTable}!getPOSTableInfo@{getPOSTableInfo}}
+\index{getPOSTableInfo@{getPOSTableInfo}!cma::POSTable@{cma::POSTable}}
+\subsubsection[{getPOSTableInfo}]{\setlength{\rightskip}{0pt plus 5cm}const POSTableInfo$\ast$ cma::POSTable::getPOSTableInfo ()\hspace{0.3cm}{\ttfamily  [inline]}}\label{classcma_1_1POSTable_ac3fe80758770f2946c870b07b4f7d3bc}
+Get \doxyref{POSTable}{p.}{classcma_1_1POSTable} information, reserved Interface \begin{DoxyReturn}{Returns}
+\doxyref{POSTable}{p.}{classcma_1_1POSTable} information 
+\end{DoxyReturn}
 \index{cma::POSTable@{cma::POSTable}!getStrFromCode@{getStrFromCode}}
 \index{getStrFromCode@{getStrFromCode}!cma::POSTable@{cma::POSTable}}
-\subsubsection[{getStrFromCode}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::POSTable::getStrFromCode (int {\em index}) const}\label{classcma_1_1POSTable_cf9611088b3484dbaad11ef2b5b24f52}
-
-
-Get the POS string from the POS index code in the global part-of-speech table. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em index}]the POS index code \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]POS string, null pointer for non POS available \end{Desc}
+\subsubsection[{getStrFromCode}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::POSTable::getStrFromCode (int {\em index}) const}\label{classcma_1_1POSTable_acf9611088b3484dbaad11ef2b5b24f52}
+Get the POS string from the POS index code in the global part-\/of-\/speech table. 
+\begin{DoxyParams}{Parameters}
+\item[{\em index}]the POS index code \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+POS string, null pointer for non POS available 
+\end{DoxyReturn}
+\index{cma::POSTable@{cma::POSTable}!isIndexPOS@{isIndexPOS}}
+\index{isIndexPOS@{isIndexPOS}!cma::POSTable@{cma::POSTable}}
+\subsubsection[{isIndexPOS}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTable::isIndexPOS (int {\em posCode}) const}\label{classcma_1_1POSTable_a0348ae37b15a1b9c4ce920ffecd83264}
+Whether the posCode indicates that word is index word, if the posCode is invalid, return true. 
+\begin{DoxyParams}{Parameters}
+\item[{\em posCode}]the specific pos Code \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if posCode is the index POS 
+\end{DoxyReturn}
 \index{cma::POSTable@{cma::POSTable}!loadConfig@{loadConfig}}
 \index{loadConfig@{loadConfig}!cma::POSTable@{cma::POSTable}}
-\subsubsection[{loadConfig}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTable::loadConfig (const char $\ast$ {\em fileName})}\label{classcma_1_1POSTable_a70a1e82116a1855f9599aeb48cb5139}
+\subsubsection[{loadConfig}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTable::loadConfig (const char $\ast$ {\em fileName})}\label{classcma_1_1POSTable_aa70a1e82116a1855f9599aeb48cb5139}
+Load the configuration file, which is in text format. This file contains the part-\/of-\/speech configuration, which format is \char`\"{}tag = value\char`\"{}. 
+\begin{DoxyParams}{Parameters}
+\item[{\em fileName}]the file name \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 for fail, 1 for success 
+\end{DoxyReturn}
 
 
-Load the configuration file, which is in text format. This file contains the part-of-speech configuration, which format is \char`\"{}tag = value\char`\"{}. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em fileName}]the file name \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]0 for fail, 1 for success \end{Desc}
+References addPOS().\index{cma::POSTable@{cma::POSTable}!resetIndexPOSList@{resetIndexPOSList}}
+\index{resetIndexPOSList@{resetIndexPOSList}!cma::POSTable@{cma::POSTable}}
+\subsubsection[{resetIndexPOSList}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTable::resetIndexPOSList (bool {\em defVal} = {\ttfamily true})}\label{classcma_1_1POSTable_a6027450417effadd701d683b773ec659}
+Reset all the pos index Information as defVal \begin{DoxyReturn}{Returns}
+defVal default value to reset (default is true) 
+\end{DoxyReturn}
 
 
-References addPOS().\index{cma::POSTable@{cma::POSTable}!size@{size}}
+Referenced by cma::CMA\_\-ME\_\-Analyzer::resetIndexPOSList().\index{cma::POSTable@{cma::POSTable}!setIndexPOS@{setIndexPOS}}
+\index{setIndexPOS@{setIndexPOS}!cma::POSTable@{cma::POSTable}}
+\subsubsection[{setIndexPOS}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTable::setIndexPOS (int {\em posCode}, \/  bool {\em isIndex})}\label{classcma_1_1POSTable_a1a3432b617b81c542a58e2d97146a1d8}
+Set the specific posCode whether is index 
+\begin{DoxyParams}{Parameters}
+\item[{\em posCode}]the specific POS code \item[{\em whether}]the index is posCode \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+whether set successfully, if false, the posCode doesn't exists 
+\end{DoxyReturn}
+\index{cma::POSTable@{cma::POSTable}!setIndexPOSList@{setIndexPOSList}}
+\index{setIndexPOSList@{setIndexPOSList}!cma::POSTable@{cma::POSTable}}
+\subsubsection[{setIndexPOSList}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::setIndexPOSList (std::vector$<$ std::string $>$ \& {\em posList})}\label{classcma_1_1POSTable_a439d062eadae6baee49f6a1038629364}
+Set the POS index as true in the posList 
+\begin{DoxyParams}{Parameters}
+\item[{\em posList}]the list that allowed in the posList \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+how many POS are set successfully (mainly because not exists). 
+\end{DoxyReturn}
+
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::setIndexPOSList().\index{cma::POSTable@{cma::POSTable}!size@{size}}
 \index{size@{size}!cma::POSTable@{cma::POSTable}}
-\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::size () const}\label{classcma_1_1POSTable_eb70793af427c7dd545f132e177ca26e}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::size () const}\label{classcma_1_1POSTable_aeb70793af427c7dd545f132e177ca26e}
+Get the number of POS tags in the global part-\/of-\/speech table. \begin{DoxyReturn}{Returns}
+the number of POS tags 
+\end{DoxyReturn}
 
 
-Get the number of POS tags in the global part-of-speech table. \begin{Desc}
-\item[Returns:]the number of POS tags \end{Desc}
-
-
-The documentation for this class was generated from the following files:\begin{CompactItemize}
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-/home/vernkin/projects/chinese-ma-chen/source/include/{\bf pos\_\-table.h}\item 
-/home/vernkin/projects/chinese-ma-chen/source/src/{\bf pos\_\-table.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-\/ma-\/chen/source/include/{\bf pos\_\-table.h}\item 
+/home/vernkin/projects/chinese-\/ma-\/chen/source/src/{\bf pos\_\-table.cpp}\end{DoxyCompactItemize}

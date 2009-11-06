@@ -1,74 +1,61 @@
 \section{cma::Morpheme Struct Reference}
 \label{structcma_1_1Morpheme}\index{cma::Morpheme@{cma::Morpheme}}
-a pair of lexicon string and its part-of-speech tag.  
 
 
-{\tt \#include $<$sentence.h$>$}
+a pair of lexicon string and its part-\/of-\/speech tag.  
 
-\subsection*{Public Member Functions}
-\begin{CompactItemize}
+
+{\ttfamily \#include $<$sentence.h$>$}\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
 \item 
 {\bf Morpheme} ()
-\item 
-{\bf Morpheme} (std::string lexicon, int posCode, std::string \&posStr)
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 std::string {\bf lexicon\_\-}
 \item 
 int {\bf posCode\_\-}
 \item 
 std::string {\bf posStr\_\-}
-\end{CompactItemize}
+\item 
+bool {\bf isIndexed}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-a pair of lexicon string and its part-of-speech tag. 
+a pair of lexicon string and its part-\/of-\/speech tag. 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{cma::Morpheme@{cma::Morpheme}!Morpheme@{Morpheme}}
 \index{Morpheme@{Morpheme}!cma::Morpheme@{cma::Morpheme}}
-\subsubsection[{Morpheme}]{\setlength{\rightskip}{0pt plus 5cm}cma::Morpheme::Morpheme ()}\label{structcma_1_1Morpheme_79ab5404cd959f89daadb8a7714334cb}
-
-
-Constructor. The lexicon string value is initialized with empty string, and the index code of part-of-speech tag is initialized with -1, meaning that no part-of-speech tag is available. \index{cma::Morpheme@{cma::Morpheme}!Morpheme@{Morpheme}}
-\index{Morpheme@{Morpheme}!cma::Morpheme@{cma::Morpheme}}
-\subsubsection[{Morpheme}]{\setlength{\rightskip}{0pt plus 5cm}cma::Morpheme::Morpheme (std::string {\em lexicon}, \/  int {\em posCode}, \/  std::string \& {\em posStr})}\label{structcma_1_1Morpheme_12e84d0109bff5f66e4d72a78fbd19b4}
-
-
-Constructor \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em posCode}]initial POS Code \item[{\em posStr}]initial POS string value \end{description}
-\end{Desc}
-
+\subsubsection[{Morpheme}]{\setlength{\rightskip}{0pt plus 5cm}cma::Morpheme::Morpheme ()}\label{structcma_1_1Morpheme_a79ab5404cd959f89daadb8a7714334cb}
+Constructor. The lexicon string value is initialized with empty string, and the index code of part-\/of-\/speech tag is initialized with -\/1, meaning that no part-\/of-\/speech tag is available. 
 
 \subsection{Member Data Documentation}
-\index{cma::Morpheme@{cma::Morpheme}!lexicon\_\-@{lexicon\_\-}}
+\index{cma::Morpheme@{cma::Morpheme}!isIndexed@{isIndexed}}
+\index{isIndexed@{isIndexed}!cma::Morpheme@{cma::Morpheme}}
+\subsubsection[{isIndexed}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf cma::Morpheme::isIndexed}}\label{structcma_1_1Morpheme_abef7ac799b458e7d4526fef0b97d8018}
+Whether is indexed word 
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Morpheme@{cma::Morpheme}!lexicon\_\-@{lexicon\_\-}}
 \index{lexicon\_\-@{lexicon\_\-}!cma::Morpheme@{cma::Morpheme}}
-\subsubsection[{lexicon\_\-}]{\setlength{\rightskip}{0pt plus 5cm}std::string {\bf cma::Morpheme::lexicon\_\-}}\label{structcma_1_1Morpheme_1054ad519e1ebb80ec71cd21b8ad2a78}
-
-
+\subsubsection[{lexicon\_\-}]{\setlength{\rightskip}{0pt plus 5cm}std::string {\bf cma::Morpheme::lexicon\_\-}}\label{structcma_1_1Morpheme_a1054ad519e1ebb80ec71cd21b8ad2a78}
 the lexicon string value 
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Morpheme@{cma::Morpheme}!posCode\_\-@{posCode\_\-}}
 \index{posCode\_\-@{posCode\_\-}!cma::Morpheme@{cma::Morpheme}}
-\subsubsection[{posCode\_\-}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf cma::Morpheme::posCode\_\-}}\label{structcma_1_1Morpheme_883d0df2e303ce7bd5953bfa913a88ef}
-
-
-the index code of part-of-speech tag 
+\subsubsection[{posCode\_\-}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf cma::Morpheme::posCode\_\-}}\label{structcma_1_1Morpheme_a883d0df2e303ce7bd5953bfa913a88ef}
+the index code of part-\/of-\/speech tag 
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::Morpheme@{cma::Morpheme}!posStr\_\-@{posStr\_\-}}
 \index{posStr\_\-@{posStr\_\-}!cma::Morpheme@{cma::Morpheme}}
-\subsubsection[{posStr\_\-}]{\setlength{\rightskip}{0pt plus 5cm}std::string {\bf cma::Morpheme::posStr\_\-}}\label{structcma_1_1Morpheme_21b273edef21e9efd50956f926cdaeab}
-
-
+\subsubsection[{posStr\_\-}]{\setlength{\rightskip}{0pt plus 5cm}std::string {\bf cma::Morpheme::posStr\_\-}}\label{structcma_1_1Morpheme_a21b273edef21e9efd50956f926cdaeab}
 the POS string value 
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().
 
-The documentation for this struct was generated from the following files:\begin{CompactItemize}
+The documentation for this struct was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-/home/vernkin/projects/chinese-ma-chen/include/{\bf sentence.h}\item 
-/home/vernkin/projects/chinese-ma-chen/source/src/{\bf sentence.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-\/ma-\/chen/include/{\bf sentence.h}\item 
+/home/vernkin/projects/chinese-\/ma-\/chen/source/src/{\bf sentence.cpp}\end{DoxyCompactItemize}

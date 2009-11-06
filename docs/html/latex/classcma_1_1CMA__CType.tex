@@ -1,18 +1,15 @@
 \section{cma::CMA\_\-CType Class Reference}
 \label{classcma_1_1CMA__CType}\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}}
-\doxyref{CMA\_\-CType}{p.}{classcma_1_1CMA__CType} gives the character type information.  
 
 
-{\tt \#include $<$cma\_\-ctype.h$>$}
-
-Inheritance diagram for cma::CMA\_\-CType::\begin{figure}[H]
+{\ttfamily \#include $<$cma\_\-ctype.h$>$}Inheritance diagram for cma::CMA\_\-CType::\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=2cm]{classcma_1_1CMA__CType}
+\includegraphics[height=1.54696cm]{classcma_1_1CMA__CType}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 virtual {\bf $\sim$CMA\_\-CType} ()
 \item 
@@ -31,175 +28,182 @@ bool {\bf isSpace} (const char $\ast$p) const
 bool {\bf isSentenceSeparator} (const char $\ast$p) const 
 \item 
 int {\bf loadConfiguration} (const char $\ast$file)
-\end{CompactItemize}
+\item 
+CharType {\bf getDefaultEndType} (CharType preType)
+\item 
+string {\bf getPOCXmlStr} (const char $\ast$p) const 
+\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 static {\bf CMA\_\-CType} $\ast$ {\bf instance} ({\bf Knowledge::EncodeType} type)
 \item 
 static CharType {\bf getCharTypeByXmlName} (const char $\ast$name, bool noDefault=false)
-\end{CompactItemize}
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Knowledge::EncodeType} {\bf type\_\-}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 \doxyref{CMA\_\-CType}{p.}{classcma_1_1CMA__CType} gives the character type information. 
 
-\doxyref{CMA\_\-CType}{p.}{classcma_1_1CMA__CType} gives the character type information. 
-
 \subsection{Constructor \& Destructor Documentation}
 \index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!$\sim$CMA\_\-CType@{$\sim$CMA\_\-CType}}
 \index{$\sim$CMA\_\-CType@{$\sim$CMA\_\-CType}!cma::CMA_CType@{cma::CMA\_\-CType}}
-\subsubsection[{$\sim$CMA\_\-CType}]{\setlength{\rightskip}{0pt plus 5cm}cma::CMA\_\-CType::$\sim$CMA\_\-CType ()\hspace{0.3cm}{\tt  [virtual]}}\label{classcma_1_1CMA__CType_a5069cd1dc6794e4744e3fbcac7afbd6}
-
-
-Destrucor 
+\subsubsection[{$\sim$CMA\_\-CType}]{\setlength{\rightskip}{0pt plus 5cm}cma::CMA\_\-CType::$\sim$CMA\_\-CType ()\hspace{0.3cm}{\ttfamily  [virtual]}}\label{classcma_1_1CMA__CType_aa5069cd1dc6794e4744e3fbcac7afbd6}
+Destructor 
 
 \subsection{Member Function Documentation}
 \index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getByteCount@{getByteCount}}
 \index{getByteCount@{getByteCount}!cma::CMA_CType@{cma::CMA\_\-CType}}
-\subsubsection[{getByteCount}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int cma::CMA\_\-CType::getByteCount (const char $\ast$ {\em p}) const\hspace{0.3cm}{\tt  [pure virtual]}}\label{classcma_1_1CMA__CType_00f7e99cea12e9db504629c4a6cdb2d4}
+\subsubsection[{getByteCount}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int cma::CMA\_\-CType::getByteCount (const char $\ast$ {\em p}) const\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1CMA__CType_a00f7e99cea12e9db504629c4a6cdb2d4}
+Get the byte count of the first character pointed by {\itshape p\/}, which character is in a specific encoding. 
+\begin{DoxyParams}{Parameters}
+\item[{\em p}]pointer to the character string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for punctuation, false for non punctuation. 
+\end{DoxyReturn}
 
 
-Get the byte count of the first character pointed by {\em p\/}, which character is in a specific encoding. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em p}]pointer to the character string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]true for punctuation, false for non punctuation. \end{Desc}
-
-
-Implemented in {\bf cma::CMA\_\-CType\_\-Big5} \doxyref{}{p.}{classcma_1_1CMA__CType__Big5_0e471b0985214eb074b69fe273cde7f5}, {\bf cma::CMA\_\-CType\_\-GB18030} \doxyref{}{p.}{classcma_1_1CMA__CType__GB18030_1d6d026a400245efbf365f1b21698318}, and {\bf cma::CMA\_\-CType\_\-GB2312} \doxyref{}{p.}{classcma_1_1CMA__CType__GB2312_057ccee8e82b0a22a30b79fb2f059b8f}.
+Implemented in {\bf cma::CMA\_\-CType\_\-Big5} \doxyref{}{p.}{classcma_1_1CMA__CType__Big5_a0e471b0985214eb074b69fe273cde7f5}, {\bf cma::CMA\_\-CType\_\-GB18030} \doxyref{}{p.}{classcma_1_1CMA__CType__GB18030_a1d6d026a400245efbf365f1b21698318}, {\bf cma::CMA\_\-CType\_\-GB2312} \doxyref{}{p.}{classcma_1_1CMA__CType__GB2312_a057ccee8e82b0a22a30b79fb2f059b8f}, and {\bf cma::CMA\_\-CType\_\-UTF8} \doxyref{}{p.}{classcma_1_1CMA__CType__UTF8_a7de25d99a46d649bbf0cc9d1df3b9af5}.
 
 Referenced by getEncodeValue(), length(), and cma::CTypeTokenizer::next().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getCharType@{getCharType}}
 \index{getCharType@{getCharType}!cma::CMA_CType@{cma::CMA\_\-CType}}
-\subsubsection[{getCharType}]{\setlength{\rightskip}{0pt plus 5cm}CharType cma::CMA\_\-CType::getCharType (const char $\ast$ {\em p}, \/  CharType {\em preType}, \/  const char $\ast$ {\em nextP}) const}\label{classcma_1_1CMA__CType_36e9b60205fad71d91f60752d47135a4}
+\subsubsection[{getCharType}]{\setlength{\rightskip}{0pt plus 5cm}CharType cma::CMA\_\-CType::getCharType (const char $\ast$ {\em p}, \/  CharType {\em preType}, \/  const char $\ast$ {\em nextP}) const}\label{classcma_1_1CMA__CType_a36e9b60205fad71d91f60752d47135a4}
+Get the character type. 
+\begin{DoxyParams}{Parameters}
+\item[{\em p}]pointer to the string to be checked \item[{\em preType}]the chartype of the previous character \item[{\em nextP}]the pointer of the next character, it can be 0 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the character type. 
+\end{DoxyReturn}
 
 
-Get the character type. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em p}]pointer to the string to be checked \item[{\em preType}]the chartype of the previous character \item[{\em nextP}]the pointer of the next character, it can be 0 \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]the character type. \end{Desc}
-
-
-References cma::CharConditions::baseType\_\-, getEncodeValue(), and cma::CharConditions::match().
+References getEncodeValue().
 
 Referenced by cma::CMA\_\-WType::getWordType(), isPunct(), and cma::CateStrTokenizer::next().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getCharTypeByXmlName@{getCharTypeByXmlName}}
 \index{getCharTypeByXmlName@{getCharTypeByXmlName}!cma::CMA_CType@{cma::CMA\_\-CType}}
-\subsubsection[{getCharTypeByXmlName}]{\setlength{\rightskip}{0pt plus 5cm}CharType cma::CMA\_\-CType::getCharTypeByXmlName (const char $\ast$ {\em name}, \/  bool {\em noDefault} = {\tt false})\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1CMA__CType_b6de8d1bf6014e5caf7f8b638f3d24cc}
-
-
-The naming in the poc.xml, include digit, chardigit, space, letter, punctuation \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em noDefault}]if true, an assert error will occur \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]if not found, return CHAR\_\-TYPE\_\-OTHER \end{Desc}
+\subsubsection[{getCharTypeByXmlName}]{\setlength{\rightskip}{0pt plus 5cm}CharType cma::CMA\_\-CType::getCharTypeByXmlName (const char $\ast$ {\em name}, \/  bool {\em noDefault} = {\ttfamily false})\hspace{0.3cm}{\ttfamily  [static]}}\label{classcma_1_1CMA__CType_ab6de8d1bf6014e5caf7f8b638f3d24cc}
+The naming in the poc.xml, include digit, chardigit, space, letter, punctuation 
+\begin{DoxyParams}{Parameters}
+\item[{\em noDefault}]if true, an assert error will occur \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+if not found, return CHAR\_\-TYPE\_\-OTHER 
+\end{DoxyReturn}
+\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getDefaultEndType@{getDefaultEndType}}
+\index{getDefaultEndType@{getDefaultEndType}!cma::CMA_CType@{cma::CMA\_\-CType}}
+\subsubsection[{getDefaultEndType}]{\setlength{\rightskip}{0pt plus 5cm}CharType cma::CMA\_\-CType::getDefaultEndType (CharType {\em preType})}\label{classcma_1_1CMA__CType_a54b139bee59e4951795dcabbf255546e}
+Invoke this function when the last word not exists 
+\begin{DoxyParams}{Parameters}
+\item[{\em preType}]type of the previous character \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the default next type 
+\end{DoxyReturn}
 \index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getEncodeValue@{getEncodeValue}}
 \index{getEncodeValue@{getEncodeValue}!cma::CMA_CType@{cma::CMA\_\-CType}}
-\subsubsection[{getEncodeValue}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int cma::CMA\_\-CType::getEncodeValue (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_493df55a7117400553d64b63d0809e0d}
-
-
+\subsubsection[{getEncodeValue}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int cma::CMA\_\-CType::getEncodeValue (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_a493df55a7117400553d64b63d0809e0d}
 Get the encoding value in unsigned int type
 
-param p the character with pointer p \begin{Desc}
-\item[Returns:]unsigned int value of p, 0 if error occurs \end{Desc}
+param p the character with pointer p \begin{DoxyReturn}{Returns}
+unsigned int value of p, 0 if error occurs 
+\end{DoxyReturn}
 
 
 References getByteCount().
 
-Referenced by getCharType(), isSentenceSeparator(), and isSpace().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!instance@{instance}}
+Referenced by getCharType(), isSentenceSeparator(), and isSpace().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getPOCXmlStr@{getPOCXmlStr}}
+\index{getPOCXmlStr@{getPOCXmlStr}!cma::CMA_CType@{cma::CMA\_\-CType}}
+\subsubsection[{getPOCXmlStr}]{\setlength{\rightskip}{0pt plus 5cm}string cma::CMA\_\-CType::getPOCXmlStr (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_a3dc7c08fdb3264b7a3d7c1bc774e4729}
+Get the specific string with associated encoding in the poc.xml Except for utf-\/16, others encoding return the original form 
+\begin{DoxyParams}{Parameters}
+\item[{\em p}]the input string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the target string 
+\end{DoxyReturn}
+
+
+References type\_\-.\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!instance@{instance}}
 \index{instance@{instance}!cma::CMA_CType@{cma::CMA\_\-CType}}
-\subsubsection[{instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-CType} $\ast$ cma::CMA\_\-CType::instance ({\bf Knowledge::EncodeType} {\em type})\hspace{0.3cm}{\tt  [static]}}\label{classcma_1_1CMA__CType_a0a1b4e5959587032b22036c64790314}
+\subsubsection[{instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CMA\_\-CType} $\ast$ cma::CMA\_\-CType::instance ({\bf Knowledge::EncodeType} {\em type})\hspace{0.3cm}{\ttfamily  [static]}}\label{classcma_1_1CMA__CType_aa0a1b4e5959587032b22036c64790314}
+Create an instance of {\itshape \doxyref{CMA\_\-CType}{p.}{classcma_1_1CMA__CType}\/} based on the character encode type. 
+\begin{DoxyParams}{Parameters}
+\item[{\em type}]the character encode type \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the pointer to instance 
+\end{DoxyReturn}
 
 
-Create an instance of {\em \doxyref{CMA\_\-CType}{p.}{classcma_1_1CMA__CType}\/} based on the character encode type. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em type}]the character encode type \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]the pointer to instance \end{Desc}
-
-
-References cma::Knowledge::ENCODE\_\-TYPE\_\-BIG5, cma::Knowledge::ENCODE\_\-TYPE\_\-GB18030, and cma::Knowledge::ENCODE\_\-TYPE\_\-GB2312.
+References cma::Knowledge::ENCODE\_\-TYPE\_\-BIG5, cma::Knowledge::ENCODE\_\-TYPE\_\-GB18030, cma::Knowledge::ENCODE\_\-TYPE\_\-GB2312, and cma::Knowledge::ENCODE\_\-TYPE\_\-UTF8.
 
 Referenced by cma::CMA\_\-ME\_\-Knowledge::loadStatModel(), and cma::CMA\_\-ME\_\-Analyzer::setKnowledge().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!isPunct@{isPunct}}
 \index{isPunct@{isPunct}!cma::CMA_CType@{cma::CMA\_\-CType}}
-\subsubsection[{isPunct}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-CType::isPunct (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_b9fbb6aa32fd36bb3838b48ffb92bf24}
-
-
-Whether the p is a punctuation \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em p}]pointer to the string to be checked \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]true if the p is the punctuation \end{Desc}
+\subsubsection[{isPunct}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-CType::isPunct (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_ab9fbb6aa32fd36bb3838b48ffb92bf24}
+Whether the p is a punctuation 
+\begin{DoxyParams}{Parameters}
+\item[{\em p}]pointer to the string to be checked \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the p is the punctuation 
+\end{DoxyReturn}
 
 
 References getCharType().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!isSentenceSeparator@{isSentenceSeparator}}
 \index{isSentenceSeparator@{isSentenceSeparator}!cma::CMA_CType@{cma::CMA\_\-CType}}
-\subsubsection[{isSentenceSeparator}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-CType::isSentenceSeparator (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_d6d58ef5f016e64e07ded48d434d24f2}
-
-
-Check whether is a seperator of sentence. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em p}]pointer to the character string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]true for separator, false for non separator. \end{Desc}
+\subsubsection[{isSentenceSeparator}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-CType::isSentenceSeparator (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_ad6d58ef5f016e64e07ded48d434d24f2}
+Check whether is a seperator of sentence. 
+\begin{DoxyParams}{Parameters}
+\item[{\em p}]pointer to the character string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for separator, false for non separator. 
+\end{DoxyReturn}
 
 
 References getEncodeValue().
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::splitSentence().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!isSpace@{isSpace}}
 \index{isSpace@{isSpace}!cma::CMA_CType@{cma::CMA\_\-CType}}
-\subsubsection[{isSpace}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-CType::isSpace (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_9570155ad79775281e9042b796f85f3c}
-
-
-Check whether is white-space character. White-space characters are \char`\"{} $\backslash$t$\backslash$n$\backslash$v$\backslash$f$\backslash$r\char`\"{}, and also space character in specific encoding. \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em p}]pointer to the character string \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]true for white-space character, false for non white-space character. \end{Desc}
+\subsubsection[{isSpace}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::CMA\_\-CType::isSpace (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_a9570155ad79775281e9042b796f85f3c}
+Check whether is white-\/space character. White-\/space characters are \char`\"{} $\backslash$t$\backslash$n$\backslash$v$\backslash$f$\backslash$r\char`\"{}, and also space character in specific encoding. 
+\begin{DoxyParams}{Parameters}
+\item[{\em p}]pointer to the character string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for white-\/space character, false for non white-\/space character. 
+\end{DoxyReturn}
 
 
 References getEncodeValue().
 
 Referenced by cma::CMA\_\-ME\_\-Analyzer::splitSentence().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!length@{length}}
 \index{length@{length}!cma::CMA_CType@{cma::CMA\_\-CType}}
-\subsubsection[{length}]{\setlength{\rightskip}{0pt plus 5cm}size\_\-t cma::CMA\_\-CType::length (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_4583d638f7336cf0a548905e8e88f826}
-
-
-Get the number of the characters in the p \begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em p}]pointer to the string to be checked \end{description}
-\end{Desc}
-\begin{Desc}
-\item[Returns:]the number of the characters in the p \end{Desc}
+\subsubsection[{length}]{\setlength{\rightskip}{0pt plus 5cm}size\_\-t cma::CMA\_\-CType::length (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_a4583d638f7336cf0a548905e8e88f826}
+Get the number of the characters in the p 
+\begin{DoxyParams}{Parameters}
+\item[{\em p}]pointer to the string to be checked \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the number of the characters in the p 
+\end{DoxyReturn}
 
 
 References getByteCount().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!loadConfiguration@{loadConfiguration}}
 \index{loadConfiguration@{loadConfiguration}!cma::CMA_CType@{cma::CMA\_\-CType}}
-\subsubsection[{loadConfiguration}]{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-CType::loadConfiguration (const char $\ast$ {\em file})}\label{classcma_1_1CMA__CType_c8a0564b888569e891e00ee72e03ead8}
-
-
-Load the poc.xml \begin{Desc}
-\item[Returns:]1 if load successfully \end{Desc}
+\subsubsection[{loadConfiguration}]{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-CType::loadConfiguration (const char $\ast$ {\em file})}\label{classcma_1_1CMA__CType_ac8a0564b888569e891e00ee72e03ead8}
+Load the poc.xml \begin{DoxyReturn}{Returns}
+1 if load successfully 
+\end{DoxyReturn}
 
 
 Referenced by cma::CMA\_\-ME\_\-Knowledge::loadStatModel().
 
-The documentation for this class was generated from the following files:\begin{CompactItemize}
+\subsection{Member Data Documentation}
+\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!type\_\-@{type\_\-}}
+\index{type\_\-@{type\_\-}!cma::CMA_CType@{cma::CMA\_\-CType}}
+\subsubsection[{type\_\-}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Knowledge::EncodeType} {\bf cma::CMA\_\-CType::type\_\-}\hspace{0.3cm}{\ttfamily  [protected]}}\label{classcma_1_1CMA__CType_a262dc0195e2a93786dc7b0f28bd2aedd}
+The encode type of the current cma\_\-ctype class 
+
+Referenced by cma::CMA\_\-CType\_\-Big5::CMA\_\-CType\_\-Big5(), cma::CMA\_\-CType\_\-GB18030::CMA\_\-CType\_\-GB18030(), cma::CMA\_\-CType\_\-GB2312::CMA\_\-CType\_\-GB2312(), cma::CMA\_\-CType\_\-UTF8::CMA\_\-CType\_\-UTF8(), and getPOCXmlStr().
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-/home/vernkin/projects/chinese-ma-chen/source/include/{\bf cma\_\-ctype.h}\item 
-/home/vernkin/projects/chinese-ma-chen/source/src/{\bf cma\_\-ctype.cpp}\end{CompactItemize}
+/home/vernkin/projects/chinese-\/ma-\/chen/source/include/{\bf cma\_\-ctype.h}\item 
+/home/vernkin/projects/chinese-\/ma-\/chen/source/src/{\bf cma\_\-ctype.cpp}\end{DoxyCompactItemize}

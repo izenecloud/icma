@@ -1,26 +1,26 @@
-\section{/home/vernkin/projects/chinese-ma-chen/source/src/CMABasicTrainer.cc File Reference}
-\label{CMABasicTrainer_8cc}\index{/home/vernkin/projects/chinese-ma-chen/source/src/CMABasicTrainer.cc@{/home/vernkin/projects/chinese-ma-chen/source/src/CMABasicTrainer.cc}}
+\section{/home/vernkin/projects/chinese-\/ma-\/chen/source/src/CMABasicTrainer.cc File Reference}
+\label{CMABasicTrainer_8cc}\index{/home/vernkin/projects/chinese-\/ma-\/chen/source/src/CMABasicTrainer.cc@{/home/vernkin/projects/chinese-\/ma-\/chen/source/src/CMABasicTrainer.cc}}
+
+
 shared module for training the POC and POS MaxEnt model  
-
-
-{\tt \#include $<$set$>$}\par
-{\tt \#include $<$iostream$>$}\par
-{\tt \#include $<$stdlib.h$>$}\par
-{\tt \#include $<$vector$>$}\par
-{\tt \#include \char`\"{}CMABasicTrainer.h\char`\"{}}\par
-{\tt \#include \char`\"{}strutil.h\char`\"{}}\par
-{\tt \#include \char`\"{}tokenizer.h\char`\"{}}\par
-{\tt \#include \char`\"{}cma\_\-wtype.h\char`\"{}}\par
+{\ttfamily \#include $<$set$>$}\par
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$stdlib.h$>$}\par
+{\ttfamily \#include $<$vector$>$}\par
+{\ttfamily \#include \char`\"{}CMABasicTrainer.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}strutil.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}tokenizer.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}cma\_\-wtype.h\char`\"{}}\par
 \subsection*{Typedefs}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
-typedef boost::tokenizer$<$ boost::char\_\-separator$<$ char $>$, string::const\_\-iterator, string $>$ \textbf{cma::TagTokenizer}\label{namespacecma_a0c6c2dc82197fc6600c20a59cade565}
+typedef boost::tokenizer$<$ boost::char\_\-separator$<$ char $>$, string::const\_\-iterator, string $>$ {\bfseries cma::TagTokenizer}\label{namespacecma_aa0c6c2dc82197fc6600c20a59cade565}
 
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 \subsection*{Functions}
-\begin{CompactItemize}
+\begin{DoxyCompactItemize}
 \item 
-const boost::char\_\-separator$<$ char $>$ \textbf{cma::UNIT\_\-SEP} (\char`\"{} \char`\"{})\label{namespacecma_f0620dd94c72d29cdfd5879862a0fa3c}
+const boost::char\_\-separator$<$ char $>$ {\bfseries cma::UNIT\_\-SEP} (\char`\"{} \char`\"{})\label{namespacecma_af0620dd94c72d29cdfd5879862a0fa3c}
 
 \item 
 string {\bf cma::formatModelPath} (const char $\ast$in)
@@ -43,7 +43,7 @@ void {\bf cma::save\_\-word\_\-freq} (TrainerData $\ast$data, const char $\ast$f
 \item 
 void {\bf cma::save\_\-tag\_\-dict} (TrainerData $\ast$data, const char $\ast$file)
 \item 
-void \textbf{cma::save\_\-pos\_\-list} (TrainerData $\ast$data, const char $\ast$file)\label{namespacecma_3f1398255ff5b9455a32b5c26b37c73d}
+void {\bfseries cma::save\_\-pos\_\-list} (TrainerData $\ast$data, const char $\ast$file)\label{namespacecma_a3f1398255ff5b9455a32b5c26b37c73d}
 
 \item 
 void {\bf cma::load\_\-tag\_\-dict} (map$<$ string, map$<$ string, int $>$ $>$ $\ast$tagDict, const char $\ast$file)
@@ -57,11 +57,10 @@ void {\bf cma::train} (TrainerData $\ast$data, const char $\ast$file, const stri
 void {\bf cma::create\_\-poc\_\-meterial} (const char $\ast$inFile, const char $\ast$outFile, Knowledge::EncodeType type, string posDelimiter)
 \item 
 void {\bf cma::fetchSegmentedFile} (const char $\ast$inFile, const char $\ast$outFile, string posDelimiter, bool keepTag, bool keepSeparator)
-\end{CompactItemize}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-shared module for training the POC and POS MaxEnt model 
-
-\begin{Desc}
-\item[Author:]vernkin \end{Desc}
+shared module for training the POC and POS MaxEnt model \begin{DoxyAuthor}{Author}
+vernkin 
+\end{DoxyAuthor}
