@@ -51,13 +51,16 @@ namespace
     const char* OPTION_DICT = "--dict";
 }
 
+string testFilePrefix = "/home/vernkin/temp/cmac/icwb2/icwb2_test.";
+string testFileSuffix;
+
 vector<string> testSrcVec;
 bool srcVecLoadError = false;
 
 void loadSpecialSentence(string& inout)
 {
 	if(!srcVecLoadError && testSrcVec.empty()){
-		const char* testFile = "/home/vernkin/temp/cmac/icwb2/icwb_test.gb18030";
+		const char* testFile = ( testFilePrefix + testFileSuffix ).c_str();
 		ifstream in(testFile);
 		if(!in){
 			cout<<"[Error] Cannot open test file "<<testFile<<endl;
@@ -330,7 +333,7 @@ int main(int argc, char* argv[])
     size_t last = modelPathStr.find_last_of('/');
     size_t first = modelPathStr.find_last_of('/', last-1);
     string encodeStr = modelPathStr.substr(first+1, last-first-1);
-
+    testFileSuffix = encodeStr;
     knowledge->loadModel( encodeStr.data(), modelPath );
     size_t dicSize = ((CMA_ME_Knowledge*)knowledge)->getTrie()->size();
     printf("[Info] All Dictionaries' Size: %.2fm.\n", dicSize/1048576.0);

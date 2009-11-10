@@ -79,29 +79,6 @@
 				<end>true</end>
 			</condition>
 		</rule>
-
-		<rule>
-			<char><![CDATA[.．‧-－]]></char>
-			<condition>
-				<type>letter</type>
-				<nexttype>letter</nexttype>
-			</condition>
-			<condition>
-				<type>letter</type>
-				<pretype>letter</pretype>
-				<nexttype>digit</nexttype>
-			</condition>
-			<condition>
-				<type>digit</type>
-				<pretype>digit</pretype>
-				<nexttype>digit</nexttype>
-			</condition>
-			<condition>
-				<type>chardigit</type>
-				<pretype>chardigit</pretype>
-				<nexttype>chardigit</nexttype>
-			</condition>
-		</rule>
 		
 		<rule>
 			<char><![CDATA[,/／]]></char>
@@ -167,30 +144,6 @@
 				<type>chardigit</type>
 				<pretype>chardigit</pretype>
 				<end>true</end>
-			</condition>
-		</rule>
-
-		<rule>
-			<char><![CDATA[.．‧-－]]></char>
-			<condition>
-				<type>letter</type>
-				<pretype>digit,letter</pretype>
-				<nexttype>letter</nexttype>
-			</condition>
-			<condition>
-				<type>letter</type>
-				<pretype>digit</pretype>
-				<nexttype>letter</nexttype>
-			</condition>
-			<condition>
-				<type>digit</type>
-				<pretype>digit</pretype>
-				<nexttype>digit</nexttype>
-			</condition>
-			<condition>
-				<type>chardigit</type>
-				<pretype>chardigit</pretype>
-				<nexttype>chardigit</nexttype>
 			</condition>
 		</rule>
 		
@@ -269,19 +222,19 @@
 		</rule>
 		
 		<rule>
-			<char><![CDATA[,]]></char>
+			<char><![CDATA[@＠]]></char>
 			<condition>
-				<type>digit</type>
-				<pretype>digit</pretype>
-				<nexttype>digit</nexttype>
+				<type>letter</type>
+				<pretype>digit,letter</pretype>
+				<nexttype>digit,letter</nexttype>
 			</condition>
 		</rule>
 		
 		<rule>
-			<char><![CDATA[-－]]></char>
+			<char><![CDATA[,]]></char>
 			<condition>
 				<type>digit</type>
-				<nopretype>digit</nopretype>
+				<pretype>digit</pretype>
 				<nexttype>digit</nexttype>
 			</condition>
 		</rule>
