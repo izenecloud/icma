@@ -91,6 +91,22 @@ public:
     virtual int runWithStream(const char* inFileName, const char* outFileName) = 0;
 
     /**
+	 * Get the N-Gram result in the inStr
+	 * \param inStr paragraph string
+	 * \param n the specific n in the N-Gram
+	 * \param output to keep the output value
+	 */
+	virtual void getNGramResult( const char* inStr, int n, std::vector<std::string>& output ) = 0;
+
+	/**
+	 * Get all the specific N-Gram results (see parameter nArray) in the inStr
+	 * \param inStr paragraph string
+	 * \param nArray the collection of the specific n in the N-Gram
+	 * \param output to keep the output value
+	 */
+	virtual void getNGramArrayResult( const char* inStr, std::vector<int> nArray, std::vector<std::string>& output ) = 0;
+
+    /**
      * Split a paragraph string into sentences.
      * \param paragraph paragraph string
      * \param sentences sentence vector

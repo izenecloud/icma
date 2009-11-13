@@ -45,7 +45,7 @@ using namespace cma;
 namespace
 {
     /** command options */
-    const char* OPTIONS[] = {"--sentence", "--string", "--stream"};
+    const char* OPTIONS[] = {"--sentence", "--string", "--stream", "--ngram"};
 
     /** optional command option for dictionary path */
     const char* OPTION_DICT = "--dict";
@@ -236,6 +236,54 @@ void testWithStream(Analyzer* analyzer, const char* source, const char* dest)
 }
 
 /**
+ * Analyze a string.
+ */
+void testWithNGram(Analyzer* analyzer, string nGramValue)
+{
+	//analysis the nGramValue
+	int first, second;
+	size_t idx = nGramValue.find( '-' );
+	if( idx == nGramValue.npos )
+	{
+		first = second = atoi( nGramValue.data() );
+	}
+	else
+	{
+		first = atoi( nGramValue.substr( 0, idx ).data() );
+		second = atoi( nGramValue.substr( idx + 1 ).data() );
+		if( second < first )
+		{
+			int tmp = first;
+			first = second;
+			second = first;
+		}
+	}
+
+	vector<int> nArray;
+	for( int i = first; i <= second; ++i )
+		nArray.push_back( i );
+
+	cout << "########## test method runWithString()" << endl;
+    cout << "please input string ended with newline:" << endl;
+
+    string line;
+    while(getline(cin, line))
+    {
+    	loadSpecialSentence(line);
+    	if(line.empty())
+    	    continue;
+    	vector<string> output;
+    	analyzer->getNGramArrayResult( line.c_str(), nArray, output );
+    	cout << endl << "result:" << endl;
+    	for( vector<string>::iterator itr = output.begin();
+    			itr != output.end(); ++itr )
+    		cout<<*itr<<" , ";
+    	cout << endl;
+        cout << endl << "please input string ended with newline:" << endl;
+    }
+}
+
+/**
  * Print the test usage.
  */
 void printUsage()
@@ -243,6 +291,8 @@ void printUsage()
     cerr << "Usages:\t" << OPTIONS[0] << " N-best [--dict DICT_PATH]" << endl;
     cerr << "  or:\t" << OPTIONS[1] << " [--dict DICT_PATH]" << endl;
     cerr << "  or:\t" << OPTIONS[2] << " INPUT OUTPUT [--dict DICT_PATH]" << endl;
+    cerr << "  or:\t" << OPTIONS[3] << " N-Gram(s) [--dict DICT_PATH]  N-Gram(s) can "<<
+    		"be 3 or 2-4 (there are 2,3 and 4)" << endl;
 }
 
 /**
@@ -267,7 +317,8 @@ int main(int argc, char* argv[])
     // check argument
     if((optionIndex == optionSize)
 	    || (optionIndex == 0 && argc < 3) // command option "--sentence N-best"
-	    || (optionIndex == 2 && argc < 4)) // command option "--stream INPUT OUTPUT"
+	    || (optionIndex == 2 && argc < 4) // command option "--stream INPUT OUTPUT"
+    	|| (optionIndex == 3 && argc < 3)) // command option "--ngram N-Gram"
     {
         printUsage();
         exit(1);
@@ -324,6 +375,14 @@ int main(int argc, char* argv[])
         }
         break;
 
+    case 3:
+        // command option: "--ngram N-Gram --dict DICT_PATH"
+        if(argc == 5 && ! strcmp(argv[3], OPTION_DICT))
+        {
+        	modelPath = argv[4];
+        }
+        break;
+
     default:
         printUsage();
         exit(1);
@@ -373,6 +432,10 @@ int main(int argc, char* argv[])
         cout << "total time: " << dif << endl;
         break;
     }
+
+    case 3:
+		testWithNGram(analyzer, string(argv[2]) );
+		break;
 
     default:
         printUsage();

@@ -72,6 +72,22 @@ public:
     virtual int runWithStream(const char* inFileName, const char* outFileName);
 
     /**
+	 * Get the N-Gram result in the inStr
+	 * \param inStr paragraph string
+	 * \param n the specific n in the N-Gram
+	 * \param output to keep the output value
+	 */
+	virtual void getNGramResult( const char* inStr, int n, vector<string>& output );
+
+	/**
+	 * Get all the specific N-Gram results (see parameter nArray) in the inStr
+	 * \param inStr paragraph string
+	 * \param nArray the collection of the specific n in the N-Gram
+	 * \param output to keep the output value
+	 */
+	virtual void getNGramArrayResult( const char* inStr, vector<int> nArray, vector<string>& output );
+
+    /**
      * Split a paragraph string into sentences.
      * \param paragraph paragraph string
      * \param sentences sentence vector
@@ -92,12 +108,26 @@ public:
      */
     virtual int setIndexPOSList( std::vector<std::string>& posList );
 
+    typedef pair<string, bool> OneGramType;
+
 private:
     /**
      * Each segment only map to one pos set
      */
     void analysis(const char* sentence, int N, vector<vector<string> >& pos,
             vector<pair<vector<string>, double> >& segment, bool tagPOS = true);
+
+    /**
+     * Simply combine sequential letters, digits and letters+digits together
+     * \param sentence the input string
+     * \param output the string is the input value and bool represents whether
+     */
+    void splitToOneGram( const char* sentence, vector<OneGramType>& output );
+
+    /**
+     * Implementation of getting N-Gram result
+     */
+    void getNGramResultImpl( const vector<OneGramType>& oneGram, const int n, vector<string>& output );
 
 private:
     CMA_ME_Knowledge *knowledge_;

@@ -66,6 +66,13 @@ public:
             const char* nextP) const;
 
     /**
+     * Get the base Character Type of Character P without any rules
+     * \param p the input character
+     * \return the base type of p, or CHAR_TYPE_OTHER for default
+     */
+    CharType getBaseType( const char* p ) const;
+
+    /**
      * Whether the p is a punctuation
      * \param p pointer to the string to be checked
      * \return true if the p is the punctuation

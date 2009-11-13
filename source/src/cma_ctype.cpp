@@ -348,8 +348,20 @@ CharType CMA_CType::getCharType(const char* p, CharType preType, const char* nex
 	return matchedType;
 }
 
+CharType CMA_CType::getBaseType( const char* p ) const
+{
+	CharValue curV = getEncodeValue(p);
+	map< CharValue, CharConditions >::const_iterator itr = typeMap_.find( curV );
+	if( itr == typeMap_.end() )
+		return CHAR_TYPE_OTHER;
+	return itr->second.baseType_;
+}
+
 bool CMA_CType::isSpace(const char* p) const
 {
+	unsigned int len = getByteCount( p );
+	if( len == 1 )
+		return isspace( (unsigned char)p[0] );
 	CharValue curV = getEncodeValue(p);
 	return spaceSet_.find(curV) != spaceSet_.end();
 }
