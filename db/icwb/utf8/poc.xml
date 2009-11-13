@@ -7,7 +7,7 @@
 		<chardigit><![CDATA[零一二三四五六七八九○廿卅几幾十百千万亿萬億兆]]></chardigit>
 		<!--<chardigitupper><![CDATA[壹贰貳叄肆伍陆陸柒捌玖拾佰仟]]></chardigitupper>-->
 		<letter><![CDATA[QWERTYUIOPqwertyuiopASDFGHJKLasdfghjklZXCVBNMzxcvbnmＱＷＥＲＴＹＵＩＯＰｑｗｅｒｔｙｕｉｏｐＡＳＤＦＧＨＪＫＬａｓｄｆｇｈｊｋｌＺＸＣＶＢＮＭｚｘｃｖｂｎｍ]]></letter>
-		<punctuation><![CDATA[~!@#%^&*()` {}[]:"|;'\<>?,./.""''+-=_.～！＠＃％＾＆×（）｀　｛｝［］：＂｜；＇＼＜＞？，．／。《》“”‘’＋－＝—．]]></punctuation>		
+		<punctuation><![CDATA[~!@#%^&*()` {}[]:"|;'\<>?,/""''+-=_.～！＠＃％＾＆×（）｀　｛｝［］：＂｜；＇＼＜＞？，．／。《》“”‘’＋－＝—．]]></punctuation>		
 		<space><![CDATA[ 　]]></space>
 		<sentenceseparator><![CDATA[?!。！？；：]]></sentenceseparator>
 	</entities>
@@ -81,124 +81,16 @@
 		</rule>
 		
 		<rule>
-			<char><![CDATA[,/／]]></char>
+			<char><![CDATA[/／]]></char>
 			<condition>
 				<type>digit</type>
 				<pretype>digit</pretype>
 				<nexttype>digit</nexttype>
 			</condition>
 		</rule>
-		
-		<rule>
-			<char><![CDATA[之点點成半]]></char>
-			<condition>
-				<type>chardigit</type>
-				<pretype>chardigit</pretype>
-				<nexttype>chardigit</nexttype>
-			</condition>
-		</rule>
 
 		<rule>
-			<char><![CDATA[多余餘來]]></char>
-			<condition>
-				<type>chardigit</type>
-				<pretype>chardigit</pretype>
-				<end>true</end>
-			</condition>
-		</rule>
-
-		<rule>
-			<char><![CDATA[多]]></char>
-			<condition>
-				<type>digit</type>
-				<pretype>digit</pretype>
-			</condition>
-		</rule>
-		
-		<rule>
-			<char><![CDATA[第]]></char>
-			<condition>
-				<type>chardigit</type>
-				<nopretype>chardigit</nopretype>
-				<nexttype>chardigit</nexttype>
-			</condition>
-			<condition>
-				<type>digit</type>
-				<nopretype>digit</nopretype>
-				<nexttype>digit</nexttype>
-			</condition>
-		</rule>
-		
-		<rule>
-			<char><![CDATA[两兩]]></char>
-			<condition>
-				<type>chardigit</type>
-				<nopretype>chardigit</nopretype>
-				<nexttype>chardigit</nexttype>
-			</condition>
-		</rule>
-
-		<rule>
-			<char><![CDATA[%％‰]]></char>
-			<condition>
-				<type>chardigit</type>
-				<pretype>chardigit</pretype>
-				<end>true</end>
-			</condition>
-		</rule>
-		
-		<rule>
-			<char><![CDATA[,]]></char>
-			<condition>
-				<type>digit</type>
-				<pretype>digit</pretype>
-				<nexttype>digit</nexttype>
-			</condition>
-		</rule>
-		
-		<rule>
-			<char><![CDATA[-－]]></char>
-			<condition>
-				<type>digit</type>
-				<nopretype>digit</nopretype>
-				<nexttype>digit</nexttype>
-			</condition>
-		</rule>
-		
-		<rule>
-			<char><![CDATA[第]]></char>
-			<condition>
-				<type>chardigit</type>
-				<nopretype>chardigit</nopretype>
-				<nexttype>chardigit</nexttype>
-			</condition>
-			<condition>
-				<type>digit</type>
-				<nopretype>digit</nopretype>
-				<nexttype>digit</nexttype>
-			</condition>
-		</rule>
-		
-		<rule>
-			<char><![CDATA[两兩]]></char>
-			<condition>
-				<type>chardigit</type>
-				<nopretype>chardigit</nopretype>
-				<nexttype>chardigit</nexttype>
-			</condition>
-		</rule>
-
-		<rule>
-			<char><![CDATA[%％‰]]></char>
-			<condition>
-				<type>chardigit</type>
-				<pretype>chardigit</pretype>
-				<end>true</end>
-			</condition>
-		</rule>
-
-		<rule>
-			<char><![CDATA[.．‧-－﹒]]></char>
+			<char><![CDATA[.．‧-－—﹒]]></char>
 			<condition>
 				<type>letter</type>
 				<pretype>digit,letter</pretype>
@@ -206,8 +98,8 @@
 			</condition>
 			<condition>
 				<type>letter</type>
-				<pretype>digit</pretype>
-				<nexttype>letter</nexttype>
+				<pretype>letter</pretype>
+				<nexttype>digit</nexttype>
 			</condition>
 			<condition>
 				<type>digit</type>
@@ -231,15 +123,6 @@
 		</rule>
 		
 		<rule>
-			<char><![CDATA[,]]></char>
-			<condition>
-				<type>digit</type>
-				<pretype>digit</pretype>
-				<nexttype>digit</nexttype>
-			</condition>
-		</rule>
-		
-		<rule>
 			<char><![CDATA[之点點成半]]></char>
 			<condition>
 				<type>chardigit</type>
@@ -249,7 +132,7 @@
 		</rule>
 
 		<rule>
-			<char><![CDATA[多余餘]]></char>
+			<char><![CDATA[多余餘來]]></char>
 			<condition>
 				<type>chardigit</type>
 				<pretype>chardigit</pretype>
@@ -268,6 +151,14 @@
 				<type>digit</type>
 				<nopretype>digit</nopretype>
 				<nexttype>digit</nexttype>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[多]]></char>
+			<condition>
+				<type>digit</type>
+				<pretype>digit</pretype>
 			</condition>
 		</rule>
 		

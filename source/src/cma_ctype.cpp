@@ -342,7 +342,10 @@ CharType CMA_CType::getCharType(const char* p, CharType preType, const char* nex
 	CharType nextType = (itr2 == typeMap_.end()) ? CHAR_TYPE_OTHER : itr2->second.baseType_;
 
 	const CharConditions& charConds = itr->second;
-	return charConds.match(preType, nextV, nextType, charConds.baseType_);
+	CharType matchedType = charConds.match(preType, nextV, nextType, charConds.baseType_);
+	if( preType == CHAR_TYPE_LETTER && matchedType == CHAR_TYPE_NUMBER )
+		return CHAR_TYPE_LETTER;
+	return matchedType;
 }
 
 bool CMA_CType::isSpace(const char* p) const

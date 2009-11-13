@@ -112,11 +112,14 @@ void loadSpecialSentence(string& inout)
 
 		inout = "";
 		int len = (int)testSrcVec.size();
-		for(int i=0; i<len; ++i)
+		for( int i=0; i<len; ++i )
 		{
 			string& line = testSrcVec[i];
-			if(line.find(dest) != line.npos)
+			if( line.find(dest) != line.npos )
+			{
+				cout<<"[Info] Founded at line: "<< ( i + 1 ) <<endl;
 				inout.append(line);
+			}
 		}
 
 		return;
