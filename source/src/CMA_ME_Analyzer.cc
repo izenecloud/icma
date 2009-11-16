@@ -273,14 +273,14 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
 
     void CMA_ME_Analyzer::getNGramResult( const char *inStr, int n, vector<string>& output )
     {
-    	vector<OneGramType> oneGram;
+    	vector<vector<OneGramType> > oneGram;
     	splitToOneGram( inStr, oneGram );
     	getNGramResultImpl( oneGram, n, output );
     }
 
     void CMA_ME_Analyzer::getNGramArrayResult( const char *inStr, vector<int> nArray, vector<string>& output )
 	{
-    	vector<OneGramType> oneGram;
+    	vector<vector<OneGramType> > oneGram;
 		splitToOneGram( inStr, oneGram );
 		for( vector<int>::iterator itr = nArray.begin();
 				itr != nArray.end(); ++itr)
@@ -587,77 +587,63 @@ namespace meanainner{
 
     }
 
-    void CMA_ME_Analyzer::splitToOneGram( const char* sentence, vector<OneGramType>& output )
+    void CMA_ME_Analyzer::splitToOneGram( const char* sentence, vector<vector<OneGramType> >& output )
     {
+    	if( encodeType_ == Knowledge::ENCODE_TYPE_UTF8 )
+		{
+    		const unsigned char *uc = (const unsigned char *)sentence;
+			if( uc[0] == 0xEF && uc[1] == 0xBB && uc[2] == 0xBF )
+				sentence += 3;
+		}
+
     	CTypeTokenizer token(ctype_, sentence);
 
     	const char* next = 0;
-    	string buffer;
-    	bool isDL = false; // whether is digit or letter
+
+    	output.push_back( vector<OneGramType>() );
+    	vector<OneGramType> *curFragment = &output[ output.size() - 1 ];
 
     	while( (next = token.next()) ){
     		CharType curType = ctype_->getBaseType( next );
-			if( isDL && ( curType == CHAR_TYPE_NUMBER || curType == CHAR_TYPE_LETTER ) )
-			{
-				buffer += next;
+    		switch( curType )
+    		{
+    		case CHAR_TYPE_NUMBER:
+    		case CHAR_TYPE_LETTER:
+    		case CHAR_TYPE_PUNC:
+    			if( !curFragment->empty() )
+				{
+					output.push_back( vector<OneGramType>() );
+					curFragment = &output[ output.size() - 1 ];
+				}
 				continue;
-			}
+    		case CHAR_TYPE_SPACE:
+    			continue;
+    		}
 
-			if( !buffer.empty() )
-			{
-				output.push_back(OneGramType());
-				OneGramType& end = output[ output.size() - 1 ];
-				end.first = buffer;
-				end.second = isDL;
-				//clear the buffer
-				buffer.clear();
-			}
-
-			// ignore space
-			if( ctype_->isSpace(next) )
-			{
-				isDL = false;
-				continue;
-			}
-
-			// set new buffer
-			buffer = next;
-			isDL = ( curType == CHAR_TYPE_NUMBER || curType == CHAR_TYPE_LETTER );
-		}
-
-    	// whether remain content
-    	if( !buffer.empty() )
-		{
-			output.push_back(OneGramType());
-			OneGramType& end = output[ output.size() - 1 ];
-			end.first = buffer;
-			end.second = isDL;
+			curFragment->push_back( next );
 		}
     }
 
-    void CMA_ME_Analyzer::getNGramResultImpl( const vector<OneGramType>& oneGram, const int n,
+    void CMA_ME_Analyzer::getNGramResultImpl( const vector<vector<OneGramType> >& oneGram, const int n,
     		vector<string>& output )
     {
     	if( n < 1 )
     		return;
-    	int size = static_cast<int>(oneGram.size());
-    	int lastIdx = size - n + 1;
-    	cout<<"size="<<size<<",n="<<n<<",lastIdx="<<lastIdx<<endl;
-    	for( int i = 0; i < lastIdx; ++i )
+    	size_t fragSize = oneGram.size();
+    	for(size_t fidx = 0; fidx < fragSize; ++fidx)
     	{
-    		const OneGramType& firstEle = oneGram[i];
-    		string buf = firstEle.first;
-    		bool preIsDL = firstEle.second;
-    		for( int j = 1; j < n; ++j )
-    		{
-    			const OneGramType& gramEle = oneGram[ i + j ];
-    			if( preIsDL && gramEle.second )
-    				buf += " " + gramEle.first;
-    			else
-    				buf += gramEle.first;
-    			preIsDL = gramEle.second;
-    		}
-    		output.push_back( buf );
+    		const vector<OneGramType>& curFragment = oneGram[ fidx ];
+    		int size = static_cast<int>(curFragment.size());
+			int lastIdx = size - n + 1;
+			//cout<<"size="<<size<<",n="<<n<<",lastIdx="<<lastIdx<<endl;
+			for( int i = 0; i < lastIdx; ++i )
+			{
+				string buf = curFragment[i];
+				for( int j = 1; j < n; ++j )
+					buf += curFragment[ i + j ];
+
+				output.push_back( buf );
+			}
     	}
     }
 

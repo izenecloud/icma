@@ -108,7 +108,7 @@ public:
      */
     virtual int setIndexPOSList( std::vector<std::string>& posList );
 
-    typedef pair<string, bool> OneGramType;
+    typedef string OneGramType;
 
 private:
     /**
@@ -122,12 +122,12 @@ private:
      * \param sentence the input string
      * \param output the string is the input value and bool represents whether
      */
-    void splitToOneGram( const char* sentence, vector<OneGramType>& output );
+    void splitToOneGram( const char* sentence, vector<vector<OneGramType> >& output );
 
     /**
      * Implementation of getting N-Gram result
      */
-    void getNGramResultImpl( const vector<OneGramType>& oneGram, const int n, vector<string>& output );
+    void getNGramResultImpl( const vector<vector<OneGramType> >& oneGram, const int n, vector<string>& output );
 
 private:
     CMA_ME_Knowledge *knowledge_;

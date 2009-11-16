@@ -26,6 +26,8 @@ using namespace std;
 namespace cma
 {
 
+const string DEFAULT_SPACE = " \t\n\x0B\f\r";
+
 CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
 {
    switch(type)
@@ -171,10 +173,9 @@ void loadTypes( const char* typeStr, vector<CharType>& ret )
 	}
 }
 
-void loadEntity( const TiXmlNode* textNode, CTypeTokenizer& tokenizer, CharType type,
+void loadEntityImpl( const char* text, CTypeTokenizer& tokenizer, CharType type,
 		map< CharValue, CharConditions >& ret)
 {
-	const char* text = getTinyXmlText( textNode );
 	const CMA_CType *ctype = tokenizer.getCType();
 
 	string instr = ctype->getPOCXmlStr(text);
@@ -192,6 +193,14 @@ void loadEntity( const TiXmlNode* textNode, CTypeTokenizer& tokenizer, CharType 
 		}
 		cc.baseType_ = type;
 	}
+}
+
+
+void loadEntity( const TiXmlNode* textNode, CTypeTokenizer& tokenizer, CharType type,
+		map< CharValue, CharConditions >& ret)
+{
+	const char* text = getTinyXmlText( textNode );
+	loadEntityImpl( text, tokenizer, type, ret);
 }
 
 void loadCondition(const TiXmlNode* condNode, CTypeTokenizer& tokenizer, Condition& ret)
@@ -304,8 +313,10 @@ int CMA_CType::loadConfiguration( const char* file )
 			loadEntity( node, tokenizer, CHAR_TYPE_PUNC, typeMap_ );
 		else if( strcmp( tag, "space") == 0 )
 		{
-			//loadEntity( node, tokenizer, CHAR_TYPE_SPACE, typeMap_ );
-			loadCharsValue( getTinyXmlText( node ), tokenizer, spaceSet_ );
+			string spaceValue =  getTinyXmlText( node );
+			spaceValue += DEFAULT_SPACE;
+			//loadEntityImpl( spaceValue.c_str(), tokenizer, CHAR_TYPE_SPACE, typeMap_ );
+			loadCharsValue( spaceValue.c_str(), tokenizer, spaceSet_ );
 		}
 		else if( strcmp( tag, "sentenceseparator") == 0 )
 			loadCharsValue( getTinyXmlText( node ), tokenizer, senSepSet_ );
@@ -359,9 +370,6 @@ CharType CMA_CType::getBaseType( const char* p ) const
 
 bool CMA_CType::isSpace(const char* p) const
 {
-	unsigned int len = getByteCount( p );
-	if( len == 1 )
-		return isspace( (unsigned char)p[0] );
 	CharValue curV = getEncodeValue(p);
 	return spaceSet_.find(curV) != spaceSet_.end();
 }
