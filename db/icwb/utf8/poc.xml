@@ -166,7 +166,6 @@
 			<char><![CDATA[两兩]]></char>
 			<condition>
 				<type>chardigit</type>
-				<nopretype>chardigit</nopretype>
 				<nexttype>chardigit</nexttype>
 			</condition>
 		</rule>
@@ -208,6 +207,10 @@
 			<condition>
 				<type>digit</type>
 				<pretype>digit</pretype>
+			</condition>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
 			</condition>
 		</rule>
 

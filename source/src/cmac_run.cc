@@ -338,12 +338,7 @@ int main(int argc, char* argv[])
     Knowledge* knowledge = factory->createKnowledge();
 
     // set default dictionary file
-    const char* modelPath = 0;
-#if defined(_WIN32) && !defined(__CYGWIN__)
-    modelPath = "../db/icwb/gb18030/";
-#else
-    modelPath = "../db/icwb/gb18030/";
-#endif
+    const char* modelPath = "../db/icwb/utf8/";
 
     switch(optionIndex)
     {
