@@ -15,7 +15,7 @@ TARGET_LINK_LIBRARIES(cmac_static ${LIBS_ME} ${LIBS_XML}
 SET_TARGET_PROPERTIES ( cmac_static PROPERTIES OUTPUT_NAME cmac CLEAN_DIRECT_OUTPUT 1)
 
 ADD_LIBRARY(cmac_shared SHARED ${CM_BASIC_SRC})
-TARGET_LINK_LIBRARIES(cmac_shared maxent_shared tinyxml_shared
+TARGET_LINK_LIBRARIES(cmac_shared maxent_static tinyxml_static
 		#wiselib procmeminfo
 	)
 SET_TARGET_PROPERTIES ( cmac_shared PROPERTIES OUTPUT_NAME cmac CLEAN_DIRECT_OUTPUT 1)

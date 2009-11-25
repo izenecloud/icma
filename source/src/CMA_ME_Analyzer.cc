@@ -618,6 +618,8 @@ namespace meanainner{
 				continue;
     		case CHAR_TYPE_SPACE:
     			continue;
+    		default:
+    			;//do nothing
     		}
 
 			curFragment->push_back( next );
