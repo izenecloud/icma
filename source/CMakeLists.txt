@@ -40,10 +40,6 @@ project(CMA-CHEN)
 
 add_definitions("-Wall -fPIC")# -O3
 
-SET(USE_IZENEWISELIB FALSE)
-
-
-IF(USE_IZENEWISELIB)
 
 FIND_PACKAGE(Threads REQUIRED)
 
@@ -106,7 +102,6 @@ SET(LIBS_WISELIB wiselib)
 include_directories(${izenelib_INCLUDE_DIRS})
 include_directories(${wiselib_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
-ENDIF(USE_IZENEWISELIB)
 
 IF( USE_MICROHTTPD )
 	MESSAGE( STATUS "libmicrohttpd is the third library used for demo page, you should go to the directory source/libmicrohttpd first, then type: ./configure and make in sequence.")
@@ -121,7 +116,6 @@ include_directories(./include)
 include_directories(./corpus)
 include_directories(./maxent)
 include_directories(./vsynonym)
-include_directories(./tinyxml)
 
 
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../lib)
@@ -130,9 +124,7 @@ include_directories(./tinyxml)
 SET(LIBS_ME maxent_static)
 SET(LIBS_CORPUS corpus)
 SET(LIBS_CMAC cmac_static)
-SET(LIBS_XML tinyxml_static)
 
-add_subdirectory(tinyxml)
 add_subdirectory(maxent)
 add_subdirectory(src cmac)
 add_subdirectory(corpus)

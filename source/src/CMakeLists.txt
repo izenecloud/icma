@@ -9,13 +9,13 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../bin)
 
 
 ADD_LIBRARY(cmac_static STATIC ${CM_BASIC_SRC})
-TARGET_LINK_LIBRARIES(cmac_static ${LIBS_ME} ${LIBS_XML} 
+TARGET_LINK_LIBRARIES(cmac_static ${LIBS_ME} ticpp 
 		#wiselib procmeminfo
 	)
 SET_TARGET_PROPERTIES ( cmac_static PROPERTIES OUTPUT_NAME cmac CLEAN_DIRECT_OUTPUT 1)
 
 ADD_LIBRARY(cmac_shared SHARED ${CM_BASIC_SRC})
-TARGET_LINK_LIBRARIES(cmac_shared maxent_static tinyxml_static
+TARGET_LINK_LIBRARIES(cmac_shared maxent_static ticpp
 		#wiselib procmeminfo
 	)
 SET_TARGET_PROPERTIES ( cmac_shared PROPERTIES OUTPUT_NAME cmac CLEAN_DIRECT_OUTPUT 1)
@@ -27,7 +27,7 @@ ADD_EXECUTABLE(cmacsegger SeggerCMD.cc)
 TARGET_LINK_LIBRARIES(cmacsegger ${LIBS_CMAC})
 
 ADD_EXECUTABLE(cmac_run cmac_run.cc)
-TARGET_LINK_LIBRARIES(cmac_run ${LIBS_CMAC})
+TARGET_LINK_LIBRARIES(cmac_run cmac_shared)
 
 ADD_EXECUTABLE(cmac_run2 cmac_run2.cc)
 TARGET_LINK_LIBRARIES(cmac_run2 ${LIBS_CMAC} pthread)

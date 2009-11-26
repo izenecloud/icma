@@ -11,13 +11,14 @@
 	#include <wiselib/ustring/UString.h>
 #endif
 
+#include <wiselib/ticpp/tinyxml.h>
+
 #include "cma_ctype.h"
 #include "cma_ctype_gb2312.h"
 #include "cma_ctype_big5.h"
 #include "cma_ctype_gb18030.h"
 #include "cma_ctype_utf8.h"
 #include "cma_ctype_utf16.h"
-#include "tinyxml.h"
 #include "tokenizer.h"
 #include "strutil.h"
 
@@ -293,10 +294,10 @@ int CMA_CType::loadConfiguration( const char* file )
 		return 0;
 	}
 
-
 	const TiXmlElement* root= doc.RootElement();
 
 	CTypeTokenizer tokenizer( this );
+
 	//load the entities
 	const TiXmlNode* entityNode = root->FirstChild( "entities" );
 
