@@ -63,7 +63,9 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
 }
 
 
-    CMA_ME_Analyzer::CMA_ME_Analyzer() : knowledge_(0), ctype_(0) {
+    CMA_ME_Analyzer::CMA_ME_Analyzer()
+			: knowledge_(0), ctype_(0), posTable_(0)
+    {
     }
 
     CMA_ME_Analyzer::~CMA_ME_Analyzer() {
@@ -80,8 +82,6 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
         vector<vector<string> > pos;
         analysis(sentence.getString(), N, pos, segment, printPOS);
 
-        const POSTable* posTable = knowledge_->getPOSTable();
-
         if(N <= 1)
         {
         	MorphemeList list;
@@ -97,8 +97,8 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
 				if(printPOS)
 				{
 					morp.posStr_ = poses[j];
-					morp.posCode_ = posTable->getCodeFromStr(morp.posStr_);
-					morp.isIndexed = posTable->isIndexPOS( morp.posCode_ );
+					morp.posCode_ = posTable_->getCodeFromStr(morp.posStr_);
+					morp.isIndexed = posTable_->isIndexPOS( morp.posCode_ );
 				}
 				list.push_back(morp);
 			}
@@ -123,8 +123,8 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
 				if(printPOS)
 				{
 					morp.posStr_ = poses[j];
-					morp.posCode_ = posTable->getCodeFromStr(morp.posStr_);
-					morp.isIndexed = posTable->isIndexPOS( morp.posCode_ );
+					morp.posCode_ = posTable_->getCodeFromStr(morp.posStr_);
+					morp.isIndexed = posTable_->isIndexPOS( morp.posCode_ );
 				}
 
 				list.push_back(morp);
@@ -292,7 +292,7 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
         // close the POS output automatically
         if(!knowledge_->isSupportPOS())
         	setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
-
+        posTable_ = knowledge_->getPOSTable();
         ctype_ = CMA_CType::instance(knowledge_->getEncodeType());
         encodeType_ = knowledge_->getEncodeType();
         if(knowledge_->getPOSTagger())
@@ -651,12 +651,27 @@ namespace meanainner{
 
     void CMA_ME_Analyzer::resetIndexPOSList( bool defVal )
     {
-    	knowledge_->getPOSTable()->resetIndexPOSList( defVal );
+    	posTable_->resetIndexPOSList( defVal );
     }
 
     int CMA_ME_Analyzer::setIndexPOSList( std::vector<std::string>& posList )
     {
-    	return knowledge_->getPOSTable()->setIndexPOSList( posList );
+    	return posTable_->setIndexPOSList( posList );
+    }
+
+    int CMA_ME_Analyzer::getCodeFromStr( const string& pos ) const
+    {
+    	return posTable_->getCodeFromStr( pos );
+    }
+
+    const char* CMA_ME_Analyzer::getStrFromCode( int index ) const
+    {
+    	return posTable_->getStrFromCode( index );
+    }
+
+    int CMA_ME_Analyzer::getPOSTagSetSize() const
+    {
+    	return posTable_->size();
     }
 
 }

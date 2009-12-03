@@ -128,6 +128,26 @@ public:
     virtual int setIndexPOSList( std::vector< std::string >& posList ) = 0;
 
     /**
+     * Get the POS index code from the POS string in the global part-of-speech table.
+     * \param pos the POS string
+     * \return POS index code, -1 for non POS available
+     */
+    virtual int getCodeFromStr(const std::string& pos) const = 0;
+
+    /**
+     * Get the POS string from the POS index code in the global part-of-speech table.
+     * \param index the POS index code
+     * \return POS string, null pointer for non POS available
+     */
+    virtual const char* getStrFromCode(int index) const = 0;
+
+    /**
+	 * Get the number of POS tags in the global part-of-speech table.
+	 * \return the number of POS tags
+	 */
+	virtual int getPOSTagSetSize() const = 0;
+
+    /**
      * Option type for analysis.
      */
     enum OptionType

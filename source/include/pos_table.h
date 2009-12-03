@@ -77,14 +77,6 @@ public:
     int size() const;
 
     /**
-     * Load the configuration file, which is in text format.
-     * This file contains the part-of-speech configuration, which format is "tag = value".
-     * \param fileName the file name
-     * \return 0 for fail, 1 for success
-     */
-    bool loadConfig(const char* fileName);
-
-    /**
      * Special part-of-speech types.
      */
     enum POSType

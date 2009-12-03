@@ -108,6 +108,26 @@ public:
      */
     virtual int setIndexPOSList( std::vector<std::string>& posList );
 
+    /**
+     * Get the POS index code from the POS string in the global part-of-speech table.
+     * \param pos the POS string
+     * \return POS index code, -1 for non POS available
+     */
+    virtual int getCodeFromStr(const std::string& pos) const;
+
+    /**
+     * Get the POS string from the POS index code in the global part-of-speech table.
+     * \param index the POS index code
+     * \return POS string, null pointer for non POS available
+     */
+    virtual const char* getStrFromCode(int index) const;
+
+    /**
+	 * Get the number of POS tags in the global part-of-speech table.
+	 * \return the number of POS tags
+	 */
+	virtual int getPOSTagSetSize() const;
+
     typedef string OneGramType;
 
 private:
@@ -144,6 +164,8 @@ private:
      * The Encode Type of Analyzer
      */
     Knowledge::EncodeType encodeType_;
+
+    POSTable* posTable_;
 };
 
 
