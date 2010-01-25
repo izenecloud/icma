@@ -65,8 +65,12 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
                     case CHAR_TYPE_DATE:
                         return (nextP) ? WORD_TYPE_OTHER : WORD_TYPE_DATE;
                     default:
-                        assert(false && "unexpected arrive here (pre is number, cur is not-letter or non-date)");
+                    {
+                        string errorMsg("unexpected arrive here (pre is number, cur is not-letter or non-date). Input: ");
+                        errorMsg += word;
+                        assert(false && errorMsg.c_str());
                         break;
+                    }
                 }
                 break;
 
