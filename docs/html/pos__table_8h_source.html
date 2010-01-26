@@ -55,54 +55,52 @@
 <a name="l00072"></a>00072 
 <a name="l00077"></a>00077     <span class="keywordtype">int</span> <a class="code" href="classcma_1_1POSTable.html#aeb70793af427c7dd545f132e177ca26e">size</a>() <span class="keyword">const</span>;
 <a name="l00078"></a>00078 
-<a name="l00085"></a>00085     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1POSTable.html#aa70a1e82116a1855f9599aeb48cb5139">loadConfig</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* fileName);
-<a name="l00086"></a>00086 
-<a name="l00090"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001">00090</a>     <span class="keyword">enum</span> <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001">POSType</a>
-<a name="l00091"></a>00091     {
-<a name="l00092"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001aa9688ce10893fe5845f859eac8aa8341">00092</a>         <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001aa9688ce10893fe5845f859eac8aa8341" title="the POS type of numeral words, such as &amp;quot;123&amp;quot;, &amp;quot;一百&amp;quot;, etc">POS_TYPE_NUMBER</a>, 
-<a name="l00093"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001a2aedfaa1b656b4f9d284e9f697f70d7a">00093</a>         <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001a2aedfaa1b656b4f9d284e9f697f70d7a" title="the POS type of temporal nouns such as &amp;quot;今天&amp;quot;, &amp;quot;2009年&amp;quot;, etc...">POS_TYPE_DATE</a>, 
-<a name="l00094"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001aa8210d74c2fff14ee41eaab24708901e">00094</a>         <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001aa8210d74c2fff14ee41eaab24708901e" title="the POS type of foreign words such as &amp;quot;ISO&amp;quot;, &amp;quot;ＣＨＩＮＡ&amp;quot;...">POS_TYPE_FOREIGN</a>, 
-<a name="l00095"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001a0ef9758a5659c4e92a7f66cd853697a8">00095</a>         <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001a0ef9758a5659c4e92a7f66cd853697a8" title="the POS type of punctuations such as &amp;quot;，&amp;quot;, &amp;quot;。&amp;quot;, etc">POS_TYPE_PUNCT</a>, 
-<a name="l00096"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001a8f8cf5a000c13742573f254677f24a70">00096</a>         <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001a8f8cf5a000c13742573f254677f24a70" title="the POS type of user defined words">POS_TYPE_USER</a>, 
-<a name="l00097"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001ac5863d9717e733ba5f1234e1f0a64fbd">00097</a>         <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001ac5863d9717e733ba5f1234e1f0a64fbd" title="the count of POS types">POS_TYPE_MAX_NUM</a> 
-<a name="l00098"></a>00098     };
-<a name="l00099"></a>00099 
-<a name="l00105"></a>00105     <span class="keywordtype">int</span> <a class="code" href="classcma_1_1POSTable.html#ad6c9ee24dd82620d36d4de8018702546">getCodeFromType</a>(<a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001">POSType</a> type) <span class="keyword">const</span>;
+<a name="l00082"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001">00082</a>     <span class="keyword">enum</span> <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001">POSType</a>
+<a name="l00083"></a>00083     {
+<a name="l00084"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001aa9688ce10893fe5845f859eac8aa8341">00084</a>         <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001aa9688ce10893fe5845f859eac8aa8341" title="the POS type of numeral words, such as &amp;quot;123&amp;quot;, &amp;quot;一百&amp;quot;, etc">POS_TYPE_NUMBER</a>, 
+<a name="l00085"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001a2aedfaa1b656b4f9d284e9f697f70d7a">00085</a>         <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001a2aedfaa1b656b4f9d284e9f697f70d7a" title="the POS type of temporal nouns such as &amp;quot;今天&amp;quot;, &amp;quot;2009年&amp;quot;, etc...">POS_TYPE_DATE</a>, 
+<a name="l00086"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001aa8210d74c2fff14ee41eaab24708901e">00086</a>         <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001aa8210d74c2fff14ee41eaab24708901e" title="the POS type of foreign words such as &amp;quot;ISO&amp;quot;, &amp;quot;ＣＨＩＮＡ&amp;quot;...">POS_TYPE_FOREIGN</a>, 
+<a name="l00087"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001a0ef9758a5659c4e92a7f66cd853697a8">00087</a>         <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001a0ef9758a5659c4e92a7f66cd853697a8" title="the POS type of punctuations such as &amp;quot;，&amp;quot;, &amp;quot;。&amp;quot;, etc">POS_TYPE_PUNCT</a>, 
+<a name="l00088"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001a8f8cf5a000c13742573f254677f24a70">00088</a>         <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001a8f8cf5a000c13742573f254677f24a70" title="the POS type of user defined words">POS_TYPE_USER</a>, 
+<a name="l00089"></a><a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001ac5863d9717e733ba5f1234e1f0a64fbd">00089</a>         <a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001ac5863d9717e733ba5f1234e1f0a64fbd" title="the count of POS types">POS_TYPE_MAX_NUM</a> 
+<a name="l00090"></a>00090     };
+<a name="l00091"></a>00091 
+<a name="l00097"></a>00097     <span class="keywordtype">int</span> <a class="code" href="classcma_1_1POSTable.html#ad6c9ee24dd82620d36d4de8018702546">getCodeFromType</a>(<a class="code" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001">POSType</a> type) <span class="keyword">const</span>;
+<a name="l00098"></a>00098 
+<a name="l00105"></a>00105     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1POSTable.html#a0348ae37b15a1b9c4ce920ffecd83264">isIndexPOS</a>( <span class="keywordtype">int</span> posCode ) <span class="keyword">const</span>;
 <a name="l00106"></a>00106 
-<a name="l00113"></a>00113     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1POSTable.html#a0348ae37b15a1b9c4ce920ffecd83264">isIndexPOS</a>( <span class="keywordtype">int</span> posCode ) <span class="keyword">const</span>;
+<a name="l00113"></a>00113     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1POSTable.html#a1a3432b617b81c542a58e2d97146a1d8">setIndexPOS</a>( <span class="keywordtype">int</span> posCode, <span class="keywordtype">bool</span> isIndex );
 <a name="l00114"></a>00114 
-<a name="l00121"></a>00121     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1POSTable.html#a1a3432b617b81c542a58e2d97146a1d8">setIndexPOS</a>( <span class="keywordtype">int</span> posCode, <span class="keywordtype">bool</span> isIndex );
-<a name="l00122"></a>00122 
-<a name="l00127"></a>00127     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1POSTable.html#a6027450417effadd701d683b773ec659">resetIndexPOSList</a>(<span class="keywordtype">bool</span> defVal = <span class="keyword">true</span>);
-<a name="l00128"></a>00128 
-<a name="l00134"></a>00134         <span class="keywordtype">int</span> <a class="code" href="classcma_1_1POSTable.html#a439d062eadae6baee49f6a1038629364">setIndexPOSList</a>( std::vector&lt;std::string&gt;&amp; posList );
-<a name="l00135"></a>00135 
-<a name="l00140"></a><a class="code" href="classcma_1_1POSTable.html#ac3fe80758770f2946c870b07b4f7d3bc">00140</a>     <span class="keyword">const</span> POSTableInfo* <a class="code" href="classcma_1_1POSTable.html#ac3fe80758770f2946c870b07b4f7d3bc">getPOSTableInfo</a>()
-<a name="l00141"></a>00141     {
-<a name="l00142"></a>00142         <span class="keywordflow">return</span> &amp;posTable_;
-<a name="l00143"></a>00143     }
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145 <span class="keyword">private</span>:
-<a name="l00147"></a>00147     <span class="keyword">static</span> <a class="code" href="classcma_1_1POSTable.html" title="POSTable stores the global table of part-of-speech tags.">POSTable</a>* instance_;
-<a name="l00148"></a>00148 
-<a name="l00150"></a>00150     POSTableInfo posTable_;
-<a name="l00151"></a>00151 
-<a name="l00153"></a>00153     <span class="keyword">typedef</span> std::map&lt;std::string, int, Nocase&gt; POSMap;
-<a name="l00154"></a>00154 
-<a name="l00156"></a>00156     POSMap posMap_;
-<a name="l00157"></a>00157 
-<a name="l00159"></a>00159     std::vector&lt;int&gt; typeTable_;
-<a name="l00160"></a>00160 
-<a name="l00162"></a>00162     <span class="keyword">typedef</span> std::map&lt;std::string, POSType&gt; TypeMap;
-<a name="l00163"></a>00163 
-<a name="l00165"></a>00165     TypeMap typeMap_;
-<a name="l00166"></a>00166 };
-<a name="l00167"></a>00167 
-<a name="l00168"></a>00168 } <span class="comment">// namespace cma</span>
-<a name="l00169"></a>00169 
-<a name="l00170"></a>00170 <span class="preprocessor">#endif // CMA_POS_TABLE_H</span>
+<a name="l00119"></a>00119     <span class="keywordtype">void</span> <a class="code" href="classcma_1_1POSTable.html#a6027450417effadd701d683b773ec659">resetIndexPOSList</a>(<span class="keywordtype">bool</span> defVal = <span class="keyword">true</span>);
+<a name="l00120"></a>00120 
+<a name="l00126"></a>00126         <span class="keywordtype">int</span> <a class="code" href="classcma_1_1POSTable.html#a439d062eadae6baee49f6a1038629364">setIndexPOSList</a>( std::vector&lt;std::string&gt;&amp; posList );
+<a name="l00127"></a>00127 
+<a name="l00132"></a><a class="code" href="classcma_1_1POSTable.html#ac3fe80758770f2946c870b07b4f7d3bc">00132</a>     <span class="keyword">const</span> POSTableInfo* <a class="code" href="classcma_1_1POSTable.html#ac3fe80758770f2946c870b07b4f7d3bc">getPOSTableInfo</a>()
+<a name="l00133"></a>00133     {
+<a name="l00134"></a>00134         <span class="keywordflow">return</span> &amp;posTable_;
+<a name="l00135"></a>00135     }
+<a name="l00136"></a>00136 
+<a name="l00137"></a>00137 <span class="keyword">private</span>:
+<a name="l00139"></a>00139     <span class="keyword">static</span> <a class="code" href="classcma_1_1POSTable.html" title="POSTable stores the global table of part-of-speech tags.">POSTable</a>* instance_;
+<a name="l00140"></a>00140 
+<a name="l00142"></a>00142     POSTableInfo posTable_;
+<a name="l00143"></a>00143 
+<a name="l00145"></a>00145     <span class="keyword">typedef</span> std::map&lt;std::string, int, Nocase&gt; POSMap;
+<a name="l00146"></a>00146 
+<a name="l00148"></a>00148     POSMap posMap_;
+<a name="l00149"></a>00149 
+<a name="l00151"></a>00151     std::vector&lt;int&gt; typeTable_;
+<a name="l00152"></a>00152 
+<a name="l00154"></a>00154     <span class="keyword">typedef</span> std::map&lt;std::string, POSType&gt; TypeMap;
+<a name="l00155"></a>00155 
+<a name="l00157"></a>00157     TypeMap typeMap_;
+<a name="l00158"></a>00158 };
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160 } <span class="comment">// namespace cma</span>
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162 <span class="preprocessor">#endif // CMA_POS_TABLE_H</span>
 </pre></div></div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Nov 6 15:59:12 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jan 26 13:00:41 2010 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

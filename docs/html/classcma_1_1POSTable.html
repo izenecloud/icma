@@ -54,7 +54,6 @@ typedef std::vector&lt; std::pair<br class="typebreak"/>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#a1692f43e2154d408265e09affd64d70a">getCodeFromStr</a> (const std::string &amp;pos) const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#acf9611088b3484dbaad11ef2b5b24f52">getStrFromCode</a> (int index) const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#aeb70793af427c7dd545f132e177ca26e">size</a> () const </td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#aa70a1e82116a1855f9599aeb48cb5139">loadConfig</a> (const char *fileName)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#ad6c9ee24dd82620d36d4de8018702546">getCodeFromType</a> (<a class="el" href="classcma_1_1POSTable.html#ab65c0d7bf4f492aeff968cf462b6c001">POSType</a> type) const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#a0348ae37b15a1b9c4ce920ffecd83264">isIndexPOS</a> (int posCode) const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1POSTable.html#a1a3432b617b81c542a58e2d97146a1d8">setIndexPOS</a> (int posCode, bool isIndex)</td></tr>
@@ -128,7 +127,7 @@ typedef std::vector&lt; std::pair<br class="typebreak"/>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the index code of the POS string added, if the POS string has been added before, its index code previously added is returned. </dd></dl>
 <dl class="attention"><dt><b>Attention:</b></dt><dd>Note that the POS string is case-insensitively. </dd></dl>
 
-<p>Referenced by <a class="el" href="pos__table_8cpp_source.html#l00083">loadConfig()</a>, and <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00044">cma::CMA_ME_Knowledge::loadPOSModel()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00044">cma::CMA_ME_Knowledge::loadPOSModel()</a>.</p>
 
 </div>
 </div>
@@ -155,6 +154,8 @@ typedef std::vector&lt; std::pair<br class="typebreak"/>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>POS index code, -1 for non POS available </dd></dl>
+
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00074">cma::CMA_ME_Analyzer::runWithSentence()</a>.</p>
 
 </div>
 </div>
@@ -227,6 +228,8 @@ typedef std::vector&lt; std::pair<br class="typebreak"/>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>POS string, null pointer for non POS available </dd></dl>
 
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00667">cma::CMA_ME_Analyzer::getStrFromCode()</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a0348ae37b15a1b9c4ce920ffecd83264"></a><!-- doxytag: member="cma::POSTable::isIndexPOS" ref="a0348ae37b15a1b9c4ce920ffecd83264" args="(int posCode) const " -->
@@ -253,33 +256,7 @@ typedef std::vector&lt; std::pair<br class="typebreak"/>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true if posCode is the index POS </dd></dl>
 
-</div>
-</div>
-<a class="anchor" id="aa70a1e82116a1855f9599aeb48cb5139"></a><!-- doxytag: member="cma::POSTable::loadConfig" ref="aa70a1e82116a1855f9599aeb48cb5139" args="(const char *fileName)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool cma::POSTable::loadConfig </td>
-          <td>(</td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>fileName</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<p>Load the configuration file, which is in text format. This file contains the part-of-speech configuration, which format is "tag = value". </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>fileName</em>&nbsp;</td><td>the file name </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 for fail, 1 for success </dd></dl>
-
-<p>References <a class="el" href="pos__table_8cpp_source.html#l00044">addPOS()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00074">cma::CMA_ME_Analyzer::runWithSentence()</a>.</p>
 
 </div>
 </div>
@@ -301,7 +278,7 @@ typedef std::vector&lt; std::pair<br class="typebreak"/>
 <p>Reset all the pos index Information as defVal </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>defVal default value to reset (default is true) </dd></dl>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00574">cma::CMA_ME_Analyzer::resetIndexPOSList()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00652">cma::CMA_ME_Analyzer::resetIndexPOSList()</a>.</p>
 
 </div>
 </div>
@@ -365,7 +342,7 @@ typedef std::vector&lt; std::pair<br class="typebreak"/>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>how many POS are set successfully (mainly because not exists). </dd></dl>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00579">cma::CMA_ME_Analyzer::setIndexPOSList()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00657">cma::CMA_ME_Analyzer::setIndexPOSList()</a>.</p>
 
 </div>
 </div>
@@ -386,6 +363,8 @@ typedef std::vector&lt; std::pair<br class="typebreak"/>
 <p>Get the number of POS tags in the global part-of-speech table. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the number of POS tags </dd></dl>
 
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00672">cma::CMA_ME_Analyzer::getPOSTagSetSize()</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
@@ -393,7 +372,7 @@ typedef std::vector&lt; std::pair<br class="typebreak"/>
 <li>/home/vernkin/projects/chinese-ma-chen/source/src/<a class="el" href="pos__table_8cpp.html">pos_table.cpp</a></li>
 </ul>
 </div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Nov 6 15:59:13 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jan 26 13:00:42 2010 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

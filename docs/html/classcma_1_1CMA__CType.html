@@ -49,6 +49,7 @@ Inheritance diagram for cma::CMA_CType:</div>
 <tr><td class="memItemLeft" align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#aa5069cd1dc6794e4744e3fbcac7afbd6">~CMA_CType</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#a00f7e99cea12e9db504629c4a6cdb2d4">getByteCount</a> (const char *p) const =0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">CharType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#a36e9b60205fad71d91f60752d47135a4">getCharType</a> (const char *p, CharType preType, const char *nextP) const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">CharType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#a3ff5236c2ad85e67e3ec562227282de5">getBaseType</a> (const char *p) const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#ab9fbb6aa32fd36bb3838b48ffb92bf24">isPunct</a> (const char *p) const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#a4583d638f7336cf0a548905e8e88f826">length</a> (const char *p) const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__CType.html#a493df55a7117400553d64b63d0809e0d">getEncodeValue</a> (const char *p) const </td></tr>
@@ -85,6 +86,34 @@ Inheritance diagram for cma::CMA_CType:</div>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a3ff5236c2ad85e67e3ec562227282de5"></a><!-- doxytag: member="cma::CMA_CType::getBaseType" ref="a3ff5236c2ad85e67e3ec562227282de5" args="(const char *p) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CharType cma::CMA_CType::getBaseType </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>p</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Get the base Character Type of Character P without any rules </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>p</em>&nbsp;</td><td>the input character </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the base type of p, or CHAR_TYPE_OTHER for default </dd></dl>
+
+<p>References <a class="el" href="cma__ctype_8cpp_source.html#l00106">getEncodeValue()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a00f7e99cea12e9db504629c4a6cdb2d4"></a><!-- doxytag: member="cma::CMA_CType::getByteCount" ref="a00f7e99cea12e9db504629c4a6cdb2d4" args="(const char *p) const =0" -->
 <div class="memitem">
 <div class="memproto">
@@ -111,7 +140,7 @@ Inheritance diagram for cma::CMA_CType:</div>
 
 <p>Implemented in <a class="el" href="classcma_1_1CMA__CType__Big5.html#a0e471b0985214eb074b69fe273cde7f5">cma::CMA_CType_Big5</a>, <a class="el" href="classcma_1_1CMA__CType__GB18030.html#a1d6d026a400245efbf365f1b21698318">cma::CMA_CType_GB18030</a>, <a class="el" href="classcma_1_1CMA__CType__GB2312.html#a057ccee8e82b0a22a30b79fb2f059b8f">cma::CMA_CType_GB2312</a>, and <a class="el" href="classcma_1_1CMA__CType__UTF8.html#a7de25d99a46d649bbf0cc9d1df3b9af5">cma::CMA_CType_UTF8</a>.</p>
 
-<p>Referenced by <a class="el" href="cma__ctype_8cpp_source.html#l00103">getEncodeValue()</a>, <a class="el" href="cma__ctype_8cpp_source.html#l00090">length()</a>, and <a class="el" href="tokenizer_8cpp_source.html#l00040">cma::CTypeTokenizer::next()</a>.</p>
+<p>Referenced by <a class="el" href="cma__ctype_8cpp_source.html#l00106">getEncodeValue()</a>, <a class="el" href="cma__ctype_8cpp_source.html#l00093">length()</a>, and <a class="el" href="tokenizer_8cpp_source.html#l00040">cma::CTypeTokenizer::next()</a>.</p>
 
 </div>
 </div>
@@ -156,9 +185,9 @@ Inheritance diagram for cma::CMA_CType:</div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the character type. </dd></dl>
 
-<p>References <a class="el" href="cma__ctype_8cpp_source.html#l00103">getEncodeValue()</a>.</p>
+<p>References <a class="el" href="cma__ctype_8cpp_source.html#l00106">getEncodeValue()</a>.</p>
 
-<p>Referenced by <a class="el" href="cma__wtype_8cpp_source.html#l00024">cma::CMA_WType::getWordType()</a>, <a class="el" href="cma__ctype_8cpp_source.html#l00086">isPunct()</a>, and <a class="el" href="CateStrTokenizer_8cc_source.html#l00035">cma::CateStrTokenizer::next()</a>.</p>
+<p>Referenced by <a class="el" href="cma__wtype_8cpp_source.html#l00024">cma::CMA_WType::getWordType()</a>, <a class="el" href="cma__ctype_8cpp_source.html#l00089">isPunct()</a>, and <a class="el" href="CateStrTokenizer_8cc_source.html#l00035">cma::CateStrTokenizer::next()</a>.</p>
 
 </div>
 </div>
@@ -244,7 +273,7 @@ Inheritance diagram for cma::CMA_CType:</div>
 
 <p>References <a class="el" href="classcma_1_1CMA__CType.html#a00f7e99cea12e9db504629c4a6cdb2d4">getByteCount()</a>.</p>
 
-<p>Referenced by <a class="el" href="cma__ctype_8cpp_source.html#l00333">getCharType()</a>, <a class="el" href="cma__ctype_8cpp_source.html#l00354">isSentenceSeparator()</a>, and <a class="el" href="cma__ctype_8cpp_source.html#l00348">isSpace()</a>.</p>
+<p>Referenced by <a class="el" href="cma__ctype_8cpp_source.html#l00363">getBaseType()</a>, <a class="el" href="cma__ctype_8cpp_source.html#l00345">getCharType()</a>, <a class="el" href="cma__ctype_8cpp_source.html#l00378">isSentenceSeparator()</a>, and <a class="el" href="cma__ctype_8cpp_source.html#l00372">isSpace()</a>.</p>
 
 </div>
 </div>
@@ -272,7 +301,7 @@ Inheritance diagram for cma::CMA_CType:</div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the target string </dd></dl>
 
-<p>References <a class="el" href="cma__ctype_8h_source.html#l00128">type_</a>.</p>
+<p>References <a class="el" href="cma__ctype_8h_source.html#l00135">type_</a>.</p>
 
 </div>
 </div>
@@ -302,7 +331,7 @@ Inheritance diagram for cma::CMA_CType:</div>
 
 <p>References <a class="el" href="knowledge_8h_source.html#l00082">cma::Knowledge::ENCODE_TYPE_BIG5</a>, <a class="el" href="knowledge_8h_source.html#l00083">cma::Knowledge::ENCODE_TYPE_GB18030</a>, <a class="el" href="knowledge_8h_source.html#l00081">cma::Knowledge::ENCODE_TYPE_GB2312</a>, and <a class="el" href="knowledge_8h_source.html#l00084">cma::Knowledge::ENCODE_TYPE_UTF8</a>.</p>
 
-<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00082">cma::CMA_ME_Knowledge::loadStatModel()</a>, and <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00274">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00082">cma::CMA_ME_Knowledge::loadStatModel()</a>, and <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00290">cma::CMA_ME_Analyzer::setKnowledge()</a>.</p>
 
 </div>
 </div>
@@ -330,7 +359,7 @@ Inheritance diagram for cma::CMA_CType:</div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true if the p is the punctuation </dd></dl>
 
-<p>References <a class="el" href="cma__ctype_8cpp_source.html#l00333">getCharType()</a>.</p>
+<p>References <a class="el" href="cma__ctype_8cpp_source.html#l00345">getCharType()</a>.</p>
 
 </div>
 </div>
@@ -358,9 +387,9 @@ Inheritance diagram for cma::CMA_CType:</div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true for separator, false for non separator. </dd></dl>
 
-<p>References <a class="el" href="cma__ctype_8cpp_source.html#l00103">getEncodeValue()</a>.</p>
+<p>References <a class="el" href="cma__ctype_8cpp_source.html#l00106">getEncodeValue()</a>.</p>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00301">cma::CMA_ME_Analyzer::splitSentence()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00317">cma::CMA_ME_Analyzer::splitSentence()</a>.</p>
 
 </div>
 </div>
@@ -388,9 +417,9 @@ Inheritance diagram for cma::CMA_CType:</div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true for white-space character, false for non white-space character. </dd></dl>
 
-<p>References <a class="el" href="cma__ctype_8cpp_source.html#l00103">getEncodeValue()</a>.</p>
+<p>References <a class="el" href="cma__ctype_8cpp_source.html#l00106">getEncodeValue()</a>.</p>
 
-<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00301">cma::CMA_ME_Analyzer::splitSentence()</a>.</p>
+<p>Referenced by <a class="el" href="CMA__ME__Analyzer_8cc_source.html#l00317">cma::CMA_ME_Analyzer::splitSentence()</a>.</p>
 
 </div>
 </div>
@@ -457,7 +486,7 @@ Inheritance diagram for cma::CMA_CType:</div>
 <div class="memdoc">
 <p>The encode type of the current cma_ctype class </p>
 
-<p>Referenced by <a class="el" href="cma__ctype__big5_8cpp_source.html#l00030">cma::CMA_CType_Big5::CMA_CType_Big5()</a>, <a class="el" href="cma__ctype__gb18030_8cpp_source.html#l00030">cma::CMA_CType_GB18030::CMA_CType_GB18030()</a>, <a class="el" href="cma__ctype__gb2312_8cpp_source.html#l00030">cma::CMA_CType_GB2312::CMA_CType_GB2312()</a>, <a class="el" href="cma__ctype__utf8_8cpp_source.html#l00029">cma::CMA_CType_UTF8::CMA_CType_UTF8()</a>, and <a class="el" href="cma__ctype_8cpp_source.html#l00368">getPOCXmlStr()</a>.</p>
+<p>Referenced by <a class="el" href="cma__ctype__big5_8cpp_source.html#l00030">cma::CMA_CType_Big5::CMA_CType_Big5()</a>, <a class="el" href="cma__ctype__gb18030_8cpp_source.html#l00030">cma::CMA_CType_GB18030::CMA_CType_GB18030()</a>, <a class="el" href="cma__ctype__gb2312_8cpp_source.html#l00030">cma::CMA_CType_GB2312::CMA_CType_GB2312()</a>, <a class="el" href="cma__ctype__utf8_8cpp_source.html#l00029">cma::CMA_CType_UTF8::CMA_CType_UTF8()</a>, and <a class="el" href="cma__ctype_8cpp_source.html#l00392">getPOCXmlStr()</a>.</p>
 
 </div>
 </div>
@@ -466,7 +495,7 @@ Inheritance diagram for cma::CMA_CType:</div>
 <li>/home/vernkin/projects/chinese-ma-chen/source/src/<a class="el" href="cma__ctype_8cpp.html">cma_ctype.cpp</a></li>
 </ul>
 </div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Nov 6 15:59:13 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jan 26 13:00:42 2010 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

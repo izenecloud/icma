@@ -21,28 +21,33 @@ If the external program uses the library, simply add all the header files in the
 The dataset have to be trained by the Trainer. The Trainer is a executable file with name camctrainer under directory bin.
 
 The SYNOPSIS for the trainer is: \par
- ./cmactrainer mateFile modelPath [encoding] [posDelimiter] \par
+ ./cmactrainer pocXmlFile mateFile modelPath [encoding] [posDelimiter] [pos $|$ poc $|$ pos+poc] [large-\/corpus] \par
 
 
 \par
 The Description for the parameters: 
 \begin{DoxyItemize}
-\item mateFile is the material file, it should be in the form word1/pos1 word2/pos2 word3/pos3 ... 
+\item pocXmlFile is the path of Segmentation XML file in the associated encoding. One sample is db/icwb/utf8/poc.xml (With utf8 encoding).  
+\item mateFile is the material file, the words separated by spaces and maybe has POS information. For example, mateFile with POS information: word1/pos1 word2/pos2...; mateFile without POS information: word1 word2.... 
 \item modelPath is the directory to hold all the output files (include trained model files and dictionaries). 
-\item encoding is the encoding of the mateFile, and gb18030 is the default encoding. Support utf8, gb18030, gb2312 and big5 now. 
-\item posDelimiter is the delimiter between the word and the POS tag, like '/' and '\_\-' and default is '/'. 
+\item encoding is the encoding of the mateFile, Default value is gb18030. Support utf8, gb2312, gb18030 and big5 now. Recommend to use utf8/gb18030 to support both Simplified and Traditional Chinese. 
+\item posDelimiter is the delimiter between the word and the pos tag. Default value is '/'.Like '/' and '\_\-'. If the taining model is poc(the next parameter) and the mateFile doesn't contains POS information, posDemiliter can be any single character (recommend to ues '/'). 
+\item pos $|$ poc $|$ pos+poc is the training mode. Default value is pos+poc. poc only trains segmentation model, pos only trains POS tagging model, and pos+poc trains both of them. 
+\item large-\/corpus indicates whether the mateFile is large ( $>$ 20MB). Default value in none (don't add parameter large-\/corpus). some parameters are adjusted for large mateFile. 
 \end{DoxyItemize}
 
 Take "/dir1/dir2 " as the cateFile, after the training. The following files are created (All under directory /dir1/dir2): 
 \begin{DoxyEnumerate}
-\item {\bfseries pos.model} is the POS statistical model file. 
-\item {\bfseries pos.pos} is the all the POS gained from the training dataset. 
-\item {\bfseries sys.dic} is the dictionary (include words and POS tags) gained from the training dataset. This file is plain text and should be loaded as user dictionary. To convert it to the system dictionary, use Knowledge::encodeSystemDict(const char$\ast$ txtFileName, const char$\ast$ binFileName), then the binFileName can be loaded as the system dictioanry. 
-\item {\bfseries poc.model} is the POC statistical model file. 
+\item {\bfseries pos.model} is the POS statistical model file. Exists when training mode is pos or pos+poc. 
+\item {\bfseries pos.pos} is the all the POS gained from the training dataset. Exists when training mode is pos or pos+poc. 
+\item {\bfseries sys.dic} is the dictionary (include words and POS tags) gained from the training dataset. This file is plain text and should be loaded as user dictionary. To convert it to the system dictionary, use Knowledge::encodeSystemDict(const char$\ast$ txtFileName, const char$\ast$ binFileName), then the binFileName can be loaded as the system dictioanry. Exists when training mode is pos or pos+poc. 
+\item {\bfseries poc.model} is the POC statistical model file. Exists when training mode is poc or pos+poc. 
 \end{DoxyEnumerate}
 
 All the files are required to run the program.\par
-\section{Run the Demo}\label{index_rundemo}
+
+
+{\bfseries Notice:} Configuration files ( cma.config, poc.xml and pos.config) are not created automatically. You can copy these files with same names under db/icwb/utf8 (If the encoding of mateFile isn't utf8, require to change the encoding of copied files).\section{Run the Demo}\label{index_rundemo}
 After the training, you can run the demo to segment the file, The Demo is a executable file with name camcsegger under directory bin.
 
 The SYNOPSIS for the trainer is: \par

@@ -5,13 +5,13 @@
 CMA\_\-CType gives the character type information.  
 {\ttfamily \#include $<$assert.h$>$}\par
 {\ttfamily \#include $<$stdlib.h$>$}\par
+{\ttfamily \#include $<$wiselib/ticpp/tinyxml.h$>$}\par
 {\ttfamily \#include \char`\"{}cma\_\-ctype.h\char`\"{}}\par
 {\ttfamily \#include \char`\"{}cma\_\-ctype\_\-gb2312.h\char`\"{}}\par
 {\ttfamily \#include \char`\"{}cma\_\-ctype\_\-big5.h\char`\"{}}\par
 {\ttfamily \#include \char`\"{}cma\_\-ctype\_\-gb18030.h\char`\"{}}\par
 {\ttfamily \#include \char`\"{}cma\_\-ctype\_\-utf8.h\char`\"{}}\par
 {\ttfamily \#include \char`\"{}cma\_\-ctype\_\-utf16.h\char`\"{}}\par
-{\ttfamily \#include \char`\"{}tinyxml.h\char`\"{}}\par
 {\ttfamily \#include \char`\"{}tokenizer.h\char`\"{}}\par
 {\ttfamily \#include \char`\"{}strutil.h\char`\"{}}\par
 \subsection*{Functions}
@@ -25,6 +25,9 @@ void {\bfseries cma::loadCharsValue} (const char $\ast$str, CTypeTokenizer \&tok
 \item 
 void {\bf cma::loadTypes} (const char $\ast$typeStr, vector$<$ CharType $>$ \&ret)
 \item 
+void {\bfseries cma::loadEntityImpl} (const char $\ast$text, CTypeTokenizer \&tokenizer, CharType type, map$<$ CharValue, CharConditions $>$ \&ret)\label{namespacecma_a76b89689131f8c4b4b6574ad684e910b}
+
+\item 
 void {\bfseries cma::loadEntity} (const TiXmlNode $\ast$textNode, CTypeTokenizer \&tokenizer, CharType type, map$<$ CharValue, CharConditions $>$ \&ret)\label{namespacecma_aa633d17ab2db100f6da72cf5736f8d45}
 
 \item 
@@ -32,6 +35,12 @@ void {\bfseries cma::loadCondition} (const TiXmlNode $\ast$condNode, CTypeTokeni
 
 \item 
 void {\bfseries cma::loadRule} (const TiXmlNode $\ast$ruleNode, CTypeTokenizer \&tokenizer, map$<$ CharValue, CharConditions $>$ \&ret)\label{namespacecma_afa2a411436584a8e37139dffd9f44c1a}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const string {\bfseries cma::DEFAULT\_\-SPACE} = \char`\"{} $\backslash$t$\backslash$n$\backslash$x0B$\backslash$f$\backslash$r\char`\"{}\label{namespacecma_ac59a7f8f000563d36ce3c8351df07f89}
 
 \end{DoxyCompactItemize}
 

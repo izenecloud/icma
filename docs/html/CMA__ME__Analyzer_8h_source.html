@@ -54,34 +54,52 @@
 <a name="l00063"></a>00063 
 <a name="l00072"></a>00072     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#aeb9e065c3cc25885f2ccb0c70f4a5964">runWithStream</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* inFileName, <span class="keyword">const</span> <span class="keywordtype">char</span>* outFileName);
 <a name="l00073"></a>00073 
-<a name="l00080"></a>00080     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#ab6d7b5e169207cca37337eceb07ac5fe">splitSentence</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* paragraph, std::vector&lt;Sentence&gt;&amp; sentences);
+<a name="l00080"></a>00080         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#a590bac470ef26b7935f26aec808919f1">getNGramResult</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* inStr, <span class="keywordtype">int</span> n, vector&lt;string&gt;&amp; output );
 <a name="l00081"></a>00081 
-<a name="l00086"></a>00086     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#afa513b05898ec374781c5889ed9714c8">resetIndexPOSList</a>( <span class="keywordtype">bool</span> defVal = <span class="keyword">true</span> );
-<a name="l00087"></a>00087 
-<a name="l00093"></a>00093     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#a523e50a8c933c9dbc78ddd137666a666">setIndexPOSList</a>( std::vector&lt;std::string&gt;&amp; posList );
-<a name="l00094"></a>00094 
-<a name="l00095"></a>00095 <span class="keyword">private</span>:
-<a name="l00099"></a>00099     <span class="keywordtype">void</span> analysis(<span class="keyword">const</span> <span class="keywordtype">char</span>* sentence, <span class="keywordtype">int</span> N, vector&lt;vector&lt;string&gt; &gt;&amp; pos,
-<a name="l00100"></a>00100             vector&lt;pair&lt;vector&lt;string&gt;, <span class="keywordtype">double</span>&gt; &gt;&amp; segment, <span class="keywordtype">bool</span> tagPOS = <span class="keyword">true</span>);
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102 <span class="keyword">private</span>:
-<a name="l00103"></a>00103     <a class="code" href="classcma_1_1CMA__ME__Knowledge.html" title="Knowledge for the CMAC.">CMA_ME_Knowledge</a> *knowledge_;
-<a name="l00104"></a>00104 
-<a name="l00106"></a>00106     <span class="keywordtype">string</span> strBuf_;
-<a name="l00107"></a>00107 
-<a name="l00111"></a>00111     <a class="code" href="classcma_1_1CMA__CType.html">CMA_CType</a>* ctype_;
-<a name="l00112"></a>00112 
-<a name="l00116"></a>00116     <a class="code" href="classcma_1_1Knowledge.html#a2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> encodeType_;
-<a name="l00117"></a>00117 };
-<a name="l00118"></a>00118 
-<a name="l00119"></a>00119 
-<a name="l00120"></a>00120 }
-<a name="l00121"></a>00121 
-<a name="l00122"></a>00122 
-<a name="l00123"></a>00123 <span class="preprocessor">#endif  </span><span class="comment">/* _CMA_ME_ANALYZER_H */</span>
+<a name="l00088"></a>00088         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#a9b9ed98bd9782764d866f94145b9bf65">getNGramArrayResult</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* inStr, vector&lt;int&gt; nArray, vector&lt;string&gt;&amp; output );
+<a name="l00089"></a>00089 
+<a name="l00096"></a>00096     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#ab6d7b5e169207cca37337eceb07ac5fe">splitSentence</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* paragraph, std::vector&lt;Sentence&gt;&amp; sentences);
+<a name="l00097"></a>00097 
+<a name="l00102"></a>00102     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#afa513b05898ec374781c5889ed9714c8">resetIndexPOSList</a>( <span class="keywordtype">bool</span> defVal = <span class="keyword">true</span> );
+<a name="l00103"></a>00103 
+<a name="l00109"></a>00109     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#a523e50a8c933c9dbc78ddd137666a666">setIndexPOSList</a>( std::vector&lt;std::string&gt;&amp; posList );
+<a name="l00110"></a>00110 
+<a name="l00116"></a>00116     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#a51f3d3d9df1f88de445740aa56aab336">getCodeFromStr</a>(<span class="keyword">const</span> std::string&amp; pos) <span class="keyword">const</span>;
+<a name="l00117"></a>00117 
+<a name="l00123"></a>00123     <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#a05d471db9b5c1cccdebb9a21582acaad">getStrFromCode</a>(<span class="keywordtype">int</span> index) <span class="keyword">const</span>;
 <a name="l00124"></a>00124 
+<a name="l00129"></a>00129         <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__ME__Analyzer.html#a6defaeb4b7ce84d3688ce9d42fde2145">getPOSTagSetSize</a>() <span class="keyword">const</span>;
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131     <span class="keyword">typedef</span> <span class="keywordtype">string</span> OneGramType;
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133 <span class="keyword">private</span>:
+<a name="l00137"></a>00137     <span class="keywordtype">void</span> analysis(<span class="keyword">const</span> <span class="keywordtype">char</span>* sentence, <span class="keywordtype">int</span> N, vector&lt;vector&lt;string&gt; &gt;&amp; pos,
+<a name="l00138"></a>00138             vector&lt;pair&lt;vector&lt;string&gt;, <span class="keywordtype">double</span>&gt; &gt;&amp; segment, <span class="keywordtype">bool</span> tagPOS = <span class="keyword">true</span>);
+<a name="l00139"></a>00139 
+<a name="l00145"></a>00145     <span class="keywordtype">void</span> splitToOneGram( <span class="keyword">const</span> <span class="keywordtype">char</span>* sentence, vector&lt;vector&lt;OneGramType&gt; &gt;&amp; output );
+<a name="l00146"></a>00146 
+<a name="l00150"></a>00150     <span class="keywordtype">void</span> getNGramResultImpl( <span class="keyword">const</span> vector&lt;vector&lt;OneGramType&gt; &gt;&amp; oneGram, <span class="keyword">const</span> <span class="keywordtype">int</span> n, vector&lt;string&gt;&amp; output );
+<a name="l00151"></a>00151 
+<a name="l00152"></a>00152 <span class="keyword">private</span>:
+<a name="l00153"></a>00153     <a class="code" href="classcma_1_1CMA__ME__Knowledge.html" title="Knowledge for the CMAC.">CMA_ME_Knowledge</a> *knowledge_;
+<a name="l00154"></a>00154 
+<a name="l00156"></a>00156     <span class="keywordtype">string</span> strBuf_;
+<a name="l00157"></a>00157 
+<a name="l00161"></a>00161     <a class="code" href="classcma_1_1CMA__CType.html">CMA_CType</a>* ctype_;
+<a name="l00162"></a>00162 
+<a name="l00166"></a>00166     <a class="code" href="classcma_1_1Knowledge.html#a2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> encodeType_;
+<a name="l00167"></a>00167 
+<a name="l00168"></a>00168     <a class="code" href="classcma_1_1POSTable.html" title="POSTable stores the global table of part-of-speech tags.">POSTable</a>* posTable_;
+<a name="l00169"></a>00169 };
+<a name="l00170"></a>00170 
+<a name="l00171"></a>00171 
+<a name="l00172"></a>00172 }
+<a name="l00173"></a>00173 
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175 <span class="preprocessor">#endif  </span><span class="comment">/* _CMA_ME_ANALYZER_H */</span>
+<a name="l00176"></a>00176 
 </pre></div></div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Nov 6 15:59:12 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jan 26 13:00:41 2010 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

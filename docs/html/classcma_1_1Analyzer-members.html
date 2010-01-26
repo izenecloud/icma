@@ -27,9 +27,14 @@
 <div class="contents">
 <h1>cma::Analyzer Member List</h1>This is the complete list of members for <a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a>, including all inherited members.<table>
   <tr bgcolor="#f0f0f0"><td><b>Analyzer</b>() (defined in <a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a>)</td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classcma_1_1Analyzer.html#a8cf23f3e17a8d808ab946e2a6474d08b">getCodeFromStr</a>(const std::string &amp;pos) const =0</td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td><code> [pure virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classcma_1_1Analyzer.html#ad78d1757b5a6f91bf22bc2cea62f01fa">getNGramArrayResult</a>(const char *inStr, std::vector&lt; int &gt; nArray, std::vector&lt; std::string &gt; &amp;output)=0</td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td><code> [pure virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classcma_1_1Analyzer.html#af4a78d3d74364a7b0d6d875e01b1c08b">getNGramResult</a>(const char *inStr, int n, std::vector&lt; std::string &gt; &amp;output)=0</td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td><code> [pure virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classcma_1_1Analyzer.html#a8df9e86073a5e3d0f44dce0c14f27706">getOption</a>(OptionType nOption) const </td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcma_1_1Analyzer.html#ae5351b7f2fa7717b1b5af2be8a86c04f">getPOSDelimiter</a>() const </td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classcma_1_1Analyzer.html#a5607a772d430d7e2923d29720f5aa63a">getPOSTagSetSize</a>() const =0</td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td><code> [pure virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classcma_1_1Analyzer.html#aeee55c792c0397bc4a58fa162d4fbe01">getSentenceDelimiter</a>() const </td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classcma_1_1Analyzer.html#a2ba8615ba11be2409aa80b62ad1f7a1b">getStrFromCode</a>(int index) const =0</td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td><code> [pure virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classcma_1_1Analyzer.html#abee23d91de22d6083c3ba41a126d43a6">getWordDelimiter</a>() const </td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcma_1_1Analyzer.html#a828bd41bd7badd423d6cef5aa1454efea7737be8d0d08f661301fb1b90f0a96bc">OPTION_TYPE_NBEST</a> enum value</td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcma_1_1Analyzer.html#a828bd41bd7badd423d6cef5aa1454efea2951e28fcefc2733d78dadcec45c15ac">OPTION_TYPE_NUM</a> enum value</td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td></td></tr>
@@ -52,7 +57,7 @@
   <tr class="memlist"><td><a class="el" href="classcma_1_1Analyzer.html#a2bc9276661a6c732dc52dbc3fda74817">wordDelimiter_</a></td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~Analyzer</b>() (defined in <a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a>)</td><td><a class="el" href="classcma_1_1Analyzer.html">cma::Analyzer</a></td><td><code> [virtual]</code></td></tr>
 </table></div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Nov 6 15:59:13 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jan 26 13:00:42 2010 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

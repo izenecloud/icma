@@ -37,35 +37,55 @@
  * file with name camctrainer under directory bin.
  *
  * The SYNOPSIS for the trainer is: <BR>
- * ./cmactrainer mateFile modelPath [encoding] [posDelimiter] <BR>
+ * ./cmactrainer pocXmlFile mateFile modelPath [encoding] [posDelimiter] [pos | poc | pos+poc] [large-corpus] <BR>
  *
  * <BR>The Description for the parameters:
  * <ul>
- *    <li> mateFile is the material file, it should be in the form word1/pos1 
- * word2/pos2 word3/pos3 ...</li>
+ *    <li> pocXmlFile is the path of Segmentation XML file in the associated
+ * encoding. One sample is db/icwb/utf8/poc.xml (With utf8 encoding). </li>
+ *    <li> mateFile  is the material file, the words separated by spaces and
+ * maybe has POS information. For example, mateFile with POS information:
+ * word1/pos1 word2/pos2...; mateFile without POS information: word1 word2....</li>
  *    <li> modelPath is the directory to hold all the output files (include
  * trained model files and dictionaries).</li>
- *    <li> encoding is the encoding of the mateFile, and gb18030 is the default
- * encoding. Support utf8, gb18030, gb2312 and big5 now.</li>
- *    <li> posDelimiter is the delimiter between the word and the POS tag, like
- * '/' and '_' and default is '/'.</li>
+ *    <li> encoding is the encoding of the mateFile, Default value is gb18030.
+ * Support utf8, gb2312, gb18030 and big5 now. Recommend to use utf8/gb18030
+ * to support both Simplified and Traditional Chinese.</li>
+ *    <li> posDelimiter is the delimiter between the word and the pos tag.
+ * Default value is '/'.Like '/' and '_'. If the taining model is poc(the
+ * next parameter) and the mateFile doesn't contains POS information,
+ * posDemiliter can be any single character (recommend to ues '/').</li>
+ *    <li>pos | poc | pos+poc is the training mode. Default value is pos+poc.
+ * poc only trains segmentation model, pos only trains POS tagging model,
+ * and pos+poc trains both of them.</li>
+ *    <li>large-corpus indicates whether the mateFile is large ( > 20MB).
+ * Default value in none (don't add parameter large-corpus). some parameters
+ * are adjusted for large mateFile.</li>
  * </ul>
  *
  * Take  &quot;/dir1/dir2 &quot; as the cateFile, after the training. The
  * following files are created (All under directory /dir1/dir2):
  * <ol>
- *  <li> <b>pos.model</b> is the POS statistical model file.</li>
- *  <li> <b>pos.pos</b> is the all the POS gained from the training dataset.</li>
+ *  <li> <b>pos.model</b> is the POS statistical model file. Exists when
+ * training mode is pos or pos+poc.</li>
+ *  <li> <b>pos.pos</b> is the all the POS gained from the training dataset.
+ * Exists when training mode is pos or pos+poc.</li>
  *  <li> <b>sys.dic</b> is the dictionary (include words and POS tags) gained from the
  * training dataset. This file is plain text and should be loaded as user
  * dictionary. To convert it to the system dictionary, use
  * Knowledge::encodeSystemDict(const char* txtFileName, const char* binFileName),
- * then the binFileName can be loaded as the system dictioanry.</li>
- *  <li> <b>poc.model</b> is the POC statistical model file.</li>
+ * then the binFileName can be loaded as the system dictioanry. Exists when
+ * training mode is pos or pos+poc.</li>
+ *  <li> <b>poc.model</b> is the POC statistical model file. Exists when
+ * training mode is poc or pos+poc.</li>
  * </ol>
  *
  * All the files are required to run the program.<BR>
  *
+ * <b>Notice:</b> Configuration files ( cma.config, poc.xml and pos.config) are not
+ * created automatically. You can copy these files with same names under
+ * db/icwb/utf8 (If the encoding of mateFile isn't utf8, require to change
+ *  the encoding of copied files).
  *
  * \section rundemo Run the Demo
  *

@@ -17,6 +17,8 @@ virtual unsigned int {\bf getByteCount} (const char $\ast$p) const =0
 \item 
 CharType {\bf getCharType} (const char $\ast$p, CharType preType, const char $\ast$nextP) const 
 \item 
+CharType {\bf getBaseType} (const char $\ast$p) const 
+\item 
 bool {\bf isPunct} (const char $\ast$p) const 
 \item 
 size\_\-t {\bf length} (const char $\ast$p) const 
@@ -57,7 +59,18 @@ static CharType {\bf getCharTypeByXmlName} (const char $\ast$name, bool noDefaul
 Destructor 
 
 \subsection{Member Function Documentation}
-\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getByteCount@{getByteCount}}
+\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getBaseType@{getBaseType}}
+\index{getBaseType@{getBaseType}!cma::CMA_CType@{cma::CMA\_\-CType}}
+\subsubsection[{getBaseType}]{\setlength{\rightskip}{0pt plus 5cm}CharType cma::CMA\_\-CType::getBaseType (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_a3ff5236c2ad85e67e3ec562227282de5}
+Get the base Character Type of Character P without any rules 
+\begin{DoxyParams}{Parameters}
+\item[{\em p}]the input character \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the base type of p, or CHAR\_\-TYPE\_\-OTHER for default 
+\end{DoxyReturn}
+
+
+References getEncodeValue().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getByteCount@{getByteCount}}
 \index{getByteCount@{getByteCount}!cma::CMA_CType@{cma::CMA\_\-CType}}
 \subsubsection[{getByteCount}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int cma::CMA\_\-CType::getByteCount (const char $\ast$ {\em p}) const\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1CMA__CType_a00f7e99cea12e9db504629c4a6cdb2d4}
 Get the byte count of the first character pointed by {\itshape p\/}, which character is in a specific encoding. 
@@ -113,7 +126,7 @@ unsigned int value of p, 0 if error occurs
 
 References getByteCount().
 
-Referenced by getCharType(), isSentenceSeparator(), and isSpace().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getPOCXmlStr@{getPOCXmlStr}}
+Referenced by getBaseType(), getCharType(), isSentenceSeparator(), and isSpace().\index{cma::CMA\_\-CType@{cma::CMA\_\-CType}!getPOCXmlStr@{getPOCXmlStr}}
 \index{getPOCXmlStr@{getPOCXmlStr}!cma::CMA_CType@{cma::CMA\_\-CType}}
 \subsubsection[{getPOCXmlStr}]{\setlength{\rightskip}{0pt plus 5cm}string cma::CMA\_\-CType::getPOCXmlStr (const char $\ast$ {\em p}) const}\label{classcma_1_1CMA__CType_a3dc7c08fdb3264b7a3d7c1bc774e4729}
 Get the specific string with associated encoding in the poc.xml Except for utf-\/16, others encoding return the original form 

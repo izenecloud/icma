@@ -30,11 +30,21 @@ virtual const char $\ast$ {\bf runWithString} (const char $\ast$inStr)=0
 \item 
 virtual int {\bf runWithStream} (const char $\ast$inFileName, const char $\ast$outFileName)=0
 \item 
+virtual void {\bf getNGramResult} (const char $\ast$inStr, int n, std::vector$<$ std::string $>$ \&output)=0
+\item 
+virtual void {\bf getNGramArrayResult} (const char $\ast$inStr, std::vector$<$ int $>$ nArray, std::vector$<$ std::string $>$ \&output)=0
+\item 
 virtual void {\bf splitSentence} (const char $\ast$paragraph, std::vector$<$ {\bf Sentence} $>$ \&sentences)=0
 \item 
 virtual void {\bf resetIndexPOSList} (bool defVal=true)=0
 \item 
 virtual int {\bf setIndexPOSList} (std::vector$<$ std::string $>$ \&posList)=0
+\item 
+virtual int {\bf getCodeFromStr} (const std::string \&pos) const =0
+\item 
+virtual const char $\ast$ {\bf getStrFromCode} (int index) const =0
+\item 
+virtual int {\bf getPOSTagSetSize} () const =0
 \item 
 void {\bf setOption} ({\bf OptionType} nOption, double nValue)
 \item 
@@ -101,6 +111,29 @@ OPTION\_\-TYPE\_\-NUM\label{classcma_1_1Analyzer_a828bd41bd7badd423d6cef5aa1454e
 
 
 \subsection{Member Function Documentation}
+\index{cma::Analyzer@{cma::Analyzer}!getCodeFromStr@{getCodeFromStr}}
+\index{getCodeFromStr@{getCodeFromStr}!cma::Analyzer@{cma::Analyzer}}
+\subsubsection[{getCodeFromStr}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Analyzer::getCodeFromStr (const std::string \& {\em pos}) const\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1Analyzer_a8cf23f3e17a8d808ab946e2a6474d08b}
+Get the POS index code from the POS string in the global part-\/of-\/speech table. 
+\begin{DoxyParams}{Parameters}
+\item[{\em pos}]the POS string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+POS index code, -\/1 for non POS available 
+\end{DoxyReturn}
+
+
+Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_a51f3d3d9df1f88de445740aa56aab336}.\index{cma::Analyzer@{cma::Analyzer}!getNGramArrayResult@{getNGramArrayResult}}
+\index{getNGramArrayResult@{getNGramArrayResult}!cma::Analyzer@{cma::Analyzer}}
+\subsubsection[{getNGramArrayResult}]{\setlength{\rightskip}{0pt plus 5cm}virtual void cma::Analyzer::getNGramArrayResult (const char $\ast$ {\em inStr}, \/  std::vector$<$ int $>$ {\em nArray}, \/  std::vector$<$ std::string $>$ \& {\em output})\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1Analyzer_ad78d1757b5a6f91bf22bc2cea62f01fa}
+Get all the specific N-\/Gram results (see parameter nArray) in the inStr 
+\begin{DoxyParams}{Parameters}
+\item[{\em inStr}]paragraph string \item[{\em nArray}]the collection of the specific n in the N-\/Gram \item[{\em output}]to keep the output value \end{DoxyParams}
+\index{cma::Analyzer@{cma::Analyzer}!getNGramResult@{getNGramResult}}
+\index{getNGramResult@{getNGramResult}!cma::Analyzer@{cma::Analyzer}}
+\subsubsection[{getNGramResult}]{\setlength{\rightskip}{0pt plus 5cm}virtual void cma::Analyzer::getNGramResult (const char $\ast$ {\em inStr}, \/  int {\em n}, \/  std::vector$<$ std::string $>$ \& {\em output})\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1Analyzer_af4a78d3d74364a7b0d6d875e01b1c08b}
+Get the N-\/Gram result in the inStr 
+\begin{DoxyParams}{Parameters}
+\item[{\em inStr}]paragraph string \item[{\em n}]the specific n in the N-\/Gram \item[{\em output}]to keep the output value \end{DoxyParams}
 \index{cma::Analyzer@{cma::Analyzer}!getOption@{getOption}}
 \index{getOption@{getOption}!cma::Analyzer@{cma::Analyzer}}
 \subsubsection[{getOption}]{\setlength{\rightskip}{0pt plus 5cm}double cma::Analyzer::getOption ({\bf OptionType} {\em nOption}) const}\label{classcma_1_1Analyzer_a8df9e86073a5e3d0f44dce0c14f27706}
@@ -122,7 +155,15 @@ the delimiter between word and POS tag in the output result
 \end{DoxyReturn}
 
 
-References posDelimiter\_\-.\index{cma::Analyzer@{cma::Analyzer}!getSentenceDelimiter@{getSentenceDelimiter}}
+References posDelimiter\_\-.\index{cma::Analyzer@{cma::Analyzer}!getPOSTagSetSize@{getPOSTagSetSize}}
+\index{getPOSTagSetSize@{getPOSTagSetSize}!cma::Analyzer@{cma::Analyzer}}
+\subsubsection[{getPOSTagSetSize}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::Analyzer::getPOSTagSetSize () const\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1Analyzer_a5607a772d430d7e2923d29720f5aa63a}
+Get the number of POS tags in the global part-\/of-\/speech table. \begin{DoxyReturn}{Returns}
+the number of POS tags 
+\end{DoxyReturn}
+
+
+Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_a6defaeb4b7ce84d3688ce9d42fde2145}.\index{cma::Analyzer@{cma::Analyzer}!getSentenceDelimiter@{getSentenceDelimiter}}
 \index{getSentenceDelimiter@{getSentenceDelimiter}!cma::Analyzer@{cma::Analyzer}}
 \subsubsection[{getSentenceDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Analyzer::getSentenceDelimiter () const}\label{classcma_1_1Analyzer_aeee55c792c0397bc4a58fa162d4fbe01}
 Get the delimiter between sentences. \begin{DoxyReturn}{Returns}
@@ -130,7 +171,18 @@ the delimiter between the pairs (word and POS tag) in the output result
 \end{DoxyReturn}
 
 
-References sentenceDelimiter\_\-.\index{cma::Analyzer@{cma::Analyzer}!getWordDelimiter@{getWordDelimiter}}
+References sentenceDelimiter\_\-.\index{cma::Analyzer@{cma::Analyzer}!getStrFromCode@{getStrFromCode}}
+\index{getStrFromCode@{getStrFromCode}!cma::Analyzer@{cma::Analyzer}}
+\subsubsection[{getStrFromCode}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ cma::Analyzer::getStrFromCode (int {\em index}) const\hspace{0.3cm}{\ttfamily  [pure virtual]}}\label{classcma_1_1Analyzer_a2ba8615ba11be2409aa80b62ad1f7a1b}
+Get the POS string from the POS index code in the global part-\/of-\/speech table. 
+\begin{DoxyParams}{Parameters}
+\item[{\em index}]the POS index code \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+POS string, null pointer for non POS available 
+\end{DoxyReturn}
+
+
+Implemented in {\bf cma::CMA\_\-ME\_\-Analyzer} \doxyref{}{p.}{classcma_1_1CMA__ME__Analyzer_a05d471db9b5c1cccdebb9a21582acaad}.\index{cma::Analyzer@{cma::Analyzer}!getWordDelimiter@{getWordDelimiter}}
 \index{getWordDelimiter@{getWordDelimiter}!cma::Analyzer@{cma::Analyzer}}
 \subsubsection[{getWordDelimiter}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::Analyzer::getWordDelimiter () const}\label{classcma_1_1Analyzer_abee23d91de22d6083c3ba41a126d43a6}
 Get the delimiter between the pairs (word and POS tag) in the output result of {\itshape \doxyref{runWithString()}{p.}{classcma_1_1Analyzer_a2d05785e30e19a390aa887f25bda2d2f}\/} and {\itshape \doxyref{runWithStream()}{p.}{classcma_1_1Analyzer_aae19c787b296d086d52449cb1b6e3699}\/}, which delimiter is \char`\"{}  \char`\"{} (double-\/space) defaultly so that the result would be \char`\"{}word/pos  word/pos  ...\char`\"{}. \begin{DoxyReturn}{Returns}

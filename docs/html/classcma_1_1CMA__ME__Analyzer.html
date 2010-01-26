@@ -45,15 +45,23 @@ Inheritance diagram for cma::CMA_ME_Analyzer:</div>
 
 <p><a href="classcma_1_1CMA__ME__Analyzer-members.html">List of all members.</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
+<tr><td colspan="2"><h2>Public Types</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b615fa3994c626a039187c7444ba0f0"></a><!-- doxytag: member="cma::CMA_ME_Analyzer::OneGramType" ref="a9b615fa3994c626a039187c7444ba0f0" args="" -->
+typedef string&nbsp;</td><td class="memItemRight" valign="bottom"><b>OneGramType</b></td></tr>
 <tr><td colspan="2"><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Analyzer.html#a67e7728f4fa010deaa8f30c575e0c078">~CMA_ME_Analyzer</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Analyzer.html#a04d6b5c7b7dcd199c8e96a06afa5ea44">setKnowledge</a> (<a class="el" href="classcma_1_1Knowledge.html">Knowledge</a> *pKnowledge)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Analyzer.html#a6bac993f470b61cc4fccdbd4a7217948">runWithSentence</a> (<a class="el" href="classcma_1_1Sentence.html">Sentence</a> &amp;sentence)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Analyzer.html#a50b039c84be34cc7c83ce8aef97058f2">runWithString</a> (const char *inStr)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Analyzer.html#aeb9e065c3cc25885f2ccb0c70f4a5964">runWithStream</a> (const char *inFileName, const char *outFileName)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Analyzer.html#a590bac470ef26b7935f26aec808919f1">getNGramResult</a> (const char *inStr, int n, vector&lt; string &gt; &amp;output)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Analyzer.html#a9b9ed98bd9782764d866f94145b9bf65">getNGramArrayResult</a> (const char *inStr, vector&lt; int &gt; nArray, vector&lt; string &gt; &amp;output)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Analyzer.html#ab6d7b5e169207cca37337eceb07ac5fe">splitSentence</a> (const char *paragraph, std::vector&lt; <a class="el" href="classcma_1_1Sentence.html">Sentence</a> &gt; &amp;sentences)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Analyzer.html#afa513b05898ec374781c5889ed9714c8">resetIndexPOSList</a> (bool defVal=true)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Analyzer.html#a523e50a8c933c9dbc78ddd137666a666">setIndexPOSList</a> (std::vector&lt; std::string &gt; &amp;posList)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Analyzer.html#a51f3d3d9df1f88de445740aa56aab336">getCodeFromStr</a> (const std::string &amp;pos) const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Analyzer.html#a05d471db9b5c1cccdebb9a21582acaad">getStrFromCode</a> (int index) const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcma_1_1CMA__ME__Analyzer.html#a6defaeb4b7ce84d3688ce9d42fde2145">getPOSTagSetSize</a> () const </td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p><a class="el" href="classcma_1_1Analyzer.html" title="Analyzer executes the Chinese morphological analysis.">Analyzer</a> for the CMAC. </p>
@@ -77,6 +85,171 @@ Inheritance diagram for cma::CMA_ME_Analyzer:</div>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a51f3d3d9df1f88de445740aa56aab336"></a><!-- doxytag: member="cma::CMA_ME_Analyzer::getCodeFromStr" ref="a51f3d3d9df1f88de445740aa56aab336" args="(const std::string &amp;pos) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual int cma::CMA_ME_Analyzer::getCodeFromStr </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>pos</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Get the POS index code from the POS string in the global part-of-speech table. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pos</em>&nbsp;</td><td>the POS string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>POS index code, -1 for non POS available </dd></dl>
+
+<p>Implements <a class="el" href="classcma_1_1Analyzer.html#a8cf23f3e17a8d808ab946e2a6474d08b">cma::Analyzer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9b9ed98bd9782764d866f94145b9bf65"></a><!-- doxytag: member="cma::CMA_ME_Analyzer::getNGramArrayResult" ref="a9b9ed98bd9782764d866f94145b9bf65" args="(const char *inStr, vector&lt; int &gt; nArray, vector&lt; string &gt; &amp;output)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cma::CMA_ME_Analyzer::getNGramArrayResult </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>inStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vector&lt; int &gt;&nbsp;</td>
+          <td class="paramname"> <em>nArray</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vector&lt; string &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>output</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Get all the specific N-Gram results (see parameter nArray) in the inStr </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>inStr</em>&nbsp;</td><td>paragraph string </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>nArray</em>&nbsp;</td><td>the collection of the specific n in the N-Gram </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>output</em>&nbsp;</td><td>to keep the output value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a590bac470ef26b7935f26aec808919f1"></a><!-- doxytag: member="cma::CMA_ME_Analyzer::getNGramResult" ref="a590bac470ef26b7935f26aec808919f1" args="(const char *inStr, int n, vector&lt; string &gt; &amp;output)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cma::CMA_ME_Analyzer::getNGramResult </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>inStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vector&lt; string &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>output</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Get the N-Gram result in the inStr </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>inStr</em>&nbsp;</td><td>paragraph string </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>n</em>&nbsp;</td><td>the specific n in the N-Gram </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>output</em>&nbsp;</td><td>to keep the output value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a6defaeb4b7ce84d3688ce9d42fde2145"></a><!-- doxytag: member="cma::CMA_ME_Analyzer::getPOSTagSetSize" ref="a6defaeb4b7ce84d3688ce9d42fde2145" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int cma::CMA_ME_Analyzer::getPOSTagSetSize </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Get the number of POS tags in the global part-of-speech table. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the number of POS tags </dd></dl>
+
+<p>Implements <a class="el" href="classcma_1_1Analyzer.html#a5607a772d430d7e2923d29720f5aa63a">cma::Analyzer</a>.</p>
+
+<p>References <a class="el" href="pos__table_8cpp_source.html#l00077">cma::POSTable::size()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a05d471db9b5c1cccdebb9a21582acaad"></a><!-- doxytag: member="cma::CMA_ME_Analyzer::getStrFromCode" ref="a05d471db9b5c1cccdebb9a21582acaad" args="(int index) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * cma::CMA_ME_Analyzer::getStrFromCode </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>index</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Get the POS string from the POS index code in the global part-of-speech table. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>index</em>&nbsp;</td><td>the POS index code </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>POS string, null pointer for non POS available </dd></dl>
+
+<p>Implements <a class="el" href="classcma_1_1Analyzer.html#a2ba8615ba11be2409aa80b62ad1f7a1b">cma::Analyzer</a>.</p>
+
+<p>References <a class="el" href="pos__table_8cpp_source.html#l00069">cma::POSTable::getStrFromCode()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="afa513b05898ec374781c5889ed9714c8"></a><!-- doxytag: member="cma::CMA_ME_Analyzer::resetIndexPOSList" ref="afa513b05898ec374781c5889ed9714c8" args="(bool defVal=true)" -->
 <div class="memitem">
 <div class="memproto">
@@ -97,7 +270,7 @@ Inheritance diagram for cma::CMA_ME_Analyzer:</div>
 
 <p>Implements <a class="el" href="classcma_1_1Analyzer.html#a4e2aad23b33ceeb60265dd68daf9da67">cma::Analyzer</a>.</p>
 
-<p>References <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00406">cma::CMA_ME_Knowledge::getPOSTable()</a>, and <a class="el" href="pos__table_8cpp_source.html#l00177">cma::POSTable::resetIndexPOSList()</a>.</p>
+<p>References <a class="el" href="pos__table_8cpp_source.html#l00105">cma::POSTable::resetIndexPOSList()</a>.</p>
 
 </div>
 </div>
@@ -130,7 +303,7 @@ Inheritance diagram for cma::CMA_ME_Analyzer:</div>
 
 <p>Implements <a class="el" href="classcma_1_1Analyzer.html#a2274acc45dd1ccc6aa7ea87cd34ad0e7">cma::Analyzer</a>.</p>
 
-<p>References <a class="el" href="sentence_8cpp_source.html#l00098">cma::Sentence::addList()</a>, <a class="el" href="sentence_8cpp_source.html#l00043">cma::Sentence::getListSize()</a>, <a class="el" href="sentence_8cpp_source.html#l00073">cma::Sentence::getMorphemeList()</a>, <a class="el" href="analyzer_8cpp_source.html#l00053">cma::Analyzer::getOption()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00406">cma::CMA_ME_Knowledge::getPOSTable()</a>, <a class="el" href="sentence_8cpp_source.html#l00078">cma::Sentence::getScore()</a>, <a class="el" href="sentence_8cpp_source.html#l00038">cma::Sentence::getString()</a>, <a class="el" href="sentence_8h_source.html#l00034">cma::Morpheme::isIndexed</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00341">cma::CMA_ME_Knowledge::isStopWord()</a>, <a class="el" href="sentence_8h_source.html#l00025">cma::Morpheme::lexicon_</a>, <a class="el" href="analyzer_8h_source.html#l00120">cma::Analyzer::OPTION_TYPE_NBEST</a>, <a class="el" href="analyzer_8h_source.html#l00119">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="sentence_8h_source.html#l00028">cma::Morpheme::posCode_</a>, <a class="el" href="sentence_8h_source.html#l00031">cma::Morpheme::posStr_</a>, and <a class="el" href="sentence_8cpp_source.html#l00083">cma::Sentence::setScore()</a>.</p>
+<p>References <a class="el" href="sentence_8cpp_source.html#l00098">cma::Sentence::addList()</a>, <a class="el" href="pos__table_8cpp_source.html#l00060">cma::POSTable::getCodeFromStr()</a>, <a class="el" href="sentence_8cpp_source.html#l00043">cma::Sentence::getListSize()</a>, <a class="el" href="sentence_8cpp_source.html#l00073">cma::Sentence::getMorphemeList()</a>, <a class="el" href="analyzer_8cpp_source.html#l00053">cma::Analyzer::getOption()</a>, <a class="el" href="sentence_8cpp_source.html#l00078">cma::Sentence::getScore()</a>, <a class="el" href="sentence_8cpp_source.html#l00038">cma::Sentence::getString()</a>, <a class="el" href="sentence_8h_source.html#l00034">cma::Morpheme::isIndexed</a>, <a class="el" href="pos__table_8cpp_source.html#l00090">cma::POSTable::isIndexPOS()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00341">cma::CMA_ME_Knowledge::isStopWord()</a>, <a class="el" href="sentence_8h_source.html#l00025">cma::Morpheme::lexicon_</a>, <a class="el" href="analyzer_8h_source.html#l00156">cma::Analyzer::OPTION_TYPE_NBEST</a>, <a class="el" href="analyzer_8h_source.html#l00155">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="sentence_8h_source.html#l00028">cma::Morpheme::posCode_</a>, <a class="el" href="sentence_8h_source.html#l00031">cma::Morpheme::posStr_</a>, and <a class="el" href="sentence_8cpp_source.html#l00083">cma::Sentence::setScore()</a>.</p>
 
 </div>
 </div>
@@ -171,7 +344,7 @@ Inheritance diagram for cma::CMA_ME_Analyzer:</div>
 
 <p>Implements <a class="el" href="classcma_1_1Analyzer.html#aae19c787b296d086d52449cb1b6e3699">cma::Analyzer</a>.</p>
 
-<p>References <a class="el" href="analyzer_8cpp_source.html#l00053">cma::Analyzer::getOption()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00341">cma::CMA_ME_Knowledge::isStopWord()</a>, <a class="el" href="analyzer_8h_source.html#l00119">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="analyzer_8h_source.html#l00180">cma::Analyzer::posDelimiter_</a>, <a class="el" href="analyzer_8h_source.html#l00186">cma::Analyzer::sentenceDelimiter_</a>, and <a class="el" href="analyzer_8h_source.html#l00183">cma::Analyzer::wordDelimiter_</a>.</p>
+<p>References <a class="el" href="analyzer_8cpp_source.html#l00053">cma::Analyzer::getOption()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00341">cma::CMA_ME_Knowledge::isStopWord()</a>, <a class="el" href="analyzer_8h_source.html#l00155">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="analyzer_8h_source.html#l00216">cma::Analyzer::posDelimiter_</a>, <a class="el" href="analyzer_8h_source.html#l00222">cma::Analyzer::sentenceDelimiter_</a>, and <a class="el" href="analyzer_8h_source.html#l00219">cma::Analyzer::wordDelimiter_</a>.</p>
 
 </div>
 </div>
@@ -201,7 +374,7 @@ Inheritance diagram for cma::CMA_ME_Analyzer:</div>
 
 <p>Implements <a class="el" href="classcma_1_1Analyzer.html#a2d05785e30e19a390aa887f25bda2d2f">cma::Analyzer</a>.</p>
 
-<p>References <a class="el" href="analyzer_8cpp_source.html#l00053">cma::Analyzer::getOption()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00341">cma::CMA_ME_Knowledge::isStopWord()</a>, <a class="el" href="analyzer_8h_source.html#l00119">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="analyzer_8h_source.html#l00180">cma::Analyzer::posDelimiter_</a>, and <a class="el" href="analyzer_8h_source.html#l00183">cma::Analyzer::wordDelimiter_</a>.</p>
+<p>References <a class="el" href="analyzer_8cpp_source.html#l00053">cma::Analyzer::getOption()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00341">cma::CMA_ME_Knowledge::isStopWord()</a>, <a class="el" href="analyzer_8h_source.html#l00155">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="analyzer_8h_source.html#l00216">cma::Analyzer::posDelimiter_</a>, and <a class="el" href="analyzer_8h_source.html#l00219">cma::Analyzer::wordDelimiter_</a>.</p>
 
 </div>
 </div>
@@ -231,7 +404,7 @@ Inheritance diagram for cma::CMA_ME_Analyzer:</div>
 
 <p>Implements <a class="el" href="classcma_1_1Analyzer.html#a3f4726b064b1197f069e2505ef093720">cma::Analyzer</a>.</p>
 
-<p>References <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00406">cma::CMA_ME_Knowledge::getPOSTable()</a>, and <a class="el" href="classcma_1_1POSTable.html#a439d062eadae6baee49f6a1038629364">cma::POSTable::setIndexPOSList()</a>.</p>
+<p>References <a class="el" href="classcma_1_1POSTable.html#a439d062eadae6baee49f6a1038629364">cma::POSTable::setIndexPOSList()</a>.</p>
 
 </div>
 </div>
@@ -260,7 +433,7 @@ Inheritance diagram for cma::CMA_ME_Analyzer:</div>
 
 <p>Implements <a class="el" href="classcma_1_1Analyzer.html#a52d2462f2f05cec4a9c4d6773e7502cb">cma::Analyzer</a>.</p>
 
-<p>References <a class="el" href="knowledge_8cpp_source.html#l00050">cma::Knowledge::getEncodeType()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00301">cma::CMA_ME_Knowledge::getPOSTagger()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00297">cma::CMA_ME_Knowledge::getSegTagger()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00518">cma::CMA_ME_Knowledge::getSystemProperty()</a>, <a class="el" href="cma__ctype_8cpp_source.html#l00029">cma::CMA_CType::instance()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00292">cma::CMA_ME_Knowledge::isSupportPOS()</a>, <a class="el" href="analyzer_8h_source.html#l00119">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="CMAPOSTagger_8h_source.html#l00153">cma::POSTagger::setCType()</a>, <a class="el" href="analyzer_8cpp_source.html#l00042">cma::Analyzer::setOption()</a>, <a class="el" href="analyzer_8cpp_source.html#l00058">cma::Analyzer::setPOSDelimiter()</a>, <a class="el" href="analyzer_8cpp_source.html#l00078">cma::Analyzer::setSentenceDelimiter()</a>, and <a class="el" href="analyzer_8cpp_source.html#l00068">cma::Analyzer::setWordDelimiter()</a>.</p>
+<p>References <a class="el" href="knowledge_8cpp_source.html#l00050">cma::Knowledge::getEncodeType()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00406">cma::CMA_ME_Knowledge::getPOSTable()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00301">cma::CMA_ME_Knowledge::getPOSTagger()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00297">cma::CMA_ME_Knowledge::getSegTagger()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00518">cma::CMA_ME_Knowledge::getSystemProperty()</a>, <a class="el" href="cma__ctype_8cpp_source.html#l00032">cma::CMA_CType::instance()</a>, <a class="el" href="CMA__ME__Knowledge_8cc_source.html#l00292">cma::CMA_ME_Knowledge::isSupportPOS()</a>, <a class="el" href="analyzer_8h_source.html#l00155">cma::Analyzer::OPTION_TYPE_POS_TAGGING</a>, <a class="el" href="CMAPOSTagger_8h_source.html#l00153">cma::POSTagger::setCType()</a>, <a class="el" href="analyzer_8cpp_source.html#l00042">cma::Analyzer::setOption()</a>, <a class="el" href="analyzer_8cpp_source.html#l00058">cma::Analyzer::setPOSDelimiter()</a>, <a class="el" href="analyzer_8cpp_source.html#l00078">cma::Analyzer::setSentenceDelimiter()</a>, and <a class="el" href="analyzer_8cpp_source.html#l00068">cma::Analyzer::setWordDelimiter()</a>.</p>
 
 </div>
 </div>
@@ -300,7 +473,7 @@ Inheritance diagram for cma::CMA_ME_Analyzer:</div>
 
 <p>Implements <a class="el" href="classcma_1_1Analyzer.html#a8ed5115519284c1ccf2bde9e289168dd">cma::Analyzer</a>.</p>
 
-<p>References <a class="el" href="tokenizer_8cpp_source.html#l00033">cma::CTypeTokenizer::assign()</a>, <a class="el" href="cma__ctype_8cpp_source.html#l00354">cma::CMA_CType::isSentenceSeparator()</a>, <a class="el" href="cma__ctype_8cpp_source.html#l00348">cma::CMA_CType::isSpace()</a>, <a class="el" href="tokenizer_8cpp_source.html#l00040">cma::CTypeTokenizer::next()</a>, and <a class="el" href="sentence_8cpp_source.html#l00031">cma::Sentence::setString()</a>.</p>
+<p>References <a class="el" href="tokenizer_8cpp_source.html#l00033">cma::CTypeTokenizer::assign()</a>, <a class="el" href="cma__ctype_8cpp_source.html#l00378">cma::CMA_CType::isSentenceSeparator()</a>, <a class="el" href="cma__ctype_8cpp_source.html#l00372">cma::CMA_CType::isSpace()</a>, <a class="el" href="tokenizer_8cpp_source.html#l00040">cma::CTypeTokenizer::next()</a>, and <a class="el" href="sentence_8cpp_source.html#l00031">cma::Sentence::setString()</a>.</p>
 
 </div>
 </div>
@@ -309,7 +482,7 @@ Inheritance diagram for cma::CMA_ME_Analyzer:</div>
 <li>/home/vernkin/projects/chinese-ma-chen/source/src/<a class="el" href="CMA__ME__Analyzer_8cc.html">CMA_ME_Analyzer.cc</a></li>
 </ul>
 </div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Nov 6 15:59:13 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jan 26 13:00:42 2010 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

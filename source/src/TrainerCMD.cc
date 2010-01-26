@@ -68,17 +68,33 @@ void printTainerUsage(){
     cout<<"SYNOPSIS\n     ./cmactrainer pocXmlFile mateFile modelPath [encoding] [posDelimiter] "<<
     		"[pos | poc | pos+poc] [large-corpus]"<<endl;
     cout<<"Description"<<endl;
-    cout<<"   pocXmlFile the Segment xml file in the associated encoding"<<endl;
+    cout<<"   pocXmlFile is the path of Segmentation XML file in the associated encoding. One sample is "<<
+            "db/icwb/utf8/poc.xml (With utf8 encoding)."<<endl;
     cout<<"   mateFile is the material file, the words separated by spaces and maybe "
-    		"has POS information"<<endl;
-    cout<<"   modelPath is the path of the directory what will contains all the model, like "<<
+    		"has POS information. For example, mateFile with POS information: word1/pos1 word2/pos2...; "<<
+    		"mateFile without POS information: word1 word2...."<<endl;
+    cout<<"   modelPath is the path of the directory what will contains all the model. Like "<<
             "poc.model, sys.dic and so on."<<endl;
-    cout<<"   encoding is the encoding of the mateFile, and gb18030 "<<
-            "is the default encoding. Support utf16, utf8, gb2312, gb18030 and big5 now"<<endl;
-    cout<<"   posDelimiter is the delimiter between the word and the pos tag, "<<
-            "like '/' and '_' and default is '/'"<<endl;
-    cout<<"   pos | poc | pos+poc indicate only train POS | POC |POS and POC models"<<endl;
-    cout<<"   large-corpus indicates the corpus is large, some parameters are set larger"<<endl;
+    cout<<"   encoding is the encoding of the mateFile, Default value is gb18030. "<<
+            "Support utf8, gb2312, gb18030 and big5 now. Recommend to use utf8/gb18030 to support "<<
+            "both Simplified and Traditional Chinese."<<endl;
+    cout<<"   posDelimiter is the delimiter between the word and the pos tag. Default value is '/'."<<
+            "Like '/' and '_'. If the taining model is poc(the next parameter) and the mateFile doesn't "<<
+            "contains POS information, posDemiliter can be any single character (recommend to ues '/')."<<endl;
+    cout<<"   pos | poc | pos+poc is the training mode. Default value is pos+poc. poc only trains "<<
+            "segmentation model, pos only trains POS tagging model, and pos+poc trains both of them."<<endl;
+    cout<<"   large-corpus indicates whether the mateFile is large ( > 20MB). Default value in none "<<
+            "(don't add parameter large-corpus). some parameters are adjusted for large mateFile."<<endl;
+    cout<<"Notice: Configuration files ( cma.config, poc.xml and pos.config) are not created automatically. You can copy these "<<
+          "files with same names under db/icwb/utf8 (If the encoding of mateFile isn't utf8, require to change the encoding of "<<
+          "copied files)."<<endl;
+    cout<<endl;
+    cout<<"For example ( create the directory modelPath first and put the poc.xml under modelPath ): "<<endl;
+    cout<<"   1) To train a larger utf8 file for both segmentation for POS tagging with '/' as POS separator, use:"<<endl;
+    cout<<"      ./cmactrainer modelPath/poc.xml mateFile modelPath utf8 / pos+poc large-corpus"<<endl;
+    cout<<"   2) To train a small utf8 file just for segmentation with '/' as POS separator (It is OK "<<
+          "if don't contain POS information, such as: word1 word2 word3. And just use '/' as POS separator ):"<<endl;
+    cout<<"      ./cmactrainer modelPath/poc.xml mateFile modelPath utf8 / poc"<<endl;
 }
 
 int tainerEntry(int argc, char** argv){

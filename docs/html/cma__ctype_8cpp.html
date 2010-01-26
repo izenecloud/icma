@@ -29,13 +29,13 @@
 <a href="#_details">More...</a></p>
 <code>#include &lt;assert.h&gt;</code><br/>
 <code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;wiselib/ticpp/tinyxml.h&gt;</code><br/>
 <code>#include &quot;<a class="el" href="cma__ctype_8h_source.html">cma_ctype.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="cma__ctype__gb2312_8h_source.html">cma_ctype_gb2312.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="cma__ctype__big5_8h_source.html">cma_ctype_big5.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="cma__ctype__gb18030_8h_source.html">cma_ctype_gb18030.h</a>&quot;</code><br/>
 <code>#include &quot;cma_ctype_utf8.h&quot;</code><br/>
 <code>#include &quot;cma_ctype_utf16.h&quot;</code><br/>
-<code>#include &quot;tinyxml.h&quot;</code><br/>
 <code>#include &quot;<a class="el" href="tokenizer_8h_source.html">tokenizer.h</a>&quot;</code><br/>
 <code>#include &quot;strutil.h&quot;</code><br/>
 <table border="0" cellpadding="0" cellspacing="0">
@@ -45,12 +45,17 @@ const char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>cma::getTinyX
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab115ac8f5f6e8aa470f025bf114773b"></a><!-- doxytag: member="cma_ctype.cpp::loadCharsValue" ref="aab115ac8f5f6e8aa470f025bf114773b" args="(const char *str, CTypeTokenizer &amp;tokenizer, set&lt; CharValue &gt; &amp;ret)" -->
 void&nbsp;</td><td class="memItemRight" valign="bottom"><b>cma::loadCharsValue</b> (const char *str, CTypeTokenizer &amp;tokenizer, set&lt; CharValue &gt; &amp;ret)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecma.html#ac00ca5edbc732855b2e91cc899e1068f">cma::loadTypes</a> (const char *typeStr, vector&lt; CharType &gt; &amp;ret)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76b89689131f8c4b4b6574ad684e910b"></a><!-- doxytag: member="cma_ctype.cpp::loadEntityImpl" ref="a76b89689131f8c4b4b6574ad684e910b" args="(const char *text, CTypeTokenizer &amp;tokenizer, CharType type, map&lt; CharValue, CharConditions &gt; &amp;ret)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>cma::loadEntityImpl</b> (const char *text, CTypeTokenizer &amp;tokenizer, CharType type, map&lt; CharValue, CharConditions &gt; &amp;ret)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa633d17ab2db100f6da72cf5736f8d45"></a><!-- doxytag: member="cma_ctype.cpp::loadEntity" ref="aa633d17ab2db100f6da72cf5736f8d45" args="(const TiXmlNode *textNode, CTypeTokenizer &amp;tokenizer, CharType type, map&lt; CharValue, CharConditions &gt; &amp;ret)" -->
 void&nbsp;</td><td class="memItemRight" valign="bottom"><b>cma::loadEntity</b> (const TiXmlNode *textNode, CTypeTokenizer &amp;tokenizer, CharType type, map&lt; CharValue, CharConditions &gt; &amp;ret)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc9de2d3ab1659aa8e628b95a490270e"></a><!-- doxytag: member="cma_ctype.cpp::loadCondition" ref="afc9de2d3ab1659aa8e628b95a490270e" args="(const TiXmlNode *condNode, CTypeTokenizer &amp;tokenizer, Condition &amp;ret)" -->
 void&nbsp;</td><td class="memItemRight" valign="bottom"><b>cma::loadCondition</b> (const TiXmlNode *condNode, CTypeTokenizer &amp;tokenizer, Condition &amp;ret)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa2a411436584a8e37139dffd9f44c1a"></a><!-- doxytag: member="cma_ctype.cpp::loadRule" ref="afa2a411436584a8e37139dffd9f44c1a" args="(const TiXmlNode *ruleNode, CTypeTokenizer &amp;tokenizer, map&lt; CharValue, CharConditions &gt; &amp;ret)" -->
 void&nbsp;</td><td class="memItemRight" valign="bottom"><b>cma::loadRule</b> (const TiXmlNode *ruleNode, CTypeTokenizer &amp;tokenizer, map&lt; CharValue, CharConditions &gt; &amp;ret)</td></tr>
+<tr><td colspan="2"><h2>Variables</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac59a7f8f000563d36ce3c8351df07f89"></a><!-- doxytag: member="cma_ctype.cpp::DEFAULT_SPACE" ref="ac59a7f8f000563d36ce3c8351df07f89" args="" -->
+const string&nbsp;</td><td class="memItemRight" valign="bottom"><b>cma::DEFAULT_SPACE</b> = &quot; \t\n\x0B\f\r&quot;</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>CMA_CType gives the character type information. </p>
@@ -58,7 +63,7 @@ void&nbsp;</td><td class="memItemRight" valign="bottom"><b>cma::loadRule</b> (co
 <dl class="version"><dt><b>Version:</b></dt><dd>0.2 </dd></dl>
 <dl class="date"><dt><b>Date:</b></dt><dd>Mar 10, 2009 </dd></dl>
 </div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Nov 6 15:59:13 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jan 26 13:00:42 2010 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

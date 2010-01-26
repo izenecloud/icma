@@ -52,39 +52,41 @@
 <a name="l00065"></a>00065     CharType <a class="code" href="classcma_1_1CMA__CType.html#a36e9b60205fad71d91f60752d47135a4">getCharType</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p, CharType preType,
 <a name="l00066"></a>00066             <span class="keyword">const</span> <span class="keywordtype">char</span>* nextP) <span class="keyword">const</span>;
 <a name="l00067"></a>00067 
-<a name="l00073"></a>00073     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__CType.html#ab9fbb6aa32fd36bb3838b48ffb92bf24">isPunct</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
+<a name="l00073"></a>00073     CharType <a class="code" href="classcma_1_1CMA__CType.html#a3ff5236c2ad85e67e3ec562227282de5">getBaseType</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* p ) <span class="keyword">const</span>;
 <a name="l00074"></a>00074 
-<a name="l00080"></a>00080     <span class="keywordtype">size_t</span> <a class="code" href="classcma_1_1CMA__CType.html#a4583d638f7336cf0a548905e8e88f826">length</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
+<a name="l00080"></a>00080     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__CType.html#ab9fbb6aa32fd36bb3838b48ffb92bf24">isPunct</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
 <a name="l00081"></a>00081 
-<a name="l00088"></a>00088     <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__CType.html#a493df55a7117400553d64b63d0809e0d">getEncodeValue</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
-<a name="l00089"></a>00089 
-<a name="l00096"></a>00096     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__CType.html#a9570155ad79775281e9042b796f85f3c">isSpace</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
-<a name="l00097"></a>00097 
-<a name="l00103"></a>00103     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__CType.html#ad6d58ef5f016e64e07ded48d434d24f2">isSentenceSeparator</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
+<a name="l00087"></a>00087     <span class="keywordtype">size_t</span> <a class="code" href="classcma_1_1CMA__CType.html#a4583d638f7336cf0a548905e8e88f826">length</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
+<a name="l00088"></a>00088 
+<a name="l00095"></a>00095     <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__CType.html#a493df55a7117400553d64b63d0809e0d">getEncodeValue</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
+<a name="l00096"></a>00096 
+<a name="l00103"></a>00103     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__CType.html#a9570155ad79775281e9042b796f85f3c">isSpace</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
 <a name="l00104"></a>00104 
-<a name="l00109"></a>00109         <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__CType.html#ac8a0564b888569e891e00ee72e03ead8">loadConfiguration</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* file);
-<a name="l00110"></a>00110 
-<a name="l00116"></a>00116         CharType <a class="code" href="classcma_1_1CMA__CType.html#a54b139bee59e4951795dcabbf255546e">getDefaultEndType</a>( CharType preType );
+<a name="l00110"></a>00110     <span class="keywordtype">bool</span> <a class="code" href="classcma_1_1CMA__CType.html#ad6d58ef5f016e64e07ded48d434d24f2">isSentenceSeparator</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
+<a name="l00111"></a>00111 
+<a name="l00116"></a>00116         <span class="keywordtype">int</span> <a class="code" href="classcma_1_1CMA__CType.html#ac8a0564b888569e891e00ee72e03ead8">loadConfiguration</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* file);
 <a name="l00117"></a>00117 
-<a name="l00124"></a>00124     <span class="keywordtype">string</span> <a class="code" href="classcma_1_1CMA__CType.html#a3dc7c08fdb3264b7a3d7c1bc774e4729">getPOCXmlStr</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
-<a name="l00125"></a>00125 
-<a name="l00126"></a>00126 <span class="keyword">protected</span>:
-<a name="l00128"></a><a class="code" href="classcma_1_1CMA__CType.html#a262dc0195e2a93786dc7b0f28bd2aedd">00128</a>         <a class="code" href="classcma_1_1Knowledge.html#a2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> <a class="code" href="classcma_1_1CMA__CType.html#a262dc0195e2a93786dc7b0f28bd2aedd">type_</a>;
-<a name="l00129"></a>00129 
-<a name="l00130"></a>00130 <span class="keyword">private</span>:
-<a name="l00132"></a>00132         map&lt; CharValue, CharConditions &gt; typeMap_;
-<a name="l00133"></a>00133 
-<a name="l00135"></a>00135         set&lt;CharValue&gt; spaceSet_;
+<a name="l00123"></a>00123         CharType <a class="code" href="classcma_1_1CMA__CType.html#a54b139bee59e4951795dcabbf255546e">getDefaultEndType</a>( CharType preType );
+<a name="l00124"></a>00124 
+<a name="l00131"></a>00131     <span class="keywordtype">string</span> <a class="code" href="classcma_1_1CMA__CType.html#a3dc7c08fdb3264b7a3d7c1bc774e4729">getPOCXmlStr</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* p) <span class="keyword">const</span>;
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133 <span class="keyword">protected</span>:
+<a name="l00135"></a><a class="code" href="classcma_1_1CMA__CType.html#a262dc0195e2a93786dc7b0f28bd2aedd">00135</a>         <a class="code" href="classcma_1_1Knowledge.html#a2f725921dec755cdd496e81a95389f1d">Knowledge::EncodeType</a> <a class="code" href="classcma_1_1CMA__CType.html#a262dc0195e2a93786dc7b0f28bd2aedd">type_</a>;
 <a name="l00136"></a>00136 
-<a name="l00138"></a>00138         set&lt;CharValue&gt; senSepSet_;
-<a name="l00139"></a>00139 
-<a name="l00140"></a>00140 };
-<a name="l00141"></a>00141 
-<a name="l00142"></a>00142 } <span class="comment">// namespace cma</span>
+<a name="l00137"></a>00137 <span class="keyword">private</span>:
+<a name="l00139"></a>00139         map&lt; CharValue, CharConditions &gt; typeMap_;
+<a name="l00140"></a>00140 
+<a name="l00142"></a>00142         set&lt;CharValue&gt; spaceSet_;
 <a name="l00143"></a>00143 
-<a name="l00144"></a>00144 <span class="preprocessor">#endif // CMA_CTYPE_H</span>
+<a name="l00145"></a>00145         set&lt;CharValue&gt; senSepSet_;
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147 };
+<a name="l00148"></a>00148 
+<a name="l00149"></a>00149 } <span class="comment">// namespace cma</span>
+<a name="l00150"></a>00150 
+<a name="l00151"></a>00151 <span class="preprocessor">#endif // CMA_CTYPE_H</span>
 </pre></div></div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Nov 6 15:59:12 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jan 26 13:00:41 2010 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

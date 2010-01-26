@@ -11,6 +11,12 @@
 \includegraphics[height=2cm]{classcma_1_1CMA__ME__Analyzer}
 \end{center}
 \end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef string {\bfseries OneGramType}\label{classcma_1_1CMA__ME__Analyzer_a9b615fa3994c626a039187c7444ba0f0}
+
+\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -24,11 +30,21 @@ virtual const char $\ast$ {\bf runWithString} (const char $\ast$inStr)
 \item 
 virtual int {\bf runWithStream} (const char $\ast$inFileName, const char $\ast$outFileName)
 \item 
+virtual void {\bf getNGramResult} (const char $\ast$inStr, int n, vector$<$ string $>$ \&output)
+\item 
+virtual void {\bf getNGramArrayResult} (const char $\ast$inStr, vector$<$ int $>$ nArray, vector$<$ string $>$ \&output)
+\item 
 virtual void {\bf splitSentence} (const char $\ast$paragraph, std::vector$<$ {\bf Sentence} $>$ \&sentences)
 \item 
 virtual void {\bf resetIndexPOSList} (bool defVal=true)
 \item 
 virtual int {\bf setIndexPOSList} (std::vector$<$ std::string $>$ \&posList)
+\item 
+virtual int {\bf getCodeFromStr} (const std::string \&pos) const 
+\item 
+virtual const char $\ast$ {\bf getStrFromCode} (int index) const 
+\item 
+virtual int {\bf getPOSTagSetSize} () const 
 \end{DoxyCompactItemize}
 
 
@@ -42,7 +58,53 @@ virtual int {\bf setIndexPOSList} (std::vector$<$ std::string $>$ \&posList)
 The Desconstrutor won't delete knowledge pointer 
 
 \subsection{Member Function Documentation}
-\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!resetIndexPOSList@{resetIndexPOSList}}
+\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!getCodeFromStr@{getCodeFromStr}}
+\index{getCodeFromStr@{getCodeFromStr}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
+\subsubsection[{getCodeFromStr}]{\setlength{\rightskip}{0pt plus 5cm}virtual int cma::CMA\_\-ME\_\-Analyzer::getCodeFromStr (const std::string \& {\em pos}) const\hspace{0.3cm}{\ttfamily  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_a51f3d3d9df1f88de445740aa56aab336}
+Get the POS index code from the POS string in the global part-\/of-\/speech table. 
+\begin{DoxyParams}{Parameters}
+\item[{\em pos}]the POS string \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+POS index code, -\/1 for non POS available 
+\end{DoxyReturn}
+
+
+Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_a8cf23f3e17a8d808ab946e2a6474d08b}.\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!getNGramArrayResult@{getNGramArrayResult}}
+\index{getNGramArrayResult@{getNGramArrayResult}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
+\subsubsection[{getNGramArrayResult}]{\setlength{\rightskip}{0pt plus 5cm}void cma::CMA\_\-ME\_\-Analyzer::getNGramArrayResult (const char $\ast$ {\em inStr}, \/  vector$<$ int $>$ {\em nArray}, \/  vector$<$ string $>$ \& {\em output})\hspace{0.3cm}{\ttfamily  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_a9b9ed98bd9782764d866f94145b9bf65}
+Get all the specific N-\/Gram results (see parameter nArray) in the inStr 
+\begin{DoxyParams}{Parameters}
+\item[{\em inStr}]paragraph string \item[{\em nArray}]the collection of the specific n in the N-\/Gram \item[{\em output}]to keep the output value \end{DoxyParams}
+\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!getNGramResult@{getNGramResult}}
+\index{getNGramResult@{getNGramResult}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
+\subsubsection[{getNGramResult}]{\setlength{\rightskip}{0pt plus 5cm}void cma::CMA\_\-ME\_\-Analyzer::getNGramResult (const char $\ast$ {\em inStr}, \/  int {\em n}, \/  vector$<$ string $>$ \& {\em output})\hspace{0.3cm}{\ttfamily  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_a590bac470ef26b7935f26aec808919f1}
+Get the N-\/Gram result in the inStr 
+\begin{DoxyParams}{Parameters}
+\item[{\em inStr}]paragraph string \item[{\em n}]the specific n in the N-\/Gram \item[{\em output}]to keep the output value \end{DoxyParams}
+\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!getPOSTagSetSize@{getPOSTagSetSize}}
+\index{getPOSTagSetSize@{getPOSTagSetSize}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
+\subsubsection[{getPOSTagSetSize}]{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Analyzer::getPOSTagSetSize () const\hspace{0.3cm}{\ttfamily  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_a6defaeb4b7ce84d3688ce9d42fde2145}
+Get the number of POS tags in the global part-\/of-\/speech table. \begin{DoxyReturn}{Returns}
+the number of POS tags 
+\end{DoxyReturn}
+
+
+Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_a5607a772d430d7e2923d29720f5aa63a}.
+
+References cma::POSTable::size().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!getStrFromCode@{getStrFromCode}}
+\index{getStrFromCode@{getStrFromCode}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
+\subsubsection[{getStrFromCode}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ cma::CMA\_\-ME\_\-Analyzer::getStrFromCode (int {\em index}) const\hspace{0.3cm}{\ttfamily  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_a05d471db9b5c1cccdebb9a21582acaad}
+Get the POS string from the POS index code in the global part-\/of-\/speech table. 
+\begin{DoxyParams}{Parameters}
+\item[{\em index}]the POS index code \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+POS string, null pointer for non POS available 
+\end{DoxyReturn}
+
+
+Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_a2ba8615ba11be2409aa80b62ad1f7a1b}.
+
+References cma::POSTable::getStrFromCode().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!resetIndexPOSList@{resetIndexPOSList}}
 \index{resetIndexPOSList@{resetIndexPOSList}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
 \subsubsection[{resetIndexPOSList}]{\setlength{\rightskip}{0pt plus 5cm}void cma::CMA\_\-ME\_\-Analyzer::resetIndexPOSList (bool {\em defVal} = {\ttfamily true})\hspace{0.3cm}{\ttfamily  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_afa513b05898ec374781c5889ed9714c8}
 Reset all the POS index Information as defVal \begin{DoxyReturn}{Returns}
@@ -52,7 +114,7 @@ defVal default value to reset (default is true)
 
 Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_a4e2aad23b33ceeb60265dd68daf9da67}.
 
-References cma::CMA\_\-ME\_\-Knowledge::getPOSTable(), and cma::POSTable::resetIndexPOSList().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!runWithSentence@{runWithSentence}}
+References cma::POSTable::resetIndexPOSList().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!runWithSentence@{runWithSentence}}
 \index{runWithSentence@{runWithSentence}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
 \subsubsection[{runWithSentence}]{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Analyzer::runWithSentence ({\bf Sentence} \& {\em sentence})\hspace{0.3cm}{\ttfamily  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_a6bac993f470b61cc4fccdbd4a7217948}
 Execute the morphological analysis based on a sentence. 
@@ -74,7 +136,7 @@ white-\/space characters are ignored in the analysis, which include \char`\"{} $
 
 Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_a2274acc45dd1ccc6aa7ea87cd34ad0e7}.
 
-References cma::Sentence::addList(), cma::Sentence::getListSize(), cma::Sentence::getMorphemeList(), cma::Analyzer::getOption(), cma::CMA\_\-ME\_\-Knowledge::getPOSTable(), cma::Sentence::getScore(), cma::Sentence::getString(), cma::Morpheme::isIndexed, cma::CMA\_\-ME\_\-Knowledge::isStopWord(), cma::Morpheme::lexicon\_\-, cma::Analyzer::OPTION\_\-TYPE\_\-NBEST, cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, cma::Morpheme::posCode\_\-, cma::Morpheme::posStr\_\-, and cma::Sentence::setScore().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!runWithStream@{runWithStream}}
+References cma::Sentence::addList(), cma::POSTable::getCodeFromStr(), cma::Sentence::getListSize(), cma::Sentence::getMorphemeList(), cma::Analyzer::getOption(), cma::Sentence::getScore(), cma::Sentence::getString(), cma::Morpheme::isIndexed, cma::POSTable::isIndexPOS(), cma::CMA\_\-ME\_\-Knowledge::isStopWord(), cma::Morpheme::lexicon\_\-, cma::Analyzer::OPTION\_\-TYPE\_\-NBEST, cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, cma::Morpheme::posCode\_\-, cma::Morpheme::posStr\_\-, and cma::Sentence::setScore().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!runWithStream@{runWithStream}}
 \index{runWithStream@{runWithStream}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
 \subsubsection[{runWithStream}]{\setlength{\rightskip}{0pt plus 5cm}int cma::CMA\_\-ME\_\-Analyzer::runWithStream (const char $\ast$ {\em inFileName}, \/  const char $\ast$ {\em outFileName})\hspace{0.3cm}{\ttfamily  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_aeb9e065c3cc25885f2ccb0c70f4a5964}
 Execute the morphological analysis based on a file. 
@@ -116,7 +178,7 @@ how many POS are set successfully (mainly because not exists).
 
 Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_a3f4726b064b1197f069e2505ef093720}.
 
-References cma::CMA\_\-ME\_\-Knowledge::getPOSTable(), and cma::POSTable::setIndexPOSList().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!setKnowledge@{setKnowledge}}
+References cma::POSTable::setIndexPOSList().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!setKnowledge@{setKnowledge}}
 \index{setKnowledge@{setKnowledge}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
 \subsubsection[{setKnowledge}]{\setlength{\rightskip}{0pt plus 5cm}void cma::CMA\_\-ME\_\-Analyzer::setKnowledge ({\bf Knowledge} $\ast$ {\em pKnowledge})\hspace{0.3cm}{\ttfamily  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_a04d6b5c7b7dcd199c8e96a06afa5ea44}
 Set the {\itshape \doxyref{Knowledge}{p.}{classcma_1_1Knowledge}\/} for analysis. 
@@ -126,7 +188,7 @@ Set the {\itshape \doxyref{Knowledge}{p.}{classcma_1_1Knowledge}\/} for analysis
 
 Implements {\bf cma::Analyzer} \doxyref{}{p.}{classcma_1_1Analyzer_a52d2462f2f05cec4a9c4d6773e7502cb}.
 
-References cma::Knowledge::getEncodeType(), cma::CMA\_\-ME\_\-Knowledge::getPOSTagger(), cma::CMA\_\-ME\_\-Knowledge::getSegTagger(), cma::CMA\_\-ME\_\-Knowledge::getSystemProperty(), cma::CMA\_\-CType::instance(), cma::CMA\_\-ME\_\-Knowledge::isSupportPOS(), cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, cma::POSTagger::setCType(), cma::Analyzer::setOption(), cma::Analyzer::setPOSDelimiter(), cma::Analyzer::setSentenceDelimiter(), and cma::Analyzer::setWordDelimiter().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!splitSentence@{splitSentence}}
+References cma::Knowledge::getEncodeType(), cma::CMA\_\-ME\_\-Knowledge::getPOSTable(), cma::CMA\_\-ME\_\-Knowledge::getPOSTagger(), cma::CMA\_\-ME\_\-Knowledge::getSegTagger(), cma::CMA\_\-ME\_\-Knowledge::getSystemProperty(), cma::CMA\_\-CType::instance(), cma::CMA\_\-ME\_\-Knowledge::isSupportPOS(), cma::Analyzer::OPTION\_\-TYPE\_\-POS\_\-TAGGING, cma::POSTagger::setCType(), cma::Analyzer::setOption(), cma::Analyzer::setPOSDelimiter(), cma::Analyzer::setSentenceDelimiter(), and cma::Analyzer::setWordDelimiter().\index{cma::CMA\_\-ME\_\-Analyzer@{cma::CMA\_\-ME\_\-Analyzer}!splitSentence@{splitSentence}}
 \index{splitSentence@{splitSentence}!cma::CMA_ME_Analyzer@{cma::CMA\_\-ME\_\-Analyzer}}
 \subsubsection[{splitSentence}]{\setlength{\rightskip}{0pt plus 5cm}void cma::CMA\_\-ME\_\-Analyzer::splitSentence (const char $\ast$ {\em paragraph}, \/  std::vector$<$ {\bf Sentence} $>$ \& {\em sentences})\hspace{0.3cm}{\ttfamily  [virtual]}}\label{classcma_1_1CMA__ME__Analyzer_ab6d7b5e169207cca37337eceb07ac5fe}
 Split a paragraph string into sentences. 

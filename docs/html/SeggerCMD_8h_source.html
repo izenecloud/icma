@@ -23,33 +23,33 @@
     </ul>
   </div>
 <h1>/home/vernkin/projects/chinese-ma-chen/source/include/SeggerCMD.h</h1><a href="SeggerCMD_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00174"></a>00174 <span class="preprocessor">#ifndef _SEGGERCMD_H</span>
-<a name="l00175"></a>00175 <span class="preprocessor"></span><span class="preprocessor">#define _SEGGERCMD_H</span>
-<a name="l00176"></a>00176 <span class="preprocessor"></span>
-<a name="l00177"></a>00177 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<a name="l00178"></a>00178 
-<a name="l00179"></a>00179 <span class="keyword">using namespace </span>std;
-<a name="l00180"></a>00180 
-<a name="l00181"></a>00181 <span class="preprocessor">#include &quot;<a class="code" href="cma__factory_8h.html" title="CMA_Factory creates instances for Chinese morphological analysis.">cma_factory.h</a>&quot;</span>
-<a name="l00182"></a>00182 <span class="preprocessor">#include &quot;<a class="code" href="analyzer_8h.html" title="Analyzer executes the Chinese morphological analysis.">analyzer.h</a>&quot;</span>
-<a name="l00183"></a>00183 <span class="preprocessor">#include &quot;<a class="code" href="knowledge_8h.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">knowledge.h</a>&quot;</span>
-<a name="l00184"></a>00184 <span class="preprocessor">#include &quot;<a class="code" href="sentence_8h.html" title="Sentence saves the results of Chinese morphological analysis.">sentence.h</a>&quot;</span>
-<a name="l00185"></a>00185 
-<a name="l00186"></a>00186 <span class="keyword">using namespace </span>cma;
-<a name="l00187"></a>00187 
-<a name="l00188"></a>00188 <span class="preprocessor">#include &quot;VTimer.h&quot;</span>
-<a name="l00189"></a>00189 
-<a name="l00193"></a>00193 <span class="keywordtype">void</span> beginSeg(<span class="keywordtype">string</span> mate, <span class="keywordtype">string</span> inFile, <span class="keywordtype">string</span> outFile, <span class="keywordtype">string</span> enc,
-<a name="l00194"></a>00194         <span class="keywordtype">string</span> posDelimiter);
-<a name="l00195"></a>00195 
-<a name="l00196"></a>00196 <span class="keywordtype">int</span> seggerEntry(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv);
-<a name="l00197"></a>00197 
-<a name="l00198"></a>00198 <span class="keywordtype">void</span> printSeggerUsage();
-<a name="l00199"></a>00199 
-<a name="l00200"></a>00200 <span class="preprocessor">#endif  </span><span class="comment">/* _SEGGERCMD_H */</span>
-<a name="l00201"></a>00201 
+<a name="l00194"></a>00194 <span class="preprocessor">#ifndef _SEGGERCMD_H</span>
+<a name="l00195"></a>00195 <span class="preprocessor"></span><span class="preprocessor">#define _SEGGERCMD_H</span>
+<a name="l00196"></a>00196 <span class="preprocessor"></span>
+<a name="l00197"></a>00197 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00198"></a>00198 
+<a name="l00199"></a>00199 <span class="keyword">using namespace </span>std;
+<a name="l00200"></a>00200 
+<a name="l00201"></a>00201 <span class="preprocessor">#include &quot;<a class="code" href="cma__factory_8h.html" title="CMA_Factory creates instances for Chinese morphological analysis.">cma_factory.h</a>&quot;</span>
+<a name="l00202"></a>00202 <span class="preprocessor">#include &quot;<a class="code" href="analyzer_8h.html" title="Analyzer executes the Chinese morphological analysis.">analyzer.h</a>&quot;</span>
+<a name="l00203"></a>00203 <span class="preprocessor">#include &quot;<a class="code" href="knowledge_8h.html" title="Knowledge manages the linguistic information for Chinese morphological analysis.">knowledge.h</a>&quot;</span>
+<a name="l00204"></a>00204 <span class="preprocessor">#include &quot;<a class="code" href="sentence_8h.html" title="Sentence saves the results of Chinese morphological analysis.">sentence.h</a>&quot;</span>
+<a name="l00205"></a>00205 
+<a name="l00206"></a>00206 <span class="keyword">using namespace </span>cma;
+<a name="l00207"></a>00207 
+<a name="l00208"></a>00208 <span class="preprocessor">#include &quot;VTimer.h&quot;</span>
+<a name="l00209"></a>00209 
+<a name="l00213"></a>00213 <span class="keywordtype">void</span> beginSeg(<span class="keywordtype">string</span> mate, <span class="keywordtype">string</span> inFile, <span class="keywordtype">string</span> outFile, <span class="keywordtype">string</span> enc,
+<a name="l00214"></a>00214         <span class="keywordtype">string</span> posDelimiter);
+<a name="l00215"></a>00215 
+<a name="l00216"></a>00216 <span class="keywordtype">int</span> seggerEntry(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv);
+<a name="l00217"></a>00217 
+<a name="l00218"></a>00218 <span class="keywordtype">void</span> printSeggerUsage();
+<a name="l00219"></a>00219 
+<a name="l00220"></a>00220 <span class="preprocessor">#endif  </span><span class="comment">/* _SEGGERCMD_H */</span>
+<a name="l00221"></a>00221 
 </pre></div></div>
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Nov 6 15:59:12 2009 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jan 26 13:00:41 2010 for Chinese&nbsp;Morphological&nbsp;Analyzer(Chen) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

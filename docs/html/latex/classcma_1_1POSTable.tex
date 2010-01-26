@@ -32,8 +32,6 @@ const char $\ast$ {\bf getStrFromCode} (int index) const
 \item 
 int {\bf size} () const 
 \item 
-bool {\bf loadConfig} (const char $\ast$fileName)
-\item 
 int {\bf getCodeFromType} ({\bf POSType} type) const 
 \item 
 bool {\bf isIndexPOS} (int posCode) const 
@@ -90,7 +88,7 @@ Note that the POS string is case-\/insensitively.
 \end{DoxyAttention}
 
 
-Referenced by loadConfig(), and cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTable@{cma::POSTable}!getCodeFromStr@{getCodeFromStr}}
+Referenced by cma::CMA\_\-ME\_\-Knowledge::loadPOSModel().\index{cma::POSTable@{cma::POSTable}!getCodeFromStr@{getCodeFromStr}}
 \index{getCodeFromStr@{getCodeFromStr}!cma::POSTable@{cma::POSTable}}
 \subsubsection[{getCodeFromStr}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromStr (const std::string \& {\em pos}) const}\label{classcma_1_1POSTable_a1692f43e2154d408265e09affd64d70a}
 Get the POS index code from the POS string in the global part-\/of-\/speech table. 
@@ -99,7 +97,9 @@ Get the POS index code from the POS string in the global part-\/of-\/speech tabl
 \begin{DoxyReturn}{Returns}
 POS index code, -\/1 for non POS available 
 \end{DoxyReturn}
-\index{cma::POSTable@{cma::POSTable}!getCodeFromType@{getCodeFromType}}
+
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::POSTable@{cma::POSTable}!getCodeFromType@{getCodeFromType}}
 \index{getCodeFromType@{getCodeFromType}!cma::POSTable@{cma::POSTable}}
 \subsubsection[{getCodeFromType}]{\setlength{\rightskip}{0pt plus 5cm}int cma::POSTable::getCodeFromType ({\bf POSType} {\em type}) const}\label{classcma_1_1POSTable_ad6c9ee24dd82620d36d4de8018702546}
 Get the POS index code from the special POS type. 
@@ -123,7 +123,9 @@ Get the POS string from the POS index code in the global part-\/of-\/speech tabl
 \begin{DoxyReturn}{Returns}
 POS string, null pointer for non POS available 
 \end{DoxyReturn}
-\index{cma::POSTable@{cma::POSTable}!isIndexPOS@{isIndexPOS}}
+
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::getStrFromCode().\index{cma::POSTable@{cma::POSTable}!isIndexPOS@{isIndexPOS}}
 \index{isIndexPOS@{isIndexPOS}!cma::POSTable@{cma::POSTable}}
 \subsubsection[{isIndexPOS}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTable::isIndexPOS (int {\em posCode}) const}\label{classcma_1_1POSTable_a0348ae37b15a1b9c4ce920ffecd83264}
 Whether the posCode indicates that word is index word, if the posCode is invalid, return true. 
@@ -132,18 +134,9 @@ Whether the posCode indicates that word is index word, if the posCode is invalid
 \begin{DoxyReturn}{Returns}
 true if posCode is the index POS 
 \end{DoxyReturn}
-\index{cma::POSTable@{cma::POSTable}!loadConfig@{loadConfig}}
-\index{loadConfig@{loadConfig}!cma::POSTable@{cma::POSTable}}
-\subsubsection[{loadConfig}]{\setlength{\rightskip}{0pt plus 5cm}bool cma::POSTable::loadConfig (const char $\ast$ {\em fileName})}\label{classcma_1_1POSTable_aa70a1e82116a1855f9599aeb48cb5139}
-Load the configuration file, which is in text format. This file contains the part-\/of-\/speech configuration, which format is \char`\"{}tag = value\char`\"{}. 
-\begin{DoxyParams}{Parameters}
-\item[{\em fileName}]the file name \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-0 for fail, 1 for success 
-\end{DoxyReturn}
 
 
-References addPOS().\index{cma::POSTable@{cma::POSTable}!resetIndexPOSList@{resetIndexPOSList}}
+Referenced by cma::CMA\_\-ME\_\-Analyzer::runWithSentence().\index{cma::POSTable@{cma::POSTable}!resetIndexPOSList@{resetIndexPOSList}}
 \index{resetIndexPOSList@{resetIndexPOSList}!cma::POSTable@{cma::POSTable}}
 \subsubsection[{resetIndexPOSList}]{\setlength{\rightskip}{0pt plus 5cm}void cma::POSTable::resetIndexPOSList (bool {\em defVal} = {\ttfamily true})}\label{classcma_1_1POSTable_a6027450417effadd701d683b773ec659}
 Reset all the pos index Information as defVal \begin{DoxyReturn}{Returns}
@@ -178,6 +171,8 @@ Get the number of POS tags in the global part-\/of-\/speech table. \begin{DoxyRe
 the number of POS tags 
 \end{DoxyReturn}
 
+
+Referenced by cma::CMA\_\-ME\_\-Analyzer::getPOSTagSetSize().
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
