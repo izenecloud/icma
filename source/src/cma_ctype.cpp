@@ -286,11 +286,11 @@ void loadRule(const TiXmlNode* ruleNode, CTypeTokenizer& tokenizer, map< CharVal
 
 int CMA_CType::loadConfiguration( const char* file )
 {
-	TiXmlDocument doc( file );
-	bool loadOkay = doc.LoadFile();
+    TiXmlDocument doc( file );
+	bool loadOkay = doc.LoadFile( );
 	if( !loadOkay )
 	{
-		cerr<< "[pox.xml Init Error] " << doc.ErrorDesc() << endl;
+		cerr<< "[poc.xml Init Error] " << doc.ErrorDesc() << " for file "<< file << endl;
 		return 0;
 	}
 
