@@ -82,26 +82,25 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
         }
 
         options_[nOption] = nValue;
-
         // check for specific setting
         if( nOption == OPTION_ANALYSIS_TYPE )
         {
-            if( nValue == 2 )
-            {
-                analysis= &CMA_ME_Analyzer::analysis_fmm;
-            }
+            if( static_cast<int>(nValue) == 2 )
+                analysis = &CMA_ME_Analyzer::analysis_fmm;
+            else
+                analysis = &CMA_ME_Analyzer::analysis_mmmodel;
         }
     }
 
     int CMA_ME_Analyzer::runWithSentence(Sentence& sentence) {
         if( strlen( sentence.getString() ) == 0 )
         	return 1;
-
-    	int N = (int) getOption(OPTION_TYPE_NBEST);
+        int N = (int) getOption(OPTION_TYPE_NBEST);
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
         
         vector<pair<vector<string>, double> > segment;
         vector<vector<string> > pos;
+
         (this->*analysis)(sentence.getString(), N, pos, segment, printPOS);
 
         if(N <= 1)
@@ -647,7 +646,6 @@ namespace meanainner{
         segRet.resize(1);
 
         VTrie *trie = knowledge_->getTrie();
-
         meanainner::combineRetWithTrie( trie, words, segRet[0].first, ctype_);
         segRet[0].second = 1;
 
@@ -661,7 +659,6 @@ namespace meanainner{
         vector<string>& wordVec = segRet[0].first;
         size_t wordSize = wordVec.size();
         posRetOne.resize( wordSize );
-
         for (size_t i = 0; i < wordSize; ++i) {
             VTrieNode node;
             trie->search( wordVec[i].data(), &node );
