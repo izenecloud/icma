@@ -152,6 +152,7 @@ public:
      */
     enum OptionType
     {
+	OPTION_ANALYSIS_TYPE, ///< set the segmentation approach see the definition of specific Analyzer
 	OPTION_TYPE_POS_TAGGING, ///< the value zero for not to tag part-of-speech tags in the result of \e runWithSentence(), \e runWithString() and \e runWithStream(), which value is 1 defaultly.
 	OPTION_TYPE_NBEST, ///< a positive value to set the number of candidate results of \e runWithSentence(), which value is 1 defaultly.
 	OPTION_TYPE_NUM ///< the count of option types
@@ -163,7 +164,7 @@ public:
      * \param nValue the option value
      * \attention when \e nOption is \e OPTION_TYPE_NBEST, the invalid \e nValue less than 1 will take no effect.
      */
-    void setOption(OptionType nOption, double nValue);
+    virtual void setOption(OptionType nOption, double nValue);
 
     /**
      * Get the option value.

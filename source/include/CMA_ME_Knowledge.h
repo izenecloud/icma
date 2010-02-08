@@ -78,9 +78,10 @@ public:
      * \param cateName the file name, it include two files, (cateName).model and
      *      (cateName).tag. For example, with cateName cate1, "cate1.model" and
      *      "cate1.tag" should exists
+     * \param loadModel whether load model file, default is true
      * \return 0 for fail, 1 for success
      */
-    virtual int loadStatModel(const char* cateName);
+    virtual int loadStatModel(const char* cateName, bool loadModel = true );
 
     /**
      * Load the model file in binary format, which contains statistical
@@ -88,9 +89,10 @@ public:
      * \param cateName the file name, it include two files, (cateName).model and
      *      (cateName).tag. For example, with cateName cate1, "cate1.model" and
      *      "cate1.tag" should exists
+     * \param loadModel whether load model file, default is true
      * \return 0 for fail, 1 for success
      */
-    virtual int loadPOSModel(const char* cateName);
+    virtual int loadPOSModel(const char* cateName, bool loadModel = true );
 
     /**
      * Load the configuration file, which is in text format.
@@ -113,9 +115,11 @@ public:
      * Encoding must be set here.
      * \encoding like gb18030 and utf8
      * \modelPath the directory that contains all the models
+     * \param loadModel whether load model file, default is true
      * \return whether perform success
      */
-    virtual int loadModel(const char* encoding, const char* modelPath);
+    virtual int loadModel(const char* encoding, const char* modelPath,
+            bool loadModel = true );
 
     /**
      * Whether contains POS model

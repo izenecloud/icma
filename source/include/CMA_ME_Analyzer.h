@@ -36,6 +36,14 @@ public:
     ~CMA_ME_Analyzer();
 
     /**
+     * Set the option value for analysis.
+     * \param nOption the option type
+     * \param nValue the option value
+     * \attention when \e nOption is \e OPTION_TYPE_NBEST, the invalid \e nValue less than 1 will take no effect.
+     */
+    virtual void setOption(OptionType nOption, double nValue);
+
+    /**
      * Set the \e Knowledge for analysis.
      * \param pKnowledge the pointer of \e Knowledge
      */
@@ -130,12 +138,21 @@ public:
 
     typedef string OneGramType;
 
+    typedef void(CMA_ME_Analyzer::*analysis_t)(const char*, int, vector<vector<string> >&,
+            vector<pair<vector<string>, double> >&, bool);
+
 private:
     /**
-     * Each segment only map to one pos set
+     * Each segment only map to one pos set, with maximum model approach
      */
-    void analysis(const char* sentence, int N, vector<vector<string> >& pos,
+    void analysis_mmmodel(const char* sentence, int N, vector<vector<string> >& pos,
             vector<pair<vector<string>, double> >& segment, bool tagPOS = true);
+
+    /*
+     * Forwards maximum matching approach
+     */
+    void analysis_fmm(const char* sentence, int N, vector<vector<string> >& pos,
+                vector<pair<vector<string>, double> >& segment, bool tagPOS = true);
 
     /**
      * Simply combine sequential letters, digits and letters+digits together
@@ -166,6 +183,11 @@ private:
     Knowledge::EncodeType encodeType_;
 
     POSTable* posTable_;
+
+    /**
+     * Analysis Type
+     */
+    CMA_ME_Analyzer::analysis_t analysis;
 };
 
 

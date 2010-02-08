@@ -42,6 +42,8 @@
 using namespace std;
 using namespace cma;
 
+#define DEBUG_FMM
+
 namespace
 {
     /** command options */
@@ -383,6 +385,11 @@ int main(int argc, char* argv[])
         exit(1);
     }
 
+    bool loadModel = true;
+#ifdef DEBUG_FMM
+    loadModel = false;
+#endif
+
     // set encoding type from the dictionary path
     string modelPathStr(modelPath);
     if(modelPathStr[ modelPathStr.length() -  1] != '/' )
@@ -391,7 +398,7 @@ int main(int argc, char* argv[])
     size_t first = modelPathStr.find_last_of('/', last-1);
     string encodeStr = modelPathStr.substr(first+1, last-first-1);
     testFileSuffix = encodeStr;
-    knowledge->loadModel( encodeStr.data(), modelPath );
+    knowledge->loadModel( encodeStr.data(), modelPath, loadModel );
     size_t dicSize = ((CMA_ME_Knowledge*)knowledge)->getTrie()->size();
     printf("[Info] All Dictionaries' Size: %.2fm.\n", dicSize/1048576.0);
     //cout<<"[Info] All Dictionary Size: "<<(dicSize/1048576.0)<<"m"<<endl;
@@ -401,6 +408,10 @@ int main(int argc, char* argv[])
     // disable POS output for runWithStream
     if( optionIndex == 2 )
     	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
+
+    #ifdef DEBUG_FMM
+    analyzer->setOption( Analyzer::OPTION_ANALYSIS_TYPE, 2 );
+#endif
 
     switch(optionIndex)
     {

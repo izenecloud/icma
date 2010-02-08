@@ -41,7 +41,8 @@ CMA_ME_Knowledge::~CMA_ME_Knowledge(){
     delete posTable_;
 }
 
-int CMA_ME_Knowledge::loadPOSModel(const char* cateName){
+int CMA_ME_Knowledge::loadPOSModel(const char* cateName, bool loadModel)
+{
     string cateStr(cateName);
 
     //load pos table first
@@ -56,30 +57,33 @@ int CMA_ME_Knowledge::loadPOSModel(const char* cateName){
         posTable_->addPOS(line);
     }
 
-    assert(!posT_);
-    posT_ = new POSTagger((cateStr + ".model").data(), trie_);
+    if( loadModel )
+    {
+        assert(!posT_);
+        posT_ = new POSTagger((cateStr + ".model").data(), trie_);
 
-    map<string, string> configMap;
-    loadConfig0((cateStr + ".config").data(), configMap, false);
-    string ret = configMap["defaultPOS"];
-    posT_->defaultPOS = ret.empty() ? "N" : ret;
+        map<string, string> configMap;
+        loadConfig0((cateStr + ".config").data(), configMap, false);
+        string ret = configMap["defaultPOS"];
+        posT_->defaultPOS = ret.empty() ? "N" : ret;
 
-    ret = configMap["numberPOS"];
-    posT_->numberPOS = ret.empty() ? "M" : ret;
+        ret = configMap["numberPOS"];
+        posT_->numberPOS = ret.empty() ? "M" : ret;
 
-    ret = configMap["letterPOS"];
-    posT_->letterPOS = ret.empty() ? "NX" : ret;
+        ret = configMap["letterPOS"];
+        posT_->letterPOS = ret.empty() ? "NX" : ret;
 
-    ret = configMap["puncPOS"];
-    posT_->puncPOS = ret.empty() ? "W" : ret;
+        ret = configMap["puncPOS"];
+        posT_->puncPOS = ret.empty() ? "W" : ret;
 
-    ret = configMap["datePOS"];
-    posT_->datePOS = ret.empty() ? "T" : ret;
+        ret = configMap["datePOS"];
+        posT_->datePOS = ret.empty() ? "T" : ret;
+    }
 
     return 1;
 }
 
-int CMA_ME_Knowledge::loadStatModel(const char* cateName){
+int CMA_ME_Knowledge::loadStatModel(const char* cateName, bool loadModel){
 	string cateStr(cateName);
 
 	int ret = CMA_CType::instance( getEncodeType() )->loadConfiguration( (cateStr + ".xml" ).data() );
@@ -90,8 +94,11 @@ int CMA_ME_Knowledge::loadStatModel(const char* cateName){
 		return 0;
 	}
 
-	assert(!segT_);
-    segT_ = new SegTagger(cateStr, trie_);
+	if( loadModel )
+	{
+        assert(!segT_);
+        segT_ = new SegTagger(cateStr, trie_);
+	}
 
     //try to load black words here
     string blackWordFile = cateStr.substr(0, cateStr.length() - 3) + "blackwords";
@@ -258,7 +265,8 @@ int CMA_ME_Knowledge::encodeSystemDict(const char* txtFileName,
     return 1;
 }
 
-int CMA_ME_Knowledge::loadModel(const char* encoding, const char* modelPath)
+int CMA_ME_Knowledge::loadModel(const char* encoding, const char* modelPath,
+        bool loadModel)
 {
 	//set encoding
 	Knowledge::EncodeType encode = Knowledge::decodeEncodeType(encoding);
@@ -269,14 +277,14 @@ int CMA_ME_Knowledge::loadModel(const char* encoding, const char* modelPath)
 	string path = formatModelPath(modelPath);
 
 	// load the STAT model
-	loadStatModel( ( path + "poc").data() );
+	loadStatModel( ( path + "poc").data(), loadModel );
 
 	// load the POS model
 	ifstream posIn( ( path + "pos.model").data() );
 	if(posIn)
 	{
 		posIn.close();
-		loadPOSModel( ( path + "pos" ).data() );
+		loadPOSModel( ( path + "pos" ).data(), loadModel );
 	}
 
 	//TODO here have to change to load system dictionary

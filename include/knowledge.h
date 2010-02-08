@@ -46,16 +46,18 @@ public:
     /**
      * Load the model file in binary format, which contains statistical information for word segmentation.
      * \param binFileName the file name
+     * \param loadModel whether load model file, default is true
      * \return 0 for fail, 1 for success
      */
-    virtual int loadStatModel(const char* binFileName) = 0;
+    virtual int loadStatModel(const char* binFileName, bool loadModel = true) = 0;
 
     /**
      * Load the model file in binary format, which contains statistical information for part-of-speech tagging.
      * \param binFileName the file name
+     * \param loadModel whether load model file, default is true
      * \return 0 for fail, 1 for success
      */
-    virtual int loadPOSModel(const char* binFileName) = 0;
+    virtual int loadPOSModel(const char* binFileName, bool loadModel = true) = 0;
 
     /**
      * Load the configuration file, which is in text format.
@@ -114,9 +116,11 @@ public:
      * Encoding must be set here.
      * \encoding like gb18030 and utf8
      * \modelPath the directory that contains all the models
+     * \param loadModel whether load model file, default is true
      * \return whether perform success
      */
-    virtual int loadModel(const char* encoding, const char* modelPath) = 0;
+    virtual int loadModel(const char* encoding, const char* modelPath,
+            bool loadModel = true) = 0;
 
     /**
      * Whether contains POS model

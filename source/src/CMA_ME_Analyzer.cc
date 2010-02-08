@@ -64,11 +64,33 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
 
 
     CMA_ME_Analyzer::CMA_ME_Analyzer()
-			: knowledge_(0), ctype_(0), posTable_(0)
+			: knowledge_(0), ctype_(0), posTable_(0),
+			  analysis(&CMA_ME_Analyzer::analysis_mmmodel)
     {
     }
 
     CMA_ME_Analyzer::~CMA_ME_Analyzer() {
+    }
+
+    void CMA_ME_Analyzer::setOption(OptionType nOption, double nValue)
+    {
+        // standard implementation
+        // check nbest value range
+        if(nOption == OPTION_TYPE_NBEST && nValue < 1)
+        {
+        return;
+        }
+
+        options_[nOption] = nValue;
+
+        // check for specific setting
+        if( nOption == OPTION_ANALYSIS_TYPE )
+        {
+            if( nValue == 2 )
+            {
+                analysis= &CMA_ME_Analyzer::analysis_fmm;
+            }
+        }
     }
 
     int CMA_ME_Analyzer::runWithSentence(Sentence& sentence) {
@@ -80,7 +102,7 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
         
         vector<pair<vector<string>, double> > segment;
         vector<vector<string> > pos;
-        analysis(sentence.getString(), N, pos, segment, printPOS);
+        (this->*analysis)(sentence.getString(), N, pos, segment, printPOS);
 
         if(N <= 1)
         {
@@ -192,7 +214,7 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
             }
             vector<pair<vector<string>, double> > segment;
             vector<vector<string> > pos;
-            analysis(line.data(), N, pos, segment, printPOS);
+            (this->*analysis)(line.data(), N, pos, segment, printPOS);
 
             if (printPOS)
             {
@@ -243,7 +265,7 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
       
         vector<pair<vector<string>, double> > segment;
         vector<vector<string> > pos;
-        analysis(inStr, 1, pos, segment, printPOS);
+        (this->*analysis)(inStr, 1, pos, segment, printPOS);
 
         if (printPOS)
         {
@@ -478,7 +500,7 @@ namespace meanainner{
 
 }
 
-    void CMA_ME_Analyzer::analysis(const char* sentence, int N,
+    void CMA_ME_Analyzer::analysis_mmmodel(const char* sentence, int N,
             vector<vector<string> >& posRet,
             vector<pair<vector<string>, double> >& segRet, bool tagPOS) {
         if( encodeType_ == Knowledge::ENCODE_TYPE_UTF8 )
@@ -490,7 +512,7 @@ namespace meanainner{
 
     	int segN = N;
 
-        vector<pair<vector<string>, double> > segment(1);
+        vector<pair<vector<string>, double> > segment(segN);
 
         SegTagger* segTagger = knowledge_->getSegTagger();
 
@@ -585,6 +607,59 @@ namespace meanainner{
         }
 
 
+    }
+
+    void CMA_ME_Analyzer::analysis_fmm(const char* sentence, int N,
+            vector<vector<string> >& posRet,
+            vector<pair<vector<string>, double> >& segRet, bool tagPOS) {
+        if( encodeType_ == Knowledge::ENCODE_TYPE_UTF8 )
+        {
+            const unsigned char *uc = (const unsigned char *)sentence;
+            if( uc[0] == 0xEF && uc[1] == 0xBB && uc[2] == 0xBF )
+                sentence += 3;
+        }
+
+
+        CTypeTokenizer token(ctype_, sentence);
+
+        vector<string> words;
+        const char* next = 0;
+        while((next = token.next())){
+            words.push_back(next);
+        }
+
+        if(words.empty())
+            return;
+/*
+        int maxWordOff = (int)words.size() - 1;
+        CharType types[maxWordOff + 1];
+        CharType preType = CHAR_TYPE_INIT;
+        for(int i=0; i<maxWordOff; ++i){
+            types[i] = preType = ctype_->getCharType(words[i].data(),
+                    preType, words[i+1].data());
+
+        }
+
+        types[maxWordOff] = ctype_->getCharType(words[maxWordOff].data(),
+                    preType, 0);
+*/
+
+        segRet.resize(1);
+
+        VTrie *trie = knowledge_->getTrie();
+
+        meanainner::combineRetWithTrie( trie, words, segRet[0].first, ctype_);
+        segRet[0].second = 1;
+
+        if(!tagPOS)
+            return;
+        /*
+        posRet.resize(N);
+        POSTagger* posTagger = knowledge_->getPOSTagger();
+        for (int i = 0; i < N; ++i) {
+            posTagger->tag_sentence_best(segRet[i].first, posRet[i], 0,
+                segRet[i].first.size());
+        }*/
     }
 
     void CMA_ME_Analyzer::splitToOneGram( const char* sentence, vector<vector<OneGramType> >& output )
