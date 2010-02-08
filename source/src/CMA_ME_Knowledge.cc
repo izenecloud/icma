@@ -57,28 +57,25 @@ int CMA_ME_Knowledge::loadPOSModel(const char* cateName, bool loadModel)
         posTable_->addPOS(line);
     }
 
-    if( loadModel )
-    {
-        assert(!posT_);
-        posT_ = new POSTagger((cateStr + ".model").data(), trie_);
+    assert(!posT_);
+    posT_ = new POSTagger((cateStr + ".model").data(), trie_, loadModel );
 
-        map<string, string> configMap;
-        loadConfig0((cateStr + ".config").data(), configMap, false);
-        string ret = configMap["defaultPOS"];
-        posT_->defaultPOS = ret.empty() ? "N" : ret;
+    map<string, string> configMap;
+    loadConfig0((cateStr + ".config").data(), configMap, false);
+    string ret = configMap["defaultPOS"];
+    posT_->defaultPOS = ret.empty() ? "N" : ret;
 
-        ret = configMap["numberPOS"];
-        posT_->numberPOS = ret.empty() ? "M" : ret;
+    ret = configMap["numberPOS"];
+    posT_->numberPOS = ret.empty() ? "M" : ret;
 
-        ret = configMap["letterPOS"];
-        posT_->letterPOS = ret.empty() ? "NX" : ret;
+    ret = configMap["letterPOS"];
+    posT_->letterPOS = ret.empty() ? "NX" : ret;
 
-        ret = configMap["puncPOS"];
-        posT_->puncPOS = ret.empty() ? "W" : ret;
+    ret = configMap["puncPOS"];
+    posT_->puncPOS = ret.empty() ? "W" : ret;
 
-        ret = configMap["datePOS"];
-        posT_->datePOS = ret.empty() ? "T" : ret;
-    }
+    ret = configMap["datePOS"];
+    posT_->datePOS = ret.empty() ? "T" : ret;
 
     return 1;
 }
@@ -295,19 +292,6 @@ int CMA_ME_Knowledge::loadModel(const char* encoding, const char* modelPath,
 	loadConfig( ( path + "cma.config" ).data() );
 
 	return 1;
-}
-
-bool CMA_ME_Knowledge::isSupportPOS() const
-{
-	return posT_;
-}
-
-SegTagger* CMA_ME_Knowledge::getSegTagger() const{
-    return segT_;
-}
-
-POSTagger* CMA_ME_Knowledge::getPOSTagger() const{
-    return posT_;
 }
 
 string CMA_ME_Knowledge::readEncryptLine(FILE *in){

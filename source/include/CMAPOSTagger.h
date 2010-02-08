@@ -94,8 +94,9 @@ public:
     /**
      * Construct the POSTagger with outer VTrie
      * \param model POS model name
+     * \param loadModel whether loadModel, default is true
      */
-    POSTagger(const string& model, VTrie* pTrie);
+    POSTagger(const string& model, VTrie* pTrie, bool loadModel = true );
 
     /**
      * Construct the POSTagger with inner VTrie (read from dictFile)

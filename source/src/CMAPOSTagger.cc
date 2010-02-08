@@ -173,8 +173,11 @@ inline void insertCandidate(string& pos, int index, double score,
     unit.previous = cIndex;
 }
 
-POSTagger::POSTagger(const string& model, VTrie* pTrie) : isInnerTrie_(false){
-    me.load(model);
+POSTagger::POSTagger(const string& model, VTrie* pTrie, bool loadModel )
+        : isInnerTrie_(false){
+    if( loadModel )
+        me.load(model);
+
     assert(pTrie);
     trie_ = pTrie;
     //reserved the location offset 0

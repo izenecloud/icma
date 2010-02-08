@@ -653,13 +653,30 @@ namespace meanainner{
 
         if(!tagPOS)
             return;
-        /*
-        posRet.resize(N);
-        POSTagger* posTagger = knowledge_->getPOSTagger();
-        for (int i = 0; i < N; ++i) {
-            posTagger->tag_sentence_best(segRet[i].first, posRet[i], 0,
-                segRet[i].first.size());
-        }*/
+
+        posRet.resize(1);
+        vector<string>& posRetOne = posRet[0];
+        vector<set<string> >& posVec = knowledge_->getPOSTagger()->posVec_;
+        string& defaultPOS = knowledge_->getPOSTagger()->defaultPOS;
+        vector<string>& wordVec = segRet[0].first;
+        size_t wordSize = wordVec.size();
+        posRetOne.resize( wordSize );
+
+        for (size_t i = 0; i < wordSize; ++i) {
+            VTrieNode node;
+            trie->search( wordVec[i].data(), &node );
+            if( node.data > 0 )
+            {
+                set<string>& posSet = posVec[node.data];
+                if( !posSet.empty() )
+                {
+                    posRetOne[i] = *posSet.begin();
+                    continue;
+                }
+            }
+
+            posRetOne[i] = defaultPOS;
+        }
     }
 
     void CMA_ME_Analyzer::splitToOneGram( const char* sentence, vector<vector<OneGramType> >& output )

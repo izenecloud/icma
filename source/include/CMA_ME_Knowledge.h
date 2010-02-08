@@ -125,19 +125,28 @@ public:
      * Whether contains POS model
      * \return true if contains POS model
      */
-    virtual bool isSupportPOS() const;
+    inline virtual bool isSupportPOS() const
+    {
+        return posT_ != 0;
+    }
 
     /**
      * Get the segment tagger.
      * \return pointer to tagger
      */
-    SegTagger* getSegTagger() const;
+    inline SegTagger* getSegTagger() const
+    {
+        return segT_;
+    }
 
     /**
      * Get the segment tagger.
      * \return pointer to tagger
      */
-    POSTagger* getPOSTagger() const;
+    inline POSTagger* getPOSTagger() const
+    {
+        return posT_;
+    }
 
     /**
      * Whether the specific word is stop word
