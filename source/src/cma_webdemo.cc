@@ -727,7 +727,7 @@ int answer_to_connection(void *cls, struct MHD_Connection *connection,
 		isFilePost = true;
 	else if( lowerURL == "/textpost" )
 		isTextPost = true;
-	else if( lowerURL != "/favicon.ico" && lowerURL != "/" )
+	else if( lowerURL != "/favicon.ico" && lowerURL != "/" && lowerURL != "/icma" )
 	{
 		char buffer[1024] = { 0 };
 		sprintf(buffer, invalidurlpage, url);
