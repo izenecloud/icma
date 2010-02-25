@@ -311,7 +311,7 @@ function onSubmit( form )\n\
 	\n\
 	<div id=\"content\">\n\
 		<div id=\"input\">\n\
-			<form method=\"post\" action=\"/textpost\" onsubmit=\"return onSubmit(this);\">\n\
+			<form method=\"post\" action=\"textpost\" onsubmit=\"return onSubmit(this);\">\n\
 			<span class=\"prompt\">Please input the Chinese Text:</span>\n\
 			<textarea  rows=\"15\" wrap=\"soft\" name=\"userInput\" id=\"userInput\">%s</textarea>\n\
 			<div id=\"inputbtns\">\n\
@@ -325,7 +325,7 @@ function onSubmit( form )\n\
 			<span class=\"prompt\">Or upload a file with UTF-8 encoding:</span>\n\
 			\n\
 			<div id=\"uploadfilediv\">\n\
-				<form action=\"/filepost\" method=\"post\" enctype=\"multipart/form-data\" onsubmit=\"return onSubmit(this);\">\n\
+				<form action=\"filepost\" method=\"post\" enctype=\"multipart/form-data\" onsubmit=\"return onSubmit(this);\">\n\
 					<input type=\"hidden\" name=\"tagpos\" value=\"1\"/>\n\
 					<input type=\"hidden\" name=\"nbest\" value=\"1\"/>\n\
 					<input name=\"file\" type=\"file\" size=\"35px\"/>\n\
@@ -487,7 +487,7 @@ const char *servererrorpage =
 
 /** Special Webpage */
 const char *invalidurlpage =
-		"<html><body>The Request URL <b>%s</b> is invalid. Back to <a href=\"/\">Home</a>.</body></html>";
+		"<html><body>The Request URL <b>%s</b> is invalid. Back to <a href=\"icma\">Home</a>.</body></html>";
 
 /**
  * Before invoke this method, global variable knowledge should be initialized
@@ -727,7 +727,8 @@ int answer_to_connection(void *cls, struct MHD_Connection *connection,
 		isFilePost = true;
 	else if( lowerURL == "/textpost" )
 		isTextPost = true;
-	else if( lowerURL != "/favicon.ico" && lowerURL != "/" && lowerURL != "/icma" )
+	else if( lowerURL != "/favicon.ico" && lowerURL != "/" && lowerURL != "/icma"
+	        && lowerURL.find("/icma/") != 0 )
 	{
 		char buffer[1024] = { 0 };
 		sprintf(buffer, invalidurlpage, url);
@@ -820,6 +821,8 @@ int main(int argc, char* argv[])
 	{
 		port = atoi( argv[1] );
 	}
+
+	cout<<"## Weddemo will listening the port " << port << "..."<<endl;
 
 #ifdef USE_DEAMON
 	cout<<"## To become a daemon..."<<endl;
