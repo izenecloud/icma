@@ -40,4 +40,8 @@ src/testcurl/https/Makefile
 src/testzzuf/.deps/
 src/testzzuf/Makefile
 stamp-h1
+src/testcurl/.libs/
+src/testcurl/daemon_options_test
+src/testcurl/libcurl_version_check.a
+
 

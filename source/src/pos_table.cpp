@@ -57,13 +57,13 @@ int POSTable::addPOS(const std::string& pos)
     return index;
 }
 
-int POSTable::getCodeFromStr(const std::string& pos) const
+int POSTable::getCodeFromStr(const std::string& pos)
 {
     POSMap::const_iterator iter = posMap_.find(pos);
     if(iter != posMap_.end())
     	return iter->second;
     else
-    	return -1;
+    	return addPOS( pos );
 }
 
 const char* POSTable::getStrFromCode(int index) const

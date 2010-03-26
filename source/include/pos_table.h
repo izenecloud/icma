@@ -61,7 +61,7 @@ public:
      * \param pos the POS string
      * \return POS index code, -1 for non POS available
      */
-    int getCodeFromStr(const std::string& pos) const;
+    int getCodeFromStr(const std::string& pos);
 
     /**
      * Get the POS string from the POS index code in the global part-of-speech table.
