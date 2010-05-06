@@ -130,6 +130,13 @@ public:
         return posT_ != 0;
     }
 
+    /*
+     * Check whether the parameter is an exist word in the dictionary or not
+     * \param word the word to be checked
+     * \return whether the parameter is an exist word in the dictionary or not
+     */
+    virtual bool isExistWord( const char* word );
+
     /**
      * Get the segment tagger.
      * \return pointer to tagger

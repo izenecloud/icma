@@ -128,6 +128,13 @@ public:
      */
     virtual bool isSupportPOS() const = 0;
 
+    /*
+     * Check whether the parameter is an exist word in the dictionary or not
+     * \param word the word to be checked
+     * \return whether the parameter is an exist word in the dictionary or not
+     */
+    virtual bool isExistWord( const char* word ) = 0;
+
 private:
     /** character encode type */
     EncodeType encodeType_;

@@ -294,6 +294,14 @@ int CMA_ME_Knowledge::loadModel(const char* encoding, const char* modelPath,
 	return 1;
 }
 
+bool CMA_ME_Knowledge::isExistWord( const char* word )
+{
+    if( trie_ == NULL )
+        return false;
+    VTrieNode node;
+    return trie_->search( word, &node ) != 0;
+}
+
 string CMA_ME_Knowledge::readEncryptLine(FILE *in){
     int seCode[] = {0x12, 0x34, 0x54, 0x27};
     int lenBuf[4];
