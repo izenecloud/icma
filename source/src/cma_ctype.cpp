@@ -276,7 +276,7 @@ void loadRule(const TiXmlNode* ruleNode, CTypeTokenizer& tokenizer, map< CharVal
 	}
 
 	//update the conditions
-	for( set<uint>::iterator itr = values.begin(); itr != values.end(); ++itr)
+	for( set<CharValue>::iterator itr = values.begin(); itr != values.end(); ++itr)
 	{
 		CharConditions& charCond = ret[ *itr ];
 		charCond.addConditions( conds );
