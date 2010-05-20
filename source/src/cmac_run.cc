@@ -42,7 +42,7 @@
 using namespace std;
 using namespace cma;
 
-#define DEBUG_FMM
+//#define DEBUG_FMM
 
 namespace
 {
