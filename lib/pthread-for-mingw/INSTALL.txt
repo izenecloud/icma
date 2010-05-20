@@ -1,3 +1,4 @@
 1. Move to the root directory of MinGW;
 2. Copy libpthread.a into "lib" directory;
 3. Copy pthreadGC2.dll into "bin" directory.
+4. Copy files in include to "include" directory.
