@@ -7,7 +7,7 @@
 		<chardigit><![CDATA[零一二三四五六七八九○廿卅几幾十百千万亿萬億兆]]></chardigit>
 		<!--<chardigitupper><![CDATA[壹贰貳叄肆伍陆陸柒捌玖拾佰仟]]></chardigitupper>-->
 		<letter><![CDATA[QWERTYUIOPqwertyuiopASDFGHJKLasdfghjklZXCVBNMzxcvbnmＱＷＥＲＴＹＵＩＯＰｑｗｅｒｔｙｕｉｏｐＡＳＤＦＧＨＪＫＬａｓｄｆｇｈｊｋｌＺＸＣＶＢＮＭｚｘｃｖｂｎｍ]]></letter>
-		<punctuation><![CDATA[~!@#%^&*()` {}[]:"|;'\<>?,/""''+-=_.～！＠＃％＾＆×（）｀　｛｝［］：＂｜；＇＼＜＞？，．／。《》“”‘’＋－＝—．、]]></punctuation>		
+		<punctuation><![CDATA[~!@#%^&*()` {}[]:"|;'\<>?,/""''+-=_.～！＠＃％＾＆×（）｀　｛｝［］：＂｜；＇＼＜＞？，．／。《》“”‘’＋－＝—．•、]]></punctuation>		
 		<space><![CDATA[ 　]]></space>
 		<sentenceseparator><![CDATA[?!。！？；：]]></sentenceseparator>
 	</entities>

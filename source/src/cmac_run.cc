@@ -56,12 +56,33 @@ namespace
 string testFilePrefix = "/home/vernkin/temp/cmac/icwb2/icwb2_test.";
 string testFileSuffix;
 
+Knowledge* knowledge;
+
 vector<string> testSrcVec;
 bool srcVecLoadError = false;
 
+vector<string> disabledWords;
+
 void loadSpecialSentence(string& inout)
 {
-	if(!srcVecLoadError && testSrcVec.empty()){
+	if( disabledWords.empty() == false )
+	{
+	    knowledge->enableWords( disabledWords );
+	    disabledWords.clear();
+	}
+
+    if( inout.find( "##" ) == 0 )
+	{
+	    inout = inout.substr( 2 );
+	    disabledWords.push_back( inout );
+	    knowledge->disableWords( disabledWords );
+	    return;
+	}
+
+    if( inout.find("@@") != 0 && inout.find("!!") != 0 )
+	    return;
+
+    if(!srcVecLoadError && testSrcVec.empty()){
 		const char* testFile = ( testFilePrefix + testFileSuffix ).c_str();
 		ifstream in(testFile);
 		if(!in){
@@ -257,7 +278,7 @@ void testWithNGram(Analyzer* analyzer, string nGramValue)
 		{
 			int tmp = first;
 			first = second;
-			second = first;
+			second = tmp;
 		}
 	}
 
@@ -337,7 +358,7 @@ int main(int argc, char* argv[])
     CMA_Factory* factory = CMA_Factory::instance();
     Analyzer* analyzer = factory->createAnalyzer();
 
-    Knowledge* knowledge = factory->createKnowledge();
+    knowledge = factory->createKnowledge();
 
     // set default dictionary file
     const char* modelPath = "../db/icwb/utf8/";

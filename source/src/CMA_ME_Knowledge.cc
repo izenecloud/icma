@@ -302,6 +302,54 @@ bool CMA_ME_Knowledge::isExistWord( const char* word )
     return trie_->search( word, &node ) != 0;
 }
 
+/**
+ * Disable the specific words in the dictionary, those
+ * OOV words would be ignored
+ * \param words the target words
+ */
+void CMA_ME_Knowledge::disableWords( const vector< string >& words )
+{
+    if( trie_ == NULL )
+        return;
+    VTrieNode node;
+    for( vector< string >::const_iterator itr = words.begin(); itr != words.end(); ++itr )
+    {
+        // can't find
+        if( trie_->search( itr->c_str(), &node ) == 0 )
+            continue;
+        // already be disabled
+        if( node.data < 0 )
+            continue;
+
+        node.data = -node.data;
+        trie_->insert( itr->c_str(), &node );
+    }
+}
+
+/**
+ * Enable the specific words in the dictionary, those
+ * OOV words would be ignored
+ * \param words the target words
+ */
+void CMA_ME_Knowledge::enableWords( const vector< string >& words )
+{
+    if( trie_ == NULL )
+        return;
+    VTrieNode node;
+    for( vector< string >::const_iterator itr = words.begin(); itr != words.end(); ++itr )
+    {
+        // can't find
+        if( trie_->search( itr->c_str(), &node ) == 0 )
+            continue;
+        // already be enabled
+        if( node.data > 0 )
+            continue;
+
+        node.data = -node.data;
+        trie_->insert( itr->c_str(), &node );
+    }
+}
+
 string CMA_ME_Knowledge::readEncryptLine(FILE *in){
     int seCode[] = {0x12, 0x34, 0x54, 0x27};
     int lenBuf[4];
@@ -357,11 +405,12 @@ bool CMA_ME_Knowledge::appendWordPOS(string& line){
     vector<string> tokens;
     TOKEN_STR(line, tokens);
     size_t n = tokens.size();
-    if(!n){
+    if( n == 0 )
+    {
         return false;
     }
     string& word = tokens[0];
-    if(blackWords_.find(word) != blackWords_.end())
+    if( blackWords_.find(word) != blackWords_.end() )
     {
     	return false;
     }

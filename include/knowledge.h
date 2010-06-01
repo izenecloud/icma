@@ -8,6 +8,9 @@
 #ifndef CMA_KNOWLEDGE_H
 #define CMA_KNOWLEDGE_H
 
+#include <vector>
+#include <string>
+
 namespace cma
 {
 
@@ -134,6 +137,20 @@ public:
      * \return whether the parameter is an exist word in the dictionary or not
      */
     virtual bool isExistWord( const char* word ) = 0;
+
+    /**
+     * Disable the specific words in the dictionary, those
+     * OOV words would be ignored
+     * \param words the target words
+     */
+    virtual void disableWords( const std::vector< std::string >& words ) = 0;
+
+    /**
+     * Enable the specific words in the dictionary, those
+     * OOV words would be ignored
+     * \param words the target words
+     */
+    virtual void enableWords( const std::vector< std::string >& words ) = 0;
 
 private:
     /** character encode type */

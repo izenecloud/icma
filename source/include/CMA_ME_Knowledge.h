@@ -138,6 +138,20 @@ public:
     virtual bool isExistWord( const char* word );
 
     /**
+     * Disable the specific words in the dictionary, those
+     * OOV words would be ignored
+     * \param words the target words
+     */
+    virtual void disableWords( const vector< string >& words );
+
+    /**
+     * Enable the specific words in the dictionary, those
+     * OOV words would be ignored
+     * \param words the target words
+     */
+    virtual void enableWords( const vector< string >& words );
+
+    /**
      * Get the segment tagger.
      * \return pointer to tagger
      */
@@ -183,6 +197,7 @@ public:
      * \return if not exists, return 0.
      */
     const string* getSystemProperty( const string& key );
+
 
 private:
     /** Input maybe a line or a word*/

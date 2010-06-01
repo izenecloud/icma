@@ -357,7 +357,7 @@ public:
         }
 
         //the node.data can be negative (as no pos tags)
-        completeSearch = !(*p) && (node.data || node.moreLong);
+        completeSearch = !(*p) && (node.data > 0 || node.moreLong);
 		#ifdef DEBUG_POC_TAGGER_TRIE
 			cout<<"isEnd="<<!(*p)<<",data="<<node.data<<",moreLong="<<node.moreLong<<endl;
 		#endif
@@ -377,7 +377,7 @@ public:
      */
     bool exists()
     {
-    	return completeSearch && node.data;
+    	return completeSearch && node.data > 0;
     }
 
 public:
