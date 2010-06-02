@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <map>
 using namespace std;
 
 #define WB_NAME_NUM 5
@@ -30,7 +31,7 @@ const string WB_POS_SEP = "_";
 
 namespace wbinner
 {
-
+typedef map< string, int > WBTrainDS;
 
 void construtWBNames( Sentence& sent, vector< string >& out )
 {
@@ -51,10 +52,10 @@ void construtWBNames( Sentence& sent, vector< string >& out )
     out[ 1 ] = WB_SUFFIX_N + sent.getLexicon( bestIdx, wordCount - 1 );
 
     // prefix POS
-    out[ 2 ] = WB_PREFIXPOS_N + sent.getLexicon( bestIdx, 0 ) + WB_POS_SEP + sent.getStrPOS( bestIdx, 0 );
+    out[ 2 ] = WB_PREFIXPOS_N + sent.getLexicon( bestIdx, 0 ) + WB_POS_SEP + sent.getStrPOS( bestIdx, 1 );
 
     // suffix POS
-    out[ 3 ] = WB_SUFFIXPOS_N + sent.getLexicon( bestIdx, wordCount - 1 ) + WB_POS_SEP + sent.getStrPOS( bestIdx, wordCount - 1 );
+    out[ 3 ] = WB_SUFFIXPOS_N + sent.getLexicon( bestIdx, wordCount - 1 ) + WB_POS_SEP + sent.getStrPOS( bestIdx, wordCount - 2 );
 
     // pos sequence
     out[ 4 ] = WB_POSSEQUENCE_N + sent.getStrPOS( bestIdx, 0 );
@@ -64,18 +65,16 @@ void construtWBNames( Sentence& sent, vector< string >& out )
     }
 }
 
-void trainWord( Sentence& sent, VTrie& trie )
+void trainWord( Sentence& sent, WBTrainDS& ds )
 {
     vector< string > names;
     construtWBNames( sent, names );
     if( names.empty() == true )
         return;
 
-    VTrieNode node;
-    node.data = 1;
     for( int i = 0; i < WB_NAME_NUM; ++i )
     {
-        trie.insert( names[ i ].c_str(), &node );
+        ++ds[ names[i] ];
     }
 }
 
@@ -107,6 +106,7 @@ int WordBound::trainModel(
 
     vector< string > disabledWords;
 
+    wbinner::WBTrainDS wbData;
     VTrie trie;
     for( vector< string >::const_iterator dictItr = dicts.begin();
             dictItr != dicts.end(); ++dictItr )
@@ -143,12 +143,23 @@ int WordBound::trainModel(
             Sentence sent;
             sent.setString( line.c_str() );
             analyzer->runWithSentence( sent );
-            wbinner::trainWord( sent, trie );
+            wbinner::trainWord( sent, wbData );
             //cout << "Train line " << line << "." << endl;
         }
 
         fin.close();
     }
+
+    VTrieNode node;
+    node.data = 1;
+    for( wbinner::WBTrainDS::iterator itr = wbData.begin(); itr != wbData.end(); ++itr )
+    {
+        if( itr->second > 5 )
+        {
+            trie.insert( itr->first.c_str(), &node );
+        }
+    }
+
     trie.saveToFile( wbModelFile );
 
     delete analyzer;
@@ -184,9 +195,9 @@ bool WordBound::isPossibeWord( Sentence& sent )
     {
         trie_->search( names[ i ].c_str(), &node );
         score += node.data;
-        cout << "Check " << names[ i ] << ": " << node.data << endl;
+        //cout << "Check " << names[ i ] << ": " << node.data << endl;
     }
-    cout << "Score " << score << endl;
+    //cout << "Score " << score << endl;
     return score >= minScore_;
 }
 

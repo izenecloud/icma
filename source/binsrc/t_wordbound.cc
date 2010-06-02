@@ -103,7 +103,7 @@ void testWithStream( const char* source, const char* dest )
     string line;
     while( in.eof() == false )
     {
-        getline( cin, line );
+        getline( in, line );
         if( line.empty() == true )
         {
             out << endl;
