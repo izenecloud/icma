@@ -49,3 +49,6 @@ IF( USE_MICROHTTPD )
 	TARGET_LINK_LIBRARIES(t_microhttpd pthread microhttpd)
 ENDIF( USE_MICROHTTPD )
 
+ADD_EXECUTABLE(t_multithread t_multithread.cc)
+TARGET_LINK_LIBRARIES(t_multithread ${LIBS_CMAC} pthread)
+
