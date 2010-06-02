@@ -117,13 +117,23 @@ public:
     /**
      * Auto load POS model, Stat Model and System Dictionaries.
      * Encoding must be set here.
+     * \modelPath the directory that contains all the models, the last
+     * directory of the modelPath must be encdoing name
+     * \param toLoadModel whether load model file, default is true
+     * \return whether perform success
+     */
+    int loadModel( const char* modelPath, bool toLoadModel = true );
+
+    /**
+     * Auto load POS model, Stat Model and System Dictionaries.
+     * Encoding must be set here.
      * \encoding like gb18030 and utf8
      * \modelPath the directory that contains all the models
-     * \param loadModel whether load model file, default is true
+     * \param toLoadModel whether load model file, default is true
      * \return whether perform success
      */
     virtual int loadModel(const char* encoding, const char* modelPath,
-            bool loadModel = true) = 0;
+            bool toLoadModel = true) = 0;
 
     /**
      * Whether contains POS model

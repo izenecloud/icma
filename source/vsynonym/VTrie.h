@@ -9,6 +9,8 @@
 #include <vector>
 #include <iostream>
 #include <stdlib.h>
+#include <fstream>
+#include <stdio.h>
 #include "types.h"
 
 using namespace std;
@@ -17,6 +19,27 @@ using namespace std;
 
 #ifndef _VTRIE_H
 #define	_VTRIE_H
+
+/*namespace vtinner
+{
+    void writeLongInt( long int value, char buf[] )
+    {
+        memset( buf, 0x0, sizeof( buf) );
+        stringstream strstream;
+        strstream << buf;
+        string str = strstream.str();
+        for( size_t i = 0; i < str.size(); ++i )
+        {
+            buf[ i ] = str[ i ];
+        }
+    }
+
+    long int readLongInt( char buf[] )
+    {
+        return atol( buf );
+    }
+}*/
+
 
 #define VTPTR_L 4
 
@@ -696,6 +719,65 @@ private:
             cout<<(int)*start++<<",";
         }
         cout<<endl;
+    }
+
+public:
+    bool saveToFile( const char* file )
+    {
+        ofstream out( file );
+        if( out == NULL )
+        {
+            cerr << "Fail to open file: " << file << "." << endl;
+            return false;
+        }
+
+        out << "###VTrieData###" << endl;
+        out << (unsigned int)curDataSize_ << endl;
+        if( curDataSize_ > 0 )
+        {
+            out << (unsigned int)wastedBytes_ << endl;
+            out << (unsigned int)( endPtr_ - data_ ) << endl;
+            out.write( (char*)data_, curDataSize_ );
+        }
+        out.close();
+        return true;
+    }
+
+    bool loadFromFile( const char* file )
+    {
+        // clear the exsitent data
+        if( curDataSize_ > 0 )
+            delete data_;
+        init();
+        ifstream in( file );
+        if( in == NULL || in.eof() == true )
+        {
+            cerr << "Fail to open file: " << file << "." << endl;
+            return false;
+        }
+        string line;
+        getline( in, line );
+        if( line != "###VTrieData###" )
+        {
+            cerr << "Invalid VTrie File: " << file << "." << endl;
+            return false;
+        }
+
+        getline( in, line );
+        curDataSize_ = (size_t)((unsigned int)atoi(line.c_str()));
+        if( curDataSize_ > 0 )
+        {
+            getline( in, line );
+            wastedBytes_ = (size_t)((unsigned int)atoi(line.c_str()));
+            getline( in, line );
+            unsigned int endOffset = (unsigned int)atoi(line.c_str());
+            char* data = (char*)malloc( curDataSize_ );
+            in.read( data, curDataSize_ );
+            data_ = (uint8_t*)data;
+            endPtr_ = data_ + endOffset;
+        }
+        in.close();
+        return true;
     }
 
 private:

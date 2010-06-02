@@ -80,4 +80,15 @@ Knowledge::EncodeType Knowledge::decodeEncodeType(const char* encType){
     return Knowledge::ENCODE_TYPE_NUM;
 }
 
+int Knowledge::loadModel( const char* modelPath, bool toLoadModel )
+{
+    string modelPathStr(modelPath);
+    if(modelPathStr[ modelPathStr.length() -  1] != '/' )
+        modelPathStr += "/";
+    size_t last = modelPathStr.find_last_of('/');
+    size_t first = modelPathStr.find_last_of('/', last-1);
+    string encodeStr = modelPathStr.substr(first+1, last-first-1);
+    return loadModel( encodeStr.c_str(), modelPath, toLoadModel );
+}
+
 } // namespace cma
