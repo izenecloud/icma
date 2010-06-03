@@ -33,23 +33,25 @@ namespace wbinner
 {
 typedef map< string, int > WBTrainDS;
 
-void construtWBNames( Sentence& sent, vector< string >& out )
+bool construtWBNames( Sentence& sent, vector< string >& out )
 {
     out.clear();
     if( sent.getListSize() < 1 )
-        return;
+        return true;
     int bestIdx = sent.getOneBestIndex();
     int wordCount = sent.getCount( bestIdx );
     if( wordCount < 2 )
-        return;
+        return true;
+    else if( wordCount > 8 )
+    	return false;
 
     out.resize( 5 );
 
     // prefix
-    out[ 0 ] = WB_PREFIX_N + sent.getLexicon( bestIdx, 0 );
+    out[ 0 ] = WB_PREFIX_N + sent.getLexicon( bestIdx, 1 ) + WB_POS_SEP + sent.getStrPOS( bestIdx, 0 );
 
     // suffix
-    out[ 1 ] = WB_SUFFIX_N + sent.getLexicon( bestIdx, wordCount - 1 );
+    out[ 1 ] = WB_SUFFIX_N + sent.getLexicon( bestIdx, wordCount - 1 ) + WB_POS_SEP + sent.getStrPOS( bestIdx, wordCount - 2 );
 
     // prefix POS
     out[ 2 ] = WB_PREFIXPOS_N + sent.getLexicon( bestIdx, 0 ) + WB_POS_SEP + sent.getStrPOS( bestIdx, 1 );
@@ -63,6 +65,7 @@ void construtWBNames( Sentence& sent, vector< string >& out )
     {
         out[ 4 ] += WB_POS_SEP + sent.getStrPOS( bestIdx, wIdx );
     }
+    return true;
 }
 
 void trainWord( Sentence& sent, WBTrainDS& ds )
@@ -184,10 +187,10 @@ double WordBound::getMinScore()
 
 bool WordBound::isPossibeWord( Sentence& sent )
 {
-    vector< string > names;
-    wbinner::construtWBNames( sent, names );
+	vector< string > names;
+    bool ret = wbinner::construtWBNames( sent, names );
     if( names.empty() == true )
-        return true;
+        return ret;
 
     double score = 0;
     VTrieNode node;
