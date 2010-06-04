@@ -12,6 +12,8 @@
 
 using namespace std;
 
+//#define ENABLE_WT_ASSERT
+
 namespace cma
 {
 
@@ -66,9 +68,11 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
                         return (nextP) ? WORD_TYPE_OTHER : WORD_TYPE_DATE;
                     default:
                     {
+#ifdef ENABLE_WT_ASSERT
                         string errorMsg("unexpected arrive here (pre is number, cur is not-letter or non-date). Input: ");
                         errorMsg += word;
                         assert(false && errorMsg.c_str());
+#endif
                         break;
                     }
                 }
@@ -76,12 +80,16 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
 
             case CHAR_TYPE_LETTER:
                 if(curType == CHAR_TYPE_NUMBER || curType == CHAR_TYPE_CHARDIGIT)
-                    continue;              
+                    continue;
+#ifdef ENABLE_WT_ASSERT
                 assert(false && "unexpected arrive here (pre is Letter and cur is non-digit)");
+#endif
                 break;
                 
             default:
+#ifdef ENABLE_WT_ASSERT
                 assert(false && "unexpected arrive here (preType)");
+#endif
                 break;
         }
     }
@@ -93,7 +101,9 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
         case CHAR_TYPE_CHARDIGIT:
             return WORD_TYPE_NUMBER;
         default:
+#ifdef ENABLE_WT_ASSERT
             assert(false && "unexpected arrive here");
+#endif
             return WORD_TYPE_OTHER;
     }
     return WORD_TYPE_OTHER;
@@ -136,7 +146,9 @@ CMA_WType::WordType CMA_WType::getWordType(CharType* types, size_t begin, size_t
                     case CHAR_TYPE_DATE:
                         return (begin>= size) ? WORD_TYPE_OTHER : WORD_TYPE_DATE;
                     default:
+#ifdef ENABLE_WT_ASSERT
                         assert(false && "unexpected arrive here (pre is number, cur is not-letter or non-date)");
+#endif
                         break;
                 }
                 break;
@@ -144,11 +156,15 @@ CMA_WType::WordType CMA_WType::getWordType(CharType* types, size_t begin, size_t
             case CHAR_TYPE_LETTER:
                 if(curType == CHAR_TYPE_NUMBER || curType == CHAR_TYPE_CHARDIGIT)
                     continue;
+#ifdef ENABLE_WT_ASSERT
                 assert(false && "unexpected arrive here (pre is Letter and cur is non-digit)");
+#endif
                 break;
 
             default:
+#ifdef ENABLE_WT_ASSERT
                 assert(false && "unexpected arrive here (preType)");
+#endif
                 break;
         }
     }
@@ -160,7 +176,9 @@ CMA_WType::WordType CMA_WType::getWordType(CharType* types, size_t begin, size_t
         case CHAR_TYPE_CHARDIGIT:
             return WORD_TYPE_NUMBER;
         default:
+#ifdef ENABLE_WT_ASSERT
             assert(false && "unexpected arrive here");
+#endif
             return WORD_TYPE_OTHER;
     }
     return WORD_TYPE_OTHER;
