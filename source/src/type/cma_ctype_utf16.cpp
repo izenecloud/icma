@@ -5,7 +5,7 @@
  * \date Mar 11, 2009
  */
 #ifdef USE_UTF_16
-#include "cma_ctype_utf16.h"
+#include "icma/type/cma_ctype_utf16.h"
 
 #include <cassert>
 #include <cctype>

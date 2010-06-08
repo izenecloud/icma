@@ -5,7 +5,7 @@
  * \date April 06, 2009
  */
 
-#include "cma_ctype_big5.h"
+#include "icma/type/cma_ctype_big5.h"
 
 #include <cassert>
 #include <cctype>

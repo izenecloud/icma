@@ -11,7 +11,7 @@
 #include "CMAPOCTagger.h"
 #include "CPPStringUtils.h"
 #include "strutil.h"
-#include "cma_wtype.h"
+#include "icma/type/cma_wtype.h"
 
 namespace cma{
 

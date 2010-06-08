@@ -8,7 +8,7 @@
 #ifndef CMA_CTYPE_BIG5_H
 #define CMA_CTYPE_BIG5_H
 
-#include "cma_ctype.h"
+#include "icma/type/cma_ctype.h"
 
 namespace cma
 {

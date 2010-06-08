@@ -12,7 +12,7 @@
 #include "analyzer.h"
 #include "CMA_ME_Knowledge.h"
 #include "sentence.h"
-#include "cma_ctype.h"
+#include "icma/type/cma_ctype.h"
 
 #include <string>
 

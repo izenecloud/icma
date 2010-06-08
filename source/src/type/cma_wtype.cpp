@@ -5,8 +5,8 @@
  * \date Mar 23, 2009
  */
 
-#include "cma_wtype.h"
-#include "cma_ctype.h"
+#include "icma/type/cma_wtype.h"
+#include "icma/type/cma_ctype.h"
 
 #include <cassert>
 

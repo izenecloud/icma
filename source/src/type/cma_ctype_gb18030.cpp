@@ -5,7 +5,7 @@
  * \date Mar 11, 2009
  */
 
-#include "cma_ctype_gb18030.h"
+#include "icma/type/cma_ctype_gb18030.h"
 
 #include <cassert>
 #include <cctype>

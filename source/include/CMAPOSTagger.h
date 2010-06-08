@@ -13,8 +13,8 @@
 #include "VTrie.h"
 #include "strutil.h"
 #include "CPPStringUtils.h"
-#include "cma_ctype.h"
-#include "cma_wtype.h"
+#include "icma/type/cma_ctype.h"
+#include "icma/type/cma_wtype.h"
 
 #include <algorithm>
 #include <math.h>

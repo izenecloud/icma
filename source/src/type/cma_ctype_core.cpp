@@ -5,7 +5,7 @@
  *      Author: vernkin
  */
 
-#include "cma_ctype_core.h"
+#include "icma/type/cma_ctype_core.h"
 #include "tokenizer.h"
 
 namespace cma

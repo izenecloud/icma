@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "VTrie.h"
-#include "cma_wtype.h"
 
 #include "CMAPOSTagger.h"
 

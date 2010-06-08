@@ -4,7 +4,7 @@
  * \version 0.1
  * \date Mar 11, 2009
  */
-#include "cma_ctype_utf8.h"
+#include "icma/type/cma_ctype_utf8.h"
 
 #include <cassert>
 #include <cctype>

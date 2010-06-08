@@ -6,7 +6,6 @@
  */
 
 #include "tokenizer.h"
-#include "cma_ctype.h"
 
 #include <cstring>
 #include <cassert>

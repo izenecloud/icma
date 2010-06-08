@@ -13,12 +13,12 @@
 
 #include <tinyxml.h>
 
-#include "cma_ctype.h"
-#include "cma_ctype_gb2312.h"
-#include "cma_ctype_big5.h"
-#include "cma_ctype_gb18030.h"
-#include "cma_ctype_utf8.h"
-#include "cma_ctype_utf16.h"
+#include "icma/type/cma_ctype.h"
+#include "icma/type/cma_ctype_gb2312.h"
+#include "icma/type/cma_ctype_big5.h"
+#include "icma/type/cma_ctype_gb18030.h"
+#include "icma/type/cma_ctype_utf8.h"
+#include "icma/type/cma_ctype_utf16.h"
 #include "tokenizer.h"
 #include "strutil.h"
 

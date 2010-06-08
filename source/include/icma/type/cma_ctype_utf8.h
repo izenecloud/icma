@@ -8,7 +8,7 @@
 #ifndef CMA_CTYPE_UTF8_H_
 #define CMA_CTYPE_UTF8_H_
 
-#include "cma_ctype.h"
+#include "icma/type/cma_ctype.h"
 
 namespace cma
 {

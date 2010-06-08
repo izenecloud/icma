@@ -15,7 +15,7 @@ using std::string;
 #include "knowledge.h" // Knowledge::EncodeType
 #include "cmacconfig.h"
 
-#include "cma_ctype_core.h"
+#include "icma/type/cma_ctype_core.h"
 
 namespace cma
 {

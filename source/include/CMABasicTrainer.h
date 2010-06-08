@@ -15,7 +15,7 @@
 #include "cmacconfig.h"
 #include "maxentmodel.hpp"
 #include "knowledge.h"
-#include "cma_ctype.h"
+#include "icma/type/cma_ctype.h"
 #include "knowledge.h"
 
 using namespace std;

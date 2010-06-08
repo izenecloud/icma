@@ -1,30 +1,30 @@
-/** \file cma_ctype_gb18030.h
- * \brief CMA_CType_GB18030 gives the character type information in GB18030 encoding.
+/** \file cma_ctype_gb2312.h
+ * \brief CMA_CType_GB2312 gives the character type information in GB2312 encoding.
  * \author Vernkin
  * \version 0.2
  * \date Mar 11, 2009
  */
 
-#ifndef CMA_CTYPE_GB18030_H
-#define CMA_CTYPE_GB18030_H
+#ifndef CMA_CTYPE_GB2312_H
+#define CMA_CTYPE_GB2312_H
 
-#include "cma_ctype.h"
+#include "icma/type/cma_ctype.h"
 
 namespace cma
 {
 
 /**
- * \brief CMA_CType_GB18030 gives the character type information in GB18030 encoding.
+ * \brief CMA_CType_GB2312 gives the character type information in GB2312 encoding.
  *
  */
-class CMA_CType_GB18030 : public CMA_CType
+class CMA_CType_GB2312 : public CMA_CType
 {
 public:
     /**
-     * Create an instance of \e CMA_CType_GB18030.
+     * Create an instance of \e CMA_CType_GB2312.
      * \return the pointer to instance
      */
-    static CMA_CType_GB18030* instance();
+    static CMA_CType_GB2312* instance();
 
     /**
      * Get the byte count of the first character pointed by \e p, which character is in a specific encoding.
@@ -41,7 +41,7 @@ public:
      * \return the character type.
      */
     //virtual CharType getCharType(const char* p, CharType preType,
-    //        const char* nextP) const;
+     //       const char* nextP) const;
 
     /**
      * Check whether is white-space character.
@@ -62,13 +62,13 @@ protected:
     /**
      * Avoid invoked directly
      */
-    CMA_CType_GB18030();
+    CMA_CType_GB2312();
 
 private:
-    /** the instance of \e CMA_CType_GB18030 */
-    static CMA_CType_GB18030* instance_;
+    /** the instance of \e CMA_CType_GB2312 */
+    static CMA_CType_GB2312* instance_;
 };
 
 } // namespace cma
 
-#endif // CMA_CTYPE_GB18030_H
+#endif // CMA_CTYPE_GB2312_H

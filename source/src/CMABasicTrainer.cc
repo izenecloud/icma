@@ -11,7 +11,7 @@
 #include "CMABasicTrainer.h"
 #include "strutil.h"
 #include "tokenizer.h"
-#include "cma_wtype.h"
+#include "icma/type/cma_wtype.h"
 
 using namespace std;
 
