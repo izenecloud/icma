@@ -9,8 +9,8 @@
 #ifndef _TRAINERCMD_H
 #define	_TRAINERCMD_H
 
-#include "CMAPOCTagger.h"
-#include "CMAPOSTagger.h"
+#include "icma/me/CMAPOCTagger.h"
+#include "icma/me/CMAPOSTagger.h"
 
 #include <stdlib.h>
 

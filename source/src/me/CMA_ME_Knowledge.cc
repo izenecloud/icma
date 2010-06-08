@@ -8,12 +8,13 @@
  */
 
 #include <string>
+#include <assert.h>
 
-#include "CMA_ME_Knowledge.h"
-#include "CMABasicTrainer.h"
 #include "strutil.h"
 
-#include <assert.h>
+#include "icma/me/CMA_ME_Knowledge.h"
+#include "icma/me/CMABasicTrainer.h"
+
 using namespace std;
 
 namespace cma{

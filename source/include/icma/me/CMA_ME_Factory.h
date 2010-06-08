@@ -7,8 +7,8 @@
 #define	_CMA_ME_FACTORY_H
 
 #include "cma_factory.h"
-#include "CMA_ME_Analyzer.h"
-#include "CMA_ME_Knowledge.h"
+#include "icma/me/CMA_ME_Analyzer.h"
+#include "icma/me/CMA_ME_Knowledge.h"
 
 namespace cma
 {

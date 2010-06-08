@@ -6,7 +6,7 @@
  */
 
 #include "sentence.h"
-#include "pos_table.h"
+#include "icma/pos_table.h"
 
 #include <algorithm>
 #include <cassert>

@@ -2,7 +2,7 @@
  * \brief CMA_ME_Factory creates instances for Chinese morphological analysis.
  * \author vernkin
  */
-#include "CMA_ME_Factory.h"
+#include "icma/me/CMA_ME_Factory.h"
 
 namespace cma{
 

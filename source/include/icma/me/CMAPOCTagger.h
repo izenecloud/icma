@@ -9,8 +9,8 @@
 #ifndef _CMAPOCTAGGER_H
 #define	_CMAPOCTAGGER_H
 
-#include "cmacconfig.h"
-#include "CMABasicTrainer.h"
+#include "icma/cmacconfig.h"
+#include "icma/me/CMABasicTrainer.h"
 #include "types.h"
 #include "VTrie.h"
 

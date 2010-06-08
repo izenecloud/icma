@@ -5,7 +5,7 @@
  * \date Apr 02, 2009
  */
 
-#include "pos_table.h"
+#include "icma/pos_table.h"
 
 #include <cassert>
 #include <fstream>

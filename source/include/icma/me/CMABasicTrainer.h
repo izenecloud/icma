@@ -12,11 +12,12 @@
 #include <boost/tokenizer.hpp>
 #include <fstream>
 
-#include "cmacconfig.h"
+#include "knowledge.h"
+
 #include "maxentmodel.hpp"
-#include "knowledge.h"
+
+#include "icma/cmacconfig.h"
 #include "icma/type/cma_ctype.h"
-#include "knowledge.h"
 
 using namespace std;
 using namespace maxent;

@@ -8,7 +8,7 @@
 
 #include <vector>
 
-#include "CMAPOCTagger.h"
+#include "icma/me/CMAPOCTagger.h"
 #include "icma/util/CPPStringUtils.h"
 #include "strutil.h"
 #include "icma/type/cma_wtype.h"

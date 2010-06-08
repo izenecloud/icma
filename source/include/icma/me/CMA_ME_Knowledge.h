@@ -10,9 +10,9 @@
 #define	_CMA_ME_KNOWLEDGE_H
 
 #include "knowledge.h"
-#include "CMAPOCTagger.h"
-#include "CMAPOSTagger.h"
-#include "pos_table.h"
+#include "icma/me/CMAPOCTagger.h"
+#include "icma/me/CMAPOSTagger.h"
+#include "icma/pos_table.h"
 
 #include "VSynonym.h"
 

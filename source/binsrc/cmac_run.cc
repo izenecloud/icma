@@ -27,7 +27,7 @@
 #include "sentence.h"
 
 // CMA_ME_Knowledge.h is just for test here, don't include it for other purpose
-#include "CMA_ME_Knowledge.h"
+#include "icma/me/CMA_ME_Knowledge.h"
 
 #include <iostream>
 #include <fstream>

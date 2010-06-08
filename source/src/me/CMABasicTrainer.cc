@@ -8,8 +8,9 @@
 #include <stdlib.h>
 #include <vector>
 
-#include "CMABasicTrainer.h"
 #include "strutil.h"
+
+#include "icma/me/CMABasicTrainer.h"
 #include "icma/util/tokenizer.h"
 #include "icma/type/cma_wtype.h"
 

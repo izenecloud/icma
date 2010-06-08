@@ -6,18 +6,17 @@
  */
 
 #include <string>
+#include <fstream>
+#include <iostream>
 
 #include "VTrie.h"
-
-#include "CMA_ME_Analyzer.h"
 #include "strutil.h"
-#include "pos_table.h"
+
+#include "icma/pos_table.h"
+#include "icma/me/CMA_ME_Analyzer.h"
 #include "icma/util/CPPStringUtils.h"
 #include "icma/util/CateStrTokenizer.h"
 #include "icma/util/tokenizer.h"
-
-#include <fstream>
-#include <iostream>
 
 namespace cma {
 

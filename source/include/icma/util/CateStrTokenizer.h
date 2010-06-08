@@ -13,8 +13,8 @@
 #include <set>
 using namespace std;
 
+#include "icma/cmacconfig.h"
 #include "icma/util/CPPStringUtils.h"
-#include "cmacconfig.h"
 #include "icma/util/tokenizer.h"
 
 namespace cma{

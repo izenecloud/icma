@@ -10,7 +10,7 @@
 
 #include "VTrie.h"
 
-#include "CMAPOSTagger.h"
+#include "icma/me/CMAPOSTagger.h"
 
 namespace cma{
 

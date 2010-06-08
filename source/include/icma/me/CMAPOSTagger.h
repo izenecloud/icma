@@ -9,7 +9,7 @@
 #ifndef _CMAPOSTAGGER_H
 #define	_CMAPOSTAGGER_H
 
-#include "CMABasicTrainer.h"
+#include "icma/me/CMABasicTrainer.h"
 #include "VTrie.h"
 #include "strutil.h"
 #include "icma/util/CPPStringUtils.h"
