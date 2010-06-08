@@ -13,9 +13,9 @@
 #include <set>
 using namespace std;
 
-#include "CPPStringUtils.h"
+#include "icma/util/CPPStringUtils.h"
 #include "cmacconfig.h"
-#include "tokenizer.h"
+#include "icma/util/tokenizer.h"
 
 namespace cma{
 

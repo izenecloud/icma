@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <iostream>
-#include "CPPStringUtils.h"
+#include "icma/util/CPPStringUtils.h"
 
 using namespace std;
 /**

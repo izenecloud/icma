@@ -12,7 +12,7 @@
 #include "CMABasicTrainer.h"
 #include "VTrie.h"
 #include "strutil.h"
-#include "CPPStringUtils.h"
+#include "icma/util/CPPStringUtils.h"
 #include "icma/type/cma_ctype.h"
 #include "icma/type/cma_wtype.h"
 

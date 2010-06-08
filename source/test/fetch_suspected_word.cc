@@ -12,7 +12,7 @@
 #include <set>
 
 #include "VSynonym.h"
-#include "CPPStringUtils.h"
+#include "icma/util/CPPStringUtils.h"
 #include "strutil.h"
 
 using namespace std;

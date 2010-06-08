@@ -12,9 +12,9 @@
 #include "CMA_ME_Analyzer.h"
 #include "strutil.h"
 #include "pos_table.h"
-#include "CPPStringUtils.h"
-#include "CateStrTokenizer.h"
-#include "tokenizer.h"
+#include "icma/util/CPPStringUtils.h"
+#include "icma/util/CateStrTokenizer.h"
+#include "icma/util/tokenizer.h"
 
 #include <fstream>
 #include <iostream>

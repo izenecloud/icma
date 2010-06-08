@@ -10,7 +10,7 @@
 
 #include <string.h>
 
-#include "tokenizer.h"
+#include "icma/util/tokenizer.h"
 
 namespace cma
 {

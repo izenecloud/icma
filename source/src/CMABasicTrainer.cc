@@ -10,7 +10,7 @@
 
 #include "CMABasicTrainer.h"
 #include "strutil.h"
-#include "tokenizer.h"
+#include "icma/util/tokenizer.h"
 #include "icma/type/cma_wtype.h"
 
 using namespace std;

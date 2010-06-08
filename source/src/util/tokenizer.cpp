@@ -5,7 +5,7 @@
  * \date Mar 16, 2009
  */
 
-#include "tokenizer.h"
+#include "icma/util/tokenizer.h"
 
 #include <cstring>
 #include <cassert>

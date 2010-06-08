@@ -19,7 +19,7 @@
 #include "icma/type/cma_ctype_gb18030.h"
 #include "icma/type/cma_ctype_utf8.h"
 #include "icma/type/cma_ctype_utf16.h"
-#include "tokenizer.h"
+#include "icma/util/tokenizer.h"
 #include "strutil.h"
 
 using namespace std;

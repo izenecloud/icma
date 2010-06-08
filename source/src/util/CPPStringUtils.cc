@@ -2,7 +2,7 @@
  * \brief the CPP String Utility file
  */
 
-#include "CPPStringUtils.h"
+#include "icma/util/CPPStringUtils.h"
 #include <boost/tokenizer.hpp>
 #include <fstream>
 #ifdef USE_ICONV
@@ -495,7 +495,7 @@ std::string CPPStringUtils::exchange_diacritic_chars_utf8(std::string src)
 	return dst;
 }
 
-#include "tc_sc.inc"
+#include "icma/util/tc_sc.inc"
 
 /*
  Converts characters in tradional chineses to simplified chineses. Because an index

@@ -5,7 +5,7 @@
  *
  * \author vernkin
  */
-#include "CateStrTokenizer.h"
+#include "icma/util/CateStrTokenizer.h"
 
 namespace cma{
 
