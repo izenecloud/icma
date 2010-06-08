@@ -154,6 +154,12 @@ private:
     void analysis_fmm(const char* sentence, int N, vector<vector<string> >& pos,
                 vector<pair<vector<string>, double> >& segment, bool tagPOS = true);
 
+    /*
+     * Dictionary based nbest approach
+     */
+    void analysis_dictb(const char* sentence, int N, vector<vector<string> >& pos,
+                vector<pair<vector<string>, double> >& segment, bool tagPOS = true);
+
     /**
      * Simply combine sequential letters, digits and letters+digits together
      * \param sentence the input string

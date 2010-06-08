@@ -676,6 +676,88 @@ namespace meanainner{
         }
     }
 
+    void CMA_ME_Analyzer::analysis_dictb(
+            const char* sentence,
+            int N,
+            vector<vector<string> >& posRet,
+            vector<pair<vector<string>, double> >& segRet,
+            bool tagPOS
+            )
+    {
+        if( encodeType_ == Knowledge::ENCODE_TYPE_UTF8 )
+        {
+            const unsigned char *uc = (const unsigned char *)sentence;
+            if( uc[0] == 0xEF && uc[1] == 0xBB && uc[2] == 0xBF )
+                sentence += 3;
+        }
+
+        int segN = N;
+        vector<pair<vector<string>, double> > segment( segN );
+
+        SegTagger* segTagger = knowledge_->getSegTagger();
+
+        // Initial Step 1: split as Chinese Character based
+        CTypeTokenizer token( ctype_, sentence );
+        vector<string> words;
+        const char* next = 0;
+        while( ( next = token.next() ) )
+            words.push_back( next );
+
+        if( words.empty() == true )
+            return;
+
+        // Initial Step 2nd: set character types
+        int maxWordOff = (int)words.size() - 1;
+        CharType types[ maxWordOff + 1 ];
+        CharType preType = CHAR_TYPE_INIT;
+        for( int i = 0; i < maxWordOff; ++i )
+        {
+            types[i] = preType = ctype_->getCharType(
+                    words[ i ].data(), preType, words[i+1].data() );
+        }
+        types[ maxWordOff ] = ctype_->getCharType(
+                words[ maxWordOff ].data(), preType, 0);
+
+        // Segment 1st. Perform special characters
+
+
+
+        N = segment.size();
+        segRet.resize(N);
+
+        VTrie *trie = knowledge_->getTrie();
+        //TODO, only combine the first result
+        for (int i = 0; i < N; ++i) {
+            pair<vector<string>, double>& srcPair = segment[i];
+            pair<vector<string>, double>& destPair = segRet[i];
+            destPair.second = srcPair.second;
+            if(i < 1){
+                meanainner::combineRetWithTrie( trie, srcPair.first,
+                        destPair.first, ctype_);
+            }
+            else{
+                size_t srcSize = srcPair.first.size();
+                for(size_t si = 0; si < srcSize; ++si){
+                    string& val = srcPair.first[si];
+                    if(!ctype_->isSpace(val.c_str()))
+                        destPair.first.push_back(val);
+                }
+            }
+        }
+
+        if(!tagPOS)
+            return;
+
+        posRet.resize(N);
+        POSTagger* posTagger = knowledge_->getPOSTagger();
+        for (int i = 0; i < N; ++i) {
+            posTagger->tag_sentence_best(segRet[i].first, posRet[i], 0,
+                segRet[i].first.size());
+        }
+
+
+    }
+
     void CMA_ME_Analyzer::splitToOneGram( const char* sentence, vector<vector<OneGramType> >& output )
     {
     	if( encodeType_ == Knowledge::ENCODE_TYPE_UTF8 )
