@@ -26,9 +26,7 @@ namespace cma{
 
 const string POC_BOUNDARY = "BoUnD";
 
-#ifdef USE_BE_TYPE_FEATURE
 string CharTypeArray[CHAR_TYPE_NUM];
-#endif
 
 namespace pocinner{
 
@@ -796,7 +794,6 @@ void SegTagger::initialize(){
         return;
     POC_INIT_FLAG = true;
 
-    #ifdef USE_BE_TYPE_FEATURE
     CharTypeArray[CHAR_TYPE_INIT] = "I";
     CharTypeArray[CHAR_TYPE_NUMBER] = "N";
     // It is OK to use the same name as CHAR_TYPE_NUMBER
@@ -806,7 +803,6 @@ void SegTagger::initialize(){
     CharTypeArray[CHAR_TYPE_DATE] = "D";
     CharTypeArray[CHAR_TYPE_LETTER] = "L";
     CharTypeArray[CHAR_TYPE_OTHER] = "O";
-    #endif
 }
 
 }

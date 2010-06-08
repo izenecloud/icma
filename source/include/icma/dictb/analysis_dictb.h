@@ -8,6 +8,13 @@
 #ifndef ANALYSIS_DICTB_H_
 #define ANALYSIS_DICTB_H_
 
+#include <vector>
+#include <string>
+
+#include "icma/type/cma_ctype.h"
+#include "icma/type/cma_wtype.h"
+#include "VTrie.h"
+
 namespace cma
 {
 namespace dictb
@@ -17,7 +24,20 @@ class DictBString
 {
 
 
+public:
+    size_t beginIdx_; ///< include
+    size_t endIdx_;   ///< exclude
+    std::vector< std::string >* pData_; ///< The Character Vector
+    cma::CMA_WType::WordType fragType_;
+
 };
+
+void parseDictBString(
+        vector< DictBString >& out,
+        vector<string>& words,
+        CharType* types,
+        VTrie* trie
+        );
 
 }
 

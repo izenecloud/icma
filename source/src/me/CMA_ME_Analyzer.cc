@@ -498,78 +498,33 @@ namespace meanainner{
 
 }
 
-    void CMA_ME_Analyzer::analysis_mmmodel(const char* sentence, int N,
+    void CMA_ME_Analyzer::analysis_mmmodel(
+            const char* sentence,
+            int N,
             vector<vector<string> >& posRet,
-            vector<pair<vector<string>, double> >& segRet, bool tagPOS) {
-        if( encodeType_ == Knowledge::ENCODE_TYPE_UTF8 )
-        {
-        	const unsigned char *uc = (const unsigned char *)sentence;
-        	if( uc[0] == 0xEF && uc[1] == 0xBB && uc[2] == 0xBF )
-        		sentence += 3;
-        }
-
-    	int segN = N;
-
-        vector<pair<vector<string>, double> > segment(segN);
-
-        SegTagger* segTagger = knowledge_->getSegTagger();
-
-
-        CTypeTokenizer token(ctype_, sentence);
-
-        #ifdef USE_BE_TYPE_FEATURE
+            vector<pair<vector<string>, double> >& segRet,
+            bool tagPOS
+            )
+    {
+        // Initial Step 1: split as Chinese Character based
         vector<string> words;
-        const char* next = 0;
-        while((next = token.next())){
-            words.push_back(next);
-        }
+        extractCharacter( sentence, words );
 
-        if(words.empty())
+        if( words.empty() == true )
             return;
 
-        int maxWordOff = (int)words.size() - 1;
-        CharType types[maxWordOff + 1];
-        CharType preType = CHAR_TYPE_INIT;
-        for(int i=0; i<maxWordOff; ++i){
-            types[i] = preType = ctype_->getCharType(words[i].data(),
-                    preType, words[i+1].data());
+        // Initial Step 2nd: set character types
+        CharType types[ (int)words.size() ];
+        setCharType( words, types );
 
-        }
-
-        types[maxWordOff] = ctype_->getCharType(words[maxWordOff].data(),
-                    preType, 0);
+    	int segN = N;
+        vector<pair<vector<string>, double> > segment(segN);
+        SegTagger* segTagger = knowledge_->getSegTagger();
 
         if(N == 1)
             segTagger->seg_sentence_best(words, types, segment[0].first);
         else
             segTagger->seg_sentence(words, types, segN, N, segment);
-        #else
-        //separate digits, letter and so on
-        CateStrTokenizer ct(&token);
-        while (ct.next()) {
-            if (ct.isWordSeq()) {
-                vector<string>& words = ct.getWordSeq();
-                if (words.size() > 1) {
-                    if(N == 1)
-                        segTagger->seg_sentence_best(words, segment[0].first);
-                    else
-                        segTagger->seg_sentence(words, segN, N, segment);
-                    continue;
-                }
-                string& word = words.front();
-                for (int i = 0; i < N; ++i) {
-                    segment[i].first.push_back(word);
-                }
-            } else {
-                #ifdef DEBUG_POC_TAGGER
-                    cout<<"Get Special String "<<ct.getSpecialStr()<<endl;
-                #endif
-                for (int i = 0; i < N; ++i) {
-                    segment[i].first.push_back(ct.getSpecialStr());
-                }
-            }
-        }
-        #endif
 
         N = segment.size();
         segRet.resize(N);
@@ -607,26 +562,19 @@ namespace meanainner{
 
     }
 
-    void CMA_ME_Analyzer::analysis_fmm(const char* sentence, int N,
+    void CMA_ME_Analyzer::analysis_fmm(
+            const char* sentence,
+            int N,
             vector<vector<string> >& posRet,
-            vector<pair<vector<string>, double> >& segRet, bool tagPOS) {
-        if( encodeType_ == Knowledge::ENCODE_TYPE_UTF8 )
-        {
-            const unsigned char *uc = (const unsigned char *)sentence;
-            if( uc[0] == 0xEF && uc[1] == 0xBB && uc[2] == 0xBF )
-                sentence += 3;
-        }
-
-
-        CTypeTokenizer token(ctype_, sentence);
-
+            vector<pair<vector<string>, double> >& segRet,
+            bool tagPOS
+            )
+    {
+        // Initial Step 1: split as Chinese Character based
         vector<string> words;
-        const char* next = 0;
-        while((next = token.next())){
-            words.push_back(next);
-        }
+        extractCharacter( sentence, words );
 
-        if(words.empty())
+        if( words.empty() == true )
             return;
 /*
         int maxWordOff = (int)words.size() - 1;
@@ -683,39 +631,20 @@ namespace meanainner{
             bool tagPOS
             )
     {
-        if( encodeType_ == Knowledge::ENCODE_TYPE_UTF8 )
-        {
-            const unsigned char *uc = (const unsigned char *)sentence;
-            if( uc[0] == 0xEF && uc[1] == 0xBB && uc[2] == 0xBF )
-                sentence += 3;
-        }
-
-        int segN = N;
-        vector<pair<vector<string>, double> > segment( segN );
-
-        SegTagger* segTagger = knowledge_->getSegTagger();
-
         // Initial Step 1: split as Chinese Character based
-        CTypeTokenizer token( ctype_, sentence );
         vector<string> words;
-        const char* next = 0;
-        while( ( next = token.next() ) )
-            words.push_back( next );
+        extractCharacter( sentence, words );
 
         if( words.empty() == true )
             return;
 
         // Initial Step 2nd: set character types
-        int maxWordOff = (int)words.size() - 1;
-        CharType types[ maxWordOff + 1 ];
-        CharType preType = CHAR_TYPE_INIT;
-        for( int i = 0; i < maxWordOff; ++i )
-        {
-            types[i] = preType = ctype_->getCharType(
-                    words[ i ].data(), preType, words[i+1].data() );
-        }
-        types[ maxWordOff ] = ctype_->getCharType(
-                words[ maxWordOff ].data(), preType, 0);
+        CharType types[ (int)words.size() ];
+        setCharType( words, types );
+
+        int segN = N;
+        vector<pair<vector<string>, double> > segment( segN );
+        SegTagger* segTagger = knowledge_->getSegTagger();
 
         // Segment 1st. Perform special characters
 
@@ -842,6 +771,43 @@ namespace meanainner{
     int CMA_ME_Analyzer::getPOSTagSetSize() const
     {
     	return posTable_->size();
+    }
+
+    void CMA_ME_Analyzer::extractCharacter( const char* sentence, vector< string >& charOut )
+    {
+        if( encodeType_ == Knowledge::ENCODE_TYPE_UTF8 )
+        {
+            const unsigned char *uc = (const unsigned char *)sentence;
+            if( uc[0] == 0xEF && uc[1] == 0xBB && uc[2] == 0xBF )
+                sentence += 3;
+        }
+
+        size_t len = ctype_->length( sentence );
+        charOut.resize( len );
+        if( len == 0 )
+            return;
+
+        size_t i = 0;
+        CTypeTokenizer token( ctype_, sentence );
+        const char* next = 0;
+        while( ( next = token.next() ) )
+        {
+            charOut[ i ].assign( next );
+            ++i;
+        }
+    }
+
+    void CMA_ME_Analyzer::setCharType( vector< string >& charIn, CharType* types )
+    {
+        int maxWordOff = (int)charIn.size() - 1;
+        CharType preType = CHAR_TYPE_INIT;
+        for( int i = 0; i < maxWordOff; ++i )
+        {
+            types[i] = preType = ctype_->getCharType(
+                    charIn[ i ].data(), preType, charIn[i+1].data() );
+        }
+        types[ maxWordOff ] = ctype_->getCharType(
+                charIn[ maxWordOff ].data(), preType, 0);
     }
 
 }

@@ -139,27 +139,47 @@ public:
 
     typedef string OneGramType;
 
-    typedef void(CMA_ME_Analyzer::*analysis_t)(const char*, int, vector<vector<string> >&,
-            vector<pair<vector<string>, double> >&, bool);
+    typedef void(CMA_ME_Analyzer::*analysis_t)(
+            const char*,
+            int,
+            vector<vector<string> >&,
+            vector<pair<vector<string>, double> >&,
+            bool
+            );
 
 private:
     /**
      * Each segment only map to one pos set, with maximum model approach
      */
-    void analysis_mmmodel(const char* sentence, int N, vector<vector<string> >& pos,
-            vector<pair<vector<string>, double> >& segment, bool tagPOS = true);
+    void analysis_mmmodel(
+            const char* sentence,
+            int N,
+            vector<vector<string> >& pos,
+            vector<pair<vector<string>, double> >& segment,
+            bool tagPOS = true
+            );
 
     /*
      * Forwards maximum matching approach
      */
-    void analysis_fmm(const char* sentence, int N, vector<vector<string> >& pos,
-                vector<pair<vector<string>, double> >& segment, bool tagPOS = true);
+    void analysis_fmm(
+            const char* sentence,
+            int N,
+            vector<vector<string> >& pos,
+            vector<pair<vector<string>, double> >& segment,
+            bool tagPOS = true
+            );
 
     /*
      * Dictionary based nbest approach
      */
-    void analysis_dictb(const char* sentence, int N, vector<vector<string> >& pos,
-                vector<pair<vector<string>, double> >& segment, bool tagPOS = true);
+    void analysis_dictb(
+            const char* sentence,
+            int N,
+            vector<vector<string> >& pos,
+            vector<pair<vector<string>, double> >& segment,
+            bool tagPOS = true
+            );
 
     /**
      * Simply combine sequential letters, digits and letters+digits together
@@ -172,6 +192,13 @@ private:
      * Implementation of getting N-Gram result
      */
     void getNGramResultImpl( const vector<vector<OneGramType> >& oneGram, const int n, vector<string>& output );
+
+    void extractCharacter( const char* sentence, vector< string >& charOut );
+
+    /**
+     * \param types should be allocated enough memory before invoking
+     */
+    void setCharType( vector< string >& charIn, CharType* types );
 
 private:
     CMA_ME_Knowledge *knowledge_;

@@ -22,9 +22,6 @@
     #include <assert.h>
 #endif
 
-/** if set, use punctuaion and character type feature */
-#define USE_BE_TYPE_FEATURE
-
 /** Whether use the string trie in the segmentation */
 #define USE_STRTRIE
 
