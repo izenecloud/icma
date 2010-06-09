@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <string>
+#include <list>
 
 #include "icma/type/cma_ctype.h"
 #include "icma/type/cma_wtype.h"

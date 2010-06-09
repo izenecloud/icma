@@ -11,6 +11,7 @@
 #include "VTrie.h"
 
 #include "icma/me/CMAPOSTagger.h"
+#include "icma/util/io_util.h"
 
 namespace cma{
 
@@ -175,7 +176,18 @@ inline void insertCandidate(string& pos, int index, double score,
 POSTagger::POSTagger(const string& model, VTrie* pTrie, bool loadModel )
         : isInnerTrie_(false){
     if( loadModel )
-        me.load(model);
+    {
+        string binModelName = model + ".bin";
+        if( IOUtil::isFileExist( binModelName.c_str() ) == true )
+        {
+            me.load( binModelName );
+        }
+        else
+        {
+            me.load( model );
+            me.save( binModelName, true );
+        }
+    }
 
     assert(pTrie);
     trie_ = pTrie;

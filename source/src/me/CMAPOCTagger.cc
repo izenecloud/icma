@@ -8,9 +8,10 @@
 
 #include <vector>
 
+#include "strutil.h"
 #include "icma/me/CMAPOCTagger.h"
 #include "icma/util/CPPStringUtils.h"
-#include "strutil.h"
+#include "icma/util/io_util.h"
 #include "icma/type/cma_wtype.h"
 
 namespace cma{
@@ -427,8 +428,17 @@ void poc_train(const char* file, const string& modelPath, Knowledge::EncodeType 
 SegTagger::SegTagger(const string& cateName, VTrie* posTrie, double eScore)
 {
     SegTagger::initialize();
-    //cout<<"Load poc model"<<(cateName + ".model")<<endl;
-    me.load(cateName + ".model");
+    string binModelName = cateName + ".model.bin";
+    if( IOUtil::isFileExist( binModelName.c_str() ) == true )
+    {
+        me.load( binModelName );
+    }
+    else
+    {
+        me.load(cateName + ".model");
+        me.save( binModelName, true );
+    }
+
     trie_ = posTrie;
     setEScore(eScore);
 }

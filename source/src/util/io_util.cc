@@ -7,16 +7,27 @@
 // for getLastModifiedTime
 //#include <sys/stat.h>
 
+#include <fstream>
+
 #include "icma/util/io_util.h"
 
 namespace cma
 {
 
+bool IOUtil::isFileExist( const char* path )
+{
+    std::ifstream fileIn( path );
+    if( fileIn == NULL )
+        return false;
+    fileIn.close();
+    return true;
+}
+
 /**
  * @brief get the last modified time of specific file, represented in seconds
  * FIXME only support linux/unix now
  */
-long getFileLastModifiedTime( const char* path )
+long IOUtil::getFileLastModifiedTime( const char* path )
 {
     /*
     struct stat attrib;   // create a file attribute structure

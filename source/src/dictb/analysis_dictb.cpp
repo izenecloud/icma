@@ -19,6 +19,8 @@ void parseDictBString(
         VTrie* trie
         )
 {
+    // 1st. analysis by CharType
+    size_t size = words.size();
 
 }
 

@@ -11,7 +11,13 @@
 namespace cma
 {
 
-long getFileLastModifiedTime( const char* path );
+class IOUtil
+{
+public:
+    static bool isFileExist( const char* path );
+
+    static long getFileLastModifiedTime( const char* path );
+};
 
 }
 
