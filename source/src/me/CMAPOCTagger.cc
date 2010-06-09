@@ -12,6 +12,7 @@
 #include "icma/me/CMAPOCTagger.h"
 #include "icma/util/CPPStringUtils.h"
 #include "icma/util/io_util.h"
+#include "icma/util/StrBasedVTrie.h"
 #include "icma/type/cma_wtype.h"
 
 namespace cma{
@@ -310,92 +311,6 @@ inline void combinePOCToWord(vector<string>& words, size_t n, uint8_t* tags,
         seg.push_back(strBuf);
 }
 
-/**
- * \brief The utility class to search the string one by one
- *
- * The utility class to search the string one by one
- */
-class StrBasedVTrie{
-public:
-    /**
-     * Create an instance
-     *
-     * \param pTrie the VTrie
-     */
-    StrBasedVTrie( VTrie* pTrie ) : trie(pTrie), completeSearch(false)
-    {
-    }
-
-    /**
-     * Reset all the status
-     */
-    void reset(){
-        completeSearch = true;
-        node.init();
-    }
-
-    /**
-     * search the specific string
-     *
-     * \param p point to the specific string
-     * \return true if have extending string or just the right string, here
-     * string is the combination of the previous strings and p
-     */
-    bool search(const char *p){
-		#ifdef DEBUG_POC_TAGGER_TRIE
-			cout<<"To search "<<p<<"("<<strlen(p)<<")"<<endl;
-		#endif
-
-        if(!completeSearch)
-            return false;        
-        
-        while(node.moreLong && *p){
-            trie->find(*p, &node);
-            //cout<<"finding,"<<node<<endl;
-            ++p;
-        }
-
-        //the node.data can be negative (as no pos tags)
-        completeSearch = !(*p) && (node.data > 0 || node.moreLong);
-		#ifdef DEBUG_POC_TAGGER_TRIE
-			cout<<"isEnd="<<!(*p)<<",data="<<node.data<<",moreLong="<<node.moreLong<<endl;
-		#endif
-        return completeSearch;
-    }
-
-    /**
-     * First reset then search
-     */
-    bool firstSearch(const char* p){
-        reset();
-        return search(p);
-    }
-
-    /**
-     * Whether exists in the dictionary
-     */
-    bool exists()
-    {
-    	return completeSearch && node.data > 0;
-    }
-
-public:
-    /**
-     * The VTrie
-     */
-    VTrie* trie;
-
-    /**
-     * The VTrieNode
-     */
-    VTrieNode node;
-
-    /**
-     * true if the search over all the characters in the input string
-     */
-    bool completeSearch;
-};
-
 } //end namespace pocinner
 
 
@@ -476,7 +391,7 @@ void SegTagger::preProcess(vector<string>& words, uint8_t* tags)
 
 	memset(tags, POC_TAG_INIT, words.size());
 	tags[0] = POC_TAG_B;
-	pocinner::StrBasedVTrie strTrie(trie_);
+	StrBasedVTrie strTrie(trie_);
 
 	int size = words.size();
 	int start = 0;
@@ -676,7 +591,7 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
     uint8_t pocRet[n];
 
     #ifdef USE_STRTRIE
-        pocinner::StrBasedVTrie strTrie(trie_);
+        StrBasedVTrie strTrie(trie_);
         int wordLen = 0;
         preProcess(words, pocRet);
     #endif
