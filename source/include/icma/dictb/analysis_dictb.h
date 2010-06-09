@@ -10,10 +10,9 @@
 
 #include <vector>
 #include <string>
-#include <list>
+#include <iostream>
 
 #include "icma/type/cma_ctype.h"
-#include "icma/type/cma_wtype.h"
 #include "VTrie.h"
 
 namespace cma
@@ -23,13 +22,25 @@ namespace dictb
 
 class DictBString
 {
+public:
+    enum DBSType
+    {
+        NORMAL,
+        SINGLE, ///< only have one-best (exclude one-character word)
+        DIGIT,
+        CHARDIGIT,
+        LETTER,
+        DATE,
+        PUNCTUATION,
+        COMPOSITE ///< begin with letter, digit
+    };
 
+    void print( vector<string>* words,  ostream& stream );
 
 public:
     size_t beginIdx_; ///< include
     size_t endIdx_;   ///< exclude
-    std::vector< std::string >* pData_; ///< The Character Vector
-    cma::CMA_WType::WordType fragType_;
+    DBSType fragType_;
 
 };
 
@@ -37,7 +48,9 @@ void parseDictBString(
         vector< DictBString >& out,
         vector<string>& words,
         CharType* types,
-        VTrie* trie
+        VTrie* trie,
+        size_t beginIdx,
+        size_t endIdx
         );
 
 }
