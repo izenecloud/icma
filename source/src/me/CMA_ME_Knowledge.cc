@@ -84,10 +84,14 @@ int CMA_ME_Knowledge::loadPOSModel(const char* cateName, bool loadModel)
 int CMA_ME_Knowledge::loadStatModel(const char* cateName, bool loadModel){
 	string cateStr(cateName);
 
-	int ret = CMA_CType::instance( getEncodeType() )->loadConfiguration( (cateStr + ".xml" ).data() );
+	int ret = CMA_CType::instance( getEncodeType() )->loadConfiguration(
+	        (cateStr + ".xml" ).data() );
 	if( !ret )
 	{
-		cerr<<" Fail to load poc.xml, please check that file! "<<endl;
+	    size_t lastPathSep = cateStr.find_last_of( '/' );
+	    string knowledgePath = cateStr.substr( 0, lastPathSep );
+		cerr<<"Fail to load poc.xml, please check that file and CMA Knowledge Path \"" <<
+		      knowledgePath << "\" maybe incorrect!"<<endl;
 		exit(1);
 		return 0;
 	}
