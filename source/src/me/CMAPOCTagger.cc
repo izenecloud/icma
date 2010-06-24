@@ -343,16 +343,7 @@ void poc_train(const char* file, const string& modelPath, Knowledge::EncodeType 
 SegTagger::SegTagger(const string& cateName, VTrie* posTrie, double eScore)
 {
     SegTagger::initialize();
-    string binModelName = cateName + ".model.bin";
-    if( IOUtil::isFileExist( binModelName.c_str() ) == true )
-    {
-        me.load( binModelName );
-    }
-    else
-    {
-        me.load(cateName + ".model");
-        me.save( binModelName, true );
-    }
+    me.load(cateName + ".model");
 
     trie_ = posTrie;
     setEScore(eScore);

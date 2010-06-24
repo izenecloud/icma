@@ -177,16 +177,7 @@ POSTagger::POSTagger(const string& model, VTrie* pTrie, bool loadModel )
         : isInnerTrie_(false){
     if( loadModel )
     {
-        string binModelName = model + ".bin";
-        if( IOUtil::isFileExist( binModelName.c_str() ) == true )
-        {
-            me.load( binModelName );
-        }
-        else
-        {
-            me.load( model );
-            me.save( binModelName, true );
-        }
+        me.load( model );
     }
 
     assert(pTrie);
