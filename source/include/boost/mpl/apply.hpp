@@ -160,7 +160,7 @@ struct apply
 
 ///// iteration, depth == 1
 
-#elif BOOST_PP_ITERATION_DEPTH() == 1
+#elif BOOST_PP_ITERATION_DEPTH == 1
 
 #   define i BOOST_PP_FRAME_ITERATION(1)
 #   if i == 0
@@ -327,7 +327,7 @@ struct apply_impl_chooser<i>
 
 ///// iteration, depth == 2
 
-#elif BOOST_PP_ITERATION_DEPTH() == 2
+#elif BOOST_PP_ITERATION_DEPTH == 2
 
 #   define j BOOST_PP_FRAME_ITERATION(2)
 
