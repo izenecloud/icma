@@ -18,6 +18,8 @@
 #include "icma/util/CateStrTokenizer.h"
 #include "icma/util/tokenizer.h"
 
+#include "icma/fmincover/analysis_fmincover.h"
+
 namespace cma {
 
 /**
@@ -86,6 +88,8 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
         {
             if( static_cast<int>(nValue) == 2 )
                 analysis = &CMA_ME_Analyzer::analysis_fmm;
+            else if( static_cast<int>(nValue) == 3 )
+                analysis = &CMA_ME_Analyzer::analysis_fmincover;
             else
                 analysis = &CMA_ME_Analyzer::analysis_mmmodel;
         }
@@ -644,7 +648,7 @@ namespace meanainner{
 
         int segN = N;
         vector<pair<vector<string>, double> > segment( segN );
-        SegTagger* segTagger = knowledge_->getSegTagger();
+        //SegTagger* segTagger = knowledge_->getSegTagger();
 
         // Segment 1st. Perform special characters
 
@@ -684,6 +688,59 @@ namespace meanainner{
         }
 
 
+    }
+
+
+    void CMA_ME_Analyzer::analysis_fmincover(
+            const char* sentence,
+            int N,
+            vector<vector<string> >& posRet,
+            vector<pair<vector<string>, double> >& segment,
+            bool tagPOS
+            )
+    {
+        // Initial Step 1: split as Chinese Character based
+        vector<string> words;
+        extractCharacter( sentence, words );
+
+        if( words.empty() == true )
+            return;
+        // Initial Step 2nd: set character types
+        CharType types[ (int)words.size() ];
+        setCharType( words, types );
+
+        segment.resize(1);
+        segment[0].second = 1;
+
+        VTrie *trie = knowledge_->getTrie();
+        fmincover::parseFMinCoverString(
+                segment[0].first, words, types, trie, 0, words.size() );
+
+        if(!tagPOS)
+            return;
+
+        posRet.resize(1);
+        vector<string>& posRetOne = posRet[0];
+        vector<set<string> >& posVec = knowledge_->getPOSTagger()->posVec_;
+        string& defaultPOS = knowledge_->getPOSTagger()->defaultPOS;
+        vector<string>& wordVec = segment[0].first;
+        size_t wordSize = wordVec.size();
+        posRetOne.resize( wordSize );
+        for (size_t i = 0; i < wordSize; ++i) {
+            VTrieNode node;
+            trie->search( wordVec[i].data(), &node );
+            if( node.data > 0 )
+            {
+                set<string>& posSet = posVec[node.data];
+                if( !posSet.empty() )
+                {
+                    posRetOne[i] = *posSet.begin();
+                    continue;
+                }
+            }
+
+            posRetOne[i] = defaultPOS;
+        }
     }
 
     void CMA_ME_Analyzer::splitToOneGram( const char* sentence, vector<vector<OneGramType> >& output )

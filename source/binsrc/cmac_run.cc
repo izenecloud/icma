@@ -406,7 +406,7 @@ int main(int argc, char* argv[])
         exit(1);
     }
 
-    bool loadModel = true;
+    bool loadModel = false;
 #ifdef DEBUG_FMM
     loadModel = false;
 #endif
@@ -433,7 +433,7 @@ int main(int argc, char* argv[])
     #ifdef DEBUG_FMM
     analyzer->setOption( Analyzer::OPTION_ANALYSIS_TYPE, 2 );
 #endif
-
+    analyzer->setOption( Analyzer::OPTION_ANALYSIS_TYPE, 3 );
     switch(optionIndex)
     {
     case 0:

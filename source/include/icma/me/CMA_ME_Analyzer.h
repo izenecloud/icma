@@ -159,7 +159,7 @@ private:
             bool tagPOS = true
             );
 
-    /*
+    /**
      * Forwards maximum matching approach
      */
     void analysis_fmm(
@@ -170,10 +170,21 @@ private:
             bool tagPOS = true
             );
 
-    /*
+    /**
      * Dictionary based nbest approach
      */
     void analysis_dictb(
+            const char* sentence,
+            int N,
+            vector<vector<string> >& pos,
+            vector<pair<vector<string>, double> >& segment,
+            bool tagPOS = true
+            );
+
+    /**
+     * Dictionary based Forwards minimum conver segmentation
+     */
+    void analysis_fmincover(
             const char* sentence,
             int N,
             vector<vector<string> >& pos,
