@@ -175,7 +175,7 @@ void addFMinCString(
 /*    string tmp;
         inner::assignStrVectorDomain( tmp, words,
                 beginIdx, endIdx );
-        cout << "addFMinCString "<<tmp<<endl;*/
+        cout << "addFMinCString "<<tmp<<",type:"<<types[endIdx-1]<<endl;*/
 
     vector< string >::iterator itr;
 
@@ -219,7 +219,7 @@ void addFMinCString(
     case CHAR_TYPE_SPACE:
     case CHAR_TYPE_INIT:
     {
-        // do nothing
+        cout<<"ignore space "<<endl;// do nothing
         return;
     }
     default:
