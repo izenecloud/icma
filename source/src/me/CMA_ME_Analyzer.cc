@@ -711,36 +711,20 @@ namespace meanainner{
 
         segment.resize(1);
         segment[0].second = 1;
+        vector<string>& bestSeg = segment[0].first;
 
         VTrie *trie = knowledge_->getTrie();
         fmincover::parseFMinCoverString(
-                segment[0].first, words, types, trie, 0, words.size() );
+                bestSeg, words, types, trie, 0, words.size() );
 
-        if(!tagPOS)
+        if( tagPOS == false )
             return;
 
         posRet.resize(1);
         vector<string>& posRetOne = posRet[0];
-        vector<set<string> >& posVec = knowledge_->getPOSTagger()->posVec_;
-        string& defaultPOS = knowledge_->getPOSTagger()->defaultPOS;
-        vector<string>& wordVec = segment[0].first;
-        size_t wordSize = wordVec.size();
-        posRetOne.resize( wordSize );
-        for (size_t i = 0; i < wordSize; ++i) {
-            VTrieNode node;
-            trie->search( wordVec[i].data(), &node );
-            if( node.data > 0 )
-            {
-                set<string>& posSet = posVec[node.data];
-                if( !posSet.empty() )
-                {
-                    posRetOne[i] = *posSet.begin();
-                    continue;
-                }
-            }
+        knowledge_->getPOSTagger()->quick_tag_sentence_best(
+                bestSeg, posRetOne, 0, bestSeg.size() );
 
-            posRetOne[i] = defaultPOS;
-        }
     }
 
     void CMA_ME_Analyzer::splitToOneGram( const char* sentence, vector<vector<OneGramType> >& output )

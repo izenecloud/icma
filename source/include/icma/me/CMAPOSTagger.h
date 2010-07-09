@@ -134,6 +134,20 @@ public:
             int begin, int end);
 
     /**
+     * Quick Tag sentence best, no statistical model is used
+     * \param words words vector
+     * \param posRet to hold the result value
+     * \param begin the begin index (include) to check
+     * \param end the first index that should not check
+     */
+    void quick_tag_sentence_best(
+            vector<string>& words,
+            vector<string>& posRet,
+            int begin,
+            int end
+            );
+
+    /**
      * tag the word with the best POS and return its score
      * \param words words vector
      * \param poses the previous pos vector, but the current pos won't store into
@@ -186,6 +200,24 @@ private:
      */
     inline double tag_word_best_1(vector<string>& words, vector<string>& poses, 
             int index, string& pos, CMA_WType& wtype);
+
+    /**
+     * tag the word with the best POS in quick mode (private method)
+     * \param words words vector
+     * \param poses the previous pos vector, but the current pos won't store into
+     * the poses
+     * \param index the current index to check
+     * \param pos to store the best pos
+     * \param wtype the identify the type of the word
+     * \return return the score of the best pos
+     */
+    inline double quick_tag_word_best_impl(
+            vector<string>& words,
+            vector<string>& poses,
+            int index,
+            string& pos,
+            CMA_WType& wtype
+            );
 
 public:
     /** vector to hold the POS information */

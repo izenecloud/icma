@@ -219,7 +219,7 @@ void addFMinCString(
     case CHAR_TYPE_SPACE:
     case CHAR_TYPE_INIT:
     {
-        cout<<"ignore space "<<endl;// do nothing
+        // do nothing
         return;
     }
     default:
