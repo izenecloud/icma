@@ -125,7 +125,9 @@ inline void removeDuplicatedSegment(
         }
     }
 
-    int CMA_ME_Analyzer::runWithSentence(Sentence& sentence) {
+    int CMA_ME_Analyzer::runWithSentence(Sentence& sentence)
+    {
+        static const Morpheme DefMorp;
         if( strlen( sentence.getString() ) == 0 )
         	return 1;
         int N = (int) getOption(OPTION_TYPE_NBEST);
@@ -143,7 +145,7 @@ inline void removeDuplicatedSegment(
 			size_t posSize = poses.size();
 			sentence.addList( MorphemeList() );
 			MorphemeList& list = *sentence.getMorphemeList( sentence.getListSize() - 1 );
-			list.resize( posSize );
+			list.insert( list.end(), posSize, DefMorp );
 
 			if( printPOS == true )
 			{
