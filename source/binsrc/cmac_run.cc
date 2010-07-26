@@ -417,10 +417,9 @@ int main(int argc, char* argv[])
         exit(1);
     }
 
-    bool loadModel = false;
-#ifdef DEBUG_FMM
-    loadModel = false;
-#endif
+    int analysisType = 3;
+
+    bool loadModel = ( analysisType == 1 );
 
     // set encoding type from the dictionary path
     string modelPathStr(modelPath);
@@ -441,10 +440,7 @@ int main(int argc, char* argv[])
     if( optionIndex == 2 )
     	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
 
-    #ifdef DEBUG_FMM
-    analyzer->setOption( Analyzer::OPTION_ANALYSIS_TYPE, 2 );
-#endif
-    analyzer->setOption( Analyzer::OPTION_ANALYSIS_TYPE, 3 );
+    analyzer->setOption( Analyzer::OPTION_ANALYSIS_TYPE, analysisType );
     switch(optionIndex)
     {
     case 0:

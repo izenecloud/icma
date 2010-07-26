@@ -22,47 +22,77 @@
 
 namespace cma {
 
-/**
- * Whether the two MorphemeLists is the same
- * \param list1 the MorphemeList 1
- * \param list2 the MorphemeList 2
- */
-inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* list2, bool printPOS )
+namespace cmainner
 {
-	// if one is zero pointer, return null
-	if( !list1 || !list2 )
-	{
-		return false;
-	}
+/**
+ * Whether the two Segmentation is the same
+ */
+inline bool isSameSegment(
+        vector<pair<vector<string>, double> >& segment,
+        vector<vector<string> >& pos,
+        int idx1,
+        int idx2,
+        bool includePOS
+        )
+{
+    vector<string>& seg1 = segment[ idx1 ].first;
+    vector<string>& seg2 = segment[ idx2 ].first;
+    if( seg1.size() != seg2.size() )
+        return false;
 
-	if( list1->size() != list2->size() )
-		return false;
-	//compare one by one
-	size_t N = list1->size();
-	if( printPOS )
-	{
-		for( size_t i = 0; i < N; ++i )
-		{
-			const Morpheme& m1 = (*list1)[i];
-			const Morpheme& m2 = (*list2)[i];
-			if( m1.lexicon_ != m2.lexicon_ || m1.posCode_ != m2.posCode_)
-			{
-				return false;
-			}
-		}
-	}
-	else
-	{
-		for( size_t i = 0; i < N; ++i )
-		{
-			if( (*list1)[i].lexicon_ != (*list2)[i].lexicon_ )
-				return false;
-		}
-	}
-	//all the elements are the same
-	return true;
+    size_t size = seg1.size();
+    for( size_t i = 0; i < size; ++i )
+    {
+        if( seg1[ i ] != seg2[ i ] )
+            return false;
+    }
+
+    if( includePOS = false )
+        return true;
+    vector<string>& pos1 = pos[ idx1 ];
+    vector<string>& pos2 = pos[ idx2 ];
+    for( size_t i = 0; i < size; ++i )
+    {
+        if( pos1[ i ] != pos2[ i ] )
+            return false;
+    }
+
+    return true;
 }
 
+inline void removeDuplicatedSegment(
+        vector<pair<vector<string>, double> >& segment,
+        vector<vector<string> >& pos,
+        bool includePOS
+        )
+{
+    int listSize = (int)segment.size();
+    if( listSize <= 1 )
+        return;
+
+    vector< size_t > duplicatedList;
+    for( int i = 1; i < listSize; ++i )
+    {
+        for( int j = i - 1; j >= 0; --j )
+        {
+            cout << "Compare #" << i << " with #" << j <<endl;
+            if( isSameSegment( segment, pos, i, j, includePOS ) == true )
+            {
+                duplicatedList.push_back( i );
+                break;
+            }
+        }
+    }
+
+    for( vector< size_t >::reverse_iterator itr = duplicatedList.rbegin();
+            itr != duplicatedList.rend(); ++itr )
+    {
+        segment.erase( ( segment.begin() + *itr ) );
+        pos.erase( ( pos.begin() + *itr ) );
+    }
+}
+
+}
 
     CMA_ME_Analyzer::CMA_ME_Analyzer()
 			: knowledge_(0), ctype_(0), posTable_(0),
@@ -101,33 +131,28 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
         int N = (int) getOption(OPTION_TYPE_NBEST);
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
         
-        vector<pair<vector<string>, double> > segment;
-        vector<vector<string> > pos;
+        vector<pair<vector<string>, double> >& segment = sentence.segment_;
+        vector<vector<string> >& pos = sentence.pos_;
 
         (this->*analysis)(sentence.getString(), N, pos, segment, printPOS);
 
         size_t size = segment.size();
         if( size <= 1 )
         {
-			vector<string>& segs = segment[0].first;
 			vector<string>& poses = pos[0];
-			size_t segSize = segs.size();
-			sentence.addList( MorphemeList(), 1.0 );
+			size_t posSize = poses.size();
+			sentence.addList( MorphemeList() );
 			MorphemeList& list = *sentence.getMorphemeList( sentence.getListSize() - 1 );
-			list.resize( segSize );
+			list.resize( posSize );
 
-			for ( size_t j = 0; j < segSize; ++j )
+			if( printPOS == true )
 			{
-				Morpheme& morp = list[ j ];
-
-				morp.lexicon_ = segs[j];
-				if( printPOS == true )
-				{
-					morp.posStr_ = poses[j];
-					morp.posCode_ = posTable_->getCodeFromStr(morp.posStr_);
-					morp.isIndexed = posTable_->isIndexPOS( morp.posCode_ );
-				}
-
+                for ( size_t j = 0; j < posSize; ++j )
+                {
+                    Morpheme& morp = list[ j ];
+                    morp.posCode_ = posTable_->getCodeFromStr( poses[j] );
+                    morp.isIndexed = posTable_->isIndexPOS( morp.posCode_ );
+                }
 			}
 
 			return 1;
@@ -135,46 +160,29 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
 
 
         double totalScore = 0;
+        //remove duplicate first
+        cmainner::removeDuplicatedSegment( segment, pos, printPOS );
 
-		for (size_t i = 0; i < size; ++i) {
-			MorphemeList list;
-			vector<string>& segs = segment[i].first;
+		for ( size_t i = 0; i < size; ++i )
+		{
 			vector<string>& poses = pos[i];
-			size_t segSize = segs.size();
-			for (size_t j = 0; j < segSize; ++j) {
-				string& seg = segs[j];
-				if(knowledge_->isStopWord(seg))
-					continue;
-				Morpheme morp;
-				morp.lexicon_ = seg;
-				if(printPOS)
-				{
-					morp.posStr_ = poses[j];
-					morp.posCode_ = posTable_->getCodeFromStr(morp.posStr_);
-					morp.isIndexed = posTable_->isIndexPOS( morp.posCode_ );
-				}
+			size_t posSize = poses.size();
+			sentence.addList( MorphemeList() );
+			MorphemeList& list = *sentence.getMorphemeList( sentence.getListSize() - 1 );
+            list.resize( posSize );
 
-				list.push_back(morp);
-			}
-
-			bool isDupl = false;
-
-			//check the current result with exits results
-			for( int listOffset = sentence.getListSize() - 1 ; listOffset >= 0; --listOffset )
-			{
-				if( isSameMorphemeList( sentence.getMorphemeList(listOffset), &list, printPOS ) )
-				{
-					isDupl = true;
-					break;
-				}
-			}
-			//ignore the duplicate results
-			if( isDupl )
-				continue;
+            if( printPOS == true )
+            {
+                for ( size_t j = 0; j < posSize; ++j )
+                {
+                    Morpheme& morp = list[ j ];
+                    morp.posCode_ = posTable_->getCodeFromStr( poses[j] );
+                    morp.isIndexed = posTable_->isIndexPOS( morp.posCode_ );
+                }
+            }
 
 			double score = segment[i].second;
 			totalScore += score;
-			sentence.addList( list, score );
 		}
 
 		for ( int j = 0; j < sentence.getListSize(); ++j )
@@ -534,34 +542,38 @@ namespace meanainner{
             segTagger->seg_sentence(words, types, segN, N, segment);
 
         N = segment.size();
-        segRet.resize(N);
+        segRet.resize( N );
 
         VTrie *trie = knowledge_->getTrie();
         //TODO, only combine the first result
-        for (int i = 0; i < N; ++i) {
+        for ( int i = 0; i < N; ++i )
+        {
             pair<vector<string>, double>& srcPair = segment[i];
             pair<vector<string>, double>& destPair = segRet[i];
             destPair.second = srcPair.second;
-            if(i < 1){
+            if(i < 1)
+            {
                 meanainner::combineRetWithTrie( trie, srcPair.first,
                         destPair.first, ctype_);
             }
             else{
                 size_t srcSize = srcPair.first.size();
-                for(size_t si = 0; si < srcSize; ++si){
+                for( size_t si = 0; si < srcSize; ++si )
+                {
                     string& val = srcPair.first[si];
-                    if(!ctype_->isSpace(val.c_str()))
+                    if( ctype_->isSpace( val.c_str() ) == false )
                         destPair.first.push_back(val);
                 }
             }
         }
 
-        if(!tagPOS)
+        if( tagPOS == false )
             return;
 
-        posRet.resize(N);
+        posRet.resize( N );
         POSTagger* posTagger = knowledge_->getPOSTagger();       
-        for (int i = 0; i < N; ++i) {
+        for ( int i = 0; i < N; ++i )
+        {
             posTagger->tag_sentence_best(segRet[i].first, posRet[i], 0,
                 segRet[i].first.size());
         }

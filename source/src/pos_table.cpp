@@ -78,7 +78,7 @@ const char* POSTable::getStrFromCode(int index) const
 
 int POSTable::size() const
 {
-    assert(posTable_.size() == posMap_.size() && "POS table size should equal to POS map size");
+    //assert(posTable_.size() == posMap_.size() && "POS table size should equal to POS map size");
     return posTable_.size();
 }
 

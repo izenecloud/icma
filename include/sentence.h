@@ -15,6 +15,8 @@
 namespace cma
 {
 
+class CMA_ME_Analyzer;
+
 /**
  * \brief a pair of lexicon string and its part-of-speech tag.
  *
@@ -22,13 +24,13 @@ namespace cma
 struct Morpheme
 {
     /** the lexicon string value */
-    std::string lexicon_;
+    //std::string lexicon_;
 
     /** the index code of part-of-speech tag */
     int posCode_;
 
     /** the POS string value */
-    std::string posStr_;
+    //std::string posStr_;
 
     /** Whether is indexed word */
     bool isIndexed;
@@ -77,6 +79,8 @@ typedef std::vector<Morpheme> MorphemeList;
 class Sentence
 {
 public:
+
+    friend class CMA_ME_Analyzer;
 
 	/**
 	 * Default Constructor and do nothing
@@ -177,19 +181,24 @@ public:
     /**
      * Add a candidate result of morphological analysis.
      * \param morphemeList the candidate result
-     * \param score the score value of the candidate
      */
-    void addList(const MorphemeList& morphemeList, double score = 0.0);
+    void addList(const MorphemeList& morphemeList);
 
 private:
     /** the raw sentence string */
     std::string raw_;
 
+    /** segmentation and score vector */
+    std::vector< std::pair < std::vector< std::string >, double> > segment_;
+
+    /** POS list */
+    std::vector< std::vector< std::string > > pos_;
+
     /** the candidates list of morphological analysis result */
     std::vector<MorphemeList> candidates_;
 
     /** the scores list of candidates */
-    std::vector<double> scores_;
+    //std::vector<double> scores_;
 };
 
 } // namespace cma

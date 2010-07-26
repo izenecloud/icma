@@ -32,7 +32,8 @@ void Sentence::setString(const char* pString)
 {
     raw_ = pString;
     candidates_.clear();
-    scores_.clear();
+    segment_.clear();
+    pos_.clear();
 }
 
 const char* Sentence::getString(void) const
@@ -52,7 +53,7 @@ int Sentence::getCount(int nPos) const
 
 const char* Sentence::getLexicon(int nPos, int nIdx) const
 {
-    return candidates_[nPos][nIdx].lexicon_.c_str();
+    return (segment_[nPos].first)[nIdx].c_str();
 }
 
 bool Sentence::isIndexWord(int nPos, int nIdx) const
@@ -67,7 +68,7 @@ int Sentence::getPOS(int nPos, int nIdx) const
 
 const char* Sentence::getStrPOS(int nPos, int nIdx) const
 {
-    return candidates_[nPos][nIdx].posStr_.c_str();
+    return pos_[nPos][nIdx].c_str();
 }
 
 MorphemeList* Sentence::getMorphemeList(int nPos)
@@ -77,28 +78,41 @@ MorphemeList* Sentence::getMorphemeList(int nPos)
 
 double Sentence::getScore(int nPos) const
 {
-    return scores_[nPos];
+    return segment_[nPos].second;
 }
 
 void Sentence::setScore(int nPos, double nScore)
 {
-	scores_[nPos] = nScore;
+    segment_[nPos].second = nScore;
 }
 
 int Sentence::getOneBestIndex(void) const
 {
-    if(scores_.empty())
-	return -1;
+    if( segment_.empty() )
+	   return -1;
+    if( segment_.size() == 1 )
+       return 0;
 
-    //assert(scores_.size() > 0 && scores_.size() == candidates_.size());
+    double bestScore = segment_[0].second;
+    int bestIdx = 0;
+    int size = segment_.size();
+    for( int i = 1; i < size; ++i )
+    {
+        double tmpScore = segment_[ i ].second;
+        if( tmpScore > bestScore )
+        {
+            bestScore = tmpScore;
+            bestIdx = i;
+        }
 
-    return std::max_element(scores_.begin(), scores_.end()) - scores_.begin();
+    }
+
+    return bestIdx;
 }
 
-void Sentence::addList(const MorphemeList& morphemeList, double score)
+void Sentence::addList( const MorphemeList& morphemeList )
 {
     candidates_.push_back(morphemeList);
-    scores_.push_back(score);
 }
 
 } // namespace cma
