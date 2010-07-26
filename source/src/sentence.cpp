@@ -70,7 +70,7 @@ const char* Sentence::getStrPOS(int nPos, int nIdx) const
     return candidates_[nPos][nIdx].posStr_.c_str();
 }
 
-const MorphemeList* Sentence::getMorphemeList(int nPos) const
+MorphemeList* Sentence::getMorphemeList(int nPos)
 {
 	return &candidates_[nPos];
 }
@@ -90,7 +90,7 @@ int Sentence::getOneBestIndex(void) const
     if(scores_.empty())
 	return -1;
 
-    assert(scores_.size() > 0 && scores_.size() == candidates_.size());
+    //assert(scores_.size() > 0 && scores_.size() == candidates_.size());
 
     return std::max_element(scores_.begin(), scores_.end()) - scores_.begin();
 }

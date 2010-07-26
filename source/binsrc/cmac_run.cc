@@ -187,7 +187,7 @@ void testWithSentence(Analyzer* analyzer)
             	for(int j=0; j<s.getCount(i); ++j)
                 {
                     const char* pLexicon = s.getLexicon(i, j);
-                    cout << pLexicon << "/" << s.getStrPOS(i, j) << "  ";
+                    cout << pLexicon << "/" << s.getStrPOS(i, j) << "(" << s.getPOS(i,j) << ")  ";
                 }
                 cout << "\t" << s.getScore(i) << "\t#words: " << s.getCount(i) << endl;
             }
@@ -209,7 +209,7 @@ void testWithSentence(Analyzer* analyzer)
                     cout << "\t" << i << ": ";
 
                 const char* pLexicon = s.getLexicon(i, j);
-                cout << pLexicon << "/" << s.getStrPOS(i, j) << "  ";
+                cout << pLexicon << "/" << s.getStrPOS(i, j) << "(" << s.getPOS(i,j) << ")  ";
             }
             cout << "\t" << s.getScore(i) << endl;
         }

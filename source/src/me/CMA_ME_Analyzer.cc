@@ -106,31 +106,34 @@ inline bool isSameMorphemeList( const MorphemeList* list1, const MorphemeList* l
 
         (this->*analysis)(sentence.getString(), N, pos, segment, printPOS);
 
-        if(N <= 1)
+        size_t size = segment.size();
+        if( size <= 1 )
         {
-        	MorphemeList list;
 			vector<string>& segs = segment[0].first;
 			vector<string>& poses = pos[0];
 			size_t segSize = segs.size();
-			for (size_t j = 0; j < segSize; ++j) {
-				string& seg = segs[j];
-				if(knowledge_->isStopWord(seg))
-					continue;
-				Morpheme morp;
-				morp.lexicon_ = seg;
-				if(printPOS)
+			sentence.addList( MorphemeList(), 1.0 );
+			MorphemeList& list = *sentence.getMorphemeList( sentence.getListSize() - 1 );
+			list.resize( segSize );
+
+			for ( size_t j = 0; j < segSize; ++j )
+			{
+				Morpheme& morp = list[ j ];
+
+				morp.lexicon_ = segs[j];
+				if( printPOS == true )
 				{
 					morp.posStr_ = poses[j];
 					morp.posCode_ = posTable_->getCodeFromStr(morp.posStr_);
 					morp.isIndexed = posTable_->isIndexPOS( morp.posCode_ );
 				}
-				list.push_back(morp);
+
 			}
-			sentence.addList(list, 1.0);
+
 			return 1;
         }
 
-        size_t size = segment.size();
+
         double totalScore = 0;
 
 		for (size_t i = 0; i < size; ++i) {

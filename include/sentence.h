@@ -152,7 +152,7 @@ public:
      * \param nPos candidate result index
      * \return the MorphemeList
      */
-    const MorphemeList* getMorphemeList(int nPos) const;
+    MorphemeList* getMorphemeList(int nPos);
 
     /**
      * Get the score of candidate result \e nPos.

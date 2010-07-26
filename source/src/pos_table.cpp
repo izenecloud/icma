@@ -57,6 +57,7 @@ int POSTable::addPOS(const std::string& pos)
     return index;
 }
 
+/*
 int POSTable::getCodeFromStr(const std::string& pos)
 {
     int ret = posMap_.search( pos.c_str() );
@@ -65,6 +66,7 @@ int POSTable::getCodeFromStr(const std::string& pos)
     else
     	return addPOS( pos );
 }
+*/
 
 const char* POSTable::getStrFromCode(int index) const
 {
