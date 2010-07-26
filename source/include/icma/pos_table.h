@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <icma/util/DCTrie.h>
 
 namespace cma
 {
@@ -142,7 +143,7 @@ private:
     POSTableInfo posTable_;
 
     /** the POS tag map type from case-insensitive string to index code */
-    typedef std::map<std::string, int, Nocase> POSMap;
+    typedef DCTrie POSMap;
 
     /** the POS tag map */
     POSMap posMap_;

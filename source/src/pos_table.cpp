@@ -44,14 +44,14 @@ POSTable::POSTable()
 int POSTable::addPOS(const std::string& pos)
 {
     // check whether has been added before
-    POSMap::const_iterator iter = posMap_.find(pos);
-    if(iter != posMap_.end())
+    int ret = posMap_.search( pos.c_str() );
+    if( ret > 0 )
     {
-        return iter->second;
+        return ret;
     }
 
     int index = posTable_.size();
-    posMap_[pos] = index;
+    posMap_.insert( pos.c_str(), index );
     posTable_.push_back( pair<string, bool>(pos, true));
 
     return index;
@@ -59,9 +59,9 @@ int POSTable::addPOS(const std::string& pos)
 
 int POSTable::getCodeFromStr(const std::string& pos)
 {
-    POSMap::const_iterator iter = posMap_.find(pos);
-    if(iter != posMap_.end())
-    	return iter->second;
+    int ret = posMap_.search( pos.c_str() );
+    if( ret > 0 )
+    	return ret;
     else
     	return addPOS( pos );
 }
