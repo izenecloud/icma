@@ -47,7 +47,7 @@ using namespace cma;
 namespace
 {
     /** command options */
-    const char* OPTIONS[] = {"--sentence", "--string", "--stream", "--ngram"};
+    const char* OPTIONS[] = {"--sentence", "--string", "--stream", "--sentstream"};
 
     /** optional command option for dictionary path */
     const char* OPTION_DICT = "--dict";
@@ -258,6 +258,18 @@ void testWithStream(Analyzer* analyzer, const char* source, const char* dest)
     }
 }
 
+void testSentStream(Analyzer* analyzer, const char* source)
+{
+    string line;
+    ifstream fin( source );
+    while( fin.eof() == false )
+    {
+        getline( fin, line );
+        Sentence sent( line.c_str() );
+        analyzer->runWithSentence( sent );
+    }
+}
+
 /**
  * Analyze a string.
  */
@@ -314,8 +326,7 @@ void printUsage()
     cerr << "Usages:\t" << OPTIONS[0] << " N-best [--dict DICT_PATH]" << endl;
     cerr << "  or:\t" << OPTIONS[1] << " [--dict DICT_PATH]" << endl;
     cerr << "  or:\t" << OPTIONS[2] << " INPUT OUTPUT [--dict DICT_PATH]" << endl;
-    cerr << "  or:\t" << OPTIONS[3] << " N-Gram(s) [--dict DICT_PATH]  N-Gram(s) can "<<
-    		"be 3 or 2-4 (there are 2,3 and 4)" << endl;
+    cerr << "  or:\t" << OPTIONS[3] << " INPUT [--dict DICT_PATH] " << endl;
 }
 
 /**
@@ -461,8 +472,20 @@ int main(int argc, char* argv[])
     }
 
     case 3:
-		testWithNGram(analyzer, string(argv[2]) );
-		break;
+    {
+        clock_t etime = clock();
+        double dif = (double)(etime - stime) / CLOCKS_PER_SEC;
+        cout << "knowledge loading time: " << dif << endl;
+
+        testSentStream(analyzer, argv[2]);
+
+        dif = (double)(clock() - etime) / CLOCKS_PER_SEC;
+        cout << "sentence stream analysis time: " << dif << endl;
+
+        dif = (double)(clock() - stime) / CLOCKS_PER_SEC;
+        cout << "total time: " << dif << endl;
+        break;
+        }
 
     default:
         printUsage();
