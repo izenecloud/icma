@@ -30,6 +30,11 @@ namespace cma
 
 const string DEFAULT_SPACE = " \t\n\x0B\f\r";
 
+CMA_CType::CMA_CType()
+    : spaceArray_ ( NULL )
+{
+}
+
 CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
 {
    switch(type)
@@ -85,6 +90,7 @@ CharType CMA_CType::getCharTypeByXmlName( const char* name, bool noDefault )
 
 CMA_CType::~CMA_CType()
 {
+    delete[] spaceArray_;
 }
 
 bool CMA_CType::isPunct(const char* p) const{
@@ -301,6 +307,7 @@ int CMA_CType::loadConfiguration( const char* file )
 
 	//load the entities
 	const TiXmlNode* entityNode = root->FirstChild( "entities" );
+	set< CharValue > spaceSet;
 
 	for( const TiXmlNode* node = entityNode->FirstChild(); node; node = node->NextSibling() )
 	{
@@ -318,7 +325,7 @@ int CMA_CType::loadConfiguration( const char* file )
 			string spaceValue =  getTinyXmlText( node );
 			spaceValue += DEFAULT_SPACE;
 			//loadEntityImpl( spaceValue.c_str(), tokenizer, CHAR_TYPE_SPACE, typeMap_ );
-			loadCharsValue( spaceValue.c_str(), tokenizer, spaceSet_ );
+			loadCharsValue( spaceValue.c_str(), tokenizer, spaceSet );
 		}
 		else if( strcmp( tag, "sentenceseparator") == 0 )
 			loadCharsValue( getTinyXmlText( node ), tokenizer, senSepSet_ );
@@ -329,6 +336,41 @@ int CMA_CType::loadConfiguration( const char* file )
 			cerr<<"Unknown Entity Name: " << tag << endl;
 			exit(1);
 		}
+	}
+
+	// initialize space array
+	int spaceSize = (int)spaceSet.size();
+	vector<CharValue> spaceVec(spaceSize);
+	int spaceIdx = 0;
+	for( set<CharValue>::iterator itr = spaceSet.begin(); itr != spaceSet.end(); ++itr )
+	{
+	    spaceVec[ spaceIdx ] = *itr;
+	    ++spaceIdx;
+	}
+	spaceArraySize_ = spaceSet.size() * 2 + 1;
+	while( true )
+	{
+	    //cout << "Try " << spaceArraySize_ << endl;
+	    delete[] spaceArray_;
+	    spaceArray_ =  new CharValue[ spaceArraySize_ ];
+	    memset( spaceArray_, 0x0, sizeof(CharValue) * spaceArraySize_ );
+	    bool failed = false;
+	    for( spaceIdx = 0; spaceIdx < spaceSize; ++spaceIdx )
+	    {
+	        CharValue charVal = spaceVec[ spaceIdx ];
+	        int destIdx = charVal % spaceArraySize_;
+	        // already be used
+	        if( spaceArray_[ destIdx ] != 0 )
+	        {
+	            failed = true;
+	            break;
+	        }
+	        spaceArray_[ destIdx ] = charVal;
+	    }
+
+	    if( failed == false )
+	        break;
+	    spaceArraySize_ += 2;
 	}
 
 	// load the rules
@@ -374,8 +416,9 @@ CharType CMA_CType::getBaseType( const char* p ) const
 
 bool CMA_CType::isSpace(const char* p) const
 {
-	CharValue curV = getEncodeValue(p);
-	return spaceSet_.find(curV) != spaceSet_.end();
+	CharValue charVal = getEncodeValue(p);
+	int destIdx = charVal % spaceArraySize_;
+	return spaceArray_[ destIdx ] == charVal;
 }
 
 bool CMA_CType::isSentenceSeparator(const char* p) const

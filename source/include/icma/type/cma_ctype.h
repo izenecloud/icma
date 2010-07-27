@@ -28,6 +28,9 @@ namespace cma
 class CMA_CType
 {
 public:
+
+    CMA_CType();
+
     /**
      * Create an instance of \e CMA_CType based on the character encode type.
      * \param type the character encode type
@@ -139,7 +142,10 @@ private:
 	map< CharValue, CharConditions > typeMap_;
 
 	/** Spaces Set */
-	set<CharValue> spaceSet_;
+	CharValue* spaceArray_;
+
+	/** */
+	int spaceArraySize_;
 
 	/** Sentence Separator Set */
 	set<CharValue> senSepSet_;
