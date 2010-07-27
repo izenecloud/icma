@@ -29,7 +29,14 @@ class CMA_CType
 {
 public:
 
-    CMA_CType();
+    typedef unsigned int(*getByteCount_t)(
+        const unsigned char*
+        );
+
+    CMA_CType(
+            Knowledge::EncodeType type,
+            getByteCount_t getByteCountFun
+            );
 
     /**
      * Create an instance of \e CMA_CType based on the character encode type.
@@ -48,15 +55,15 @@ public:
     /**
      * Destructor
      */
-    virtual ~CMA_CType();
+    ~CMA_CType();
 
     /**
-     * Get the byte count of the first character pointed by \e p, which
-     * character is in a specific encoding.
+     * Get the byte count of the first character pointed by \e p, which character is in a specific encoding.
      * \param p pointer to the character string
-     * \return true for punctuation, false for non punctuation.
+     * \return the count of bytes.
      */
-    virtual unsigned int getByteCount(const char* p) const = 0;
+    unsigned int getByteCount(const char* p) const;
+
 
     /**
      * Get the character type.
@@ -149,6 +156,8 @@ private:
 
 	/** Sentence Separator Set */
 	set<CharValue> senSepSet_;
+
+	getByteCount_t getByteCountFun_;
 
 };
 

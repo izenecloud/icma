@@ -14,11 +14,6 @@
 #include <tinyxml.h>
 
 #include "icma/type/cma_ctype.h"
-#include "icma/type/cma_ctype_gb2312.h"
-#include "icma/type/cma_ctype_big5.h"
-#include "icma/type/cma_ctype_gb18030.h"
-#include "icma/type/cma_ctype_utf8.h"
-#include "icma/type/cma_ctype_utf16.h"
 #include "icma/util/tokenizer.h"
 #include "strutil.h"
 
@@ -28,38 +23,138 @@ using namespace cma::ticpp;
 namespace cma
 {
 
+namespace ctypeinner
+{
+
+unsigned int getByteCountBig5(const unsigned char* uc)
+{
+    if(uc[0] == 0)
+        return 0;
+
+    if(uc[0] < 0x80)
+        return 1; // encoding in ASCII
+
+    return 2; // encoding in Big5
+}
+
+unsigned int getByteCountGB18030( const unsigned char* uc )
+{
+    if(uc[0] == 0)
+        return 0;
+
+    if(uc[0] <= 0x80) //0x80 is valid but unsigned
+        return 1; // encoding in ASCII
+
+    if(uc[0] <= 0xfe)
+    {
+        if(uc[1] >= 0x40 && uc[1] <= 0xfe && uc[1] != 0x7f)
+            return 2;
+        else if(uc[1] >= 0x30 && uc[1] <= 0x39)
+        {
+            if(uc[2] >= 0x81 && uc[2] <= 0xfe && uc[3] >= 0x30 && uc[3] <= 0x39)
+                return 4;
+            //assert(false && ("Invalid third and fourth bytes of gb18030: " +
+            //      (int)uc[2] + "," + (int)uc[3] + ",str=" + p));
+            return 1;
+        }
+        else
+        {
+            //assert(false && ("Invalid second byte of gb18030: " + (int)uc[1] + ",str=" + p));
+            return 1;
+        }
+
+    }
+    //assert(false && ("Invalid first byte of gb18030: " + (int)uc[0] + ",str=" + p));
+    return 1;
+}
+
+unsigned int getByteCountGB2312( const unsigned char* uc )
+{
+    if(uc[0] == 0)
+        return 0;
+
+    if(uc[0] < 0x80)
+        return 1; // encoding in ASCII
+
+    return 2; // encoding in GB2312
+}
+
+unsigned int getByteCountUTF16( const unsigned char* uc )
+{
+    return 2;
+}
+
+unsigned int getByteCountUTF8( const unsigned char* uc )
+{
+    unsigned char val = uc[0];
+
+    if( val == 0 )        // length   byte1     byte2     byte3    byte4
+        return 0;
+    else if( val < 0x80 ) //    1    0xxxxxxx
+        return 1;
+    else if( val < 0xE0 ) //    2    110yyyxx  10xxxxxx
+        return 2;
+    else if( val < 0xF0)  //    3    1110yyyy  10yyyyxx  10xxxxxx
+        return 3;
+    return 4;             //    4    11110zzz  10zzyyyy  10yyyyxx  10xxxxxx
+}
+
+}
+
 const string DEFAULT_SPACE = " \t\n\x0B\f\r";
 
-CMA_CType::CMA_CType()
-    : spaceArray_ ( NULL )
+map< Knowledge::EncodeType, CMA_CType* > CTypeCache;
+
+CMA_CType::CMA_CType(
+        Knowledge::EncodeType type,
+        getByteCount_t getByteCountFun
+        )
+    : type_( type ),
+    spaceArray_ ( NULL ),
+    getByteCountFun_ ( getByteCountFun )
 {
 }
 
 CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
 {
-   switch(type)
+    map< Knowledge::EncodeType, CMA_CType* >::iterator itr
+            = CTypeCache.find( type );
+    if( itr != CTypeCache.end() )
+        return itr->second;
+
+    CMA_CType* ret = NULL;
+
+    switch(type)
     {
-	case Knowledge::ENCODE_TYPE_GB2312:
-		return CMA_CType_GB2312::instance();
+    case Knowledge::ENCODE_TYPE_GB2312:
+        ret = new CMA_CType( type, &ctypeinner::getByteCountGB2312 );
+        break;
 
-	case Knowledge::ENCODE_TYPE_BIG5:
-		return CMA_CType_Big5::instance();
+    case Knowledge::ENCODE_TYPE_BIG5:
+        ret = new CMA_CType( type, &ctypeinner::getByteCountBig5 );
+        break;
 
-	case Knowledge::ENCODE_TYPE_GB18030:
-		return CMA_CType_GB18030::instance();
+    case Knowledge::ENCODE_TYPE_GB18030:
+        ret = new CMA_CType( type, &ctypeinner::getByteCountGB18030 );
+        break;
 
-	case Knowledge::ENCODE_TYPE_UTF8:
-		return CMA_CType_UTF8::instance();
+    case Knowledge::ENCODE_TYPE_UTF8:
+        ret = new CMA_CType( type, &ctypeinner::getByteCountUTF8 );
+        break;
 
 #ifdef USE_UTF_16
 	case Knowledge::ENCODE_TYPE_UTF16:
-			return CMA_CType_UTF16::instance();
+	    ret = new CMA_CType( type, &ctypeinner::getByteCountUTF16 );
+       break;
 #endif
 
 	default:
 		assert(false && "unknown character encode type");
 	    return 0;
     }
+
+    CTypeCache[ type ] = ret;
+    return ret;
 }
 
 CharType CMA_CType::getCharTypeByXmlName( const char* name, bool noDefault )
@@ -93,18 +188,27 @@ CMA_CType::~CMA_CType()
     delete[] spaceArray_;
 }
 
+unsigned int CMA_CType::getByteCount(const char* p) const
+{
+    const unsigned char* uc = (const unsigned char*)p;
+    return getByteCountFun_( uc );
+}
+
 bool CMA_CType::isPunct(const char* p) const{
     return getCharType(p, CHAR_TYPE_INIT, 0) == CHAR_TYPE_PUNC;
 }
 
-size_t CMA_CType::length(const char* p) const{
+size_t CMA_CType::length( const char* p ) const
+{
     size_t ret = 0;
-    while(p){
-        unsigned int len = getByteCount(p);
+    const unsigned char* uc = (const unsigned char*)p;
+    while( uc )
+    {
+        unsigned int len = getByteCountFun_( uc );
         //len can be 0
         if(!len)
             return ret;
-        p += len;
+        uc += len;
         ++ret;
     }
     return ret;
@@ -112,11 +216,11 @@ size_t CMA_CType::length(const char* p) const{
 
 unsigned int CMA_CType::getEncodeValue(const char* p) const
 {
-	unsigned int bytes = getByteCount( p );
-	if(!bytes)
-		return 0;
+    const unsigned char* uc = (const unsigned char*)p;
 
-	const unsigned char* uc = (const unsigned char*)p;
+	unsigned int bytes = getByteCountFun_( uc );
+	if( bytes == 0 )
+		return 0;
 
 	unsigned int val = 0;
 	switch(bytes)
