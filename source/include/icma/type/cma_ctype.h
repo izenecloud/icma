@@ -20,6 +20,8 @@ using std::string;
 namespace cma
 {
 
+class CMA_ME_Analyzer;
+
 /**
  * \brief CMA_CType gives the character type information.
  *
@@ -32,6 +34,8 @@ public:
     typedef unsigned int(*getByteCount_t)(
         const unsigned char*
         );
+
+    friend class CMA_ME_Analyzer;
 
     CMA_CType(
             Knowledge::EncodeType type,

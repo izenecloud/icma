@@ -833,6 +833,8 @@ namespace meanainner{
 
     void CMA_ME_Analyzer::extractCharacter( const char* sentence, vector< string >& charOut )
     {
+        static const string DefString;
+
         if( encodeType_ == Knowledge::ENCODE_TYPE_UTF8 )
         {
             const unsigned char *uc = (const unsigned char *)sentence;
@@ -840,6 +842,20 @@ namespace meanainner{
                 sentence += 3;
         }
 
+        CMA_CType::getByteCount_t getByteFunc = ctype_->getByteCountFun_;
+        unsigned int len;
+        const unsigned char *us = (const unsigned char *)sentence;
+        vector< string >::iterator itr;
+        while( ( len = getByteFunc( us ) ) > 0 )
+        {
+            itr = charOut.insert( charOut.end(), DefString );
+            itr->append( (const char*)us, len );
+            us += len;
+        }
+
+
+
+        /*
         size_t len = ctype_->length( sentence );
         charOut.resize( len );
         if( len == 0 )
@@ -853,6 +869,7 @@ namespace meanainner{
             charOut[ i ].assign( next );
             ++i;
         }
+        */
     }
 
     void CMA_ME_Analyzer::setCharType( vector< string >& charIn, CharType* types )
