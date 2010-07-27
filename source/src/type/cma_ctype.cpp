@@ -99,6 +99,47 @@ unsigned int getByteCountUTF8( const unsigned char* uc )
     return 4;             //    4    11110zzz  10zzyyyy  10yyyyxx  10xxxxxx
 }
 
+int computeMinMod( set<CharValue> inputSet )
+{
+    int inputSize = (int)inputSet.size();
+    vector<CharValue> inputVec(inputSize);
+    int idx = 0;
+    for( set<CharValue>::iterator itr = inputSet.begin(); itr != inputSet.end(); ++itr )
+    {
+        inputVec[ idx ] = *itr;
+        ++idx;
+    }
+    int minMod = inputSet.size() * 2 + 1;
+    CharValue *tmpArray = NULL;
+    while( true )
+    {
+        //cout << "Try " << spaceArraySize_ << endl;
+        delete[] tmpArray;
+        tmpArray =  new CharValue[ minMod ];
+        memset( tmpArray, 0x0, sizeof(CharValue) * minMod );
+        bool failed = false;
+        for( idx = 0; idx < inputSize; ++idx )
+        {
+            CharValue charVal = inputVec[ idx ];
+            int destIdx = charVal % minMod;
+            // already be used
+            if( tmpArray[ destIdx ] != 0 )
+            {
+                failed = true;
+                break;
+            }
+            tmpArray[ destIdx ] = charVal;
+        }
+
+        if( failed == false )
+            break;
+        minMod += 2;
+    }
+    delete[] tmpArray;
+
+    return minMod;
+}
+
 }
 
 const string DEFAULT_SPACE = " \t\n\x0B\f\r";
@@ -110,7 +151,6 @@ CMA_CType::CMA_CType(
         getByteCount_t getByteCountFun
         )
     : type_( type ),
-    spaceArray_ ( NULL ),
     getByteCountFun_ ( getByteCountFun )
 {
 }
@@ -185,7 +225,6 @@ CharType CMA_CType::getCharTypeByXmlName( const char* name, bool noDefault )
 
 CMA_CType::~CMA_CType()
 {
-    delete[] spaceArray_;
 }
 
 unsigned int CMA_CType::getByteCount(const char* p) const
@@ -443,39 +482,13 @@ int CMA_CType::loadConfiguration( const char* file )
 	}
 
 	// initialize space array
-	int spaceSize = (int)spaceSet.size();
-	vector<CharValue> spaceVec(spaceSize);
-	int spaceIdx = 0;
-	for( set<CharValue>::iterator itr = spaceSet.begin(); itr != spaceSet.end(); ++itr )
+	memset( spaceArray_, 0x0, sizeof( spaceArray_ ) );
+	for( set<CharValue>::iterator itr = spaceSet.begin();
+	        itr != spaceSet.end(); ++itr )
 	{
-	    spaceVec[ spaceIdx ] = *itr;
-	    ++spaceIdx;
+	    spaceArray_[ *itr % SPACE_ARRAY_SIZE ] = *itr;
 	}
-	spaceArraySize_ = spaceSet.size() * 2 + 1;
-	while( true )
-	{
-	    //cout << "Try " << spaceArraySize_ << endl;
-	    delete[] spaceArray_;
-	    spaceArray_ =  new CharValue[ spaceArraySize_ ];
-	    memset( spaceArray_, 0x0, sizeof(CharValue) * spaceArraySize_ );
-	    bool failed = false;
-	    for( spaceIdx = 0; spaceIdx < spaceSize; ++spaceIdx )
-	    {
-	        CharValue charVal = spaceVec[ spaceIdx ];
-	        int destIdx = charVal % spaceArraySize_;
-	        // already be used
-	        if( spaceArray_[ destIdx ] != 0 )
-	        {
-	            failed = true;
-	            break;
-	        }
-	        spaceArray_[ destIdx ] = charVal;
-	    }
 
-	    if( failed == false )
-	        break;
-	    spaceArraySize_ += 2;
-	}
 
 	// load the rules
 	const TiXmlNode* rulesNode = root->FirstChild( "rules" );
@@ -521,7 +534,7 @@ CharType CMA_CType::getBaseType( const char* p ) const
 bool CMA_CType::isSpace(const char* p) const
 {
 	CharValue charVal = getEncodeValue(p);
-	int destIdx = charVal % spaceArraySize_;
+	int destIdx = charVal % SPACE_ARRAY_SIZE;
 	return spaceArray_[ destIdx ] == charVal;
 }
 

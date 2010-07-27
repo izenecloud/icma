@@ -20,6 +20,10 @@ using std::string;
 namespace cma
 {
 
+//TODO this value should be updated if new spaces is added
+#define SPACE_ARRAY_SIZE 15
+
+
 class CMA_ME_Analyzer;
 
 /**
@@ -153,10 +157,7 @@ private:
 	map< CharValue, CharConditions > typeMap_;
 
 	/** Spaces Set */
-	CharValue* spaceArray_;
-
-	/** */
-	int spaceArraySize_;
+	CharValue spaceArray_[SPACE_ARRAY_SIZE];
 
 	/** Sentence Separator Set */
 	set<CharValue> senSepSet_;
