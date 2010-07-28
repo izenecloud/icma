@@ -26,6 +26,26 @@ namespace cma
 namespace ctypeinner
 {
 
+const unsigned int UTF8_LEN_CODE[ 256 ] = {
+//  0x0 0x1 0x2 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xa 0xb 0xc 0xd 0xe 0xf
+      0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x00
+      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x10
+      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x20
+      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x30
+      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x40
+      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x50
+      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x60
+      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x70
+      2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0x80
+      2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0x90
+      2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0xa0
+      2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0xb0
+      2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0xc0
+      2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0xd0
+      3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3, // 0xe0
+      4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4  // 0xf0
+};
+
 unsigned int getByteCountBig5(const unsigned char* uc)
 {
     if(uc[0] == 0)
@@ -86,6 +106,8 @@ unsigned int getByteCountUTF16( const unsigned char* uc )
 
 unsigned int getByteCountUTF8( const unsigned char* uc )
 {
+    return UTF8_LEN_CODE[ *uc ];
+    /*
     unsigned char val = uc[0];
 
     if( val == 0 )        // length   byte1     byte2     byte3    byte4
@@ -97,6 +119,7 @@ unsigned int getByteCountUTF8( const unsigned char* uc )
     else if( val < 0xF0)  //    3    1110yyyy  10yyyyxx  10xxxxxx
         return 3;
     return 4;             //    4    11110zzz  10zzyyyy  10yyyyxx  10xxxxxx
+    */
 }
 
 int computeMinMod( set<CharValue> inputSet )
