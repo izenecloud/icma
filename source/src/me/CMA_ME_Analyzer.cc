@@ -842,6 +842,7 @@ namespace meanainner{
                 sentence += 3;
         }
 
+        charOut.reserve( strlen(sentence) / 2 + 1 );
         CMA_CType::getByteCount_t getByteFunc = ctype_->getByteCountFun_;
         unsigned int len;
         const unsigned char *us = (const unsigned char *)sentence;
@@ -849,6 +850,7 @@ namespace meanainner{
         while( ( len = getByteFunc( us ) ) > 0 )
         {
             itr = charOut.insert( charOut.end(), DefString );
+            itr->reserve( len );
             itr->append( (const char*)us, len );
             us += len;
         }

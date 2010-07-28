@@ -41,10 +41,9 @@ const char* CTypeTokenizer::next()
     if(raw_ == 0 || *raw_ == 0)
         return 0;
     unsigned int bc = ctype_->getByteCount(raw_);
-    assert(bc > 0 && bc < BUFFER_SIZE);
+    //assert(bc > 0 && bc < BUFFER_SIZE);
 
-    for(unsigned int i=0; i<bc; ++i)
-        buffer_[i] = *(raw_+i);
+    memcpy( buffer_, raw_, bc );
 
     // append 0 as end of string
     buffer_[bc] = 0;
