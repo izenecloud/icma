@@ -1,4 +1,4 @@
-# Build izenelib
+# Wrapper of CMAKE
 BRANCH = File.read(File.join(File.dirname(__FILE__), ".git/HEAD")).sub(/^.*\//, "").chomp
 
 [
