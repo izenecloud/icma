@@ -54,3 +54,6 @@ TARGET_LINK_LIBRARIES(t_multithread ${LIBS_CMAC} pthread)
 
 ADD_EXECUTABLE(t_mapspeed t_mapspeed.cpp)
 TARGET_LINK_LIBRARIES(t_mapspeed ${LIBS_CMAC})
+
+ADD_EXECUTABLE(t_speed t_speed.cpp)
+TARGET_LINK_LIBRARIES(t_speed ${LIBS_CMAC})
