@@ -224,6 +224,7 @@ public:
                     }
                 }else{
                     vector<int> keyVec;
+                    keyVec.reserve( 2 );
                     keyVec.push_back(VTRIE_CODE[(unsigned char)*key]);
                     keyVec.push_back(VTRIE_CODE[*dataPtr]);
                     uint16_t minMod = 1 + getModMinSize(keyVec);
@@ -664,6 +665,7 @@ private:
         wastedBytes_ += copyLen + VTCHILDS_L + minMod * VTENTRY_L;
 
         vector<int> keyVec;
+        keyVec.reserve( minMod + 1 );
         //append the new char first
         keyVec.push_back(VTRIE_CODE[(unsigned char)*key]);
 
