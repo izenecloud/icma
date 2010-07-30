@@ -45,6 +45,8 @@ public:
 
     void initialize();
 
+    bool contains( const char* str );
+
 private:
     void ensureFreeLength( size_t extraLen )
     {

@@ -157,4 +157,15 @@ void StringArray::initialize()
     dataLen_ = 0;
 }
 
+bool StringArray::contains( const char* str )
+{
+    size_t size = this->size();
+    for( size_t i = 0; i < size; ++i )
+    {
+        if( strcmp( str, this->operator []( i ) ) == 0 )
+            return true;
+    }
+    return false;
+}
+
 }
