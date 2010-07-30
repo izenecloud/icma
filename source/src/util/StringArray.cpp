@@ -85,6 +85,12 @@ StringArray::StringArray( const char* str )
         setString( str );
 }
 
+StringArray::StringArray( const StringArray& other )
+{
+    initialize();
+    swap( (StringArray&)other );
+}
+
 StringArray::~StringArray()
 {
     delete data_;
@@ -167,6 +173,24 @@ void StringArray::removeHead()
 {
     if( offsetVec_.empty() == false )
         offsetVec_.erase( offsetVec_.begin() );
+}
+
+void StringArray::swap( StringArray& other )
+{
+    offsetVec_.swap( other.offsetVec_ );
+    char* tmp;
+
+    tmp = other.data_;
+    other.data_ = data_;
+    data_ = tmp;
+
+    tmp = other.endPtr_;
+    other.endPtr_ = endPtr_;
+    endPtr_ = tmp;
+
+    size_t tmpSize = other.dataLen_;
+    other.dataLen_ = dataLen_;
+    dataLen_ = tmpSize;
 }
 
 }

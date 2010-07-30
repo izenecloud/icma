@@ -182,6 +182,7 @@ POSTagger::POSTagger(const string& model, VTrie* pTrie, bool loadModel )
 
     assert(pTrie);
     trie_ = pTrie;
+    posVec_.reserve( 410000 );
     //reserved the location offset 0
     posVec_.push_back(set<string>());
 }

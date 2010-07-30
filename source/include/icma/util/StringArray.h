@@ -29,6 +29,8 @@ public:
 
     StringArray( const char* str = NULL );
 
+    StringArray( const StringArray& other );
+
     ~StringArray();
 
     void setString( const char* str );
@@ -57,6 +59,8 @@ public:
     }
 
     void removeHead();
+
+    void swap( StringArray& other );
 
 private:
     void ensureFreeLength( size_t extraLen )

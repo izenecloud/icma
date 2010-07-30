@@ -406,7 +406,61 @@ int CMA_ME_Knowledge::loadConfig(const char* fileName)
     return r ? 1 : 0;
 }
 
+/*
 bool CMA_ME_Knowledge::appendWordPOS(string& line){
+    vector<string> tokens;
+    TOKEN_STR(line, tokens);
+    size_t n = tokens.size();
+    if( n == 0 )
+    {
+        return false;
+    }
+    string& word = tokens[0];
+    if( blackWords_.find(word) != blackWords_.end() )
+    {
+        return false;
+    }
+    set<string>* posSet = 0;
+    //try to search first
+    VTrieNode node;
+    trie_->search(word.data(), &node);
+    //already exits
+    if(node.data > 0){
+        if(posT_)
+            posSet = &(posT_->posVec_[node.data]);
+    }else{
+
+        if(posT_)
+        {
+            //get the right offset (offset 0 is reserved)
+            node.data = (int)posT_->posVec_.size();
+            //insert new key
+            posT_->posVec_.push_back(set<string>());
+            posSet = &(posT_->posVec_.back());
+
+            trie_->insert(word.data(), &node);
+        }
+        else
+        {
+            node.data = 1;
+            trie_->insert(word.data(), &node);
+        }
+    }
+
+    if(posT_)
+    {
+        for(size_t i=1; i<n; ++i){
+            posSet->insert(tokens[i]);
+        }
+    }
+
+
+    return true;
+}
+*/
+
+bool CMA_ME_Knowledge::appendWordPOS( string& line )
+{
     vector<string> tokens;
     TOKEN_STR(line, tokens);
     size_t n = tokens.size();

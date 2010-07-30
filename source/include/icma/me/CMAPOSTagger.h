@@ -15,6 +15,7 @@
 #include "icma/util/CPPStringUtils.h"
 #include "icma/type/cma_ctype.h"
 #include "icma/type/cma_wtype.h"
+#include "icma/util/StringArray.h"
 
 #include <algorithm>
 #include <math.h>
@@ -221,7 +222,7 @@ private:
 
 public:
     /** vector to hold the POS information */
-    vector<set<string> > posVec_;
+    vector< set<string> > posVec_;
 
     /** default POS */
     string defaultPOS;
