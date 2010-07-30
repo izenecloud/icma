@@ -73,12 +73,15 @@ add_subdirectory(corpus)
 add_subdirectory(binsrc)
 add_subdirectory(test)
 
-# Install Headers
-
+# Install Headers & Knowledges
 INSTALL(
   DIRECTORY "${CMAKE_SOURCE_DIR}/../include/"
   DESTINATION include
   FILES_MATCHING PATTERN "*.h"
+  )
+INSTALL(
+  DIRECTORY "${CMAKE_SOURCE_DIR}/../db/icwb/utf8/"
+  DESTINATION db/icwb/utf8
   )
 
 # CPACK
