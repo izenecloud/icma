@@ -118,11 +118,6 @@ void StringArray::setString( const char* str )
     }
 }
 
-size_t StringArray::size()
-{
-    return offsetVec_.size();
-}
-
 void StringArray::reserve( size_t size )
 {
     if( size < dataLen_ )
@@ -166,6 +161,12 @@ bool StringArray::contains( const char* str )
             return true;
     }
     return false;
+}
+
+void StringArray::removeHead()
+{
+    if( offsetVec_.empty() == false )
+        offsetVec_.erase( offsetVec_.begin() );
 }
 
 }

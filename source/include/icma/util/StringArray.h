@@ -10,6 +10,7 @@
 
 #include <string>
 #include <vector>
+#include <queue>
 
 namespace cma
 {
@@ -32,7 +33,10 @@ public:
 
     void setString( const char* str );
 
-    size_t size();
+    inline size_t size()
+    {
+        return offsetVec_.size();
+    }
 
     inline char* operator[]( int idx )
     {
@@ -46,6 +50,13 @@ public:
     void initialize();
 
     bool contains( const char* str );
+
+    inline bool empty()
+    {
+        return offsetVec_.empty();
+    }
+
+    void removeHead();
 
 private:
     void ensureFreeLength( size_t extraLen )
@@ -66,7 +77,7 @@ private:
     char* data_;
     char* endPtr_;
     size_t dataLen_;
-    std::vector<offset_t> offsetVec_;
+    std::deque<offset_t> offsetVec_;
 };
 
 }
