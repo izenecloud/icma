@@ -47,7 +47,7 @@ public:
 
     void reserve( size_t size );
 
-    void append( const char* str, size_t len = 0 );
+    void push_back( const char* str, size_t len = 0 );
 
     void initialize();
 

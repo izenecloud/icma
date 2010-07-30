@@ -621,21 +621,21 @@ namespace meanainner{
             return;
 
         posRet.resize(1);
-        vector<string>& posRetOne = posRet[0];
-        vector<set<string> >& posVec = knowledge_->getPOSTagger()->posVec_;
+        vector<string>& posRetOne = posRet[ 0 ];
+        vector< POSTagger::POSUnitType >& posVec = knowledge_->getPOSTagger()->posVec_;
         string& defaultPOS = knowledge_->getPOSTagger()->defaultPOS;
-        vector<string>& wordVec = segRet[0].first;
+        vector<string>& wordVec = segRet[ 0 ].first;
         size_t wordSize = wordVec.size();
         posRetOne.resize( wordSize );
         for (size_t i = 0; i < wordSize; ++i) {
             VTrieNode node;
-            trie->search( wordVec[i].data(), &node );
+            trie->search( wordVec[ i ].data(), &node );
             if( node.data > 0 )
             {
-                set<string>& posSet = posVec[node.data];
+                POSTagger::POSUnitType& posSet = posVec[ node.data ];
                 if( !posSet.empty() )
                 {
-                    posRetOne[i] = *posSet.begin();
+                    posRetOne[ i ] = posSet[ 0 ];
                     continue;
                 }
             }

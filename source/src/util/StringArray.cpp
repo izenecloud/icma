@@ -136,7 +136,7 @@ void StringArray::reserve( size_t size )
     endPtr_ = data_ + usedLen;
 }
 
-void StringArray::append( const char* str, size_t len )
+void StringArray::push_back( const char* str, size_t len )
 {
     if( len == 0 )
         len = strlen( str );

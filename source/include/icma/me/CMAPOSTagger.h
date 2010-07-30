@@ -92,6 +92,8 @@ struct POSTagUnit{
  */
 class POSTagger{
 public:
+    typedef StringArray POSUnitType;
+
     /**
      * Construct the POSTagger with outer VTrie
      * \param model POS model name
@@ -222,7 +224,7 @@ private:
 
 public:
     /** vector to hold the POS information */
-    vector< set<string> > posVec_;
+    vector< POSUnitType > posVec_;
 
     /** default POS */
     string defaultPOS;

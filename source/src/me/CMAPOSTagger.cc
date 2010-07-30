@@ -184,7 +184,7 @@ POSTagger::POSTagger(const string& model, VTrie* pTrie, bool loadModel )
     trie_ = pTrie;
     posVec_.reserve( 410000 );
     //reserved the location offset 0
-    posVec_.push_back(set<string>());
+    posVec_.push_back( POSUnitType() );
 }
 
 POSTagger::POSTagger(const string& model, const char* dictFile) : isInnerTrie_(true){
@@ -192,7 +192,7 @@ POSTagger::POSTagger(const string& model, const char* dictFile) : isInnerTrie_(t
 
     trie_ = new VTrie();
     //reserved the location offset 0
-    posVec_.push_back(set<string>());
+    posVec_.push_back( POSUnitType() );
     ifstream in(dictFile);
     assert(in);
     string line;
@@ -226,11 +226,11 @@ void POSTagger::tag_word(vector<string>& words, int index, size_t N,
 
     size_t outSize = outcomes.size();
     if(exists){
-        set<string>& posSet = posVec_[node.data];
+        POSUnitType& posSet = posVec_[node.data];
         for(size_t i=0; i<outSize; ++i){
             pair<outcome_type, double>& pair = outcomes[i];
             //whether exists such pos
-            if(posSet.count(pair.first) <= 0)
+            if( posSet.contains( pair.first.c_str() ) == true )
                 continue;
             double score = pair.second * initScore;
             if(canSize >= N && score <= candidates[lastIndex].score)
@@ -389,14 +389,18 @@ double POSTagger::tag_word_best_1(vector<string>& words, vector<string>& poses,
     string& tag_1 = index > 0 ? poses[index-1] : POS_BOUNDARY;
     string& tag_2 = index > 1 ? poses[index-2] : POS_BOUNDARY;
     posinner::get_pos_zh_scontext_1(words, tag_1, tag_2, index, context, wtype);
-    if(node.data > 0){
-        set<string>& posSet = posVec_[node.data];
+    if( node.data > 0 )
+    {
+        POSUnitType& posSet = posVec_[node.data];
         //FIXME avoid default POS here
-        if(posSet.empty()){
+        if( posSet.empty() == true )
+        {
             pos = defaultPOS;
             return 1.0;
-        }else if(posSet.size() == 1){
-            pos = *posSet.begin();
+        }
+        else if( posSet.size() == 1 )
+        {
+            pos = posSet[ 0 ];
             return 1.0;
         }
 
@@ -409,7 +413,8 @@ double POSTagger::tag_word_best_1(vector<string>& words, vector<string>& poses,
 
         for(size_t k=0; k<outSize; ++k){
             pair<outcome_type, double>& pair = outcomes[k];
-            if(pair.second > bestScore && (posSet.count(pair.first) > 0)){
+            if( pair.second > bestScore && ( posSet.contains( pair.first.c_str() ) == true ) )
+            {
                 bestScore = pair.second;
                 pos = pair.first;
             }
@@ -479,7 +484,7 @@ double POSTagger::tag_word_best(vector<string>& words, vector<string>& poses,
     CMA_WType wtype(ctype_);
     return tag_word_best_1(words, poses, index, pos, wtype);
 }
-
+/*
 bool POSTagger::appendWordPOS(string& line){
     vector<string> tokens;
     TOKEN_STR(line, tokens);
@@ -513,6 +518,58 @@ bool POSTagger::appendWordPOS(string& line){
 
     return true;
 }
+*/
+
+bool POSTagger::appendWordPOS(string& line)
+{
+    StringArray tokens;
+    StringArray::tokenize( line.c_str(), tokens );
+
+    size_t n = tokens.size();
+    if( n == 0 )
+    {
+        return false;
+    }
+
+    string word = tokens[0];
+    replaceAll(word, "_", " ");
+
+    POSUnitType* posSet = 0;
+    //try to search first
+    VTrieNode node;
+    trie_->search(word.data(), &node);
+    //already exits
+    if(node.data > 0){
+        posSet = &(posVec_[node.data]);
+    }else
+    {
+        //get the right offset (offset 0 is reserved)
+        node.data = (int)posVec_.size();
+        //insert new key
+        posVec_.push_back( POSUnitType() );
+        posSet = &(posVec_.back());
+
+        trie_->insert(word.data(), &node);
+    }
+
+    if( posSet->empty() == true )
+    {
+        tokens.removeHead();
+        posSet->swap( tokens );
+    }
+    else
+    {
+        for( size_t i = 1; i < n; ++i )
+        {
+            const char* str = tokens[ i ];
+            if( posSet->contains( str ) == false )
+                posSet->push_back( tokens[ i ] ) ;
+        }
+    }
+
+    return true;
+}
+
 
 double POSTagger::quick_tag_word_best_impl(
         vector<string>& words,
@@ -545,10 +602,10 @@ double POSTagger::quick_tag_word_best_impl(
     trie_->search( word, &node );
     if( node.data > 0 )
     {
-        set<string>& posSet = posVec_[node.data];
+        POSUnitType& posSet = posVec_[node.data];
         if( posSet.empty() == false )
         {
-            pos = *posSet.begin();
+            pos = posSet[ 0 ];
             return 1.0;
         }
     }
