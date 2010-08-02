@@ -540,7 +540,8 @@ private:
         if( remain > MIN_REMAIN )
             return;
 
-        curDataSize_ += INCRE_SIZE;
+        //curDataSize_ += INCRE_SIZE;
+        curDataSize_ = (int)(curDataSize_*1.5) + INCRE_SIZE;
         uint8_t* nData = (uint8_t*)malloc(curDataSize_);
         if(data_){
             memcpy(nData, data_, usedLen);
