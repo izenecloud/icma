@@ -11,11 +11,11 @@
 #include <string>
 #include <vector>
 #include <queue>
-#include <icma/util/GenericArray.h>
+#include <VGenericArray.h>
 
 namespace cma
 {
-
+extern std::string DefDelimeter;
 
 class StringArray
 {
@@ -25,7 +25,7 @@ public:
     static void tokenize(
             const char* str,
             StringArray& ret,
-            const std::string& delimeter = " "
+            const std::string& delimeter = DefDelimeter
             );
 
     StringArray( const char* str = NULL );
@@ -82,7 +82,7 @@ private:
     char* data_;
     char* endPtr_;
     size_t dataLen_;
-    GenericArray<offset_t> offsetVec_;
+    vtrie::VGenericArray<offset_t> offsetVec_;
 };
 
 }

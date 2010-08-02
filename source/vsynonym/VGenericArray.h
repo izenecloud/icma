@@ -1,32 +1,32 @@
 /**
- * \file GenericArray.h
+ * \file VGenericArray.h
  * \brief 
  * \date Aug 2, 2010
  * \author Vernkin Chen
  */
 
-#ifndef GENERICARRAY_H_
-#define GENERICARRAY_H_
+#ifndef VGENERICARRAY_H_
+#define VGENERICARRAY_H_
 
-namespace cma
+namespace vtrie
 {
 
 template<class T>
-class GenericArray
+class VGenericArray
 {
 public:
-    GenericArray()
+    VGenericArray()
     {
         init();
     }
 
-    GenericArray( size_t size )
+    VGenericArray( size_t size )
     {
         init();
         reserve( size );
     }
 
-    ~GenericArray()
+    ~VGenericArray()
     {
         delete data_;
     }
@@ -71,7 +71,7 @@ public:
         return data_[ startOffset_ + idx ];
     }
 
-    void swap( GenericArray<T>& other )
+    void swap( VGenericArray<T>& other )
     {
         T* tmpData = other.data_;
         other.data_ = data_;
@@ -88,16 +88,6 @@ public:
         tmpSize = other.size_;
         other.size_ = size_;
         size_ = tmpSize;
-    }
-
-
-private:
-    void init()
-    {
-        data_ = NULL;
-        size_ = 0;
-        startOffset_ = 0;
-        endOffset_ = 0;
     }
 
     void reserve( size_t size )
@@ -123,6 +113,15 @@ private:
     }
 
 private:
+    void init()
+    {
+        data_ = NULL;
+        size_ = 0;
+        startOffset_ = 0;
+        endOffset_ = 0;
+    }
+
+private:
     T* data_;
     size_t startOffset_;
     size_t endOffset_;
@@ -131,4 +130,4 @@ private:
 
 }
 
-#endif /* GENERICARRAY_H_ */
+#endif /* VGENERICARRAY_H_ */

@@ -12,6 +12,7 @@
 #include <fstream>
 #include <stdio.h>
 #include "types.h"
+#include "VGenericArray.h"
 
 using namespace std;
 
@@ -223,7 +224,7 @@ public:
                         return 1;
                     }
                 }else{
-                    vector<int> keyVec;
+                    vtrie::VGenericArray<int> keyVec;
                     keyVec.reserve( 2 );
                     keyVec.push_back(VTRIE_CODE[(unsigned char)*key]);
                     keyVec.push_back(VTRIE_CODE[*dataPtr]);
@@ -627,7 +628,7 @@ private:
     /**
      * Get the minimum mod value of the children
      */
-    inline uint8_t getModMinSize(const vector<int>& vec){
+    inline uint8_t getModMinSize( vtrie::VGenericArray<int>& vec ){
         int len = (int)vec.size();
         if(len == 0)
             return 0;
@@ -664,7 +665,7 @@ private:
         //update wasted bytes
         wastedBytes_ += copyLen + VTCHILDS_L + minMod * VTENTRY_L;
 
-        vector<int> keyVec;
+        vtrie::VGenericArray<int> keyVec;
         keyVec.reserve( minMod + 1 );
         //append the new char first
         keyVec.push_back(VTRIE_CODE[(unsigned char)*key]);

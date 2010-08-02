@@ -11,6 +11,8 @@ using namespace std;
 namespace cma
 {
 
+string DefDelimeter = " ";
+
 void StringArray::tokenize(
         const char* str,
         StringArray& ret,
