@@ -12,7 +12,6 @@
 #include <fstream>
 #include <stdio.h>
 #include "types.h"
-#include "VGenericArray.h"
 
 using namespace std;
 
@@ -224,11 +223,10 @@ public:
                         return 1;
                     }
                 }else{
-                    vtrie::VGenericArray<int> keyVec;
-                    keyVec.reserve( 2 );
-                    keyVec.push_back(VTRIE_CODE[(unsigned char)*key]);
-                    keyVec.push_back(VTRIE_CODE[*dataPtr]);
-                    uint16_t minMod = 1 + getModMinSize(keyVec);
+                    int keyVec[2];
+                    keyVec[ 0 ]= VTRIE_CODE[(unsigned char)*key];
+                    keyVec[ 1 ] = VTRIE_CODE[*dataPtr];
+                    uint16_t minMod = 1 + getModMinSize( keyVec, 2 );
 
                     node->moreLong = false;
                     //compute the current status
@@ -628,8 +626,7 @@ private:
     /**
      * Get the minimum mod value of the children
      */
-    inline uint8_t getModMinSize( vtrie::VGenericArray<int>& vec ){
-        int len = (int)vec.size();
+    inline uint8_t getModMinSize( int* vec, int len ){
         if(len == 0)
             return 0;
 
@@ -665,24 +662,28 @@ private:
         //update wasted bytes
         wastedBytes_ += copyLen + VTCHILDS_L + minMod * VTENTRY_L;
 
-        vtrie::VGenericArray<int> keyVec;
-        keyVec.reserve( minMod + 1 );
-        //append the new char first
-        keyVec.push_back(VTRIE_CODE[(unsigned char)*key]);
+        int len = minMod + 1;
+        int keyVec[ len ];
+        keyVec[ 0 ] = VTRIE_CODE[(unsigned char)*key];
 
         vtptr_t* childPtr = (vtptr_t*)(modByte+1);
+        int realLen = 1;
 
-        for(int i=0; i<minMod; ++i){
-            if(*childPtr){
-                keyVec.push_back(VTRIE_CODE[*(data_ + *childPtr + VTSAMEPS_L)]);
+        for(int i=0; i<minMod; ++i)
+        {
+            if(*childPtr)
+            {
+                keyVec[ realLen ] = VTRIE_CODE[*(data_ + *childPtr + VTSAMEPS_L)];
+                ++realLen;
             }
+
             ++childPtr;
         }
 
-        uint16_t nMinMod = 1 + getModMinSize(keyVec);
+        uint16_t nMinMod = 1 + getModMinSize(keyVec,realLen);
         if(minMod == nMinMod){
-            //cout<<"same mod "<<minMod<<endl;
-            for(size_t i=0; i<keyVec.size(); ++i){
+            cout<<"same mod "<<minMod<<": ";
+            for(int i=0; i<realLen; ++i){
                 cout<<keyVec[i]<<",";
             }
             cout<<endl;
