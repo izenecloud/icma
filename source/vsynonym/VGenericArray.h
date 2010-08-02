@@ -41,10 +41,15 @@ public:
         return endOffset_ == startOffset_;
     }
 
-    void clear()
+    inline void clear()
     {
         startOffset_ = 0;
         endOffset_ = 0;
+    }
+
+    inline size_t capacity()
+    {
+        return size_;
     }
 
     void push_back( const T& t )
@@ -121,7 +126,7 @@ private:
         endOffset_ = 0;
     }
 
-private:
+public:
     T* data_;
     size_t startOffset_;
     size_t endOffset_;
