@@ -104,8 +104,7 @@ void StringArray::setString( const char* str )
         return;
     }
 
-    if( offsetVec_.empty() == false )
-        offsetVec_.clear();
+    offsetVec_.clear();
     if( data_ != NULL )
         delete data_;
 
@@ -150,8 +149,7 @@ void StringArray::push_back( const char* str, size_t len )
 
 void StringArray::initialize()
 {
-    if( offsetVec_.empty() == false )
-        offsetVec_.clear();
+    offsetVec_.clear();
     if( data_ != NULL )
         delete data_;
     data_ = endPtr_ = NULL;
@@ -172,7 +170,7 @@ bool StringArray::contains( const char* str )
 void StringArray::removeHead()
 {
     if( offsetVec_.empty() == false )
-        offsetVec_.erase( offsetVec_.begin() );
+        offsetVec_.removeHead();
 }
 
 void StringArray::swap( StringArray& other )

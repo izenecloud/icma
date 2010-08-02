@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <icma/util/GenericArray.h>
 
 namespace cma
 {
@@ -81,7 +82,7 @@ private:
     char* data_;
     char* endPtr_;
     size_t dataLen_;
-    std::deque<offset_t> offsetVec_;
+    GenericArray<offset_t> offsetVec_;
 };
 
 }
