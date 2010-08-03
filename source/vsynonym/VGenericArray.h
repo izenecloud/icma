@@ -28,7 +28,7 @@ public:
 
     ~VGenericArray()
     {
-        delete data_;
+        delete[] data_;
     }
 
     inline size_t size()
@@ -76,6 +76,11 @@ public:
         return data_[ startOffset_ + idx ];
     }
 
+    inline T& operator[]( int idx ) const
+    {
+        return data_[ startOffset_ + idx ];
+    }
+
     void swap( VGenericArray<T>& other )
     {
         T* tmpData = other.data_;
@@ -109,8 +114,11 @@ public:
 
         T* tmp = new T[ size ];
         size_t usedSize = endOffset_ - startOffset_;
-        memcpy( tmp, data_ + startOffset_, usedSize * sizeof( T ) );
-        delete data_;
+        //memcpy( tmp, data_ + startOffset_, usedSize * sizeof( T ) );
+        for( size_t i = 0; i < usedSize; ++i )
+            tmp[ i ] = this->operator []( i );
+
+        delete[] data_;
         data_ = tmp;
         startOffset_ = 0;
         endOffset_ = usedSize;

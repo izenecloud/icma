@@ -353,7 +353,7 @@ public:
      * \param node the node to stote the information
      * \return return 0 if search fails
      */
-    int search( const char* key, VTrieNode* node){
+    int search( const char* key, VTrieNode* node) const{
         if(!data_) return 0;
         size_t remainLen = strlen(key);
 

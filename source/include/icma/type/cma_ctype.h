@@ -17,6 +17,9 @@ using std::string;
 #include "icma/cmacconfig.h"
 #include "icma/type/cma_ctype_core.h"
 
+#include "VTrie.h"
+#include "VGenericArray.h"
+
 namespace cma
 {
 
@@ -155,7 +158,9 @@ protected:
 
 private:
 	/** Character to types map */
-	map< CharValue, CharConditions > typeMap_;
+	//map< CharValue, CharConditions > typeMap_;
+	VTrie condKeys_;
+	vtrie::VGenericArray<CharConditions> condValues_;
 
 	/** Spaces Set */
 	CharValue spaceArray_[SPACE_ARRAY_SIZE];

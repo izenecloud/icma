@@ -23,8 +23,36 @@ using namespace cma::ticpp;
 namespace cma
 {
 
+static const CharConditions DefCharConditions;
+
 namespace ctypeinner
 {
+
+class ConditionRetType
+{
+public:
+    CharConditions& getCharCondition( const char* key )
+    {
+        VTrieNode node;
+        keys_->search( key, &node );
+        if( node.data <= 0 )
+        {
+            node.data = (int)values_->size();
+            keys_->insert( key, &node );
+            values_->push_back( DefCharConditions );
+            return (*values_)[ values_->size() - 1 ];
+        }
+        else
+        {
+            return (*values_)[ node.data ];
+        }
+    }
+
+public:
+    VTrie* keys_;
+    vtrie::VGenericArray<CharConditions>* values_;
+};
+
 
 const unsigned int UTF8_LEN_CODE[ 256 ] = {
 //  0x0 0x1 0x2 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xa 0xb 0xc 0xd 0xe 0xf
@@ -176,6 +204,8 @@ CMA_CType::CMA_CType(
     : type_( type ),
     getByteCountFun_ ( getByteCountFun )
 {
+    condValues_.reserve( 330 );
+    condValues_.push_back( DefCharConditions ); //reserve offset 0
 }
 
 CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
@@ -256,7 +286,8 @@ unsigned int CMA_CType::getByteCount(const char* p) const
     return getByteCountFun_( uc );
 }
 
-bool CMA_CType::isPunct(const char* p) const{
+bool CMA_CType::isPunct(const char* p) const
+{
     return getCharType(p, CHAR_TYPE_INIT, 0) == CHAR_TYPE_PUNC;
 }
 
@@ -325,6 +356,19 @@ void loadCharsValue( const char* str, CTypeTokenizer& tokenizer, set<CharValue>&
 	}
 }
 
+void loadCharsString( const char* str, CTypeTokenizer& tokenizer, set<string>& ret )
+{
+    const CMA_CType *ctype = tokenizer.getCType();
+    const char* p = 0;
+    string instr = ctype->getPOCXmlStr(str);
+    tokenizer.assign( instr.c_str() );
+    while( ( p = tokenizer.next() ) )
+    {
+        //cout<<"load char "<<p<<endl;
+        ret.insert( p );
+    }
+}
+
 /**
  * Ignore the CHAR_TYPE_OTHER
  */
@@ -348,7 +392,7 @@ void loadTypes( const char* typeStr, vector<CharType>& ret )
 }
 
 void loadEntityImpl( const char* text, CTypeTokenizer& tokenizer, CharType type,
-		map< CharValue, CharConditions >& ret)
+        ctypeinner::ConditionRetType& ret)
 {
 	const CMA_CType *ctype = tokenizer.getCType();
 
@@ -358,8 +402,7 @@ void loadEntityImpl( const char* text, CTypeTokenizer& tokenizer, CharType type,
 
 	while( ( p = tokenizer.next() ) )
 	{
-		CharValue value = ctype->getEncodeValue( p );
-		CharConditions& cc = ret[value];
+		CharConditions& cc = ret.getCharCondition( p );
 		if( cc.baseType_ != CHAR_TYPE_INIT && cc.baseType_ != type)
 		{
 			cerr<<"[poc.xml Error] Character "<< p <<"'s base type is set."<<endl;
@@ -371,7 +414,7 @@ void loadEntityImpl( const char* text, CTypeTokenizer& tokenizer, CharType type,
 
 
 void loadEntity( const TiXmlNode* textNode, CTypeTokenizer& tokenizer, CharType type,
-		map< CharValue, CharConditions >& ret)
+        ctypeinner::ConditionRetType& ret)
 {
 	const char* text = getTinyXmlText( textNode );
 	loadEntityImpl( text, tokenizer, type, ret);
@@ -415,16 +458,16 @@ void loadCondition(const TiXmlNode* condNode, CTypeTokenizer& tokenizer, Conditi
 	ret.init( type, preTypes, noPreTypes, nextTypes, noNextTypes, nextChars, isEnd );
 }
 
-void loadRule(const TiXmlNode* ruleNode, CTypeTokenizer& tokenizer, map< CharValue, CharConditions >& ret)
+void loadRule(const TiXmlNode* ruleNode, CTypeTokenizer& tokenizer, ctypeinner::ConditionRetType& ret)
 {
-	set<CharValue> values;
+	set<string> values;
 	vector<Condition > conds;
 	//dealt the rule node
 	for( const TiXmlNode* node = ruleNode->FirstChild(); node; node = node->NextSibling() )
 	{
 		const char* tag = node->Value();
 		if( strcmp( tag, "char") == 0 )
-			loadCharsValue( getTinyXmlText( node ), tokenizer, values );
+			loadCharsString( getTinyXmlText( node ), tokenizer, values );
 		else if( strcmp( tag, "condition") == 0 )
 		{
 			Condition cond;
@@ -448,9 +491,9 @@ void loadRule(const TiXmlNode* ruleNode, CTypeTokenizer& tokenizer, map< CharVal
 	}
 
 	//update the conditions
-	for( set<CharValue>::iterator itr = values.begin(); itr != values.end(); ++itr)
+	for( set<string>::iterator itr = values.begin(); itr != values.end(); ++itr)
 	{
-		CharConditions& charCond = ret[ *itr ];
+		CharConditions& charCond = ret.getCharCondition( itr->c_str() );
 		charCond.addConditions( conds );
 		if( charCond.baseType_ == CHAR_TYPE_INIT )
 			charCond.baseType_ = CHAR_TYPE_OTHER;
@@ -471,6 +514,10 @@ int CMA_CType::loadConfiguration( const char* file )
 
 	CTypeTokenizer tokenizer( this );
 
+	ctypeinner::ConditionRetType ret;
+	ret.keys_ = &condKeys_;
+	ret.values_ = &condValues_;
+
 	//load the entities
 	const TiXmlNode* entityNode = root->FirstChild( "entities" );
 	set< CharValue > spaceSet;
@@ -479,13 +526,13 @@ int CMA_CType::loadConfiguration( const char* file )
 	{
 		const char* tag = node->Value();
 		if( strcmp( tag, "digit") == 0 )
-			loadEntity( node, tokenizer, CHAR_TYPE_NUMBER, typeMap_ );
+			loadEntity( node, tokenizer, CHAR_TYPE_NUMBER, ret );
 		else if( strcmp( tag, "chardigit") == 0 )
-			loadEntity( node, tokenizer, CHAR_TYPE_CHARDIGIT, typeMap_ );
+			loadEntity( node, tokenizer, CHAR_TYPE_CHARDIGIT, ret );
 		else if( strcmp( tag, "letter") == 0 )
-			loadEntity( node, tokenizer, CHAR_TYPE_LETTER, typeMap_ );
+			loadEntity( node, tokenizer, CHAR_TYPE_LETTER, ret );
 		else if( strcmp( tag, "punctuation") == 0 )
-			loadEntity( node, tokenizer, CHAR_TYPE_PUNC, typeMap_ );
+			loadEntity( node, tokenizer, CHAR_TYPE_PUNC, ret );
 		else if( strcmp( tag, "space") == 0 )
 		{
 			string spaceValue =  getTinyXmlText( node );
@@ -519,7 +566,7 @@ int CMA_CType::loadConfiguration( const char* file )
 	{
 		if( strcmp( node->Value(), "rule" ) != 0)
 			continue;
-		loadRule(node, tokenizer, typeMap_);
+		loadRule( node, tokenizer, ret );
 	}
 
 	return 1;
@@ -530,15 +577,22 @@ CharType CMA_CType::getCharType(const char* p, CharType preType, const char* nex
     CharValue curV = getEncodeValue(p);
 	if( isSpace( curV ) )
         return CHAR_TYPE_SPACE;
-	map< CharValue, CharConditions >::const_iterator itr = typeMap_.find( curV );
-	if( itr == typeMap_.end() )
+	VTrieNode node1;
+	condKeys_.search( p, &node1 );
+	if( node1.data <= 0 )
 		return CHAR_TYPE_OTHER;
 
+	VTrieNode node2;
 	CharValue nextV = nextP ? getEncodeValue( nextP ) : 0;
-	map< CharValue, CharConditions >::const_iterator itr2 = typeMap_.find( nextV );
-	CharType nextType = (itr2 == typeMap_.end()) ? CHAR_TYPE_OTHER : itr2->second.baseType_;
+	CharType nextType = CHAR_TYPE_OTHER;
+	if( nextV != 0 )
+	{
+	    condKeys_.search( nextP, &node2 );
+	    if( node2.data > 0 )
+	        nextType = condValues_[ node2.data ].baseType_;
+	}
 
-	const CharConditions& charConds = itr->second;
+	const CharConditions& charConds = condValues_[ node1.data ];
 	CharType matchedType = charConds.match(preType, nextV, nextType, charConds.baseType_);
 	if( preType == CHAR_TYPE_LETTER && matchedType == CHAR_TYPE_NUMBER )
 		return CHAR_TYPE_LETTER;
@@ -547,11 +601,11 @@ CharType CMA_CType::getCharType(const char* p, CharType preType, const char* nex
 
 CharType CMA_CType::getBaseType( const char* p ) const
 {
-	CharValue curV = getEncodeValue(p);
-	map< CharValue, CharConditions >::const_iterator itr = typeMap_.find( curV );
-	if( itr == typeMap_.end() )
+	VTrieNode node;
+	condKeys_.search( p, &node );
+	if( node.data <= 0 )
 		return CHAR_TYPE_OTHER;
-	return itr->second.baseType_;
+	return condValues_[ node.data ].baseType_;
 }
 
 bool CMA_CType::isSpace(const char* p) const
