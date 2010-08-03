@@ -435,7 +435,7 @@ int main(int argc, char* argv[])
     //cout<<"[Info] All Dictionary Size: "<<(dicSize/1048576.0)<<"m"<<endl;
     // set knowledge
     analyzer->setKnowledge(knowledge);
-
+//if(true) exit(0);
     // disable POS output for runWithStream
     if( optionIndex == 2 )
     	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);

@@ -527,9 +527,9 @@ int CMA_CType::loadConfiguration( const char* file )
 
 CharType CMA_CType::getCharType(const char* p, CharType preType, const char* nextP) const
 {
-	if( isSpace( p ) )
-        return CHAR_TYPE_SPACE;
     CharValue curV = getEncodeValue(p);
+	if( isSpace( curV ) )
+        return CHAR_TYPE_SPACE;
 	map< CharValue, CharConditions >::const_iterator itr = typeMap_.find( curV );
 	if( itr == typeMap_.end() )
 		return CHAR_TYPE_OTHER;
@@ -559,6 +559,11 @@ bool CMA_CType::isSpace(const char* p) const
 	CharValue charVal = getEncodeValue(p);
 	int destIdx = charVal % SPACE_ARRAY_SIZE;
 	return spaceArray_[ destIdx ] == charVal;
+}
+
+bool CMA_CType::isSpace( CharValue charVal ) const
+{
+    return spaceArray_[ charVal % SPACE_ARRAY_SIZE ] == charVal;
 }
 
 bool CMA_CType::isSentenceSeparator(const char* p) const

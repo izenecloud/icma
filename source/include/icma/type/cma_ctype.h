@@ -119,6 +119,7 @@ public:
      * \return true for white-space character, false for non white-space character.
      */
     bool isSpace(const char* p) const;
+    bool isSpace( CharValue charVal ) const;
 
     /**
      * Check whether is a seperator of sentence.
