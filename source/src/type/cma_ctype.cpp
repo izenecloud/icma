@@ -204,7 +204,7 @@ CMA_CType::CMA_CType(
     : type_( type ),
     getByteCountFun_ ( getByteCountFun )
 {
-    condValues_.reserve( 330 );
+    condValues_.reserve( 260 );
     condValues_.push_back( DefCharConditions ); //reserve offset 0
 }
 
