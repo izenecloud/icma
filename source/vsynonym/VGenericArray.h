@@ -31,12 +31,12 @@ public:
         delete[] data_;
     }
 
-    inline size_t size()
+    inline size_t size() const
     {
         return endOffset_ - startOffset_;
     }
 
-    inline bool empty()
+    inline bool empty() const
     {
         return endOffset_ == startOffset_;
     }
@@ -47,7 +47,7 @@ public:
         endOffset_ = 0;
     }
 
-    inline size_t capacity()
+    inline size_t capacity() const
     {
         return size_;
     }

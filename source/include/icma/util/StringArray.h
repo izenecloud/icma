@@ -36,12 +36,12 @@ public:
 
     void setString( const char* str );
 
-    inline size_t size()
+    inline size_t size() const
     {
         return offsetVec_.size();
     }
 
-    inline char* operator[]( int idx )
+    inline char* operator[]( int idx ) const
     {
         return data_ + offsetVec_[ idx ];
     }
@@ -52,9 +52,9 @@ public:
 
     void initialize();
 
-    bool contains( const char* str );
+    bool contains( const char* str ) const;
 
-    inline bool empty()
+    inline bool empty() const
     {
         return offsetVec_.empty();
     }

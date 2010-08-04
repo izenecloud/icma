@@ -158,7 +158,7 @@ void StringArray::initialize()
     dataLen_ = 0;
 }
 
-bool StringArray::contains( const char* str )
+bool StringArray::contains( const char* str ) const
 {
     size_t size = this->size();
     for( size_t i = 0; i < size; ++i )
