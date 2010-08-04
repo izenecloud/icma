@@ -12,6 +12,8 @@
 #include <vector>
 #include <map>
 #include <icma/util/DCTrie.h>
+#include <icma/util/StringArray.h>
+#include <VGenericArray.h>
 
 namespace cma
 {
@@ -43,8 +45,6 @@ public:
 class POSTable
 {
 public:
-
-	typedef std::vector< std::pair<std::string, bool> > POSTableInfo;
 
     POSTable();
 
@@ -137,7 +137,7 @@ public:
      * Get POSTable information, reserved Interface
      * \return POSTable information
      */
-    const POSTableInfo* getPOSTableInfo()
+    const StringArray* getPOSTableInfo()
     {
     	return &posTable_;
     }
@@ -147,7 +147,10 @@ private:
     static POSTable* instance_;
 
     /** the POS tag table */
-    POSTableInfo posTable_;
+    StringArray posTable_;
+
+    /** Index array */
+    vtrie::VGenericArray<bool> indexedFlags_;
 
     /** the POS tag map type from case-insensitive string to index code */
     typedef DCTrie POSMap;

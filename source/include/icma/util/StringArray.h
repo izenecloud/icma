@@ -64,19 +64,7 @@ public:
     void swap( StringArray& other );
 
 private:
-    void ensureFreeLength( size_t extraLen )
-    {
-        // reserve one zero byte
-        ++extraLen;
-        size_t freeLen = dataLen_ - ( endPtr_ - data_ );
-        if( freeLen > extraLen )
-            return;
-        size_t minNewLen = dataLen_ + extraLen - freeLen;
-        size_t newLen = dataLen_;
-        while( newLen < minNewLen )
-            newLen = (size_t)( newLen * 1.5 );
-        reserve( newLen );
-    }
+    void ensureFreeLength( size_t extraLen );
 
 private:
     char* data_;

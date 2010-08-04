@@ -95,7 +95,7 @@ StringArray::StringArray( const StringArray& other )
 
 StringArray::~StringArray()
 {
-    delete data_;
+    delete[] data_;
 }
 
 void StringArray::setString( const char* str )
@@ -108,7 +108,7 @@ void StringArray::setString( const char* str )
 
     offsetVec_.clear();
     if( data_ != NULL )
-        delete data_;
+        delete[] data_;
 
     size_t strLen = strlen( str );
     if( strLen == 0 )
@@ -129,12 +129,21 @@ void StringArray::reserve( size_t size )
 {
     if( size < dataLen_ )
         return;
-    char* tmp = new char[dataLen_];
+    if( data_ == NULL )
+    {
+        dataLen_ = size;
+        data_ = new char[ dataLen_ ];
+        endPtr_ = data_;
+        return;
+    }
+
+    char* tmp = new char[ size ];
     size_t usedLen = endPtr_ - data_;
     memcpy( tmp, data_, usedLen );
-    delete data_;
+    delete[] data_;
     data_ = tmp;
     endPtr_ = data_ + usedLen;
+    dataLen_ = size;
 }
 
 void StringArray::push_back( const char* str, size_t len )
@@ -153,7 +162,7 @@ void StringArray::initialize()
 {
     offsetVec_.clear();
     if( data_ != NULL )
-        delete data_;
+        delete[] data_;
     data_ = endPtr_ = NULL;
     dataLen_ = 0;
 }
@@ -191,6 +200,19 @@ void StringArray::swap( StringArray& other )
     size_t tmpSize = other.dataLen_;
     other.dataLen_ = dataLen_;
     dataLen_ = tmpSize;
+}
+
+void StringArray::ensureFreeLength( size_t extraLen )
+{
+    // reserve one zero byte
+    size_t freeLen = dataLen_ - ( endPtr_ - data_ );
+    if( freeLen > extraLen )
+        return;
+    size_t minNewLen = dataLen_ + extraLen - freeLen;
+    size_t newLen = dataLen_;
+    while( newLen < minNewLen )
+        newLen = (size_t)( newLen * 1.5 ) + 1;
+    reserve( newLen );
 }
 
 }

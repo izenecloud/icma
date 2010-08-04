@@ -9,6 +9,7 @@
 
 #include <cassert>
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -39,20 +40,26 @@ bool Nocase::operator() (const std::string& x, const std::string& y) const
 
 POSTable::POSTable()
 {
+    posTable_.reserve( 120 );
+    indexedFlags_.reserve( 45 );
+    posTable_.push_back( "N/A" );
+    indexedFlags_.push_back( true );
 }
 
 int POSTable::addPOS(const std::string& pos)
 {
+    const char* str = pos.data();
     // check whether has been added before
-    int ret = posMap_.search( pos.c_str() );
+    int ret = posMap_.search( str );
     if( ret > 0 )
     {
         return ret;
     }
 
-    int index = posTable_.size();
-    posMap_.insert( pos.c_str(), index );
-    posTable_.push_back( pair<string, bool>(pos, true));
+    int index = indexedFlags_.size();
+    posMap_.insert( str, index );
+    posTable_.push_back( str );
+    indexedFlags_.push_back( true );
 
     return index;
 }
@@ -70,16 +77,16 @@ int POSTable::getCodeFromStr(const std::string& pos)
 
 const char* POSTable::getStrFromCode(int index) const
 {
-    if(index < 0 || static_cast<size_t>(index) >= posTable_.size())
+    if(index < 0 || indexedFlags_.size() <= (size_t)index )
     	return EMPTY;
 
-    return posTable_[index].first.c_str();
+    return posTable_[index];
 }
 
 int POSTable::size() const
 {
     //assert(posTable_.size() == posMap_.size() && "POS table size should equal to POS map size");
-    return posTable_.size();
+    return indexedFlags_.size_;
 }
 
 int POSTable::getCodeFromType(POSType type) const
@@ -92,23 +99,24 @@ int POSTable::getCodeFromType(POSType type) const
 bool POSTable::isIndexPOS( int posCode ) const
 {
 	// Error POS Index return true by default
-	if(posCode < 0 || static_cast<size_t>(posCode) >= posTable_.size())
+	if(posCode < 0 || indexedFlags_.size() <= (size_t)posCode )
 		return true;
-	return posTable_[ posCode ].second;
+	return indexedFlags_[ posCode ];
 }
 
 bool POSTable::setIndexPOS( int posCode, bool isIndex )
 {
-	if(posCode < 0 || static_cast<size_t>(posCode) >= posTable_.size())
-			return false;
-	return posTable_[ posCode ].second = isIndex;
+	if(posCode < 0 || indexedFlags_.size() <= (size_t)index )
+        return false;
+	return indexedFlags_[ posCode ] = isIndex;
 }
 
 void POSTable::resetIndexPOSList( bool defVal )
 {
-	for( POSTableInfo::iterator itr = posTable_.begin();
-			itr != posTable_.end(); ++itr )
-		itr->second = defVal;
+	for( size_t i = 0; i < indexedFlags_.size(); ++i )
+	{
+	    indexedFlags_[ i ] = defVal;
+	}
 }
 
 int POSTable::setIndexPOSList( vector<string>& posList )
