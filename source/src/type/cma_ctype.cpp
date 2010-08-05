@@ -50,7 +50,7 @@ public:
 
 public:
     VTrie* keys_;
-    vtrie::VGenericArray<CharConditions>* values_;
+    VGenericArray<CharConditions>* values_;
 };
 
 

@@ -8,6 +8,8 @@
 #include "sentence.h"
 #include "icma/pos_table.h"
 
+#include <icma/util/StringArray.h>
+
 #include <algorithm>
 #include <cassert>
 
@@ -53,7 +55,7 @@ int Sentence::getCount(int nPos) const
 
 const char* Sentence::getLexicon(int nPos, int nIdx) const
 {
-    return (segment_[nPos].first)[nIdx].c_str();
+    return (segment_[nPos].first)[nIdx];
 }
 
 bool Sentence::isIndexWord(int nPos, int nIdx) const
@@ -68,7 +70,7 @@ int Sentence::getPOS(int nPos, int nIdx) const
 
 const char* Sentence::getStrPOS(int nPos, int nIdx) const
 {
-    return pos_[nPos][nIdx].c_str();
+    return pos_[nPos][nIdx];
 }
 
 MorphemeList* Sentence::getMorphemeList(int nPos)

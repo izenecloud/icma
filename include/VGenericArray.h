@@ -8,7 +8,7 @@
 #ifndef VGENERICARRAY_H_
 #define VGENERICARRAY_H_
 
-namespace vtrie
+namespace cma
 {
 
 template<class T>

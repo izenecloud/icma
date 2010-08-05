@@ -70,7 +70,7 @@ private:
     char* data_;
     char* endPtr_;
     size_t dataLen_;
-    vtrie::VGenericArray<offset_t> offsetVec_;
+    VGenericArray<offset_t> offsetVec_;
 };
 
 }

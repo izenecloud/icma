@@ -44,9 +44,21 @@
 #endif
 
 #include <iostream>
+#include <vector>
+
+#include <VGenericArray.h>
+#include <icma/util/StringArray.h>
 
 // Whether use utf_16 encoding
 //#define USE_UTF_16
+
+namespace cma
+{
+
+typedef VGenericArray< StringArray > POSRetType;
+typedef VGenericArray< std::pair< StringArray, double > > SegRetType;
+typedef StringArray StringVectorType;
+}
 
 #endif	/* _CMACCONFIG_H */
 

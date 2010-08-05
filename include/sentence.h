@@ -12,10 +12,14 @@
 #include <vector>
 #include <map>
 
+#include <VGenericArray.h>
+#include <icma/util/StringArray.h>
+
 namespace cma
 {
 
 class CMA_ME_Analyzer;
+class StringArray;
 
 /**
  * \brief a pair of lexicon string and its part-of-speech tag.
@@ -189,13 +193,13 @@ private:
     std::string raw_;
 
     /** segmentation and score vector */
-    std::vector< std::pair < std::vector< std::string >, double> > segment_;
+    VGenericArray< std::pair < StringArray, double> > segment_;
 
     /** POS list */
-    std::vector< std::vector< std::string > > pos_;
+    VGenericArray< StringArray > pos_;
 
     /** the candidates list of morphological analysis result */
-    std::vector<MorphemeList> candidates_;
+    VGenericArray< MorphemeList > candidates_;
 
     /** the scores list of candidates */
     //std::vector<double> scores_;

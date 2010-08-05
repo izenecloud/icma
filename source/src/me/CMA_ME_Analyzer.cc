@@ -20,6 +20,9 @@
 
 #include "icma/fmincover/analysis_fmincover.h"
 
+// used to disable some codes
+#define ON_DEV
+
 namespace cma {
 
 namespace cmainner
@@ -28,32 +31,32 @@ namespace cmainner
  * Whether the two Segmentation is the same
  */
 inline bool isSameSegment(
-        vector<pair<vector<string>, double> >& segment,
-        vector<vector<string> >& pos,
+        SegRetType& segment,
+        POSRetType& pos,
         int idx1,
         int idx2,
         bool includePOS
         )
 {
-    vector<string>& seg1 = segment[ idx1 ].first;
-    vector<string>& seg2 = segment[ idx2 ].first;
+    StringArray& seg1 = segment[ idx1 ].first;
+    StringArray& seg2 = segment[ idx2 ].first;
     if( seg1.size() != seg2.size() )
         return false;
 
     size_t size = seg1.size();
     for( size_t i = 0; i < size; ++i )
     {
-        if( seg1[ i ] != seg2[ i ] )
+        if( strcmp( seg1[ i ], seg2[ i ] ) != 0 )
             return false;
     }
 
     if( includePOS = false )
         return true;
-    vector<string>& pos1 = pos[ idx1 ];
-    vector<string>& pos2 = pos[ idx2 ];
+    StringArray& pos1 = pos[ idx1 ];
+    StringArray& pos2 = pos[ idx2 ];
     for( size_t i = 0; i < size; ++i )
     {
-        if( pos1[ i ] != pos2[ i ] )
+        if( strcmp( pos1[ i ], pos2[ i ] ) != 0 )
             return false;
     }
 
@@ -61,11 +64,12 @@ inline bool isSameSegment(
 }
 
 inline void removeDuplicatedSegment(
-        vector<pair<vector<string>, double> >& segment,
-        vector<vector<string> >& pos,
+        SegRetType& segment,
+        POSRetType& pos,
         bool includePOS
         )
 {
+#ifndef ON_DEV
     int listSize = (int)segment.size();
     if( listSize <= 1 )
         return;
@@ -75,7 +79,7 @@ inline void removeDuplicatedSegment(
     {
         for( int j = i - 1; j >= 0; --j )
         {
-            cout << "Compare #" << i << " with #" << j <<endl;
+            //cout << "Compare #" << i << " with #" << j <<endl;
             if( isSameSegment( segment, pos, i, j, includePOS ) == true )
             {
                 duplicatedList.push_back( i );
@@ -90,8 +94,8 @@ inline void removeDuplicatedSegment(
         segment.erase( ( segment.begin() + *itr ) );
         pos.erase( ( pos.begin() + *itr ) );
     }
+#endif
 }
-
 }
 
     CMA_ME_Analyzer::CMA_ME_Analyzer()
@@ -127,23 +131,24 @@ inline void removeDuplicatedSegment(
 
     int CMA_ME_Analyzer::runWithSentence(Sentence& sentence)
     {
+        static const MorphemeList DefMorphemeList;
         static const Morpheme DefMorp;
         if( strlen( sentence.getString() ) == 0 )
         	return 1;
         int N = (int) getOption(OPTION_TYPE_NBEST);
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
         
-        vector<pair<vector<string>, double> >& segment = sentence.segment_;
-        vector<vector<string> >& pos = sentence.pos_;
+        SegRetType& segment = sentence.segment_;
+        POSRetType& pos = sentence.pos_;
 
         (this->*analysis)(sentence.getString(), N, pos, segment, printPOS);
 
         size_t size = segment.size();
         if( size <= 1 )
         {
-			vector<string>& poses = pos[0];
+            StringVectorType& poses = pos[0];
 			size_t posSize = poses.size();
-			sentence.addList( MorphemeList() );
+			sentence.addList( DefMorphemeList );
 			MorphemeList& list = *sentence.getMorphemeList( sentence.getListSize() - 1 );
 			list.insert( list.end(), posSize, DefMorp );
 
@@ -167,9 +172,9 @@ inline void removeDuplicatedSegment(
 
 		for ( size_t i = 0; i < size; ++i )
 		{
-			vector<string>& poses = pos[i];
+		    StringVectorType& poses = pos[i];
 			size_t posSize = poses.size();
-			sentence.addList( MorphemeList() );
+			sentence.addList( DefMorphemeList );
 			MorphemeList& list = *sentence.getMorphemeList( sentence.getListSize() - 1 );
             list.resize( posSize );
 
@@ -227,14 +232,14 @@ inline void removeDuplicatedSegment(
 					out << endl;
                 continue;
             }
-            vector<pair<vector<string>, double> > segment;
-            vector<vector<string> > pos;
+            SegRetType segment;
+            POSRetType pos;
             (this->*analysis)(line.data(), N, pos, segment, printPOS);
 
             if (printPOS)
             {
-                vector<string>& best = segment[0].first;
-                vector<string>& bestPOS = pos[0];
+                StringVectorType& best = segment[0].first;
+                StringVectorType& bestPOS = pos[0];
                 int maxIndex = (int)best.size();
                 for (int i = 0; i < maxIndex; ++i) {
                     if(knowledge_->isStopWord(best[i]))
@@ -249,7 +254,7 @@ inline void removeDuplicatedSegment(
             }
             else
             {
-                vector<string>& best = segment[0].first;
+                StringVectorType& best = segment[0].first;
                 int maxIndex = (int)best.size();
                 for (int i = 0; i < maxIndex; ++i) {
                 	if(knowledge_->isStopWord(best[i]))
@@ -278,14 +283,14 @@ inline void removeDuplicatedSegment(
 
     	bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
       
-        vector<pair<vector<string>, double> > segment;
-        vector<vector<string> > pos;
+        SegRetType segment;
+        POSRetType pos;
         (this->*analysis)(inStr, 1, pos, segment, printPOS);
 
         if (printPOS)
         {
-            vector<string>& best = segment.begin()->first;
-            vector<string>& bestPOS = pos[0];
+            StringVectorType& best = segment[0].first;
+            StringVectorType& bestPOS = pos[0];
             size_t size = best.size();
             for (size_t i = 0; i < size; ++i) {
                 if(knowledge_->isStopWord(best[i]))
@@ -296,7 +301,7 @@ inline void removeDuplicatedSegment(
         }
         else
         {
-            vector<string>& best = segment[0].first;
+            StringVectorType& best = segment[0].first;
             size_t size = best.size();
             for (size_t i = 0; i < size; ++i) {
             	if(knowledge_->isStopWord(best[i]))
@@ -518,11 +523,12 @@ namespace meanainner{
     void CMA_ME_Analyzer::analysis_mmmodel(
             const char* sentence,
             int N,
-            vector<vector<string> >& posRet,
-            vector<pair<vector<string>, double> >& segRet,
+            POSRetType& posRet,
+            SegRetType& segRet,
             bool tagPOS
             )
     {
+#ifndef ON_DEV
         // Initial Step 1: split as Chinese Character based
         vector<string> words;
         extractCharacter( sentence, words );
@@ -535,7 +541,7 @@ namespace meanainner{
         setCharType( words, types );
 
     	int segN = N;
-        vector<pair<vector<string>, double> > segment(segN);
+        SegRetType segment(segN);
         SegTagger* segTagger = knowledge_->getSegTagger();
 
         if(N == 1)
@@ -580,17 +586,18 @@ namespace meanainner{
                 segRet[i].first.size());
         }
 
-
+#endif
     }
 
     void CMA_ME_Analyzer::analysis_fmm(
             const char* sentence,
             int N,
-            vector<vector<string> >& posRet,
-            vector<pair<vector<string>, double> >& segRet,
+            POSRetType& posRet,
+            SegRetType& segRet,
             bool tagPOS
             )
     {
+#ifndef ON_DEV
         // Initial Step 1: split as Chinese Character based
         vector<string> words;
         extractCharacter( sentence, words );
@@ -642,16 +649,18 @@ namespace meanainner{
 
             posRetOne[i] = defaultPOS;
         }
+#endif
     }
 
     void CMA_ME_Analyzer::analysis_dictb(
             const char* sentence,
             int N,
-            vector<vector<string> >& posRet,
-            vector<pair<vector<string>, double> >& segRet,
+            POSRetType& posRet,
+            SegRetType& segRet,
             bool tagPOS
             )
     {
+#ifndef ON_DEV
         // Initial Step 1: split as Chinese Character based
         vector<string> words;
         extractCharacter( sentence, words );
@@ -664,7 +673,7 @@ namespace meanainner{
         setCharType( words, types );
 
         int segN = N;
-        vector<pair<vector<string>, double> > segment( segN );
+        SegRetType segment( segN );
         //SegTagger* segTagger = knowledge_->getSegTagger();
 
         // Segment 1st. Perform special characters
@@ -704,18 +713,19 @@ namespace meanainner{
                 segRet[i].first.size());
         }
 
-
+#endif
     }
 
 
     void CMA_ME_Analyzer::analysis_fmincover(
             const char* sentence,
             int N,
-            vector<vector<string> >& posRet,
-            vector<pair<vector<string>, double> >& segment,
+            POSRetType& posRet,
+            SegRetType& segRet,
             bool tagPOS
             )
     {
+#ifndef ON_DEV
         // Initial Step 1: split as Chinese Character based
         vector<string> words;
         extractCharacter( sentence, words );
@@ -726,9 +736,9 @@ namespace meanainner{
         CharType types[ (int)words.size() ];
         setCharType( words, types );
 
-        segment.resize(1);
-        segment[0].second = 1;
-        vector<string>& bestSeg = segment[0].first;
+        segRet.resize(1);
+        segRet[0].second = 1;
+        StringVectorType& bestSeg = segRet[0].first;
 
         VTrie *trie = knowledge_->getTrie();
         fmincover::parseFMinCoverString(
@@ -741,6 +751,7 @@ namespace meanainner{
         vector<string>& posRetOne = posRet[0];
         knowledge_->getPOSTagger()->quick_tag_sentence_best(
                 bestSeg, posRetOne, 0, bestSeg.size() );
+#endif
 
     }
 

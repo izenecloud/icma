@@ -13,7 +13,9 @@
 #include <iostream>
 
 #include "icma/type/cma_ctype.h"
+#include "icma/cmacconfig.h"
 #include "VTrie.h"
+
 
 namespace cma
 {
@@ -21,8 +23,8 @@ namespace fmincover
 {
 
 void parseFMinCoverString(
-        vector< string >& out,
-        vector< string >& words,
+        StringVectorType& out,
+        StringVectorType& words,
         CharType* types,
         VTrie* trie,
         size_t beginIdx,

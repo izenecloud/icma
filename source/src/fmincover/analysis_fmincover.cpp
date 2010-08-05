@@ -12,6 +12,8 @@
 
 using namespace std;
 
+#define ON_DEV
+
 namespace cma
 {
 namespace fmincover
@@ -22,16 +24,18 @@ namespace inner
 
 inline void assignStrVectorDomain(
         string& out,
-        vector<string>& words,
+        StringVectorType& words,
         size_t beginIdx,
         size_t endIdx
         )
 {
+#ifndef ON_DEV
     out = words[ beginIdx ];
     for( size_t i = beginIdx + 1; i < endIdx; ++i )
     {
         out += words[i];
     }
+#endif
 }
 
 }
@@ -39,13 +43,14 @@ inline void assignStrVectorDomain(
 const string DefStr;
 
 void divideNormalString(
-        vector< string >& out,
+        StringVectorType& out,
         VTrie* trie,
         size_t beginIdx,
         size_t endIdxSt,
-        vector<string>& words
+        StringVectorType& words
         )
 {
+#ifndef ON_DEV
  /*   string tmp;
     inner::assignStrVectorDomain( tmp, words,
             beginIdx, endIdxSt );
@@ -161,10 +166,11 @@ void divideNormalString(
 
         dLIdx = dLEndIdx;
     }
+#endif
 }
 
 void addFMinCString(
-        vector< string >& out,
+        StringVectorType& out,
         VTrie* trie,
         size_t beginIdx,
         size_t endIdx,
@@ -172,6 +178,7 @@ void addFMinCString(
         CharType* types
         )
 {
+#ifndef ON_DEV
 /*    string tmp;
         inner::assignStrVectorDomain( tmp, words,
                 beginIdx, endIdx );
@@ -229,19 +236,20 @@ void addFMinCString(
     }
 
     }
-
+#endif
 }
 
 
 void parseFMinCoverString(
-        vector< string >& out,
-        vector< string >& words,
+        StringVectorType& out,
+        StringVectorType& words,
         CharType* types,
         VTrie* trie,
         size_t beginIdx,
         size_t endIdx
         )
 {
+#ifndef ON_DEV
     if( words.empty() == true )
         return;
 
@@ -304,6 +312,7 @@ void parseFMinCoverString(
     {
         addFMinCString( out, trie, fsIdx, curIdx, words, types );
     }
+#endif
 }
 
 }

@@ -15,6 +15,9 @@
 #include "icma/me/CMA_ME_Knowledge.h"
 #include "icma/type/cma_ctype.h"
 
+#include <VGenericArray.h>
+#include <icma/util/StringArray.h>
+
 #include <string>
 
 using namespace std;
@@ -29,6 +32,7 @@ namespace cma
 class CMA_ME_Analyzer : public Analyzer
 {
 public:
+
     CMA_ME_Analyzer();
 
     /**
@@ -142,8 +146,8 @@ public:
     typedef void(CMA_ME_Analyzer::*analysis_t)(
             const char*,
             int,
-            vector<vector<string> >&,
-            vector<pair<vector<string>, double> >&,
+            POSRetType&,
+            SegRetType&,
             bool
             );
 
@@ -154,8 +158,8 @@ private:
     void analysis_mmmodel(
             const char* sentence,
             int N,
-            vector<vector<string> >& pos,
-            vector<pair<vector<string>, double> >& segment,
+            POSRetType& posRet,
+            SegRetType& segRet,
             bool tagPOS = true
             );
 
@@ -165,8 +169,8 @@ private:
     void analysis_fmm(
             const char* sentence,
             int N,
-            vector<vector<string> >& pos,
-            vector<pair<vector<string>, double> >& segment,
+            POSRetType& posRet,
+            SegRetType& segRet,
             bool tagPOS = true
             );
 
@@ -176,8 +180,8 @@ private:
     void analysis_dictb(
             const char* sentence,
             int N,
-            vector<vector<string> >& pos,
-            vector<pair<vector<string>, double> >& segment,
+            POSRetType& posRet,
+            SegRetType& segRet,
             bool tagPOS = true
             );
 
@@ -187,8 +191,8 @@ private:
     void analysis_fmincover(
             const char* sentence,
             int N,
-            vector<vector<string> >& pos,
-            vector<pair<vector<string>, double> >& segment,
+            POSRetType& posRet,
+            SegRetType& segRet,
             bool tagPOS = true
             );
 

@@ -160,7 +160,7 @@ private:
 	/** Character to types map */
 	//map< CharValue, CharConditions > typeMap_;
 	VTrie condKeys_;
-	vtrie::VGenericArray<CharConditions> condValues_;
+	VGenericArray<CharConditions> condValues_;
 
 	/** Spaces Set */
 	CharValue spaceArray_[SPACE_ARRAY_SIZE];
