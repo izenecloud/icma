@@ -12,10 +12,12 @@
 #include <vector>
 #include <queue>
 #include <VGenericArray.h>
+#include <iostream>
 
 namespace cma
 {
 extern std::string DefDelimeter;
+extern std::string DefPrintDelimeter;
 
 class StringArray
 {
@@ -48,9 +50,16 @@ public:
 
     void reserve( size_t size );
 
+    inline void reserveOffsetVec( size_t size )
+    {
+        offsetVec_.reserve( size );
+    }
+
     void push_back( const char* str, size_t len = 0 );
 
     void initialize();
+
+    void clear();
 
     bool contains( const char* str ) const;
 
@@ -62,6 +71,8 @@ public:
     void removeHead();
 
     void swap( StringArray& other );
+
+    void print( const std::string& delimeter = DefPrintDelimeter, std::ostream& out = std::cout );
 
 private:
     void ensureFreeLength( size_t extraLen );

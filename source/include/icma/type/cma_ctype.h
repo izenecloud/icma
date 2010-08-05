@@ -152,6 +152,12 @@ public:
      */
     string getPOCXmlStr( const char* p) const;
 
+    Knowledge::EncodeType getEncodeType()
+    {
+        return type_;
+    }
+
+
 protected:
 	/** The encode type of the current cma_ctype class */
 	Knowledge::EncodeType type_;
@@ -168,6 +174,7 @@ private:
 	/** Sentence Separator Set */
 	set<CharValue> senSepSet_;
 
+public:
 	getByteCount_t getByteCountFun_;
 
 };
