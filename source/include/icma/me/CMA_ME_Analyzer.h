@@ -208,7 +208,7 @@ private:
      */
     void getNGramResultImpl( const vector<vector<OneGramType> >& oneGram, const int n, vector<string>& output );
 
-    void extractCharacter( const char* sentence, vector< string >& charOut );
+    void extractCharacter( const char* sentence, StringVectorType& charOut );
 
     /**
      * \param types should be allocated enough memory before invoking

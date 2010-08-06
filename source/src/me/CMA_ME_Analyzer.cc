@@ -725,13 +725,13 @@ namespace meanainner{
             bool tagPOS
             )
     {
-#ifndef ON_DEV
         // Initial Step 1: split as Chinese Character based
-        vector<string> words;
+        StringVectorType words;
         extractCharacter( sentence, words );
 
         if( words.empty() == true )
             return;
+#ifndef ON_DEV
         // Initial Step 2nd: set character types
         CharType types[ (int)words.size() ];
         setCharType( words, types );
@@ -842,7 +842,7 @@ namespace meanainner{
     	return posTable_->size();
     }
 
-    void CMA_ME_Analyzer::extractCharacter( const char* sentence, vector< string >& charOut )
+    void CMA_ME_Analyzer::extractCharacter( const char* sentence, StringVectorType& charOut )
     {
         static const string DefString;
 
@@ -853,36 +853,17 @@ namespace meanainner{
                 sentence += 3;
         }
 
-        charOut.reserve( strlen(sentence) / 2 + 1 );
         CMA_CType::getByteCount_t getByteFunc = ctype_->getByteCountFun_;
+        size_t strLen = strlen(sentence);
+        charOut.reserve( strLen * 2 );
+        charOut.reserveOffsetVec( strLen );
         unsigned int len;
         const unsigned char *us = (const unsigned char *)sentence;
-        vector< string >::iterator itr;
         while( ( len = getByteFunc( us ) ) > 0 )
         {
-            itr = charOut.insert( charOut.end(), DefString );
-            itr->reserve( len );
-            itr->append( (const char*)us, len );
+            charOut.push_back( ( const char* )us, len );
             us += len;
         }
-
-
-
-        /*
-        size_t len = ctype_->length( sentence );
-        charOut.resize( len );
-        if( len == 0 )
-            return;
-
-        size_t i = 0;
-        CTypeTokenizer token( ctype_, sentence );
-        const char* next = 0;
-        while( ( next = token.next() ) )
-        {
-            charOut[ i ].assign( next );
-            ++i;
-        }
-        */
     }
 
     void CMA_ME_Analyzer::setCharType( vector< string >& charIn, CharType* types )
