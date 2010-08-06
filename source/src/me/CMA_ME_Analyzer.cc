@@ -731,11 +731,12 @@ namespace meanainner{
 
         if( words.empty() == true )
             return;
-#ifndef ON_DEV
+
         // Initial Step 2nd: set character types
         CharType types[ (int)words.size() ];
         setCharType( words, types );
 
+#ifndef ON_DEV
         segRet.resize(1);
         segRet[0].second = 1;
         StringVectorType& bestSeg = segRet[0].first;
@@ -866,17 +867,17 @@ namespace meanainner{
         }
     }
 
-    void CMA_ME_Analyzer::setCharType( vector< string >& charIn, CharType* types )
+    void CMA_ME_Analyzer::setCharType( StringVectorType& charIn, CharType* types )
     {
         int maxWordOff = (int)charIn.size() - 1;
         CharType preType = CHAR_TYPE_INIT;
         for( int i = 0; i < maxWordOff; ++i )
         {
             types[i] = preType = ctype_->getCharType(
-                    charIn[ i ].data(), preType, charIn[i+1].data() );
+                    charIn[ i ], preType, charIn[i+1] );
         }
         types[ maxWordOff ] = ctype_->getCharType(
-                charIn[ maxWordOff ].data(), preType, 0);
+                charIn[ maxWordOff ], preType, 0);
     }
 
 }

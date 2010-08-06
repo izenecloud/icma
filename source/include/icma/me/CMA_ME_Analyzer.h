@@ -213,7 +213,7 @@ private:
     /**
      * \param types should be allocated enough memory before invoking
      */
-    void setCharType( vector< string >& charIn, CharType* types );
+    void setCharType( StringVectorType& charIn, CharType* types );
 
 private:
     CMA_ME_Knowledge *knowledge_;
