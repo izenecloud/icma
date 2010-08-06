@@ -46,7 +46,7 @@
 #include <iostream>
 #include <vector>
 
-#include <VGenericArray.h>
+#include <icma/util/VGenericArray.h>
 #include <icma/util/StringArray.h>
 
 // Whether use utf_16 encoding

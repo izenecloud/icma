@@ -12,7 +12,7 @@
 #include <vector>
 #include <map>
 
-#include <VGenericArray.h>
+#include <icma/util/VGenericArray.h>
 #include <icma/util/StringArray.h>
 
 namespace cma

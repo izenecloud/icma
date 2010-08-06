@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 #include <queue>
-#include <VGenericArray.h>
+#include <icma/util/VGenericArray.h>
 #include <iostream>
 
 namespace cma

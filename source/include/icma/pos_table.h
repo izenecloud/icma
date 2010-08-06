@@ -13,7 +13,7 @@
 #include <map>
 #include <icma/util/DCTrie.h>
 #include <icma/util/StringArray.h>
-#include <VGenericArray.h>
+#include <icma/util/VGenericArray.h>
 
 namespace cma
 {

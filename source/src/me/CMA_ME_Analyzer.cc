@@ -725,6 +725,8 @@ namespace meanainner{
             bool tagPOS
             )
     {
+        static const std::pair< StringArray, double > DefPOSInner;
+
         // Initial Step 1: split as Chinese Character based
         StringVectorType words;
         extractCharacter( sentence, words );
@@ -736,15 +738,17 @@ namespace meanainner{
         CharType types[ (int)words.size() ];
         setCharType( words, types );
 
-#ifndef ON_DEV
-        segRet.resize(1);
+        segRet.clear();
+        segRet.reserve( 1 );
+        segRet.push_back( DefPOSInner );
         segRet[0].second = 1;
         StringVectorType& bestSeg = segRet[0].first;
+
 
         VTrie *trie = knowledge_->getTrie();
         fmincover::parseFMinCoverString(
                 bestSeg, words, types, trie, 0, words.size() );
-
+#ifndef ON_DEV
         if( tagPOS == false )
             return;
 
