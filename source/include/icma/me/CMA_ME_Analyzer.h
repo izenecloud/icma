@@ -15,9 +15,6 @@
 #include "icma/me/CMA_ME_Knowledge.h"
 #include "icma/type/cma_ctype.h"
 
-#include <icma/util/VGenericArray.h>
-#include <icma/util/StringArray.h>
-
 #include <string>
 
 using namespace std;

@@ -196,6 +196,62 @@ void testExtractCharacter( int argc, char** argv )
 
 }
 
+namespace memalloc
+{
+
+void testMemAlloc()
+{
+    int times = 5000;
+    size_t size = 2 * 1024 * 1024;
+    size_t newSize = 8 * 1024 * 1024;
+
+    char* records[ times ];
+
+    cout << "===== testMemAlloc" << endl;
+
+    VTimer timer;
+
+    {
+        cout << "Test new memalloc ..." << endl;
+        timer.startWithTitle( "new memalloc" );
+        for( int i = 0; i < times; ++i )
+        {
+            char* tmp = new char[size];
+            tmp[size-1] = 'a';
+            records[ i ] = new char[newSize];
+            memcpy( records[i], tmp, size );
+            delete tmp;
+            delete records[i];
+        }
+        timer.endAndPrint();
+    }
+
+    /*for( int i = 0; i < times; ++i )
+    {
+        delete[] records[ i ];
+    }*/
+
+    {
+        cout << "Test malloc memalloc ..." << endl;
+        timer.startWithTitle( "malloc memalloc" );
+        for( int i = 0; i < times; ++i )
+        {
+            records[ i ] = (char*)malloc(size);
+            (records[ i ])[size-1] = 'a';
+            records[ i ] = (char*)realloc(records[ i ],size);
+            free( records[i] );
+        }
+        timer.endAndPrint();
+    }
+
+    /*for( int i = 0; i < times; ++i )
+    {
+        free(records[ i ]);
+    }*/
+}
+
+}
+
 
 int main( int argc, char** argv )
 {
@@ -203,7 +259,10 @@ int main( int argc, char** argv )
     //tokenizer::testTokenizerSpeed( argc, argv );
 
     //extracorCharacter::testExtractCharacterByStringArray();
-    extracorCharacter::testExtractCharacter( argc, argv );
+    //extracorCharacter::testExtractCharacter( argc, argv );
+
+    memalloc::testMemAlloc();
+
 
     return 0;
 }

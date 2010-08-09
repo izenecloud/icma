@@ -18,7 +18,6 @@ using std::string;
 #include "icma/type/cma_ctype_core.h"
 
 #include "VTrie.h"
-#include "icma/util/VGenericArray.h"
 
 namespace cma
 {
