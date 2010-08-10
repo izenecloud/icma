@@ -29,7 +29,7 @@
  *
  * If the external program uses the library, simply add all the header files
  * in the $include$ directory under the project root directory, and add the
- * lib/libcmac.a into the library for static linking or lib/*.so for dynamic linking.
+ * lib/libcmac.a into the library for static linking or lib/libcmac.so for dynamic linking.
  *
  * \section runtrainer Run the Trainer
  *

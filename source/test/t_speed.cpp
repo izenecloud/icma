@@ -12,6 +12,7 @@
 // for testTokenizer
 #include <icma/util/CPPStringUtils.h>
 #include <icma/util/StringArray.h>
+#include <icma/util/VGenericArray.h>
 #include <knowledge.h>
 #include <icma/type/cma_ctype.h>
 
@@ -252,6 +253,22 @@ void testMemAlloc()
 
 }
 
+namespace genericarray
+{
+void testGenericArray()
+{
+    VGenericArray<string> s1;
+    s1.push_back( "acs" );
+    s1.reserve( 30 );
+    cout << "Shoule be 'acs': " << s1[0] << endl;
+
+    PGenericArray<int> s2;
+    s2.push_back( 222 );
+    s2.reserve( 30 );
+    cout << "Shoule be '222: " << s2[0] << endl;
+}
+}
+
 
 int main( int argc, char** argv )
 {
@@ -261,8 +278,9 @@ int main( int argc, char** argv )
     //extracorCharacter::testExtractCharacterByStringArray();
     //extracorCharacter::testExtractCharacter( argc, argv );
 
-    memalloc::testMemAlloc();
+    //memalloc::testMemAlloc();
 
+    genericarray::testGenericArray();
 
     return 0;
 }

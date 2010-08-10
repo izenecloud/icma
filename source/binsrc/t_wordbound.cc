@@ -195,7 +195,7 @@ int main(int argc, char* argv[])
         exit(1);
     }
 
-    bool loadModel = true;
+    //bool loadModel = true;
 
 
     // set encoding type from the dictionary path

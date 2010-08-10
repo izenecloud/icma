@@ -744,11 +744,11 @@ namespace meanainner{
         segRet[0].second = 1;
         StringVectorType& bestSeg = segRet[0].first;
 
-
+#ifndef ON_DEV
         VTrie *trie = knowledge_->getTrie();
         fmincover::parseFMinCoverString(
                 bestSeg, words, types, trie, 0, words.size() );
-#ifndef ON_DEV
+
         if( tagPOS == false )
             return;
 
