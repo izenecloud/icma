@@ -273,14 +273,14 @@ void testGenericArray()
 int main( int argc, char** argv )
 {
     //tokenizer::testStringArrayTokenizer();
-    //tokenizer::testTokenizerSpeed( argc, argv );
+    tokenizer::testTokenizerSpeed( argc, argv );
 
     //extracorCharacter::testExtractCharacterByStringArray();
     //extracorCharacter::testExtractCharacter( argc, argv );
 
     //memalloc::testMemAlloc();
 
-    genericarray::testGenericArray();
+    //genericarray::testGenericArray();
 
     return 0;
 }

@@ -81,7 +81,7 @@ private:
     char* data_;
     char* endPtr_;
     size_t dataLen_;
-    VGenericArray<offset_t> offsetVec_;
+    PGenericArray<offset_t> offsetVec_;
 };
 
 }

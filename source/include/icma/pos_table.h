@@ -150,7 +150,7 @@ private:
     StringArray posTable_;
 
     /** Index array */
-    VGenericArray<bool> indexedFlags_;
+    PGenericArray<bool> indexedFlags_;
 
     /** the POS tag map type from case-insensitive string to index code */
     typedef DCTrie POSMap;
