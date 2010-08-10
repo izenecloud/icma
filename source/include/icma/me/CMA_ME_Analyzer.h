@@ -143,8 +143,7 @@ public:
     typedef void(CMA_ME_Analyzer::*analysis_t)(
             const char*,
             int,
-            POSRetType&,
-            SegRetType&,
+            Sentence&,
             bool
             );
 
@@ -155,8 +154,7 @@ private:
     void analysis_mmmodel(
             const char* sentence,
             int N,
-            POSRetType& posRet,
-            SegRetType& segRet,
+            Sentence& ret,
             bool tagPOS = true
             );
 
@@ -166,8 +164,7 @@ private:
     void analysis_fmm(
             const char* sentence,
             int N,
-            POSRetType& posRet,
-            SegRetType& segRet,
+            Sentence& ret,
             bool tagPOS = true
             );
 
@@ -177,8 +174,7 @@ private:
     void analysis_dictb(
             const char* sentence,
             int N,
-            POSRetType& posRet,
-            SegRetType& segRet,
+            Sentence& ret,
             bool tagPOS = true
             );
 
@@ -188,8 +184,7 @@ private:
     void analysis_fmincover(
             const char* sentence,
             int N,
-            POSRetType& posRet,
-            SegRetType& segRet,
+            Sentence& ret,
             bool tagPOS = true
             );
 
@@ -211,6 +206,12 @@ private:
      * \param types should be allocated enough memory before invoking
      */
     void setCharType( StringVectorType& charIn, CharType* types );
+
+    void createStringLexicon(
+            StringVectorType& words,
+            PGenericArray<size_t> segSeq,
+            StringVectorType& out
+            );
 
 private:
     CMA_ME_Knowledge *knowledge_;

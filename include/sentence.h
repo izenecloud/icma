@@ -48,6 +48,19 @@ struct Morpheme
 
 };
 
+class CandidateMeta
+{
+public:
+    /** segment offset for current Candidate */
+    size_t segOffset_;
+
+    /** POS offset for current Candidate */
+    size_t posOffset_;
+
+    /** Candidate Score */
+    double score_;
+};
+
 /** A list of morphemes. */
 typedef std::vector<Morpheme> MorphemeList;
 
@@ -193,13 +206,16 @@ private:
     std::string raw_;
 
     /** segmentation and score vector */
-    VGenericArray< std::pair < StringArray, double> > segment_;
+    StringArray segment_;
 
     /** POS list */
-    VGenericArray< StringArray > pos_;
+    PGenericArray< const char* > pos_;
 
     /** the candidates list of morphological analysis result */
     VGenericArray< MorphemeList > candidates_;
+
+    /** the candidates meta information */
+    VGenericArray< CandidateMeta > candMetas_;
 
     /** the scores list of candidates */
     //std::vector<double> scores_;

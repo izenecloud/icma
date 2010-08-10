@@ -55,8 +55,6 @@
 namespace cma
 {
 
-typedef VGenericArray< StringArray > POSRetType;
-typedef VGenericArray< std::pair< StringArray, double > > SegRetType;
 typedef StringArray StringVectorType;
 }
 

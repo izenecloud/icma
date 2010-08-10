@@ -68,6 +68,11 @@ public:
         return offsetVec_.empty();
     }
 
+    size_t freeLen() const
+    {
+        return dataLen_ == 0 ? 0 : ( dataLen_ - ( endPtr_ - data_ ) );
+    }
+
     void removeHead();
 
     void swap( StringArray& other );

@@ -31,32 +31,30 @@ namespace cmainner
  * Whether the two Segmentation is the same
  */
 inline bool isSameSegment(
-        SegRetType& segment,
-        POSRetType& pos,
+        Sentence& sent,
         int idx1,
         int idx2,
         bool includePOS
         )
 {
-    StringArray& seg1 = segment[ idx1 ].first;
-    StringArray& seg2 = segment[ idx2 ].first;
-    if( seg1.size() != seg2.size() )
+    if( sent.getCount( idx1 ) != sent.getCount( idx2 ) )
         return false;
 
-    size_t size = seg1.size();
+    size_t size = sent.getCount( idx1 );
     for( size_t i = 0; i < size; ++i )
     {
-        if( strcmp( seg1[ i ], seg2[ i ] ) != 0 )
+        if( strcmp( sent.getLexicon( idx1, i ),
+                sent.getLexicon( idx2, i ) ) != 0 )
             return false;
     }
 
     if( includePOS = false )
         return true;
-    StringArray& pos1 = pos[ idx1 ];
-    StringArray& pos2 = pos[ idx2 ];
+
     for( size_t i = 0; i < size; ++i )
     {
-        if( strcmp( pos1[ i ], pos2[ i ] ) != 0 )
+        if( strcmp( sent.getStrPOS( idx1, i ),
+                sent.getStrPOS( idx2, i ) ) != 0 )
             return false;
     }
 
@@ -64,13 +62,11 @@ inline bool isSameSegment(
 }
 
 inline void removeDuplicatedSegment(
-        SegRetType& segment,
-        POSRetType& pos,
+        Sentence& sent,
         bool includePOS
         )
 {
-#ifndef ON_DEV
-    int listSize = (int)segment.size();
+    int listSize = sent.getListSize();
     if( listSize <= 1 )
         return;
 
@@ -80,7 +76,7 @@ inline void removeDuplicatedSegment(
         for( int j = i - 1; j >= 0; --j )
         {
             //cout << "Compare #" << i << " with #" << j <<endl;
-            if( isSameSegment( segment, pos, i, j, includePOS ) == true )
+            if( isSameSegment( sent, i, j, includePOS ) == true )
             {
                 duplicatedList.push_back( i );
                 break;
@@ -91,10 +87,10 @@ inline void removeDuplicatedSegment(
     for( vector< size_t >::reverse_iterator itr = duplicatedList.rbegin();
             itr != duplicatedList.rend(); ++itr )
     {
-        segment.erase( ( segment.begin() + *itr ) );
-        pos.erase( ( pos.begin() + *itr ) );
+        //TODO have remove some results here
+        //segment.erase( ( segment.begin() + *itr ) );
+        //pos.erase( ( pos.begin() + *itr ) );
     }
-#endif
 }
 }
 
@@ -138,16 +134,16 @@ inline void removeDuplicatedSegment(
         int N = (int) getOption(OPTION_TYPE_NBEST);
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
         
-        SegRetType& segment = sentence.segment_;
-        POSRetType& pos = sentence.pos_;
 
-        (this->*analysis)(sentence.getString(), N, pos, segment, printPOS);
 
-        size_t size = segment.size();
+        (this->*analysis)(sentence.getString(), N, sentence, printPOS);
+
+        size_t size = sentence.getListSize();
+        sentence.candidates_.reserve( size );
+
         if( size <= 1 )
         {
-            StringVectorType& poses = pos[0];
-			size_t posSize = poses.size();
+			size_t posSize = sentence.getCount( 0 );
 			sentence.addList( DefMorphemeList );
 			MorphemeList& list = *sentence.getMorphemeList( sentence.getListSize() - 1 );
 			list.insert( list.end(), posSize, DefMorp );
@@ -157,7 +153,7 @@ inline void removeDuplicatedSegment(
                 for ( size_t j = 0; j < posSize; ++j )
                 {
                     Morpheme& morp = list[ j ];
-                    morp.posCode_ = posTable_->getCodeFromStr( poses[j] );
+                    morp.posCode_ = posTable_->getCodeFromStr( sentence.getStrPOS( 0, j ) );
                     morp.isIndexed = posTable_->isIndexPOS( morp.posCode_ );
                 }
 			}
@@ -168,36 +164,36 @@ inline void removeDuplicatedSegment(
 
         double totalScore = 0;
         //remove duplicate first
-        cmainner::removeDuplicatedSegment( segment, pos, printPOS );
+        cmainner::removeDuplicatedSegment( sentence, printPOS );
 
 		for ( size_t i = 0; i < size; ++i )
 		{
-		    StringVectorType& poses = pos[i];
-			size_t posSize = poses.size();
+		    size_t posSize = sentence.getCount( i );
 			sentence.addList( DefMorphemeList );
 			MorphemeList& list = *sentence.getMorphemeList( sentence.getListSize() - 1 );
-            list.resize( posSize );
+			list.insert( list.end(), posSize, DefMorp );
 
             if( printPOS == true )
             {
                 for ( size_t j = 0; j < posSize; ++j )
                 {
                     Morpheme& morp = list[ j ];
-                    morp.posCode_ = posTable_->getCodeFromStr( poses[j] );
+                    morp.posCode_ = posTable_->getCodeFromStr( sentence.getStrPOS( i, j ) );
                     morp.isIndexed = posTable_->isIndexPOS( morp.posCode_ );
                 }
             }
 
-			double score = segment[i].second;
+			double score = sentence.getScore( i );
 			totalScore += score;
 		}
 
 		for ( int j = 0; j < sentence.getListSize(); ++j )
 		{
-			sentence.setScore(j, sentence.getScore(j) / totalScore );
+			sentence.setScore( j, sentence.getScore(j) / totalScore );
 		}
 
         return 1;
+
     }
 
     int CMA_ME_Analyzer::runWithStream(const char* inFileName, const char* outFileName) {
@@ -219,7 +215,6 @@ inline void removeDuplicatedSegment(
 			return 0;
 		}
 
-    	int N = 1;
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
 
         string line;
@@ -232,19 +227,18 @@ inline void removeDuplicatedSegment(
 					out << endl;
                 continue;
             }
-            SegRetType segment;
-            POSRetType pos;
-            (this->*analysis)(line.data(), N, pos, segment, printPOS);
+            Sentence sent;
+            (this->*analysis)(line.data(), 1, sent, printPOS);
 
             if (printPOS)
             {
-                StringVectorType& best = segment[0].first;
-                StringVectorType& bestPOS = pos[0];
-                int maxIndex = (int)best.size();
-                for (int i = 0; i < maxIndex; ++i) {
-                    if(knowledge_->isStopWord(best[i]))
-                    	continue;
-                	out << best[i] << posDelimiter_ << bestPOS[i] << wordDelimiter_;
+                int maxIndex = sent.getCount( 0 );
+                for ( int i = 0; i < maxIndex; ++i )
+                {
+                    const char* lexicon = sent.getLexicon( 0, i );
+                    //if( knowledge_->isStopWord( lexicon ) )
+                    //	continue;
+                	out << lexicon << posDelimiter_ << sent.getStrPOS( 0, i ) << wordDelimiter_;
                 }
 
                 if (remains)
@@ -254,12 +248,13 @@ inline void removeDuplicatedSegment(
             }
             else
             {
-                StringVectorType& best = segment[0].first;
-                int maxIndex = (int)best.size();
-                for (int i = 0; i < maxIndex; ++i) {
-                	if(knowledge_->isStopWord(best[i]))
-                		continue;
-                	out << best[i] << wordDelimiter_;
+                int maxIndex = sent.getCount( 0 );
+                for (int i = 0; i < maxIndex; ++i)
+                {
+                    const char* lexicon = sent.getLexicon( 0, i );
+                	//if( knowledge_->isStopWord( lexicon) )
+                	//	continue;
+                	out << lexicon << wordDelimiter_;
                 }
 
                 if (remains)
@@ -283,30 +278,30 @@ inline void removeDuplicatedSegment(
 
     	bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
       
-        SegRetType segment;
-        POSRetType pos;
-        (this->*analysis)(inStr, 1, pos, segment, printPOS);
+        Sentence sent;
+        (this->*analysis)(inStr, 1, sent, printPOS);
 
         if (printPOS)
         {
-            StringVectorType& best = segment[0].first;
-            StringVectorType& bestPOS = pos[0];
-            size_t size = best.size();
-            for (size_t i = 0; i < size; ++i) {
-                if(knowledge_->isStopWord(best[i]))
-                	continue;
-            	strBuf_.append(best[i]).append(posDelimiter_).
-                      append(bestPOS[i]).append(wordDelimiter_);
+            size_t size = sent.getCount( 0 );
+            for ( size_t i = 0; i < size; ++i )
+            {
+                const char* lexicon = sent.getLexicon( 0, i );
+                //if( knowledge_->isStopWord( lexicon ) )
+                //	continue;
+            	strBuf_.append( lexicon ).append( posDelimiter_ ).
+                      append( sent.getStrPOS( 0, i ) ).append( wordDelimiter_ );
             }
         }
         else
         {
-            StringVectorType& best = segment[0].first;
-            size_t size = best.size();
-            for (size_t i = 0; i < size; ++i) {
-            	if(knowledge_->isStopWord(best[i]))
-            		continue;
-            	strBuf_.append(best[i]).append(wordDelimiter_);
+            size_t size = sent.getCount( 0 );
+            for ( size_t i = 0; i < size; ++i )
+            {
+                const char* lexicon = sent.getLexicon( 0, i );
+                //if( knowledge_->isStopWord( lexicon ) )
+                //  continue;
+            	strBuf_.append( lexicon ).append( wordDelimiter_ );
             }
         }
 
@@ -523,8 +518,7 @@ namespace meanainner{
     void CMA_ME_Analyzer::analysis_mmmodel(
             const char* sentence,
             int N,
-            POSRetType& posRet,
-            SegRetType& segRet,
+            Sentence& ret,
             bool tagPOS
             )
     {
@@ -592,8 +586,7 @@ namespace meanainner{
     void CMA_ME_Analyzer::analysis_fmm(
             const char* sentence,
             int N,
-            POSRetType& posRet,
-            SegRetType& segRet,
+            Sentence& ret,
             bool tagPOS
             )
     {
@@ -655,8 +648,7 @@ namespace meanainner{
     void CMA_ME_Analyzer::analysis_dictb(
             const char* sentence,
             int N,
-            POSRetType& posRet,
-            SegRetType& segRet,
+            Sentence& ret,
             bool tagPOS
             )
     {
@@ -720,12 +712,11 @@ namespace meanainner{
     void CMA_ME_Analyzer::analysis_fmincover(
             const char* sentence,
             int N,
-            POSRetType& posRet,
-            SegRetType& segRet,
+            Sentence& ret,
             bool tagPOS
             )
     {
-        static const std::pair< StringArray, double > DefPOSInner;
+        static CandidateMeta DefCandidateMeta;
 
         // Initial Step 1: split as Chinese Character based
         StringVectorType words;
@@ -738,11 +729,10 @@ namespace meanainner{
         CharType types[ (int)words.size() ];
         setCharType( words, types );
 
-        segRet.clear();
-        segRet.reserve( 1 );
-        segRet.push_back( DefPOSInner );
-        segRet[0].second = 1;
-        StringVectorType& bestSeg = segRet[0].first;
+        ret.candMetas_.clear();
+        ret.candMetas_.push_back( DefCandidateMeta );
+        ret.candMetas_[ 0 ].segOffset_ = 0;
+        ret.candMetas_[ 0 ].score_ = 1.0;
 
         PGenericArray<size_t> bestSegSeq;
 
@@ -750,10 +740,14 @@ namespace meanainner{
         fmincover::parseFMinCoverString(
                 bestSegSeq, words, types, trie, 0, words.size() );
 
-        //
+        // convert to string lexicon
+        ret.segment_.clear();
 
         if( tagPOS == false )
             return;
+
+        ret.candMetas_[ 0 ].posOffset_ = 0;
+
 #ifndef ON_DEV
         posRet.resize(1);
         vector<string>& posRetOne = posRet[0];
@@ -885,6 +879,16 @@ namespace meanainner{
         }
         types[ maxWordOff ] = ctype_->getCharType(
                 charIn[ maxWordOff ], preType, 0);
+    }
+
+    void CMA_ME_Analyzer::createStringLexicon(
+            StringVectorType& words,
+            PGenericArray<size_t> segSeq,
+            StringVectorType& out
+            )
+    {
+        size_t curSize = out.freeLen();
+
     }
 
 }
