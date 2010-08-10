@@ -744,14 +744,17 @@ namespace meanainner{
         segRet[0].second = 1;
         StringVectorType& bestSeg = segRet[0].first;
 
-#ifndef ON_DEV
+        PGenericArray<size_t> bestSegSeq;
+
         VTrie *trie = knowledge_->getTrie();
         fmincover::parseFMinCoverString(
-                bestSeg, words, types, trie, 0, words.size() );
+                bestSegSeq, words, types, trie, 0, words.size() );
+
+        //
 
         if( tagPOS == false )
             return;
-
+#ifndef ON_DEV
         posRet.resize(1);
         vector<string>& posRetOne = posRet[0];
         knowledge_->getPOSTagger()->quick_tag_sentence_best(

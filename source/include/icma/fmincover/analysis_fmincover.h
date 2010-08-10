@@ -22,8 +22,10 @@ namespace cma
 namespace fmincover
 {
 
+typedef PGenericArray<size_t> FMinCOutType;
+
 void parseFMinCoverString(
-        StringVectorType& out,
+        FMinCOutType& out,
         StringVectorType& words,
         CharType* types,
         VTrie* trie,
