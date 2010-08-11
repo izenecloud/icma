@@ -887,7 +887,25 @@ namespace meanainner{
             StringVectorType& out
             )
     {
-        size_t curSize = out.freeLen();
+        size_t curFreeLen = out.freeLen();
+        size_t segSeqSize = segSeq.size();
+        size_t minLen = 0;
+        // minLen is used collect character number now
+        for( size_t i = 1; i < segSegSize; i += 2 )
+        {
+            minLen += segSegSize[ i ];
+        }
+
+        // convert to bytes, it will wasted some bytes
+        minLen = minLen * 4 + segSeqSize + 10;
+        if( minLen > freeLen )
+        {
+            out.reserve( out.dataLen_ + minLen - curFreeLen );
+        }
+
+        out.offsetVec_.reserve(1);
+        // Converting integer to string
+
 
     }
 

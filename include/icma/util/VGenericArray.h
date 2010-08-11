@@ -54,6 +54,16 @@ public:
         return size_;
     }
 
+    inline size_t usedLen() const
+    {
+        return endOffset_;
+    }
+
+    inline size_t freeLen() const
+    {
+        return size_ - endOffset_;
+    }
+
     void push_back( const T& t )
     {
         if( endOffset_ == size_ )

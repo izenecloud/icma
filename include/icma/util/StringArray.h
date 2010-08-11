@@ -73,6 +73,16 @@ public:
         return dataLen_ == 0 ? 0 : ( dataLen_ - ( endPtr_ - data_ ) );
     }
 
+    size_t usedLen() const
+    {
+        return dataLen_ == 0 ? 0 : ( endPtr_ - data_ );
+    }
+
+    size_t capacity() const
+    {
+        return dataLen_;
+    }
+
     void removeHead();
 
     void swap( StringArray& other );
