@@ -459,23 +459,54 @@ void POSTagger::tag_sentence_best(vector<string>& words, vector<string>& posRet,
 }
 
 void POSTagger::quick_tag_sentence_best(
-        vector<string>& words,
-        vector<string>& posRet,
-        int begin,
-        int end
+        StringVectorType& words,
+        PGenericArray<size_t>& segSeq,
+        CharType* types,
+        int beginIdx,
+        int endIdx,
+        PGenericArray< const char* >& posRet
         )
 {
-    size_t endSt = (size_t)end;
-    if( posRet.size() < endSt )
-    {
-        string defStr;
-        posRet.insert( posRet.end(), endSt - posRet.size(), defStr );
-    }
-
+    size_t usedSize = endIdx - beginIdx;
+    posRet.reserve( posRet.usedLen() + usedSize );
     CMA_WType wtype(ctype_);
-    for( int index = begin; index < end; ++index )
+    for( size_t i = 0; i < usedSize; ++i )
     {
-        quick_tag_word_best_impl(words, posRet, index, posRet[ index ], wtype);
+        size_t wordBeginIdx = segSeq[ i * 2 ];
+        size_t wordEndIdx =  wordBeginIdx + segSeq[ i * 2 + 1 ];
+        CMA_WType::WordType wordT = wtype.getWordType( types, wordBeginIdx, wordEndIdx );
+
+        switch(wordT){
+            case CMA_WType::WORD_TYPE_PUNC:
+                posRet.push_back( puncPOS.c_str() );
+                continue;
+            case CMA_WType::WORD_TYPE_NUMBER:
+                posRet.push_back( numberPOS.c_str() );
+                continue;
+            case CMA_WType::WORD_TYPE_LETTER:
+                posRet.push_back( letterPOS.c_str() );
+                continue;
+            case CMA_WType::WORD_TYPE_DATE:
+                posRet.push_back( datePOS.c_str() );
+                continue;
+            default:
+                break;
+        }
+
+        const char* word = words[ i + beginIdx ];
+        VTrieNode node;
+        trie_->search( word, &node );
+        if( node.data > 0 )
+        {
+            POSUnitType& posSet = posVec_[node.data];
+            if( posSet.empty() == false )
+            {
+                posRet.push_back( posSet[ 0 ] );
+                continue;
+            }
+        }
+
+        posRet.push_back( defaultPOS.c_str() );
     }
 }
 
@@ -568,50 +599,6 @@ bool POSTagger::appendWordPOS(string& line)
     }
 
     return true;
-}
-
-
-double POSTagger::quick_tag_word_best_impl(
-        vector<string>& words,
-        vector<string>& poses,
-        int index,
-        string& pos,
-        CMA_WType& wtype
-        )
-{
-    const char* word = words[index].data();
-    CMA_WType::WordType wordT = wtype.getWordType(word);
-    switch(wordT){
-        case CMA_WType::WORD_TYPE_PUNC:
-            pos = puncPOS;
-            return 1.0;
-        case CMA_WType::WORD_TYPE_NUMBER:
-            pos = numberPOS;
-            return 1.0;
-        case CMA_WType::WORD_TYPE_LETTER:
-            pos = letterPOS;
-            return 1.0;
-        case CMA_WType::WORD_TYPE_DATE:
-            pos = datePOS;
-            return 1.0;
-        default:
-            break;
-    }
-
-    VTrieNode node;
-    trie_->search( word, &node );
-    if( node.data > 0 )
-    {
-        POSUnitType& posSet = posVec_[node.data];
-        if( posSet.empty() == false )
-        {
-            pos = posSet[ 0 ];
-            return 1.0;
-        }
-    }
-
-    pos = defaultPOS;
-    return 1.0;
 }
 
 }

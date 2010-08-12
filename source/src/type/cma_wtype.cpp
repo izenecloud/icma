@@ -16,6 +16,17 @@ using namespace std;
 
 namespace cma
 {
+CMA_WType::WordType CTYPE_2_WTYPE[ CHAR_TYPE_NUM ] = {
+        CMA_WType::WORD_TYPE_OTHER, // CHAR_TYPE_INIT
+        CMA_WType::WORD_TYPE_OTHER, // CHAR_TYPE_OTHER
+        CMA_WType::WORD_TYPE_NUMBER,// CHAR_TYPE_DIGIT
+        CMA_WType::WORD_TYPE_NUMBER,// CHAR_TYPE_CHARDIGIT
+        CMA_WType::WORD_TYPE_PUNC,  // CHAR_TYPE_PUNC
+        CMA_WType::WORD_TYPE_PUNC,  // CHAR_TYPE_SPACE
+        CMA_WType::WORD_TYPE_DATE,  // CHAR_TYPE_DATE
+        CMA_WType::WORD_TYPE_LETTER // CHAR_TYPE_LETTER
+        };
+
 
 CMA_WType::CMA_WType(const CMA_CType* ctype)
     : ctype_(ctype), tokenizer_(ctype)
@@ -58,7 +69,7 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
                 preType = curType;
                 break;
 
-            case CHAR_TYPE_NUMBER:
+            case CHAR_TYPE_DIGIT:
             case CHAR_TYPE_CHARDIGIT:
                 switch(curType){
                     case CHAR_TYPE_LETTER:
@@ -79,7 +90,7 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
                 break;
 
             case CHAR_TYPE_LETTER:
-                if(curType == CHAR_TYPE_NUMBER || curType == CHAR_TYPE_CHARDIGIT)
+                if(curType == CHAR_TYPE_DIGIT || curType == CHAR_TYPE_CHARDIGIT)
                     continue;
 #ifdef ENABLE_WT_ASSERT
                 assert(false && "unexpected arrive here (pre is Letter and cur is non-digit)");
@@ -97,7 +108,7 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
     switch(preType){
         case CHAR_TYPE_LETTER:
             return WORD_TYPE_LETTER;
-        case CHAR_TYPE_NUMBER:
+        case CHAR_TYPE_DIGIT:
         case CHAR_TYPE_CHARDIGIT:
             return WORD_TYPE_NUMBER;
         default:
@@ -110,78 +121,23 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
 }
 
 
-CMA_WType::WordType CMA_WType::getWordType(CharType* types, size_t begin, size_t size)
+CMA_WType::WordType CMA_WType::getWordType(CharType* types, size_t beginIdx, size_t endIdx)
 {
-	CharType preType = begin > 0 ? types[begin-1] : CHAR_TYPE_INIT;
-	CharType curType = CHAR_TYPE_INIT;
-	for(; begin < size; ++begin)
+    size_t maxIdx = endIdx - 1;
+    CharType type = types[ maxIdx ];
+    if( type == CHAR_TYPE_DIGIT && maxIdx > beginIdx )
     {
-        curType = types[begin];
-
-        if(preType == curType)
-            continue;
-
-        switch(curType){
-            case CHAR_TYPE_OTHER:
-                return WORD_TYPE_OTHER;
-            case CHAR_TYPE_PUNC:
-                if(preType == CHAR_TYPE_INIT && begin>= size)
-                    return WORD_TYPE_PUNC;
-                return WORD_TYPE_OTHER;
-            default:
+        for( size_t i = beginIdx; i < maxIdx; ++i )
+        {
+            if( types[ i ] != CHAR_TYPE_DIGIT )
+            {
+                type = types[ i ];
                 break;
-        }
-
-        switch(preType){
-            case CHAR_TYPE_INIT:
-                preType = curType;
-                break;
-
-            case CHAR_TYPE_NUMBER:
-            case CHAR_TYPE_CHARDIGIT:
-                switch(curType){
-                    case CHAR_TYPE_LETTER:
-                        preType = CHAR_TYPE_LETTER;
-                        break;
-                    case CHAR_TYPE_DATE:
-                        return (begin>= size) ? WORD_TYPE_OTHER : WORD_TYPE_DATE;
-                    default:
-#ifdef ENABLE_WT_ASSERT
-                        assert(false && "unexpected arrive here (pre is number, cur is not-letter or non-date)");
-#endif
-                        break;
-                }
-                break;
-
-            case CHAR_TYPE_LETTER:
-                if(curType == CHAR_TYPE_NUMBER || curType == CHAR_TYPE_CHARDIGIT)
-                    continue;
-#ifdef ENABLE_WT_ASSERT
-                assert(false && "unexpected arrive here (pre is Letter and cur is non-digit)");
-#endif
-                break;
-
-            default:
-#ifdef ENABLE_WT_ASSERT
-                assert(false && "unexpected arrive here (preType)");
-#endif
-                break;
+            }
         }
     }
 
-    switch(preType){
-        case CHAR_TYPE_LETTER:
-            return WORD_TYPE_LETTER;
-        case CHAR_TYPE_NUMBER:
-        case CHAR_TYPE_CHARDIGIT:
-            return WORD_TYPE_NUMBER;
-        default:
-#ifdef ENABLE_WT_ASSERT
-            assert(false && "unexpected arrive here");
-#endif
-            return WORD_TYPE_OTHER;
-    }
-    return WORD_TYPE_OTHER;
+    return CTYPE_2_WTYPE[ type ];
 }
 
 } // namespace cma

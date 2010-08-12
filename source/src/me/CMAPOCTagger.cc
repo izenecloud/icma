@@ -162,7 +162,7 @@ inline void get_poc_zh_context_1(vector<string>& words, CharType *types,
             }
         }else{
             wa[j] = POC_BOUNDARY;
-            if(preType == CHAR_TYPE_NUMBER || preType == CHAR_TYPE_LETTER
+            if(preType == CHAR_TYPE_DIGIT || preType == CHAR_TYPE_LETTER
             		|| preType == CHAR_TYPE_CHARDIGIT)
             	ta[j] = preType;
             else
@@ -711,8 +711,8 @@ void SegTagger::initialize(){
     POC_INIT_FLAG = true;
 
     CharTypeArray[CHAR_TYPE_INIT] = "I";
-    CharTypeArray[CHAR_TYPE_NUMBER] = "N";
-    // It is OK to use the same name as CHAR_TYPE_NUMBER
+    CharTypeArray[CHAR_TYPE_DIGIT] = "N";
+    // It is OK to use the same name as CHAR_TYPE_DIGIT
     CharTypeArray[CHAR_TYPE_CHARDIGIT] = "N";
     CharTypeArray[CHAR_TYPE_PUNC] = "P";
     CharTypeArray[CHAR_TYPE_SPACE] = "S";

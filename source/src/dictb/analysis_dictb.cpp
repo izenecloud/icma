@@ -151,14 +151,14 @@ void addDictBString(
         divideNormalString( out, trie, beginIdx, endIdx, words );
         return;
     }
-    case CHAR_TYPE_NUMBER:
+    case CHAR_TYPE_DIGIT:
     case CHAR_TYPE_LETTER:
     {
         // check for the word begin with whole string
         itr = out.insert( out.end(), DefDBS );
         itr->beginIdx_ = beginIdx;
         itr->endIdx_ = endIdx;
-        if( lastType == CHAR_TYPE_NUMBER )
+        if( lastType == CHAR_TYPE_DIGIT )
             itr->fragType_ = DictBString::DIGIT;
         else
             itr->fragType_ = DictBString::LETTER;
@@ -246,10 +246,10 @@ void parseDictBString(
             break;
         }
 
-        case CHAR_TYPE_NUMBER:
+        case CHAR_TYPE_DIGIT:
         case CHAR_TYPE_LETTER:
         {
-            if( t0 != CHAR_TYPE_DATE && t0 != CHAR_TYPE_NUMBER && t0 != CHAR_TYPE_LETTER )
+            if( t0 != CHAR_TYPE_DATE && t0 != CHAR_TYPE_DIGIT && t0 != CHAR_TYPE_LETTER )
             {
                 addDictBString( out, trie, fsIdx, curIdx, &words, types );
                 fsIdx = curIdx;

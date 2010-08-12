@@ -188,7 +188,7 @@ void addFMinCString(
         divideNormalString( out, trie, beginIdx, endIdx, words );
         return;
     }
-    case CHAR_TYPE_NUMBER:
+    case CHAR_TYPE_DIGIT:
     case CHAR_TYPE_LETTER:
     {
         // check for the word begin with whole string
@@ -274,10 +274,10 @@ void parseFMinCoverString(
             break;
         }
 
-        case CHAR_TYPE_NUMBER:
+        case CHAR_TYPE_DIGIT:
         case CHAR_TYPE_LETTER:
         {
-            if( t0 != CHAR_TYPE_DATE && t0 != CHAR_TYPE_NUMBER && t0 != CHAR_TYPE_LETTER )
+            if( t0 != CHAR_TYPE_DATE && t0 != CHAR_TYPE_DIGIT && t0 != CHAR_TYPE_LETTER )
             {
                 addFMinCString( out, trie, fsIdx, curIdx, words, types );
                 fsIdx = curIdx;

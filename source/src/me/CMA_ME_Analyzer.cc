@@ -751,13 +751,8 @@ namespace meanainner{
             return;
 
         ret.candMetas_[ 0 ].posOffset_ = 0;
-
-#ifndef ON_DEV
-        posRet.resize(1);
-        vector<string>& posRetOne = posRet[0];
         knowledge_->getPOSTagger()->quick_tag_sentence_best(
-                bestSeg, posRetOne, 0, bestSeg.size() );
-#endif
+                ret.segment_, bestSegSeq, types, 0, ret.segment_.size(), ret.pos_ );
 
     }
 
@@ -781,7 +776,7 @@ namespace meanainner{
     		CharType curType = ctype_->getBaseType( next );
     		switch( curType )
     		{
-    		case CHAR_TYPE_NUMBER:
+    		case CHAR_TYPE_DIGIT:
     		case CHAR_TYPE_LETTER:
     		case CHAR_TYPE_PUNC:
     			if( !curFragment->empty() )

@@ -255,7 +255,7 @@ CharType CMA_CType::getCharTypeByXmlName( const char* name, bool noDefault )
 	if( strcmp( name, "other") == 0)
 		return CHAR_TYPE_OTHER;
 	else if( strcmp( name, "digit") == 0)
-		return CHAR_TYPE_NUMBER;
+		return CHAR_TYPE_DIGIT;
 	else if( strcmp( name, "chardigit") == 0)
 		return CHAR_TYPE_CHARDIGIT;
 	else if( strcmp( name, "letter") == 0)
@@ -526,7 +526,7 @@ int CMA_CType::loadConfiguration( const char* file )
 	{
 		const char* tag = node->Value();
 		if( strcmp( tag, "digit") == 0 )
-			loadEntity( node, tokenizer, CHAR_TYPE_NUMBER, ret );
+			loadEntity( node, tokenizer, CHAR_TYPE_DIGIT, ret );
 		else if( strcmp( tag, "chardigit") == 0 )
 			loadEntity( node, tokenizer, CHAR_TYPE_CHARDIGIT, ret );
 		else if( strcmp( tag, "letter") == 0 )
@@ -594,7 +594,7 @@ CharType CMA_CType::getCharType(const char* p, CharType preType, const char* nex
 
 	const CharConditions& charConds = condValues_[ node1.data ];
 	CharType matchedType = charConds.match(preType, nextV, nextType, charConds.baseType_);
-	if( preType == CHAR_TYPE_LETTER && matchedType == CHAR_TYPE_NUMBER )
+	if( preType == CHAR_TYPE_LETTER && matchedType == CHAR_TYPE_DIGIT )
 		return CHAR_TYPE_LETTER;
 	return matchedType;
 }
@@ -628,7 +628,7 @@ bool CMA_CType::isSentenceSeparator(const char* p) const
 
 CharType CMA_CType::getDefaultEndType( CharType preType )
 {
-	if(preType == CHAR_TYPE_NUMBER || preType == CHAR_TYPE_LETTER
+	if(preType == CHAR_TYPE_DIGIT || preType == CHAR_TYPE_LETTER
 	            		|| preType == CHAR_TYPE_CHARDIGIT)
 		return preType;
 	return CHAR_TYPE_OTHER;
