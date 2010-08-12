@@ -132,8 +132,8 @@ inline void removeDuplicatedSegment(
         if( strlen( sentence.getString() ) == 0 )
         	return 1;
         int N = (int) getOption(OPTION_TYPE_NBEST);
+
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
-        
 
 
         (this->*analysis)(sentence.getString(), N, sentence, printPOS);
@@ -276,7 +276,9 @@ inline void removeDuplicatedSegment(
     	if( strlen( inStr ) == 0 )
     	      return strBuf_.c_str();
 
-    	bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
+    	//FIXME for debug disable printPOS
+    	//bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
+        bool printPOS = false;
       
         Sentence sent;
         (this->*analysis)(inStr, 1, sent, printPOS);
@@ -742,6 +744,8 @@ namespace meanainner{
 
         // convert to string lexicon
         ret.segment_.clear();
+        createStringLexicon( words, bestSegSeq, ret.segment_ );
+
 
         if( tagPOS == false )
             return;
@@ -883,7 +887,7 @@ namespace meanainner{
 
     void CMA_ME_Analyzer::createStringLexicon(
             StringVectorType& words,
-            PGenericArray<size_t> segSeq,
+            PGenericArray<size_t>& segSeq,
             StringVectorType& out
             )
     {
@@ -891,22 +895,43 @@ namespace meanainner{
         size_t segSeqSize = segSeq.size();
         size_t minLen = 0;
         // minLen is used collect character number now
-        for( size_t i = 1; i < segSegSize; i += 2 )
+        for( size_t i = 1; i < segSeqSize; i += 2 )
         {
-            minLen += segSegSize[ i ];
+            minLen += segSeq[ i ];
         }
-
         // convert to bytes, it will wasted some bytes
         minLen = minLen * 4 + segSeqSize + 10;
-        if( minLen > freeLen )
+        if( minLen > curFreeLen )
         {
             out.reserve( out.dataLen_ + minLen - curFreeLen );
         }
+        out.offsetVec_.reserve( out.size() + (size_t)(segSeqSize / 2) );
 
-        out.offsetVec_.reserve(1);
         // Converting integer to string
+        char* outPtr = out.endPtr_;
+        for( size_t i = 1; i < segSeqSize; i += 2 )
+        {
+            size_t startIdx = segSeq[ i - 1 ];
+            size_t endIdx = startIdx + segSeq[ i ];
+            if( startIdx == endIdx )
+                continue;
+            out.offsetVec_.push_back( outPtr - out.data_ );
+            for( size_t wordIdx = startIdx; wordIdx < endIdx; ++wordIdx )
+            {
+                const char* wordPtr = words[ wordIdx ];
+                while( *wordPtr != 0 )
+                {
+                    *outPtr = *wordPtr;
+                    ++outPtr;
+                    ++wordPtr;
+                }
+            }
 
+            *outPtr = 0;
+            ++outPtr;
+        }
 
+        out.endPtr_ = outPtr;
     }
 
 }

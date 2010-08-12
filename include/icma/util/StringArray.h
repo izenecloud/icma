@@ -19,10 +19,14 @@ namespace cma
 extern std::string DefDelimeter;
 extern std::string DefPrintDelimeter;
 
+class CMA_ME_Analyzer;
+
 class StringArray
 {
 public:
     typedef size_t offset_t;
+
+    friend class CMA_ME_Analyzer;
 
     static void tokenize(
             const char* str,
