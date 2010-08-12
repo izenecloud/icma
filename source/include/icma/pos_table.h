@@ -71,6 +71,15 @@ public:
             return addPOS( pos );
     }
 
+    inline int getCodeFromStr( const char* pos )
+    {
+        int ret = posMap_.search( pos );
+        if( ret > 0 )
+            return ret;
+        else
+            return addPOS( pos );
+    }
+
     /**
      * Get the POS string from the POS index code in the global part-of-speech table.
      * \param index the POS index code
