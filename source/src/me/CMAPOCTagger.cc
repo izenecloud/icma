@@ -15,8 +15,6 @@
 #include "icma/util/StrBasedVTrie.h"
 #include "icma/type/cma_wtype.h"
 
-#define ON_DEV
-
 namespace cma{
 
 #define POC_TAG_INIT 0
@@ -390,13 +388,22 @@ SegTagger::~SegTagger()
 {
 }
 
-void SegTagger::tag_word(vector<string>& words, CharType* types,
-        int index, size_t N, uint8_t* tags, POCTagUnit* candidates,
-        int& lastIndex, size_t& canSize, double initScore, int candidateNum){
-
+void SegTagger::tag_word(
+        StringVectorType& words,
+        CharType *types,
+        int index,
+        size_t N,
+        uint8_t* tags,
+        POCTagUnit* candidates,
+        int& lastIndex,
+        size_t& canSize,
+        double initScore,
+        int candidateNum
+        )
+{
     vector<string> context;
 
-    pocinner::get_poc_zh_context_seg< vector<string> >(words, types, index, context, ctype_);
+    pocinner::get_poc_zh_context_seg< StringVectorType >(words, types, index, context, ctype_);
 
     vector<pair<outcome_type, double> > outcomes;
     me.eval_all(context, outcomes, false);
@@ -482,7 +489,7 @@ void SegTagger::seg_sentence(
         VGenericArray< CandidateMeta >& candMeta
         )
 {
-#ifndef ON_DEV
+    static CandidateMeta DefCandidateMeta;
     size_t n = words.size();
 
     //h0, h1 and score don't need to initialize
@@ -548,20 +555,24 @@ void SegTagger::seg_sentence(
     }
     if(retSize < h0Size)
         h0Size = retSize;
-    if(segment.size() != h0Size)
-		segment.resize(h0Size);
-    for( size_t k=0; k<h0Size; ++k ){
+
+    candMeta.clear();
+    candMeta.reserve( h0Size );
+    segment.clear();
+    segment.reserve( h0Size * n * 2 );
+
+    for( size_t k=0; k<h0Size; ++k )
+    {
         uint8_t* tags = h0[k];
-        pair<vector<string>,double>& pair = segment[k];
-        pair.second = (pair.second > 0) ? (pair.second * scores[k]) : scores[k];
-        pocinner::combinePOCToWord(words, n, tags, pair.first);
+        candMeta.push_back( DefCandidateMeta );
+        candMeta[ k ].score_ = scores[k];
+        candMeta[ k ].segOffset_ = segment.size();
+        pocinner::combinePOCToWord(words, n, tags, segment );
     }
-#endif
 }
 
 void SegTagger::tag_file(const char* inFile, const char* outFile,
         string encType){
-#ifndef ON_DEV
     ifstream in(inFile);
     ofstream out(outFile);
 
@@ -579,7 +590,7 @@ void SegTagger::tag_file(const char* inFile, const char* outFile,
 
         ctypeCt.assign(line.data());
 
-        vector<string> words;
+        StringVectorType words;
         const char* nextPtr;
         while((nextPtr = ctypeCt.next())){
             words.push_back(nextPtr);
@@ -594,27 +605,32 @@ void SegTagger::tag_file(const char* inFile, const char* outFile,
         CharType types[maxWordOff + 1];
         CharType preType = CHAR_TYPE_INIT;
         for(int i=0; i<maxWordOff; ++i){
-            types[i] = preType = ctype_->getCharType(words[i].data(),
-                    preType, words[i+1].data());
+            types[i] = preType = ctype_->getCharType(words[i], preType, words[i+1]);
         }
+        types[maxWordOff] = ctype_->getCharType(words[maxWordOff], preType, 0);
 
-        types[maxWordOff] = ctype_->getCharType(words[maxWordOff].data(),
-                    preType, 0);
-
-        vector<string> best;
+        PGenericArray<size_t> best;
         seg_sentence_best(words, types, best);
 
         //print the result
-        size_t maxIndex = best.size() - 1;
-        for(size_t i=0; i<maxIndex; ++i){
-            out<<best[i]<<" ";
+        size_t size = best.size();
+        for( size_t i = 0; i < size; i+=2 )
+        {
+            size_t beginIdx = best[ i * 2 ];
+            size_t endIdx = best[ i * 2 + 1 ] + beginIdx;
+            for( size_t wordIdx = beginIdx; wordIdx < endIdx; ++wordIdx )
+            {
+                out << words[wordIdx];
+            }
+            if( i + 2 < size )
+                out << " ";
         }
-        out<<best[maxIndex]<<endl;
+
+        out << endl;
     }
 
     in.close();
     out.close();
-#endif
 }
 
 #define BACK_FIX_END_TAG if(!strTrie.exists()){ \

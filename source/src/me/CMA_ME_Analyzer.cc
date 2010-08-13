@@ -543,8 +543,7 @@ namespace meanainner{
         PGenericArray<size_t> segment;
 
         SegTagger* segTagger = knowledge_->getSegTagger();
-#ifndef ON_DEV
-        if(N == 1)
+        if( N == 1 )
         {
             segTagger->seg_sentence_best( words, types, segment );
             candMeta.push_back( DefCandidateMeta );
@@ -552,8 +551,11 @@ namespace meanainner{
             candMeta[ 0 ].score_ = 1.0;
         }
         else
-            segTagger->seg_sentence(words, types, segN, N, segment);
+        {
+            segTagger->seg_sentence( words, types, N, N, segment, candMeta );
+        }
 
+#ifndef ON_DEV
         N = segment.size();
         segRet.resize( N );
 

@@ -178,9 +178,18 @@ private:
      * \param canSize the used size in the candidates
      * \return a list of (tag, score) pair sorted
      */
-    void tag_word(vector<string>& words, CharType *type, int index, size_t N,
-            uint8_t* tags, POCTagUnit* candidates, int& lastIndex, size_t& canSize,
-            double initScore, int candidateNum);
+    void tag_word(
+            StringVectorType& words,
+            CharType* types,
+            int index,
+            size_t N,
+            uint8_t* tags,
+            POCTagUnit* candidates,
+            int& lastIndex,
+            size_t& canSize,
+            double initScore,
+            int candidateNum
+            );
 
     /** Find out the words contains at least 4 characters */
     void preProcess(
