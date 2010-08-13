@@ -262,10 +262,11 @@ void testSentStream(Analyzer* analyzer, const char* source)
 {
     string line;
     ifstream fin( source );
+    Sentence sent;
     while( fin.eof() == false )
     {
         getline( fin, line );
-        Sentence sent( line.c_str() );
+        sent.setString( line.c_str() );
         analyzer->runWithSentence( sent );
     }
 }

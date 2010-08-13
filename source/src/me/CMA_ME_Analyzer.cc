@@ -218,6 +218,7 @@ inline void removeDuplicatedSegment(
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
 
         string line;
+        Sentence sent;
         bool remains = !in.eof();
         while (remains) {
             getline(in, line);
@@ -227,7 +228,7 @@ inline void removeDuplicatedSegment(
 					out << endl;
                 continue;
             }
-            Sentence sent;
+
             (this->*analysis)(line.data(), 1, sent, printPOS);
 
             if (printPOS)
@@ -760,6 +761,7 @@ namespace meanainner{
             return;
 
         ret.candMetas_[ 0 ].posOffset_ = 0;
+        ret.pos_.clear();
         knowledge_->getPOSTagger()->quick_tag_sentence_best(
                 ret.segment_, bestSegSeq, types, 0, ret.segment_.size(), ret.pos_ );
 
