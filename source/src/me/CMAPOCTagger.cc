@@ -15,6 +15,8 @@
 #include "icma/util/StrBasedVTrie.h"
 #include "icma/type/cma_wtype.h"
 
+#define ON_DEV
+
 namespace cma{
 
 #define POC_TAG_INIT 0
@@ -37,8 +39,15 @@ namespace pocinner{
 /**
  * Inner function to get the context of the POC, invoked by segmentation method
  */
-inline void get_poc_zh_context_seg(vector<string>& words, CharType *types,
-        size_t index, vector<string>& context, CMA_CType *ctype){
+template< class StringVector >
+inline void get_poc_zh_context_seg(
+        StringVector& words,
+        CharType *types,
+        size_t index,
+        vector<string>& context,
+        CMA_CType *ctype
+        )
+{
 
 	CharType t_1 = index > 0 ? types[index - 1] : CHAR_TYPE_INIT;
 	CharType t0 = types[ index ];
@@ -311,6 +320,34 @@ inline void combinePOCToWord(vector<string>& words, size_t n, uint8_t* tags,
         seg.push_back(strBuf);
 }
 
+/**
+ * Combine the poc tags to words
+ */
+inline void combinePOCToWord(
+        StringVectorType& words,
+        size_t n,
+        uint8_t* tags,
+        PGenericArray<size_t>& seg
+        )
+{
+    seg.reserve( seg.usedLen() + n );
+
+    size_t lastIdx = 0;
+    seg.push_back( lastIdx );
+    size_t i = 1;
+    for( ; i < n; ++i )
+    {
+        if( tags[i] == POC_TAG_B )
+        {
+            seg.push_back( i - lastIdx );
+            lastIdx = i;
+            seg.push_back( lastIdx );
+        }
+    }
+
+    seg.push_back( n - lastIdx );
+}
+
 } //end namespace pocinner
 
 
@@ -359,7 +396,7 @@ void SegTagger::tag_word(vector<string>& words, CharType* types,
 
     vector<string> context;
 
-    pocinner::get_poc_zh_context_seg(words, types, index, context, ctype_);
+    pocinner::get_poc_zh_context_seg< vector<string> >(words, types, index, context, ctype_);
 
     vector<pair<outcome_type, double> > outcomes;
     me.eval_all(context, outcomes, false);
@@ -376,7 +413,11 @@ void SegTagger::tag_word(vector<string>& words, CharType* types,
     }
 }
 
-void SegTagger::preProcess(vector<string>& words, uint8_t* tags)
+void SegTagger::preProcess(
+        StringVectorType& words,
+        CharType* types,
+        uint8_t* tags
+        )
 {
 	CMA_WType wtype(ctype_);
 
@@ -386,15 +427,15 @@ void SegTagger::preProcess(vector<string>& words, uint8_t* tags)
 
 	int size = words.size();
 	int start = 0;
-	while(start < size)
+	while( start < size )
 	{
 		int idx = start;
-		strTrie.firstSearch(words[idx++].data());
+		strTrie.firstSearch( words[idx++] );
 		int maxLastIdx = 0; //exclude the maxLastIdx itself
-		while(strTrie.completeSearch && idx < size)
+		while( strTrie.completeSearch && idx < size )
 		{
-			strTrie.search(words[idx++].data());
-			if(strTrie.exists())
+			strTrie.search( words[idx++] );
+			if( strTrie.exists() )
 				maxLastIdx = idx;
 		}
 
@@ -406,15 +447,9 @@ void SegTagger::preProcess(vector<string>& words, uint8_t* tags)
 		// exists word begin with start index and length at least MIN_PRE_WORD_LEN
 		if((maxLastIdx - start) >= MIN_PRE_WORD_LEN)
 		{
-			//check the wtype
-			string init(words[start]);
-			for(int i=start+1; i<maxLastIdx; ++i)
-			{
-				init.append(words[i]);
-			}
-
 			//here don't dealt with digits, letters, data and other entities
-			if(wtype.getWordType(init.data()) == CMA_WType::WORD_TYPE_OTHER)
+			if( wtype.getWordType( types, start, maxLastIdx )
+			        == CMA_WType::WORD_TYPE_OTHER)
 			{
 				#ifdef DEBUG_POC_TAGGER
 					cout<<"PreProcess combine "<<init<<",start="<<start<<
@@ -438,9 +473,16 @@ void SegTagger::preProcess(vector<string>& words, uint8_t* tags)
 }
 
 
-void SegTagger::seg_sentence(vector<string>& words, CharType* types,
-        size_t N, size_t retSize,
-        vector<pair<vector<string>, double> >& segment){
+void SegTagger::seg_sentence(
+        StringVectorType& words,
+        CharType *types,
+        size_t N,
+        size_t retSize,
+        PGenericArray<size_t>& segment,
+        VGenericArray< CandidateMeta >& candMeta
+        )
+{
+#ifndef ON_DEV
     size_t n = words.size();
 
     //h0, h1 and score don't need to initialize
@@ -448,7 +490,7 @@ void SegTagger::seg_sentence(vector<string>& words, CharType* types,
     uint8_t _array2[N][n];
 
     //pre-process
-    preProcess(words, _array1[0]);
+    preProcess( words, types, _array1[0] );
     memcpy(_array2[0], _array1[0], n);
     //initialize all the array
     for(size_t i=1; i<N; ++i)
@@ -508,16 +550,18 @@ void SegTagger::seg_sentence(vector<string>& words, CharType* types,
         h0Size = retSize;
     if(segment.size() != h0Size)
 		segment.resize(h0Size);
-    for(size_t k=0; k<h0Size; ++k){
+    for( size_t k=0; k<h0Size; ++k ){
         uint8_t* tags = h0[k];
         pair<vector<string>,double>& pair = segment[k];
         pair.second = (pair.second > 0) ? (pair.second * scores[k]) : scores[k];
         pocinner::combinePOCToWord(words, n, tags, pair.first);
     }
+#endif
 }
 
 void SegTagger::tag_file(const char* inFile, const char* outFile,
         string encType){
+#ifndef ON_DEV
     ifstream in(inFile);
     ofstream out(outFile);
 
@@ -570,21 +614,26 @@ void SegTagger::tag_file(const char* inFile, const char* outFile,
 
     in.close();
     out.close();
+#endif
 }
 
 #define BACK_FIX_END_TAG if(!strTrie.exists()){ \
 		for(size_t i=index-1; i>lastExistIndex && types[i] == CHAR_TYPE_OTHER; --i) \
 			pocRet[i] = POC_TAG_B;}
 
-void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
-        vector<string>& segment){
+void SegTagger::seg_sentence_best(
+        StringVectorType& words,
+        CharType* types,
+        PGenericArray<size_t>& segment
+        )
+{
     size_t n = words.size();
     uint8_t pocRet[n];
 
     #ifdef USE_STRTRIE
         StrBasedVTrie strTrie(trie_);
         int wordLen = 0;
-        preProcess(words, pocRet);
+        preProcess( words, types, pocRet );
     #endif
 
     size_t lastExistIndex = 0;
@@ -602,17 +651,18 @@ void SegTagger::seg_sentence_best(vector<string>& words, CharType* types,
         	{
         		wordLen = 1;
         		lastExistIndex = index;
-        		strTrie.firstSearch(words[ index ].c_str());
+        		strTrie.firstSearch( words[ index ] );
         	}
 
         	continue;
         }
     	#ifdef USE_STRTRIE
-            const char* curPtr = words[ index ].c_str();
+            const char* curPtr = words[ index ];
         #endif
             
         vector<string> context;
-        pocinner::get_poc_zh_context_seg(words, types, index, context, ctype_);
+        pocinner::get_poc_zh_context_seg<StringVectorType>(
+                words, types, index, context, ctype_);
 
         #ifdef DEBUG_POC_TAGGER
         /*int n = context.size();

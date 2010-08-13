@@ -524,9 +524,10 @@ namespace meanainner{
             bool tagPOS
             )
     {
-#ifndef ON_DEV
+        static CandidateMeta DefCandidateMeta;
+
         // Initial Step 1: split as Chinese Character based
-        vector<string> words;
+        StringVectorType words;
         extractCharacter( sentence, words );
 
         if( words.empty() == true )
@@ -536,12 +537,20 @@ namespace meanainner{
         CharType types[ (int)words.size() ];
         setCharType( words, types );
 
-    	int segN = N;
-        SegRetType segment(segN);
-        SegTagger* segTagger = knowledge_->getSegTagger();
 
+        VGenericArray< CandidateMeta >& candMeta = ret.candMetas_;
+        candMeta.clear();
+        PGenericArray<size_t> segment;
+
+        SegTagger* segTagger = knowledge_->getSegTagger();
+#ifndef ON_DEV
         if(N == 1)
-            segTagger->seg_sentence_best(words, types, segment[0].first);
+        {
+            segTagger->seg_sentence_best( words, types, segment );
+            candMeta.push_back( DefCandidateMeta );
+            candMeta[ 0 ].segOffset_ = 0;
+            candMeta[ 0 ].score_ = 1.0;
+        }
         else
             segTagger->seg_sentence(words, types, segN, N, segment);
 
