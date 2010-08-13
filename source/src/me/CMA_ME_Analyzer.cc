@@ -276,9 +276,7 @@ inline void removeDuplicatedSegment(
     	if( strlen( inStr ) == 0 )
     	      return strBuf_.c_str();
 
-    	//FIXME for debug disable printPOS
-    	//bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
-        bool printPOS = false;
+    	bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
       
         Sentence sent;
         (this->*analysis)(inStr, 1, sent, printPOS);
