@@ -628,9 +628,9 @@ const char* MaxentModel::__str__() const {
         static char buf[300];
         sprintf(buf, 
 "Conditional Maximum Entropy Model (C++ version)\n"
-"Number of context predicates  : %d\n"
-"Number of outcome             : %d\n"
-"Number of paramaters(features): %d" ,  m_pred_map->size()
+"Number of context predicates  : %zd\n"
+"Number of outcome             : %zd\n"
+"Number of paramaters(features): %zd" ,  m_pred_map->size()
 , m_outcome_map->size() , n);
         return buf;
     }
