@@ -11,7 +11,8 @@ int tests_run = 0;
 using namespace std;
 
 char* test_mmapfile() {
-    char* tmpfile = tmpnam(0);
+    char* tmpfile = "test_mmapfileXXXXXX";
+    mkstemp( tmpfile );
     ofstream of(tmpfile, ios::binary);
     for (size_t i = 0;i < 100; ++i)
         of.write((const char*)&i, sizeof(i));
@@ -29,7 +30,8 @@ char* test_mmapfile() {
 }
 
 char* test_line_mem_iterator() {
-    char* tmpfile = tmpnam(0);
+    char* tmpfile = "test_mmapfileXXXXXX";
+    mkstemp( tmpfile );
     {
         ofstream of(tmpfile);
         of << "first line." << endl;
@@ -51,7 +53,7 @@ char* test_line_mem_iterator() {
 }
 
 char* test_token_mem_iterator() {
-    char buf[] = " this	is  ÖÐ¹ú 	a \r\r test !  \r\r";
+    char buf[] = " this	is  ï¿½Ð¹ï¿½ 	a \r\r test !  \r\r";
     token_mem_iterator<> it(buf, buf + strlen(buf));
     token_mem_iterator<> end;
     for (; it != end; ++it) {
