@@ -242,7 +242,7 @@ void parseFMinCoverString(
     out.clear();
     if( words.empty() == true )
         return;
-    out.reserve( (size_t)( words.size() * 2.2 ) );
+    out.reserve( (size_t)( ( words.size() - beginIdx ) * 2.2 ) );
 
     // 1st. analysis by CharType
     size_t size = words.size();

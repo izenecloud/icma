@@ -210,7 +210,9 @@ private:
     void createStringLexicon(
             StringVectorType& words,
             PGenericArray<size_t>& segSeq,
-            StringVectorType& out
+            StringVectorType& out,
+            size_t beginIdx,
+            size_t endIdx
             );
 
 private:

@@ -15,6 +15,7 @@
 #include "icma/pos_table.h"
 #include "icma/me/CMA_ME_Analyzer.h"
 #include "icma/util/CPPStringUtils.h"
+#include "icma/util/StrBasedVTrie.h"
 #include "icma/util/CateStrTokenizer.h"
 #include "icma/util/tokenizer.h"
 
@@ -514,6 +515,21 @@ namespace meanainner{
         }
     }
 
+    void toCombine(
+            PGenericArray<size_t>& segment,
+            size_t begin,
+            size_t lastWordEnd
+            )
+    {
+        //cout << " to combine [" << begin << ", " << lastWordEnd << "]"<< endl;
+        size_t lastIndex = lastWordEnd + 1; // included
+        segment[ begin + 1 ] = segment[ lastIndex ];
+        for( size_t cbIdx = begin + 3; cbIdx <= lastIndex; cbIdx += 2 )
+        {
+            segment[ cbIdx ] = 0;
+        }
+    }
+
     void combineRetWithTrie(
             VTrie* trie,
             StringVectorType& words,
@@ -523,84 +539,89 @@ namespace meanainner{
             size_t endIdx
             )
     {
-#ifndef ON_DEV
         StrBasedVTrie strTrie( trie );
 
-        int begin = -1;
-        int lastWordEnd = -1;
+        bool continueSch = false;
+        bool schFlag = false;
+        size_t begin = 0;
+        size_t lastWordEnd = 0;
 
-        int n = (int)src.size();
-        VTrieNode node;
-        for ( size_t i = beginIdx; i < endIdx;  i += 2 )
+        for ( size_t i = beginIdx; i <= endIdx;  i += 2 )
         {
-            size_t wordBeginIdx = segment[ i * 2 ];
-            size_t wordEndIdx = segment[ i * 2 + 1 ];
+            if( i == endIdx )
+            {
+                if( schFlag == false || ( lastWordEnd + 2 ) == endIdx )
+                    break;
+                if( begin < lastWordEnd )
+                    toCombine( segment, begin, lastWordEnd );
 
-            string& str = src[i];
-
-            #ifdef DEBUG_TRIE_MATCH
-            cout<<"Before Check begin:"<<begin<<node<<endl;
-            #endif
-
-            size_t strLen = str.length();
-            size_t j = 0;
-            for (; node.moreLong && j < strLen; ++j) {
-                trie->find(str[j], &node);
-                //cout<<"Ret "<<(int)(unsigned char)str[j]<<","<<node<<endl;
+                continueSch = false;
+                i = lastWordEnd;
+                continue;
             }
 
-            #ifdef DEBUG_TRIE_MATCH
-            cout<<"Check str "<<str<<",isEnd:"<<(j == strLen)<<node<<endl;
-            #endif
+            size_t wordIdx = segment[ i ];
+            if( continueSch == true )
+                schFlag = strTrie.search( words[ wordIdx ] );
+            else
+                schFlag = strTrie.firstSearch( words[ wordIdx ] );
+
+            if( schFlag == true && strTrie.node.moreLong == true )
+            {
+                size_t wordEndIdx = segment[ i + 1 ];
+                for( ++wordIdx; wordIdx < wordEndIdx; ++wordIdx )
+                {
+                    schFlag = strTrie.search( words[ wordIdx ] );
+                    if( schFlag == false )
+                        break;
+                }
+            }
 
             //did not reach the last bit
-            if (j < strLen) {
+            if ( schFlag == false )
+            {
                 //no exist in the dictionary
-                if (begin < 0)
+                if ( continueSch == false )
                 {
-                    if(!type->isSpace(str.c_str()))
-                        dest.push_back(str);
+                    if( types[ wordIdx ] == CHAR_TYPE_SPACE )
+                        segment[ i * 2 + 1 ] = 0;
+                    continue;
                 }
-                 else {
-                    if(lastWordEnd < begin)
-                        lastWordEnd = begin;
-                    toCombine(trie, type, src, begin, lastWordEnd, dest);
-                    begin = -1;
-                    //restart that node
-                    i = lastWordEnd; //another ++ in the loop
-                }
-                node.init();
-            } else {
-                if (node.moreLong && (i < n - 1)) {
-                    if(begin < 0)
-                        begin = i;
-                    if(node.data > 0)
-                        lastWordEnd = i;
-                } else {
-                    if (begin < 0)
-                    {
-                        if(!type->isSpace(str.c_str()))
-                            dest.push_back(str);
-                    }
-                    else {
-                        if(node.data > 0)
-                            lastWordEnd = i;
-                        else if(lastWordEnd < begin)
-                            lastWordEnd = begin;
 
-                        toCombine(trie, type, src, begin, lastWordEnd, dest);
-                        begin = -1;
-                        i = lastWordEnd;
-                    }
-                    node.init();
-                }
+
+                if( begin < lastWordEnd )
+                    toCombine( segment, begin, lastWordEnd );
+
+                continueSch = false;
+                i = lastWordEnd; //another ++ in the loop
+            }
+            else if( strTrie.node.moreLong == false )
+            {
+                if( continueSch == false )
+                    continue;
+
+                if( begin < lastWordEnd )
+                    toCombine( segment, begin, lastWordEnd );
+
+                continueSch = false;
+                i = lastWordEnd;
+            }
+            else if( continueSch == false )
+            {
+                continueSch = true;
+                lastWordEnd = begin = i;
+            }
+            else if( strTrie.node.data > 0 )
+            {
+                lastWordEnd = i;
             }
         } //end for
 
-        if(begin >= 0){
-            toCombine(trie, type, src, begin, n-1, dest);
+        if( continueSch == true )
+        {
+            toCombine( segment, begin, endIdx - 2 );
         }
-#endif
+
     }
 
 }
@@ -691,59 +712,58 @@ namespace meanainner{
             bool tagPOS
             )
     {
-#ifndef ON_DEV
+        static CandidateMeta DefCandidateMeta;
+
         // Initial Step 1: split as Chinese Character based
-        vector<string> words;
+        StringVectorType words;
         extractCharacter( sentence, words );
 
         if( words.empty() == true )
             return;
-/*
-        int maxWordOff = (int)words.size() - 1;
-        CharType types[maxWordOff + 1];
-        CharType preType = CHAR_TYPE_INIT;
-        for(int i=0; i<maxWordOff; ++i){
-            types[i] = preType = ctype_->getCharType(words[i].data(),
-                    preType, words[i+1].data());
 
+        size_t wordSize = words.size();
+        // Initial Step 2nd: set character types
+        CharType types[ (int)wordSize ];
+        setCharType( words, types );
+
+        ret.candMetas_.clear();
+        ret.candMetas_.push_back( DefCandidateMeta );
+        ret.candMetas_[ 0 ].segOffset_ = 0;
+        ret.candMetas_[ 0 ].score_ = 1.0;
+
+
+        PGenericArray<size_t> bestSegSeq;
+        bestSegSeq.reserve( wordSize * 2 );
+        for( size_t i = 0; i < wordSize; ++i )
+        {
+            bestSegSeq.push_back( i );
+            bestSegSeq.push_back( i + 1 );
         }
 
-        types[maxWordOff] = ctype_->getCharType(words[maxWordOff].data(),
-                    preType, 0);
-*/
-
-        segRet.resize(1);
 
         VTrie *trie = knowledge_->getTrie();
-        meanainner::combineRetWithTrie( trie, words, segRet[0].first, ctype_);
-        segRet[0].second = 1;
+        meanainner::combineRetWithTrie( trie, words, types,
+                bestSegSeq, 0, bestSegSeq.size() );
 
-        if(!tagPOS)
+        /*
+        for( size_t i = 0; i < wordSize; ++i )
+        {
+            cout << bestSegSeq[ i * 2 ] << " -> " << bestSegSeq[ i * 2 + 1 ] << endl;
+        }
+        */
+
+        // convert to string lexicon
+        ret.segment_.clear();
+        createStringLexicon( words, bestSegSeq, ret.segment_, 0, bestSegSeq.size() );
+
+
+        if( tagPOS == false )
             return;
 
-        posRet.resize(1);
-        vector<string>& posRetOne = posRet[ 0 ];
-        vector< POSTagger::POSUnitType >& posVec = knowledge_->getPOSTagger()->posVec_;
-        string& defaultPOS = knowledge_->getPOSTagger()->defaultPOS;
-        vector<string>& wordVec = segRet[ 0 ].first;
-        size_t wordSize = wordVec.size();
-        posRetOne.resize( wordSize );
-        for (size_t i = 0; i < wordSize; ++i) {
-            VTrieNode node;
-            trie->search( wordVec[ i ].data(), &node );
-            if( node.data > 0 )
-            {
-                POSTagger::POSUnitType& posSet = posVec[ node.data ];
-                if( !posSet.empty() )
-                {
-                    posRetOne[ i ] = posSet[ 0 ];
-                    continue;
-                }
-            }
-
-            posRetOne[i] = defaultPOS;
-        }
-#endif
+        ret.candMetas_[ 0 ].posOffset_ = 0;
+        ret.pos_.clear();
+        knowledge_->getPOSTagger()->quick_tag_sentence_best(
+                ret.segment_, bestSegSeq, types, 0, ret.segment_.size(), ret.pos_ );
     }
 
     void CMA_ME_Analyzer::analysis_dictb(
@@ -843,7 +863,7 @@ namespace meanainner{
 
         // convert to string lexicon
         ret.segment_.clear();
-        createStringLexicon( words, bestSegSeq, ret.segment_ );
+        createStringLexicon( words, bestSegSeq, ret.segment_, 0, bestSegSeq.size() );
 
 
         if( tagPOS == false )
@@ -983,14 +1003,16 @@ namespace meanainner{
     void CMA_ME_Analyzer::createStringLexicon(
             StringVectorType& words,
             PGenericArray<size_t>& segSeq,
-            StringVectorType& out
+            StringVectorType& out,
+            size_t beginIdx,
+            size_t endIdx
             )
     {
         size_t curFreeLen = out.freeLen();
-        size_t segSeqSize = segSeq.size();
+        size_t segSeqSize = ( endIdx - beginIdx ) / 2;
         size_t minLen = 0;
         // minLen is used collect character number now
-        for( size_t i = 1; i < segSeqSize; i += 2 )
+        for( size_t i = beginIdx + 1; i < endIdx; i += 2 )
         {
             minLen += segSeq[ i ];
         }
@@ -1004,11 +1026,11 @@ namespace meanainner{
 
         // Converting integer to string
         char* outPtr = out.endPtr_;
-        for( size_t i = 1; i < segSeqSize; i += 2 )
+        for( size_t i = beginIdx + 1; i < endIdx; i += 2 )
         {
             size_t startIdx = segSeq[ i - 1 ];
             size_t endIdx = segSeq[ i ];
-            if( startIdx == endIdx )
+            if( startIdx >= endIdx )
                 continue;
             out.offsetVec_.push_back( outPtr - out.data_ );
             for( size_t wordIdx = startIdx; wordIdx < endIdx; ++wordIdx )
