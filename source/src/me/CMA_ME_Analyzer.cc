@@ -514,6 +514,95 @@ namespace meanainner{
         }
     }
 
+    void combineRetWithTrie(
+            VTrie* trie,
+            StringVectorType& words,
+            CharType* types,
+            PGenericArray<size_t>& segment,
+            size_t beginIdx,
+            size_t endIdx
+            )
+    {
+#ifndef ON_DEV
+        StrBasedVTrie strTrie( trie );
+
+        int begin = -1;
+        int lastWordEnd = -1;
+
+        int n = (int)src.size();
+        VTrieNode node;
+        for ( size_t i = beginIdx; i < endIdx;  i += 2 )
+        {
+            size_t wordBeginIdx = segment[ i * 2 ];
+            size_t wordEndIdx = segment[ i * 2 + 1 ];
+
+            string& str = src[i];
+
+            #ifdef DEBUG_TRIE_MATCH
+            cout<<"Before Check begin:"<<begin<<node<<endl;
+            #endif
+
+            size_t strLen = str.length();
+            size_t j = 0;
+            for (; node.moreLong && j < strLen; ++j) {
+                trie->find(str[j], &node);
+                //cout<<"Ret "<<(int)(unsigned char)str[j]<<","<<node<<endl;
+            }
+
+            #ifdef DEBUG_TRIE_MATCH
+            cout<<"Check str "<<str<<",isEnd:"<<(j == strLen)<<node<<endl;
+            #endif
+
+            //did not reach the last bit
+            if (j < strLen) {
+                //no exist in the dictionary
+                if (begin < 0)
+                {
+                    if(!type->isSpace(str.c_str()))
+                        dest.push_back(str);
+                }
+                 else {
+                    if(lastWordEnd < begin)
+                        lastWordEnd = begin;
+                    toCombine(trie, type, src, begin, lastWordEnd, dest);
+                    begin = -1;
+                    //restart that node
+                    i = lastWordEnd; //another ++ in the loop
+                }
+                node.init();
+            } else {
+                if (node.moreLong && (i < n - 1)) {
+                    if(begin < 0)
+                        begin = i;
+                    if(node.data > 0)
+                        lastWordEnd = i;
+                } else {
+                    if (begin < 0)
+                    {
+                        if(!type->isSpace(str.c_str()))
+                            dest.push_back(str);
+                    }
+                    else {
+                        if(node.data > 0)
+                            lastWordEnd = i;
+                        else if(lastWordEnd < begin)
+                            lastWordEnd = begin;
+
+                        toCombine(trie, type, src, begin, lastWordEnd, dest);
+                        begin = -1;
+                        i = lastWordEnd;
+                    }
+                    node.init();
+                }
+            }
+        } //end for
+
+        if(begin >= 0){
+            toCombine(trie, type, src, begin, n-1, dest);
+        }
+#endif
+    }
+
 }
 
     void CMA_ME_Analyzer::analysis_mmmodel(
