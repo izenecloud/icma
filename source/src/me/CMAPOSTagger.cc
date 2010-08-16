@@ -473,7 +473,7 @@ void POSTagger::quick_tag_sentence_best(
     for( size_t i = 0; i < usedSize; ++i )
     {
         size_t wordBeginIdx = segSeq[ i * 2 ];
-        size_t wordEndIdx =  wordBeginIdx + segSeq[ i * 2 + 1 ];
+        size_t wordEndIdx =  segSeq[ i * 2 + 1 ];
         CMA_WType::WordType wordT = wtype.getWordType( types, wordBeginIdx, wordEndIdx );
 
         switch(wordT){

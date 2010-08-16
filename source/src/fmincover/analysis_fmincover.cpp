@@ -112,7 +112,7 @@ void divideNormalString(
         if( curLen == 1 )
         {
             out.push_back( dLIdx + beginOffset );
-            out.push_back( 1 );
+            out.push_back( dLIdx + beginOffset + 1 );
             ++dLIdx;
             continue;
         }
@@ -139,7 +139,7 @@ void divideNormalString(
         if( haveCross == false )
         {
             out.push_back( dLIdx + beginOffset );
-            out.push_back( dLEndIdx - dLIdx );
+            out.push_back( beginOffset + dLEndIdx );
             dLIdx = dLEndIdx;
             continue;
         }
@@ -148,13 +148,13 @@ void divideNormalString(
         {
             curLen = dictLen[ advDLIdx ];
             out.push_back( advDLIdx + beginOffset );
-            out.push_back( 1 );
+            out.push_back( advDLIdx + beginOffset + 1 );
 
             if( curLen == 1 )
                 continue;
 
             out.push_back( advDLIdx + beginOffset );
-            out.push_back( curLen );
+            out.push_back( advDLIdx + beginOffset + curLen );
         }
 
         dLIdx = dLEndIdx;
@@ -193,7 +193,7 @@ void addFMinCString(
     {
         // check for the word begin with whole string
         out.push_back( beginIdx );
-        out.push_back( endIdx - beginIdx );
+        out.push_back( endIdx );
         return;
     }
 
@@ -202,14 +202,14 @@ void addFMinCString(
     {
         // check for start with part of string
         out.push_back( beginIdx );
-        out.push_back( endIdx - beginIdx );
+        out.push_back( endIdx );
         return;
     }
 
     case CHAR_TYPE_PUNC:
     {
         out.push_back( beginIdx );
-        out.push_back( endIdx - beginIdx );
+        out.push_back( endIdx );
         return;
     }
 

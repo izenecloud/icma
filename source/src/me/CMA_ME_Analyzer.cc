@@ -1007,7 +1007,7 @@ namespace meanainner{
         for( size_t i = 1; i < segSeqSize; i += 2 )
         {
             size_t startIdx = segSeq[ i - 1 ];
-            size_t endIdx = startIdx + segSeq[ i ];
+            size_t endIdx = segSeq[ i ];
             if( startIdx == endIdx )
                 continue;
             out.offsetVec_.push_back( outPtr - out.data_ );
