@@ -186,6 +186,17 @@ bool StringArray::contains( const char* str ) const
     return false;
 }
 
+int StringArray::index( const char* str ) const
+{
+    int size = (int)this->size();
+    for( int i = 0; i < size; ++i )
+    {
+        if( strcmp( str, this->operator []( i ) ) == 0 )
+            return i;
+    }
+    return -1;
+}
+
 void StringArray::removeHead()
 {
     if( offsetVec_.empty() == false )

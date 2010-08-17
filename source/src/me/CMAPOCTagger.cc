@@ -337,13 +337,13 @@ inline void combinePOCToWord(
     {
         if( tags[i] == POC_TAG_B )
         {
-            seg.push_back( i - lastIdx );
+            seg.push_back( i );
             lastIdx = i;
             seg.push_back( lastIdx );
         }
     }
 
-    seg.push_back( n - lastIdx );
+    seg.push_back( n );
 }
 
 } //end namespace pocinner

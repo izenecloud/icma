@@ -418,7 +418,7 @@ int main(int argc, char* argv[])
         exit(1);
     }
 
-    int analysisType = 3;
+    int analysisType = 1;
 
     bool loadModel = ( analysisType == 1 );
 

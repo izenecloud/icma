@@ -67,6 +67,8 @@ public:
 
     bool contains( const char* str ) const;
 
+    int index( const char* str ) const;
+
     inline bool empty() const
     {
         return offsetVec_.empty();

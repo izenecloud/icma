@@ -530,6 +530,41 @@ namespace meanainner{
         }
     }
 
+    void rmEmptyUnits(
+            PGenericArray<size_t>& segment,
+            size_t beginIdx,
+            size_t endIdx
+            )
+    {
+        size_t idx = beginIdx + 1;
+        for( ; idx < endIdx; idx += 2 )
+        {
+            if( segment[ idx ] == 0 )
+                break;
+        }
+
+        // no empty unit found
+        if( idx >= endIdx )
+            return;
+        size_t validIdx = idx + 2;
+        while( true )
+        {
+            // find next non-empty unit
+            while( validIdx < endIdx && segment[ validIdx ] == 0 )
+                validIdx += 2;
+            // if not found, exit
+            if( validIdx >= endIdx )
+                break;
+
+            segment[ idx - 1 ] = segment[ validIdx - 1 ];
+            segment[ idx ] = segment[ validIdx ];
+            idx += 2;
+            validIdx += 2;
+        }
+        // set last idx as empty
+        segment[ idx ] = 0;
+    }
+
     void combineRetWithTrie(
             VTrie* trie,
             StringVectorType& words,
@@ -622,6 +657,8 @@ namespace meanainner{
             toCombine( segment, begin, endIdx - 2 );
         }
 
+        // remove zero bytes
+        rmEmptyUnits( segment, beginIdx, endIdx );
     }
 
 }
@@ -683,7 +720,13 @@ namespace meanainner{
             createStringLexicon( words, segment, ret.segment_,
                     offsetArray[ i ], offsetArray[ i + 1 ] );
         }
-
+/*
+        cout << "analysis_mmmodel segment: " << endl;
+        for( size_t i = 0; i < segment.size(); i += 2 )
+        {
+            cout << segment[ i ] << " -> " << segment[ i + 1 ] << endl;
+        }
+*/
 
         if( tagPOS == false )
             return;
@@ -695,7 +738,7 @@ namespace meanainner{
         {
             candMeta[ i ].posOffset_ = ret.pos_.size();
             posTagger->tag_sentence_best( ret.segment_, segment, types,
-                    offsetArray[ i ], offsetArray[ i + 1 ], ret.pos_ );
+                    offsetArray[ i ] / 2, offsetArray[ i + 1 ] / 2, ret.pos_ );
         }
 
     }
@@ -1026,7 +1069,7 @@ namespace meanainner{
             size_t startIdx = segSeq[ i - 1 ];
             size_t endIdx = segSeq[ i ];
             if( startIdx >= endIdx )
-                continue;
+                break;
             out.offsetVec_.push_back( outPtr - out.data_ );
             for( size_t wordIdx = startIdx; wordIdx < endIdx; ++wordIdx )
             {

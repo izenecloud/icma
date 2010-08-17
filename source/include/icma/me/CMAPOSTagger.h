@@ -163,19 +163,6 @@ public:
             );
 
     /**
-     * tag the word with the best POS and return its score
-     * \param words words vector
-     * \param poses the previous pos vector, but the current pos won't store into
-     * the poses
-     * \param index the current index to check
-     * \param pos to store the best pos
-     * \return return the score of the best pos
-     */
-    double tag_word_best(vector<string>& words, vector<string>& poses, int index,
-            string& pos);
-
-
-    /**
      * Set the reference to the specific character encoding
      *
      * \param ctype new specific character encoding
@@ -202,20 +189,6 @@ private:
     void tag_word(vector<string>& words, int index, size_t N, string* tags,
             POSTagUnit* candidates, int& lastIndex, size_t& canSize,
             double initScore, int candidateNum, CMA_WType& wtype);
-
-    /**
-     * tag the word with the best POS (private method)
-     * \param words words vector
-     * \param poses the previous pos vector, but the current pos won't store into
-     * the poses
-     * \param index the current index to check
-     * \param pos to store the best pos
-     * \param wtype the identify the type of the word
-     * \return return the score of the best pos
-     */
-    inline double tag_word_best_1(
-            vector<string>& words, vector<string>& poses,
-            int index, string& pos, CMA_WType& wtype);
 
 public:
     /** vector to hold the POS information */
