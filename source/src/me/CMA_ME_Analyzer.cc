@@ -720,10 +720,21 @@ namespace meanainner{
             createStringLexicon( words, segment, ret.segment_,
                     offsetArray[ i ], offsetArray[ i + 1 ] );
         }
+
 /*
+        for( int i = 0; i <= N; ++i )
+        {
+            cout << "offsetArray[ " << i << " ] = " << offsetArray[ i ] << endl;
+        }
         cout << "analysis_mmmodel segment: " << endl;
+        int oaidx = 0;
         for( size_t i = 0; i < segment.size(); i += 2 )
         {
+            if( i == offsetArray[ oaidx ] )
+            {
+                cout << "--------" << endl;
+                ++oaidx;
+            }
             cout << segment[ i ] << " -> " << segment[ i + 1 ] << endl;
         }
 */
@@ -1052,7 +1063,11 @@ namespace meanainner{
         // minLen is used collect character number now
         for( size_t i = beginIdx + 1; i < endIdx; i += 2 )
         {
-            minLen += segSeq[ i ];
+            size_t startIdx = segSeq[ i - 1 ];
+            size_t endIdx = segSeq[ i ];
+            if( startIdx >= endIdx )
+                break;
+            minLen += endIdx - startIdx;
         }
         // convert to bytes, it will wasted some bytes
         minLen = minLen * 4 + segSeqSize + 10;
