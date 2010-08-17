@@ -13,6 +13,8 @@
 #include "icma/me/CMAPOSTagger.h"
 #include "icma/util/io_util.h"
 
+#define ON_DEV
+
 namespace cma{
 
 string POS_BOUNDARY = "BoUnD";
@@ -328,6 +330,7 @@ void POSTagger::tag_sentence(vector<string>& words, size_t N, size_t retSize,
 }
 
 void POSTagger::tag_file(const char* inFile, const char* outFile){
+#ifndef ON_DEV
     ifstream in(inFile);
     ofstream out(outFile);
 
@@ -360,6 +363,7 @@ void POSTagger::tag_file(const char* inFile, const char* outFile){
 
     in.close();
     out.close();
+#endif
 }
 
 double POSTagger::tag_word_best_1(vector<string>& words, vector<string>& poses,
@@ -448,29 +452,39 @@ double POSTagger::tag_word_best_1(vector<string>& words, vector<string>& poses,
     return bestScore;
 }
 
-void POSTagger::tag_sentence_best(vector<string>& words, vector<string>& posRet,
-        int begin, int end){
+void POSTagger::tag_sentence_best(
+        StringVectorType& words,
+        PGenericArray<size_t>& segSeq,
+        CharType* types,
+        size_t beginIdx,
+        size_t endIdx,
+        PGenericArray< const char* >& posRet
+        )
+{
     CMA_WType wtype(ctype_);
-    for( int index = begin; index < end; ++index ){
+    posRet.reserve( posRet.usedLen() + endIdx - beginIdx );
+#ifndef ON_DEV
+    for( size_t index = beginIdx; index < endIdx; ++index )
+    {
         string pos;
         tag_word_best_1(words, posRet, index, pos, wtype);
         posRet.push_back(pos);
     }
+#endif
 }
 
 void POSTagger::quick_tag_sentence_best(
         StringVectorType& words,
         PGenericArray<size_t>& segSeq,
         CharType* types,
-        int beginIdx,
-        int endIdx,
+        size_t beginIdx,
+        size_t endIdx,
         PGenericArray< const char* >& posRet
         )
 {
-    size_t usedSize = endIdx - beginIdx;
-    posRet.reserve( posRet.usedLen() + usedSize );
+    posRet.reserve( posRet.usedLen() + endIdx - beginIdx );
     CMA_WType wtype(ctype_);
-    for( size_t i = 0; i < usedSize; ++i )
+    for( size_t i = beginIdx; i < endIdx; ++i )
     {
         size_t wordBeginIdx = segSeq[ i * 2 ];
         size_t wordEndIdx =  segSeq[ i * 2 + 1 ];
@@ -493,7 +507,7 @@ void POSTagger::quick_tag_sentence_best(
                 break;
         }
 
-        const char* word = words[ i + beginIdx ];
+        const char* word = words[ i ];
         VTrieNode node;
         trie_->search( word, &node );
         if( node.data > 0 )

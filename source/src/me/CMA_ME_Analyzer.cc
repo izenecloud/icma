@@ -662,47 +662,42 @@ namespace meanainner{
         else
         {
             segTagger->seg_sentence( words, types, N, N, segment, candMeta );
+            N = candMeta.size();
         }
 
-#ifndef ON_DEV
-        N = segment.size();
-        segRet.resize( N );
+        size_t offsetArray[ N + 1 ];
+        offsetArray[ 0 ] = 0;
+        offsetArray[ N ] = segment.size();
+        for( int i = 1; i < N; ++i )
+            offsetArray[ i ] = candMeta[ i ].segOffset_;
 
+
+        // only combine the first result
         VTrie *trie = knowledge_->getTrie();
-        //TODO, only combine the first result
-        for ( int i = 0; i < N; ++i )
+        meanainner::combineRetWithTrie( trie, words, types, segment,
+                0, offsetArray[ 1 ] );
+        ret.segment_.clear();
+        for( int i = 0; i < N; ++i )
         {
-            pair<vector<string>, double>& srcPair = segment[i];
-            pair<vector<string>, double>& destPair = segRet[i];
-            destPair.second = srcPair.second;
-            if(i < 1)
-            {
-                meanainner::combineRetWithTrie( trie, srcPair.first,
-                        destPair.first, ctype_);
-            }
-            else{
-                size_t srcSize = srcPair.first.size();
-                for( size_t si = 0; si < srcSize; ++si )
-                {
-                    string& val = srcPair.first[si];
-                    if( ctype_->isSpace( val.c_str() ) == false )
-                        destPair.first.push_back(val);
-                }
-            }
+            candMeta[ i ].segOffset_ = ret.segment_.size();
+            createStringLexicon( words, segment, ret.segment_,
+                    offsetArray[ i ], offsetArray[ i + 1 ] );
         }
+
 
         if( tagPOS == false )
             return;
 
-        posRet.resize( N );
+        ret.pos_.clear();
+        ret.pos_.reserve( offsetArray[ N ] );
         POSTagger* posTagger = knowledge_->getPOSTagger();       
         for ( int i = 0; i < N; ++i )
         {
-            posTagger->tag_sentence_best(segRet[i].first, posRet[i], 0,
-                segRet[i].first.size());
+            candMeta[ i ].posOffset_ = ret.pos_.size();
+            posTagger->tag_sentence_best( ret.segment_, segment, types,
+                    offsetArray[ i ], offsetArray[ i + 1 ], ret.pos_ );
         }
 
-#endif
     }
 
     void CMA_ME_Analyzer::analysis_fmm(

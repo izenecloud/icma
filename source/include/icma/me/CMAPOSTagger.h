@@ -133,8 +133,14 @@ public:
      * \param begin the begin index (include) to check
      * \param end the first index that should not check
      */
-    void tag_sentence_best(vector<string>& words, vector<string>& posRet,
-            int begin, int end);
+    void tag_sentence_best(
+            StringVectorType& words,
+            PGenericArray<size_t>& segSeq,
+            CharType* types,
+            size_t beginIdx,
+            size_t endIdx,
+            PGenericArray< const char* >& posRet
+            );
 
     /**
      * Quick Tag sentence best, no statistical model is used
@@ -151,8 +157,8 @@ public:
             StringVectorType& words,
             PGenericArray<size_t>& segSeq,
             CharType* types,
-            int beginIdx,
-            int endIdx,
+            size_t beginIdx,
+            size_t endIdx,
             PGenericArray< const char* >& posRet
             );
 
@@ -207,7 +213,8 @@ private:
      * \param wtype the identify the type of the word
      * \return return the score of the best pos
      */
-    inline double tag_word_best_1(vector<string>& words, vector<string>& poses, 
+    inline double tag_word_best_1(
+            vector<string>& words, vector<string>& poses,
             int index, string& pos, CMA_WType& wtype);
 
 public:
