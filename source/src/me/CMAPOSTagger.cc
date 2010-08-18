@@ -18,7 +18,7 @@
 namespace cma{
 
 string POS_BOUNDARY = "BoUnD";
-const char* POS_BOUNDARY_CSTR = "BoUnD";
+const char* POS_BOUNDARY_CSTR = POS_BOUNDARY.c_str();
 
 namespace posinner{
 
@@ -423,7 +423,7 @@ void POSTagger::tag_sentence_best(
     int posIndex = -1;
     for( size_t index = beginIdx; index < endIdx; ++index )
     {
-
+cout << "# " << index << " " << words[index]<<endl;
         size_t wordBeginIdx = segSeq[ index * 2 ];
         size_t wordEndIdx =  segSeq[ index * 2 + 1 ];
         if( wordEndIdx <= wordBeginIdx )
@@ -470,8 +470,12 @@ void POSTagger::tag_sentence_best(
 
         const char* pos = NULL;
         context.clear();
-        const char* tag_1 = index > 0 ? posRet[index-1] : POS_BOUNDARY_CSTR;
-        const char* tag_2 = index > 1 ? posRet[index-2] : POS_BOUNDARY_CSTR;
+        const char* tag_1 = index > beginIdx ? posRet[index-1] : POS_BOUNDARY_CSTR;
+        const char* tag_2 = index > beginIdx+1 ? posRet[index-2] : POS_BOUNDARY_CSTR;
+		
+		
+		cout << tag_1 << ", ";
+		cout << tag_2 << endl;
         posinner::get_pos_zh_scontext_postagger( words, tag_1, tag_2, index, context );
 
         vector<pair<outcome_type, double> > outcomes;
@@ -495,6 +499,8 @@ void POSTagger::tag_sentence_best(
         {
             pos = defaultPOS.c_str();
         }
+		else
+			cout << "!!checked by mmm "<<endl;
         posRet.push_back(pos);
     }
 }
