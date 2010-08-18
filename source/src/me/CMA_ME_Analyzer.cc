@@ -146,7 +146,7 @@ inline void removeDuplicatedSegment(
         {
 			size_t posSize = sentence.getCount( 0 );
 			sentence.addList( DefMorphemeList );
-			MorphemeList& list = *sentence.getMorphemeList( sentence.getListSize() - 1 );
+			MorphemeList& list = *sentence.getMorphemeList( 0 );
 			list.insert( list.end(), posSize, DefMorp );
 
 			if( printPOS == true )
@@ -171,7 +171,7 @@ inline void removeDuplicatedSegment(
 		{
 		    size_t posSize = sentence.getCount( i );
 			sentence.addList( DefMorphemeList );
-			MorphemeList& list = *sentence.getMorphemeList( sentence.getListSize() - 1 );
+			MorphemeList& list = *sentence.getMorphemeList( i );
 			list.insert( list.end(), posSize, DefMorp );
 
             if( printPOS == true )
