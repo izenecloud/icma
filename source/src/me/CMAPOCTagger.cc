@@ -319,10 +319,11 @@ inline void combinePOCToWord(vector<string>& words, size_t n, uint8_t* tags,
 }
 
 /**
- * Combine the poc tags to words
+ * Combine the poc tags to words and remove white spaces
  */
 inline void combinePOCToWord(
         StringVectorType& words,
+        CharType* types,
         size_t n,
         uint8_t* tags,
         PGenericArray<size_t>& seg
@@ -330,16 +331,23 @@ inline void combinePOCToWord(
 {
     seg.reserve( seg.usedLen() + n );
 
-    size_t lastIdx = 0;
-    seg.push_back( lastIdx );
-    size_t i = 1;
-    for( ; i < n; ++i )
+    size_t i = 0;
+    while( i < n && types[ i ] == CHAR_TYPE_SPACE )
+        ++i;
+    if( i == n )
+        return;
+    seg.push_back( i );
+
+    for( ++i; i < n; ++i )
     {
         if( tags[i] == POC_TAG_B )
         {
             seg.push_back( i );
-            lastIdx = i;
-            seg.push_back( lastIdx );
+            while( i < n && types[ i ] == CHAR_TYPE_SPACE )
+                ++i;
+            if( i == n )
+                return;
+            seg.push_back( i );
         }
     }
 
@@ -567,7 +575,7 @@ void SegTagger::seg_sentence(
         candMeta.push_back( DefCandidateMeta );
         candMeta[ k ].score_ = scores[k];
         candMeta[ k ].segOffset_ = segment.size();
-        pocinner::combinePOCToWord(words, n, tags, segment );
+        pocinner::combinePOCToWord(words, types, n, tags, segment );
     }
 }
 
@@ -764,7 +772,7 @@ void SegTagger::seg_sentence_best(
 
     }
 
-    pocinner::combinePOCToWord(words, n, pocRet, segment);
+    pocinner::combinePOCToWord(words, types, n, pocRet, segment);
 }
 
 #undef BACK_FIX_END_TAG

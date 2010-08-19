@@ -431,6 +431,8 @@ void POSTagger::tag_sentence_best(
         size_t seqIdx = index * 2 + word2SeqIdxOffset;
         size_t seqWordBeginIdx = segSeq[ seqIdx ];
         size_t seqWordEndIdx =  segSeq[ seqIdx + 1 ];
+
+        //cout << "index = " << index << ", seqIdx = " << seqIdx << ", words = " << words[ index ] << endl;
         if( seqWordEndIdx <= seqWordBeginIdx )
             break;
 

@@ -418,7 +418,7 @@ int main(int argc, char* argv[])
         exit(1);
     }
 
-    int analysisType = 3;
+    int analysisType = 1;
 
     bool loadModel = ( analysisType == 1 );
 
@@ -439,7 +439,7 @@ int main(int argc, char* argv[])
 //if(true) exit(0);
     // disable POS output for runWithStream
     if( optionIndex == 2 )
-    	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
+    	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 1);
 
     analyzer->setOption( Analyzer::OPTION_ANALYSIS_TYPE, analysisType );
     switch(optionIndex)

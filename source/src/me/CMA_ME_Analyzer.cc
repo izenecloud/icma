@@ -556,10 +556,14 @@ namespace meanainner{
             if( validIdx >= endIdx )
                 break;
 
-            segment[ idx - 1 ] = segment[ validIdx - 1 ];
-            segment[ idx ] = segment[ validIdx ];
-            idx += 2;
-            validIdx += 2;
+            do
+            {
+                segment[ idx - 1 ] = segment[ validIdx - 1 ];
+                segment[ idx ] = segment[ validIdx ];
+                idx += 2;
+                validIdx += 2;
+            }
+            while( validIdx < endIdx && segment[ validIdx ] != 0 );
         }
         // set last idx as empty
         segment[ idx ] = 0;
@@ -711,8 +715,8 @@ namespace meanainner{
 
         // only combine the first result
         VTrie *trie = knowledge_->getTrie();
-        meanainner::combineRetWithTrie( trie, words, types, segment,
-                0, offsetArray[ 1 ] );
+        //FIXME meanainner::combineRetWithTrie( trie, words, types, segment,
+        //        0, offsetArray[ 1 ] );
         ret.segment_.clear();
         for( int i = 0; i < N; ++i )
         {
@@ -735,7 +739,7 @@ namespace meanainner{
                 cout << "--------" << endl;
                 ++oaidx;
             }
-            cout << segment[ i ] << " -> " << segment[ i + 1 ] << endl;
+            cout << "#" << i << ": " << segment[ i ] << " -> " << segment[ i + 1 ] << endl;
         }
 */
 
@@ -743,7 +747,7 @@ namespace meanainner{
             return;
 
         ret.pos_.clear();
-        ret.pos_.reserve( offsetArray[ N ] );
+        ret.pos_.reserve( ret.segment_.size() );
         POSTagger* posTagger = knowledge_->getPOSTagger();       
         for ( int i = 0; i < N; ++i )
         {
@@ -1064,11 +1068,11 @@ namespace meanainner{
         // minLen is used collect character number now
         for( size_t i = beginIdx + 1; i < endIdx; i += 2 )
         {
-            size_t startIdx = segSeq[ i - 1 ];
-            size_t endIdx = segSeq[ i ];
-            if( startIdx >= endIdx )
+            size_t seqStartIdx = segSeq[ i - 1 ];
+            size_t seqEndIdx = segSeq[ i ];
+            if( seqStartIdx >= seqEndIdx )
                 break;
-            minLen += endIdx - startIdx;
+            minLen += seqEndIdx - seqStartIdx;
         }
         // convert to bytes, it will wasted some bytes
         minLen = minLen * 4 + segSeqSize + 10;
@@ -1082,12 +1086,12 @@ namespace meanainner{
         char* outPtr = out.endPtr_;
         for( size_t i = beginIdx + 1; i < endIdx; i += 2 )
         {
-            size_t startIdx = segSeq[ i - 1 ];
-            size_t endIdx = segSeq[ i ];
-            if( startIdx >= endIdx )
+            size_t seqStartIdx = segSeq[ i - 1 ];
+            size_t seqEndIdx = segSeq[ i ];
+            if( seqStartIdx >= seqEndIdx )
                 break;
             out.offsetVec_.push_back( outPtr - out.data_ );
-            for( size_t wordIdx = startIdx; wordIdx < endIdx; ++wordIdx )
+            for( size_t wordIdx = seqStartIdx; wordIdx < seqEndIdx; ++wordIdx )
             {
                 const char* wordPtr = words[ wordIdx ];
                 while( *wordPtr != 0 )
