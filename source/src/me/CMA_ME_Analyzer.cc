@@ -229,7 +229,7 @@ inline void removeDuplicatedSegment(
 					out << endl;
                 continue;
             }
-
+            //cout << "#analysis " << line << endl;
             (this->*analysis)(line.data(), 1, sent, printPOS);
 
             if (printPOS)
@@ -589,7 +589,7 @@ namespace meanainner{
         {
             if( i == endIdx )
             {
-                if( schFlag == false || ( lastWordEnd + 2 ) == endIdx )
+                if( continueSch == false || ( lastWordEnd + 2 ) >= endIdx )
                     break;
                 if( begin < lastWordEnd )
                     toCombine( segment, begin, lastWordEnd );
@@ -597,6 +597,8 @@ namespace meanainner{
                 continueSch = false;
                 i = lastWordEnd;
                 continue;
+
+                break;
             }
 
             size_t wordIdx = segment[ i ];
@@ -715,8 +717,8 @@ namespace meanainner{
 
         // only combine the first result
         VTrie *trie = knowledge_->getTrie();
-        //FIXME meanainner::combineRetWithTrie( trie, words, types, segment,
-        //        0, offsetArray[ 1 ] );
+        meanainner::combineRetWithTrie( trie, words, types, segment,
+                0, offsetArray[ 1 ] );
         ret.segment_.clear();
         for( int i = 0; i < N; ++i )
         {
