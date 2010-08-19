@@ -625,7 +625,7 @@ namespace meanainner{
                 if ( continueSch == false )
                 {
                     if( types[ wordIdx ] == CHAR_TYPE_SPACE )
-                        segment[ i * 2 + 1 ] = 0;
+                        segment[ i + 1 ] = 0;
                     continue;
                 }
 
