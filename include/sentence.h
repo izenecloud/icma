@@ -57,6 +57,9 @@ public:
     /** POS offset for current Candidate */
     size_t posOffset_;
 
+    /** word offset offset */
+    size_t wdOffset_;
+
     /** Candidate Score */
     double score_;
 };
@@ -169,6 +172,14 @@ public:
     const char* getStrPOS(int nPos, int nIdx) const;
 
     /**
+     * Get the Offset of morpheme \e nIdx in candidate result \e nPos in the sentence.
+     * \param nPos candidate result index
+     * \param nIdx morpheme index
+     * \return offset in the sentence
+     */
+    size_t getOffset( int nPos, int nIdx ) const;
+
+    /**
      * Get the MorphemeList of candidate result \e nPos.
      * \param nPos candidate result index
      * \return the MorphemeList
@@ -216,6 +227,9 @@ private:
 
     /** the candidates meta information */
     VGenericArray< CandidateMeta > candMetas_;
+
+    /** word offsets */
+    PGenericArray< size_t > wordOffset_;
 
     /** the scores list of candidates */
     //std::vector<double> scores_;

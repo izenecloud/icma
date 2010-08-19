@@ -37,6 +37,7 @@ void Sentence::setString(const char* pString)
     segment_.clear();
     pos_.clear();
     candMetas_.clear();
+    wordOffset_.clear();
 }
 
 const char* Sentence::getString(void) const
@@ -75,6 +76,11 @@ int Sentence::getPOS(int nPos, int nIdx) const
 const char* Sentence::getStrPOS(int nPos, int nIdx) const
 {
     return pos_[ candMetas_[ nPos ].posOffset_ + nIdx ];
+}
+
+size_t Sentence::getOffset(int nPos, int nIdx) const
+{
+    return wordOffset_[ candMetas_[ nPos ].wdOffset_ + nIdx ];
 }
 
 MorphemeList* Sentence::getMorphemeList(int nPos)
