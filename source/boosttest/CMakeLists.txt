@@ -1,0 +1,6 @@
+# For hudson, Unit-test/Smoke-test:
+
+ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK=1)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/runner/)
+
+

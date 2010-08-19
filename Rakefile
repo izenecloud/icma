@@ -22,3 +22,5 @@ IZENESOFT::CMake.new do |t|
 end
 
 IZENESOFT::GITClean.new
+
+IZENESOFT::BoostTest.new
