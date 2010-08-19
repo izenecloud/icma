@@ -96,11 +96,12 @@ inline void get_pos_zh_scontext_postagger(
         const char* tag_1,
         const char* tag_2,
         int index,
+        int endIdx,
         vector<string>& context
         )
 {
 
-    int n = (int)words.size();
+    int n = endIdx;
     string wa[5]; //word array
     wa[0] = index > 1 ? words[index-2] : POS_BOUNDARY;
     wa[1] = index > 0 ? words[index-1] : POS_BOUNDARY;
@@ -412,24 +413,28 @@ void POSTagger::tag_sentence_best(
         StringVectorType& words,
         PGenericArray<size_t>& segSeq,
         CharType* types,
-        size_t beginIdx,
-        size_t endIdx,
+        size_t wordBeginIdx,
+        size_t wordEngIdx,
+        size_t seqStartIdx,
         PGenericArray< const char* >& posRet
         )
 {
+    int word2SeqIdxOffset = (int)seqStartIdx - (int)wordBeginIdx * 2;
+    posRet.reserve( posRet.usedLen() + wordEngIdx - wordBeginIdx );
+
     CMA_WType wtype(ctype_);
-    posRet.reserve( posRet.usedLen() + endIdx - beginIdx );
     vector<string> context;
     int posIndex = -1;
-    for( size_t index = beginIdx; index < endIdx; ++index )
+
+    for( size_t index = wordBeginIdx; index < wordEngIdx; ++index )
     {
-cout << "# " << index << " " << words[index]<<endl;
-        size_t wordBeginIdx = segSeq[ index * 2 ];
-        size_t wordEndIdx =  segSeq[ index * 2 + 1 ];
-        if( wordEndIdx <= wordBeginIdx )
+        size_t seqIdx = index * 2 + word2SeqIdxOffset;
+        size_t seqWordBeginIdx = segSeq[ seqIdx ];
+        size_t seqWordEndIdx =  segSeq[ seqIdx + 1 ];
+        if( seqWordEndIdx <= seqWordBeginIdx )
             break;
 
-        CMA_WType::WordType wordT = wtype.getWordType( types, wordBeginIdx, wordEndIdx );
+        CMA_WType::WordType wordT = wtype.getWordType( types, seqWordBeginIdx, seqWordEndIdx );
 
         switch(wordT){
             case CMA_WType::WORD_TYPE_PUNC:
@@ -470,13 +475,14 @@ cout << "# " << index << " " << words[index]<<endl;
 
         const char* pos = NULL;
         context.clear();
-        const char* tag_1 = index > beginIdx ? posRet[index-1] : POS_BOUNDARY_CSTR;
-        const char* tag_2 = index > beginIdx+1 ? posRet[index-2] : POS_BOUNDARY_CSTR;
+        const char* tag_1 = index > wordBeginIdx ? posRet[ index - 1 ] : POS_BOUNDARY_CSTR;
+        const char* tag_2 = index > wordBeginIdx + 1 ? posRet[ index - 2 ] : POS_BOUNDARY_CSTR;
 		
 		
-		cout << tag_1 << ", ";
-		cout << tag_2 << endl;
-        posinner::get_pos_zh_scontext_postagger( words, tag_1, tag_2, index, context );
+		//cout << tag_1 << ", ";
+		//cout << tag_2 << endl;
+        posinner::get_pos_zh_scontext_postagger(
+                words, tag_1, tag_2, index, wordEngIdx, context );
 
         vector<pair<outcome_type, double> > outcomes;
         me.eval_all(context, outcomes, false);
@@ -507,22 +513,24 @@ void POSTagger::quick_tag_sentence_best(
         StringVectorType& words,
         PGenericArray<size_t>& segSeq,
         CharType* types,
-        size_t beginIdx,
-        size_t endIdx,
         size_t wordBeginIdx,
+        size_t wordEngIdx,
+        size_t seqStartIdx,
         PGenericArray< const char* >& posRet
         )
 {
-    posRet.reserve( posRet.usedLen() + endIdx - beginIdx );
+    int word2SeqIdxOffset = (int)seqStartIdx - (int)wordBeginIdx * 2;
+    posRet.reserve( posRet.usedLen() + wordEngIdx - wordBeginIdx );
+
     CMA_WType wtype(ctype_);
-    int segWordIdxOffset = (int)beginIdx/2 - (int)wordBeginIdx;
-    for( size_t i = beginIdx; i < endIdx; i += 2 )
+    for( size_t index = wordBeginIdx; index < wordEngIdx; ++index )
     {
-        size_t wordBeginIdx = segSeq[ i ];
-        size_t wordEndIdx =  segSeq[ i + 1 ];
-        if( wordEndIdx <= wordBeginIdx )
+        size_t seqIdx = index * 2 + word2SeqIdxOffset;
+        size_t seqWordBeginIdx = segSeq[ seqIdx ];
+        size_t seqWordEndIdx =  segSeq[ seqIdx + 1 ];
+        if( seqWordEndIdx <= seqWordBeginIdx )
             break;
-        CMA_WType::WordType wordT = wtype.getWordType( types, wordBeginIdx, wordEndIdx );
+        CMA_WType::WordType wordT = wtype.getWordType( types, seqWordBeginIdx, seqWordEndIdx );
 
         switch(wordT){
             case CMA_WType::WORD_TYPE_PUNC:
@@ -541,7 +549,7 @@ void POSTagger::quick_tag_sentence_best(
                 break;
         }
 
-        const char* word = words[ i / 2 + segWordIdxOffset ];
+        const char* word = words[ index ];
         VTrieNode node;
         trie_->search( word, &node );
         if( node.data > 0 )

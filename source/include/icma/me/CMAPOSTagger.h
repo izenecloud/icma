@@ -128,17 +128,23 @@ public:
 
     /**
      * Only return the best result
-     * \param words words vector
+     * \param words words string vector, values in [ beginIdx, endIdx ) will
+     *        be processed.
+     * \param segSeq segment sequence. Each unit takes two values, the first
+     *        is beginning index and the second the length of the word
+     * \param type Character Types array, its range is [ 0, endIdx - beginIdx ).
+     * \param wordBeginIdx word begin index for the parameter words.
+     * \param wordEndIdx word end index ( exclusive ) for the parameter words.
+     * \param seqStartIdx the begin index (include) in the parameter segSeq.
      * \param posRet to hold the result value
-     * \param begin the begin index (include) to check
-     * \param end the first index that should not check
      */
     void tag_sentence_best(
             StringVectorType& words,
             PGenericArray<size_t>& segSeq,
             CharType* types,
-            size_t beginIdx,
-            size_t endIdx,
+            size_t wordBeginIdx,
+            size_t wordEngIdx,
+            size_t seqStartIdx,
             PGenericArray< const char* >& posRet
             );
 
@@ -149,18 +155,18 @@ public:
      * \param segSeq segment sequence. Each unit takes two values, the first
      *        is beginning index and the second the length of the word
      * \param type Character Types array, its range is [ 0, endIdx - beginIdx ).
-     * \param beginIdx the begin index (include) in the parameter segSeq.
-     * \param endIdx the ending index in the parameter segSeq, exclusive.
      * \param wordBeginIdx word begin index for the parameter words.
+     * \param wordEndIdx word end index ( exclusive ) for the parameter words.
+     * \param seqStartIdx the begin index (include) in the parameter segSeq.
      * \param posRet to hold the result value
      */
     void quick_tag_sentence_best(
             StringVectorType& words,
             PGenericArray<size_t>& segSeq,
             CharType* types,
-            size_t beginIdx,
-            size_t endIdx,
             size_t wordBeginIdx,
+            size_t wordEngIdx,
+            size_t seqStartIdx,
             PGenericArray< const char* >& posRet
             );
 

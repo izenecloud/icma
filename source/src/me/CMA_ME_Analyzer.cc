@@ -747,9 +747,10 @@ namespace meanainner{
         POSTagger* posTagger = knowledge_->getPOSTagger();       
         for ( int i = 0; i < N; ++i )
         {
+            CandidateMeta& cm = candMeta[ i ];
             candMeta[ i ].posOffset_ = ret.pos_.size();
             posTagger->tag_sentence_best( ret.segment_, segment, types,
-                    offsetArray[ i ] / 2, offsetArray[ i + 1 ] / 2, ret.pos_ );
+                    cm.segOffset_, cm.segOffset_ + ret.getCount( i ), offsetArray[ i ], ret.pos_ );
         }
 
     }
@@ -812,7 +813,7 @@ namespace meanainner{
         ret.candMetas_[ 0 ].posOffset_ = 0;
         ret.pos_.clear();
         knowledge_->getPOSTagger()->quick_tag_sentence_best(
-                ret.segment_, bestSegSeq, types, 0, bestSegSeq.size(), 0, ret.pos_ );
+                ret.segment_, bestSegSeq, types, 0, ret.segment_.size(), 0, ret.pos_ );
     }
 
     void CMA_ME_Analyzer::analysis_dictb(
@@ -921,7 +922,7 @@ namespace meanainner{
         ret.candMetas_[ 0 ].posOffset_ = 0;
         ret.pos_.clear();
         knowledge_->getPOSTagger()->quick_tag_sentence_best(
-                ret.segment_, bestSegSeq, types, 0, bestSegSeq.size(), 0, ret.pos_ );
+                ret.segment_, bestSegSeq, types, 0, ret.segment_.size(), 0, ret.pos_ );
 
     }
 
