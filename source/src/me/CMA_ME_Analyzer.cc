@@ -812,7 +812,7 @@ namespace meanainner{
         ret.candMetas_[ 0 ].posOffset_ = 0;
         ret.pos_.clear();
         knowledge_->getPOSTagger()->quick_tag_sentence_best(
-                ret.segment_, bestSegSeq, types, 0, ret.segment_.size(), ret.pos_ );
+                ret.segment_, bestSegSeq, types, 0, bestSegSeq.size(), 0, ret.pos_ );
     }
 
     void CMA_ME_Analyzer::analysis_dictb(
@@ -921,7 +921,7 @@ namespace meanainner{
         ret.candMetas_[ 0 ].posOffset_ = 0;
         ret.pos_.clear();
         knowledge_->getPOSTagger()->quick_tag_sentence_best(
-                ret.segment_, bestSegSeq, types, 0, ret.segment_.size(), ret.pos_ );
+                ret.segment_, bestSegSeq, types, 0, bestSegSeq.size(), 0, ret.pos_ );
 
     }
 

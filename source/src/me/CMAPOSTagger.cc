@@ -499,8 +499,6 @@ cout << "# " << index << " " << words[index]<<endl;
         {
             pos = defaultPOS.c_str();
         }
-		else
-			cout << "!!checked by mmm "<<endl;
         posRet.push_back(pos);
     }
 }
@@ -511,15 +509,17 @@ void POSTagger::quick_tag_sentence_best(
         CharType* types,
         size_t beginIdx,
         size_t endIdx,
+        size_t wordBeginIdx,
         PGenericArray< const char* >& posRet
         )
 {
     posRet.reserve( posRet.usedLen() + endIdx - beginIdx );
     CMA_WType wtype(ctype_);
-    for( size_t i = beginIdx; i < endIdx; ++i )
+    int segWordIdxOffset = (int)beginIdx/2 - (int)wordBeginIdx;
+    for( size_t i = beginIdx; i < endIdx; i += 2 )
     {
-        size_t wordBeginIdx = segSeq[ i * 2 ];
-        size_t wordEndIdx =  segSeq[ i * 2 + 1 ];
+        size_t wordBeginIdx = segSeq[ i ];
+        size_t wordEndIdx =  segSeq[ i + 1 ];
         if( wordEndIdx <= wordBeginIdx )
             break;
         CMA_WType::WordType wordT = wtype.getWordType( types, wordBeginIdx, wordEndIdx );
@@ -541,7 +541,7 @@ void POSTagger::quick_tag_sentence_best(
                 break;
         }
 
-        const char* word = words[ i ];
+        const char* word = words[ i / 2 + segWordIdxOffset ];
         VTrieNode node;
         trie_->search( word, &node );
         if( node.data > 0 )
