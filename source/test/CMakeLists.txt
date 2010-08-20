@@ -1,8 +1,9 @@
+include_directories(../include)
 INCLUDE_DIRECTORIES(.)
 
 EXEC_PROGRAM(cp ${CMAKE_CURRENT_SOURCE_DIR}  ARGS "-r data ${CMAKE_CURRENT_BINARY_DIR}")
 
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../testbin)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../innertestbin)
 
 #Test ME
 ADD_EXECUTABLE(t_display t_display.cc)

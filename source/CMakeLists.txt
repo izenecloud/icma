@@ -86,7 +86,6 @@ IF( USE_MICROHTTPD )
 ENDIF( USE_MICROHTTPD )
 
 include_directories(../include)
-include_directories(./include)
 include_directories(./corpus)
 include_directories(./maxent)
 include_directories(./vsynonym)

@@ -1,3 +1,5 @@
+include_directories(../include)
+
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../bin)
 
 ADD_EXECUTABLE(cmactrainer TrainerCMD.cc)

@@ -1,3 +1,5 @@
+include_directories(../include)
+
 #ignore lbfgs
 #SET(ME_COMMON_SRC display.cpp gistrainer.cpp lbfgs.c maxentmodel.cpp trainer.cpp mmapfile.c lbfgstrainer.cpp modelfile.cpp maxent_cmdline.c lbfgs_algo.c)
 

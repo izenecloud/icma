@@ -1,3 +1,5 @@
+include_directories(../include)
+
 SET(CMAKE_CURRENT_BINARY_DIR cmac)
 
 FILE( GLOB_RECURSE CM_BASIC_SRC

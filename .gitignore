@@ -15,5 +15,6 @@
 !/.gitignore
 !/db
 testbin/*
+innertestbin
 *.model.bin
 /include/icma-version.h
