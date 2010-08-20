@@ -262,10 +262,11 @@ void testSentStream(Analyzer* analyzer, const char* source)
 {
     string line;
     ifstream fin( source );
+    Sentence sent;
     while( fin.eof() == false )
     {
         getline( fin, line );
-        Sentence sent( line.c_str() );
+        sent.setString( line.c_str() );
         analyzer->runWithSentence( sent );
     }
 }
@@ -438,7 +439,7 @@ int main(int argc, char* argv[])
 //if(true) exit(0);
     // disable POS output for runWithStream
     if( optionIndex == 2 )
-    	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 0);
+    	analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING, 1);
 
     analyzer->setOption( Analyzer::OPTION_ANALYSIS_TYPE, analysisType );
     switch(optionIndex)

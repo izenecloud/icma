@@ -99,8 +99,8 @@ int POSTable::getCodeFromType(POSType type) const
 bool POSTable::isIndexPOS( int posCode ) const
 {
 	// Error POS Index return true by default
-	if(posCode < 0 || indexedFlags_.size() <= (size_t)posCode )
-		return true;
+	//if(posCode < 0 || indexedFlags_.size() <= (size_t)posCode )
+	//	return true;
 	return indexedFlags_[ posCode ];
 }
 

@@ -13,16 +13,20 @@
 #include <iostream>
 
 #include "icma/type/cma_ctype.h"
+#include "icma/cmacconfig.h"
 #include "VTrie.h"
+
 
 namespace cma
 {
 namespace fmincover
 {
 
+typedef PGenericArray<size_t> FMinCOutType;
+
 void parseFMinCoverString(
-        vector< string >& out,
-        vector< string >& words,
+        FMinCOutType& out,
+        StringVectorType& words,
         CharType* types,
         VTrie* trie,
         size_t beginIdx,

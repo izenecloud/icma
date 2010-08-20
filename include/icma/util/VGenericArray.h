@@ -8,27 +8,29 @@
 #ifndef VGENERICARRAY_H_
 #define VGENERICARRAY_H_
 
-namespace vtrie
+#include <icma/util/MemAllocator.h>
+
+namespace cma
 {
 
-template<class T>
-class VGenericArray
+template< typename T, class MemAllocator >
+class GenericArray
 {
 public:
-    VGenericArray()
+    GenericArray()
     {
         init();
     }
 
-    VGenericArray( size_t size )
+    GenericArray( size_t size )
     {
         init();
         reserve( size );
     }
 
-    ~VGenericArray()
+    ~GenericArray()
     {
-        delete[] data_;
+        MemAllocator::deleteArray( data_ );
     }
 
     inline size_t size() const
@@ -50,6 +52,16 @@ public:
     inline size_t capacity() const
     {
         return size_;
+    }
+
+    inline size_t usedLen() const
+    {
+        return endOffset_;
+    }
+
+    inline size_t freeLen() const
+    {
+        return size_ - endOffset_;
     }
 
     void push_back( const T& t )
@@ -81,7 +93,7 @@ public:
         return data_[ startOffset_ + idx ];
     }
 
-    void swap( VGenericArray<T>& other )
+    void swap( GenericArray< T, MemAllocator >& other )
     {
         T* tmpData = other.data_;
         other.data_ = data_;
@@ -107,11 +119,17 @@ public:
         if( size_ == 0 )
         {
             size_ = size;
-            data_ = new T[ size_ ];
+            data_ = MemAllocator::createArray( size_ );
             startOffset_ = endOffset_ = 0;
             return;
         }
 
+        size_t usedSize = endOffset_ - startOffset_;
+        // startOffset_ with be set in the resize()
+        data_ = MemAllocator::resize( data_, startOffset_, endOffset_, size );
+        endOffset_ = startOffset_ + usedSize;
+        size_ = size;
+/*
         T* tmp = new T[ size ];
         size_t usedSize = endOffset_ - startOffset_;
         //memcpy( tmp, data_ + startOffset_, usedSize * sizeof( T ) );
@@ -123,6 +141,7 @@ public:
         startOffset_ = 0;
         endOffset_ = usedSize;
         size_ = size;
+        */
     }
 
 private:
@@ -139,7 +158,25 @@ public:
     size_t startOffset_;
     size_t endOffset_;
     size_t size_;
+
 };
+
+/**
+ * Normal class Generic Array
+ */
+template< typename T >
+class VGenericArray : public GenericArray< T, NewAllocator<T> >
+{
+};
+
+/**
+ * Primitive Type Generic Array
+ */
+template< typename T>
+class PGenericArray : public GenericArray< T, MAllocAllocator<T> >
+{
+};
+
 
 }
 

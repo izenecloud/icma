@@ -220,7 +220,7 @@ void load_events(const string& file, Func add_event) {
             if (!get_sample(line->first, line->second, context,
                         outcome, binary_feature)) {
                 char msg[100];
-                sprintf(msg, "line [%d] in data file broken.", count);
+                sprintf(msg, "line [%zd] in data file broken.", count);
                 throw runtime_error(msg);
             }
             add_event(context, outcome);
@@ -230,7 +230,7 @@ void load_events(const string& file, Func add_event) {
                 if (count % 10000 == 0)
                     displayA(" ");
                 if (count % 50000 == 0)
-                    display("\t%d samples", count);
+                    display("\t%zd samples", count);
             }
         }
     } else {
@@ -245,7 +245,7 @@ void load_events(const string& file, Func add_event) {
                 continue; 
             if (!get_sample(*line, context, outcome, binary_feature)) {
                 char msg[100];
-                sprintf(msg, "line [%d] in data file broken.", count);
+                sprintf(msg, "line [%zd] in data file broken.", count);
                 throw runtime_error(msg);
             }
             add_event(context, outcome);
@@ -255,7 +255,7 @@ void load_events(const string& file, Func add_event) {
                 if (count % 10000 == 0)
                     displayA(" ");
                 if (count % 50000 == 0)
-                    display("\t%d samples", count);
+                    display("\t%zd samples", count);
             }
         }
 #if defined(HAVE_SYSTEM_MMAP)
@@ -343,7 +343,7 @@ void predict(const MaxentModel& m, const string& in_file,
     for (; line != lend; ++line) {
         if (!get_sample(*line, context, outcome, binary_feature)) {
             char msg[100];
-            sprintf(msg, "line [%d] in data file broken.", count);
+            sprintf(msg, "line [%zd] in data file broken.", count);
             throw runtime_error(msg);
         }
 

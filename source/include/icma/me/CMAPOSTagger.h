@@ -128,40 +128,47 @@ public:
 
     /**
      * Only return the best result
-     * \param words words vector
+     * \param words words string vector, values in [ beginIdx, endIdx ) will
+     *        be processed.
+     * \param segSeq segment sequence. Each unit takes two values, the first
+     *        is beginning index and the second the length of the word
+     * \param type Character Types array, its range is [ 0, endIdx - beginIdx ).
+     * \param wordBeginIdx word begin index for the parameter words.
+     * \param wordEndIdx word end index ( exclusive ) for the parameter words.
+     * \param seqStartIdx the begin index (include) in the parameter segSeq.
      * \param posRet to hold the result value
-     * \param begin the begin index (include) to check
-     * \param end the first index that should not check
      */
-    void tag_sentence_best(vector<string>& words, vector<string>& posRet,
-            int begin, int end);
-
-    /**
-     * Quick Tag sentence best, no statistical model is used
-     * \param words words vector
-     * \param posRet to hold the result value
-     * \param begin the begin index (include) to check
-     * \param end the first index that should not check
-     */
-    void quick_tag_sentence_best(
-            vector<string>& words,
-            vector<string>& posRet,
-            int begin,
-            int end
+    void tag_sentence_best(
+            StringVectorType& words,
+            PGenericArray<size_t>& segSeq,
+            CharType* types,
+            size_t wordBeginIdx,
+            size_t wordEngIdx,
+            size_t seqStartIdx,
+            PGenericArray< const char* >& posRet
             );
 
     /**
-     * tag the word with the best POS and return its score
-     * \param words words vector
-     * \param poses the previous pos vector, but the current pos won't store into
-     * the poses
-     * \param index the current index to check
-     * \param pos to store the best pos
-     * \return return the score of the best pos
+     * Quick Tag sentence best, no statistical model is used
+     * \param words words string vector, values in [ beginIdx, endIdx ) will
+     *        be processed.
+     * \param segSeq segment sequence. Each unit takes two values, the first
+     *        is beginning index and the second the length of the word
+     * \param type Character Types array, its range is [ 0, endIdx - beginIdx ).
+     * \param wordBeginIdx word begin index for the parameter words.
+     * \param wordEndIdx word end index ( exclusive ) for the parameter words.
+     * \param seqStartIdx the begin index (include) in the parameter segSeq.
+     * \param posRet to hold the result value
      */
-    double tag_word_best(vector<string>& words, vector<string>& poses, int index,
-            string& pos);
-
+    void quick_tag_sentence_best(
+            StringVectorType& words,
+            PGenericArray<size_t>& segSeq,
+            CharType* types,
+            size_t wordBeginIdx,
+            size_t wordEngIdx,
+            size_t seqStartIdx,
+            PGenericArray< const char* >& posRet
+            );
 
     /**
      * Set the reference to the specific character encoding
@@ -190,37 +197,6 @@ private:
     void tag_word(vector<string>& words, int index, size_t N, string* tags,
             POSTagUnit* candidates, int& lastIndex, size_t& canSize,
             double initScore, int candidateNum, CMA_WType& wtype);
-
-    /**
-     * tag the word with the best POS (private method)
-     * \param words words vector
-     * \param poses the previous pos vector, but the current pos won't store into
-     * the poses
-     * \param index the current index to check
-     * \param pos to store the best pos
-     * \param wtype the identify the type of the word
-     * \return return the score of the best pos
-     */
-    inline double tag_word_best_1(vector<string>& words, vector<string>& poses, 
-            int index, string& pos, CMA_WType& wtype);
-
-    /**
-     * tag the word with the best POS in quick mode (private method)
-     * \param words words vector
-     * \param poses the previous pos vector, but the current pos won't store into
-     * the poses
-     * \param index the current index to check
-     * \param pos to store the best pos
-     * \param wtype the identify the type of the word
-     * \return return the score of the best pos
-     */
-    inline double quick_tag_word_best_impl(
-            vector<string>& words,
-            vector<string>& poses,
-            int index,
-            string& pos,
-            CMA_WType& wtype
-            );
 
 public:
     /** vector to hold the POS information */

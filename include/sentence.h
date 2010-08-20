@@ -12,10 +12,14 @@
 #include <vector>
 #include <map>
 
+#include <icma/util/VGenericArray.h>
+#include <icma/util/StringArray.h>
+
 namespace cma
 {
 
 class CMA_ME_Analyzer;
+class StringArray;
 
 /**
  * \brief a pair of lexicon string and its part-of-speech tag.
@@ -42,6 +46,22 @@ struct Morpheme
      */
     Morpheme();
 
+};
+
+class CandidateMeta
+{
+public:
+    /** segment offset for current Candidate */
+    size_t segOffset_;
+
+    /** POS offset for current Candidate */
+    size_t posOffset_;
+
+    /** word offset offset */
+    size_t wdOffset_;
+
+    /** Candidate Score */
+    double score_;
 };
 
 /** A list of morphemes. */
@@ -152,6 +172,14 @@ public:
     const char* getStrPOS(int nPos, int nIdx) const;
 
     /**
+     * Get the Offset of morpheme \e nIdx in candidate result \e nPos in the sentence.
+     * \param nPos candidate result index
+     * \param nIdx morpheme index
+     * \return offset in the sentence
+     */
+    size_t getOffset( int nPos, int nIdx ) const;
+
+    /**
      * Get the MorphemeList of candidate result \e nPos.
      * \param nPos candidate result index
      * \return the MorphemeList
@@ -189,13 +217,19 @@ private:
     std::string raw_;
 
     /** segmentation and score vector */
-    std::vector< std::pair < std::vector< std::string >, double> > segment_;
+    StringArray segment_;
 
     /** POS list */
-    std::vector< std::vector< std::string > > pos_;
+    PGenericArray< const char* > pos_;
 
     /** the candidates list of morphological analysis result */
-    std::vector<MorphemeList> candidates_;
+    VGenericArray< MorphemeList > candidates_;
+
+    /** the candidates meta information */
+    VGenericArray< CandidateMeta > candMetas_;
+
+    /** word offsets */
+    PGenericArray< size_t > wordOffset_;
 
     /** the scores list of candidates */
     //std::vector<double> scores_;

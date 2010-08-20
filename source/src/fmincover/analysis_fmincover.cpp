@@ -12,6 +12,8 @@
 
 using namespace std;
 
+#define ON_DEV
+
 namespace cma
 {
 namespace fmincover
@@ -22,7 +24,7 @@ namespace inner
 
 inline void assignStrVectorDomain(
         string& out,
-        vector<string>& words,
+        StringVectorType& words,
         size_t beginIdx,
         size_t endIdx
         )
@@ -30,7 +32,7 @@ inline void assignStrVectorDomain(
     out = words[ beginIdx ];
     for( size_t i = beginIdx + 1; i < endIdx; ++i )
     {
-        out += words[i];
+        out.append( words[i] );
     }
 }
 
@@ -39,11 +41,11 @@ inline void assignStrVectorDomain(
 const string DefStr;
 
 void divideNormalString(
-        vector< string >& out,
+        FMinCOutType& out,
         VTrie* trie,
         size_t beginIdx,
         size_t endIdxSt,
-        vector<string>& words
+        StringVectorType& words
         )
 {
  /*   string tmp;
@@ -54,7 +56,6 @@ void divideNormalString(
     typedef unsigned int FMSizeType;
 
     StrBasedVTrie strTrie( trie );
-    vector< string >::iterator itr;
 
     if( endIdxSt <= beginIdx )
         return;
@@ -69,8 +70,8 @@ void divideNormalString(
 
     for( FMSizeType curIdx = beginOffset; curIdx < maxOffset; ++curIdx )
     {
-        string& curWord = words[ curIdx ];
-        strTrie.firstSearch( curWord.c_str() );
+        const char* curWord = words[ curIdx ];
+        strTrie.firstSearch( curWord );
         // if non word ( length > 1 ) begin with words[ curIdx ]
         if( strTrie.completeSearch == false
                 || strTrie.node.moreLong == false )
@@ -79,12 +80,12 @@ void divideNormalString(
             continue;
         }
 
-        // try to find words that length > 2, forword minimum matching
+        // try to find words that length > 2, forwards minimum matching
         FMSizeType advIdx = curIdx + 1; // advanced index to find longer word
         FMSizeType foundWordLastIdx = 0;
         for( ; advIdx < endIdx; ++advIdx )
         {
-            strTrie.search( words[ advIdx ].c_str() );
+            strTrie.search( words[ advIdx ] );
             if( strTrie.completeSearch == false )
                 break;
             if( strTrie.exists() == true )
@@ -110,8 +111,8 @@ void divideNormalString(
         FMSizeType curLen = dictLen[ dLIdx ];
         if( curLen == 1 )
         {
-            itr = out.insert( out.end(), DefStr );
-            *itr = words[ dLIdx + beginOffset ];
+            out.push_back( dLIdx + beginOffset );
+            out.push_back( dLIdx + beginOffset + 1 );
             ++dLIdx;
             continue;
         }
@@ -137,9 +138,8 @@ void divideNormalString(
 
         if( haveCross == false )
         {
-            itr = out.insert( out.end(), DefStr );
-            inner::assignStrVectorDomain( *itr, words,
-                    dLIdx + beginOffset, dLEndIdx + beginOffset );
+            out.push_back( dLIdx + beginOffset );
+            out.push_back( beginOffset + dLEndIdx );
             dLIdx = dLEndIdx;
             continue;
         }
@@ -147,28 +147,27 @@ void divideNormalString(
         for( advDLIdx = dLIdx; advDLIdx < dLEndIdx; ++advDLIdx )
         {
             curLen = dictLen[ advDLIdx ];
-            itr = out.insert( out.end(), DefStr );
-            *itr = words[ advDLIdx + beginOffset ];
+            out.push_back( advDLIdx + beginOffset );
+            out.push_back( advDLIdx + beginOffset + 1 );
 
             if( curLen == 1 )
                 continue;
 
-            itr = out.insert( out.end(), DefStr );
-            inner::assignStrVectorDomain( *itr, words,
-                    advDLIdx + beginOffset, advDLIdx + curLen + beginOffset );
-
+            out.push_back( advDLIdx + beginOffset );
+            out.push_back( advDLIdx + beginOffset + curLen );
         }
 
         dLIdx = dLEndIdx;
     }
+
 }
 
 void addFMinCString(
-        vector< string >& out,
+        FMinCOutType& out,
         VTrie* trie,
         size_t beginIdx,
         size_t endIdx,
-        vector<string>& words,
+        StringVectorType& words,
         CharType* types
         )
 {
@@ -176,8 +175,6 @@ void addFMinCString(
         inner::assignStrVectorDomain( tmp, words,
                 beginIdx, endIdx );
         cout << "addFMinCString "<<tmp<<",type:"<<types[endIdx-1]<<endl;*/
-
-    vector< string >::iterator itr;
 
     size_t maxIdx = endIdx - 1;
     CharType lastType = types[ maxIdx ];
@@ -191,12 +188,12 @@ void addFMinCString(
         divideNormalString( out, trie, beginIdx, endIdx, words );
         return;
     }
-    case CHAR_TYPE_NUMBER:
+    case CHAR_TYPE_DIGIT:
     case CHAR_TYPE_LETTER:
     {
         // check for the word begin with whole string
-        itr = out.insert( out.end(), DefStr );
-        inner::assignStrVectorDomain( *itr, words, beginIdx, endIdx );
+        out.push_back( beginIdx );
+        out.push_back( endIdx );
         return;
     }
 
@@ -204,15 +201,15 @@ void addFMinCString(
     case CHAR_TYPE_CHARDIGIT:
     {
         // check for start with part of string
-        itr = out.insert( out.end(), DefStr );
-        inner::assignStrVectorDomain( *itr, words, beginIdx, endIdx );
+        out.push_back( beginIdx );
+        out.push_back( endIdx );
         return;
     }
 
     case CHAR_TYPE_PUNC:
     {
-        itr = out.insert( out.end(), DefStr );
-        inner::assignStrVectorDomain( *itr, words, beginIdx, endIdx );
+        out.push_back( beginIdx );
+        out.push_back( endIdx );
         return;
     }
 
@@ -234,16 +231,18 @@ void addFMinCString(
 
 
 void parseFMinCoverString(
-        vector< string >& out,
-        vector< string >& words,
+        FMinCOutType& out,
+        StringVectorType& words,
         CharType* types,
         VTrie* trie,
         size_t beginIdx,
         size_t endIdx
         )
 {
+    out.clear();
     if( words.empty() == true )
         return;
+    out.reserve( (size_t)( ( words.size() - beginIdx ) * 2.2 ) );
 
     // 1st. analysis by CharType
     size_t size = words.size();
@@ -259,8 +258,8 @@ void parseFMinCoverString(
         {
         case CHAR_TYPE_PUNC:
         {
-            if( words[ curIdx ] !=  words[ curIdx - 1 ] ||
-                    words[ curIdx ] != "." )
+            if( strcmp( words[ curIdx ], words[ curIdx - 1 ] ) != 0 ||
+                    strcmp( words[ curIdx ], "." ) != 0 )
             {
                 addFMinCString( out, trie, fsIdx, curIdx, words, types );
                 fsIdx = curIdx;
@@ -275,10 +274,10 @@ void parseFMinCoverString(
             break;
         }
 
-        case CHAR_TYPE_NUMBER:
+        case CHAR_TYPE_DIGIT:
         case CHAR_TYPE_LETTER:
         {
-            if( t0 != CHAR_TYPE_DATE && t0 != CHAR_TYPE_NUMBER && t0 != CHAR_TYPE_LETTER )
+            if( t0 != CHAR_TYPE_DATE && t0 != CHAR_TYPE_DIGIT && t0 != CHAR_TYPE_LETTER )
             {
                 addFMinCString( out, trie, fsIdx, curIdx, words, types );
                 fsIdx = curIdx;
@@ -304,6 +303,7 @@ void parseFMinCoverString(
     {
         addFMinCString( out, trie, fsIdx, curIdx, words, types );
     }
+
 }
 
 }

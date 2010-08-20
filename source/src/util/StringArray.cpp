@@ -12,6 +12,7 @@ namespace cma
 {
 
 string DefDelimeter = " ";
+string DefPrintDelimeter = ",";
 
 void StringArray::tokenize(
         const char* str,
@@ -150,12 +151,13 @@ void StringArray::push_back( const char* str, size_t len )
 {
     if( len == 0 )
         len = strlen( str );
-    ++len; // reserve tailing space
-    ensureFreeLength( len );
+    size_t fullLen = len + 1; // reserve tailing space
+    ensureFreeLength( fullLen );
     offset_t offset = endPtr_ - data_;
     offsetVec_.push_back( offset );
     memcpy( endPtr_, str, len );
-    endPtr_ += len;
+    endPtr_[ len ] = 0;
+    endPtr_ += fullLen;
 }
 
 void StringArray::initialize()
@@ -167,6 +169,12 @@ void StringArray::initialize()
     dataLen_ = 0;
 }
 
+void StringArray::clear()
+{
+    offsetVec_.clear();
+    endPtr_ = data_;
+}
+
 bool StringArray::contains( const char* str ) const
 {
     size_t size = this->size();
@@ -176,6 +184,17 @@ bool StringArray::contains( const char* str ) const
             return true;
     }
     return false;
+}
+
+int StringArray::index( const char* str ) const
+{
+    int size = (int)this->size();
+    for( int i = 0; i < size; ++i )
+    {
+        if( strcmp( str, this->operator []( i ) ) == 0 )
+            return i;
+    }
+    return -1;
 }
 
 void StringArray::removeHead()
@@ -206,13 +225,31 @@ void StringArray::ensureFreeLength( size_t extraLen )
 {
     // reserve one zero byte
     size_t freeLen = dataLen_ - ( endPtr_ - data_ );
-    if( freeLen > extraLen )
+    if( freeLen >= extraLen )
         return;
+    //cout << "freelen " << freeLen << " < extraLen " << extraLen << ", dataLen = " << dataLen_ << endl;
     size_t minNewLen = dataLen_ + extraLen - freeLen;
     size_t newLen = dataLen_;
     while( newLen < minNewLen )
         newLen = (size_t)( newLen * 1.5 ) + 1;
     reserve( newLen );
+}
+
+void StringArray::print( const std::string& delimeter, std::ostream& out )
+{
+    size_t s = size();
+    if( s == 0 )
+    {
+        out << "[]";
+        return;
+    }
+
+    out << "[";
+    for( size_t i = 0; i < s - 1; ++i )
+    {
+        out << this->operator []( i ) << ",";
+    }
+    out << this->operator []( s - 1 ) << "]";
 }
 
 }

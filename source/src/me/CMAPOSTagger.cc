@@ -13,9 +13,12 @@
 #include "icma/me/CMAPOSTagger.h"
 #include "icma/util/io_util.h"
 
+#define ON_DEV
+
 namespace cma{
 
 string POS_BOUNDARY = "BoUnD";
+const char* POS_BOUNDARY_CSTR = POS_BOUNDARY.c_str();
 
 namespace posinner{
 
@@ -85,6 +88,48 @@ inline void get_pos_zh_scontext_1(vector<string>& words, string& tag_1,
 
     //context.push_back("T-1=" + tag_1);
     context.push_back("T-2,-1="+tag_2+","+tag_1);
+
+}
+
+inline void get_pos_zh_scontext_postagger(
+        StringVectorType& words,
+        const char* tag_1,
+        const char* tag_2,
+        int index,
+        int endIdx,
+        vector<string>& context
+        )
+{
+
+    int n = endIdx;
+    string wa[5]; //word array
+    wa[0] = index > 1 ? words[index-2] : POS_BOUNDARY;
+    wa[1] = index > 0 ? words[index-1] : POS_BOUNDARY;
+    wa[2] = words[index];
+    wa[3] = (index < n - 1) ? words[index+1] : POS_BOUNDARY;
+    wa[4] = (index < n - 2) ? words[index+2] : POS_BOUNDARY;
+
+    //context.push_back("C-2=" + wa[0]);
+    context.push_back("C-1=" + wa[1]);
+    context.push_back("CO=" + wa[2]);
+    context.push_back("C1=" + wa[3]);
+    //context.push_back("C2=" + wa[3]);
+
+    context.push_back("C-2,-1=" + wa[0] + "," + wa[1]);
+    context.push_back("C-1,0=" + wa[1] + "," + wa[2]);
+    context.push_back("C0,1=" + wa[2] + "," + wa[3]);
+    //context.push_back("C1,2=" + wa[3] + "," + wa[4]);
+
+    context.push_back("C-1,1=" + wa[1] + "," + wa[3]);
+
+    //context.push_back("C-2,-1,0=" + wa[0] + "," + wa[1] + "," + wa[2]);
+    context.push_back("C-1,0,1=" + wa[1] + "," + wa[2] + "," + wa[3]);
+    //context.push_back("C0,1,2=" + wa[2] + "," + wa[3] + "," + wa[4]);
+
+    //context.push_back("T-1=" + tag_1);
+    string tmp( "T-2,-1=" );
+    tmp.append( tag_2 ).append( "," ).append( tag_1 );
+    context.push_back( tmp );
 
 }
 
@@ -328,6 +373,7 @@ void POSTagger::tag_sentence(vector<string>& words, size_t N, size_t retSize,
 }
 
 void POSTagger::tag_file(const char* inFile, const char* outFile){
+#ifndef ON_DEV
     ifstream in(inFile);
     ofstream out(outFile);
 
@@ -360,49 +406,85 @@ void POSTagger::tag_file(const char* inFile, const char* outFile){
 
     in.close();
     out.close();
+#endif
 }
 
-double POSTagger::tag_word_best_1(vector<string>& words, vector<string>& poses,
-        int index, string& pos, CMA_WType& wtype){
-    const char* word = words[index].data();
-    CMA_WType::WordType wordT = wtype.getWordType(word);
-    switch(wordT){
-		case CMA_WType::WORD_TYPE_PUNC:
-			pos = puncPOS;
-			return 1.0;
-		case CMA_WType::WORD_TYPE_NUMBER:
-			pos = numberPOS;
-			return 1.0;
-		case CMA_WType::WORD_TYPE_LETTER:
-			pos = letterPOS;
-			return 1.0;
-		case CMA_WType::WORD_TYPE_DATE:
-			pos = datePOS;
-			return 1.0;
-		default:
-			break;
-    }
+void POSTagger::tag_sentence_best(
+        StringVectorType& words,
+        PGenericArray<size_t>& segSeq,
+        CharType* types,
+        size_t wordBeginIdx,
+        size_t wordEngIdx,
+        size_t seqStartIdx,
+        PGenericArray< const char* >& posRet
+        )
+{
+    int word2SeqIdxOffset = (int)seqStartIdx - (int)wordBeginIdx * 2;
+    posRet.reserve( posRet.usedLen() + wordEngIdx - wordBeginIdx );
 
-	vector<string> context;
-    VTrieNode node;
-    trie_->search( word, &node );
-    string& tag_1 = index > 0 ? poses[index-1] : POS_BOUNDARY;
-    string& tag_2 = index > 1 ? poses[index-2] : POS_BOUNDARY;
-    posinner::get_pos_zh_scontext_1(words, tag_1, tag_2, index, context, wtype);
-    if( node.data > 0 )
+    CMA_WType wtype(ctype_);
+    vector<string> context;
+    int posIndex = -1;
+
+    for( size_t index = wordBeginIdx; index < wordEngIdx; ++index )
     {
+        size_t seqIdx = index * 2 + word2SeqIdxOffset;
+        size_t seqWordBeginIdx = segSeq[ seqIdx ];
+        size_t seqWordEndIdx =  segSeq[ seqIdx + 1 ];
+
+        //cout << "index = " << index << ", seqIdx = " << seqIdx << ", words = " << words[ index ] << endl;
+        if( seqWordEndIdx <= seqWordBeginIdx )
+            break;
+
+        CMA_WType::WordType wordT = wtype.getWordType( types, seqWordBeginIdx, seqWordEndIdx );
+
+        switch(wordT){
+            case CMA_WType::WORD_TYPE_PUNC:
+                posRet.push_back( puncPOS.c_str() );
+                continue;
+            case CMA_WType::WORD_TYPE_NUMBER:
+                posRet.push_back( numberPOS.c_str() );
+                continue;
+            case CMA_WType::WORD_TYPE_LETTER:
+                posRet.push_back( letterPOS.c_str() );
+                continue;
+            case CMA_WType::WORD_TYPE_DATE:
+                posRet.push_back( datePOS.c_str() );
+                continue;
+            default:
+                break;
+        }
+
+        VTrieNode node;
+        trie_->search( words[ index ], &node );
+        if( node.data < 0 )
+        {
+            posRet.push_back( defaultPOS.c_str() );
+            continue;
+        }
+
         POSUnitType& posSet = posVec_[node.data];
-        //FIXME avoid default POS here
         if( posSet.empty() == true )
         {
-            pos = defaultPOS;
-            return 1.0;
+            posRet.push_back( defaultPOS.c_str() );
+            continue;
         }
         else if( posSet.size() == 1 )
         {
-            pos = posSet[ 0 ];
-            return 1.0;
+            posRet.push_back( posSet[ 0 ] );
+            continue;
         }
+
+        const char* pos = NULL;
+        context.clear();
+        const char* tag_1 = index > wordBeginIdx ? posRet[ index - 1 ] : POS_BOUNDARY_CSTR;
+        const char* tag_2 = index > wordBeginIdx + 1 ? posRet[ index - 2 ] : POS_BOUNDARY_CSTR;
+		
+		
+		//cout << tag_1 << ", ";
+		//cout << tag_2 << endl;
+        posinner::get_pos_zh_scontext_postagger(
+                words, tag_1, tag_2, index, wordEngIdx, context );
 
         vector<pair<outcome_type, double> > outcomes;
         me.eval_all(context, outcomes, false);
@@ -411,114 +493,80 @@ double POSTagger::tag_word_best_1(vector<string>& words, vector<string>& poses,
         double bestScore = -1.0;
         size_t outSize = outcomes.size();
 
-        for(size_t k=0; k<outSize; ++k){
+        for( size_t k=0; k<outSize; ++k )
+        {
             pair<outcome_type, double>& pair = outcomes[k];
-            if( pair.second > bestScore && ( posSet.contains( pair.first.c_str() ) == true ) )
+            if( pair.second > bestScore && ( posIndex = posSet.index( pair.first.c_str() ) >= 0 ) )
             {
                 bestScore = pair.second;
-                pos = pair.first;
+                pos = posSet[ posIndex ];
             }
         }
 
-        if(bestScore > 0 && !pos.empty())
-            return bestScore;
-        
-    }
-
-    double bestScore = -1.0;
-    if((bestScore = me.eval(context, pos)) > 0.0){
-        return bestScore;
-    }
-    
-    vector<pair<outcome_type, double> > outcomes;
-    me.eval_all(context, outcomes, false);
-
-    //find the best pos
-    
-    size_t outSize = outcomes.size();
-
-    for(size_t k=0; k<outSize; ++k){
-        pair<outcome_type, double>& pair = outcomes[k];
-        if(pair.second > bestScore){
-            bestScore = pair.second;
-            pos = pair.first;
+        if( pos == NULL )
+        {
+            pos = defaultPOS.c_str();
         }
-    }
-
-    return bestScore;
-}
-
-void POSTagger::tag_sentence_best(vector<string>& words, vector<string>& posRet,
-        int begin, int end){
-    CMA_WType wtype(ctype_);
-    for( int index = begin; index < end; ++index ){
-        string pos;
-        tag_word_best_1(words, posRet, index, pos, wtype);
         posRet.push_back(pos);
     }
 }
 
 void POSTagger::quick_tag_sentence_best(
-        vector<string>& words,
-        vector<string>& posRet,
-        int begin,
-        int end
+        StringVectorType& words,
+        PGenericArray<size_t>& segSeq,
+        CharType* types,
+        size_t wordBeginIdx,
+        size_t wordEngIdx,
+        size_t seqStartIdx,
+        PGenericArray< const char* >& posRet
         )
 {
-    size_t endSt = (size_t)end;
-    if( posRet.size() < endSt )
-    {
-        string defStr;
-        posRet.insert( posRet.end(), endSt - posRet.size(), defStr );
-    }
+    int word2SeqIdxOffset = (int)seqStartIdx - (int)wordBeginIdx * 2;
+    posRet.reserve( posRet.usedLen() + wordEngIdx - wordBeginIdx );
 
     CMA_WType wtype(ctype_);
-    for( int index = begin; index < end; ++index )
+    for( size_t index = wordBeginIdx; index < wordEngIdx; ++index )
     {
-        quick_tag_word_best_impl(words, posRet, index, posRet[ index ], wtype);
+        size_t seqIdx = index * 2 + word2SeqIdxOffset;
+        size_t seqWordBeginIdx = segSeq[ seqIdx ];
+        size_t seqWordEndIdx =  segSeq[ seqIdx + 1 ];
+        if( seqWordEndIdx <= seqWordBeginIdx )
+            break;
+        CMA_WType::WordType wordT = wtype.getWordType( types, seqWordBeginIdx, seqWordEndIdx );
+
+        switch(wordT){
+            case CMA_WType::WORD_TYPE_PUNC:
+                posRet.push_back( puncPOS.c_str() );
+                continue;
+            case CMA_WType::WORD_TYPE_NUMBER:
+                posRet.push_back( numberPOS.c_str() );
+                continue;
+            case CMA_WType::WORD_TYPE_LETTER:
+                posRet.push_back( letterPOS.c_str() );
+                continue;
+            case CMA_WType::WORD_TYPE_DATE:
+                posRet.push_back( datePOS.c_str() );
+                continue;
+            default:
+                break;
+        }
+
+        const char* word = words[ index ];
+        VTrieNode node;
+        trie_->search( word, &node );
+        if( node.data > 0 )
+        {
+            POSUnitType& posSet = posVec_[node.data];
+            if( posSet.empty() == false )
+            {
+                posRet.push_back( posSet[ 0 ] );
+                continue;
+            }
+        }
+
+        posRet.push_back( defaultPOS.c_str() );
     }
 }
-
-double POSTagger::tag_word_best(vector<string>& words, vector<string>& poses,
-        int index, string& pos){
-    CMA_WType wtype(ctype_);
-    return tag_word_best_1(words, poses, index, pos, wtype);
-}
-/*
-bool POSTagger::appendWordPOS(string& line){
-    vector<string> tokens;
-    TOKEN_STR(line, tokens);
-    size_t n = tokens.size();
-    if(!n){
-        return false;
-    }
-    string word = tokens[0];
-    replaceAll(word, "_", " ");
-
-    set<string>* posSet = 0;
-    //try to search first
-    VTrieNode node;
-    trie_->search(word.data(), &node);
-    //already exits
-    if(node.data > 0){
-		posSet = &(posVec_[node.data]);
-    }else{
-		//get the right offset (offset 0 is reserved)
-		node.data = (int)posVec_.size();
-		//insert new key
-		posVec_.push_back(set<string>());
-		posSet = &(posVec_.back());
-
-		trie_->insert(word.data(), &node);
-    }
-
-	for(size_t i=1; i<n; ++i){
-		posSet->insert(tokens[i]);
-	}
-
-    return true;
-}
-*/
 
 bool POSTagger::appendWordPOS(string& line)
 {
@@ -568,50 +616,6 @@ bool POSTagger::appendWordPOS(string& line)
     }
 
     return true;
-}
-
-
-double POSTagger::quick_tag_word_best_impl(
-        vector<string>& words,
-        vector<string>& poses,
-        int index,
-        string& pos,
-        CMA_WType& wtype
-        )
-{
-    const char* word = words[index].data();
-    CMA_WType::WordType wordT = wtype.getWordType(word);
-    switch(wordT){
-        case CMA_WType::WORD_TYPE_PUNC:
-            pos = puncPOS;
-            return 1.0;
-        case CMA_WType::WORD_TYPE_NUMBER:
-            pos = numberPOS;
-            return 1.0;
-        case CMA_WType::WORD_TYPE_LETTER:
-            pos = letterPOS;
-            return 1.0;
-        case CMA_WType::WORD_TYPE_DATE:
-            pos = datePOS;
-            return 1.0;
-        default:
-            break;
-    }
-
-    VTrieNode node;
-    trie_->search( word, &node );
-    if( node.data > 0 )
-    {
-        POSUnitType& posSet = posVec_[node.data];
-        if( posSet.empty() == false )
-        {
-            pos = posSet[ 0 ];
-            return 1.0;
-        }
-    }
-
-    pos = defaultPOS;
-    return 1.0;
 }
 
 }

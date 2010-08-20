@@ -29,6 +29,7 @@ namespace cma
 class CMA_ME_Analyzer : public Analyzer
 {
 public:
+
     CMA_ME_Analyzer();
 
     /**
@@ -142,8 +143,7 @@ public:
     typedef void(CMA_ME_Analyzer::*analysis_t)(
             const char*,
             int,
-            vector<vector<string> >&,
-            vector<pair<vector<string>, double> >&,
+            Sentence&,
             bool
             );
 
@@ -154,8 +154,7 @@ private:
     void analysis_mmmodel(
             const char* sentence,
             int N,
-            vector<vector<string> >& pos,
-            vector<pair<vector<string>, double> >& segment,
+            Sentence& ret,
             bool tagPOS = true
             );
 
@@ -165,8 +164,7 @@ private:
     void analysis_fmm(
             const char* sentence,
             int N,
-            vector<vector<string> >& pos,
-            vector<pair<vector<string>, double> >& segment,
+            Sentence& ret,
             bool tagPOS = true
             );
 
@@ -176,8 +174,7 @@ private:
     void analysis_dictb(
             const char* sentence,
             int N,
-            vector<vector<string> >& pos,
-            vector<pair<vector<string>, double> >& segment,
+            Sentence& ret,
             bool tagPOS = true
             );
 
@@ -187,8 +184,7 @@ private:
     void analysis_fmincover(
             const char* sentence,
             int N,
-            vector<vector<string> >& pos,
-            vector<pair<vector<string>, double> >& segment,
+            Sentence& ret,
             bool tagPOS = true
             );
 
@@ -204,12 +200,20 @@ private:
      */
     void getNGramResultImpl( const vector<vector<OneGramType> >& oneGram, const int n, vector<string>& output );
 
-    void extractCharacter( const char* sentence, vector< string >& charOut );
+    void extractCharacter( const char* sentence, StringVectorType& charOut );
 
     /**
      * \param types should be allocated enough memory before invoking
      */
-    void setCharType( vector< string >& charIn, CharType* types );
+    void setCharType( StringVectorType& charIn, CharType* types );
+
+    void createStringLexicon(
+            StringVectorType& words,
+            PGenericArray<size_t>& segSeq,
+            StringVectorType& out,
+            size_t beginIdx,
+            size_t endIdx
+            );
 
 private:
     CMA_ME_Knowledge *knowledge_;

@@ -153,7 +153,7 @@ bool CateStrTokenizer::next(){
                 tokenT_ = CHAR_TYPE_OTHER;
                 return true;
 
-            case CHAR_TYPE_NUMBER:
+            case CHAR_TYPE_DIGIT:
                 switch(curType){
                     case CHAR_TYPE_LETTER:
                         _preCharT = CHAR_TYPE_LETTER;
@@ -175,14 +175,14 @@ bool CateStrTokenizer::next(){
                         return true;
                     case CHAR_TYPE_PUNC:
                         speStr_ = _strBuf;
-                        tokenT_ = CHAR_TYPE_NUMBER;
+                        tokenT_ = CHAR_TYPE_DIGIT;
                         _preCharT = curType;
                         _strBuf = curChar;
                         return true;
                     case CHAR_TYPE_OTHER:
                         speStr_ = _strBuf;
                         wordSeq_.push_back(curChar);
-                        tokenT_ = CHAR_TYPE_NUMBER;
+                        tokenT_ = CHAR_TYPE_DIGIT;
                         _preCharT = curType;
                         _strBuf.clear();
                         return true;
@@ -192,7 +192,7 @@ bool CateStrTokenizer::next(){
 
             case CHAR_TYPE_LETTER:
                 switch(curType){
-                    case CHAR_TYPE_NUMBER:
+                    case CHAR_TYPE_DIGIT:
                         _strBuf.append(curChar);
                         continue;
                     case CHAR_TYPE_SPACE:
@@ -204,14 +204,14 @@ bool CateStrTokenizer::next(){
                         return true;
                     case CHAR_TYPE_PUNC:
                         speStr_ = _strBuf;
-                        tokenT_ = CHAR_TYPE_NUMBER;
+                        tokenT_ = CHAR_TYPE_DIGIT;
                         _preCharT = curType;
                         _strBuf = curChar;
                         return true;
                     case CHAR_TYPE_OTHER:
                         speStr_ = _strBuf;
                         wordSeq_.push_back(curChar);
-                        tokenT_ = CHAR_TYPE_NUMBER;
+                        tokenT_ = CHAR_TYPE_DIGIT;
                         _preCharT = curType;
                         _strBuf.clear();
                         return true;

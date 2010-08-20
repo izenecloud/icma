@@ -44,9 +44,19 @@
 #endif
 
 #include <iostream>
+#include <vector>
+
+#include <icma/util/VGenericArray.h>
+#include <icma/util/StringArray.h>
 
 // Whether use utf_16 encoding
 //#define USE_UTF_16
+
+namespace cma
+{
+
+typedef StringArray StringVectorType;
+}
 
 #endif	/* _CMACCONFIG_H */
 

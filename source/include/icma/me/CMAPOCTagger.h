@@ -13,6 +13,7 @@
 #include "icma/me/CMABasicTrainer.h"
 #include "types.h"
 #include "VTrie.h"
+#include "sentence.h"
 
 #include <algorithm>
 #include <math.h>
@@ -115,17 +116,25 @@ public:
      * \param N return N best
      * \param retSize retSize &lt;= N, the size of segment
      */
-    void seg_sentence(vector<string>& words, CharType *types,
-            size_t N, size_t retSize,
-            vector<pair<vector<string>, double> >& segment);
+    void seg_sentence(
+            StringVectorType& words,
+            CharType *types,
+            size_t N,
+            size_t retSize,
+            PGenericArray<size_t>& segment,
+            VGenericArray< CandidateMeta >& candMeta
+            );
 
     /**
      * only return the best segment result, no scores is used here
      * \param words the word list
      * \param segment to store the segmented words
      */
-    void seg_sentence_best(vector<string>& words, CharType *types,
-            vector<string>& segment);
+    void seg_sentence_best(
+            StringVectorType& words,
+            CharType *types,
+            PGenericArray<size_t>& segment
+            );
 
     /**
      * Would be invoked by the SegTagger's Constructor
@@ -169,12 +178,25 @@ private:
      * \param canSize the used size in the candidates
      * \return a list of (tag, score) pair sorted
      */
-    void tag_word(vector<string>& words, CharType *type, int index, size_t N,
-            uint8_t* tags, POCTagUnit* candidates, int& lastIndex, size_t& canSize,
-            double initScore, int candidateNum);
+    void tag_word(
+            StringVectorType& words,
+            CharType* types,
+            int index,
+            size_t N,
+            uint8_t* tags,
+            POCTagUnit* candidates,
+            int& lastIndex,
+            size_t& canSize,
+            double initScore,
+            int candidateNum
+            );
 
     /** Find out the words contains at least 4 characters */
-    void preProcess(vector<string>& words, uint8_t* tags);
+    void preProcess(
+            StringVectorType& words,
+            CharType* types,
+            uint8_t* tags
+            );
 
 private:
     /** The MaxEnt model Object */

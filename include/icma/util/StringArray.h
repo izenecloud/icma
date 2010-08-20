@@ -11,16 +11,22 @@
 #include <string>
 #include <vector>
 #include <queue>
-#include <VGenericArray.h>
+#include <icma/util/VGenericArray.h>
+#include <iostream>
 
 namespace cma
 {
 extern std::string DefDelimeter;
+extern std::string DefPrintDelimeter;
+
+class CMA_ME_Analyzer;
 
 class StringArray
 {
 public:
     typedef size_t offset_t;
+
+    friend class CMA_ME_Analyzer;
 
     static void tokenize(
             const char* str,
@@ -48,20 +54,46 @@ public:
 
     void reserve( size_t size );
 
+    inline void reserveOffsetVec( size_t size )
+    {
+        offsetVec_.reserve( size );
+    }
+
     void push_back( const char* str, size_t len = 0 );
 
     void initialize();
 
+    void clear();
+
     bool contains( const char* str ) const;
+
+    int index( const char* str ) const;
 
     inline bool empty() const
     {
         return offsetVec_.empty();
     }
 
+    size_t freeLen() const
+    {
+        return dataLen_ == 0 ? 0 : ( dataLen_ - ( endPtr_ - data_ ) );
+    }
+
+    size_t usedLen() const
+    {
+        return dataLen_ == 0 ? 0 : ( endPtr_ - data_ );
+    }
+
+    size_t capacity() const
+    {
+        return dataLen_;
+    }
+
     void removeHead();
 
     void swap( StringArray& other );
+
+    void print( const std::string& delimeter = DefPrintDelimeter, std::ostream& out = std::cout );
 
 private:
     void ensureFreeLength( size_t extraLen );
@@ -70,7 +102,7 @@ private:
     char* data_;
     char* endPtr_;
     size_t dataLen_;
-    vtrie::VGenericArray<offset_t> offsetVec_;
+    PGenericArray<offset_t> offsetVec_;
 };
 
 }

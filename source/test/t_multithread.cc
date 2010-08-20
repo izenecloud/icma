@@ -141,8 +141,8 @@ string encoding = "gb18030";
 	}
 	
 	while(true)	{
-		int _done = 0;
-		for(int i = 0; i < NUM_THREADS; i++)	{
+		size_t _done = 0;
+		for(size_t i = 0; i < NUM_THREADS; i++)	{
 			_done += done[i];
 		}
 		

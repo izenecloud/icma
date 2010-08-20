@@ -15,10 +15,14 @@
 #include "icma/pos_table.h"
 #include "icma/me/CMA_ME_Analyzer.h"
 #include "icma/util/CPPStringUtils.h"
+#include "icma/util/StrBasedVTrie.h"
 #include "icma/util/CateStrTokenizer.h"
 #include "icma/util/tokenizer.h"
 
 #include "icma/fmincover/analysis_fmincover.h"
+
+// used to disable some codes
+#define ON_DEV
 
 namespace cma {
 
@@ -28,32 +32,30 @@ namespace cmainner
  * Whether the two Segmentation is the same
  */
 inline bool isSameSegment(
-        vector<pair<vector<string>, double> >& segment,
-        vector<vector<string> >& pos,
+        Sentence& sent,
         int idx1,
         int idx2,
         bool includePOS
         )
 {
-    vector<string>& seg1 = segment[ idx1 ].first;
-    vector<string>& seg2 = segment[ idx2 ].first;
-    if( seg1.size() != seg2.size() )
+    if( sent.getCount( idx1 ) != sent.getCount( idx2 ) )
         return false;
 
-    size_t size = seg1.size();
+    size_t size = sent.getCount( idx1 );
     for( size_t i = 0; i < size; ++i )
     {
-        if( seg1[ i ] != seg2[ i ] )
+        if( strcmp( sent.getLexicon( idx1, i ),
+                sent.getLexicon( idx2, i ) ) != 0 )
             return false;
     }
 
     if( includePOS = false )
         return true;
-    vector<string>& pos1 = pos[ idx1 ];
-    vector<string>& pos2 = pos[ idx2 ];
+
     for( size_t i = 0; i < size; ++i )
     {
-        if( pos1[ i ] != pos2[ i ] )
+        if( strcmp( sent.getStrPOS( idx1, i ),
+                sent.getStrPOS( idx2, i ) ) != 0 )
             return false;
     }
 
@@ -61,12 +63,11 @@ inline bool isSameSegment(
 }
 
 inline void removeDuplicatedSegment(
-        vector<pair<vector<string>, double> >& segment,
-        vector<vector<string> >& pos,
+        Sentence& sent,
         bool includePOS
         )
 {
-    int listSize = (int)segment.size();
+    int listSize = sent.getListSize();
     if( listSize <= 1 )
         return;
 
@@ -75,8 +76,8 @@ inline void removeDuplicatedSegment(
     {
         for( int j = i - 1; j >= 0; --j )
         {
-            cout << "Compare #" << i << " with #" << j <<endl;
-            if( isSameSegment( segment, pos, i, j, includePOS ) == true )
+            //cout << "Compare #" << i << " with #" << j <<endl;
+            if( isSameSegment( sent, i, j, includePOS ) == true )
             {
                 duplicatedList.push_back( i );
                 break;
@@ -87,11 +88,11 @@ inline void removeDuplicatedSegment(
     for( vector< size_t >::reverse_iterator itr = duplicatedList.rbegin();
             itr != duplicatedList.rend(); ++itr )
     {
-        segment.erase( ( segment.begin() + *itr ) );
-        pos.erase( ( pos.begin() + *itr ) );
+        //TODO have remove some results here
+        //segment.erase( ( segment.begin() + *itr ) );
+        //pos.erase( ( pos.begin() + *itr ) );
     }
 }
-
 }
 
     CMA_ME_Analyzer::CMA_ME_Analyzer()
@@ -127,24 +128,25 @@ inline void removeDuplicatedSegment(
 
     int CMA_ME_Analyzer::runWithSentence(Sentence& sentence)
     {
+        static const MorphemeList DefMorphemeList;
         static const Morpheme DefMorp;
         if( strlen( sentence.getString() ) == 0 )
         	return 1;
         int N = (int) getOption(OPTION_TYPE_NBEST);
+
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
-        
-        vector<pair<vector<string>, double> >& segment = sentence.segment_;
-        vector<vector<string> >& pos = sentence.pos_;
 
-        (this->*analysis)(sentence.getString(), N, pos, segment, printPOS);
 
-        size_t size = segment.size();
+        (this->*analysis)(sentence.getString(), N, sentence, printPOS);
+
+        size_t size = sentence.getListSize();
+        sentence.candidates_.reserve( size );
+
         if( size <= 1 )
         {
-			vector<string>& poses = pos[0];
-			size_t posSize = poses.size();
-			sentence.addList( MorphemeList() );
-			MorphemeList& list = *sentence.getMorphemeList( sentence.getListSize() - 1 );
+			size_t posSize = sentence.getCount( 0 );
+			sentence.addList( DefMorphemeList );
+			MorphemeList& list = *sentence.getMorphemeList( 0 );
 			list.insert( list.end(), posSize, DefMorp );
 
 			if( printPOS == true )
@@ -152,7 +154,7 @@ inline void removeDuplicatedSegment(
                 for ( size_t j = 0; j < posSize; ++j )
                 {
                     Morpheme& morp = list[ j ];
-                    morp.posCode_ = posTable_->getCodeFromStr( poses[j] );
+                    morp.posCode_ = posTable_->getCodeFromStr( sentence.getStrPOS( 0, j ) );
                     morp.isIndexed = posTable_->isIndexPOS( morp.posCode_ );
                 }
 			}
@@ -163,36 +165,36 @@ inline void removeDuplicatedSegment(
 
         double totalScore = 0;
         //remove duplicate first
-        cmainner::removeDuplicatedSegment( segment, pos, printPOS );
+        cmainner::removeDuplicatedSegment( sentence, printPOS );
 
 		for ( size_t i = 0; i < size; ++i )
 		{
-			vector<string>& poses = pos[i];
-			size_t posSize = poses.size();
-			sentence.addList( MorphemeList() );
-			MorphemeList& list = *sentence.getMorphemeList( sentence.getListSize() - 1 );
-            list.resize( posSize );
+		    size_t posSize = sentence.getCount( i );
+			sentence.addList( DefMorphemeList );
+			MorphemeList& list = *sentence.getMorphemeList( i );
+			list.insert( list.end(), posSize, DefMorp );
 
             if( printPOS == true )
             {
                 for ( size_t j = 0; j < posSize; ++j )
                 {
                     Morpheme& morp = list[ j ];
-                    morp.posCode_ = posTable_->getCodeFromStr( poses[j] );
+                    morp.posCode_ = posTable_->getCodeFromStr( sentence.getStrPOS( i, j ) );
                     morp.isIndexed = posTable_->isIndexPOS( morp.posCode_ );
                 }
             }
 
-			double score = segment[i].second;
+			double score = sentence.getScore( i );
 			totalScore += score;
 		}
 
 		for ( int j = 0; j < sentence.getListSize(); ++j )
 		{
-			sentence.setScore(j, sentence.getScore(j) / totalScore );
+			sentence.setScore( j, sentence.getScore(j) / totalScore );
 		}
 
         return 1;
+
     }
 
     int CMA_ME_Analyzer::runWithStream(const char* inFileName, const char* outFileName) {
@@ -214,10 +216,10 @@ inline void removeDuplicatedSegment(
 			return 0;
 		}
 
-    	int N = 1;
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
 
         string line;
+        Sentence sent;
         bool remains = !in.eof();
         while (remains) {
             getline(in, line);
@@ -227,19 +229,18 @@ inline void removeDuplicatedSegment(
 					out << endl;
                 continue;
             }
-            vector<pair<vector<string>, double> > segment;
-            vector<vector<string> > pos;
-            (this->*analysis)(line.data(), N, pos, segment, printPOS);
+            //cout << "#analysis " << line << endl;
+            (this->*analysis)(line.data(), 1, sent, printPOS);
 
             if (printPOS)
             {
-                vector<string>& best = segment[0].first;
-                vector<string>& bestPOS = pos[0];
-                int maxIndex = (int)best.size();
-                for (int i = 0; i < maxIndex; ++i) {
-                    if(knowledge_->isStopWord(best[i]))
-                    	continue;
-                	out << best[i] << posDelimiter_ << bestPOS[i] << wordDelimiter_;
+                int maxIndex = sent.getCount( 0 );
+                for ( int i = 0; i < maxIndex; ++i )
+                {
+                    const char* lexicon = sent.getLexicon( 0, i );
+                    //if( knowledge_->isStopWord( lexicon ) )
+                    //	continue;
+                	out << lexicon << posDelimiter_ << sent.getStrPOS( 0, i ) << wordDelimiter_;
                 }
 
                 if (remains)
@@ -249,12 +250,13 @@ inline void removeDuplicatedSegment(
             }
             else
             {
-                vector<string>& best = segment[0].first;
-                int maxIndex = (int)best.size();
-                for (int i = 0; i < maxIndex; ++i) {
-                	if(knowledge_->isStopWord(best[i]))
-                		continue;
-                	out << best[i] << wordDelimiter_;
+                int maxIndex = sent.getCount( 0 );
+                for (int i = 0; i < maxIndex; ++i)
+                {
+                    const char* lexicon = sent.getLexicon( 0, i );
+                	//if( knowledge_->isStopWord( lexicon) )
+                	//	continue;
+                	out << lexicon << wordDelimiter_;
                 }
 
                 if (remains)
@@ -278,30 +280,30 @@ inline void removeDuplicatedSegment(
 
     	bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
       
-        vector<pair<vector<string>, double> > segment;
-        vector<vector<string> > pos;
-        (this->*analysis)(inStr, 1, pos, segment, printPOS);
+        Sentence sent;
+        (this->*analysis)(inStr, 1, sent, printPOS);
 
         if (printPOS)
         {
-            vector<string>& best = segment.begin()->first;
-            vector<string>& bestPOS = pos[0];
-            size_t size = best.size();
-            for (size_t i = 0; i < size; ++i) {
-                if(knowledge_->isStopWord(best[i]))
-                	continue;
-            	strBuf_.append(best[i]).append(posDelimiter_).
-                      append(bestPOS[i]).append(wordDelimiter_);
+            size_t size = sent.getCount( 0 );
+            for ( size_t i = 0; i < size; ++i )
+            {
+                const char* lexicon = sent.getLexicon( 0, i );
+                //if( knowledge_->isStopWord( lexicon ) )
+                //	continue;
+            	strBuf_.append( lexicon ).append( posDelimiter_ ).
+                      append( sent.getStrPOS( 0, i ) ).append( wordDelimiter_ );
             }
         }
         else
         {
-            vector<string>& best = segment[0].first;
-            size_t size = best.size();
-            for (size_t i = 0; i < size; ++i) {
-            	if(knowledge_->isStopWord(best[i]))
-            		continue;
-            	strBuf_.append(best[i]).append(wordDelimiter_);
+            size_t size = sent.getCount( 0 );
+            for ( size_t i = 0; i < size; ++i )
+            {
+                const char* lexicon = sent.getLexicon( 0, i );
+                //if( knowledge_->isStopWord( lexicon ) )
+                //  continue;
+            	strBuf_.append( lexicon ).append( wordDelimiter_ );
             }
         }
 
@@ -513,18 +515,171 @@ namespace meanainner{
         }
     }
 
+    void toCombine(
+            PGenericArray<size_t>& segment,
+            size_t begin,
+            size_t lastWordEnd
+            )
+    {
+        //cout << " to combine [" << begin << ", " << lastWordEnd << "]"<< endl;
+        size_t lastIndex = lastWordEnd + 1; // included
+        segment[ begin + 1 ] = segment[ lastIndex ];
+        for( size_t cbIdx = begin + 3; cbIdx <= lastIndex; cbIdx += 2 )
+        {
+            segment[ cbIdx ] = 0;
+        }
+    }
+
+    void rmEmptyUnits(
+            PGenericArray<size_t>& segment,
+            size_t beginIdx,
+            size_t endIdx
+            )
+    {
+        size_t idx = beginIdx + 1;
+        for( ; idx < endIdx; idx += 2 )
+        {
+            if( segment[ idx ] == 0 )
+                break;
+        }
+
+        // no empty unit found
+        if( idx >= endIdx )
+            return;
+        size_t validIdx = idx + 2;
+        while( true )
+        {
+            // find next non-empty unit
+            while( validIdx < endIdx && segment[ validIdx ] == 0 )
+                validIdx += 2;
+            // if not found, exit
+            if( validIdx >= endIdx )
+                break;
+
+            do
+            {
+                segment[ idx - 1 ] = segment[ validIdx - 1 ];
+                segment[ idx ] = segment[ validIdx ];
+                idx += 2;
+                validIdx += 2;
+            }
+            while( validIdx < endIdx && segment[ validIdx ] != 0 );
+        }
+        // set last idx as empty
+        segment[ idx ] = 0;
+    }
+
+    void combineRetWithTrie(
+            VTrie* trie,
+            StringVectorType& words,
+            CharType* types,
+            PGenericArray<size_t>& segment,
+            size_t beginIdx,
+            size_t endIdx
+            )
+    {
+        StrBasedVTrie strTrie( trie );
+
+        bool continueSch = false;
+        bool schFlag = false;
+        size_t begin = 0;
+        size_t lastWordEnd = 0;
+
+        for ( size_t i = beginIdx; i <= endIdx;  i += 2 )
+        {
+            if( i == endIdx )
+            {
+                if( continueSch == false || ( lastWordEnd + 2 ) >= endIdx )
+                    break;
+                if( begin < lastWordEnd )
+                    toCombine( segment, begin, lastWordEnd );
+
+                continueSch = false;
+                i = lastWordEnd;
+                continue;
+
+                break;
+            }
+
+            size_t wordIdx = segment[ i ];
+            if( continueSch == true )
+                schFlag = strTrie.search( words[ wordIdx ] );
+            else
+                schFlag = strTrie.firstSearch( words[ wordIdx ] );
+
+            if( schFlag == true && strTrie.node.moreLong == true )
+            {
+                size_t wordEndIdx = segment[ i + 1 ];
+                for( ++wordIdx; wordIdx < wordEndIdx; ++wordIdx )
+                {
+                    schFlag = strTrie.search( words[ wordIdx ] );
+                    if( schFlag == false )
+                        break;
+                }
+            }
+
+            //did not reach the last bit
+            if ( schFlag == false )
+            {
+                //no exist in the dictionary
+                if ( continueSch == false )
+                {
+                    if( types[ wordIdx ] == CHAR_TYPE_SPACE )
+                        segment[ i + 1 ] = 0;
+                    continue;
+                }
+
+
+                if( begin < lastWordEnd )
+                    toCombine( segment, begin, lastWordEnd );
+
+                continueSch = false;
+                i = lastWordEnd; //another ++ in the loop
+            }
+            else if( strTrie.node.moreLong == false )
+            {
+                if( continueSch == false )
+                    continue;
+
+                if( begin < lastWordEnd )
+                    toCombine( segment, begin, lastWordEnd );
+
+                continueSch = false;
+                i = lastWordEnd;
+            }
+            else if( continueSch == false )
+            {
+                continueSch = true;
+                lastWordEnd = begin = i;
+            }
+            else if( strTrie.node.data > 0 )
+            {
+                lastWordEnd = i;
+            }
+        } //end for
+
+        if( continueSch == true )
+        {
+            toCombine( segment, begin, endIdx - 2 );
+        }
+
+        // remove zero bytes
+        rmEmptyUnits( segment, beginIdx, endIdx );
+    }
+
 }
 
     void CMA_ME_Analyzer::analysis_mmmodel(
             const char* sentence,
             int N,
-            vector<vector<string> >& posRet,
-            vector<pair<vector<string>, double> >& segRet,
+            Sentence& ret,
             bool tagPOS
             )
     {
+        static CandidateMeta DefCandidateMeta;
+
         // Initial Step 1: split as Chinese Character based
-        vector<string> words;
+        StringVectorType words;
         extractCharacter( sentence, words );
 
         if( words.empty() == true )
@@ -534,124 +689,147 @@ namespace meanainner{
         CharType types[ (int)words.size() ];
         setCharType( words, types );
 
-    	int segN = N;
-        vector<pair<vector<string>, double> > segment(segN);
+
+        VGenericArray< CandidateMeta >& candMeta = ret.candMetas_;
+        candMeta.clear();
+        PGenericArray<size_t> segment;
+
         SegTagger* segTagger = knowledge_->getSegTagger();
-
-        if(N == 1)
-            segTagger->seg_sentence_best(words, types, segment[0].first);
-        else
-            segTagger->seg_sentence(words, types, segN, N, segment);
-
-        N = segment.size();
-        segRet.resize( N );
-
-        VTrie *trie = knowledge_->getTrie();
-        //TODO, only combine the first result
-        for ( int i = 0; i < N; ++i )
+        if( N == 1 )
         {
-            pair<vector<string>, double>& srcPair = segment[i];
-            pair<vector<string>, double>& destPair = segRet[i];
-            destPair.second = srcPair.second;
-            if(i < 1)
-            {
-                meanainner::combineRetWithTrie( trie, srcPair.first,
-                        destPair.first, ctype_);
-            }
-            else{
-                size_t srcSize = srcPair.first.size();
-                for( size_t si = 0; si < srcSize; ++si )
-                {
-                    string& val = srcPair.first[si];
-                    if( ctype_->isSpace( val.c_str() ) == false )
-                        destPair.first.push_back(val);
-                }
-            }
+            segTagger->seg_sentence_best( words, types, segment );
+            candMeta.push_back( DefCandidateMeta );
+            candMeta[ 0 ].segOffset_ = 0;
+            candMeta[ 0 ].score_ = 1.0;
         }
+        else
+        {
+            segTagger->seg_sentence( words, types, N, N, segment, candMeta );
+            N = candMeta.size();
+        }
+
+        size_t offsetArray[ N + 1 ];
+        offsetArray[ 0 ] = 0;
+        offsetArray[ N ] = segment.size();
+        for( int i = 1; i < N; ++i )
+            offsetArray[ i ] = candMeta[ i ].segOffset_;
+
+
+        // only combine the first result
+        VTrie *trie = knowledge_->getTrie();
+        meanainner::combineRetWithTrie( trie, words, types, segment,
+                0, offsetArray[ 1 ] );
+        ret.segment_.clear();
+        for( int i = 0; i < N; ++i )
+        {
+            candMeta[ i ].segOffset_ = ret.segment_.size();
+            createStringLexicon( words, segment, ret.segment_,
+                    offsetArray[ i ], offsetArray[ i + 1 ] );
+        }
+
+/*
+        for( int i = 0; i <= N; ++i )
+        {
+            cout << "offsetArray[ " << i << " ] = " << offsetArray[ i ] << endl;
+        }
+        cout << "analysis_mmmodel segment: " << endl;
+        int oaidx = 0;
+        for( size_t i = 0; i < segment.size(); i += 2 )
+        {
+            if( i == offsetArray[ oaidx ] )
+            {
+                cout << "--------" << endl;
+                ++oaidx;
+            }
+            cout << "#" << i << ": " << segment[ i ] << " -> " << segment[ i + 1 ] << endl;
+        }
+*/
 
         if( tagPOS == false )
             return;
 
-        posRet.resize( N );
+        ret.pos_.clear();
+        ret.pos_.reserve( ret.segment_.size() );
         POSTagger* posTagger = knowledge_->getPOSTagger();       
         for ( int i = 0; i < N; ++i )
         {
-            posTagger->tag_sentence_best(segRet[i].first, posRet[i], 0,
-                segRet[i].first.size());
+            CandidateMeta& cm = candMeta[ i ];
+            candMeta[ i ].posOffset_ = ret.pos_.size();
+            posTagger->tag_sentence_best( ret.segment_, segment, types,
+                    cm.segOffset_, cm.segOffset_ + ret.getCount( i ), offsetArray[ i ], ret.pos_ );
         }
-
 
     }
 
     void CMA_ME_Analyzer::analysis_fmm(
             const char* sentence,
             int N,
-            vector<vector<string> >& posRet,
-            vector<pair<vector<string>, double> >& segRet,
+            Sentence& ret,
             bool tagPOS
             )
     {
+        static CandidateMeta DefCandidateMeta;
+
         // Initial Step 1: split as Chinese Character based
-        vector<string> words;
+        StringVectorType words;
         extractCharacter( sentence, words );
 
         if( words.empty() == true )
             return;
-/*
-        int maxWordOff = (int)words.size() - 1;
-        CharType types[maxWordOff + 1];
-        CharType preType = CHAR_TYPE_INIT;
-        for(int i=0; i<maxWordOff; ++i){
-            types[i] = preType = ctype_->getCharType(words[i].data(),
-                    preType, words[i+1].data());
 
+        size_t wordSize = words.size();
+        // Initial Step 2nd: set character types
+        CharType types[ (int)wordSize ];
+        setCharType( words, types );
+
+        ret.candMetas_.clear();
+        ret.candMetas_.push_back( DefCandidateMeta );
+        ret.candMetas_[ 0 ].segOffset_ = 0;
+        ret.candMetas_[ 0 ].score_ = 1.0;
+
+
+        PGenericArray<size_t> bestSegSeq;
+        bestSegSeq.reserve( wordSize * 2 );
+        for( size_t i = 0; i < wordSize; ++i )
+        {
+            bestSegSeq.push_back( i );
+            bestSegSeq.push_back( i + 1 );
         }
 
-        types[maxWordOff] = ctype_->getCharType(words[maxWordOff].data(),
-                    preType, 0);
-*/
-
-        segRet.resize(1);
 
         VTrie *trie = knowledge_->getTrie();
-        meanainner::combineRetWithTrie( trie, words, segRet[0].first, ctype_);
-        segRet[0].second = 1;
+        meanainner::combineRetWithTrie( trie, words, types,
+                bestSegSeq, 0, bestSegSeq.size() );
 
-        if(!tagPOS)
+        /*
+        for( size_t i = 0; i < wordSize; ++i )
+        {
+            cout << bestSegSeq[ i * 2 ] << " -> " << bestSegSeq[ i * 2 + 1 ] << endl;
+        }
+        */
+
+        // convert to string lexicon
+        ret.segment_.clear();
+        createStringLexicon( words, bestSegSeq, ret.segment_, 0, bestSegSeq.size() );
+
+
+        if( tagPOS == false )
             return;
 
-        posRet.resize(1);
-        vector<string>& posRetOne = posRet[ 0 ];
-        vector< POSTagger::POSUnitType >& posVec = knowledge_->getPOSTagger()->posVec_;
-        string& defaultPOS = knowledge_->getPOSTagger()->defaultPOS;
-        vector<string>& wordVec = segRet[ 0 ].first;
-        size_t wordSize = wordVec.size();
-        posRetOne.resize( wordSize );
-        for (size_t i = 0; i < wordSize; ++i) {
-            VTrieNode node;
-            trie->search( wordVec[ i ].data(), &node );
-            if( node.data > 0 )
-            {
-                POSTagger::POSUnitType& posSet = posVec[ node.data ];
-                if( !posSet.empty() )
-                {
-                    posRetOne[ i ] = posSet[ 0 ];
-                    continue;
-                }
-            }
-
-            posRetOne[i] = defaultPOS;
-        }
+        ret.candMetas_[ 0 ].posOffset_ = 0;
+        ret.pos_.clear();
+        knowledge_->getPOSTagger()->quick_tag_sentence_best(
+                ret.segment_, bestSegSeq, types, 0, ret.segment_.size(), 0, ret.pos_ );
     }
 
     void CMA_ME_Analyzer::analysis_dictb(
             const char* sentence,
             int N,
-            vector<vector<string> >& posRet,
-            vector<pair<vector<string>, double> >& segRet,
+            Sentence& ret,
             bool tagPOS
             )
     {
+#ifndef ON_DEV
         // Initial Step 1: split as Chinese Character based
         vector<string> words;
         extractCharacter( sentence, words );
@@ -664,7 +842,7 @@ namespace meanainner{
         setCharType( words, types );
 
         int segN = N;
-        vector<pair<vector<string>, double> > segment( segN );
+        SegRetType segment( segN );
         //SegTagger* segTagger = knowledge_->getSegTagger();
 
         // Segment 1st. Perform special characters
@@ -704,43 +882,53 @@ namespace meanainner{
                 segRet[i].first.size());
         }
 
-
+#endif
     }
 
 
     void CMA_ME_Analyzer::analysis_fmincover(
             const char* sentence,
             int N,
-            vector<vector<string> >& posRet,
-            vector<pair<vector<string>, double> >& segment,
+            Sentence& ret,
             bool tagPOS
             )
     {
+        static CandidateMeta DefCandidateMeta;
+
         // Initial Step 1: split as Chinese Character based
-        vector<string> words;
+        StringVectorType words;
         extractCharacter( sentence, words );
 
         if( words.empty() == true )
             return;
+
         // Initial Step 2nd: set character types
         CharType types[ (int)words.size() ];
         setCharType( words, types );
 
-        segment.resize(1);
-        segment[0].second = 1;
-        vector<string>& bestSeg = segment[0].first;
+        ret.candMetas_.clear();
+        ret.candMetas_.push_back( DefCandidateMeta );
+        ret.candMetas_[ 0 ].segOffset_ = 0;
+        ret.candMetas_[ 0 ].score_ = 1.0;
+
+        PGenericArray<size_t> bestSegSeq;
 
         VTrie *trie = knowledge_->getTrie();
         fmincover::parseFMinCoverString(
-                bestSeg, words, types, trie, 0, words.size() );
+                bestSegSeq, words, types, trie, 0, words.size() );
+
+        // convert to string lexicon
+        ret.segment_.clear();
+        createStringLexicon( words, bestSegSeq, ret.segment_, 0, bestSegSeq.size() );
+
 
         if( tagPOS == false )
             return;
 
-        posRet.resize(1);
-        vector<string>& posRetOne = posRet[0];
+        ret.candMetas_[ 0 ].posOffset_ = 0;
+        ret.pos_.clear();
         knowledge_->getPOSTagger()->quick_tag_sentence_best(
-                bestSeg, posRetOne, 0, bestSeg.size() );
+                ret.segment_, bestSegSeq, types, 0, ret.segment_.size(), 0, ret.pos_ );
 
     }
 
@@ -764,7 +952,7 @@ namespace meanainner{
     		CharType curType = ctype_->getBaseType( next );
     		switch( curType )
     		{
-    		case CHAR_TYPE_NUMBER:
+    		case CHAR_TYPE_DIGIT:
     		case CHAR_TYPE_LETTER:
     		case CHAR_TYPE_PUNC:
     			if( !curFragment->empty() )
@@ -831,7 +1019,7 @@ namespace meanainner{
     	return posTable_->size();
     }
 
-    void CMA_ME_Analyzer::extractCharacter( const char* sentence, vector< string >& charOut )
+    void CMA_ME_Analyzer::extractCharacter( const char* sentence, StringVectorType& charOut )
     {
         static const string DefString;
 
@@ -842,49 +1030,85 @@ namespace meanainner{
                 sentence += 3;
         }
 
-        charOut.reserve( strlen(sentence) / 2 + 1 );
         CMA_CType::getByteCount_t getByteFunc = ctype_->getByteCountFun_;
+        size_t strLen = strlen(sentence);
+        charOut.reserve( strLen * 2 );
+        charOut.reserveOffsetVec( strLen );
         unsigned int len;
         const unsigned char *us = (const unsigned char *)sentence;
-        vector< string >::iterator itr;
         while( ( len = getByteFunc( us ) ) > 0 )
         {
-            itr = charOut.insert( charOut.end(), DefString );
-            itr->reserve( len );
-            itr->append( (const char*)us, len );
+            charOut.push_back( ( const char* )us, len );
             us += len;
         }
-
-
-
-        /*
-        size_t len = ctype_->length( sentence );
-        charOut.resize( len );
-        if( len == 0 )
-            return;
-
-        size_t i = 0;
-        CTypeTokenizer token( ctype_, sentence );
-        const char* next = 0;
-        while( ( next = token.next() ) )
-        {
-            charOut[ i ].assign( next );
-            ++i;
-        }
-        */
     }
 
-    void CMA_ME_Analyzer::setCharType( vector< string >& charIn, CharType* types )
+    void CMA_ME_Analyzer::setCharType( StringVectorType& charIn, CharType* types )
     {
         int maxWordOff = (int)charIn.size() - 1;
         CharType preType = CHAR_TYPE_INIT;
         for( int i = 0; i < maxWordOff; ++i )
         {
             types[i] = preType = ctype_->getCharType(
-                    charIn[ i ].data(), preType, charIn[i+1].data() );
+                    charIn[ i ], preType, charIn[i+1] );
         }
         types[ maxWordOff ] = ctype_->getCharType(
-                charIn[ maxWordOff ].data(), preType, 0);
+                charIn[ maxWordOff ], preType, 0);
+    }
+
+    void CMA_ME_Analyzer::createStringLexicon(
+            StringVectorType& words,
+            PGenericArray<size_t>& segSeq,
+            StringVectorType& out,
+            size_t beginIdx,
+            size_t endIdx
+            )
+    {
+        size_t curFreeLen = out.freeLen();
+        size_t segSeqSize = ( endIdx - beginIdx ) / 2;
+        size_t minLen = 0;
+        // minLen is used collect character number now
+        for( size_t i = beginIdx + 1; i < endIdx; i += 2 )
+        {
+            size_t seqStartIdx = segSeq[ i - 1 ];
+            size_t seqEndIdx = segSeq[ i ];
+            if( seqStartIdx >= seqEndIdx )
+                break;
+            minLen += seqEndIdx - seqStartIdx;
+        }
+        // convert to bytes, it will wasted some bytes
+        minLen = minLen * 4 + segSeqSize + 10;
+        if( minLen > curFreeLen )
+        {
+            out.reserve( out.dataLen_ + minLen - curFreeLen );
+        }
+        out.offsetVec_.reserve( out.size() + (size_t)(segSeqSize / 2) );
+
+        // Converting integer to string
+        char* outPtr = out.endPtr_;
+        for( size_t i = beginIdx + 1; i < endIdx; i += 2 )
+        {
+            size_t seqStartIdx = segSeq[ i - 1 ];
+            size_t seqEndIdx = segSeq[ i ];
+            if( seqStartIdx >= seqEndIdx )
+                break;
+            out.offsetVec_.push_back( outPtr - out.data_ );
+            for( size_t wordIdx = seqStartIdx; wordIdx < seqEndIdx; ++wordIdx )
+            {
+                const char* wordPtr = words[ wordIdx ];
+                while( *wordPtr != 0 )
+                {
+                    *outPtr = *wordPtr;
+                    ++outPtr;
+                    ++wordPtr;
+                }
+            }
+
+            *outPtr = 0;
+            ++outPtr;
+        }
+
+        out.endPtr_ = outPtr;
     }
 
 }

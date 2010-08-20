@@ -8,6 +8,8 @@
 #include "sentence.h"
 #include "icma/pos_table.h"
 
+#include <icma/util/StringArray.h>
+
 #include <algorithm>
 #include <cassert>
 
@@ -34,6 +36,8 @@ void Sentence::setString(const char* pString)
     candidates_.clear();
     segment_.clear();
     pos_.clear();
+    candMetas_.clear();
+    wordOffset_.clear();
 }
 
 const char* Sentence::getString(void) const
@@ -43,17 +47,20 @@ const char* Sentence::getString(void) const
 
 int Sentence::getListSize(void) const
 {
-    return candidates_.size();
+    return candMetas_.size();
 }
 
 int Sentence::getCount(int nPos) const 
 {
-    return candidates_[nPos].size();
+    int listSize = candMetas_.size();
+    return ( nPos + 1 >= listSize ) ?
+            ( segment_.size() - candMetas_[ nPos ].segOffset_ ) :
+            ( candMetas_[ nPos + 1 ].segOffset_ - candMetas_[ nPos ].segOffset_ );
 }
 
 const char* Sentence::getLexicon(int nPos, int nIdx) const
 {
-    return (segment_[nPos].first)[nIdx].c_str();
+    return segment_[ candMetas_[ nPos ].segOffset_ + nIdx ];
 }
 
 bool Sentence::isIndexWord(int nPos, int nIdx) const
@@ -68,7 +75,12 @@ int Sentence::getPOS(int nPos, int nIdx) const
 
 const char* Sentence::getStrPOS(int nPos, int nIdx) const
 {
-    return pos_[nPos][nIdx].c_str();
+    return pos_[ candMetas_[ nPos ].posOffset_ + nIdx ];
+}
+
+size_t Sentence::getOffset(int nPos, int nIdx) const
+{
+    return wordOffset_[ candMetas_[ nPos ].wdOffset_ + nIdx ];
 }
 
 MorphemeList* Sentence::getMorphemeList(int nPos)
@@ -78,27 +90,28 @@ MorphemeList* Sentence::getMorphemeList(int nPos)
 
 double Sentence::getScore(int nPos) const
 {
-    return segment_[nPos].second;
+    return candMetas_[nPos].score_;
 }
 
 void Sentence::setScore(int nPos, double nScore)
 {
-    segment_[nPos].second = nScore;
+    candMetas_[nPos].score_ = nScore;
 }
 
 int Sentence::getOneBestIndex(void) const
 {
-    if( segment_.empty() )
+    if( candMetas_.empty() )
 	   return -1;
-    if( segment_.size() == 1 )
+    int size = candMetas_.size();
+    if( size == 1 )
        return 0;
 
-    double bestScore = segment_[0].second;
+    double bestScore = candMetas_[0].score_;
     int bestIdx = 0;
-    int size = segment_.size();
+
     for( int i = 1; i < size; ++i )
     {
-        double tmpScore = segment_[ i ].second;
+        double tmpScore = candMetas_[ i ].score_;
         if( tmpScore > bestScore )
         {
             bestScore = tmpScore;

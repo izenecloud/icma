@@ -21,17 +21,19 @@ namespace cma
 
 /**
  * \brief Character type.
- * [Warn] Don't set the value for following enum types
+ * [Warning] Don't set the value for following enum types
+ * [Warning] Modify it have to modify array CTYPE_2_WTYPE ( in cma_wtype.cpp
+ *           to make it consistent. )
  * Character type.
  */
 enum CharType
 {
-    CHAR_TYPE_INIT, ///< initial type, used to identify the type
+    CHAR_TYPE_INIT = 0, ///< initial type, used to identify the type
 
     CHAR_TYPE_OTHER, ///< other character
 
     //special type have to put after CHAR_TYPE_OTHER
-    CHAR_TYPE_NUMBER, ///< digit character
+    CHAR_TYPE_DIGIT, ///< digit character
     CHAR_TYPE_CHARDIGIT, //< digit in hanzi format, like '一'
     CHAR_TYPE_PUNC, ///< puntuation character
     CHAR_TYPE_SPACE, ///< space character, like ' '

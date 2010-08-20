@@ -13,7 +13,7 @@
 #include <map>
 #include <icma/util/DCTrie.h>
 #include <icma/util/StringArray.h>
-#include <VGenericArray.h>
+#include <icma/util/VGenericArray.h>
 
 namespace cma
 {
@@ -65,6 +65,15 @@ public:
     inline int getCodeFromStr(const std::string& pos)
     {
         int ret = posMap_.search( pos.c_str() );
+        if( ret > 0 )
+            return ret;
+        else
+            return addPOS( pos );
+    }
+
+    inline int getCodeFromStr( const char* pos )
+    {
+        int ret = posMap_.search( pos );
         if( ret > 0 )
             return ret;
         else
@@ -150,7 +159,7 @@ private:
     StringArray posTable_;
 
     /** Index array */
-    vtrie::VGenericArray<bool> indexedFlags_;
+    PGenericArray<bool> indexedFlags_;
 
     /** the POS tag map type from case-insensitive string to index code */
     typedef DCTrie POSMap;

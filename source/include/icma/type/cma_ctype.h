@@ -18,7 +18,6 @@ using std::string;
 #include "icma/type/cma_ctype_core.h"
 
 #include "VTrie.h"
-#include "VGenericArray.h"
 
 namespace cma
 {
@@ -152,6 +151,12 @@ public:
      */
     string getPOCXmlStr( const char* p) const;
 
+    Knowledge::EncodeType getEncodeType()
+    {
+        return type_;
+    }
+
+
 protected:
 	/** The encode type of the current cma_ctype class */
 	Knowledge::EncodeType type_;
@@ -160,7 +165,7 @@ private:
 	/** Character to types map */
 	//map< CharValue, CharConditions > typeMap_;
 	VTrie condKeys_;
-	vtrie::VGenericArray<CharConditions> condValues_;
+	VGenericArray<CharConditions> condValues_;
 
 	/** Spaces Set */
 	CharValue spaceArray_[SPACE_ARRAY_SIZE];
@@ -168,6 +173,7 @@ private:
 	/** Sentence Separator Set */
 	set<CharValue> senSepSet_;
 
+public:
 	getByteCount_t getByteCountFun_;
 
 };

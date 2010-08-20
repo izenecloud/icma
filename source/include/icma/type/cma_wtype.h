@@ -35,11 +35,11 @@ public:
      */
     enum WordType
     {
-	WORD_TYPE_NUMBER = 1, ///< number word, example: 632, 三百八十
-	WORD_TYPE_DATE, ///< date word, example: 2009年, 二零零九年, 5月, 6日
-	WORD_TYPE_LETTER, ///< letter word, example: Pentium4
+        WORD_TYPE_NUMBER = 1, ///< number word, example: 632, 三百八十
+        WORD_TYPE_DATE, ///< date word, example: 2009年, 二零零九年, 5月, 6日
+        WORD_TYPE_LETTER, ///< letter word, example: Pentium4
         WORD_TYPE_PUNC,
-	WORD_TYPE_OTHER ///< other word
+        WORD_TYPE_OTHER ///< other word
     };
 
     /**
@@ -52,11 +52,11 @@ public:
     /**
 	 * Get the word type.
 	 * \param types types that are already knows
-	 * \param begin index in types
-	 * \param the size of the types
+	 * \param beginIdx beginning index of the word ( inclusive )
+	 * \param endIdx ending index of the word ( exclusive )
 	 * \return the word type.
 	 */
-	WordType getWordType(CharType* types, size_t begin, size_t size);
+	WordType getWordType(CharType* types, size_t beginIdx, size_t endIdx );
 
 private:
     /** character encoding */
