@@ -13,6 +13,7 @@
 #include "sentence.h"
 
 #include <string>
+#include <vector>
 
 using namespace cma;
 using namespace std;
@@ -41,6 +42,44 @@ void createKnowledgeAndAnalyzer(
 }
 
 BOOST_AUTO_TEST_SUITE(icma_core_test)
+
+BOOST_AUTO_TEST_CASE(icma_basicapi)
+{
+    Knowledge* knowledge = NULL;
+    Analyzer* analyzer = NULL;
+    createKnowledgeAndAnalyzer( &knowledge, &analyzer, 3 );
+    BOOST_CHECK( knowledge != NULL );
+    BOOST_CHECK( analyzer != NULL );
+
+    // test Knowledge API
+    BOOST_CHECK( Knowledge::decodeEncodeType( "utf8" ) == Knowledge::ENCODE_TYPE_UTF8 );
+    BOOST_CHECK( knowledge->isSupportPOS() == true );
+    string word = "衣服";
+    BOOST_CHECK( knowledge->isExistWord( word.c_str() ) == true );
+
+    vector< string > words;
+    words.push_back( word );
+    knowledge->disableWords( words );
+    BOOST_CHECK( knowledge->isExistWord( word.c_str() ) == false );
+    knowledge->enableWords( words );
+    BOOST_CHECK( knowledge->isExistWord( word.c_str() ) == true );
+
+
+    // test Analyzer API
+    analyzer->setOption( Analyzer::OPTION_TYPE_NBEST, 3 );
+    BOOST_CHECK( analyzer->getOption( Analyzer::OPTION_TYPE_NBEST) == 3 );
+
+    int posCode;
+    string posValue = "N";
+    posCode = analyzer->getCodeFromStr( posValue );
+    BOOST_CHECK( posCode >= 0 );
+    string posRetValue = analyzer->getStrFromCode( posCode );
+    BOOST_CHECK( posRetValue == posValue );
+
+    delete analyzer;
+    //delete knowledge;
+}
+
 
 // forwards minimum cover
 BOOST_AUTO_TEST_CASE(icma_fminconver)

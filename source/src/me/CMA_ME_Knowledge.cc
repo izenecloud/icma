@@ -304,7 +304,8 @@ bool CMA_ME_Knowledge::isExistWord( const char* word )
     if( trie_ == NULL )
         return false;
     VTrieNode node;
-    return trie_->search( word, &node ) != 0;
+    trie_->search( word, &node );
+    return node.data > 0;
 }
 
 /**
