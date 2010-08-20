@@ -7,11 +7,134 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include "cma_factory.h"
+#include "analyzer.h"
+#include "knowledge.h"
+#include "sentence.h"
+
+#include <string>
+
+using namespace cma;
+using namespace std;
+
+Knowledge* globalKnowledge = NULL;
+
+void createKnowledgeAndAnalyzer(
+        Knowledge** knowledge,
+        Analyzer** analyzer,
+        int analysisType = 3,
+        const string dictPath = "../db/icwb/utf8/"
+        )
+{
+    CMA_Factory* factory = CMA_Factory::instance();
+
+    if( globalKnowledge == NULL )
+    {
+        globalKnowledge = factory->createKnowledge();
+        globalKnowledge->loadModel( dictPath.c_str(), true );
+    }
+    *knowledge = globalKnowledge;
+
+    *analyzer = factory->createAnalyzer();
+    (*analyzer)->setKnowledge( *knowledge );
+    (*analyzer)->setOption( Analyzer::OPTION_ANALYSIS_TYPE, analysisType );
+}
+
 BOOST_AUTO_TEST_SUITE(icma_core_test)
 
-BOOST_AUTO_TEST_CASE(icma_core)
+// forwards minimum cover
+BOOST_AUTO_TEST_CASE(icma_fminconver)
 {
-    BOOST_CHECK( ((1 + 1) < 2) );
+    Knowledge* knowledge = NULL;
+    Analyzer* analyzer = NULL;
+    createKnowledgeAndAnalyzer( &knowledge, &analyzer, 3 );
+    BOOST_CHECK( knowledge != NULL );
+    BOOST_CHECK( analyzer != NULL );
+
+    // test run with string
+    string input = "我和衣服的故事";
+    string expected = "我/P  和/AG  和衣/V  衣/N  衣服/N  服/J  的/A  故事/N  ";
+    const char* ret = analyzer->runWithString( input.c_str() );
+    BOOST_CHECK( strcmp( ret, expected.c_str() ) == 0 );
+
+    // test run with sentence
+    analyzer->setOption( Analyzer::OPTION_TYPE_NBEST, 3 );
+    Sentence sent;
+    sent.setString( input.c_str() );
+    BOOST_CHECK( analyzer->runWithSentence( sent ) == 1 );
+    BOOST_CHECK( sent.getListSize() == 1 );
+    BOOST_CHECK( sent.getCount( 0 ) == 8 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 0, 2 ), "和衣" ) == 0 );
+    BOOST_CHECK( strcmp( sent.getStrPOS( 0, 2 ), "V" ) == 0 );
+
+    delete analyzer;
+    //delete knowledge;
+}
+
+
+// forwards maximum matching
+BOOST_AUTO_TEST_CASE(icma_fmm)
+{
+    Knowledge* knowledge = NULL;
+    Analyzer* analyzer = NULL;
+    createKnowledgeAndAnalyzer( &knowledge, &analyzer, 2 );
+    BOOST_CHECK( knowledge != NULL );
+    BOOST_CHECK( analyzer != NULL );
+
+    // test run with string
+    string input = "我和衣服的故事";
+    string expected = "我/P  和衣/V  服/J  的/A  故事/N  ";
+    const char* ret = analyzer->runWithString( input.c_str() );
+    BOOST_CHECK( strcmp( ret, expected.c_str() ) == 0 );
+
+    // test run with sentence
+    analyzer->setOption( Analyzer::OPTION_TYPE_NBEST, 3 );
+    Sentence sent;
+    sent.setString( input.c_str() );
+    BOOST_CHECK( analyzer->runWithSentence( sent ) == 1 );
+    BOOST_CHECK( sent.getListSize() == 1 );
+    BOOST_CHECK( sent.getCount( 0 ) == 5 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 0, 2 ), "服" ) == 0 );
+    BOOST_CHECK( strcmp( sent.getStrPOS( 0, 2 ), "J" ) == 0 );
+
+    delete analyzer;
+    //delete knowledge;
+}
+
+
+// maximum entropy model
+BOOST_AUTO_TEST_CASE(icma_mmmodel)
+{
+    Knowledge* knowledge = NULL;
+    Analyzer* analyzer = NULL;
+    createKnowledgeAndAnalyzer( &knowledge, &analyzer, 1 );
+    BOOST_CHECK( knowledge != NULL );
+    BOOST_CHECK( analyzer != NULL );
+
+    // test run with string
+    string input = "我和衣服的故事";
+    string expected = "我/R  和/C  衣服/N  的/B  故事/N  ";
+    const char* ret = analyzer->runWithString( input.c_str() );
+    BOOST_CHECK( strcmp( ret, expected.c_str() ) == 0 );
+
+    // test run with sentence
+    analyzer->setOption( Analyzer::OPTION_TYPE_NBEST, 3 );
+    Sentence sent;
+    sent.setString( input.c_str() );
+    BOOST_CHECK( analyzer->runWithSentence( sent ) == 1 );
+    BOOST_CHECK( sent.getListSize() == 3 );
+    BOOST_CHECK( sent.getCount( 0 ) == 5 );
+    BOOST_CHECK( sent.getCount( 1 ) == 6 );
+    BOOST_CHECK( sent.getCount( 1 ) == 6 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 0, 2 ), "衣服" ) == 0 );
+    BOOST_CHECK( strcmp( sent.getStrPOS( 0, 2 ), "N" ) == 0 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 1, 4 ), "故" ) == 0 );
+    BOOST_CHECK( strcmp( sent.getStrPOS( 1, 4 ), "D" ) == 0 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 2, 2 ), "衣" ) == 0 );
+    BOOST_CHECK( strcmp( sent.getStrPOS( 2, 2 ), "NG" ) == 0 );
+
+    delete analyzer;
+    //delete knowledge;
 }
 
 BOOST_AUTO_TEST_SUITE_END()

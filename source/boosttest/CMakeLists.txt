@@ -16,5 +16,6 @@ ADD_EXECUTABLE(t_icma_core
   )
 
 TARGET_LINK_LIBRARIES(t_icma_core
+  ${LIBS_CMAC}
   ${Boost_LIBRARIES}
   )    
