@@ -20,3 +20,7 @@ IZENESOFT::CMake.new do |t|
   t.build_type = "release" # default type is release
   t["CMAKE_CMA_DEBUG_PRINT"] = 0
 end
+
+IZENESOFT::GITClean.new
+
+IZENESOFT::BoostTest.new
