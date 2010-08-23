@@ -921,6 +921,11 @@ namespace meanainner{
         ret.segment_.clear();
         createStringLexicon( words, bestSegSeq, ret.segment_, 0, bestSegSeq.size() );
 
+        ret.candMetas_[ 0 ].wdOffset_ = 0;
+        ret.wordOffset_.clear();
+        ret.wordOffset_.reserve( ret.segment_.size() );
+        createWordOffset( bestSegSeq, 0, bestSegSeq.size(), ret.wordOffset_ );
+
 
         if( tagPOS == false )
             return;
@@ -1109,6 +1114,34 @@ namespace meanainner{
         }
 
         out.endPtr_ = outPtr;
+    }
+
+
+    void CMA_ME_Analyzer::createWordOffset(
+            PGenericArray<size_t>& segSeq,
+            size_t beginIdx,
+            size_t endIdx,
+            PGenericArray<size_t>& out
+            )
+    {
+        if( beginIdx >= endIdx )
+            return;
+        size_t lastIdx = segSeq[ beginIdx ];
+        size_t wordOffset = 0;
+        for( size_t i = beginIdx + 1; i < endIdx; i += 2 )
+        {
+            size_t seqStartIdx = segSeq[ i - 1 ];
+            size_t seqEndIdx = segSeq[ i ];
+            if( seqStartIdx >= seqEndIdx )
+                break;
+
+            if( seqStartIdx != lastIdx )
+            {
+                ++wordOffset;
+                lastIdx = seqStartIdx;
+            }
+            out.push_back( wordOffset );
+        }
     }
 
 }

@@ -215,6 +215,13 @@ private:
             size_t endIdx
             );
 
+    void createWordOffset(
+            PGenericArray<size_t>& segSeq,
+            size_t beginIdx,
+            size_t endIdx,
+            PGenericArray<size_t>& out
+            );
+
 private:
     CMA_ME_Knowledge *knowledge_;
 
