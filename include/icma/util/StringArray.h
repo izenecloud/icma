@@ -49,7 +49,8 @@ public:
 
     inline char* operator[]( int idx ) const
     {
-        return data_ + offsetVec_[ idx ];
+        return data_ + offsetVec_.data_[ offsetVec_.startOffset_ + idx ];
+        //return data_ + offsetVec_[ idx ];
     }
 
     void reserve( size_t size );
