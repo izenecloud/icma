@@ -1052,13 +1052,16 @@ namespace meanainner{
     {
         int maxWordOff = (int)charIn.size() - 1;
         CharType preType = CHAR_TYPE_INIT;
+        const char* curChar = charIn[ 0 ];
+        const char* nextChar;
         for( int i = 0; i < maxWordOff; ++i )
         {
+            nextChar = charIn[ i + 1 ];
             types[i] = preType = ctype_->getCharType(
-                    charIn[ i ], preType, charIn[i+1] );
+                    curChar, preType, nextChar );
+            curChar = nextChar;
         }
-        types[ maxWordOff ] = ctype_->getCharType(
-                charIn[ maxWordOff ], preType, 0);
+        types[ maxWordOff ] = ctype_->getCharType( curChar, preType, 0 );
     }
 
     void CMA_ME_Analyzer::createStringLexicon(
@@ -1072,11 +1075,14 @@ namespace meanainner{
         size_t curFreeLen = out.freeLen();
         size_t segSeqSize = ( endIdx - beginIdx ) / 2;
         size_t minLen = 0;
+        size_t* segSeqItr = &segSeq[ beginIdx ];
         // minLen is used collect character number now
-        for( size_t i = beginIdx + 1; i < endIdx; i += 2 )
+        for( size_t i = beginIdx; i < endIdx; i += 2 )
         {
-            size_t seqStartIdx = segSeq[ i - 1 ];
-            size_t seqEndIdx = segSeq[ i ];
+            size_t seqStartIdx = *segSeqItr;
+            ++segSeqItr;
+            size_t seqEndIdx = *segSeqItr;
+            ++segSeqItr;
             if( seqStartIdx >= seqEndIdx )
                 break;
             minLen += seqEndIdx - seqStartIdx;
@@ -1091,10 +1097,13 @@ namespace meanainner{
 
         // Converting integer to string
         char* outPtr = out.endPtr_;
-        for( size_t i = beginIdx + 1; i < endIdx; i += 2 )
+        segSeqItr = &segSeq[ beginIdx ];
+        for( size_t i = beginIdx; i < endIdx; i += 2 )
         {
-            size_t seqStartIdx = segSeq[ i - 1 ];
-            size_t seqEndIdx = segSeq[ i ];
+            size_t seqStartIdx = *segSeqItr;
+            ++segSeqItr;
+            size_t seqEndIdx = *segSeqItr;
+            ++segSeqItr;
             if( seqStartIdx >= seqEndIdx )
                 break;
             out.offsetVec_.push_back( outPtr - out.data_ );
