@@ -14,6 +14,9 @@ TARGET_LINK_LIBRARIES(cmac_run ${LIBS_CMAC})
 ADD_EXECUTABLE(t_wordbound t_wordbound.cc)
 TARGET_LINK_LIBRARIES(t_wordbound ${LIBS_CMAC})
 
+ADD_EXECUTABLE(seg_scd seg_scd.cpp)
+TARGET_LINK_LIBRARIES(seg_scd ${LIBS_CMAC})
+
 IF( USE_MICROHTTPD )
     ADD_EXECUTABLE(cma_webdemo cma_webdemo.cc)
     TARGET_LINK_LIBRARIES(cma_webdemo pthread microhttpd ${LIBS_CMAC})
