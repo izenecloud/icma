@@ -791,7 +791,7 @@ namespace meanainner{
         SegTagger* segTagger = knowledge_->getSegTagger();
         if( N == 1 )
         {
-            segTagger->seg_sentence_best( words, types, segment );
+            segTagger->seg_sentence_best_with_me( words, types, segment );
             candMeta.push_back( DefCandidateMeta );
             candMeta[ 0 ].segOffset_ = 0;
             candMeta[ 0 ].score_ = 1.0;
