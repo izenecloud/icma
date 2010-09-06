@@ -159,6 +159,16 @@ private:
             );
 
     /**
+     * Each segment with pure Maximum Model Approach
+     */
+    void analysis_pure_mmmodel(
+        const char* sentence,
+        int N,
+        Sentence& ret,
+        bool tagPOS = true
+        );
+
+    /**
      * Forwards maximum matching approach
      */
     void analysis_fmm(

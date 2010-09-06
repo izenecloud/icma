@@ -12,6 +12,8 @@ void beginSeg(string cate, string inFile, string outFile, string enc,
     knowledge->loadModel( enc.data(), cate.data() );
 
     Analyzer* analyzer = factory->createAnalyzer();
+    analyzer->setOption(Analyzer::OPTION_TYPE_POS_TAGGING,0);
+    analyzer->setOption(Analyzer::OPTION_ANALYSIS_TYPE,77);
     analyzer->setKnowledge(knowledge);
     analyzer->setPOSDelimiter(posDelimiter.data());
 
@@ -30,8 +32,8 @@ void printSeggerUsage(){
             "poc.model, sys.dic and so on."<<endl;
     cout<<"   inFile is the input file"<<endl;
     cout<<"   outFile is the output file"<<endl;
-    cout<<"   encoding is the encoding of the mateFile, and gb2312 "<<
-            "is the default encoding. Support utf16, utf8, gb2312, big5 and gb18030 now"<<endl;
+    cout<<"   encoding is the encoding of the mateFile, and utf8 "<<
+            "is the default encoding. Support utf8, gb2312, big5 and gb18030 now"<<endl;
     cout<<"   posDelimiter is the delimiter between the word and the pos tag, "<<
             "like '/' and '_' and default is '/'"<<endl;
 }
@@ -44,7 +46,7 @@ int seggerEntry(int argc, char** argv){
     string cateFile(argv[1]);
     string inFile(argv[2]);
     string outFile(argv[3]);
-    string encoding = "gb18030";
+    string encoding = "utf8";
     if(argc > 4){
         encoding = argv[4];
     }

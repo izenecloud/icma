@@ -121,6 +121,8 @@ inline void removeDuplicatedSegment(
                 analysis = &CMA_ME_Analyzer::analysis_fmm;
             else if( static_cast<int>(nValue) == 3 )
                 analysis = &CMA_ME_Analyzer::analysis_fmincover;
+            else if( static_cast<int>(nValue) == 77 )
+                analysis = &CMA_ME_Analyzer::analysis_pure_mmmodel;
             else
                 analysis = &CMA_ME_Analyzer::analysis_mmmodel;
         }
@@ -751,6 +753,95 @@ namespace meanainner{
         ret.pos_.clear();
         ret.pos_.reserve( ret.segment_.size() );
         POSTagger* posTagger = knowledge_->getPOSTagger();       
+        for ( int i = 0; i < N; ++i )
+        {
+            CandidateMeta& cm = candMeta[ i ];
+            candMeta[ i ].posOffset_ = ret.pos_.size();
+            posTagger->tag_sentence_best( ret.segment_, segment, types,
+                    cm.segOffset_, cm.segOffset_ + ret.getCount( i ), offsetArray[ i ], ret.pos_ );
+        }
+
+    }
+
+    void CMA_ME_Analyzer::analysis_pure_mmmodel(
+            const char* sentence,
+            int N,
+            Sentence& ret,
+            bool tagPOS
+            )
+    {
+        static CandidateMeta DefCandidateMeta;
+
+        // Initial Step 1: split as Chinese Character based
+        StringVectorType words;
+        extractCharacter( sentence, words );
+
+        if( words.empty() == true )
+            return;
+
+        // Initial Step 2nd: set character types
+        CharType types[ (int)words.size() ];
+        setCharType( words, types );
+
+
+        VGenericArray< CandidateMeta >& candMeta = ret.candMetas_;
+        candMeta.clear();
+        PGenericArray<size_t> segment;
+
+        SegTagger* segTagger = knowledge_->getSegTagger();
+        if( N == 1 )
+        {
+            segTagger->seg_sentence_best( words, types, segment );
+            candMeta.push_back( DefCandidateMeta );
+            candMeta[ 0 ].segOffset_ = 0;
+            candMeta[ 0 ].score_ = 1.0;
+        }
+        else
+        {
+            segTagger->seg_sentence( words, types, N, N, segment, candMeta );
+            N = candMeta.size();
+        }
+
+        size_t offsetArray[ N + 1 ];
+        offsetArray[ 0 ] = 0;
+        offsetArray[ N ] = segment.size();
+        for( int i = 1; i < N; ++i )
+            offsetArray[ i ] = candMeta[ i ].segOffset_;
+
+
+        // only combine the first result
+        ret.segment_.clear();
+        for( int i = 0; i < N; ++i )
+        {
+            candMeta[ i ].segOffset_ = ret.segment_.size();
+            createStringLexicon( words, segment, ret.segment_,
+                    offsetArray[ i ], offsetArray[ i + 1 ] );
+        }
+
+/*
+        for( int i = 0; i <= N; ++i )
+        {
+            cout << "offsetArray[ " << i << " ] = " << offsetArray[ i ] << endl;
+        }
+        cout << "analysis_mmmodel segment: " << endl;
+        int oaidx = 0;
+        for( size_t i = 0; i < segment.size(); i += 2 )
+        {
+            if( i == offsetArray[ oaidx ] )
+            {
+                cout << "--------" << endl;
+                ++oaidx;
+            }
+            cout << "#" << i << ": " << segment[ i ] << " -> " << segment[ i + 1 ] << endl;
+        }
+*/
+
+        if( tagPOS == false )
+            return;
+
+        ret.pos_.clear();
+        ret.pos_.reserve( ret.segment_.size() );
+        POSTagger* posTagger = knowledge_->getPOSTagger();
         for ( int i = 0; i < N; ++i )
         {
             CandidateMeta& cm = candMeta[ i ];

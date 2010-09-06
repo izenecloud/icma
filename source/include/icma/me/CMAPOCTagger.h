@@ -137,6 +137,17 @@ public:
             );
 
     /**
+     * only return the best segment result only using Maximum Entropy
+     * \param words the word list
+     * \param segment to store the segmented words
+     */
+    void seg_sentence_best_with_me(
+            StringVectorType& words,
+            CharType *types,
+            PGenericArray<size_t>& segment
+            );
+
+    /**
      * Would be invoked by the SegTagger's Constructor
      */
     static void initialize();

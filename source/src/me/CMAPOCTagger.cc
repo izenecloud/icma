@@ -775,6 +775,41 @@ void SegTagger::seg_sentence_best(
     pocinner::combinePOCToWord(words, types, n, pocRet, segment);
 }
 
+void SegTagger::seg_sentence_best_with_me(
+        StringVectorType& words,
+        CharType* types,
+        PGenericArray<size_t>& segment
+        )
+{
+    size_t n = words.size();
+    uint8_t pocRet[n];
+
+    for(size_t index=0; index<n; ++index){
+
+        vector<string> context;
+        pocinner::get_poc_zh_context_seg<StringVectorType>(
+                words, types, index, context, ctype_);
+
+
+        vector<pair<outcome_type, double> > outcomes;
+        me.eval_all(context, outcomes, false);
+        pair<outcome_type, double>& pair0 = outcomes[0];
+        double tagEScore = (pair0.first == POC_TAG_E_NAME) ?
+              pair0.second : ( 1 - pair0.second );
+
+        //no check if the POC tag is B
+        if(tagEScore <= 0.5){
+            pocRet[index] = POC_TAG_B;
+            continue;
+        }
+
+        pocRet[index] = POC_TAG_E;
+
+    }
+
+    pocinner::combinePOCToWord(words, types, n, pocRet, segment);
+}
+
 #undef BACK_FIX_END_TAG
 
 bool POC_INIT_FLAG = false;
