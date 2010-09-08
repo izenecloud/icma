@@ -106,7 +106,7 @@ bool POSTable::isIndexPOS( int posCode ) const
 
 bool POSTable::setIndexPOS( int posCode, bool isIndex )
 {
-	if(posCode < 0 || indexedFlags_.size() <= (size_t)index )
+	if(posCode < 0 || indexedFlags_.size() <= (size_t)posCode )
         return false;
 	return indexedFlags_[ posCode ] = isIndex;
 }
