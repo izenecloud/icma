@@ -7,6 +7,8 @@
 
 #ifndef MEMALLOCATOR_H_
 #define MEMALLOCATOR_H_
+#include <cstdlib>
+#include <cstdio>
 
 namespace cma
 {

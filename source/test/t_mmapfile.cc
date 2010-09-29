@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <line_mem_iterator.hpp>
 #include <token_mem_iterator.hpp>
+#include <cstdlib>
 
 int tests_run = 0;
 

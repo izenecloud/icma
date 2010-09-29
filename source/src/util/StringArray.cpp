@@ -4,8 +4,8 @@
  * \date Jul 30, 2010
  * \author Vernkin Chen
  */
+#include <cstring>
 #include <icma/util/StringArray.h>
-
 using namespace std;
 
 namespace cma
