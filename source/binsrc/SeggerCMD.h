@@ -198,10 +198,7 @@ delete analyzer;
 
 using namespace std;
 
-#include "cma_factory.h"
-#include "analyzer.h"
-#include "knowledge.h"
-#include "sentence.h"
+#include "icma/icma.h"
 
 using namespace cma;
 

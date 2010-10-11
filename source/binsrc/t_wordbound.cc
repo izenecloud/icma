@@ -7,11 +7,7 @@
 
 
 
-#include "cma_factory.h"
-#include "analyzer.h"
-#include "knowledge.h"
-#include "sentence.h"
-#include "word_bound.h"
+#include "icma/icma.h"
 
 
 #include <iostream>

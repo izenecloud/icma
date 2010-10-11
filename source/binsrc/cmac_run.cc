@@ -21,10 +21,7 @@
  * \date April 2, 2009
  */
 
-#include "cma_factory.h"
-#include "analyzer.h"
-#include "knowledge.h"
-#include "sentence.h"
+#include "icma/icma.h"
 
 // CMA_ME_Knowledge.h is just for test here, don't include it for other purpose
 #include "icma/me/CMA_ME_Knowledge.h"
