@@ -82,12 +82,12 @@ void trainWord( Sentence& sent, WBTrainDS& ds )
 WordBound::WordBound()
     : minScore_( 3 )
 {
-    trie_ = new VTrie;
+    trie_ = (void*)(new VTrie);
 }
 
 WordBound::~WordBound()
 {
-    delete trie_;
+    delete (VTrie*)trie_;
 }
 
 int WordBound::trainModel(
@@ -168,7 +168,7 @@ int WordBound::trainModel(
 
 bool WordBound::loadModel( const char* wbModelFile )
 {
-    return trie_->loadFromFile( wbModelFile );
+    return ((VTrie*)trie_)->loadFromFile( wbModelFile );
 }
 
 void WordBound::setMinScore( double score )
@@ -192,7 +192,7 @@ bool WordBound::isPossibeWord( Sentence& sent )
     VTrieNode node;
     for( int i = 0; i < WB_NAME_NUM; ++i )
     {
-        trie_->search( names[ i ].c_str(), &node );
+        ((VTrie*)trie_)->search( names[ i ].c_str(), &node );
         score += node.data;
         //cout << "Check " << names[ i ] << ": " << node.data << endl;
     }

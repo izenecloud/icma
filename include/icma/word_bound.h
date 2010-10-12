@@ -11,8 +11,6 @@
 #include <vector>
 #include <string>
 
-class VTrie;
-
 namespace cma
 {
 
@@ -50,7 +48,7 @@ public:
 
 private:
     double minScore_;
-    VTrie* trie_;
+    void* trie_;
 };
 
 }
