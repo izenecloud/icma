@@ -1,0 +1,44 @@
+############################################################
+# File		: Makefile.defs
+# Author	: Dohyun Yun
+# Date		: 2010.10.12
+############################################################
+
+
+############################################################
+## [ LIBRARY ]
+############################################################
+LIB_PROG  = ar
+LIB_FLAGS = rcv
+
+############################################################
+## [ COMPILER ]
+############################################################
+CC_PROG      = gcc
+ifdef DEBUG
+    CC_FLAGS = -c -g -Wall -DARCH64 -DLINUX -DDEBUG
+else
+    CC_FLAGS = -c -O2 -Wall -fno-strict-aliasing -DARCH64 -DLINUX
+endif # DEBUG
+ifdef SF1_EXTEND
+    CC_FLAGS += -D"EXTENDED_LA"
+endif
+CC_LIB_FLAGS =
+CC_CON_FLAGS =
+CC_DLL_FLAGS = -fPIC
+
+############################################################
+## [ LINKER ]
+############################################################
+EXE_PROG      = gcc
+EXE_FLAGS     = -lstdc++ -lz -lpthread
+EXE_CON_FLAGS = 
+EXE_DLL_FLAGS = -shared
+
+###########################################################
+## [ JAVA ]
+############################################################
+JAVA_PROG  = javac
+JAVA_FLAGS = -classpath . -d .
+JAR_PROG   = jar
+JAR_FLAGS  = cvf
