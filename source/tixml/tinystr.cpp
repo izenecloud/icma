@@ -29,7 +29,7 @@ distribution.
 
 #ifndef TIXML_USE_STL
 
-#include <tinystr.h>
+#include <icma/tixml/tinystr.h>
 
 namespace cma { namespace ticpp {
 

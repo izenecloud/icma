@@ -21,9 +21,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-#include <ticpp.h>
-#include <ticpprc.h>
-#include <tinyxml.h>
+#include <icma/tixml/ticpp.h>
+#include <icma/tixml/ticpprc.h>
+#include <icma/tixml/tinyxml.h>
 
 #include <sstream>
 

@@ -51,7 +51,7 @@ distribution.
 	#include <sstream>
 	#define TIXML_STRING		std::string
 #else
-	#include <tinystr.h>
+	#include <icma/tixml/tinystr.h>
 	#define TIXML_STRING		TiXmlString
 #endif
 
@@ -81,7 +81,7 @@ distribution.
 	#endif
 #endif
 
-#include <ticpprc.h>
+#include <icma/tixml/ticpprc.h>
 
 namespace cma { namespace ticpp {
 

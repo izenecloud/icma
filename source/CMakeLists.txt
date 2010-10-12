@@ -89,7 +89,6 @@ include_directories(../include)
 include_directories(./corpus)
 include_directories(./maxent)
 include_directories(./vsynonym)
-include_directories(./tixml)
 include_directories(./binsrc)
 
 SET(LIBS_ME maxent_static)

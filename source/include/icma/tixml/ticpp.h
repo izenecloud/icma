@@ -43,7 +43,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef TICPP_INCLUDED
 #define TICPP_INCLUDED
 
-#include <tinyxml.h>
+#include <icma/tixml/tinyxml.h>
 
 #include <sstream>
 #include <vector>

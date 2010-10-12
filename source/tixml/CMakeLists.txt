@@ -1,3 +1,5 @@
+include_directories(../include)
+
 FILE( GLOB_RECURSE TIXML_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
 
 ADD_LIBRARY(${LIBS_TIXML} STATIC ${TIXML_SOURCE})

@@ -11,7 +11,7 @@
 	#include <wiselib/ustring/UString.h>
 #endif
 
-#include <tinyxml.h>
+#include <icma/tixml/tinyxml.h>
 
 #include "icma/type/cma_ctype.h"
 #include "icma/util/tokenizer.h"
