@@ -5,7 +5,7 @@
  * \date Feb 17, 2009
  */
 
-#include "sentence.h"
+#include "icma/sentence.h"
 #include "icma/pos_table.h"
 
 #include <icma/util/StringArray.h>

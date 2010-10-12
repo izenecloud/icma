@@ -5,7 +5,7 @@
  * \date Feb 20, 2009
  */
 
-#include "cma_factory.h"
+#include "icma/cma_factory.h"
 #include "icma/me/CMA_ME_Factory.h"
 
 namespace cma

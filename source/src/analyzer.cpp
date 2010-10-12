@@ -5,7 +5,7 @@
  * \date Feb 17, 2009
  */
 
-#include "analyzer.h"
+#include "icma/analyzer.h"
 
 #include <cassert>
 

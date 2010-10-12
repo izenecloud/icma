@@ -12,7 +12,7 @@
 #include <boost/tokenizer.hpp>
 #include <fstream>
 
-#include "knowledge.h"
+#include "icma/knowledge.h"
 
 #include "maxentmodel.hpp"
 

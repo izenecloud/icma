@@ -5,11 +5,7 @@
  * \author Vernkin Chen
  */
 
-#include "word_bound.h"
-#include "sentence.h"
-#include "knowledge.h"
-#include "analyzer.h"
-#include "cma_factory.h"
+#include "icma/icma.h"
 #include "VTrie.h"
 
 #include <iostream>

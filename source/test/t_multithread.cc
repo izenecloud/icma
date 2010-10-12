@@ -4,10 +4,7 @@
  * \date Sep 1, 2009
  */
 
-#include "cma_factory.h"
-#include "analyzer.h"
-#include "knowledge.h"
-#include "sentence.h"
+#include "icma/icma.h"
 
 #include <iostream>
 #include <sstream>

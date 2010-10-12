@@ -6,7 +6,7 @@
 #ifndef _CMA_ME_FACTORY_H
 #define	_CMA_ME_FACTORY_H
 
-#include "cma_factory.h"
+#include "icma/cma_factory.h"
 #include "icma/me/CMA_ME_Analyzer.h"
 #include "icma/me/CMA_ME_Knowledge.h"
 

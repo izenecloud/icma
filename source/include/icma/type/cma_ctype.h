@@ -12,7 +12,7 @@
 
 using std::string;
 
-#include "knowledge.h" // Knowledge::EncodeType
+#include "icma/knowledge.h" // Knowledge::EncodeType
 
 #include "icma/cmacconfig.h"
 #include "icma/type/cma_ctype_core.h"

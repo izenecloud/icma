@@ -13,7 +13,7 @@
 #include "icma/me/CMABasicTrainer.h"
 #include "types.h"
 #include "VTrie.h"
-#include "sentence.h"
+#include "icma/sentence.h"
 
 #include <algorithm>
 #include <math.h>

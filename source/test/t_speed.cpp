@@ -13,7 +13,7 @@
 #include <icma/util/CPPStringUtils.h>
 #include <icma/util/StringArray.h>
 #include <icma/util/VGenericArray.h>
-#include <knowledge.h>
+#include <icma/knowledge.h>
 #include <icma/type/cma_ctype.h>
 
 using namespace std;

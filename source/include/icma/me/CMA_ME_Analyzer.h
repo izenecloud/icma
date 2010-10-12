@@ -8,8 +8,8 @@
 #ifndef _CMA_ME_ANALYZER_H
 #define	_CMA_ME_ANALYZER_H
 
-#include "analyzer.h"
-#include "sentence.h"
+#include "icma/analyzer.h"
+#include "icma/sentence.h"
 
 #include "icma/cmacconfig.h"
 #include "icma/me/CMA_ME_Knowledge.h"

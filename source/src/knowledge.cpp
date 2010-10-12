@@ -5,7 +5,7 @@
  * \date Feb 17, 2009
  */
 
-#include "knowledge.h"
+#include "icma/knowledge.h"
 #include <string>
 #include <cassert>
 

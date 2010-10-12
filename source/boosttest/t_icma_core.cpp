@@ -7,10 +7,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "cma_factory.h"
-#include "analyzer.h"
-#include "knowledge.h"
-#include "sentence.h"
+#include "icma/icma.h"
 
 #include <string>
 #include <vector>

@@ -9,7 +9,7 @@
 #ifndef _CMA_ME_KNOWLEDGE_H
 #define	_CMA_ME_KNOWLEDGE_H
 
-#include "knowledge.h"
+#include "icma/knowledge.h"
 #include "icma/me/CMAPOCTagger.h"
 #include "icma/me/CMAPOSTagger.h"
 #include "icma/pos_table.h"

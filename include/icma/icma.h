@@ -8,10 +8,10 @@
 #ifndef ICMA_H_
 #define ICMA_H_
 
-#include <analyzer.h>
-#include <cma_factory.h>
-#include <knowledge.h>
-#include <sentence.h>
-#include <word_bound.h>
+#include <icma/analyzer.h>
+#include <icma/cma_factory.h>
+#include <icma/knowledge.h>
+#include <icma/sentence.h>
+#include <icma/word_bound.h>
 
 #endif /* ICMA_H_ */
