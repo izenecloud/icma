@@ -42,20 +42,21 @@ INC_DIRS = -I./include \
 
 OBJS = $(OBJ_SRC) $(OBJ_TIXML) $(OBJ_CORPUS) $(OBJ_MAXENT)
 
-OBJ_SRC = $(patsubst %.cpp, %.o, $(wildcard $(SRC_HOME)/*.cpp)) \
-          $(patsubst %.cc, %.o, $(wildcard $(SRC_HOME)/*.cc)) \
+OBJ_SRC = $(patsubst %.cpp, %.o, $(wildcard $(SRC_HOME)/src/*.cpp)) \
+          $(patsubst %.cc, %.o, $(wildcard $(SRC_HOME)/src/*.cc)) \
 		  $(OBJ_SRC_DICTB) \
 		  $(OBJ_SRC_FMINCOVER) \
-		  $(OBJ_SRC_ME ) \
+		  $(OBJ_SRC_ME) \
 		  $(OBJ_SRC_TYPE) \
-		  $(OBJ_SRC_UTIL )
+		  $(OBJ_SRC_UTIL)
 
-OBJ_SRC_DICTB = $(patsubst %.cpp, %.o, $(wildcard $(SRC_HOME)/dictb/*.cpp))
-OBJ_SRC_FMINCOVER = $(patsubst %.cpp, %.o, $(wildcard $(SRC_HOME)/fmincover/*.cpp))
-OBJ_SRC_ME = $(patsubst %.cc, %.o, $(wildcard $(SRC_HOME)/me/*.cc))
-OBJ_SRC_TYPE = $(patsubst %.cpp, %.o, $(wildcard $(SRC_HOME)/type/*.cpp))
-OBJ_SRC_UTIL = $(patsubst %.cpp, %.o, $(wildcard $(SRC_HOME)/util/*.cpp)) \
-			   $(patsubst %.cc, %.o, $(wildcard $(SRC_HOME)/util/*.cc))
+OBJ_SRC_DICTB = $(patsubst %.cpp, %.o, $(wildcard $(SRC_HOME)/src/dictb/*.cpp))
+OBJ_SRC_FMINCOVER = $(patsubst %.cpp, %.o, $(wildcard $(SRC_HOME)/src/fmincover/*.cpp))
+OBJ_SRC_ME = $(patsubst %.cc, %.o, $(wildcard $(SRC_HOME)/src/me/*.cc))
+OBJ_SRC_TYPE = $(patsubst %.cpp, %.o, $(wildcard $(SRC_HOME)/src/type/*.cpp))
+OBJ_SRC_UTIL = $(patsubst %.cpp, %.o, $(wildcard $(SRC_HOME)/src/util/*.cpp)) \
+			   $(patsubst %.cc, %.o, $(wildcard $(SRC_HOME)/src/util/*.cc))
+
 
 OBJ_TIXML = $(patsubst %.cpp, %.o, $(wildcard $(SRC_HOME)/tixml/*.cpp))
 
