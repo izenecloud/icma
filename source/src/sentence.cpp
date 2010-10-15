@@ -22,11 +22,14 @@ Morpheme::Morpheme()
 }
 
 Sentence::Sentence()
+    : incrementedWordOffsetB_(true)
 {
 	//do nothing
 }
 
-Sentence::Sentence(const char* pString) : raw_( pString )
+Sentence::Sentence(const char* pString)
+    : raw_( pString ),
+      incrementedWordOffsetB_(true)
 {
 }
 
@@ -126,6 +129,16 @@ int Sentence::getOneBestIndex(void) const
 void Sentence::addList( const MorphemeList& morphemeList )
 {
     candidates_.push_back(morphemeList);
+}
+
+void Sentence::setIncrementedWordOffset( bool flag )
+{
+    incrementedWordOffsetB_ = flag;
+}
+
+bool Sentence::isIncrementedWordOffset()
+{
+    return incrementedWordOffsetB_;
 }
 
 } // namespace cma

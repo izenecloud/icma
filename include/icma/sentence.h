@@ -212,6 +212,16 @@ public:
      */
     void addList(const MorphemeList& morphemeList);
 
+    /**
+     * Set the word offset in this sentence is simply incremented
+     */
+    void setIncrementedWordOffset(bool flag);
+
+    /**
+     * Whether the word offset in this sentence is simply incremented
+     */
+    bool isIncrementedWordOffset();
+
 private:
     /** the raw sentence string */
     std::string raw_;
@@ -233,6 +243,11 @@ private:
 
     /** the scores list of candidates */
     //std::vector<double> scores_;
+
+    /**
+     * Whether the word offset in this sentence is simply incremented
+     */
+    bool incrementedWordOffsetB_;
 };
 
 } // namespace cma

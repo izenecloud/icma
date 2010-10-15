@@ -18,3 +18,7 @@ testbin/*
 innertestbin
 *.model.bin
 /include/icma-version.h
+.cproject
+.project
+Debug/*
+debugbuild/*

@@ -986,6 +986,8 @@ namespace meanainner{
     {
         static CandidateMeta DefCandidateMeta;
 
+        ret.setIncrementedWordOffset(false);
+
         // Initial Step 1: split as Chinese Character based
         StringVectorType words;
         extractCharacter( sentence, words );
