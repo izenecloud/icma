@@ -203,12 +203,7 @@ int main(int argc, char** argv)
                     for(int j=0; j<s.getCount(i); ++j)
                     {
                         const char* pLexicon = s.getLexicon(i, j);
-                        cout << pLexicon << "/" << s.getStrPOS(i, j) << "#";
-                        if( s.isIncrementedWordOffset() )
-                            cout << j;
-                        else
-                            cout << s.getOffset( i, j );
-                        cout << "  ";
+                        cout << pLexicon << "/" << s.getStrPOS(i, j) << "#" << s.getOffset( i, j ) << "  ";
                     }
                     cout << "\t" << s.getScore(i) << "\t#words: " << s.getCount(i) << endl;
                     cout << endl;

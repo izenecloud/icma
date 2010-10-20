@@ -83,6 +83,8 @@ const char* Sentence::getStrPOS(int nPos, int nIdx) const
 
 size_t Sentence::getOffset(int nPos, int nIdx) const
 {
+    if( incrementedWordOffsetB_ == true )
+        return nIdx;
     return wordOffset_[ candMetas_[ nPos ].wdOffset_ + nIdx ];
 }
 
