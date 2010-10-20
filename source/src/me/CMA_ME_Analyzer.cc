@@ -106,13 +106,6 @@ inline void removeDuplicatedSegment(
 
     void CMA_ME_Analyzer::setOption(OptionType nOption, double nValue)
     {
-        // standard implementation
-        // check nbest value range
-        if(nOption == OPTION_TYPE_NBEST && nValue < 1)
-        {
-        return;
-        }
-
         options_[nOption] = nValue;
         // check for specific setting
         if( nOption == OPTION_ANALYSIS_TYPE )
@@ -679,6 +672,9 @@ namespace meanainner{
             )
     {
         static CandidateMeta DefCandidateMeta;
+
+        if( N <= 0 )
+            N = 20;
 
         // Initial Step 1: split as Chinese Character based
         StringVectorType words;
