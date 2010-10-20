@@ -37,11 +37,14 @@ enum ChineseAnalysisType
 void printUsage()
 {
     cout << "Usage: ./t_option [ME] [Max_M] [Min_M] [R+] [R0] [R1] ... [R9]" << endl;
-    cout << "\t Each option can appear at most time." << endl;
+    cout << "\t Each option can appear at most time. Cases are ignored for options." << endl;
     cout << "\t All analysis type are included if no explict analysis type given." << endl;
-    cout << "\t R+ is given if no R* given" << endl;
-    cout << "Example: ./t_option ME Max_M Min_M R+ R0  to test R+ and R0 for " <<
-            "all three analysis type" << endl;
+    cout << "\t R+ is include if no R* given" << endl;
+    cout << "Example: ./t_option ME Max_M Min_M R+ R0    to test R+ and R0 for " <<
+            "all three analysis types" << endl;
+    cout << "Example: ./t_option    to test R+ for all analysis types" << endl;
+    cout << "Example: ./t_option ME Max_M R2 R5    to test R2 and R5 for ME and Max_M analysis type" << endl;
+    cout << "Example: ./t_option ME    to test R+ for ME analysis type" << endl;
     cout << endl;
 }
 
