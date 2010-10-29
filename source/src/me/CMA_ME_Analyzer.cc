@@ -227,37 +227,44 @@ inline void removeDuplicatedSegment(
             //cout << "#analysis " << line << endl;
             (this->*analysis)(line.data(), 1, sent, printPOS);
 
-            if (printPOS)
+            if( sent.getListSize() > 0 )
             {
-                int maxIndex = sent.getCount( 0 );
-                for ( int i = 0; i < maxIndex; ++i )
+                if (printPOS)
                 {
-                    const char* lexicon = sent.getLexicon( 0, i );
-                    //if( knowledge_->isStopWord( lexicon ) )
-                    //	continue;
-                	out << lexicon << posDelimiter_ << sent.getStrPOS( 0, i ) << wordDelimiter_;
-                }
+                    int maxIndex = sent.getCount( 0 );
+                    for ( int i = 0; i < maxIndex; ++i )
+                    {
+                        const char* lexicon = sent.getLexicon( 0, i );
+                        //if( knowledge_->isStopWord( lexicon ) )
+                        //	continue;
+                        out << lexicon << posDelimiter_ << sent.getStrPOS( 0, i ) << wordDelimiter_;
+                    }
 
-                if (remains)
-                    out << sentenceDelimiter_ << endl;
+                    if (remains)
+                        out << sentenceDelimiter_ << endl;
+                    else
+                        break;
+                }
                 else
-                    break;
+                {
+                    int maxIndex = sent.getCount( 0 );
+                    for (int i = 0; i < maxIndex; ++i)
+                    {
+                        const char* lexicon = sent.getLexicon( 0, i );
+                        //if( knowledge_->isStopWord( lexicon) )
+                        //	continue;
+                        out << lexicon << wordDelimiter_;
+                    }
+
+                    if (remains)
+                        out << sentenceDelimiter_ << endl;
+                    else
+                        break;
+                }
             }
-            else
+            else if( remains )
             {
-                int maxIndex = sent.getCount( 0 );
-                for (int i = 0; i < maxIndex; ++i)
-                {
-                    const char* lexicon = sent.getLexicon( 0, i );
-                	//if( knowledge_->isStopWord( lexicon) )
-                	//	continue;
-                	out << lexicon << wordDelimiter_;
-                }
-
-                if (remains)
-                	out << sentenceDelimiter_ << endl;
-                else
-                    break;
+                out << endl;
             }
         }
 
@@ -278,30 +285,32 @@ inline void removeDuplicatedSegment(
         Sentence sent;
         (this->*analysis)(inStr, 1, sent, printPOS);
 
-        if (printPOS)
+        if( sent.getListSize() > 0 )
         {
-            size_t size = sent.getCount( 0 );
-            for ( size_t i = 0; i < size; ++i )
+            if (printPOS)
             {
-                const char* lexicon = sent.getLexicon( 0, i );
-                //if( knowledge_->isStopWord( lexicon ) )
-                //	continue;
-            	strBuf_.append( lexicon ).append( posDelimiter_ ).
-                      append( sent.getStrPOS( 0, i ) ).append( wordDelimiter_ );
+                size_t size = sent.getCount( 0 );
+                for ( size_t i = 0; i < size; ++i )
+                {
+                    const char* lexicon = sent.getLexicon( 0, i );
+                    //if( knowledge_->isStopWord( lexicon ) )
+                    //	continue;
+                    strBuf_.append( lexicon ).append( posDelimiter_ ).
+                          append( sent.getStrPOS( 0, i ) ).append( wordDelimiter_ );
+                }
+            }
+            else
+            {
+                size_t size = sent.getCount( 0 );
+                for ( size_t i = 0; i < size; ++i )
+                {
+                    const char* lexicon = sent.getLexicon( 0, i );
+                    //if( knowledge_->isStopWord( lexicon ) )
+                    //  continue;
+                    strBuf_.append( lexicon ).append( wordDelimiter_ );
+                }
             }
         }
-        else
-        {
-            size_t size = sent.getCount( 0 );
-            for ( size_t i = 0; i < size; ++i )
-            {
-                const char* lexicon = sent.getLexicon( 0, i );
-                //if( knowledge_->isStopWord( lexicon ) )
-                //  continue;
-            	strBuf_.append( lexicon ).append( wordDelimiter_ );
-            }
-        }
-
         return strBuf_.c_str();
     }
 

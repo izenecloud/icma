@@ -96,6 +96,7 @@ int main(int argc, char* argv[])
             fout << line << endl;
             continue;
         }
+
         fout << analyzer->runWithString( line.c_str() ) << endl;
 
     }
