@@ -704,7 +704,7 @@ namespace meanainner{
         SegTagger* segTagger = knowledge_->getSegTagger();
         if( N == 1 )
         {
-            segTagger->seg_sentence_best( words, types, segment );
+            segTagger->seg_sentence_best_with_me( words, types, segment );
             candMeta.push_back( DefCandidateMeta );
             candMeta[ 0 ].segOffset_ = 0;
             candMeta[ 0 ].score_ = 1.0;
@@ -721,20 +721,8 @@ namespace meanainner{
         for( int i = 1; i < N; ++i )
             offsetArray[ i ] = candMeta[ i ].segOffset_;
 
-
-        // only combine the first result
-        VTrie *trie = knowledge_->getTrie();
-        meanainner::combineRetWithTrie( trie, words, types, segment,
-                0, offsetArray[ 1 ] );
-        ret.segment_.clear();
-        for( int i = 0; i < N; ++i )
-        {
-            candMeta[ i ].segOffset_ = ret.segment_.size();
-            createStringLexicon( words, segment, ret.segment_,
-                    offsetArray[ i ], offsetArray[ i + 1 ] );
-        }
-
 /*
+{
         for( int i = 0; i <= N; ++i )
         {
             cout << "offsetArray[ " << i << " ] = " << offsetArray[ i ] << endl;
@@ -750,6 +738,39 @@ namespace meanainner{
             }
             cout << "#" << i << ": " << segment[ i ] << " -> " << segment[ i + 1 ] << endl;
         }
+}
+*/
+
+        // only combine the first result
+        VTrie *trie = knowledge_->getTrie();
+        meanainner::combineRetWithTrie( trie, words, types, segment,
+                0, offsetArray[ 1 ] );
+        ret.segment_.clear();
+        for( int i = 0; i < N; ++i )
+        {
+            candMeta[ i ].segOffset_ = ret.segment_.size();
+            createStringLexicon( words, segment, ret.segment_,
+                    offsetArray[ i ], offsetArray[ i + 1 ] );
+        }
+
+/*
+{
+        for( int i = 0; i <= N; ++i )
+        {
+            cout << "offsetArray[ " << i << " ] = " << offsetArray[ i ] << endl;
+        }
+        cout << "analysis_mmmodel segment: " << endl;
+        int oaidx = 0;
+        for( size_t i = 0; i < segment.size(); i += 2 )
+        {
+            if( i == offsetArray[ oaidx ] )
+            {
+                cout << "--------" << endl;
+                ++oaidx;
+            }
+            cout << "#" << i << ": " << segment[ i ] << " -> " << segment[ i + 1 ] << endl;
+        }
+}
 */
 
         if( tagPOS == false )
