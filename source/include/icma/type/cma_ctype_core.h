@@ -110,7 +110,7 @@ public:
 			sout<<" ( ";
 			for( set<CharValue>::const_iterator itr = nextChars.begin();
 					itr != nextChars.end(); ++itr )
-				sout<<getDecodeChar( *itr )<<", ";
+				sout<<getDecodeChar( *itr ).c_str()<<", ";
 			sout<<")";
 		}
 

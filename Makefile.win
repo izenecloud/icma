@@ -1,0 +1,118 @@
+##################################################
+# Makefile for sf1v 4.5 windows
+##################################################
+# Author 	: Dohyun Yun
+# Date 		: 2010.10.12
+##################################################
+# Description : This is for building static 
+# 				library for windows.
+# Prerequisite
+# 	- Environmental variables
+# 		SF1_SRC
+##################################################
+
+
+
+##################################################
+# include c-compiler environment makefile
+##################################################
+ifeq ($(origin SF1_SRC), undefined)
+include ./Makefile.defs
+else
+include $(SF1_SRC)/build_system/common-defs.mak
+endif
+
+#SRC_HOME = $(CURDIR)/source
+SRC_HOME = $(LIB_SRC_DIR)/la/malib/icma/source
+LIB_OUT = lib/cmac.lib
+
+##################################################
+# include paths
+##################################################
+
+INC_DIRS = /I"include" \
+		   /I"source" \
+		   /I"source/include" \
+		   /I"source/corpus" \
+		   /I"source/maxent" \
+		   /I"source/vsynonym"
+
+##################################################
+# objects
+##################################################
+
+OBJS = $(OBJ_SRC) $(OBJ_TIXML) $(OBJ_CORPUS) $(OBJ_MAXENT)
+
+OBJ_SRC = $(patsubst %.cpp, %.obj, $(wildcard source/src/*.cpp)) \
+          $(patsubst %.cc, %.obj, $(wildcard source/src/*.cc)) \
+		  $(OBJ_SRC_DICTB) \
+		  $(OBJ_SRC_FMINCOVER) \
+		  $(OBJ_SRC_ME) \
+		  $(OBJ_SRC_TYPE) \
+		  $(OBJ_SRC_UTIL)
+
+OBJ_SRC_DICTB = $(patsubst %.cpp, %.obj, $(wildcard source/src/dictb/*.cpp))
+OBJ_SRC_FMINCOVER = $(patsubst %.cpp, %.obj, $(wildcard source/src/fmincover/*.cpp))
+OBJ_SRC_ME = $(patsubst %.cc, %.obj, $(wildcard source/src/me/*.cc))
+OBJ_SRC_TYPE = $(patsubst %.cpp, %.obj, $(wildcard source/src/type/*.cpp))
+OBJ_SRC_UTIL = $(patsubst %.cpp, %.obj, $(wildcard source/src/util/*.cpp)) \
+			   $(patsubst %.cc, %.obj, $(wildcard source/src/util/*.cc))
+
+
+OBJ_TIXML = $(patsubst %.cpp, %.obj, $(wildcard source/tixml/*.cpp))
+
+OBJ_CORPUS = $(patsubst %.cpp, %.obj, $(wildcard source/corpus/*.cpp))
+
+OBJ_MAXENT = source/maxent/display.obj \
+			 source/maxent/gistrainer.obj \
+			 source/maxent/maxentmodel.obj \
+			 source/maxent/trainer.obj \
+			 source/maxent/mmapfile.obj \
+			 source/maxent/modelfile.obj \
+			 source/maxent/maxent_cmdline.obj
+
+##################################################
+# suffixes rules
+##################################################
+.SUFFIXES: .cpp .cc .c .obj .d
+
+##################################################
+# all
+##################################################
+all: $(LIB_OUT)
+
+
+##################################################
+# install
+##################################################
+#install:
+
+
+##################################################
+# compile
+##################################################
+%.obj: %.cpp
+	$(CC_PROG) $(CC_FLAGS) $(INC_DIRS) /Fo$@ $(if $(DEBUG), /Fd$(@:.obj=.pdb)) $<
+
+%.obj: %.cc
+	$(CC_PROG) $(CC_FLAGS) $(INC_DIRS) /Fo$@ $(if $(DEBUG), /Fd$(@:.obj=.pdb)) $<
+
+%.obj: %.c
+	$(CC_PROG) $(CC_FLAGS) $(INC_DIRS) /Fo$@ $(if $(DEBUG), /Fd$(@:.obj=.pdb)) $<
+
+
+##################################################
+# library output
+##################################################
+$(LIB_OUT): $(OBJS)
+	@echo $(OBJS)
+	$(LIB_PROG) $(LIB_FLAGS) /out:$@ $(OBJS)
+
+##################################################
+# clean
+##################################################
+clean: clean-lib
+	$(DEL_PROG) $(OBJS) $(OBJS:.obj=.d)
+clean-lib:
+	$(DEL_PROG) $(LIB_OUT)
+

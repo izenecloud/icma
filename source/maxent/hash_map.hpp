@@ -97,8 +97,13 @@
                 return size_t(__h);
             }
         }
+        #if (_MSC_VER == 1500 ) 
+        using stdext::hash_map; // _MSC_EXTENSIONS, though DEPRECATED
+        using stdext::hash_set;
+        #else
         using std::hash_map; // _MSC_EXTENSIONS, though DEPRECATED
         using std::hash_set;
+        #endif
     #else
         #error unknown compiler
     #endif //GCC or MSVC7+

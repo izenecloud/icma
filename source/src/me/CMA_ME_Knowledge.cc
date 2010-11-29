@@ -232,7 +232,7 @@ int CMA_ME_Knowledge::encodeSystemDict(const char* txtFileName,
         int size = (int)line.size();
         if(!size)
             continue;
-        char buf[size + 1];
+        char* buf = new char[size + 1];
         buf[size] = '\0';
         strncpy(buf, line.data(), size);    
 
@@ -260,6 +260,7 @@ int CMA_ME_Knowledge::encodeSystemDict(const char* txtFileName,
         fputc(size & 0xff, out);
         fputc(size >> 16 & 0xff, out);
         fputs(buf, out);
+        delete[] buf;
     }
 
     in.close();
@@ -367,7 +368,7 @@ string CMA_ME_Knowledge::readEncryptLine(FILE *in){
     }
     int size = (lenBuf[0] << 8) + (lenBuf[1] << 24) + (lenBuf[2]) + (lenBuf[3] << 16);
 
-    char buf[size + 1];
+    char* buf = new char[size + 1];
     buf[size] = '\0';
     fgets(buf, size + 1, in);
 
@@ -389,7 +390,9 @@ string CMA_ME_Knowledge::readEncryptLine(FILE *in){
             buf[i] -= 7;
     }
 
-    return string(buf);
+    string ret(buf);
+    delete[] buf;
+    return ret;
 }
 
 bool CMA_ME_Knowledge::isStopWord(const string& word){

@@ -501,8 +501,13 @@ void SegTagger::seg_sentence(
     size_t n = words.size();
 
     //h0, h1 and score don't need to initialize
-    uint8_t _array1[N][n];
-    uint8_t _array2[N][n];
+    uint8_t** _array1 = new uint8_t*[N];
+    uint8_t** _array2 = new uint8_t*[N];
+    for(size_t i = 0; i < N; i++)
+    {
+        _array1[i] = new uint8_t [n];
+        _array2[i] = new uint8_t [n];
+    }
 
     //pre-process
     preProcess( words, types, _array1[0] );
@@ -514,18 +519,18 @@ void SegTagger::seg_sentence(
     	memcpy(_array2[i], _array1[0], n);
     }
 
+    // TODO : Need to check if following modification is right. (dohyun)
+    uint8_t** h0 = _array1;
+    uint8_t** h1 = _array2;
 
-    uint8_t (*h0)[n] = _array1;
-    uint8_t (*h1)[n] = _array2;
+    uint8_t**hTmp;
 
-    uint8_t (*hTmp)[n];
-
-    double scores[N];
+    double* scores = new double[N];
     scores[0] = 1.0;
     
     size_t h0Size = 1;
 
-    POCTagUnit candidates[N];
+    POCTagUnit* candidates = new POCTagUnit[N];
     //last index of candidates
     int lastIndex;
     //the size of the candidates
@@ -577,6 +582,12 @@ void SegTagger::seg_sentence(
         candMeta[ k ].segOffset_ = segment.size();
         pocinner::combinePOCToWord(words, types, n, tags, segment );
     }
+
+
+    for(size_t i = 0; i < N; i++)
+        delete[] _array1[i], _array2[i];
+    delete[] _array1, _array2, scores, candidates;
+    
 }
 
 void SegTagger::tag_file(const char* inFile, const char* outFile,
@@ -610,7 +621,7 @@ void SegTagger::tag_file(const char* inFile, const char* outFile,
         }
 
         int maxWordOff = (int)words.size() - 1;
-        CharType types[maxWordOff + 1];
+        CharType* types = new CharType[maxWordOff + 1];
         CharType preType = CHAR_TYPE_INIT;
         for(int i=0; i<maxWordOff; ++i){
             types[i] = preType = ctype_->getCharType(words[i], preType, words[i+1]);
@@ -635,6 +646,8 @@ void SegTagger::tag_file(const char* inFile, const char* outFile,
         }
 
         out << endl;
+
+        delete[] types;
     }
 
     in.close();
@@ -652,7 +665,7 @@ void SegTagger::seg_sentence_best(
         )
 {
     size_t n = words.size();
-    uint8_t pocRet[n];
+    uint8_t* pocRet = new uint8_t[n];
 
     #ifdef USE_STRTRIE
         StrBasedVTrie strTrie(trie_);
@@ -773,6 +786,7 @@ void SegTagger::seg_sentence_best(
     }
 
     pocinner::combinePOCToWord(words, types, n, pocRet, segment);
+    delete[] pocRet;
 }
 
 void SegTagger::seg_sentence_best_with_me(
@@ -782,7 +796,7 @@ void SegTagger::seg_sentence_best_with_me(
         )
 {
     size_t n = words.size();
-    uint8_t pocRet[n];
+    uint8_t* pocRet = new uint8_t[n];
 
     for(size_t index=0; index<n; ++index){
 
@@ -808,6 +822,7 @@ void SegTagger::seg_sentence_best_with_me(
     }
 
     pocinner::combinePOCToWord(words, types, n, pocRet, segment);
+    delete[] pocRet;
 }
 
 #undef BACK_FIX_END_TAG

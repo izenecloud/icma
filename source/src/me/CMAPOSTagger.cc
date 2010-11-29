@@ -304,20 +304,26 @@ void POSTagger::tag_sentence(vector<string>& words, size_t N, size_t retSize,
     size_t n = words.size();
 
     //h0, h1 and score don't need to initialize
-    string _array1[N][n];
-    string _array2[N][n];
+    string** _array1 = new string*[N];
+    string** _array2 = new string*[N];
+    for(size_t i = 0; i < N; i++)
+    {
+        _array1[i] = new string;
+        _array2[i] = new string;
+    }
 
-    string (*h0)[n] = _array1;
-    string (*h1)[n] = _array2;
+    // TODO : Need to check if following modification is right (by dohyun)
+    string** h0 = _array1;
+    string** h1 = _array2;
 
-    string (*hTmp)[n];
+    string** hTmp;
 
-    double scores[N];
+    double* scores = new double[N];
     scores[0] = 1.0;
 
     size_t h0Size = 1;
 
-    POSTagUnit candidates[N];
+    POSTagUnit* candidates = new POSTagUnit[N];
     //last index of candidates
     int lastIndex;
     //the size of the candidates
@@ -370,6 +376,11 @@ void POSTagger::tag_sentence(vector<string>& words, size_t N, size_t retSize,
             seg.push_back(tags[i]);
         }
     }
+
+
+    for(size_t i = 0; i < N; i++)
+        delete[] _array1[i], _array2[i];
+    delete[] _array1, _array2, scores, candidates;
 }
 
 void POSTagger::tag_file(const char* inFile, const char* outFile){

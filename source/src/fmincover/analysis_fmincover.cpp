@@ -64,7 +64,7 @@ void divideNormalString(
 
     // Step 1: set the dictLen
     FMSizeType dictLenSize = endIdx - beginOffset;
-    FMSizeType dictLen[ dictLenSize ];
+    FMSizeType* dictLen = new FMSizeType[ dictLenSize ];
     FMSizeType maxOffset = endIdx - 1;
     dictLen[ dictLenSize - 1 ] = 1;
 
@@ -160,6 +160,7 @@ void divideNormalString(
         dLIdx = dLEndIdx;
     }
 
+    delete[] dictLen;
 }
 
 void addFMinCString(

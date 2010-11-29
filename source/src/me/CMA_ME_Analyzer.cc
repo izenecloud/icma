@@ -693,7 +693,7 @@ namespace meanainner{
             return;
 
         // Initial Step 2nd: set character types
-        CharType types[ (int)words.size() ];
+        CharType* types = new CharType[ (int)words.size() ];
         setCharType( words, types );
 
 
@@ -715,7 +715,7 @@ namespace meanainner{
             N = candMeta.size();
         }
 
-        size_t offsetArray[ N + 1 ];
+        size_t* offsetArray = new size_t[ N + 1 ];
         offsetArray[ 0 ] = 0;
         offsetArray[ N ] = segment.size();
         for( int i = 1; i < N; ++i )
@@ -787,6 +787,7 @@ namespace meanainner{
                     cm.segOffset_, cm.segOffset_ + ret.getCount( i ), offsetArray[ i ], ret.pos_ );
         }
 
+        delete[] types, offsetArray;
     }
 
     void CMA_ME_Analyzer::analysis_pure_mmmodel(
@@ -806,7 +807,7 @@ namespace meanainner{
             return;
 
         // Initial Step 2nd: set character types
-        CharType types[ (int)words.size() ];
+        CharType* types = new CharType[ (int)words.size() ];
         setCharType( words, types );
 
 
@@ -828,7 +829,7 @@ namespace meanainner{
             N = candMeta.size();
         }
 
-        size_t offsetArray[ N + 1 ];
+        size_t* offsetArray = new size_t[ N + 1 ];
         offsetArray[ 0 ] = 0;
         offsetArray[ N ] = segment.size();
         for( int i = 1; i < N; ++i )
@@ -876,6 +877,7 @@ namespace meanainner{
                     cm.segOffset_, cm.segOffset_ + ret.getCount( i ), offsetArray[ i ], ret.pos_ );
         }
 
+        delete[] types, offsetArray;
     }
 
     void CMA_ME_Analyzer::analysis_fmm(
@@ -896,7 +898,7 @@ namespace meanainner{
 
         size_t wordSize = words.size();
         // Initial Step 2nd: set character types
-        CharType types[ (int)wordSize ];
+        CharType* types = new CharType[ (int)wordSize ];
         setCharType( words, types );
 
         ret.candMetas_.clear();
@@ -937,6 +939,7 @@ namespace meanainner{
         ret.pos_.clear();
         knowledge_->getPOSTagger()->quick_tag_sentence_best(
                 ret.segment_, bestSegSeq, types, 0, ret.segment_.size(), 0, ret.pos_ );
+        delete[] types;
     }
 
     void CMA_ME_Analyzer::analysis_dictb(
@@ -1022,7 +1025,7 @@ namespace meanainner{
             return;
 
         // Initial Step 2nd: set character types
-        CharType types[ (int)words.size() ];
+        CharType* types = new CharType[ (int)words.size() ];
         setCharType( words, types );
 
         ret.candMetas_.clear();
@@ -1054,6 +1057,7 @@ namespace meanainner{
         knowledge_->getPOSTagger()->quick_tag_sentence_best(
                 ret.segment_, bestSegSeq, types, 0, ret.segment_.size(), 0, ret.pos_ );
 
+        delete[] types;
     }
 
     void CMA_ME_Analyzer::splitToOneGram( const char* sentence, vector<vector<OneGramType> >& output )

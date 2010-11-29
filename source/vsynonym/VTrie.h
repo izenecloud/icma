@@ -5,7 +5,7 @@
  */
 
 #include <assert.h>
-#include <string.h>
+#include <string>
 #include <vector>
 #include <iostream>
 #include <stdlib.h>
@@ -48,6 +48,12 @@ using namespace std;
 #define VTENTRY_L 5
 
 /** Type of the VTrie pointer */
+#if defined(_MSC_VER) && (_MSC_VER == 1500)
+    typedef unsigned __int8     uint8_t;
+    typedef unsigned __int16    uint16_t;
+    typedef unsigned __int32    uint32_t;
+#endif
+
 typedef uint32_t vtptr_t;
 
 /** max length of the same path */
@@ -637,12 +643,12 @@ private:
                 max = vec[i];
         }
         ++max;
-        bool tmpA[max];
+        bool* tmpA = new bool[max];
         int k;
 
         for(int i=len;i<max; ++i){
             //reset again
-            memset(tmpA, 0x0, sizeof(tmpA));
+            memset(tmpA, 0x0, sizeof(bool)*max);
             for(k=0; k<len; ++k){
                 int mod = vec[k] % i;
                 if(tmpA[mod]) //have been set
@@ -652,7 +658,9 @@ private:
             if(k == len){
                 return (uint8_t)(i-1);
             }
+
         }
+        delete[] tmpA;
         return (uint8_t)(max-1);
     }
 
@@ -664,7 +672,7 @@ private:
         wastedBytes_ += copyLen + VTCHILDS_L + minMod * VTENTRY_L;
 
         int len = minMod + 1;
-        int keyVec[ len ];
+        int* keyVec = new int[len];
         keyVec[ 0 ] = VTRIE_CODE[(unsigned char)*key];
 
         vtptr_t* childPtr = (vtptr_t*)(modByte+1);
@@ -689,6 +697,9 @@ private:
             }
             cout<<endl;
         }
+
+        delete[] keyVec;
+
         assert(minMod != nMinMod);
 
         uint8_t* dataPtr = endPtr_;

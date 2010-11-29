@@ -38,8 +38,12 @@
 #include "hash_map.hpp"
 
 #if !defined(_STLPORT_VERSION) && defined(_MSC_VER) && ((_MSC_VER >= 1300) || defined(__INTEL_COMPILER))
+    #if (_MSC_VER == 1500)
+    template <typename T, typename HashFunc = stdext::hash_compare<T, _STD less<T> >, typename EqualKey = _STD allocator< _STD pair<const T, size_t> > >
+    #else
     // workaround for MSVC7's hash_map declaration
     template <typename T, typename HashFunc = hash_compare<T, _STD less<T> >, typename EqualKey = _STD allocator< _STD pair<const T, size_t> > >
+    #endif
 #else
     template <typename T, typename HashFunc = hash<T>, typename EqualKey = std::equal_to<T> >
 #endif
