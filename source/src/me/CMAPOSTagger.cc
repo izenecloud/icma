@@ -308,8 +308,8 @@ void POSTagger::tag_sentence(vector<string>& words, size_t N, size_t retSize,
     string** _array2 = new string*[N];
     for(size_t i = 0; i < N; i++)
     {
-        _array1[i] = new string;
-        _array2[i] = new string;
+        _array1[i] = new string[n];
+        _array2[i] = new string[n];
     }
 
     // TODO : Need to check if following modification is right (by dohyun)
@@ -379,7 +379,11 @@ void POSTagger::tag_sentence(vector<string>& words, size_t N, size_t retSize,
 
 
     for(size_t i = 0; i < N; i++)
+    {
         delete[] _array1[i], _array2[i];
+        _array1[i] = 0;
+        _array2[i] = 0;
+    }
     delete[] _array1, _array2, scores, candidates;
 }
 

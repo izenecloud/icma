@@ -774,7 +774,10 @@ namespace meanainner{
 */
 
         if( tagPOS == false )
+        {
+            delete[] types, offsetArray;
             return;
+        }
 
         ret.pos_.clear();
         ret.pos_.reserve( ret.segment_.size() );
@@ -864,7 +867,10 @@ namespace meanainner{
 */
 
         if( tagPOS == false )
+        {
+            delete[] types, offsetArray;
             return;
+        }
 
         ret.pos_.clear();
         ret.pos_.reserve( ret.segment_.size() );
@@ -933,7 +939,10 @@ namespace meanainner{
 
 
         if( tagPOS == false )
+        {
+            delete[] types;
             return;
+        }
 
         ret.candMetas_[ 0 ].posOffset_ = 0;
         ret.pos_.clear();
@@ -1050,7 +1059,10 @@ namespace meanainner{
 
 
         if( tagPOS == false )
+        {
+            delete[] types;
             return;
+        }
 
         ret.candMetas_[ 0 ].posOffset_ = 0;
         ret.pos_.clear();
