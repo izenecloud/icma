@@ -586,11 +586,15 @@ void SegTagger::seg_sentence(
 
     for(size_t i = 0; i < N; i++)
     {
-        delete[] _array1[i], _array2[i];
+        delete[] _array1[i];
+        delete[] _array2[i];
         _array1[i] = 0;
         _array2[i] = 0;
     }
-    delete[] _array1, _array2, scores, candidates;
+    delete[] _array1;
+    delete[] _array2;
+    delete[] scores;
+    delete[] candidates;
     
 }
 

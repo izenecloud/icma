@@ -775,7 +775,8 @@ namespace meanainner{
 
         if( tagPOS == false )
         {
-            delete[] types, offsetArray;
+            delete[] types;
+            delete[] offsetArray;
             return;
         }
 
@@ -790,7 +791,8 @@ namespace meanainner{
                     cm.segOffset_, cm.segOffset_ + ret.getCount( i ), offsetArray[ i ], ret.pos_ );
         }
 
-        delete[] types, offsetArray;
+        delete[] types;
+        delete[] offsetArray;
     }
 
     void CMA_ME_Analyzer::analysis_pure_mmmodel(
@@ -868,7 +870,8 @@ namespace meanainner{
 
         if( tagPOS == false )
         {
-            delete[] types, offsetArray;
+            delete[] types;
+            delete[] offsetArray;
             return;
         }
 
@@ -883,7 +886,8 @@ namespace meanainner{
                     cm.segOffset_, cm.segOffset_ + ret.getCount( i ), offsetArray[ i ], ret.pos_ );
         }
 
-        delete[] types, offsetArray;
+        delete[] types;
+        delete[] offsetArray;
     }
 
     void CMA_ME_Analyzer::analysis_fmm(
