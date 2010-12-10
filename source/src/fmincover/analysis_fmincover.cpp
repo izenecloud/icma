@@ -4,7 +4,6 @@
  * \date Jul 7, 2010
  * \author Vernkin Chen
  */
-
 #include "icma/fmincover/analysis_fmincover.h"
 #include "icma/util/StrBasedVTrie.h"
 
@@ -122,7 +121,7 @@ void divideNormalString(
         FMSizeType dLEndIdx = dLIdx + curLen;
         // Input is ABC, following cases haveCross are true
         //   a) AB/C and A/BC  ( cross segmentation )
-        //   b) ABC  and AB/C  ( combine segmentation )
+        //   b) ABC  and AB/C  ( combine segmentation )  => should be: ABC and A/BC
         bool haveCross = false;
         FMSizeType advDLIdx = dLIdx + 1;
         for( ; advDLIdx < dLEndIdx; ++advDLIdx )
@@ -138,8 +137,28 @@ void divideNormalString(
 
         if( haveCross == false )
         {
-            out.push_back( dLIdx + beginOffset );
-            out.push_back( beginOffset + dLEndIdx );
+        	if ( g_doUnigram ) {
+        		FMSizeType uniIdx = dLIdx;
+        		FMSizeType uniEndIdx = dLEndIdx - 1;
+				for ( ; uniIdx <= uniEndIdx; uniIdx ++ ) {
+					out.push_back( beginOffset + uniIdx );
+					out.push_back( beginOffset + uniIdx + 1 );
+
+					if ( uniIdx == dLIdx && !g_useMaxOffset ) {
+		                out.push_back( dLIdx + beginOffset );
+		                out.push_back( beginOffset + dLEndIdx );
+					}
+					else if ( uniIdx == uniEndIdx && g_useMaxOffset ) {
+		                out.push_back( dLIdx + beginOffset );
+		                out.push_back( beginOffset + dLEndIdx );
+					}
+				}
+        	}
+        	else {
+        		out.push_back( dLIdx + beginOffset );
+        		out.push_back( beginOffset + dLEndIdx );
+        	}
+
             dLIdx = dLEndIdx;
             continue;
         }

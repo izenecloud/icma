@@ -95,6 +95,12 @@ inline void removeDuplicatedSegment(
 }
 }
 
+namespace fmincover
+{
+	bool g_doUnigram = false;
+	bool g_useMaxOffset = false;
+}
+
     CMA_ME_Analyzer::CMA_ME_Analyzer()
 			: knowledge_(0), ctype_(0), posTable_(0),
 			  analysis(&CMA_ME_Analyzer::analysis_mmmodel)
@@ -114,6 +120,11 @@ inline void removeDuplicatedSegment(
                 analysis = &CMA_ME_Analyzer::analysis_fmm;
             else if( static_cast<int>(nValue) == 3 )
                 analysis = &CMA_ME_Analyzer::analysis_fmincover;
+            else if( static_cast<int>(nValue) == 4 ) {
+            	analysis = &CMA_ME_Analyzer::analysis_fmincover;
+            	fmincover::g_doUnigram = true;
+            	fmincover::g_useMaxOffset = false;
+            }
             else if( static_cast<int>(nValue) == 77 )
                 analysis = &CMA_ME_Analyzer::analysis_pure_mmmodel;
             else
@@ -1283,11 +1294,12 @@ namespace meanainner{
             if( seqStartIdx >= seqEndIdx )
                 break;
 
-            if( seqStartIdx != lastIdx )
+            if( seqStartIdx > lastIdx )
             {
                 ++wordOffset;
                 lastIdx = seqStartIdx;
             }
+
             out.push_back( wordOffset );
         }
     }

@@ -24,6 +24,9 @@ namespace fmincover
 
 typedef PGenericArray<size_t> FMinCOutType;
 
+extern bool g_doUnigram;  // whether integrate segmentation result with unigram
+extern bool g_useMaxOffset; // whether set the segment's offset as the maximal offset of the unigrams it contained
+
 void parseFMinCoverString(
         FMinCOutType& out,
         StringVectorType& words,

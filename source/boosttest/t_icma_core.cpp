@@ -107,6 +107,36 @@ BOOST_AUTO_TEST_CASE(icma_fminconver)
     //delete knowledge;
 }
 
+// forwards minimum cover with unigram
+BOOST_AUTO_TEST_CASE(icma_fmincover_unigram)
+{
+	Knowledge* knowledge = NULL;
+	Analyzer* analyzer = NULL;
+	createKnowledgeAndAnalyzer( &knowledge, &analyzer, 4 );
+    BOOST_CHECK( knowledge != NULL );
+    BOOST_CHECK( analyzer != NULL );
+
+    // test run with string
+    string input = "我和衣服的故事";
+    string expected = "我/P  和/AG  和衣/V  衣/N  衣服/N  服/J  的/A  故/C  故事/N  事/N  ";
+    const char* ret = analyzer->runWithString( input.c_str() );
+    BOOST_CHECK( strcmp( ret, expected.c_str() ) == 0 );
+
+    // test run with sentence
+    analyzer->setOption( Analyzer::OPTION_TYPE_NBEST, 3 );
+    Sentence sent;
+    sent.setString( input.c_str() );
+    BOOST_CHECK( analyzer->runWithSentence( sent ) == 1 );
+    BOOST_CHECK( sent.getListSize() == 1 );
+    BOOST_CHECK( sent.getCount( 0 ) == 10 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 0, 2 ), "和衣" ) == 0 );
+    BOOST_CHECK( strcmp( sent.getStrPOS( 0, 2 ), "V" ) == 0 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 0, 8 ), "故事" ) == 0 );
+    BOOST_CHECK( strcmp( sent.getStrPOS( 0, 8 ), "N" ) == 0 );
+
+    delete analyzer;
+}
+
 
 // forwards maximum matching
 BOOST_AUTO_TEST_CASE(icma_fmm)
