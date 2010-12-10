@@ -547,12 +547,20 @@ bool CMA_ME_Knowledge::loadConfig0(const char *filename, map<string, string>& ma
 
   std::string line;
   CMA_CType* ctype = CMA_CType::instance( getEncodeType() );
+  int lineNo = 0;
   while (std::getline(ifs, line)) {
-    if (!line.size() ||
-        (line.size() && (line[0] == ';' || line[0] == '#'))) continue;
+    ++lineNo;
+    trimLeftSelf(line);
+    if ( line.empty() || line[0] == ';' || line[0] == '#' )
+        continue;
 
     size_t pos = line.find('=');
-    assert(pos != std::string::npos && "format error: ");
+    if(pos == std::string::npos)
+    {
+        cerr << "Error line in file " <<
+                filename << "(line " << lineNo << "): " << line << endl;
+        continue;
+    }
 
     size_t s1, s2;
     for (s1 = pos+1; s1 < line.size() && isspace(line[s1]); s1++);
