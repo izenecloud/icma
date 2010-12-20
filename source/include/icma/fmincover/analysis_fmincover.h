@@ -12,6 +12,7 @@
 #include <string>
 #include <iostream>
 
+#include "icma/me/CMA_ME_Analyzer.h"
 #include "icma/type/cma_ctype.h"
 #include "icma/cmacconfig.h"
 #include "VTrie.h"
@@ -24,16 +25,14 @@ namespace fmincover
 
 typedef PGenericArray<size_t> FMinCOutType;
 
-extern bool g_doUnigram;  // whether integrate segmentation result with unigram
-extern bool g_useMaxOffset; // whether set the segment's offset as the maximal offset of the unigrams it contained
-
 void parseFMinCoverString(
         FMinCOutType& out,
         StringVectorType& words,
         CharType* types,
         VTrie* trie,
         size_t beginIdx,
-        size_t endIdx
+        size_t endIdx,
+        AnalOption& analOption
         );
 
 }

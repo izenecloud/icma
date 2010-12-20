@@ -23,6 +23,14 @@ namespace cma
 {
 
 /**
+ * Analyzer Option
+ */
+typedef struct Option {
+	bool doUnigram;  // whether integrate segmentation result with unigram
+	bool useMaxOffset; // whether set the segment's offset as the maximal offset of the unigrams it contained
+} AnalOption;
+
+/**
  * \brief Analyzer for the CMAC
  *
  */
@@ -141,6 +149,7 @@ public:
     typedef string OneGramType;
 
     typedef void(CMA_ME_Analyzer::*analysis_t)(
+    		AnalOption& analOption,
             const char*,
             int,
             Sentence&,
@@ -152,6 +161,7 @@ private:
      * Each segment only map to one pos set, with maximum model approach
      */
     void analysis_mmmodel(
+    		AnalOption& analOption,
             const char* sentence,
             int N,
             Sentence& ret,
@@ -162,6 +172,7 @@ private:
      * Each segment with pure Maximum Model Approach
      */
     void analysis_pure_mmmodel(
+    	AnalOption& analOption,
         const char* sentence,
         int N,
         Sentence& ret,
@@ -172,6 +183,7 @@ private:
      * Forwards maximum matching approach
      */
     void analysis_fmm(
+    		AnalOption& analOption,
             const char* sentence,
             int N,
             Sentence& ret,
@@ -182,6 +194,7 @@ private:
      * Dictionary based nbest approach
      */
     void analysis_dictb(
+    		AnalOption& analOption,
             const char* sentence,
             int N,
             Sentence& ret,
@@ -192,6 +205,7 @@ private:
      * Dictionary based Forwards minimum conver segmentation
      */
     void analysis_fmincover(
+    		AnalOption& analOption,
             const char* sentence,
             int N,
             Sentence& ret,
@@ -254,6 +268,11 @@ private:
      * Analysis Type
      */
     CMA_ME_Analyzer::analysis_t analysis;
+
+    /**
+     * options for Analyzer
+     */
+    AnalOption analOption_;
 };
 
 

@@ -95,16 +95,12 @@ inline void removeDuplicatedSegment(
 }
 }
 
-namespace fmincover
-{
-	bool g_doUnigram = false;
-	bool g_useMaxOffset = false;
-}
-
     CMA_ME_Analyzer::CMA_ME_Analyzer()
 			: knowledge_(0), ctype_(0), posTable_(0),
 			  analysis(&CMA_ME_Analyzer::analysis_mmmodel)
     {
+    	analOption_.doUnigram = false;
+    	analOption_.useMaxOffset = false;
     }
 
     CMA_ME_Analyzer::~CMA_ME_Analyzer() {
@@ -118,12 +114,15 @@ namespace fmincover
         {
             if( static_cast<int>(nValue) == 2 )
                 analysis = &CMA_ME_Analyzer::analysis_fmm;
-            else if( static_cast<int>(nValue) == 3 )
+            else if( static_cast<int>(nValue) == 3 ) {
                 analysis = &CMA_ME_Analyzer::analysis_fmincover;
+                analOption_.doUnigram = false;
+                analOption_.useMaxOffset = false;
+            }
             else if( static_cast<int>(nValue) == 4 ) {
             	analysis = &CMA_ME_Analyzer::analysis_fmincover;
-            	fmincover::g_doUnigram = true;
-            	fmincover::g_useMaxOffset = false;
+            	analOption_.doUnigram = true;
+            	analOption_.useMaxOffset = false;
             }
             else if( static_cast<int>(nValue) == 77 )
                 analysis = &CMA_ME_Analyzer::analysis_pure_mmmodel;
@@ -143,7 +142,7 @@ namespace fmincover
         bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
 
 
-        (this->*analysis)(sentence.getString(), N, sentence, printPOS);
+        (this->*analysis)(analOption_, sentence.getString(), N, sentence, printPOS);
 
         size_t size = sentence.getListSize();
         sentence.candidates_.reserve( size );
@@ -236,7 +235,7 @@ namespace fmincover
                 continue;
             }
             //cout << "#analysis " << line << endl;
-            (this->*analysis)(line.data(), 1, sent, printPOS);
+            (this->*analysis)(analOption_, line.data(), 1, sent, printPOS);
 
             if( sent.getListSize() > 0 )
             {
@@ -294,7 +293,7 @@ namespace fmincover
     	bool printPOS = getOption(OPTION_TYPE_POS_TAGGING) > 0;
       
         Sentence sent;
-        (this->*analysis)(inStr, 1, sent, printPOS);
+        (this->*analysis)(analOption_, inStr, 1, sent, printPOS);
 
         if( sent.getListSize() > 0 )
         {
@@ -685,6 +684,7 @@ namespace meanainner{
 }
 
     void CMA_ME_Analyzer::analysis_mmmodel(
+    		AnalOption& analOption,
             const char* sentence,
             int N,
             Sentence& ret,
@@ -807,6 +807,7 @@ namespace meanainner{
     }
 
     void CMA_ME_Analyzer::analysis_pure_mmmodel(
+    		AnalOption& analOption,
             const char* sentence,
             int N,
             Sentence& ret,
@@ -902,6 +903,7 @@ namespace meanainner{
     }
 
     void CMA_ME_Analyzer::analysis_fmm(
+    		AnalOption& analOption,
             const char* sentence,
             int N,
             Sentence& ret,
@@ -967,6 +969,7 @@ namespace meanainner{
     }
 
     void CMA_ME_Analyzer::analysis_dictb(
+    		AnalOption& analOption,
             const char* sentence,
             int N,
             Sentence& ret,
@@ -1031,6 +1034,7 @@ namespace meanainner{
 
 
     void CMA_ME_Analyzer::analysis_fmincover(
+    		AnalOption& analOption,
             const char* sentence,
             int N,
             Sentence& ret,
@@ -1061,7 +1065,7 @@ namespace meanainner{
 
         VTrie *trie = knowledge_->getTrie();
         fmincover::parseFMinCoverString(
-                bestSegSeq, words, types, trie, 0, words.size() );
+                bestSegSeq, words, types, trie, 0, words.size(), analOption );
 
         // convert to string lexicon
         ret.segment_.clear();

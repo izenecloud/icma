@@ -4,6 +4,7 @@
  * \date Jul 7, 2010
  * \author Vernkin Chen
  */
+#include "icma/me/CMA_ME_Analyzer.h"
 #include "icma/fmincover/analysis_fmincover.h"
 #include "icma/util/StrBasedVTrie.h"
 
@@ -44,7 +45,8 @@ void divideNormalString(
         VTrie* trie,
         size_t beginIdx,
         size_t endIdxSt,
-        StringVectorType& words
+        StringVectorType& words,
+        AnalOption& analOption
         )
 {
  /*   string tmp;
@@ -137,18 +139,18 @@ void divideNormalString(
 
         if( haveCross == false )
         {
-        	if ( g_doUnigram ) {
+        	if ( analOption.doUnigram ) {
         		FMSizeType uniIdx = dLIdx;
         		FMSizeType uniEndIdx = dLEndIdx - 1;
 				for ( ; uniIdx <= uniEndIdx; uniIdx ++ ) {
 					out.push_back( beginOffset + uniIdx );
 					out.push_back( beginOffset + uniIdx + 1 );
 
-					if ( uniIdx == dLIdx && !g_useMaxOffset ) {
+					if ( uniIdx == dLIdx && !analOption.useMaxOffset ) {
 		                out.push_back( dLIdx + beginOffset );
 		                out.push_back( beginOffset + dLEndIdx );
 					}
-					else if ( uniIdx == uniEndIdx && g_useMaxOffset ) {
+					else if ( uniIdx == uniEndIdx && analOption.useMaxOffset ) {
 		                out.push_back( dLIdx + beginOffset );
 		                out.push_back( beginOffset + dLEndIdx );
 					}
@@ -188,7 +190,8 @@ void addFMinCString(
         size_t beginIdx,
         size_t endIdx,
         StringVectorType& words,
-        CharType* types
+        CharType* types,
+        AnalOption& analOption
         )
 {
 /*    string tmp;
@@ -205,7 +208,7 @@ void addFMinCString(
     case CHAR_TYPE_OTHER:
     {
         // divide into smaller normal boundary
-        divideNormalString( out, trie, beginIdx, endIdx, words );
+        divideNormalString( out, trie, beginIdx, endIdx, words, analOption );
         return;
     }
     case CHAR_TYPE_DIGIT:
@@ -256,7 +259,8 @@ void parseFMinCoverString(
         CharType* types,
         VTrie* trie,
         size_t beginIdx,
-        size_t endIdx
+        size_t endIdx,
+        AnalOption& analOption
         )
 {
     out.clear();
@@ -281,7 +285,7 @@ void parseFMinCoverString(
             if( strcmp( words[ curIdx ], words[ curIdx - 1 ] ) != 0 ||
                     strcmp( words[ curIdx ], "." ) != 0 )
             {
-                addFMinCString( out, trie, fsIdx, curIdx, words, types );
+                addFMinCString( out, trie, fsIdx, curIdx, words, types, analOption );
                 fsIdx = curIdx;
             }
             break;
@@ -289,7 +293,7 @@ void parseFMinCoverString(
 
         case CHAR_TYPE_DATE:
         {
-            addFMinCString( out, trie, fsIdx, curIdx, words, types );
+            addFMinCString( out, trie, fsIdx, curIdx, words, types, analOption );
             fsIdx = curIdx;
             break;
         }
@@ -299,7 +303,7 @@ void parseFMinCoverString(
         {
             if( t0 != CHAR_TYPE_DATE && t0 != CHAR_TYPE_DIGIT && t0 != CHAR_TYPE_LETTER )
             {
-                addFMinCString( out, trie, fsIdx, curIdx, words, types );
+                addFMinCString( out, trie, fsIdx, curIdx, words, types, analOption );
                 fsIdx = curIdx;
             }
             break;
@@ -309,7 +313,7 @@ void parseFMinCoverString(
         {
             if( t0 != t_1 )
             {
-                addFMinCString( out, trie, fsIdx, curIdx, words, types );
+                addFMinCString( out, trie, fsIdx, curIdx, words, types, analOption );
                 fsIdx = curIdx;
             }
             break;
@@ -321,7 +325,7 @@ void parseFMinCoverString(
 
     if( fsIdx < curIdx )
     {
-        addFMinCString( out, trie, fsIdx, curIdx, words, types );
+        addFMinCString( out, trie, fsIdx, curIdx, words, types, analOption );
     }
 
 }
