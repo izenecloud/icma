@@ -27,7 +27,7 @@ namespace cma
  */
 typedef struct Option {
 	bool doUnigram;  // whether integrate segmentation result with unigram
-	bool useMaxOffset; // whether set the segment's offset as the maximal offset of the unigrams it contained
+	bool useMaxOffset; // *reserved, whether set the segment's offset as the maximal offset of the unigrams it contained
 } AnalOption;
 
 /**
