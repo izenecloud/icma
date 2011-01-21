@@ -35,6 +35,8 @@ void parseFMinCoverString(
         AnalOption& analOption
         );
 
+typedef unsigned int FMSizeType;
+
 }
 }
 

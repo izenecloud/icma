@@ -3,6 +3,10 @@
  * \author Vernkin
  * \version 0.1
  * \date Mar 10, 2009
+ *
+ * - Log
+ *    - 2011.01.21 Zhongxia Li
+ *      Add CharTypeExpand type.
  */
 
 
@@ -42,6 +46,21 @@ enum CharType
     CHAR_TYPE_NUM
 };
 
+/**
+ * \brief Expanded Character type
+ *        add SBC/DBC case.
+ */
+enum CharTypeExpand
+{
+	CHAR_TYPE_INIT_EX = CHAR_TYPE_NUM + 1,
+	CHAR_TYPE_DIGIT_DBC,
+	CHAR_TYPE_DIGIT_SBC,
+	CHAR_TYPE_LETTER_DBC,
+	CHAR_TYPE_LETTER_SBC,
+	CHAR_TYPE_OTHER_EX,
+	CHAR_TYPE_NUM_EX = ( CHAR_TYPE_OTHER_EX - CHAR_TYPE_INIT_EX )
+};
+
 typedef unsigned int CharValue;
 
 /**
@@ -50,6 +69,15 @@ typedef unsigned int CharValue;
  * \return the original character
  */
 string getDecodeChar( CharValue value );
+
+/**
+ *  \brief get expanded char type
+ *         [Note] currently, only support digits and alpha by distinguishing SBC/DBC case.
+ *  \param cword  original sequences of given Char
+ *  \param ctype  CharType of given Char
+ *  \return CharTypeExpand
+ */
+CharTypeExpand getExpandedCharType( const char* cword, CharType& ctype );
 
 /**
  * \brief This class check the previous/next characters and their types to check whether

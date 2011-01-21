@@ -3,6 +3,13 @@
  * \brief 
  * \date Jul 7, 2010
  * \author Vernkin Chen
+ *
+ * - Log
+ *    -  2010.12.10 Zhongxia Li
+ *       Merge unigram with segmentation which controlled by option parameter.
+ *    -  2011.01.21 Zhongxia Li
+ *       divide mixed digits and alpha (keep mixed string),
+ *       divide SBC/DBC case for digits and alpha, and do unigram for SBC case.
  */
 #include "icma/me/CMA_ME_Analyzer.h"
 #include "icma/fmincover/analysis_fmincover.h"
@@ -54,7 +61,6 @@ void divideNormalString(
             beginIdx, endIdxSt );
     cout << "divideNormalString "<<tmp<<endl;
 */
-    typedef unsigned int FMSizeType;
 
     StrBasedVTrie strTrie( trie );
 
@@ -184,6 +190,66 @@ void divideNormalString(
     delete[] dictLen;
 }
 
+/**
+ * \brief divide digits and letters, but keep whole string as a segment.
+ * [Note] only do unigram for SBC case.
+ */
+void divideDigitLetterString(
+        FMinCOutType& out,
+        CharType* types,
+        size_t beginIdx,
+        size_t endIdx,
+        StringVectorType& words,
+        AnalOption& analOption
+        )
+{
+    // check for start with part of string
+    out.push_back( beginIdx );
+    out.push_back( endIdx );
+
+	// divide mixed digits and letters
+	FMSizeType pre;
+	FMSizeType cur = beginIdx;
+
+	CharTypeExpand preType;
+	CharTypeExpand curType = getExpandedCharType(words[cur], types[cur]);
+
+	while ( cur < endIdx ) {
+		pre = cur;
+		preType = curType;
+
+		cur ++;
+		while ( cur < endIdx ) {
+			curType = getExpandedCharType(words[cur], types[cur]);
+			if ( curType == preType )
+				cur ++;
+			else
+				break;
+		}
+
+		// if whole string is the same type, it has been added as a segment at the beginning.
+		// if ( !(pre == beginIdx && cur == endIdx) )
+		if ( pre != beginIdx || cur != endIdx ) {
+			out.push_back(pre);
+			out.push_back(cur);
+		}
+
+		// if merge unigram
+		if ( analOption.doUnigram && (pre + 1 < cur) ) {
+			if ( (CHAR_TYPE_DIGIT_SBC == preType)
+					|| (CHAR_TYPE_LETTER_SBC == preType) )
+			{
+				FMSizeType uniIdx = pre;
+				for ( ; uniIdx < cur; uniIdx ++ ) {
+					out.push_back(uniIdx);
+					out.push_back(uniIdx + 1);
+				}
+			}
+		}
+    }
+}
+
+
 void addFMinCString(
         FMinCOutType& out,
         VTrie* trie,
@@ -214,18 +280,41 @@ void addFMinCString(
     case CHAR_TYPE_DIGIT:
     case CHAR_TYPE_LETTER:
     {
-        // check for the word begin with whole string
-        out.push_back( beginIdx );
-        out.push_back( endIdx );
+    	divideDigitLetterString(out, types, beginIdx, endIdx, words, analOption );
         return;
     }
 
     case CHAR_TYPE_DATE:
+    {
+    	// whole string
+		out.push_back( beginIdx );
+		out.push_back( endIdx );
+
+		// divide to 2 parts
+		if ( maxIdx > beginIdx ) {
+    		// pre digits (may be mixed with letters)
+			divideDigitLetterString(out, types, beginIdx, maxIdx, words, analOption );
+    		// date-char
+    		out.push_back( maxIdx );
+    		out.push_back( endIdx );
+    	}
+    	return;
+    }
+
     case CHAR_TYPE_CHARDIGIT:
     {
         // check for start with part of string
         out.push_back( beginIdx );
         out.push_back( endIdx );
+
+        if ( analOption.doUnigram && maxIdx > beginIdx ) {
+        	FMSizeType uniIdx = beginIdx;
+        	while ( uniIdx < endIdx ) {
+        		out.push_back( uniIdx );
+        		out.push_back( uniIdx + 1 );
+        		++ uniIdx;
+        	}
+        }
         return;
     }
 
@@ -274,8 +363,11 @@ void parseFMinCoverString(
     size_t fsIdx = beginIdx; // fragment start index
     CharType t_1 = types[ curIdx - 1 ];
 
+    //cout << words[beginIdx] << " " << types[beginIdx] << endl;
+
     while( curIdx < size )
     {
+    	//cout << words[curIdx] << " " << types[curIdx] << endl;
         //cout << "#"<<curIdx<<", outsize = " << out.size() << ",last: " << ( out.empty() ? "" : *out.rbegin()) << endl;
         CharType t0 = types[ curIdx ];
         switch( t_1 )

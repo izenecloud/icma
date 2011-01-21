@@ -29,6 +29,38 @@ string getDecodeChar( CharValue value )
 	return string(buf);
 }
 
+CharTypeExpand getExpandedCharType( const char* cword, CharType& ctype )
+{
+	CharTypeExpand ret = CHAR_TYPE_OTHER_EX;
+
+	//string s(word);
+	//cout << word << "--len-" << s.size() <<"-"<<strlen(word) << "--extype-";
+
+	if (CHAR_TYPE_DIGIT == ctype) {
+		if ( *cword >= '0' && *cword <= '9' )
+		{
+			ret =  CHAR_TYPE_DIGIT_DBC;
+		}
+		else
+		{
+			ret =  CHAR_TYPE_DIGIT_SBC;
+		}
+	}
+	else if (CHAR_TYPE_LETTER == ctype) {
+		if ( ((*cword >= 'a' && *cword <= 'z') || (*cword >= 'A' && *cword <= 'Z')) )
+		{
+			ret =  CHAR_TYPE_LETTER_DBC;
+		}
+		else
+		{
+			ret =  CHAR_TYPE_LETTER_SBC;
+		}
+	}
+
+	//cout << ret << endl;
+	return ret;
+}
+
 Condition::Condition()
 {
 	//empty constructor

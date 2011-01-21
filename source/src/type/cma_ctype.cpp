@@ -594,8 +594,8 @@ CharType CMA_CType::getCharType(const char* p, CharType preType, const char* nex
 
 	const CharConditions& charConds = condValues_[ node1.data ];
 	CharType matchedType = charConds.match(preType, nextV, nextType, charConds.baseType_);
-	if( preType == CHAR_TYPE_LETTER && matchedType == CHAR_TYPE_DIGIT )
-		return CHAR_TYPE_LETTER;
+	//if( preType == CHAR_TYPE_LETTER && matchedType == CHAR_TYPE_DIGIT )
+	//	return CHAR_TYPE_LETTER;
 	return matchedType;
 }
 
