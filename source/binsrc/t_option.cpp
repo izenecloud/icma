@@ -32,12 +32,13 @@ enum ChineseAnalysisType
     maximum_entropy = 1,
     maximum_match = 2,
     minimum_match = 3,
-    minimum_match_unigram = 4
+    minimum_match_unigram = 4,
+    minimum_match_nooverlap = 5
 };
 
 void printUsage()
 {
-    cout << "Usage: ./t_option [ME] [Max_M] [Min_M] [Min_M_U] [R+] [R0] [R1] ... [R9]" << endl;
+    cout << "Usage: ./t_option [ME] [Max_M] [Min_M] [Min_M_U] [Min_M_NO] [R+] [R0] [R1] ... [R9]" << endl;
     cout << "\t Each option can appear at most time. Cases are ignored for options." << endl;
     cout << "\t All analysis type are included if no explict analysis type given." << endl;
     cout << "\t R+ is include if no R* given" << endl;
@@ -72,13 +73,14 @@ int main(int argc, char** argv)
 {
     // between 0 to nBestSize - 1 (included)
     const int nBestSize = 10;
-    const int analyzerSize = 4;
+    const int analyzerSize = 5;
 
     bool nBest[nBestSize] = { false };
     bool enabledAnalyzers[analyzerSize] = {false};
     Analyzer *analyzers[analyzerSize] = { NULL };
-    string anayzerTitles[analyzerSize] = { "ME", "Max_M", "Min_M", "Min_M_U" };
-    ChineseAnalysisType enumTypes[analyzerSize] = { maximum_entropy, maximum_match, minimum_match, minimum_match_unigram };
+    string anayzerTitles[analyzerSize] = { "ME", "Max_M", "Min_M", "Min_M_U", "Min_M_NO" };
+    ChineseAnalysisType enumTypes[analyzerSize] = { maximum_entropy, maximum_match, minimum_match, minimum_match_unigram,
+    		minimum_match_nooverlap};
 
     printUsage();
 
@@ -102,6 +104,9 @@ int main(int argc, char** argv)
         }
         else if( op == "MIN_M_U") {
         	enabledAnalyzers[ 3 ] = true;
+        }
+        else if ( op == "MIN_M_NO" ) {
+        	enabledAnalyzers[ 4 ] = true;
         }
         else if( op[0] == 'R' )
         {

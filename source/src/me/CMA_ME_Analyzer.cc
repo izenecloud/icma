@@ -117,12 +117,20 @@ inline void removeDuplicatedSegment(
             else if( static_cast<int>(nValue) == 3 ) {
                 analysis = &CMA_ME_Analyzer::analysis_fmincover;
                 analOption_.doUnigram = false;
-                analOption_.useMaxOffset = false;
+                analOption_.useMaxOffset = false; // reserved
+                analOption_.noOverlap = false;
             }
             else if( static_cast<int>(nValue) == 4 ) {
             	analysis = &CMA_ME_Analyzer::analysis_fmincover;
             	analOption_.doUnigram = true;
-            	analOption_.useMaxOffset = false;
+            	analOption_.useMaxOffset = false; // reserved
+            	analOption_.noOverlap = false;
+            }
+            else if( static_cast<int>(nValue) == 5 ) {
+            	analysis = &CMA_ME_Analyzer::analysis_fmincover;
+            	analOption_.doUnigram = false;
+            	analOption_.useMaxOffset = false; // reserved
+            	analOption_.noOverlap = true;
             }
             else if( static_cast<int>(nValue) == 77 )
                 analysis = &CMA_ME_Analyzer::analysis_pure_mmmodel;

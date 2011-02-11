@@ -171,17 +171,31 @@ void divideNormalString(
             continue;
         }
 
-        for( advDLIdx = dLIdx; advDLIdx < dLEndIdx; ++advDLIdx )
-        {
-            curLen = dictLen[ advDLIdx ];
-            out.push_back( advDLIdx + beginOffset );
-            out.push_back( advDLIdx + beginOffset + 1 );
+        if ( analOption.noOverlap ) {
+        	// ignore cross
+        	// n-best (1)
+        	for( advDLIdx = dLIdx; advDLIdx < dLEndIdx; )
+        	{
+        		curLen = dictLen[ advDLIdx ];
+        		out.push_back( advDLIdx + beginOffset );
+        		out.push_back( advDLIdx + beginOffset + curLen );
 
-            if( curLen == 1 )
-                continue;
+        		advDLIdx += curLen;
+        	}
+        }
+        else {
+			for( advDLIdx = dLIdx; advDLIdx < dLEndIdx; ++advDLIdx )
+			{
+				curLen = dictLen[ advDLIdx ];
+				out.push_back( advDLIdx + beginOffset );
+				out.push_back( advDLIdx + beginOffset + 1 );
 
-            out.push_back( advDLIdx + beginOffset );
-            out.push_back( advDLIdx + beginOffset + curLen );
+				if( curLen == 1 )
+					continue;
+
+				out.push_back( advDLIdx + beginOffset );
+				out.push_back( advDLIdx + beginOffset + curLen );
+			}
         }
 
         dLIdx = dLEndIdx;
@@ -203,9 +217,11 @@ void divideDigitLetterString(
         AnalOption& analOption
         )
 {
-    // check for start with part of string
-    out.push_back( beginIdx );
-    out.push_back( endIdx );
+    // whole word
+	if ( analOption.noOverlap == false ) {
+		out.push_back( beginIdx );
+		out.push_back( endIdx );
+	}
 
 	// divide mixed digits and letters
 	FMSizeType pre;
@@ -232,6 +248,12 @@ void divideDigitLetterString(
 		if ( pre != beginIdx || cur != endIdx ) {
 			out.push_back(pre);
 			out.push_back(cur);
+		}
+		else {
+			if ( analOption.noOverlap ) {
+				out.push_back( beginIdx );
+				out.push_back( endIdx );
+			}
 		}
 
 		// if merge unigram
