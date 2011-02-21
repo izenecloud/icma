@@ -1217,6 +1217,7 @@ namespace meanainner{
             }
             cout << endl; */
 
+        	/*
         	if ( !ctype_->Full2HalfWidth(us, len, (unsigned char*)sp) ) {
         		charOut.push_back( ( const char* )us, len );
         	}
@@ -1224,8 +1225,9 @@ namespace meanainner{
         		// full-width to half-width
         		charOut.push_back( ( const char* )sp, 1 );
         		//cout << " => to half-width: " << sp << endl;
-        	}
+        	} */
 
+            charOut.push_back( ( const char* )us, len );
             us += len;
         }
     }
