@@ -151,6 +151,15 @@ public:
      */
     string getPOCXmlStr( const char* p) const;
 
+    /**
+     * Covert full-width number/alpha characters to half-width
+     * \param[in] p the input string (full-width character)
+     * \param[in] len the input string len
+     * \param[out] rch the output char (half-with character)
+     * \return true if conversion success, else false.
+     */
+    bool Full2HalfWidth(const unsigned char*& p, int len, unsigned char* pch);
+
     Knowledge::EncodeType getEncodeType()
     {
         return type_;

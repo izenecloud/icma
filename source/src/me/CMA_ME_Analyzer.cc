@@ -8,6 +8,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 
 #include "VTrie.h"
 #include "strutil.h"
@@ -1189,6 +1190,7 @@ namespace meanainner{
     void CMA_ME_Analyzer::extractCharacter( const char* sentence, StringVectorType& charOut )
     {
         static const string DefString;
+        static unsigned char sp[2] = {0,0};
 
         if( encodeType_ == Knowledge::ENCODE_TYPE_UTF8 )
         {
@@ -1204,8 +1206,26 @@ namespace meanainner{
         unsigned int len;
         const unsigned char *us = (const unsigned char *)sentence;
         while( ( len = getByteFunc( us ) ) > 0 )
-        {
-            charOut.push_back( ( const char* )us, len );
+        {	/*
+        	cout << "len: " << len << " ";
+            for (int i=0; i<len; i ++) {
+            	cout << (char)*(us+i);
+            }
+            cout << " 0x";
+            for (int i=0; i<len; i ++) {
+            	cout << setbase(16) << (int)*(us+i) << "(" << setbase(10) << (int)*(us+i) <<") ";
+            }
+            cout << endl; */
+
+        	if ( !ctype_->Full2HalfWidth(us, len, (unsigned char*)sp) ) {
+        		charOut.push_back( ( const char* )us, len );
+        	}
+        	else {
+        		// full-width to half-width
+        		charOut.push_back( ( const char* )sp, 1 );
+        		//cout << " => to half-width: " << sp << endl;
+        	}
+
             us += len;
         }
     }
