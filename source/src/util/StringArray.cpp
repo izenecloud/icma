@@ -90,6 +90,7 @@ StringArray::StringArray( const char* str )
 
 StringArray::StringArray( const StringArray& other )
 {
+    data_ = NULL; // added: when data_ became a unexpected non-null value, "invalid pointer" is raised while delete it in initialize().
     initialize();
     swap( (StringArray&)other );
 }
