@@ -56,6 +56,11 @@ public:
     static CMA_CType* instance(Knowledge::EncodeType type);
 
     /**
+     * Clear CMA_CType instances.
+     */
+    static void clear();
+
+    /**
      * The naming in the poc.xml, include digit, chardigit, space, letter, punctuation
      * \param noDefault if true, an assert error will occur
      * \return if not found, return CHAR_TYPE_OTHER

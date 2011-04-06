@@ -40,6 +40,7 @@ CMA_ME_Knowledge::~CMA_ME_Knowledge(){
     delete vsynC_;
     delete trie_;
     delete posTable_;
+    CMA_CType::clear();
 }
 
 int CMA_ME_Knowledge::loadPOSModel(const char* cateName, bool loadModel)

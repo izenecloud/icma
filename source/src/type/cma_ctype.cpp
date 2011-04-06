@@ -249,6 +249,13 @@ CMA_CType::CMA_CType(
     condValues_.push_back( DefCharConditions ); //reserve offset 0
 }
 
+void CMA_CType::clear()
+{
+    map< Knowledge::EncodeType, CMA_CType* >::iterator iter;
+    for(iter = CTypeCache.begin(); iter != CTypeCache.end(); ++iter)
+        delete iter->second;
+}
+
 CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
 {
     map< Knowledge::EncodeType, CMA_CType* >::iterator itr

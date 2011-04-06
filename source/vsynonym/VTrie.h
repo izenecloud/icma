@@ -657,6 +657,7 @@ private:
                 tmpA[mod] = 1;
             }
             if(k == len){
+                delete[] tmpA;				
                 return (uint8_t)(i-1);
             }
 
