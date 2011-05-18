@@ -313,7 +313,7 @@ void addFMinCString(
 		out.push_back( endIdx );
 
 		// divide to 2 parts
-		if ( maxIdx > beginIdx ) {
+		if ( maxIdx > beginIdx && !analOption.noOverlap) {
     		// pre digits (may be mixed with letters)
 			divideDigitLetterString(out, types, beginIdx, maxIdx, words, analOption );
     		// date-char
