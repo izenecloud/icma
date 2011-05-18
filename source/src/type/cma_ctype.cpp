@@ -254,6 +254,7 @@ void CMA_CType::clear()
     map< Knowledge::EncodeType, CMA_CType* >::iterator iter;
     for(iter = CTypeCache.begin(); iter != CTypeCache.end(); ++iter)
         delete iter->second;
+    CTypeCache.clear();
 }
 
 CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
