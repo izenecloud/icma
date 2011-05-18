@@ -217,7 +217,7 @@ void divideDigitLetterString(
         AnalOption& analOption
         )
 {
-    // whole word
+    // add whole word ahead, but not if no overlap
 	if ( analOption.noOverlap == false ) {
 		out.push_back( beginIdx );
 		out.push_back( endIdx );
@@ -243,17 +243,19 @@ void divideDigitLetterString(
 				break;
 		}
 
-		// if whole string is the same type, it has been added as a segment at the beginning.
-		// if ( !(pre == beginIdx && cur == endIdx) )
-		if ( pre != beginIdx || cur != endIdx ) {
-			out.push_back(pre);
-			out.push_back(cur);
+		// if whole string the same type (not mixed)
+		if ( pre == beginIdx && cur == endIdx )
+		{
+		    // Whole word was not added ahead for nooverlap option,
+            // in case it's mixed with letters and digits.
+            if ( analOption.noOverlap ) {
+                out.push_back( beginIdx );
+                out.push_back( endIdx );
+            }
 		}
 		else {
-			if ( analOption.noOverlap ) {
-				out.push_back( beginIdx );
-				out.push_back( endIdx );
-			}
+            out.push_back(pre);
+            out.push_back(cur);
 		}
 
 		// if merge unigram
