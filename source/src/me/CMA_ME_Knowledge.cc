@@ -298,6 +298,9 @@ int CMA_ME_Knowledge::loadModel(const char* encoding, const char* modelPath,
 	// load the configuration
 	loadConfig( ( path + "cma.config" ).data() );
 
+	// load stopwords
+	loadStopWordDict( (path + "stopword.txt").data() );
+
 	return 1;
 }
 

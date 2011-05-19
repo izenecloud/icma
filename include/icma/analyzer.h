@@ -148,6 +148,11 @@ public:
 	virtual int getPOSTagSetSize() const = 0;
 
     /**
+     * Whether the specific word is stop word
+     */
+    virtual bool isStopWord(const std::string& word) = 0;
+
+    /**
      * Option type for analysis.
      */
     enum OptionType

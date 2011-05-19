@@ -148,6 +148,17 @@ public:
 	 */
 	virtual int getPOSTagSetSize() const;
 
+    /**
+     * Whether the specific word is stop word
+     */
+    virtual bool isStopWord(const string& word)
+    {
+        if (knowledge_)
+            return knowledge_->isStopWord(word);
+
+        return false;
+    }
+
     typedef string OneGramType;
 
     typedef void(CMA_ME_Analyzer::*analysis_t)(
