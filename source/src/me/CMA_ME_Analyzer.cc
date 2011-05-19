@@ -100,8 +100,11 @@ inline void removeDuplicatedSegment(
 			: knowledge_(0), ctype_(0), posTable_(0),
 			  analysis(&CMA_ME_Analyzer::analysis_mmmodel)
     {
+        // default setting of analysis options
+        analOption_.isMaxMatch = false;
     	analOption_.doUnigram = false;
-    	analOption_.useMaxOffset = false;
+    	analOption_.useMaxOffset = false; // reserved
+    	analOption_.noOverlap = false;
     }
 
     CMA_ME_Analyzer::~CMA_ME_Analyzer() {
@@ -109,28 +112,29 @@ inline void removeDuplicatedSegment(
 
     void CMA_ME_Analyzer::setOption(OptionType nOption, double nValue)
     {
+        // TODO: adjust nValue
         options_[nOption] = nValue;
         // check for specific setting
         if( nOption == OPTION_ANALYSIS_TYPE )
         {
-            if( static_cast<int>(nValue) == 2 )
+            // see to default setting of analOption_ in CMA_ME_Analyzer()
+            if( static_cast<int>(nValue) == 2 ) {
+                /* deprecated:
                 analysis = &CMA_ME_Analyzer::analysis_fmm;
+                */
+                analysis = &CMA_ME_Analyzer::analysis_fmincover;
+                analOption_.isMaxMatch = true;
+                analOption_.noOverlap = true;
+            }
             else if( static_cast<int>(nValue) == 3 ) {
                 analysis = &CMA_ME_Analyzer::analysis_fmincover;
-                analOption_.doUnigram = false;
-                analOption_.useMaxOffset = false; // reserved
-                analOption_.noOverlap = false;
             }
             else if( static_cast<int>(nValue) == 4 ) {
             	analysis = &CMA_ME_Analyzer::analysis_fmincover;
             	analOption_.doUnigram = true;
-            	analOption_.useMaxOffset = false; // reserved
-            	analOption_.noOverlap = false;
             }
             else if( static_cast<int>(nValue) == 5 ) {
             	analysis = &CMA_ME_Analyzer::analysis_fmincover;
-            	analOption_.doUnigram = false;
-            	analOption_.useMaxOffset = false; // reserved
             	analOption_.noOverlap = true;
             }
             else if( static_cast<int>(nValue) == 77 )

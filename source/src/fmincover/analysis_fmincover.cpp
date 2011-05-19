@@ -98,7 +98,11 @@ void divideNormalString(
             if( strTrie.exists() == true )
             {
                 foundWordLastIdx = advIdx;
-                break;
+
+                if (analOption.isMaxMatch)
+                    ;      // maximum match
+                else
+                    break; // minimum match
             }
         }
 

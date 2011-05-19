@@ -26,6 +26,7 @@ namespace cma
  * Analyzer Option
  */
 typedef struct Option {
+    bool isMaxMatch;
 	bool doUnigram;  // whether integrate segmentation result with unigram
 	bool useMaxOffset; // *reserved, whether set the segment's offset as the maximal offset of the unigrams it contained
 	bool noOverlap; // without any overlap, generate n-best.
