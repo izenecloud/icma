@@ -8,7 +8,7 @@
 		<!--<chardigitupper><![CDATA[壹贰貳叄肆伍陆陸柒捌玖拾佰仟]]></chardigitupper>-->
 		<letter><![CDATA[QWERTYUIOPqwertyuiopASDFGHJKLasdfghjklZXCVBNMzxcvbnmＱＷＥＲＴＹＵＩＯＰｑｗｅｒｔｙｕｉｏｐＡＳＤＦＧＨＪＫＬａｓｄｆｇｈｊｋｌＺＸＣＶＢＮＭｚｘｃｖｂｎｍ]]></letter>
 		<punctuation><![CDATA[~!@#%^&*()` {}[]:"|;'\<>?,/""''+-=_.～！＠＃％＾＆×（）｀　｛｝［］：＂｜；＇＼＜＞？，．／。《》“”‘’＋－＝—．•、]]></punctuation>		
-		<space><![CDATA[ 　]]></space>
+		<space><![CDATA[ 　 ]]></space>
 		<sentenceseparator><![CDATA[?!。！？；：]]></sentenceseparator>
 	</entities>
 
