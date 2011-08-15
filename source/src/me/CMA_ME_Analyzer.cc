@@ -50,7 +50,7 @@ inline bool isSameSegment(
             return false;
     }
 
-    if( includePOS = false )
+    if( includePOS == false )
         return true;
 
     for( size_t i = 0; i < size; ++i )
@@ -1194,7 +1194,7 @@ namespace meanainner{
     void CMA_ME_Analyzer::extractCharacter( const char* sentence, StringVectorType& charOut )
     {
         static const string DefString;
-        static unsigned char sp[2] = {0,0};
+        //static unsigned char sp[2] = {0,0};
 
         if( encodeType_ == Knowledge::ENCODE_TYPE_UTF8 )
         {
