@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.4)
 
+
 if(COMMAND cmake_policy)
 	cmake_policy(SET CMP0003 NEW)
 endif(COMMAND cmake_policy)
@@ -76,6 +77,19 @@ add_definitions("-Wall -fPIC")# -O3
 
 FIND_PACKAGE(Threads REQUIRED)
 
+SET(Boost_ADDITIONAL_VERSIONS 1.39 1.39.0 1.38 1.38.0 1.37 1.37.0)
+FIND_PACKAGE(Boost 1.38 REQUIRED
+  COMPONENTS
+  system
+  program_options
+  thread
+  regex
+  date_time
+  serialization
+  filesystem
+  unit_test_framework
+  iostreams
+  )
 
 IF( USE_MICROHTTPD )
 	MESSAGE( STATUS "libmicrohttpd is the third library used for demo page, you should go to the directory source/libmicrohttpd first, then type: ./configure and make in sequence.")
@@ -85,11 +99,14 @@ IF( USE_MICROHTTPD )
 	add_definitions( -DUSE_MICROHTTPD=TRUE )
 ENDIF( USE_MICROHTTPD )
 
+
+
 include_directories(../include)
 include_directories(./corpus)
 include_directories(./maxent)
 include_directories(./vsynonym)
 include_directories(./binsrc)
+INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 
 SET(LIBS_ME maxent_static)
 SET(LIBS_CORPUS corpus)
