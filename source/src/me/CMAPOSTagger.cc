@@ -540,8 +540,6 @@ void POSTagger::quick_tag_sentence_best(
         PGenericArray< const char* >& posRet
         )
 {
-    std::cout<<"POSTagger::quick_tag_sentence_best"<<std::endl;
-
     int word2SeqIdxOffset = (int)seqStartIdx - (int)wordBeginIdx * 2;
     posRet.reserve( posRet.usedLen() + wordEngIdx - wordBeginIdx );
 
