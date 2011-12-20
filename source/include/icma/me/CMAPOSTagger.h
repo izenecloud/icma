@@ -167,7 +167,8 @@ public:
             size_t wordBeginIdx,
             size_t wordEngIdx,
             size_t seqStartIdx,
-            PGenericArray< const char* >& posRet
+            PGenericArray< const char* >& posRet,
+            bool tagLetterNumber = false
             );
 
     /**

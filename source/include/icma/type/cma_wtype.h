@@ -56,7 +56,9 @@ public:
 	 * \param endIdx ending index of the word ( exclusive )
 	 * \return the word type.
 	 */
-	WordType getWordType(CharType* types, size_t beginIdx, size_t endIdx );
+	WordType getWordType(CharType* types, size_t beginIdx, size_t endIdx);
+
+	bool isLetterMixNumber(CharType* types, size_t beginIdx, size_t endIdx);
 
 private:
     /** character encoding */

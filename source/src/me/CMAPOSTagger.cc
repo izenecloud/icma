@@ -537,7 +537,8 @@ void POSTagger::quick_tag_sentence_best(
         size_t wordBeginIdx,
         size_t wordEngIdx,
         size_t seqStartIdx,
-        PGenericArray< const char* >& posRet
+        PGenericArray< const char* >& posRet,
+        bool tagLetterNumber
         )
 {
     int word2SeqIdxOffset = (int)seqStartIdx - (int)wordBeginIdx * 2;
@@ -561,7 +562,10 @@ void POSTagger::quick_tag_sentence_best(
                 posRet.push_back( numberPOS.c_str() );
                 continue;
             case CMA_WType::WORD_TYPE_LETTER:
-                posRet.push_back( letterPOS.c_str() );
+                if (tagLetterNumber && wtype.isLetterMixNumber(types, seqWordBeginIdx, seqWordEndIdx))
+                    posRet.push_back(mixedNumberLetterPOS.c_str());
+                else
+                    posRet.push_back( letterPOS.c_str() );
                 continue;
             case CMA_WType::WORD_TYPE_DATE:
                 posRet.push_back( datePOS.c_str() );

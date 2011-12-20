@@ -140,4 +140,17 @@ CMA_WType::WordType CMA_WType::getWordType(CharType* types, size_t beginIdx, siz
     return CTYPE_2_WTYPE[ type ];
 }
 
+bool CMA_WType::isLetterMixNumber(CharType* types, size_t beginIdx, size_t endIdx)
+{
+    for(size_t i = beginIdx; i < endIdx; ++i)
+    {
+        if (types[ i ] == CHAR_TYPE_DIGIT)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 } // namespace cma
