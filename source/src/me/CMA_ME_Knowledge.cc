@@ -73,6 +73,9 @@ int CMA_ME_Knowledge::loadPOSModel(const char* cateName, bool loadModel)
     ret = configMap["letterPOS"];
     posT_->letterPOS = ret.empty() ? "NX" : ret;
 
+    // xxx
+    posT_->mixedNumberLetterPOS = "X";
+
     ret = configMap["puncPOS"];
     posT_->puncPOS = ret.empty() ? "W" : ret;
 

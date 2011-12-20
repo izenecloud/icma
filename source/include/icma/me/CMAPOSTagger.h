@@ -211,6 +211,9 @@ public:
     /** Letter POS */
     string letterPOS;
 
+    /** Mixed Letter and Numerber POS*/
+    string mixedNumberLetterPOS;
+
     /** Punctuation POS */
     string puncPOS;
 

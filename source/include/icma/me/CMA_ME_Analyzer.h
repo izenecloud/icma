@@ -30,6 +30,16 @@ typedef struct Option {
 	bool doUnigram;  // whether integrate segmentation result with unigram
 	bool useMaxOffset; // *reserved, whether set the segment's offset as the maximal offset of the unigrams it contained
 	bool noOverlap; // without any overlap, generate n-best.
+	bool mergeAlphaDigit;
+
+	Option()
+	: isMaxMatch(false)
+	, doUnigram(false)
+	, useMaxOffset(false)
+	, noOverlap(false)
+	, mergeAlphaDigit(false)
+	{
+	}
 } AnalOption;
 
 /**
@@ -54,6 +64,8 @@ public:
      * \attention when \e nOption is \e OPTION_TYPE_NBEST, the invalid \e nValue less than 1 will take no effect.
      */
     virtual void setOption(OptionType nOption, double nValue);
+
+    virtual void setAnalOption(AnalOptionType analOption, bool bValue);
 
     /**
      * Set the \e Knowledge for analysis.

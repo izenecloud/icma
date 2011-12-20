@@ -100,11 +100,6 @@ inline void removeDuplicatedSegment(
 			: knowledge_(0), ctype_(0), posTable_(0),
 			  analysis(&CMA_ME_Analyzer::analysis_mmmodel)
     {
-        // default setting of analysis options
-        analOption_.isMaxMatch = false;
-    	analOption_.doUnigram = false;
-    	analOption_.useMaxOffset = false; // reserved
-    	analOption_.noOverlap = false;
     }
 
     CMA_ME_Analyzer::~CMA_ME_Analyzer() {
@@ -141,6 +136,14 @@ inline void removeDuplicatedSegment(
                 analysis = &CMA_ME_Analyzer::analysis_pure_mmmodel;
             else
                 analysis = &CMA_ME_Analyzer::analysis_mmmodel;
+        }
+    }
+
+    void CMA_ME_Analyzer::setAnalOption(AnalOptionType analOption, bool bValue)
+    {
+        if (analOption == Analyzer::ANAL_OPTION_MERGE_ALPHA_DIGIT)
+        {
+            analOption_.mergeAlphaDigit = bValue;
         }
     }
 

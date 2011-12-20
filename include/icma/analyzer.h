@@ -163,6 +163,12 @@ public:
 	OPTION_TYPE_NUM ///< the count of option types
     };
 
+    enum AnalOptionType
+    {
+        // xxx, extend
+        ANAL_OPTION_MERGE_ALPHA_DIGIT,
+    };
+
     /**
      * Set the option value for analysis.
      * \param nOption the option type
@@ -170,6 +176,8 @@ public:
      * \attention when \e nOption is \e OPTION_TYPE_NBEST, the invalid \e nValue less than 1 will take no effect.
      */
     virtual void setOption(OptionType nOption, double nValue);
+
+    virtual void setAnalOption(AnalOptionType analOption, bool bValue) {}
 
     /**
      * Get the option value.

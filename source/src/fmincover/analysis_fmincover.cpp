@@ -226,6 +226,13 @@ void divideDigitLetterString(
 		out.push_back( beginIdx );
 		out.push_back( endIdx );
 	}
+	else if (analOption.mergeAlphaDigit == true)
+	{
+	    // not divide
+        out.push_back( beginIdx );
+        out.push_back( endIdx );
+	    return;
+	}
 
 	// divide mixed digits and letters
 	FMSizeType pre;
