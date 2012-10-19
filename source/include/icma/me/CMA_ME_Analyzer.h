@@ -236,6 +236,16 @@ private:
             Sentence& ret,
             bool tagPOS = true
             );
+    /**
+     * maximum prefix matching based on Dictionary approach
+     */
+    void analysis_maxprefix(
+    		AnalOption& analOption,
+            const char* sentence,
+            int N,
+            Sentence& ret,
+            bool tagPOS = false
+            );
 
     /**
      * Simply combine sequential letters, digits and letters+digits together

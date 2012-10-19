@@ -134,6 +134,8 @@ inline void removeDuplicatedSegment(
             }
             else if( static_cast<int>(nValue) == 77 )
                 analysis = &CMA_ME_Analyzer::analysis_pure_mmmodel;
+            else if( static_cast<int>(nValue) == 100 )
+                analysis = &CMA_ME_Analyzer::analysis_maxprefix;
             else
                 analysis = &CMA_ME_Analyzer::analysis_mmmodel;
         }
@@ -959,12 +961,12 @@ namespace meanainner{
         meanainner::combineRetWithTrie( trie, words, types,
                 bestSegSeq, 0, bestSegSeq.size() );
 
-        /*
+        /*      
         for( size_t i = 0; i < wordSize; ++i )
         {
             cout << bestSegSeq[ i * 2 ] << " -> " << bestSegSeq[ i * 2 + 1 ] << endl;
         }
-        */
+        */       
 
         // convert to string lexicon
         ret.segment_.clear();
@@ -1106,6 +1108,156 @@ namespace meanainner{
 
         delete[] types;
     }
+
+    void CMA_ME_Analyzer::analysis_maxprefix(
+    		AnalOption& analOption,
+            const char* sentence,
+            int N,
+            Sentence& ret,
+            bool tagPOS
+            )
+    {
+        static CandidateMeta DefCandidateMeta;
+
+        // Initial Step 1: split as Chinese Character based
+        StringVectorType words;
+        extractCharacter( sentence, words );
+
+        if( words.empty() == true )
+            return;
+
+        size_t wordSize = words.size();
+        // Initial Step 2nd: set character types
+        CharType* types = new CharType[ (int)wordSize ];
+        setCharType( words, types );
+
+        ret.candMetas_.clear();
+        ret.candMetas_.push_back( DefCandidateMeta );
+        ret.candMetas_[ 0 ].segOffset_ = 0;
+        ret.candMetas_[ 0 ].score_ = 1.0;
+
+        PGenericArray<size_t> bestSegSeq;
+        bestSegSeq.reserve( wordSize * 2 );
+        //for( size_t i = 0; i < wordSize; ++i )
+        //{
+        //    bestSegSeq.push_back( i );
+        //    bestSegSeq.push_back( i + 1 );
+        //}
+
+        VTrie *trie = knowledge_->getTrie();
+
+        int begin = 0; 
+        int end = begin + 1;
+        int n = (int)words.size();
+        VTrieNode node;
+        // find the maximum prefix matched segment from the dictionary.
+        int segnum = 0;
+        while(end <= n) {
+            string longest_prefix;
+            while(end <= n)
+            {
+                if(types[end - 1] == CHAR_TYPE_SPACE)
+                    break;
+                size_t i = 0;
+                size_t word_len = strlen(words[end - 1]);
+                while(i < word_len)
+                {
+                    int isnode = trie->find(words[end - 1][i], &node);
+                    if(node.moreLong || isnode > 0)
+                        ++i;
+                    else
+                        break;
+                }
+                if(i < word_len)
+                    break;
+                longest_prefix += words[end - 1];
+                end++;
+            }
+
+            if(!longest_prefix.empty() && 
+                trie->search(longest_prefix.c_str(), &node) > 0)
+            {
+                cout<<"longest prefix match in dictionary: "<< longest_prefix << endl;
+                bestSegSeq.push_back(begin);
+                bestSegSeq.push_back(end - 1);
+                begin = end - 1;
+                ++segnum;
+            }
+            else
+            {
+                begin++;
+            }
+            node.init();
+            end = begin + 1;
+        }
+        // find the non-Chinese word and seperate them by space.
+        int non_dictionary_segnum = 0;
+        for(int i = -1; i < segnum; ++i)
+        {
+            int seg_end = n;
+            if(segnum != 0)
+            {
+                seg_end = (i == segnum-1) ? n:bestSegSeq[ (i+1)*2 ];
+            }
+            begin = (i == -1)? 0:bestSegSeq[ i*2 + 1];
+            end = begin + 1;
+            while(end <= seg_end)
+            {
+                string seg;
+                CharType last_type = CHAR_TYPE_INIT;
+                while(end <= seg_end)
+                {
+                    if(types[end - 1] == CHAR_TYPE_OTHER)
+                    {
+                        if(seg.length() > 0 &&
+                            last_type != CHAR_TYPE_OTHER)
+                            break;
+                    }
+                    else if(types[end - 1] != CHAR_TYPE_DIGIT &&
+                        types[end - 1] != CHAR_TYPE_LETTER )
+                    {
+                        if(types[end - 1] == CHAR_TYPE_SPACE)
+                            break;
+                        if(seg.length() > 2 && types[end - 1] == CHAR_TYPE_PUNC)
+                            break;
+                        if(seg.empty())
+                            break;
+                        if(strlen(words[end - 1]) > 2)
+                            break;
+                    }
+                    else
+                    {
+                        if(seg.length() > 0 && last_type == CHAR_TYPE_OTHER)
+                            break;
+                    }
+                    seg += words[end - 1];
+                    last_type = types[end - 1];
+                    end++;
+                }
+                if(!seg.empty())
+                {
+                    cout << "find non-dictionary segment: " << seg << endl;
+                    bestSegSeq.push_back(begin);
+                    bestSegSeq.push_back(end - 1);
+                    begin = end - 1;
+                    ++non_dictionary_segnum;
+                }
+                else
+                {
+                    begin++;
+                }
+                end = begin + 1;
+            }
+        }
+
+        // convert to string lexicon
+        ret.segment_.clear();
+        createStringLexicon( words, bestSegSeq, ret.segment_, 0, bestSegSeq.size() );
+
+        delete[] types;
+        return;
+    }
+
 
     void CMA_ME_Analyzer::splitToOneGram( const char* sentence, vector<vector<OneGramType> >& output )
     {
