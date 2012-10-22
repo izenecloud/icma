@@ -1190,7 +1190,7 @@ namespace meanainner{
             node.init();
             end = begin + 1;
         }
-        // find the non-Chinese word and seperate them by space.
+        // find the non-dictionary word and seperate them by space(Chinese to bigram).
         int non_dictionary_segnum = 0;
         for(int i = -1; i < segnum; ++i)
         {
@@ -1212,6 +1212,16 @@ namespace meanainner{
                         if(seg.length() > 0 &&
                             last_type != CHAR_TYPE_OTHER)
                             break;
+                        // each Chinese character length >=3
+                        if(seg.length() >= 3)
+                        {
+                            seg += words[end - 1];
+                            if(end == seg_end || types[end] != CHAR_TYPE_OTHER)
+                            {
+                                end++;
+                            }
+                            break;
+                        }
                     }
                     else if(types[end - 1] != CHAR_TYPE_DIGIT &&
                         types[end - 1] != CHAR_TYPE_LETTER )
