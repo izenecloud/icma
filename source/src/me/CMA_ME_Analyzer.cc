@@ -1205,6 +1205,7 @@ namespace meanainner{
             {
                 string seg;
                 CharType last_type = CHAR_TYPE_INIT;
+                bool is_chinese_bigram = false;
                 while(end <= seg_end)
                 {
                     if(types[end - 1] == CHAR_TYPE_OTHER)
@@ -1220,6 +1221,7 @@ namespace meanainner{
                             {
                                 end++;
                             }
+                            is_chinese_bigram = true;
                             break;
                         }
                     }
@@ -1248,7 +1250,10 @@ namespace meanainner{
                 {
                     cout << "find non-dictionary segment: " << seg << endl;
                     bestSegSeq.push_back(begin);
-                    bestSegSeq.push_back(end - 1);
+                    if( is_chinese_bigram )
+                        bestSegSeq.push_back(begin + 2);
+                    else
+                        bestSegSeq.push_back(end - 1);
                     begin = end - 1;
                     ++non_dictionary_segnum;
                 }
