@@ -1151,7 +1151,7 @@ namespace meanainner{
         int n = (int)words.size();
         VTrieNode node;
         // find the maximum prefix matched segment from the dictionary.
-        int segnum = 0;
+        int dic_segnum = 0;
         while(end <= n) {
             string longest_prefix;
             while(end <= n)
@@ -1181,7 +1181,7 @@ namespace meanainner{
                 bestSegSeq.push_back(begin);
                 bestSegSeq.push_back(end - 1);
                 begin = end - 1;
-                ++segnum;
+                ++dic_segnum;
             }
             else
             {
@@ -1192,12 +1192,12 @@ namespace meanainner{
         }
         // find the non-dictionary word and seperate them by space(Chinese to bigram).
         int non_dictionary_segnum = 0;
-        for(int i = -1; i < segnum; ++i)
+        for(int i = -1; i < dic_segnum; ++i)
         {
             int seg_end = n;
-            if(segnum != 0)
+            if(dic_segnum != 0)
             {
-                seg_end = (i == segnum-1) ? n:bestSegSeq[ (i+1)*2 ];
+                seg_end = (i == dic_segnum-1) ? n:bestSegSeq[ (i+1)*2 ];
             }
             begin = (i == -1)? 0:bestSegSeq[ i*2 + 1];
             end = begin + 1;
@@ -1267,7 +1267,11 @@ namespace meanainner{
 
         // convert to string lexicon
         ret.segment_.clear();
-        createStringLexicon( words, bestSegSeq, ret.segment_, 0, bestSegSeq.size() );
+        createStringLexicon( words, bestSegSeq, ret.segment_, 0, dic_segnum*2);
+        ret.candMetas_.push_back( DefCandidateMeta );
+        ret.candMetas_[ 1 ].segOffset_ = ret.segment_.size();
+        ret.candMetas_[ 1 ].score_ = 1.0;
+        createStringLexicon( words, bestSegSeq, ret.segment_, dic_segnum*2, bestSegSeq.size() );
 
         delete[] types;
         return;
