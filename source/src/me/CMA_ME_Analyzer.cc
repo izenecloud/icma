@@ -1154,15 +1154,18 @@ namespace meanainner{
         int dic_segnum = 0;
         while(end <= n) {
             string longest_prefix;
+            string longest_prefix_innode;
+            int longest_innode_wordend = end;
             while(end <= n)
             {
                 if(types[end - 1] == CHAR_TYPE_SPACE)
                     break;
                 size_t i = 0;
                 size_t word_len = strlen(words[end - 1]);
+                int isnode = 0;
                 while(i < word_len)
                 {
-                    int isnode = trie->find(words[end - 1][i], &node);
+                    isnode = trie->find(words[end - 1][i], &node);
                     if(node.moreLong || isnode > 0)
                         ++i;
                     else
@@ -1172,15 +1175,19 @@ namespace meanainner{
                     break;
                 longest_prefix += words[end - 1];
                 end++;
+                if(isnode > 0)
+                {
+                    longest_prefix_innode = longest_prefix;
+                    longest_innode_wordend = end;
+                }
             }
 
-            if(!longest_prefix.empty() && 
-                trie->search(longest_prefix.c_str(), &node) > 0)
+            if(!longest_prefix_innode.empty())
             {
-                cout<<"longest prefix match in dictionary: "<< longest_prefix << endl;
+                cout<<"longest prefix match in dictionary: "<< longest_prefix_innode << endl;
                 bestSegSeq.push_back(begin);
-                bestSegSeq.push_back(end - 1);
-                begin = end - 1;
+                bestSegSeq.push_back(longest_innode_wordend - 1);
+                begin = longest_innode_wordend - 1;
                 ++dic_segnum;
             }
             else
