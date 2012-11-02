@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 #ifdef USE_UTF_16
-	#include <wiselib/ustring/UString.h>
+#include <wiselib/ustring/UString.h>
 #endif
 
 #include <icma/tixml/tinyxml.h>
@@ -56,65 +56,68 @@ public:
 };
 
 
-const unsigned int UTF8_LEN_CODE[ 256 ] = {
+const unsigned int UTF8_LEN_CODE[ 256 ] =
+{
 //  0x0 0x1 0x2 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xa 0xb 0xc 0xd 0xe 0xf
-      0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x00
-      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x10
-      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x20
-      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x30
-      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x40
-      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x50
-      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x60
-      1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x70
-      2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0x80
-      2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0x90
-      2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0xa0
-      2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0xb0
-      2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0xc0
-      2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0xd0
-      3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3, // 0xe0
-      4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4  // 0xf0
+    0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x00
+    1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x10
+    1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x20
+    1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x30
+    1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x40
+    1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x50
+    1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x60
+    1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, // 0x70
+    2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0x80
+    2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0x90
+    2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0xa0
+    2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0xb0
+    2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0xc0
+    2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, // 0xd0
+    3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3, // 0xe0
+    4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4  // 0xf0
 };
 
 // number and alpha characters
-const unsigned int UTF8_NUM_UPPER_ALPHA_FULLWIDTH_3RD_BYTE[ 256 ] = {
+const unsigned int UTF8_NUM_UPPER_ALPHA_FULLWIDTH_3RD_BYTE[ 256 ] =
+{
 //  0x0 0x1 0x2 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xa 0xb 0xc 0xd 0xe 0xf
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x00
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x10
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x20
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x30
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x40
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x50
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x60
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x70
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x80
-      48,  49,  50,  51,  52,  53,  54,  55,  56,  57,  0,  0,  0,  0,  0,  0, // 0x90, 0 ~ 9
-      0,  65,  66,  67,  68,  69,  70,  71,  72,  73,  74,  75,  76,  77,  78,  79, // 0xa0, A~B
-      80,  81,  82,  83,  84,  85,  86,  87,  88,  89,  90,  0,  0,  0,  0,  0, // 0xb0
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xc0
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xd0
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xe0
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  // 0xf0
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x00
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x10
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x20
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x30
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x40
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x50
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x60
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x70
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x80
+    48,  49,  50,  51,  52,  53,  54,  55,  56,  57,  0,  0,  0,  0,  0,  0, // 0x90, 0 ~ 9
+    0,  65,  66,  67,  68,  69,  70,  71,  72,  73,  74,  75,  76,  77,  78,  79, // 0xa0, A~B
+    80,  81,  82,  83,  84,  85,  86,  87,  88,  89,  90,  0,  0,  0,  0,  0, // 0xb0
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xc0
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xd0
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xe0
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  // 0xf0
 };
 
-const unsigned int UTF8_LOWER_ALPHA_FULLWIDTH_3RD_BYTE[ 256 ] = {
+const unsigned int UTF8_LOWER_ALPHA_FULLWIDTH_3RD_BYTE[ 256 ] =
+{
 //  0x0 0x1 0x2 0x3 0x4 0x5 0x6 0x7 0x8 0x9 0xa 0xb 0xc 0xd 0xe 0xf
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x00
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x10
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x20
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x30
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x40
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x50
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x60
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x70
-      0, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, // 0x80, a~z
-      112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122,  0,  0,  0,  0,  0, // 0x90
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xa0
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xb0
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xc0
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xd0
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xe0
-      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  // 0xf0
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x00
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x10
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x20
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x30
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x40
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x50
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x60
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0x70
+    0, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, // 0x80, a~z
+    112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122,  0,  0,  0,  0,  0, // 0x90
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xa0
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xb0
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xc0
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xd0
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, // 0xe0
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  // 0xf0
 };
 
 unsigned int getByteCountBig5(const unsigned char* uc)
@@ -241,11 +244,11 @@ const string DEFAULT_SPACE = " \t\n\x0B\f\r";
 map< Knowledge::EncodeType, boost::shared_ptr<CMA_CType> > CTypeCache;
 
 CMA_CType::CMA_CType(
-        Knowledge::EncodeType type,
-        getByteCount_t getByteCountFun
-        )
+    Knowledge::EncodeType type,
+    getByteCount_t getByteCountFun
+)
     : type_( type ),
-    getByteCountFun_ ( getByteCountFun )
+      getByteCountFun_ ( getByteCountFun )
 {
     condValues_.reserve( 260 );
     condValues_.push_back( DefCharConditions ); //reserve offset 0
@@ -262,7 +265,7 @@ void CMA_CType::clear()
 CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
 {
     map< Knowledge::EncodeType, boost::shared_ptr<CMA_CType> >::iterator itr
-            = CTypeCache.find( type );
+    = CTypeCache.find( type );
     if( itr != CTypeCache.end() )
         return itr->second.get();
 
@@ -287,14 +290,14 @@ CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
         break;
 
 #ifdef USE_UTF_16
-	case Knowledge::ENCODE_TYPE_UTF16:
-	    ret = new CMA_CType( type, &ctypeinner::getByteCountUTF16 );
-       break;
+    case Knowledge::ENCODE_TYPE_UTF16:
+        ret = new CMA_CType( type, &ctypeinner::getByteCountUTF16 );
+        break;
 #endif
 
-	default:
-		assert(false && "unknown character encode type");
-	    return 0;
+    default:
+        assert(false && "unknown character encode type");
+        return 0;
     }
 
     CTypeCache[ type ].reset(ret);
@@ -303,27 +306,27 @@ CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
 
 CharType CMA_CType::getCharTypeByXmlName( const char* name, bool noDefault )
 {
-	if( strcmp( name, "other") == 0)
-		return CHAR_TYPE_OTHER;
-	else if( strcmp( name, "digit") == 0)
-		return CHAR_TYPE_DIGIT;
-	else if( strcmp( name, "chardigit") == 0)
-		return CHAR_TYPE_CHARDIGIT;
-	else if( strcmp( name, "letter") == 0)
-		return CHAR_TYPE_LETTER;
-	else if( strcmp( name, "punctuation") == 0)
-		return CHAR_TYPE_PUNC ;
-	else if( strcmp( name, "space") == 0)
-		return CHAR_TYPE_SPACE;
-	else if( strcmp( name, "date") == 0)
-		return CHAR_TYPE_DATE;
+    if( strcmp( name, "other") == 0)
+        return CHAR_TYPE_OTHER;
+    else if( strcmp( name, "digit") == 0)
+        return CHAR_TYPE_DIGIT;
+    else if( strcmp( name, "chardigit") == 0)
+        return CHAR_TYPE_CHARDIGIT;
+    else if( strcmp( name, "letter") == 0)
+        return CHAR_TYPE_LETTER;
+    else if( strcmp( name, "punctuation") == 0)
+        return CHAR_TYPE_PUNC ;
+    else if( strcmp( name, "space") == 0)
+        return CHAR_TYPE_SPACE;
+    else if( strcmp( name, "date") == 0)
+        return CHAR_TYPE_DATE;
 
-	if( noDefault )
-	{
-		string error = "Invalid Xml Type Name: " + string(name);
-		assert( false && error.data() );
-	}
-	return CHAR_TYPE_OTHER;
+    if( noDefault )
+    {
+        string error = "Invalid Xml Type Name: " + string(name);
+        assert( false && error.data() );
+    }
+    return CHAR_TYPE_OTHER;
 }
 
 
@@ -362,49 +365,49 @@ unsigned int CMA_CType::getEncodeValue(const char* p) const
 {
     const unsigned char* uc = (const unsigned char*)p;
 
-	unsigned int bytes = getByteCountFun_( uc );
-	if( bytes == 0 )
-		return 0;
+    unsigned int bytes = getByteCountFun_( uc );
+    if( bytes == 0 )
+        return 0;
 
-	unsigned int val = 0;
-	switch(bytes)
-	{
-			case 1:
-					val = uc[0];
-					break;
-			case 2:
-					val = uc[0] << 8 | uc[1];
-					break;
-			case 3:
-					val =  uc[0] << 16 | uc[1] << 8 | uc[2];
-					break;
-			case 4:
-					val = uc[0] << 24 | uc[1] << 16 | uc[2] << 8 | uc[3] ;
-					break;
-			default:
-					assert(false && "Cannot handle 'Character's length > 4'");
-					return 0;
-	}
+    unsigned int val = 0;
+    switch(bytes)
+    {
+    case 1:
+        val = uc[0];
+        break;
+    case 2:
+        val = uc[0] << 8 | uc[1];
+        break;
+    case 3:
+        val =  uc[0] << 16 | uc[1] << 8 | uc[2];
+        break;
+    case 4:
+        val = uc[0] << 24 | uc[1] << 16 | uc[2] << 8 | uc[3] ;
+        break;
+    default:
+        assert(false && "Cannot handle 'Character's length > 4'");
+        return 0;
+    }
 
-	return val;
+    return val;
 }
 
 inline const char* getTinyXmlText( const TiXmlNode* textNode )
 {
-	return textNode->FirstChild()->ToText()->Value();
+    return textNode->FirstChild()->ToText()->Value();
 }
 
 void loadCharsValue( const char* str, CTypeTokenizer& tokenizer, set<CharValue>& ret )
 {
-	const CMA_CType *ctype = tokenizer.getCType();
-	const char* p = 0;
-	string instr = ctype->getPOCXmlStr(str);
-	tokenizer.assign( instr.c_str() );
-	while( ( p = tokenizer.next() ) )
-	{
-		//cout<<"load char "<<p<<endl;
-		ret.insert( ctype->getEncodeValue( p ) );
-	}
+    const CMA_CType *ctype = tokenizer.getCType();
+    const char* p = 0;
+    string instr = ctype->getPOCXmlStr(str);
+    tokenizer.assign( instr.c_str() );
+    while( ( p = tokenizer.next() ) )
+    {
+        //cout<<"load char "<<p<<endl;
+        ret.insert( ctype->getEncodeValue( p ) );
+    }
 }
 
 void loadCharsString( const char* str, CTypeTokenizer& tokenizer, set<string>& ret )
@@ -425,245 +428,245 @@ void loadCharsString( const char* str, CTypeTokenizer& tokenizer, set<string>& r
  */
 void loadTypes( const char* typeStr, vector<CharType>& ret )
 {
-	vector<string> names;
-	stringToVector( string(typeStr), names, ",", true );
-	for( vector<string>::iterator itr = names.begin();
-			itr != names.end(); ++itr )
-	{
-		if( itr->empty() )
-			continue;
-		CharType type = CMA_CType::getCharTypeByXmlName( itr->data(), true );
-		if( type == CHAR_TYPE_OTHER )
-		{
-			cerr<<"[poc.xml Error] Unknown Type Name " << type << endl;
-			exit(1);
-		}
-		ret.push_back( type );
-	}
+    vector<string> names;
+    stringToVector( string(typeStr), names, ",", true );
+    for( vector<string>::iterator itr = names.begin();
+            itr != names.end(); ++itr )
+    {
+        if( itr->empty() )
+            continue;
+        CharType type = CMA_CType::getCharTypeByXmlName( itr->data(), true );
+        if( type == CHAR_TYPE_OTHER )
+        {
+            cerr<<"[poc.xml Error] Unknown Type Name " << type << endl;
+            exit(1);
+        }
+        ret.push_back( type );
+    }
 }
 
 void loadEntityImpl( const char* text, CTypeTokenizer& tokenizer, CharType type,
-        ctypeinner::ConditionRetType& ret)
+                     ctypeinner::ConditionRetType& ret)
 {
-	const CMA_CType *ctype = tokenizer.getCType();
+    const CMA_CType *ctype = tokenizer.getCType();
 
-	string instr = ctype->getPOCXmlStr(text);
-	tokenizer.assign( instr.c_str() );
-	const char* p = 0;
+    string instr = ctype->getPOCXmlStr(text);
+    tokenizer.assign( instr.c_str() );
+    const char* p = 0;
 
-	while( ( p = tokenizer.next() ) )
-	{
-		CharConditions& cc = ret.getCharCondition( p );
-		if( cc.baseType_ != CHAR_TYPE_INIT && cc.baseType_ != type)
-		{
-			cerr<<"[poc.xml Error] Character "<< p <<"'s base type is set."<<endl;
-			exit(1);
-		}
-		cc.baseType_ = type;
-	}
+    while( ( p = tokenizer.next() ) )
+    {
+        CharConditions& cc = ret.getCharCondition( p );
+        if( cc.baseType_ != CHAR_TYPE_INIT && cc.baseType_ != type)
+        {
+            cerr<<"[poc.xml Error] Character "<< p <<"'s base type is set."<<endl;
+            exit(1);
+        }
+        cc.baseType_ = type;
+    }
 }
 
 
 void loadEntity( const TiXmlNode* textNode, CTypeTokenizer& tokenizer, CharType type,
-        ctypeinner::ConditionRetType& ret)
+                 ctypeinner::ConditionRetType& ret)
 {
-	const char* text = getTinyXmlText( textNode );
-	loadEntityImpl( text, tokenizer, type, ret);
+    const char* text = getTinyXmlText( textNode );
+    loadEntityImpl( text, tokenizer, type, ret);
 }
 
 void loadCondition(const TiXmlNode* condNode, CTypeTokenizer& tokenizer, Condition& ret)
 {
-	CharType type = CHAR_TYPE_INIT;
-	vector<CharType> preTypes;
-	vector<CharType> noPreTypes;
-	vector<CharType> nextTypes;
-	vector<CharType> noNextTypes;
-	set<CharValue> nextChars;
-	bool isEnd = false;
+    CharType type = CHAR_TYPE_INIT;
+    vector<CharType> preTypes;
+    vector<CharType> noPreTypes;
+    vector<CharType> nextTypes;
+    vector<CharType> noNextTypes;
+    set<CharValue> nextChars;
+    bool isEnd = false;
 
-	for( const TiXmlNode* node = condNode->FirstChild(); node; node = node->NextSibling() )
-	{
-		const char* tag = node->Value();
-		if( strcmp( tag, "type") == 0 )
-			type = CMA_CType::getCharTypeByXmlName( getTinyXmlText( node ), true );
-		else if( strcmp( tag, "pretype") == 0 )
-			loadTypes( getTinyXmlText( node ), preTypes );
-		else if( strcmp( tag, "nopretype") == 0 )
-			loadTypes( getTinyXmlText( node ), noPreTypes );
-		else if( strcmp( tag, "nexttype") == 0 )
-			loadTypes( getTinyXmlText( node ), nextTypes );
-		else if( strcmp( tag, "nonexttype") == 0 )
-			loadTypes( getTinyXmlText( node ), noNextTypes );
-		else if( strcmp( tag, "nextchar") == 0 )
-			loadCharsValue( getTinyXmlText( node ), tokenizer, nextChars );
-		else if( strcmp( tag, "end") == 0 )
-		{
-			isEnd = ( strcmp( getTinyXmlText( node ), "true") == 0 );
-		}
-		else
-		{
-			cerr<<"[poc.xml Warn] Ignore Condition Node tag " << tag << endl;
-		}
-	}
+    for( const TiXmlNode* node = condNode->FirstChild(); node; node = node->NextSibling() )
+    {
+        const char* tag = node->Value();
+        if( strcmp( tag, "type") == 0 )
+            type = CMA_CType::getCharTypeByXmlName( getTinyXmlText( node ), true );
+        else if( strcmp( tag, "pretype") == 0 )
+            loadTypes( getTinyXmlText( node ), preTypes );
+        else if( strcmp( tag, "nopretype") == 0 )
+            loadTypes( getTinyXmlText( node ), noPreTypes );
+        else if( strcmp( tag, "nexttype") == 0 )
+            loadTypes( getTinyXmlText( node ), nextTypes );
+        else if( strcmp( tag, "nonexttype") == 0 )
+            loadTypes( getTinyXmlText( node ), noNextTypes );
+        else if( strcmp( tag, "nextchar") == 0 )
+            loadCharsValue( getTinyXmlText( node ), tokenizer, nextChars );
+        else if( strcmp( tag, "end") == 0 )
+        {
+            isEnd = ( strcmp( getTinyXmlText( node ), "true") == 0 );
+        }
+        else
+        {
+            cerr<<"[poc.xml Warn] Ignore Condition Node tag " << tag << endl;
+        }
+    }
 
-	ret.init( type, preTypes, noPreTypes, nextTypes, noNextTypes, nextChars, isEnd );
+    ret.init( type, preTypes, noPreTypes, nextTypes, noNextTypes, nextChars, isEnd );
 }
 
 void loadRule(const TiXmlNode* ruleNode, CTypeTokenizer& tokenizer, ctypeinner::ConditionRetType& ret)
 {
-	set<string> values;
-	vector<Condition > conds;
-	//dealt the rule node
-	for( const TiXmlNode* node = ruleNode->FirstChild(); node; node = node->NextSibling() )
-	{
-		const char* tag = node->Value();
-		if( strcmp( tag, "char") == 0 )
-			loadCharsString( getTinyXmlText( node ), tokenizer, values );
-		else if( strcmp( tag, "condition") == 0 )
-		{
-			Condition cond;
-			loadCondition( node, tokenizer, cond );
-			bool duplCond = false;
-			for( size_t i = 0; i < conds.size(); ++i )
-			{
-				if( conds[i].equals( cond ))
-				{
-					duplCond = true;
-					continue;
-				}
-			}
+    set<string> values;
+    vector<Condition > conds;
+    //dealt the rule node
+    for( const TiXmlNode* node = ruleNode->FirstChild(); node; node = node->NextSibling() )
+    {
+        const char* tag = node->Value();
+        if( strcmp( tag, "char") == 0 )
+            loadCharsString( getTinyXmlText( node ), tokenizer, values );
+        else if( strcmp( tag, "condition") == 0 )
+        {
+            Condition cond;
+            loadCondition( node, tokenizer, cond );
+            bool duplCond = false;
+            for( size_t i = 0; i < conds.size(); ++i )
+            {
+                if( conds[i].equals( cond ))
+                {
+                    duplCond = true;
+                    continue;
+                }
+            }
 
-			if( !duplCond )
-			{
-				//cout<<"#Add new condition "<<cond<<endl;
-				conds.push_back( cond );
-			}
-		}
-	}
+            if( !duplCond )
+            {
+                //cout<<"#Add new condition "<<cond<<endl;
+                conds.push_back( cond );
+            }
+        }
+    }
 
-	//update the conditions
-	for( set<string>::iterator itr = values.begin(); itr != values.end(); ++itr)
-	{
-		CharConditions& charCond = ret.getCharCondition( itr->c_str() );
-		charCond.addConditions( conds );
-		if( charCond.baseType_ == CHAR_TYPE_INIT )
-			charCond.baseType_ = CHAR_TYPE_OTHER;
-	}
+    //update the conditions
+    for( set<string>::iterator itr = values.begin(); itr != values.end(); ++itr)
+    {
+        CharConditions& charCond = ret.getCharCondition( itr->c_str() );
+        charCond.addConditions( conds );
+        if( charCond.baseType_ == CHAR_TYPE_INIT )
+            charCond.baseType_ = CHAR_TYPE_OTHER;
+    }
 }
 
 int CMA_CType::loadConfiguration( const char* file )
 {
     TiXmlDocument doc( file );
-	bool loadOkay = doc.LoadFile( );
-	if( !loadOkay )
-	{
-		cerr<< "[poc.xml Init Error] " << doc.ErrorDesc() << " for file "<< file << endl;
-		return 0;
-	}
+    bool loadOkay = doc.LoadFile( );
+    if( !loadOkay )
+    {
+        cerr<< "[poc.xml Init Error] " << doc.ErrorDesc() << " for file "<< file << endl;
+        return 0;
+    }
 
-	const TiXmlElement* root= doc.RootElement();
+    const TiXmlElement* root= doc.RootElement();
 
-	CTypeTokenizer tokenizer( this );
+    CTypeTokenizer tokenizer( this );
 
-	ctypeinner::ConditionRetType ret;
-	ret.keys_ = &condKeys_;
-	ret.values_ = &condValues_;
+    ctypeinner::ConditionRetType ret;
+    ret.keys_ = &condKeys_;
+    ret.values_ = &condValues_;
 
-	//load the entities
-	const TiXmlNode* entityNode = root->FirstChild( "entities" );
-	set< CharValue > spaceSet;
+    //load the entities
+    const TiXmlNode* entityNode = root->FirstChild( "entities" );
+    set< CharValue > spaceSet;
 
-	for( const TiXmlNode* node = entityNode->FirstChild(); node; node = node->NextSibling() )
-	{
-		const char* tag = node->Value();
-		if( strcmp( tag, "digit") == 0 )
-			loadEntity( node, tokenizer, CHAR_TYPE_DIGIT, ret );
-		else if( strcmp( tag, "chardigit") == 0 )
-			loadEntity( node, tokenizer, CHAR_TYPE_CHARDIGIT, ret );
-		else if( strcmp( tag, "letter") == 0 )
-			loadEntity( node, tokenizer, CHAR_TYPE_LETTER, ret );
-		else if( strcmp( tag, "punctuation") == 0 )
-			loadEntity( node, tokenizer, CHAR_TYPE_PUNC, ret );
-		else if( strcmp( tag, "space") == 0 )
-		{
-			string spaceValue =  getTinyXmlText( node );
-			spaceValue += DEFAULT_SPACE;
-			//loadEntityImpl( spaceValue.c_str(), tokenizer, CHAR_TYPE_SPACE, typeMap_ );
-			loadCharsValue( spaceValue.c_str(), tokenizer, spaceSet );
-		}
-		else if( strcmp( tag, "sentenceseparator") == 0 )
-			loadCharsValue( getTinyXmlText( node ), tokenizer, senSepSet_ );
-		else if( node->ToComment() != 0 )
-			continue;
-		else
-		{
-			cerr<<"Unknown Entity Name: " << tag << endl;
-			exit(1);
-		}
-	}
+    for( const TiXmlNode* node = entityNode->FirstChild(); node; node = node->NextSibling() )
+    {
+        const char* tag = node->Value();
+        if( strcmp( tag, "digit") == 0 )
+            loadEntity( node, tokenizer, CHAR_TYPE_DIGIT, ret );
+        else if( strcmp( tag, "chardigit") == 0 )
+            loadEntity( node, tokenizer, CHAR_TYPE_CHARDIGIT, ret );
+        else if( strcmp( tag, "letter") == 0 )
+            loadEntity( node, tokenizer, CHAR_TYPE_LETTER, ret );
+        else if( strcmp( tag, "punctuation") == 0 )
+            loadEntity( node, tokenizer, CHAR_TYPE_PUNC, ret );
+        else if( strcmp( tag, "space") == 0 )
+        {
+            string spaceValue =  getTinyXmlText( node );
+            spaceValue += DEFAULT_SPACE;
+            //loadEntityImpl( spaceValue.c_str(), tokenizer, CHAR_TYPE_SPACE, typeMap_ );
+            loadCharsValue( spaceValue.c_str(), tokenizer, spaceSet );
+        }
+        else if( strcmp( tag, "sentenceseparator") == 0 )
+            loadCharsValue( getTinyXmlText( node ), tokenizer, senSepSet_ );
+        else if( node->ToComment() != 0 )
+            continue;
+        else
+        {
+            cerr<<"Unknown Entity Name: " << tag << endl;
+            exit(1);
+        }
+    }
 
-	// initialize space array
-	memset( spaceArray_, 0x0, sizeof( spaceArray_ ) );
-	for( set<CharValue>::iterator itr = spaceSet.begin();
-	        itr != spaceSet.end(); ++itr )
-	{
-	    spaceArray_[ *itr % SPACE_ARRAY_SIZE ] = *itr;
-	}
+    // initialize space array
+    memset( spaceArray_, 0x0, sizeof( spaceArray_ ) );
+    for( set<CharValue>::iterator itr = spaceSet.begin();
+            itr != spaceSet.end(); ++itr )
+    {
+        spaceArray_[ *itr % SPACE_ARRAY_SIZE ] = *itr;
+    }
 
 
-	// load the rules
-	const TiXmlNode* rulesNode = root->FirstChild( "rules" );
-	for( const TiXmlNode* node = rulesNode->FirstChild(); node; node = node->NextSibling() )
-	{
-		if( strcmp( node->Value(), "rule" ) != 0)
-			continue;
-		loadRule( node, tokenizer, ret );
-	}
+    // load the rules
+    const TiXmlNode* rulesNode = root->FirstChild( "rules" );
+    for( const TiXmlNode* node = rulesNode->FirstChild(); node; node = node->NextSibling() )
+    {
+        if( strcmp( node->Value(), "rule" ) != 0)
+            continue;
+        loadRule( node, tokenizer, ret );
+    }
 
-	return 1;
+    return 1;
 }
 
 CharType CMA_CType::getCharType(const char* p, CharType preType, const char* nextP) const
 {
     CharValue curV = getEncodeValue(p);
-	if( isSpace( curV ) )
+    if( isSpace( curV ) )
         return CHAR_TYPE_SPACE;
-	VTrieNode node1;
-	condKeys_.search( p, &node1 );
-	if( node1.data <= 0 )
-		return CHAR_TYPE_OTHER;
+    VTrieNode node1;
+    condKeys_.search( p, &node1 );
+    if( node1.data <= 0 )
+        return CHAR_TYPE_OTHER;
 
-	VTrieNode node2;
-	CharValue nextV = nextP ? getEncodeValue( nextP ) : 0;
-	CharType nextType = CHAR_TYPE_OTHER;
-	if( nextV != 0 )
-	{
-	    condKeys_.search( nextP, &node2 );
-	    if( node2.data > 0 )
-	        nextType = condValues_[ node2.data ].baseType_;
-	}
+    VTrieNode node2;
+    CharValue nextV = nextP ? getEncodeValue( nextP ) : 0;
+    CharType nextType = CHAR_TYPE_OTHER;
+    if( nextV != 0 )
+    {
+        condKeys_.search( nextP, &node2 );
+        if( node2.data > 0 )
+            nextType = condValues_[ node2.data ].baseType_;
+    }
 
-	const CharConditions& charConds = condValues_[ node1.data ];
-	CharType matchedType = charConds.match(preType, nextV, nextType, charConds.baseType_);
-	//if( preType == CHAR_TYPE_LETTER && matchedType == CHAR_TYPE_DIGIT )
-	//	return CHAR_TYPE_LETTER;
-	return matchedType;
+    const CharConditions& charConds = condValues_[ node1.data ];
+    CharType matchedType = charConds.match(preType, nextV, nextType, charConds.baseType_);
+    //if( preType == CHAR_TYPE_LETTER && matchedType == CHAR_TYPE_DIGIT )
+    //	return CHAR_TYPE_LETTER;
+    return matchedType;
 }
 
 CharType CMA_CType::getBaseType( const char* p ) const
 {
-	VTrieNode node;
-	condKeys_.search( p, &node );
-	if( node.data <= 0 )
-		return CHAR_TYPE_OTHER;
-	return condValues_[ node.data ].baseType_;
+    VTrieNode node;
+    condKeys_.search( p, &node );
+    if( node.data <= 0 )
+        return CHAR_TYPE_OTHER;
+    return condValues_[ node.data ].baseType_;
 }
 
 bool CMA_CType::isSpace(const char* p) const
 {
-	CharValue charVal = getEncodeValue(p);
-	int destIdx = charVal % SPACE_ARRAY_SIZE;
-	return spaceArray_[ destIdx ] == charVal;
+    CharValue charVal = getEncodeValue(p);
+    int destIdx = charVal % SPACE_ARRAY_SIZE;
+    return spaceArray_[ destIdx ] == charVal;
 }
 
 bool CMA_CType::isSpace( CharValue charVal ) const
@@ -673,53 +676,56 @@ bool CMA_CType::isSpace( CharValue charVal ) const
 
 bool CMA_CType::isSentenceSeparator(const char* p) const
 {
-	CharValue curV = getEncodeValue(p);
-	return senSepSet_.find(curV) != senSepSet_.end();
+    CharValue curV = getEncodeValue(p);
+    return senSepSet_.find(curV) != senSepSet_.end();
 }
 
 CharType CMA_CType::getDefaultEndType( CharType preType )
 {
-	if(preType == CHAR_TYPE_DIGIT || preType == CHAR_TYPE_LETTER
-	            		|| preType == CHAR_TYPE_CHARDIGIT)
-		return preType;
-	return CHAR_TYPE_OTHER;
+    if(preType == CHAR_TYPE_DIGIT || preType == CHAR_TYPE_LETTER
+            || preType == CHAR_TYPE_CHARDIGIT)
+        return preType;
+    return CHAR_TYPE_OTHER;
 }
 
 string CMA_CType::getPOCXmlStr( const char* p ) const
 {
 #ifdef USE_UTF_16
-	if(type_ == Knowledge::ENCODE_TYPE_UTF16)
-	{
-		wiselib::UString ustr(p, wiselib::UString::UTF_8);
-		string ret( (const char*)ustr.c_str(), ustr.length()*2 );
-		return ret;
-	}
+    if(type_ == Knowledge::ENCODE_TYPE_UTF16)
+    {
+        wiselib::UString ustr(p, wiselib::UString::UTF_8);
+        string ret( (const char*)ustr.c_str(), ustr.length()*2 );
+        return ret;
+    }
 #endif
-	return string(p);
+    return string(p);
 }
 
 bool CMA_CType::Full2HalfWidth(const unsigned char*& p, int len, unsigned char* pch)
 {
-	// todo: other encoding, define as callback function for performance
+    // todo: other encoding, define as callback function for performance
 
-	if (type_ == Knowledge::ENCODE_TYPE_UTF8 && p[0] == 0xef /*len == 3*/)
-	{
-		*pch = 0;
-		if (p[1] == 0xbc) {
-			//0xef(239) bc(188) 90(144), 0~9
-			//0xef(239) bc(188) a1(161), A~Z
-			*pch = ctypeinner::UTF8_NUM_UPPER_ALPHA_FULLWIDTH_3RD_BYTE[ p[2] ];
-		}
-		else if (p[1] == 0xbd) {
-			//0xef(239) bd(189) 81(129), a~z
-			*pch = ctypeinner::UTF8_LOWER_ALPHA_FULLWIDTH_3RD_BYTE[ p[2] ];
-		}
-		else {
-			return false;
-		}
-		return ((*pch) != 0);
-	}
-	return false;
+    if (type_ == Knowledge::ENCODE_TYPE_UTF8 && p[0] == 0xef /*len == 3*/)
+    {
+        *pch = 0;
+        if (p[1] == 0xbc)
+        {
+            //0xef(239) bc(188) 90(144), 0~9
+            //0xef(239) bc(188) a1(161), A~Z
+            *pch = ctypeinner::UTF8_NUM_UPPER_ALPHA_FULLWIDTH_3RD_BYTE[ p[2] ];
+        }
+        else if (p[1] == 0xbd)
+        {
+            //0xef(239) bd(189) 81(129), a~z
+            *pch = ctypeinner::UTF8_LOWER_ALPHA_FULLWIDTH_3RD_BYTE[ p[2] ];
+        }
+        else
+        {
+            return false;
+        }
+        return ((*pch) != 0);
+    }
+    return false;
 }
 
 } // namespace cma

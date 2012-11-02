@@ -39,7 +39,7 @@ bool construtWBNames( Sentence& sent, vector< string >& out )
     if( wordCount < 2 )
         return true;
     else if( wordCount > 8 )
-    	return false;
+        return false;
 
     out.resize( 5 );
 
@@ -91,10 +91,10 @@ WordBound::~WordBound()
 }
 
 int WordBound::trainModel(
-        const char* iCMAModelPath,
-        const vector< string >& dicts,
-        const char* wbModelFile
-        )
+    const char* iCMAModelPath,
+    const vector< string >& dicts,
+    const char* wbModelFile
+)
 {
     int ret = 0;
     CMA_Factory* factory = CMA_Factory::instance();
@@ -183,7 +183,7 @@ double WordBound::getMinScore()
 
 bool WordBound::isPossibeWord( Sentence& sent )
 {
-	vector< string > names;
+    vector< string > names;
     bool ret = wbinner::construtWBNames( sent, names );
     if( names.empty() == true )
         return ret;

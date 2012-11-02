@@ -16,16 +16,17 @@ using namespace std;
 
 namespace cma
 {
-CMA_WType::WordType CTYPE_2_WTYPE[ CHAR_TYPE_NUM ] = {
-        CMA_WType::WORD_TYPE_OTHER, // CHAR_TYPE_INIT
-        CMA_WType::WORD_TYPE_OTHER, // CHAR_TYPE_OTHER
-        CMA_WType::WORD_TYPE_NUMBER,// CHAR_TYPE_DIGIT
-        CMA_WType::WORD_TYPE_NUMBER,// CHAR_TYPE_CHARDIGIT
-        CMA_WType::WORD_TYPE_PUNC,  // CHAR_TYPE_PUNC
-        CMA_WType::WORD_TYPE_PUNC,  // CHAR_TYPE_SPACE
-        CMA_WType::WORD_TYPE_DATE,  // CHAR_TYPE_DATE
-        CMA_WType::WORD_TYPE_LETTER // CHAR_TYPE_LETTER
-        };
+CMA_WType::WordType CTYPE_2_WTYPE[ CHAR_TYPE_NUM ] =
+{
+    CMA_WType::WORD_TYPE_OTHER, // CHAR_TYPE_INIT
+    CMA_WType::WORD_TYPE_OTHER, // CHAR_TYPE_OTHER
+    CMA_WType::WORD_TYPE_NUMBER,// CHAR_TYPE_DIGIT
+    CMA_WType::WORD_TYPE_NUMBER,// CHAR_TYPE_CHARDIGIT
+    CMA_WType::WORD_TYPE_PUNC,  // CHAR_TYPE_PUNC
+    CMA_WType::WORD_TYPE_PUNC,  // CHAR_TYPE_SPACE
+    CMA_WType::WORD_TYPE_DATE,  // CHAR_TYPE_DATE
+    CMA_WType::WORD_TYPE_LETTER // CHAR_TYPE_LETTER
+};
 
 
 CMA_WType::CMA_WType(const CMA_CType* ctype)
@@ -53,69 +54,73 @@ CMA_WType::WordType CMA_WType::getWordType(const char* word)
         if(preType == curType)
             continue;
 
-        switch(curType){
-            case CHAR_TYPE_OTHER:
-                return WORD_TYPE_OTHER;
-            case CHAR_TYPE_PUNC:
-                if(preType == CHAR_TYPE_INIT && !nextP)
-                    return WORD_TYPE_PUNC;
-                return WORD_TYPE_OTHER;
-            default:
-                break;
+        switch(curType)
+        {
+        case CHAR_TYPE_OTHER:
+            return WORD_TYPE_OTHER;
+        case CHAR_TYPE_PUNC:
+            if(preType == CHAR_TYPE_INIT && !nextP)
+                return WORD_TYPE_PUNC;
+            return WORD_TYPE_OTHER;
+        default:
+            break;
         }
 
-        switch(preType){
-            case CHAR_TYPE_INIT:
-                preType = curType;
-                break;
+        switch(preType)
+        {
+        case CHAR_TYPE_INIT:
+            preType = curType;
+            break;
 
-            case CHAR_TYPE_DIGIT:
-            case CHAR_TYPE_CHARDIGIT:
-                switch(curType){
-                    case CHAR_TYPE_LETTER:
-                        preType = CHAR_TYPE_LETTER;
-                        break;
-                    case CHAR_TYPE_DATE:
-                        return (nextP) ? WORD_TYPE_OTHER : WORD_TYPE_DATE;
-                    default:
-                    {
-#ifdef ENABLE_WT_ASSERT
-                        string errorMsg("unexpected arrive here (pre is number, cur is not-letter or non-date). Input: ");
-                        errorMsg += word;
-                        assert(false && errorMsg.c_str());
-#endif
-                        break;
-                    }
-                }
-                break;
-
+        case CHAR_TYPE_DIGIT:
+        case CHAR_TYPE_CHARDIGIT:
+            switch(curType)
+            {
             case CHAR_TYPE_LETTER:
-                if(curType == CHAR_TYPE_DIGIT || curType == CHAR_TYPE_CHARDIGIT)
-                    continue;
-#ifdef ENABLE_WT_ASSERT
-                assert(false && "unexpected arrive here (pre is Letter and cur is non-digit)");
-#endif
+                preType = CHAR_TYPE_LETTER;
                 break;
-                
+            case CHAR_TYPE_DATE:
+                return (nextP) ? WORD_TYPE_OTHER : WORD_TYPE_DATE;
             default:
+            {
 #ifdef ENABLE_WT_ASSERT
-                assert(false && "unexpected arrive here (preType)");
+                string errorMsg("unexpected arrive here (pre is number, cur is not-letter or non-date). Input: ");
+                errorMsg += word;
+                assert(false && errorMsg.c_str());
 #endif
                 break;
+            }
+            }
+            break;
+
+        case CHAR_TYPE_LETTER:
+            if(curType == CHAR_TYPE_DIGIT || curType == CHAR_TYPE_CHARDIGIT)
+                continue;
+#ifdef ENABLE_WT_ASSERT
+            assert(false && "unexpected arrive here (pre is Letter and cur is non-digit)");
+#endif
+            break;
+
+        default:
+#ifdef ENABLE_WT_ASSERT
+            assert(false && "unexpected arrive here (preType)");
+#endif
+            break;
         }
     }
 
-    switch(preType){
-        case CHAR_TYPE_LETTER:
-            return WORD_TYPE_LETTER;
-        case CHAR_TYPE_DIGIT:
-        case CHAR_TYPE_CHARDIGIT:
-            return WORD_TYPE_NUMBER;
-        default:
+    switch(preType)
+    {
+    case CHAR_TYPE_LETTER:
+        return WORD_TYPE_LETTER;
+    case CHAR_TYPE_DIGIT:
+    case CHAR_TYPE_CHARDIGIT:
+        return WORD_TYPE_NUMBER;
+    default:
 #ifdef ENABLE_WT_ASSERT
-            assert(false && "unexpected arrive here");
+        assert(false && "unexpected arrive here");
 #endif
-            return WORD_TYPE_OTHER;
+        return WORD_TYPE_OTHER;
     }
     return WORD_TYPE_OTHER;
 }

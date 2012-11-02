@@ -25,15 +25,15 @@ bool Nocase::operator() (const std::string& x, const std::string& y) const
 
     while(p != x.end() && q != y.end() && toupper(*p) == toupper(*q))
     {
-		++p;
-		++q;
+        ++p;
+        ++q;
     }
 
     if(p == x.end())
-    	return q != y.end();
+        return q != y.end();
 
     if(q == y.end())
-    	return false;
+        return false;
 
     return toupper(*p) < toupper(*q);
 }
@@ -78,7 +78,7 @@ int POSTable::getCodeFromStr(const std::string& pos)
 const char* POSTable::getStrFromCode(int index) const
 {
     if(index < 0 || indexedFlags_.size() <= (size_t)index )
-    	return EMPTY;
+        return EMPTY;
 
     return posTable_[index];
 }
@@ -98,37 +98,37 @@ int POSTable::getCodeFromType(POSType type) const
 
 bool POSTable::isIndexPOS( int posCode ) const
 {
-	// Error POS Index return true by default
-	//if(posCode < 0 || indexedFlags_.size() <= (size_t)posCode )
-	//	return true;
-	return indexedFlags_[ posCode ];
+    // Error POS Index return true by default
+    //if(posCode < 0 || indexedFlags_.size() <= (size_t)posCode )
+    //	return true;
+    return indexedFlags_[ posCode ];
 }
 
 bool POSTable::setIndexPOS( int posCode, bool isIndex )
 {
-	if(posCode < 0 || indexedFlags_.size() <= (size_t)posCode )
+    if(posCode < 0 || indexedFlags_.size() <= (size_t)posCode )
         return false;
-	return indexedFlags_[ posCode ] = isIndex;
+    return indexedFlags_[ posCode ] = isIndex;
 }
 
 void POSTable::resetIndexPOSList( bool defVal )
 {
-	for( size_t i = 0; i < indexedFlags_.size(); ++i )
-	{
-	    indexedFlags_[ i ] = defVal;
-	}
+    for( size_t i = 0; i < indexedFlags_.size(); ++i )
+    {
+        indexedFlags_[ i ] = defVal;
+    }
 }
 
 int POSTable::setIndexPOSList( vector<string>& posList )
 {
-	int ret = 0;
-	for( vector<string>::iterator itr = posList.begin();
-			itr != posList.end(); ++itr )
-	{
-		if( setIndexPOS( getCodeFromStr( *itr), true ) )
-			++ret;
-	}
-	return ret;
+    int ret = 0;
+    for( vector<string>::iterator itr = posList.begin();
+            itr != posList.end(); ++itr )
+    {
+        if( setIndexPOS( getCodeFromStr( *itr), true ) )
+            ++ret;
+    }
+    return ret;
 }
 
 } // namespace cma

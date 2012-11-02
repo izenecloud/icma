@@ -24,7 +24,7 @@ Morpheme::Morpheme()
 Sentence::Sentence()
     : incrementedWordOffsetB_(true)
 {
-	//do nothing
+    //do nothing
 }
 
 Sentence::Sentence(const char* pString)
@@ -53,12 +53,12 @@ int Sentence::getListSize(void) const
     return candMetas_.size();
 }
 
-int Sentence::getCount(int nPos) const 
+int Sentence::getCount(int nPos) const
 {
     int listSize = candMetas_.size();
     return ( nPos + 1 >= listSize ) ?
-            ( segment_.size() - candMetas_[ nPos ].segOffset_ ) :
-            ( candMetas_[ nPos + 1 ].segOffset_ - candMetas_[ nPos ].segOffset_ );
+           ( segment_.size() - candMetas_[ nPos ].segOffset_ ) :
+           ( candMetas_[ nPos + 1 ].segOffset_ - candMetas_[ nPos ].segOffset_ );
 }
 
 const char* Sentence::getLexicon(int nPos, int nIdx) const
@@ -90,7 +90,7 @@ size_t Sentence::getOffset(int nPos, int nIdx) const
 
 MorphemeList* Sentence::getMorphemeList(int nPos)
 {
-	return &candidates_[nPos];
+    return &candidates_[nPos];
 }
 
 double Sentence::getScore(int nPos) const
@@ -106,10 +106,10 @@ void Sentence::setScore(int nPos, double nScore)
 int Sentence::getOneBestIndex(void) const
 {
     if( candMetas_.empty() )
-	   return -1;
+        return -1;
     int size = candMetas_.size();
     if( size == 1 )
-       return 0;
+        return 0;
 
     double bestScore = candMetas_[0].score_;
     int bestIdx = 0;

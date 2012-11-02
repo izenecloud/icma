@@ -19,7 +19,8 @@ namespace cma
  * \param s the original string
  * \return the converted string with lower alphabets. For example, "gb2312" is returned when "GB2312" is input.
  */
-string toLower(const char* s) {
+string toLower(const char* s)
+{
     string str(s);
     for(size_t i=0; i<str.size(); ++i)
     {
@@ -52,9 +53,10 @@ Knowledge::EncodeType Knowledge::getEncodeType() const
     return encodeType_;
 }
 
-Knowledge::EncodeType Knowledge::decodeEncodeType(const char* encType){
+Knowledge::EncodeType Knowledge::decodeEncodeType(const char* encType)
+{
     string enc = toLower(encType);
-	if(enc == "gb2312" || enc == "gb 2312")
+    if(enc == "gb2312" || enc == "gb 2312")
     {
         return Knowledge::ENCODE_TYPE_GB2312;
     }
@@ -67,14 +69,14 @@ Knowledge::EncodeType Knowledge::decodeEncodeType(const char* encType){
         return Knowledge::ENCODE_TYPE_GB18030;
     }
     else if(enc == "utf8" || enc == "utf-8")
-	{
-		return Knowledge::ENCODE_TYPE_UTF8;
-	}
+    {
+        return Knowledge::ENCODE_TYPE_UTF8;
+    }
 #ifdef USE_UTF_16
     else if(enc == "utf16" || enc == "utf-16" || enc == "ucs2" || enc == "ucs-2")
-	{
-		return Knowledge::ENCODE_TYPE_UTF16;
-	}
+    {
+        return Knowledge::ENCODE_TYPE_UTF16;
+    }
 #endif
     assert(false && "unknown character encode type");
     return Knowledge::ENCODE_TYPE_NUM;

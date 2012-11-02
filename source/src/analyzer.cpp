@@ -27,9 +27,9 @@ namespace cma
 
 Analyzer::Analyzer()
     : options_(OPTION_TYPE_NUM),
-    posDelimiter_(DEFAULT_POS_DELIMITER),
-    wordDelimiter_(DEFAULT_WORD_DELIMITER),
-    sentenceDelimiter_(DEFAULT_SENTENCE_DEMIMITER)
+      posDelimiter_(DEFAULT_POS_DELIMITER),
+      wordDelimiter_(DEFAULT_WORD_DELIMITER),
+      sentenceDelimiter_(DEFAULT_SENTENCE_DEMIMITER)
 {
     options_[OPTION_TYPE_POS_TAGGING] = 1; // tag part-of-speech tags defaultly
     options_[OPTION_TYPE_NBEST] = 1; // set the default number of candidate results of runWithSentence()
@@ -44,7 +44,7 @@ void Analyzer::setOption(OptionType nOption, double nValue)
     // check nbest value range
     if(nOption == OPTION_TYPE_NBEST && nValue < 1)
     {
-	return;
+        return;
     }
 
     options_[nOption] = nValue;
