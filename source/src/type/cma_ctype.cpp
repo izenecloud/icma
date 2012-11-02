@@ -17,6 +17,8 @@
 #include "icma/util/tokenizer.h"
 #include "strutil.h"
 
+#include <boost/shared_ptr.hpp>
+
 using namespace std;
 using namespace cma::ticpp;
 
@@ -236,7 +238,7 @@ int computeMinMod( set<CharValue> inputSet )
 
 const string DEFAULT_SPACE = " \t\n\x0B\f\r";
 
-map< Knowledge::EncodeType, CMA_CType* > CTypeCache;
+map< Knowledge::EncodeType, boost::shared_ptr<CMA_CType> > CTypeCache;
 
 CMA_CType::CMA_CType(
         Knowledge::EncodeType type,
@@ -251,18 +253,18 @@ CMA_CType::CMA_CType(
 
 void CMA_CType::clear()
 {
-    map< Knowledge::EncodeType, CMA_CType* >::iterator iter;
-    for(iter = CTypeCache.begin(); iter != CTypeCache.end(); ++iter)
-        delete iter->second;
-    CTypeCache.clear();
+//    map< Knowledge::EncodeType, CMA_CType* >::iterator iter;
+//    for(iter = CTypeCache.begin(); iter != CTypeCache.end(); ++iter)
+//        delete iter->second;
+//    CTypeCache.clear();
 }
 
 CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
 {
-    map< Knowledge::EncodeType, CMA_CType* >::iterator itr
+    map< Knowledge::EncodeType, boost::shared_ptr<CMA_CType> >::iterator itr
             = CTypeCache.find( type );
     if( itr != CTypeCache.end() )
-        return itr->second;
+        return itr->second.get();
 
     CMA_CType* ret = NULL;
 
@@ -295,7 +297,7 @@ CMA_CType* CMA_CType::instance(Knowledge::EncodeType type)
 	    return 0;
     }
 
-    CTypeCache[ type ] = ret;
+    CTypeCache[ type ].reset(ret);
     return ret;
 }
 
