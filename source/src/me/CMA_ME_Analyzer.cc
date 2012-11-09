@@ -1108,6 +1108,10 @@ namespace meanainner{
 
         delete[] types;
     }
+    static inline bool IsPossibleChineseWord(CharType ct)
+    {
+        return ct == CHAR_TYPE_OTHER || ct == CHAR_TYPE_CHARDIGIT;
+    }
 
     void CMA_ME_Analyzer::analysis_maxprefix(
     		AnalOption& analOption,
@@ -1215,16 +1219,16 @@ namespace meanainner{
                 bool is_chinese_bigram = false;
                 while(end <= seg_end)
                 {
-                    if(types[end - 1] == CHAR_TYPE_OTHER)
+                    if(IsPossibleChineseWord(types[end - 1]))
                     {
                         if(seg.length() > 0 &&
-                            last_type != CHAR_TYPE_OTHER)
+                            !IsPossibleChineseWord(last_type))
                             break;
                         // each Chinese character length >=3
                         if(seg.length() >= 3)
                         {
                             seg += words[end - 1];
-                            if(end == seg_end || types[end] != CHAR_TYPE_OTHER)
+                            if(end == seg_end || !IsPossibleChineseWord(types[end]))
                             {
                                 end++;
                             }
@@ -1246,7 +1250,7 @@ namespace meanainner{
                     }
                     else
                     {
-                        if(seg.length() > 0 && last_type == CHAR_TYPE_OTHER)
+                        if(seg.length() > 0 && IsPossibleChineseWord(last_type))
                             break;
                     }
                     seg += words[end - 1];
