@@ -14,7 +14,7 @@ IF( USE_3ND_LIBS )
 # Find extra cmake modules dirs
 #
 # You can clone all modules from izenesoft.com:/git/cmake.git.
-# 
+#
 # Copy it to your install dir or change the variable
 # EXTRA_CMAKE_MODULES_DIRS.
 #
@@ -60,10 +60,10 @@ IF (CMAKE_COMPILER_IS_GNUCXX)
   # Select flags.
   SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
   # Disable assertion macros in RELEASE
-  SET(CMAKE_CXX_FLAGS_RELEASE        "-O2 -DNDEBUG")
-  SET(CMAKE_CXX_FLAGS_DEBUG          "-g -O2 -fno-reorder-blocks -fno-schedule-insns -fno-inline")
-  SET(CMAKE_CXX_FLAGS_DEBUGFULL      "-g3 -fno-inline -DIZS_DEBUG" CACHE STRING "Debugfull build type")
-  SET(CMAKE_CXX_FLAGS_PROFILE        "-pg -O2 -DNDEBUG")
+  SET(CMAKE_CXX_FLAGS_RELEASE        "-march=native -mtune=native -O2 -DNDEBUG")
+  SET(CMAKE_CXX_FLAGS_DEBUG          "-march=native -mtune=native -g -O2 -fno-reorder-blocks -fno-schedule-insns -fno-inline")
+  SET(CMAKE_CXX_FLAGS_DEBUGFULL      "-march=native -mtune=native -g3 -fno-inline -DIZS_DEBUG" CACHE STRING "Debugfull build type")
+  SET(CMAKE_CXX_FLAGS_PROFILE        "-march=native -mtune=native -pg -O2 -DNDEBUG")
   #SET(CMAKE_CXX_FLAGS_PROFILE        "-g3 -fno-inline -ftest-coverage -fprofile-arcs" CACHE STRING "Profile build type")
 
   MARK_AS_ADVANCED(CMAKE_CXX_FLAGS_DEBUGFULL CMAKE_CXX_FLAGS_PROFILE)
