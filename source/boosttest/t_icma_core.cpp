@@ -203,4 +203,102 @@ BOOST_AUTO_TEST_CASE(icma_mmmodel)
     //delete knowledge;
 }
 
+// maximum prefix in dictionary matching
+BOOST_AUTO_TEST_CASE(icma_maxprefix)
+{
+    Knowledge* knowledge = NULL;
+    Analyzer* analyzer = NULL;
+    CMA_Factory* factory = CMA_Factory::instance();
+
+    knowledge = factory->createKnowledge();
+    analyzer = factory->createAnalyzer();
+    BOOST_CHECK( knowledge != NULL );
+    BOOST_CHECK( analyzer != NULL );
+
+    knowledge->loadModel( "utf8", "../db/icwb/utf8/fmindex_dic/", false);
+    analyzer->setOption( Analyzer::OPTION_ANALYSIS_TYPE, 100);
+    analyzer->setOption( Analyzer::OPTION_TYPE_POS_TAGGING, 0);
+    analyzer->setKnowledge( knowledge );
+
+    // test run with string
+    string input = "几十万";
+    string dic_expected = "";
+    string ret = analyzer->runWithString( input.c_str() );
+    printf("result : %s\n", ret.c_str());
+    BOOST_CHECK( ret.empty() );
+
+    // test run with sentence
+    Sentence sent;
+    sent.setString( input.c_str() );
+    BOOST_CHECK( analyzer->runWithSentence( sent ) == 1 );
+    BOOST_CHECK( sent.getListSize() == 2 );
+    BOOST_CHECK( sent.getCount( 0 ) == 0 );
+    BOOST_CHECK( sent.getCount( 1 ) == 2 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 1, 0 ), "几十" ) == 0 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 1, 1 ), "十万" ) == 0 );
+    //
+    // test run with string
+    input = "佳能";
+    dic_expected = "佳能  ";
+    ret = analyzer->runWithString( input.c_str() );
+    printf("result : %s\n", ret.c_str());
+    BOOST_CHECK( ret == dic_expected );
+
+    // test run with sentence
+    sent.setString( input.c_str() );
+    BOOST_CHECK( analyzer->runWithSentence( sent ) == 1 );
+    BOOST_CHECK( sent.getListSize() == 2 );
+    BOOST_CHECK( sent.getCount( 0 ) == 1 );
+    BOOST_CHECK( sent.getCount( 1 ) == 0 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 0, 0 ), "佳能" ) == 0 );
+
+    // dictionary are all low-case, so upper-cash must not exist
+    input = "佳能(CANON)CANON2";
+    dic_expected = "佳能  ";
+    ret = analyzer->runWithString( input.c_str() );
+    printf("result : %s\n", ret.c_str());
+    BOOST_CHECK( ret == dic_expected );
+
+    // test run with sentence
+    sent.setString( input.c_str() );
+    BOOST_CHECK( analyzer->runWithSentence( sent ) == 1 );
+    BOOST_CHECK( sent.getListSize() == 2 );
+    BOOST_CHECK( sent.getCount( 0 ) == 1 );
+    BOOST_CHECK( sent.getCount( 1 ) == 2 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 1, 0 ), "CANON" ) == 0 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 1, 1 ), "CANON2" ) == 0 );
+
+    input = "(Test-non)Testnon佳能";
+    dic_expected = "佳能  ";
+    ret = analyzer->runWithString( input.c_str() );
+    printf("result : %s\n", ret.c_str());
+    BOOST_CHECK( ret == dic_expected );
+
+    // test run with sentence
+    sent.setString( input.c_str() );
+    BOOST_CHECK( analyzer->runWithSentence( sent ) == 1 );
+    BOOST_CHECK( sent.getListSize() == 2 );
+    BOOST_CHECK( sent.getCount( 0 ) == 1 );
+    BOOST_CHECK( sent.getCount( 1 ) == 2 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 1, 0 ), "Test-non" ) == 0 );
+    BOOST_CHECK( strcmp( sent.getLexicon( 1, 1 ), "Testnon" ) == 0 );
+
+    input = "佳能(canon)test non 单子不存在exist字典(6666) eos 60d单反套机(ef-s 18-135mm f/3.5-5.6is）单反镜头单子不存在";
+    dic_expected = "佳能  canon  60d  单反  18-135mm  3.5-5.6  单反镜头  ";
+    ret = analyzer->runWithString( input.c_str() );
+    printf("result : %s\n", ret.c_str());
+    BOOST_CHECK( ret == dic_expected );
+
+    // test run with sentence
+    sent.setString( input.c_str() );
+    BOOST_CHECK( analyzer->runWithSentence( sent ) == 1 );
+    BOOST_CHECK( sent.getListSize() == 2 );
+    BOOST_CHECK( sent.getCount( 0 ) == 7 );
+    BOOST_CHECK( sent.getCount( 1 ) == 18 );
+
+    delete analyzer;
+    delete knowledge;
+}
+
+
 BOOST_AUTO_TEST_SUITE_END()
