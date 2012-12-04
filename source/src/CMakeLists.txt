@@ -5,6 +5,7 @@ SET(CMAKE_CURRENT_BINARY_DIR cmac)
 FILE( GLOB_RECURSE CM_BASIC_SRC
          "${CMAKE_CURRENT_SOURCE_DIR}/*.cc" 
          "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
+         "${CMAKE_CURRENT_SOURCE_DIR}/*.c"         
          )
 
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../lib)

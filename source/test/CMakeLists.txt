@@ -45,6 +45,9 @@ TARGET_LINK_LIBRARIES(fetch_suspected_word ${LIBS_CMAC})
 ADD_EXECUTABLE(fetch_special_word fetch_special_word.cc)
 TARGET_LINK_LIBRARIES(fetch_special_word ${LIBS_CMAC})
 
+ADD_EXECUTABLE(t_opencc t_opencc.cc)
+TARGET_LINK_LIBRARIES(t_opencc ${LIBS_CMAC})
+
 IF( USE_MICROHTTPD )
 	ADD_EXECUTABLE(t_microhttpd t_microhttpd.cc)
 	TARGET_LINK_LIBRARIES(t_microhttpd pthread microhttpd)
