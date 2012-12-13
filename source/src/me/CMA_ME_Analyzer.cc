@@ -1188,7 +1188,7 @@ namespace meanainner{
 
             if(!longest_prefix_innode.empty())
             {
-                cout<<"longest prefix match in dictionary: "<< longest_prefix_innode << endl;
+                //cout<<"longest prefix match in dictionary: "<< longest_prefix_innode << endl;
                 bestSegSeq.push_back(begin);
                 bestSegSeq.push_back(longest_innode_wordend - 1);
                 begin = longest_innode_wordend - 1;
