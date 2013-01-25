@@ -1259,7 +1259,7 @@ namespace meanainner{
                 }
                 if(!seg.empty())
                 {
-                    cout << "find non-dictionary segment: " << seg << endl;
+                    //cout << "find non-dictionary segment: " << seg << endl;
                     bestSegSeq.push_back(begin);
                     if( is_chinese_bigram )
                         bestSegSeq.push_back(begin + 2);
