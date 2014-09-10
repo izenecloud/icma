@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="gb18030" ?>
+
+<cma>
+	<entities>
+		<!-- naming for these entiries are fixed -->
+		<digit><![CDATA[0123456789０１２３４５６７８９]]></digit>
+		<chardigit><![CDATA[零一二三四五六七八九○廿卅几幾十百千万亿萬億兆]]></chardigit>
+		<!--<chardigitupper><![CDATA[壹贰貳叄肆伍陆陸柒捌玖拾佰仟]]></chardigitupper>-->
+		<letter><![CDATA[QWERTYUIOPqwertyuiopASDFGHJKLasdfghjklZXCVBNMzxcvbnmＱＷＥＲＴＹＵＩＯＰｑｗｅｒｔｙｕｉｏｐＡＳＤＦＧＨＪＫＬａｓｄｆｇｈｊｋｌＺＸＣＶＢＮＭｚｘｃｖｂｎｍ]]></letter>
+		<punctuation><![CDATA[~!@#%^&*()` {}[]:"|;'\<>?,./.""''+-=_.～！＠＃％＾＆×（）｀　｛｝［］：＂｜；＇＼＜＞？，．／。《》“”‘’＋－＝—．]]></punctuation>		
+		<space><![CDATA[ 　]]></space>
+		<sentenceseparator><![CDATA[?!。！？；：]]></sentenceseparator>
+	</entities>
+
+	<rules>
+		<rule>
+			<char><![CDATA[千]]></char>
+			<condition>
+				<type>other</type>
+				<nextchar><![CDATA[瓦克伏]]></nextchar>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[日]]></char>
+			<condition>
+				<type>other</type>
+				<nextchar><![CDATA[圆元圓]]></nextchar>
+			</condition>
+		</rule>
+
+		<rule>
+			<char><![CDATA[年]]></char>
+			<condition>
+				<type>other</type>
+				<nextchar><![CDATA[度代级]]></nextchar>
+			</condition>
+		</rule>
+
+		<rule>
+			<char><![CDATA[分]]></char>
+			<condition>
+				<type>other</type>
+				<nextchar><![CDATA[贝貝钱钟步]]></nextchar>
+			</condition>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
+				<nextchar><![CDATA[之]]></nextchar>
+			</condition>
+		</rule>
+
+		<rule>
+			<char><![CDATA[年月日时分秒点點]]></char>
+			<condition>
+				<type>date</type>
+				<pretype>digit, chardigit</pretype>
+				<end>true</end>
+			</condition>
+		</rule>
+
+		<rule>
+			<char><![CDATA[.．‧-－]]></char>
+			<condition>
+				<type>letter</type>
+				<pretype>digit,letter</pretype>
+				<nexttype>letter</nexttype>
+			</condition>
+			<condition>
+				<type>letter</type>
+				<pretype>digit</pretype>
+				<nexttype>letter</nexttype>
+			</condition>
+			<condition>
+				<type>digit</type>
+				<pretype>digit</pretype>
+				<nexttype>digit</nexttype>
+			</condition>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
+				<nexttype>chardigit</nexttype>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[,]]></char>
+			<condition>
+				<type>digit</type>
+				<pretype>digit</pretype>
+				<nexttype>digit</nexttype>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[之点點成半]]></char>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
+				<nexttype>chardigit</nexttype>
+			</condition>
+		</rule>
+
+		<rule>
+			<char><![CDATA[多余餘]]></char>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
+				<end>true</end>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[第]]></char>
+			<condition>
+				<type>chardigit</type>
+				<nopretype>chardigit</nopretype>
+				<nexttype>chardigit</nexttype>
+			</condition>
+			<condition>
+				<type>digit</type>
+				<nopretype>digit</nopretype>
+				<nexttype>digit</nexttype>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[两兩]]></char>
+			<condition>
+				<type>chardigit</type>
+				<nopretype>chardigit</nopretype>
+				<nexttype>chardigit</nexttype>
+			</condition>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
+				<nexttype>chardigit</nexttype>
+			</condition>
+		</rule>
+
+		<rule>
+			<char><![CDATA[%％‰]]></char>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
+				<end>true</end>
+			</condition>
+		</rule>
+
+		<rule>
+			<char><![CDATA[.．‧-－]]></char>
+			<condition>
+				<type>letter</type>
+				<pretype>digit,letter</pretype>
+				<nexttype>letter</nexttype>
+			</condition>
+			<condition>
+				<type>letter</type>
+				<pretype>digit</pretype>
+				<nexttype>letter</nexttype>
+			</condition>
+			<condition>
+				<type>digit</type>
+				<pretype>digit</pretype>
+				<nexttype>digit</nexttype>
+			</condition>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
+				<nexttype>chardigit</nexttype>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[,]]></char>
+			<condition>
+				<type>digit</type>
+				<pretype>digit</pretype>
+				<nexttype>digit</nexttype>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[之点點成半]]></char>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
+				<nexttype>chardigit</nexttype>
+			</condition>
+		</rule>
+
+		<rule>
+			<char><![CDATA[多余餘]]></char>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
+				<end>true</end>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[第]]></char>
+			<condition>
+				<type>chardigit</type>
+				<nopretype>chardigit</nopretype>
+				<nexttype>chardigit</nexttype>
+			</condition>
+			<condition>
+				<type>digit</type>
+				<nopretype>digit</nopretype>
+				<nexttype>digit</nexttype>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[两兩]]></char>
+			<condition>
+				<type>chardigit</type>
+				<nopretype>chardigit</nopretype>
+				<nexttype>chardigit</nexttype>
+			</condition>
+		</rule>
+
+		<rule>
+			<char><![CDATA[%％‰]]></char>
+			<condition>
+				<type>chardigit</type>
+				<pretype>chardigit</pretype>
+				<end>true</end>
+			</condition>
+			<condition>
+				<type>digit</type>
+				<pretype>digit</pretype>
+				<end>true</end>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[数上]]></char>
+			<condition>
+				<type>chardigit</type>
+				<nopretype>chardigit</nopretype>
+				<nextchar><![CDATA[十百千万亿萬億兆]]></nextchar>
+			</condition>
+		</rule>
+		
+		<rule>
+			<char><![CDATA[十百千万亿萬億兆]]></char>
+			<condition>
+				<type>digit</type>
+				<pretype>digit</pretype>
+			</condition>
+		</rule>
+
+	</rules>
+
+</cma>
