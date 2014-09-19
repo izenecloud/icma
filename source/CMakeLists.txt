@@ -64,7 +64,7 @@ IF (CMAKE_COMPILER_IS_GNUCXX)
   SET(CMAKE_CXX_FLAGS_DEBUG          "-march=native -mtune=native -g -O2 -fno-reorder-blocks -fno-schedule-insns -fno-inline -std=c++11")
   SET(CMAKE_CXX_FLAGS_DEBUGFULL      "-march=native -mtune=native -g3 -fno-inline -DIZS_DEBUG -std=c++11" CACHE STRING "Debugfull build type")
   SET(CMAKE_CXX_FLAGS_PROFILE        "-march=native -mtune=native -pg -O2 -DNDEBUG -std=c++11")
-  #SET(CMAKE_CXX_FLAGS_PROFILE        "-g3 -fno-inline -ftest-coverage -fprofile-arcs" CACHE STRING "Profile build type")
+ #SET(CMAKE_CXX_FLAGS_PROFILE        "-g3 -fno-inline -ftest-coverage -fprofile-arcs" CACHE STRING "Profile build type")
 
   MARK_AS_ADVANCED(CMAKE_CXX_FLAGS_DEBUGFULL CMAKE_CXX_FLAGS_PROFILE)
 ENDIF (CMAKE_COMPILER_IS_GNUCXX)

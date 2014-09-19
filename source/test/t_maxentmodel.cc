@@ -133,7 +133,7 @@ char* check_model(MaxentModelFile& f) {
 	boost::shared_ptr<PredMapType>    pred_map;
     boost::shared_ptr<OutcomeMapType> outcome_map;
     boost::shared_ptr<ParamsType> params;
-    size_t n_theta;
+   size_t n_theta;
     shared_array<double> theta;
 
     pred_map = f.pred_map();
