@@ -45,7 +45,7 @@
     template <typename T, typename HashFunc = hash_compare<T, _STD less<T> >, typename EqualKey = _STD allocator< _STD pair<const T, size_t> > >
     #endif
 #else
-    template <typename T, typename HashFunc = hash<T>, typename EqualKey = std::equal_to<T> >
+    template <typename T, typename HashFunc = std::hash<T>, typename EqualKey = std::equal_to<T> >
 #endif
 class ItemMap {
     public:

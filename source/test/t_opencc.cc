@@ -13,6 +13,6 @@ int main(int argc, char ** argv)
     long ret = cc.convert(in, out);
     std::cout<<"out: "<<out<<" ret "<<ret<<std::endl;
     if(-1 == ret)
-        std::cout<<cc.errno()<<std::endl;
+//        std::cout<<cc.errno()<<std::endl;
     return 0;
 }

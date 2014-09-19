@@ -58,12 +58,12 @@ IF (CMAKE_COMPILER_IS_GNUCXX)
   SET(CMAKE_CONFIGURATION_TYPES ${CMAKE_CONFIGURATION_TYPES} "Debugfull" "Profile")
 
   # Select flags.
-  SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
+  SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g -std=c++11")
   # Disable assertion macros in RELEASE
-  SET(CMAKE_CXX_FLAGS_RELEASE        "-march=native -mtune=native -O2 -DNDEBUG")
-  SET(CMAKE_CXX_FLAGS_DEBUG          "-march=native -mtune=native -g -O2 -fno-reorder-blocks -fno-schedule-insns -fno-inline")
-  SET(CMAKE_CXX_FLAGS_DEBUGFULL      "-march=native -mtune=native -g3 -fno-inline -DIZS_DEBUG" CACHE STRING "Debugfull build type")
-  SET(CMAKE_CXX_FLAGS_PROFILE        "-march=native -mtune=native -pg -O2 -DNDEBUG")
+  SET(CMAKE_CXX_FLAGS_RELEASE        "-march=native -mtune=native -O2 -DNDEBUG -std=c++11")
+  SET(CMAKE_CXX_FLAGS_DEBUG          "-march=native -mtune=native -g -O2 -fno-reorder-blocks -fno-schedule-insns -fno-inline -std=c++11")
+  SET(CMAKE_CXX_FLAGS_DEBUGFULL      "-march=native -mtune=native -g3 -fno-inline -DIZS_DEBUG -std=c++11" CACHE STRING "Debugfull build type")
+  SET(CMAKE_CXX_FLAGS_PROFILE        "-march=native -mtune=native -pg -O2 -DNDEBUG -std=c++11")
   #SET(CMAKE_CXX_FLAGS_PROFILE        "-g3 -fno-inline -ftest-coverage -fprofile-arcs" CACHE STRING "Profile build type")
 
   MARK_AS_ADVANCED(CMAKE_CXX_FLAGS_DEBUGFULL CMAKE_CXX_FLAGS_PROFILE)
@@ -72,7 +72,7 @@ ENDIF (CMAKE_COMPILER_IS_GNUCXX)
 
 project(CMA-CHEN)
 
-add_definitions("-Wall -fPIC")# -O3
+add_definitions("-Wall -fPIC -std=c++11")# -O3
 
 
 FIND_PACKAGE(Threads REQUIRED)

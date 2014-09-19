@@ -15,7 +15,7 @@ struct eqstr
 
 using namespace std;
 typedef ItemMap<string> StringItemMap;
-typedef ItemMap<char*, hash<char*>, eqstr> CStringItemMap;
+typedef ItemMap<char*, std::hash<char*>, eqstr> CStringItemMap;
 
 
 template <typename T>

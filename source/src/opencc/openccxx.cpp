@@ -91,10 +91,10 @@ long OpenCC::convert(const std::wstring &in, std::wstring &out, long length)
     return count;
 }
 
-opencc_error OpenCC::errno() const
+/* opencc_error OpenCC::errno() const
 {
     return opencc_errno();
 }
 
-
+*/
 }
